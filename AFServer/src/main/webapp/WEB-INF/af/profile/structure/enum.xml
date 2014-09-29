@@ -1,0 +1,10 @@
+<part class="Container" id="$field$Container">
+    <part class="Label" id="$field$Label"/>
+    <part class="Image" id="$field$Image"/>
+    <part class="Combo" id="$field$Entry"/>
+    <part class="Label" id="$field$Help"/>
+    <!--<layout>-->
+        <!--<hbox/>-->
+    <!--</layout>-->
+</part>
+

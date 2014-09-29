@@ -1,0 +1,29 @@
+# Compilation output
+doc/
+bin/
+out/
+build/
+output/
+target/
+changelog
+
+# Eclipse workspace
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA workspace
+*.ipr
+*.iml
+*.iws
+.idea/
+/test-output
+
+# JRebel file
+rebel.xml
+
+# Backup files
+*~
+
+# OS-specific files
+.DS_Store
