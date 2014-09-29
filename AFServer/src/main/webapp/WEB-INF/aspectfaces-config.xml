@@ -72,6 +72,7 @@
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.jpa.ColumnAnnotationDescriptor</af:name>
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.jpa.JoinColumnAnnotationDescriptor</af:name>
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.jpa.TemporalAnnotationDescriptor</af:name>
+		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UILayoutDescriptor</af:name>
 
 		<!-- JPA annotations -->
 		<!-- 

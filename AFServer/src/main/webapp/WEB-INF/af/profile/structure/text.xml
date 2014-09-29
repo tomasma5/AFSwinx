@@ -1,1 +1,5 @@
-$field$
+fieldName:$field$;
+required:$required$;
+layout:$layout$
+$UILayout$
+$Layout$

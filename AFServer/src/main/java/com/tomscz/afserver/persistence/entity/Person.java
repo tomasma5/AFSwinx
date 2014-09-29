@@ -1,5 +1,8 @@
 package com.tomscz.afserver.persistence.entity;
 
+import com.codingcrayons.aspectfaces.annotations.UILayout;
+import com.codingcrayons.aspectfaces.annotations.UiLabel;
+import com.codingcrayons.aspectfaces.annotations.UiRequired;
 import com.codingcrayons.aspectfaces.annotations.UiType;
 
 
@@ -25,6 +28,8 @@ public class Person {
         this.lastName = lastName;
     }
 
+    @UiRequired
+    @UILayout(value="Border")
     public String getFirstName() {
         return firstName;
     }
