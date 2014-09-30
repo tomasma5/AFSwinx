@@ -1,9 +1,9 @@
 package com.tomscz.afserver.persistence.entity;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
-import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
-import com.codingcrayons.aspectfaces.annotations.UiType;
+
+import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 
 
 public class Person {
@@ -20,6 +20,7 @@ public class Person {
         this.id = id;
     }
 
+    @UILayout()
     public String getLastName() {
         return lastName;
     }
@@ -29,7 +30,7 @@ public class Person {
     }
 
     @UiRequired
-    @UILayout(value="Border")
+    @UILayout(layout=LayouDefinitions.BORDERLAYOUT)
     public String getFirstName() {
         return firstName;
     }
