@@ -2,9 +2,9 @@ package com.tomscz.afi.inspector;
 
 import javax.servlet.ServletContext;
 
-import com.tomscz.afi.dto.AFClassInfo;
 import com.tomscz.afi.exceptions.SkeletonException;
 import com.tomscz.afi.ws.mappers.MapperType;
+import com.tomscz.afswinx.rest.dto.AFClassInfo;
 
 public interface AFRest {
     

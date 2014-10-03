@@ -18,9 +18,9 @@ import com.codingcrayons.aspectfaces.properties.PropertyLoader;
 import com.codingcrayons.aspectfaces.util.Strings;
 import com.tomscz.afi.commons.Constants;
 import com.tomscz.afi.commons.FileUtils;
-import com.tomscz.afi.dto.AFClassInfo;
 import com.tomscz.afi.exceptions.SkeletonException;
 import com.tomscz.afi.ws.mappers.MapperType;
+import com.tomscz.afswinx.rest.dto.AFClassInfo;
 
 public class AFRestSwing implements AFRest {
 
