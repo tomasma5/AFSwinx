@@ -5,4 +5,5 @@ public enum LabelPossition {
     RIGHT,
     TOP,
     BOT,
+    NONE,
 }

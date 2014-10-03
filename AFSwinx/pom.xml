@@ -6,6 +6,25 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AFSwing</name>
 	<description>AspectFaces swing module</description>
+	<dependencies>
+			<dependency>
+			<groupId>com.codingcrayons.aspectfaces</groupId>
+			<artifactId>javaee-connector</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.codingcrayons.aspectfaces</groupId>
+			<artifactId>annotation-descriptors</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>codingcrayons-repository</id>
+			<name>CodingCrayons Maven Repository</name>
+			<url>http://maven.codingcrayons.com/content/groups/public/</url>
+		</repository>
+	</repositories>
 	<build>
 		<finalName>AFSwinx</finalName>
 		<plugins>
