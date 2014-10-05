@@ -1,15 +1,12 @@
-package com.tomscz.afswinx.layout.definitions;
+package com.tomscz.afswinx.common;
 
-public enum LabelPossition {
-    LEFT("left"),
-    RIGHT("right"),
-    TOP("top"),
-    BOT("bottom"),
-    NONE("none");
+public enum ViewType {
+
+    FORM("form");
     
     private final String name; 
     
-    private LabelPossition(String name) {
+    private ViewType(String name) {
         this.name = name;
     }
     

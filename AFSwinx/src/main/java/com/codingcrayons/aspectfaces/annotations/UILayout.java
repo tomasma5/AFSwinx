@@ -14,5 +14,5 @@ import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 @Retention(RUNTIME)
 public @interface UILayout {
     public LayouDefinitions layout() default LayouDefinitions.FLOWLAYOUT; 
-    public LabelPossition labelPossition() default LabelPossition.NONE;
+    public LabelPossition labelPossition() default LabelPossition.LEFT;
 }

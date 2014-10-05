@@ -20,7 +20,12 @@ import com.tomscz.afi.commons.Constants;
 import com.tomscz.afi.commons.FileUtils;
 import com.tomscz.afi.exceptions.SkeletonException;
 import com.tomscz.afi.ws.mappers.MapperType;
+import com.tomscz.afswinx.common.ViewType;
+import com.tomscz.afswinx.exception.MetamodelException;
+import com.tomscz.afswinx.marshal.ModelBuilder;
+import com.tomscz.afswinx.marshal.ModelFactory;
 import com.tomscz.afswinx.rest.dto.AFClassInfo;
+import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
 
 public class AFRestSwing implements AFRest {
 
@@ -63,7 +68,16 @@ public class AFRestSwing implements AFRest {
                 Context context = init(servletContext);
                 AFWeaver af = new AFWeaver(profile);
                 String widget = inspectAndTranslate(af, instance, context);
+                widget = widget.replaceAll("(\\r|\\n)", "");
                 System.out.println(widget);
+                ModelBuilder builder = new ModelFactory().createModelBuilder(ViewType.FORM, widget);
+                try{
+                    AFRestDataPackage generatedInfo = builder.buildModel();  
+                    return generatedInfo.getClassInfo();
+                }
+                catch (MetamodelException e){
+                    e.printStackTrace();
+                }
             } else {
                 //TODO Finish it
                 String[] classes = className.split("@");

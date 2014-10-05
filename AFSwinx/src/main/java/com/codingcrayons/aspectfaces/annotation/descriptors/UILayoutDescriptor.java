@@ -9,22 +9,19 @@ import com.codingcrayons.aspectfaces.annotation.registration.pointCut.VariableJo
 import com.codingcrayons.aspectfaces.annotation.registration.pointCut.properties.Variable;
 import com.tomscz.afswinx.layout.definitions.LabelPossition;
 import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
-import com.tomscz.afswinx.layout.marshal.LayoutBuilder;
 
 public class UILayoutDescriptor implements AnnotationDescriptor, VariableJoinPoint {
 
-    public static final String LAYOUT_INTERACE_VARIABLE = "layout";
-    public static final String LABEL_POSSTION_INTERFACE_VARIABLE = "labelPossition";
+    public static final String LABEL_POSSTION_AF_VARIABLE = "labelPossition";
     public static final String LAYOUT_AF_VARIABLE = "layout";
     
     @Override
     public List<Variable> getVariables(AnnotationProvider annotationProvider) {
         List<Variable> variables = new ArrayList<Variable>();
-        LayouDefinitions layout =(LayouDefinitions) annotationProvider.getValue(LAYOUT_INTERACE_VARIABLE);
-        LabelPossition labelPosstion = (LabelPossition) annotationProvider.getValue(LABEL_POSSTION_INTERFACE_VARIABLE);
-        LayoutBuilder builder = new LayoutBuilder();
-        String interpretedLayout = builder.buildLayout(layout,labelPosstion);
-        variables.add(new Variable(LAYOUT_AF_VARIABLE, interpretedLayout));
+        LayouDefinitions layout =(LayouDefinitions) annotationProvider.getValue(LAYOUT_AF_VARIABLE);
+        LabelPossition labelPosstion = (LabelPossition) annotationProvider.getValue(LABEL_POSSTION_AF_VARIABLE);
+        variables.add(new Variable(LAYOUT_AF_VARIABLE, layout));
+        variables.add(new Variable(LABEL_POSSTION_AF_VARIABLE, labelPosstion));
         return variables;
     }
 
