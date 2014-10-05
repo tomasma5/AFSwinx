@@ -55,7 +55,7 @@ public class AFRestSwing implements AFRest {
         }
     }
 
-    public AFClassInfo generateSkeleton(String entityClass, MapperType mapper,
+    public AFRestDataPackage generateSkeleton(String entityClass, MapperType mapper,
             ServletContext servletContext) throws SkeletonException {
 
         Class<?> instance = null;
@@ -73,7 +73,7 @@ public class AFRestSwing implements AFRest {
                 ModelBuilder builder = new ModelFactory().createModelBuilder(ViewType.FORM, widget);
                 try{
                     AFRestDataPackage generatedInfo = builder.buildModel();  
-                    return generatedInfo.getClassInfo();
+                    return generatedInfo;
                 }
                 catch (MetamodelException e){
                     e.printStackTrace();
