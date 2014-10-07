@@ -24,7 +24,6 @@ import com.tomscz.afswinx.common.ViewType;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.marshal.ModelBuilder;
 import com.tomscz.afswinx.marshal.ModelFactory;
-import com.tomscz.afswinx.rest.dto.AFClassInfo;
 import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
 
 public class AFRestSwing implements AFRest {

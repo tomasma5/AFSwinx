@@ -7,7 +7,7 @@
 	<name>AFSwing</name>
 	<description>AspectFaces swing module</description>
 	<dependencies>
-			<dependency>
+		<dependency>
 			<groupId>com.codingcrayons.aspectfaces</groupId>
 			<artifactId>javaee-connector</artifactId>
 			<version>1.4.0</version>
@@ -17,6 +17,34 @@
 			<artifactId>annotation-descriptors</artifactId>
 			<version>1.4.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient-cache</artifactId>
+			<version>4.3.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3</version>
+		</dependency>
+		<!-- Test scope -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 	<repositories>
 		<repository>
@@ -32,7 +60,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<!-- Compile under 1.7-->
+					<!-- Compile under 1.7 -->
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
