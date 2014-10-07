@@ -9,7 +9,7 @@ import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 import com.tomscz.afswinx.marshal.utils.DataParserHelper;
 import com.tomscz.afswinx.rest.dto.AFClassInfo;
 import com.tomscz.afswinx.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
+import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.validation.AFSwinxValidations;
 
@@ -22,11 +22,11 @@ public class FormBuilder implements ModelBuilder{
     }
     
     @Override
-    public AFRestDataPackage buildModel() throws MetamodelException {
+    public AFMetaModelPack buildModel() throws MetamodelException {
         if (metaModelInformation == null || metaModelInformation.isEmpty()) {
             throw new MetamodelException();
         }
-        AFRestDataPackage model = new AFRestDataPackage();
+        AFMetaModelPack model = new AFMetaModelPack();
         model.setClassInfo(transforDataToModel(metaModelInformation));
 
         return model;

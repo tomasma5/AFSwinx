@@ -24,7 +24,7 @@ import com.tomscz.afswinx.common.ViewType;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.marshal.ModelBuilder;
 import com.tomscz.afswinx.marshal.ModelFactory;
-import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
+import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
 public class AFRestSwing implements AFRest {
 
@@ -54,7 +54,7 @@ public class AFRestSwing implements AFRest {
         }
     }
 
-    public AFRestDataPackage generateSkeleton(String entityClass, MapperType mapper,
+    public AFMetaModelPack generateSkeleton(String entityClass, MapperType mapper,
             ServletContext servletContext) throws SkeletonException {
 
         Class<?> instance = null;
@@ -71,7 +71,7 @@ public class AFRestSwing implements AFRest {
                 System.out.println(widget);
                 ModelBuilder builder = new ModelFactory().createModelBuilder(ViewType.FORM, widget);
                 try{
-                    AFRestDataPackage generatedInfo = builder.buildModel();  
+                    AFMetaModelPack generatedInfo = builder.buildModel();  
                     return generatedInfo;
                 }
                 catch (MetamodelException e){

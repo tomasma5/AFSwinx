@@ -14,7 +14,7 @@ import javax.xml.ws.WebServiceContext;
 import com.google.gson.Gson;
 import com.tomscz.afi.exceptions.SkeletonException;
 import com.tomscz.afi.inspector.AFRestSwing;
-import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
+import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
 @Path("/")
 public class AFRootResource {
@@ -32,7 +32,7 @@ public class AFRootResource {
         
         try {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
-            AFRestDataPackage data = afSwing.generateSkeleton(entityClass, null, request.getSession().getServletContext());
+            AFMetaModelPack data = afSwing.generateSkeleton(entityClass, null, request.getSession().getServletContext());
             Gson gson = new Gson();
             String responseData = gson.toJson(data);
             return Response.status(Response.Status.OK).entity(responseData).build();

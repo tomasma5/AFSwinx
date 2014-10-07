@@ -2,16 +2,16 @@ package com.tomscz.afswinx.rest.dto;
 
 import java.io.Serializable;
 
-public class AFRestDataPackage implements Serializable{
+public class AFMetaModelPack implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private AFClassInfo classInfo;
     
-    public AFRestDataPackage(){
+    public AFMetaModelPack(){
         
     }
 
-    public AFRestDataPackage(AFClassInfo classInfo){
+    public AFMetaModelPack(AFClassInfo classInfo){
         this.setClassInfo(classInfo);
     }
 

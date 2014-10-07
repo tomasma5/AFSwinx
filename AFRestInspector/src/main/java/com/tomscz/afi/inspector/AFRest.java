@@ -4,10 +4,10 @@ import javax.servlet.ServletContext;
 
 import com.tomscz.afi.exceptions.SkeletonException;
 import com.tomscz.afi.ws.mappers.MapperType;
-import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
+import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
 public interface AFRest {
     
-    public AFRestDataPackage generateSkeleton(String entityClass, MapperType mapper, ServletContext servletContext) throws SkeletonException;
+    public AFMetaModelPack generateSkeleton(String entityClass, MapperType mapper, ServletContext servletContext) throws SkeletonException;
 
 }

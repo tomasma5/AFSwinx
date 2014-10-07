@@ -7,7 +7,7 @@ import java.net.ConnectException;
 import org.junit.Test;
 
 import com.tomscz.afswinx.rest.connection.ModelConnector;
-import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
+import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
 public class TestConnection {
 
@@ -15,7 +15,7 @@ public class TestConnection {
     public void testMetamodelConnection() {
         ModelConnector mc = new ModelConnector("localhost","/AFServer/rest/Person",8080);
         try {
-            AFRestDataPackage metamodel = mc.getContent();
+            AFMetaModelPack metamodel = mc.getContent();
             if(metamodel == null || metamodel.getClassInfo() == null){
                 fail();
             }

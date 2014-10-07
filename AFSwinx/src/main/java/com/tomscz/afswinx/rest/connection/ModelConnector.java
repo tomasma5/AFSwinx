@@ -9,7 +9,7 @@ import java.net.ConnectException;
 import org.apache.http.HttpHost;
 
 import com.google.gson.Gson;
-import com.tomscz.afswinx.rest.dto.AFRestDataPackage;
+import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
 public class ModelConnector extends BaseConnector {
 
@@ -41,7 +41,7 @@ public class ModelConnector extends BaseConnector {
 
     @SuppressWarnings("unchecked")
     @Override
-    public AFRestDataPackage getContent() throws ConnectException {
+    public AFMetaModelPack getContent() throws ConnectException {
         try {
             this.httpGetBuilder = new HttpGetBuilder(this.accept, this.contentType);
             InputStream inputStream = getResponse(this.httpGetBuilder.getGET(parameter));
@@ -56,11 +56,11 @@ public class ModelConnector extends BaseConnector {
                     responseStrBuilder.append(line);
                 }
                 String data = responseStrBuilder.toString();
-                AFRestDataPackage result = null;
+                AFMetaModelPack result = null;
                 //Construct metamodel holder 
                 if (this.accept.equals(HeaderType.JSON)) {
                     Gson gson = new Gson();
-                    result = gson.fromJson(data, AFRestDataPackage.class);
+                    result = gson.fromJson(data, AFMetaModelPack.class);
                 } else if (this.accept.equals(HeaderType.XML)) {
                     // TODO add support for xml
                 }
