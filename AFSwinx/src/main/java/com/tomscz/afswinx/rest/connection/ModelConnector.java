@@ -17,22 +17,12 @@ public class ModelConnector extends BaseConnector {
     private HttpGetBuilder httpGetBuilder;
     private String parameter;
 
-    public ModelConnector(String hostName, String parameter, int port, HeaderType accept,
-            HeaderType contentType) {
-        this.host = new HttpHost(hostName, port, BaseConnector.HTTP_PROTOCOL);
-        this.parameter = parameter;
+    public ModelConnector(AFSwinxConnection connection) {
+        this.host = new HttpHost(connection.getAddress(), connection.getPort(), connection.getProtocol());
+        this.parameter = connection.getParameters();
+        this.accept = connection.getAcceptedType();
+        this.contentType = connection.getContentType();
     }
-
-    public ModelConnector(String hostName, String parameter, int port) {
-        this.host = new HttpHost(hostName, port, BaseConnector.HTTP_PROTOCOL);
-        this.parameter = parameter;
-    }
-
-    public ModelConnector(String hostName, String parameter, int port, String protocol) {
-        this.host = new HttpHost(hostName, port, protocol);
-        this.parameter = parameter;
-    }
-
 
     @Override
     public HttpHost getHost() {
