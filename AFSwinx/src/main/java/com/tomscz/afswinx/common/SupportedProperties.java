@@ -4,6 +4,7 @@ import com.codingcrayons.aspectfaces.annotation.descriptors.UILayoutDescriptor;
 
 public enum SupportedProperties {
     
+    WIDGETTYPE("widgetType"),
     FIELDNAME("fieldname"),
     LAYOUT(UILayoutDescriptor.LAYOUT_AF_VARIABLE),
     LABEL("label"),

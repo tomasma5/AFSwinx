@@ -1,6 +1,7 @@
 package com.tomscz.afswinx.marshal;
 
 import com.tomscz.afswinx.common.SupportedProperties;
+import com.tomscz.afswinx.common.SupportedWidgets;
 import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.layout.Layout;
@@ -28,13 +29,13 @@ public class FormBuilder implements ModelBuilder{
         }
         AFMetaModelPack model = new AFMetaModelPack();
         model.setClassInfo(transforDataToModel(metaModelInformation));
-
         return model;
     }
 
     private AFClassInfo transforDataToModel(String metaModelInfomation) throws MetamodelException {
         AFClassInfo classInfo = new AFClassInfo();
         String[] fields = metaModelInfomation.split(DataParserHelper.getFildSplitter());
+        
         for (int i=1;i<fields.length;i++) {
             AFFieldInfo fieldInfo = createFieldProperties(fields[i]);
             classInfo.addFieldInfo(fieldInfo);
@@ -67,6 +68,13 @@ public class FormBuilder implements ModelBuilder{
                 throw new MetamodelException();
             }
             // Create field info
+            if(propertyType.equals(SupportedProperties.WIDGETTYPE)){
+                for (SupportedWidgets supportedWidget : SupportedWidgets.values()) {
+                    if (propertyName.equals(supportedWidget.toString())) {
+                        fieldInfo.setWidgetType(supportedWidget);
+                    }
+                }
+            }
             if (propertyType.equals(SupportedProperties.FIELDNAME)) {
                 fieldInfo.setId(propertyArray[1]);
                 continue;
