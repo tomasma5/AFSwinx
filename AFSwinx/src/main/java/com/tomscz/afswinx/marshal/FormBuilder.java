@@ -58,7 +58,7 @@ public class FormBuilder implements ModelBuilder{
             boolean isSupported = false;
             SupportedProperties propertyType = null;
             for (SupportedProperties supportedProperty : SupportedProperties.values()) {
-                if (propertyName.equals(supportedProperty.toString())) {
+                if (propertyName.equals(supportedProperty.toString().toLowerCase())) {
                     isSupported = true;
                     propertyType = supportedProperty;
                     break;
@@ -69,8 +69,9 @@ public class FormBuilder implements ModelBuilder{
             }
             // Create field info
             if(propertyType.equals(SupportedProperties.WIDGETTYPE)){
+                String value = propertyArray[1].toLowerCase();
                 for (SupportedWidgets supportedWidget : SupportedWidgets.values()) {
-                    if (propertyName.equals(supportedWidget.toString())) {
+                    if (value.equals(supportedWidget.toString().toLowerCase())) {
                         fieldInfo.setWidgetType(supportedWidget);
                     }
                 }

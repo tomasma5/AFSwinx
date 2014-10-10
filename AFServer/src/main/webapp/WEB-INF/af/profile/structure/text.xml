@@ -1,6 +1,6 @@
 ;fieldStart;
 fieldName:$field$;
-widgetType:inputField;	
+widgetType:inputField;
 label:$label$;
 required:$required$;
 layout:$layout$;
