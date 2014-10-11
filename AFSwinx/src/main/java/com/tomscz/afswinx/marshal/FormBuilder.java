@@ -14,14 +14,14 @@ import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.validation.AFSwinxValidations;
 
-public class FormBuilder implements ModelBuilder{
+public class FormBuilder implements ModelBuilder {
 
     private String metaModelInformation;
-    
-    public FormBuilder(String metamodelInformation){
+
+    public FormBuilder(String metamodelInformation) {
         this.metaModelInformation = metamodelInformation;
     }
-    
+
     @Override
     public AFMetaModelPack buildModel() throws MetamodelException {
         if (metaModelInformation == null || metaModelInformation.isEmpty()) {
@@ -35,8 +35,8 @@ public class FormBuilder implements ModelBuilder{
     private AFClassInfo transforDataToModel(String metaModelInfomation) throws MetamodelException {
         AFClassInfo classInfo = new AFClassInfo();
         String[] fields = metaModelInfomation.split(DataParserHelper.getFildSplitter());
-        
-        for (int i=1;i<fields.length;i++) {
+
+        for (int i = 1; i < fields.length; i++) {
             AFFieldInfo fieldInfo = createFieldProperties(fields[i]);
             classInfo.addFieldInfo(fieldInfo);
         }
@@ -68,7 +68,7 @@ public class FormBuilder implements ModelBuilder{
                 throw new MetamodelException();
             }
             // Create field info
-            if(propertyType.equals(SupportedProperties.WIDGETTYPE)){
+            if (propertyType.equals(SupportedProperties.WIDGETTYPE)) {
                 String value = propertyArray[1].toLowerCase();
                 for (SupportedWidgets supportedWidget : SupportedWidgets.values()) {
                     if (value.equals(supportedWidget.toString().toLowerCase())) {
@@ -107,5 +107,5 @@ public class FormBuilder implements ModelBuilder{
         }
         return fieldInfo;
     }
-    
+
 }

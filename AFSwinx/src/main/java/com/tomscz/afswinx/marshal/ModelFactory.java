@@ -1,12 +1,11 @@
 package com.tomscz.afswinx.marshal;
 
-import com.tomscz.afswinx.common.ViewType;
-
+import com.tomscz.afswinx.common.SupportedComponents;
 public class ModelFactory {
     
-    public ModelBuilder createModelBuilder(ViewType viewType, String content){
+    public ModelBuilder createModelBuilder(SupportedComponents viewType, String content){
         ModelBuilder modelBuilder = null;
-        if(viewType.equals(ViewType.FORM)){
+        if(viewType.equals(SupportedComponents.FORM)){
             modelBuilder = new FormBuilder(content);
         }
         return modelBuilder;

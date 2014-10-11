@@ -20,7 +20,7 @@ import com.tomscz.afi.commons.Constants;
 import com.tomscz.afi.commons.FileUtils;
 import com.tomscz.afi.exceptions.SkeletonException;
 import com.tomscz.afi.ws.mappers.MapperType;
-import com.tomscz.afswinx.common.ViewType;
+import com.tomscz.afswinx.common.SupportedComponents;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.marshal.ModelBuilder;
 import com.tomscz.afswinx.marshal.ModelFactory;
@@ -69,7 +69,7 @@ public class AFRestSwing implements AFRest {
                 String widget = inspectAndTranslate(af, instance, context);
                 widget = widget.replaceAll("(\\r|\\n)", "");
                 System.out.println(widget);
-                ModelBuilder builder = new ModelFactory().createModelBuilder(ViewType.FORM, widget);
+                ModelBuilder builder = new ModelFactory().createModelBuilder(SupportedComponents.FORM, widget);
                 try{
                     AFMetaModelPack generatedInfo = builder.buildModel();  
                     return generatedInfo;
