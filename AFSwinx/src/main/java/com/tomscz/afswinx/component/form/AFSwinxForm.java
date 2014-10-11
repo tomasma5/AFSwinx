@@ -8,8 +8,6 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.dto.AFClassInfo;
 import com.tomscz.afswinx.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
-import com.tomscz.afswinx.unmarshal.FieldBuilder;
-import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 
 public class AFSwinxForm extends AFSwinxComponent {
 
