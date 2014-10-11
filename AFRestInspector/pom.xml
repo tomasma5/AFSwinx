@@ -1,10 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.tomscz.af</groupId>
+
+	<parent>
+		<groupId>com.tomscz.af</groupId>
+		<artifactId>AFSwinx-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>AFRestInspector</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>AFRestInspector</name>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.codingcrayons.aspectfaces</groupId>
@@ -16,20 +22,10 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.3.2</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>com.codingcrayons.aspectfaces</groupId>
-			<artifactId>javaee-connector</artifactId>
-			<version>1.4.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.codingcrayons.aspectfaces</groupId>
-			<artifactId>annotation-descriptors</artifactId>
-			<version>1.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.tomscz.af</groupId>
@@ -37,24 +33,4 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>codingcrayons-repository</id>
-			<name>CodingCrayons Maven Repository</name>
-			<url>http://maven.codingcrayons.com/content/groups/public/</url>
-		</repository>
-	</repositories>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<!-- or whatever version you use -->
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
