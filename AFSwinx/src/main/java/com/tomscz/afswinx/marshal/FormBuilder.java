@@ -5,7 +5,7 @@ import com.tomscz.afswinx.common.SupportedWidgets;
 import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.layout.Layout;
-import com.tomscz.afswinx.layout.definitions.LabelPossition;
+import com.tomscz.afswinx.layout.definitions.LabelPosition;
 import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 import com.tomscz.afswinx.marshal.utils.DataParserHelper;
 import com.tomscz.afswinx.rest.dto.AFClassInfo;
@@ -100,8 +100,8 @@ public class FormBuilder implements ModelBuilder {
             if (propertyType.equals(SupportedProperties.LABELPOSSTION)) {
                 String labelPosstion = propertyArray[1];
                 Layout layout = fieldInfo.getLayout();
-                layout.setLabelPosstion((LabelPossition) Utils.getEnumFromString(
-                        LabelPossition.class, labelPosstion));
+                layout.setLabelPosstion((LabelPosition) Utils.getEnumFromString(
+                        LabelPosition.class, labelPosstion));
                 continue;
             }
         }

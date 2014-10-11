@@ -2,15 +2,28 @@ package com.tomscz.afswinx.rest.connection;
 
 import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 
+/**
+ * This class holds information which are necessary to get model or data and post them. Based on
+ * this are created concrete connectors.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class AFSwinxConnection {
 
     public static final String PROTOCOL_HTTP = "http";
 
+    //Address ex: localhost or toms-cz.com without http or https
     private String address;
     private int port;
+    //Additional parameters it should exclude port, which is specify in port variable
     private String parameters;
+    //Protocol ex: http or https
     private String protocol;
+    //Type of expected returned value
     private HeaderType acceptedType;
+    //Type of header request
     private HeaderType contentType;
 
     public AFSwinxConnection(String address, int port, String parameters) {

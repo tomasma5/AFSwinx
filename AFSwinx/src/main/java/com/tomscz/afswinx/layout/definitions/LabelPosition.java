@@ -1,6 +1,12 @@
 package com.tomscz.afswinx.layout.definitions;
 
-public enum LabelPossition {
+/**
+ * This enum specify all possible label positions.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
+public enum LabelPosition {
     LEFT("left"),
     RIGHT("right"),
     TOP("top"),
@@ -9,7 +15,7 @@ public enum LabelPossition {
     
     private final String name; 
     
-    private LabelPossition(String name) {
+    private LabelPosition(String name) {
         this.name = name;
     }
     

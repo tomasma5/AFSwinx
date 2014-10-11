@@ -107,6 +107,12 @@ public abstract class BaseConnector implements Connector {
         }
     }
 
+    /**
+     * This class specify type of supported request and response types.
+     * @author Martin Tomasek (martin@toms-cz.com)
+     *
+     * @since 1.0.0.
+     */
     public enum HeaderType {
         XML("application/xml"), JSON("application/json");
 
