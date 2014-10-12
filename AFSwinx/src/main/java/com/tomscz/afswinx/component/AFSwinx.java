@@ -3,6 +3,7 @@ package com.tomscz.afswinx.component;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
+import javax.swing.Box.Filler;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
@@ -50,6 +51,7 @@ public class AFSwinx {
             AFSwinxConnection dataConnection, AFSwinxConnection postConnection) {
         AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, postConnection);
         form.buildComponent();
+//        form.fillData();
         addComponent(form, componentKeyName);
         return form;
     }

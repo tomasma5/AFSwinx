@@ -13,7 +13,8 @@ public class PersonFormView extends JFrame{
     public PersonFormView(){
         AFSwinx swinx = AFSwinx.getInstance();
         AFSwinxConnection connection = new AFSwinxConnection("localhost", 8080, "/AFServer/rest/Person");
-        AFSwinxForm form = swinx.buildForm("persoForm",connection, connection, connection);
+        AFSwinxConnection dataConnection = new AFSwinxConnection("localhost", 8080, "/AFServer/rest/Person/1");
+        AFSwinxForm form = swinx.buildForm("persoForm",connection, dataConnection, connection);
         this.setSize(200, 400);
         this.add(form);
         this.setVisible(true);

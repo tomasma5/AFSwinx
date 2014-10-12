@@ -3,6 +3,10 @@ package com.tomscz.afi.inspector;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -18,25 +22,27 @@ import com.codingcrayons.aspectfaces.properties.PropertyLoader;
 import com.codingcrayons.aspectfaces.util.Strings;
 import com.tomscz.afi.commons.Constants;
 import com.tomscz.afi.commons.FileUtils;
-import com.tomscz.afi.exceptions.SkeletonException;
+import com.tomscz.afi.exceptions.AFRestException;
 import com.tomscz.afi.ws.mappers.MapperType;
 import com.tomscz.afswinx.common.SupportedComponents;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.marshal.ModelBuilder;
 import com.tomscz.afswinx.marshal.ModelFactory;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
+import com.tomscz.afswinx.rest.dto.data.AFData;
+import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 
 public class AFRestSwing implements AFRest {
 
     private ServletContext servletContext;
     private final String AF_PATH;
 
-    public AFRestSwing(ServletContext servletContext) throws SkeletonException {
+    public AFRestSwing(ServletContext servletContext) throws AFRestException {
         this.servletContext = servletContext;
         this.AF_PATH = getAFPath();
     }
 
-    private String getAFPath() throws SkeletonException {
+    private String getAFPath() throws AFRestException {
         InputStream propertyStream =
                 servletContext.getResourceAsStream(Constants.WEB_INF_FOLDER
                         + Constants.ASPECT_FACES_PROPERTY_FILE);
@@ -50,12 +56,12 @@ public class AFRestSwing implements AFRest {
             return filesDirectory;
         } catch (ConfigurationParsingException e) {
             // TODO Auto-generated catch block
-            throw new SkeletonException();
+            throw new AFRestException();
         }
     }
 
     public AFMetaModelPack generateSkeleton(String entityClass, MapperType mapper,
-            ServletContext servletContext) throws SkeletonException {
+            ServletContext servletContext) throws AFRestException {
 
         Class<?> instance = null;
         try {
@@ -88,7 +94,7 @@ public class AFRestSwing implements AFRest {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SkeletonException();
+            throw new AFRestException();
         }
         return null;
     }
@@ -121,5 +127,43 @@ public class AFRestSwing implements AFRest {
 
     protected String makeName(Class<?> clazz, Context context) {
         return Strings.lowerFirstLetter(clazz.getSimpleName());
+    }
+
+    @Override
+    public AFDataPack generateDataObject(Class<?> clazz,Object objectToGenerate) throws IllegalArgumentException{
+        if(clazz == null || objectToGenerate == null){
+            throw new IllegalArgumentException("Object to generated and class cant be null");
+        }
+        AFDataPack data = new AFDataPack(clazz.getName());
+        List<Method> getters = getGetters(objectToGenerate.getClass());
+        for (int i = 0; i < getters.size(); i++) {
+            try {
+                String value = String.valueOf(getters.get(i).invoke(objectToGenerate));
+                if(value != null && !value.equals("null")){
+                    String key = getters.get(i).getName();
+                    char firstLetter = Character.toLowerCase(key.charAt(3));
+                    key = key.substring(4);
+                    key = firstLetter+key;
+                    AFData concreteData = new AFData(key, value); 
+                    data.addData(concreteData);
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            
+        }
+        return data;
+    }
+    
+    private List<Method> getGetters(Class clazz) throws SecurityException {
+        List<Method> getters = new ArrayList<Method>();
+
+        for (Method method : clazz.getMethods()) {
+            if (method.getName().startsWith("get") && !"getClass".equals(method.getName())) {
+                getters.add(method);
+            }
+        }
+        return getters;
     }
 }

@@ -5,8 +5,8 @@ import java.net.ConnectException;
 import javax.swing.JPanel;
 
 import com.tomscz.afswinx.common.SupportedComponents;
+import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
-import com.tomscz.afswinx.rest.connection.ModelConnector;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
 public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction {
@@ -20,13 +20,15 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
     
     @Override
     public AFMetaModelPack getModel() throws ConnectException{
-        ModelConnector modelConnector = new ModelConnector(getModelConnection());
+        AFConnector<AFMetaModelPack> modelConnector = new AFConnector<AFMetaModelPack>(getModelConnection(),AFMetaModelPack.class);
         return modelConnector.getContent();  
     }
     
     @Override
     public void fillData() throws ConnectException {
-        // TODO Auto-generated method stub
+       if(getDataConnection() != null){
+//           DataConnector dataConnector = new D
+       }
         
     }
 

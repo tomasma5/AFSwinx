@@ -1,9 +1,12 @@
 package com.tomscz.afswinx.component.form;
 
 import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.tomscz.afswinx.common.SupportedComponents;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.dto.AFClassInfo;
 import com.tomscz.afswinx.rest.dto.AFFieldInfo;
@@ -18,6 +21,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     private AFSwinxConnection modelConnection;
     private AFSwinxConnection postConnection;
     private AFSwinxConnection dataConnection;
+    List<AFSwinxPanel> panels = new ArrayList<AFSwinxPanel>();
 
     private SupportedComponents componentType;
 
@@ -62,5 +66,10 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             e.printStackTrace();
         }
 
+    }
+    
+    public void add(AFSwinxPanel panelToAdd){
+        this.panels.add(panelToAdd);
+        this.add(panelToAdd);
     }
 }
