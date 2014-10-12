@@ -9,7 +9,7 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.ModelConnector;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 
-public abstract class AFSwinxComponent extends JPanel implements AFSwinxInteraction {
+public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction {
 
     private static final long serialVersionUID = 1L;
     

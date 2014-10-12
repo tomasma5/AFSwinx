@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import javax.swing.JPanel;
 
-import com.tomscz.afswinx.component.abstraction.AFSwinxComponent;
+import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 
@@ -20,7 +20,7 @@ public class AFSwinx {
 
     private static AFSwinx instance;
 
-    private HashMap<String, AFSwinxComponent> components;
+    private HashMap<String, AFSwinxTopLevelComponent> components;
 
     private AFSwinx() {
         components = new HashMap<>();
@@ -54,16 +54,16 @@ public class AFSwinx {
         return form;
     }
 
-    public AFSwinxComponent buildTable() {
+    public AFSwinxTopLevelComponent buildTable() {
         // TODO finish it
         return null;
     }
 
-    private void addComponent(AFSwinxComponent componentToAdd, String key) {
+    private void addComponent(AFSwinxTopLevelComponent componentToAdd, String key) {
         components.put(key, componentToAdd);
     }
 
-    public AFSwinxComponent getExistedComponent(String componentName) {
+    public AFSwinxTopLevelComponent getExistedComponent(String componentName) {
         return components.get(componentName);
     }
 }
