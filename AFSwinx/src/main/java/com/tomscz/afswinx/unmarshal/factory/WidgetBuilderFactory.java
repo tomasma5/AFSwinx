@@ -9,10 +9,14 @@ import com.tomscz.afswinx.unmarshal.builders.LabelFieldBuider;
 public class WidgetBuilderFactory {
 
     public static FieldBuilder createWidgetBuilder(AFFieldInfo fieldInfo){
-        if(fieldInfo.getWidgetType().equals(SupportedWidgets.INPUTFIELD)){
+       return createWidgetBuilder(fieldInfo.getWidgetType());
+    }
+    
+    public static FieldBuilder createWidgetBuilder(SupportedWidgets widget){
+        if(widget.equals(SupportedWidgets.INPUTFIELD)){
             return new InputFieldBuilder();
         }
-        else if(fieldInfo.getWidgetType().equals(SupportedWidgets.LABEL)){
+        else if(widget.equals(SupportedWidgets.LABEL)){
             return new LabelFieldBuider();
         }
         else{

@@ -8,6 +8,7 @@ import com.tomscz.afswinx.common.SupportedComponents;
 import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
+import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 
 public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction {
 
@@ -25,11 +26,9 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
     }
     
     @Override
-    public void fillData() throws ConnectException {
-       if(getDataConnection() != null){
-//           DataConnector dataConnector = new D
-       }
-        
+    public AFDataPack getData() throws ConnectException{
+            AFConnector<AFDataPack> dataConnector = new AFConnector<AFDataPack>(getDataConnection(), AFDataPack.class);
+            return dataConnector.getContent();
     }
 
     @Override
@@ -37,5 +36,4 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
         // TODO Auto-generated method stub
         
     }
-
 }

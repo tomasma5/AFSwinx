@@ -1,9 +1,9 @@
 package com.tomscz.afswinx.component;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
-import javax.swing.Box.Filler;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
@@ -48,10 +48,10 @@ public class AFSwinx {
      * @return it returns AFRorm which could be used as standard {@link JPanel} component
      */
     public AFSwinxForm buildForm(String componentKeyName, AFSwinxConnection modelConnection,
-            AFSwinxConnection dataConnection, AFSwinxConnection postConnection) {
-        AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, postConnection);
+            AFSwinxConnection dataConnection, AFSwinxConnection postConnection) throws ConnectException {
+        AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, postConnection);   
         form.buildComponent();
-//        form.fillData();
+        form.fillData();
         addComponent(form, componentKeyName);
         return form;
     }

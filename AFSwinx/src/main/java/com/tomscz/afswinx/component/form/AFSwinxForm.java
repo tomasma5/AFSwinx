@@ -1,8 +1,7 @@
 package com.tomscz.afswinx.component.form;
 
 import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import com.tomscz.afswinx.common.SupportedComponents;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
@@ -11,6 +10,8 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.dto.AFClassInfo;
 import com.tomscz.afswinx.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
+import com.tomscz.afswinx.rest.dto.data.AFData;
+import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 
@@ -21,15 +22,15 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     private AFSwinxConnection modelConnection;
     private AFSwinxConnection postConnection;
     private AFSwinxConnection dataConnection;
-    List<AFSwinxPanel> panels = new ArrayList<AFSwinxPanel>();
+    HashMap<String, AFSwinxPanel> panels = new HashMap<String, AFSwinxPanel>();
 
     private SupportedComponents componentType;
 
-    public AFSwinxForm(AFSwinxConnection modelConnection, AFSwinxConnection postConnection,
-            AFSwinxConnection dataConnection) {
+    public AFSwinxForm(AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
+            AFSwinxConnection postConnection) {
         this.modelConnection = modelConnection;
-        this.postConnection = postConnection;
         this.dataConnection = dataConnection;
+        this.postConnection = postConnection;
     }
 
     @Override
@@ -53,23 +54,29 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     }
 
     @Override
-    public void buildComponent() {
-        try {
+    public void buildComponent() throws ConnectException{
             AFMetaModelPack metaModelPack = getModel();
             AFClassInfo classInfo = metaModelPack.getClassInfo();
-            for(AFFieldInfo fieldInfo : classInfo.getFieldInfo()){
+            for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
                 FieldBuilder builder = WidgetBuilderFactory.createWidgetBuilder(fieldInfo);
-                this.add(builder.buildComponent(fieldInfo));
+                addComponent(builder.buildComponent(fieldInfo));
             }
-        } catch (ConnectException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
-    
-    public void add(AFSwinxPanel panelToAdd){
-        this.panels.add(panelToAdd);
+
+    public void addComponent(AFSwinxPanel panelToAdd) {
+        this.panels.put(panelToAdd.getPanelId(), panelToAdd);
         this.add(panelToAdd);
+    }
+
+    @Override
+    public void fillData() throws ConnectException {
+        AFDataPack data = getData();
+        for (AFData field : data.getData()) {
+            String fieldName = field.getKey();
+            AFSwinxPanel panelToSetData = panels.get(fieldName);
+            FieldBuilder builder =
+                    WidgetBuilderFactory.createWidgetBuilder(panelToSetData.getWidgetType());
+            builder.setData(panelToSetData,field);
+        }
     }
 }

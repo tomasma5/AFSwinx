@@ -35,5 +35,5 @@ public final class Utils {
         throw new IllegalArgumentException("Noone of string value from enum class "
                 + enumClass.getName() + " doestn match with " + enumValue);
     }
-
+    
 }

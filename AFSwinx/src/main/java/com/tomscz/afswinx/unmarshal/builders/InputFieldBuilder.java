@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.rest.dto.AFFieldInfo;
+import com.tomscz.afswinx.rest.dto.data.AFData;
 import com.tomscz.afswinx.unmarshal.builders.abstraction.TwoComponentsBuilder;
 
 public class InputFieldBuilder extends TwoComponentsBuilder {
@@ -14,7 +15,7 @@ public class InputFieldBuilder extends TwoComponentsBuilder {
 
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
-        if (!isBuildAvaiable(field)) {
+        if (!isBuildAvailable(field)) {
             throw new IllegalArgumentException("Input field couldn't be build for this field");
         }
 
@@ -29,7 +30,15 @@ public class InputFieldBuilder extends TwoComponentsBuilder {
         }
 
         panel.add(textField);
-        AFSwinxPanel afPanel = new AFSwinxPanel(fieldLabel, textField, panel);
+        AFSwinxPanel afPanel = new AFSwinxPanel(field.getId(),field.getWidgetType(),textField, fieldLabel, panel);
         return afPanel;
+    }
+
+    @Override
+    public void setData(AFSwinxPanel panel, AFData data) {
+        JTextField textField = (JTextField) panel.getDataHolder();
+        if(textField != null){
+            textField.setText(data.getValue());
+        }
     }
 }

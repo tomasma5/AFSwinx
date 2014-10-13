@@ -8,7 +8,7 @@ import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 public abstract class TwoComponentsBuilder implements FieldBuilder {
 
     @Override
-    public boolean isBuildAvaiable(AFFieldInfo fieldWithLabel){
+    public boolean isBuildAvailable(AFFieldInfo fieldWithLabel){
         if(fieldWithLabel != null)
             return true;
         return false;
