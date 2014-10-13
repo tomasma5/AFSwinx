@@ -1,9 +1,16 @@
 package com.tomscz.afswinx.component.panel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.tomscz.afswinx.common.SupportedWidgets;
+import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
+import com.tomscz.afswinx.validation.AFValidations;
+import com.tomscz.afswinx.validation.exception.ValidationException;
 
 public class AFSwinxPanel extends JPanel {
 
@@ -12,6 +19,7 @@ public class AFSwinxPanel extends JPanel {
     private JComponent labelHolder;
     private SupportedWidgets widgetType;
     private String panelId;
+    private List<AFValidations> validators = new ArrayList<AFValidations>();
 
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder) {
         this.panelId = panelId;
@@ -35,6 +43,12 @@ public class AFSwinxPanel extends JPanel {
         this.labelHolder = labelHolder;
         this.add(content);
     }
+    
+    public void validateModel () throws ValidationException{
+        for(AFValidations validator:validators){
+            validator.validate(AFSwinx.getInstance(), this, WidgetBuilderFactory.getInstance().createWidgetBuilder(widgetType).getData(this));
+        }
+    }
 
     public JComponent getDataHolder() {
         return dataHolder;
@@ -54,6 +68,10 @@ public class AFSwinxPanel extends JPanel {
 
     public String getPanelId() {
         return panelId;
+    }
+    
+    public void addValidator(AFValidations validator){
+        this.validators.add(validator);
     }
 
 }

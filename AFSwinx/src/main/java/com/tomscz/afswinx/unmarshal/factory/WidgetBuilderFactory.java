@@ -8,11 +8,24 @@ import com.tomscz.afswinx.unmarshal.builders.LabelFieldBuider;
 
 public class WidgetBuilderFactory {
 
-    public static FieldBuilder createWidgetBuilder(AFFieldInfo fieldInfo){
+    private static WidgetBuilderFactory instance;
+    
+    private WidgetBuilderFactory(){
+        
+    }
+    
+    public static synchronized WidgetBuilderFactory getInstance(){
+        if(instance == null){
+            instance = new WidgetBuilderFactory();
+        }
+        return instance;
+    }
+    
+    public FieldBuilder createWidgetBuilder(AFFieldInfo fieldInfo){
        return createWidgetBuilder(fieldInfo.getWidgetType());
     }
     
-    public static FieldBuilder createWidgetBuilder(SupportedWidgets widget){
+    public FieldBuilder createWidgetBuilder(SupportedWidgets widget){
         if(widget.equals(SupportedWidgets.INPUTFIELD)){
             return new InputFieldBuilder();
         }

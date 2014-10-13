@@ -5,6 +5,12 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
 
+/**
+ * This interface specify behavior which must implement each validator which will be used to validation.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public interface AFValidations {
 
     /**

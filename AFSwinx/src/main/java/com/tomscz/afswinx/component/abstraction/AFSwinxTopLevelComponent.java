@@ -31,9 +31,4 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
             return dataConnector.getContent();
     }
 
-    @Override
-    public void postData() throws ConnectException{
-        // TODO Auto-generated method stub
-        
-    }
 }

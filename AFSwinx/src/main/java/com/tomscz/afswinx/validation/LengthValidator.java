@@ -13,6 +13,9 @@ import com.tomscz.afswinx.validation.exception.ValidationException;
 //TODO use property file to language modification
 public class LengthValidator implements AFValidations {
 
+    public final static String MIN_LENGTH_KEY = "minLength";
+    public final static String MAX_LENGTH_KEY = "maxLength";
+    
     private int minLength = 0;
     private int maxLength = Integer.MAX_VALUE;
 
@@ -55,6 +58,22 @@ public class LengthValidator implements AFValidations {
         }
         throw new ValidationException("This field have to at least" + minLength
                 + " character and maximum number of characters is " + maxLength);
+    }
+
+    public int getMinLength() {
+        return minLength;
+    }
+
+    public void setMinLength(int minLength) {
+        this.minLength = minLength;
+    }
+
+    public int getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
     }
 
 }

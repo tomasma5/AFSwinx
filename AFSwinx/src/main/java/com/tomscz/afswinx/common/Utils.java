@@ -35,5 +35,20 @@ public final class Utils {
         throw new IllegalArgumentException("Noone of string value from enum class "
                 + enumClass.getName() + " doestn match with " + enumValue);
     }
-    
+
+    /**
+     * This method convert String to Integer if value is null then {@link IllegalArgumentException} is thrown. 
+     * @param value to convert to Integer
+     * @return integer value of String value given in parameter
+     * @throws IllegalArgumentException if value is null or conversion is unsuccessful
+     */
+    public static Integer convertStringToInteger(String value) throws IllegalArgumentException {
+        Integer intValue = null;
+        if (value == null) {
+            throw new IllegalArgumentException();
+        }
+        intValue = Integer.parseInt(value);
+        return intValue;
+    }
+
 }

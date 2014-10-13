@@ -14,6 +14,7 @@ import com.tomscz.afswinx.rest.dto.data.AFData;
 import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
+import com.tomscz.afswinx.validation.exception.ValidationException;
 
 public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
@@ -58,7 +59,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             AFMetaModelPack metaModelPack = getModel();
             AFClassInfo classInfo = metaModelPack.getClassInfo();
             for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
-                FieldBuilder builder = WidgetBuilderFactory.createWidgetBuilder(fieldInfo);
+                FieldBuilder builder = WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
                 addComponent(builder.buildComponent(fieldInfo));
             }
     }
@@ -75,8 +76,22 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             String fieldName = field.getKey();
             AFSwinxPanel panelToSetData = panels.get(fieldName);
             FieldBuilder builder =
-                    WidgetBuilderFactory.createWidgetBuilder(panelToSetData.getWidgetType());
+                    WidgetBuilderFactory.getInstance().createWidgetBuilder(panelToSetData.getWidgetType());
             builder.setData(panelToSetData,field);
         }
+    }
+
+    @Override
+    public void postData() throws ConnectException {
+       for(String key:panels.keySet()){
+           AFSwinxPanel panel = panels.get(key);
+           try {
+            panel.validateModel();
+        } catch (ValidationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+       }
+        
     }
 }

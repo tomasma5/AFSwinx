@@ -39,4 +39,10 @@ public class LabelFieldBuider extends TwoComponentsBuilder {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public Object getData(AFSwinxPanel panel) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

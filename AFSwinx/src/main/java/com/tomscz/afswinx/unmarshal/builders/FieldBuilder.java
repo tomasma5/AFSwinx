@@ -13,6 +13,8 @@ public interface FieldBuilder {
      * @param data Data which will be set up
      */
     public void setData(AFSwinxPanel panel,AFData data);
+    
+    public Object getData(AFSwinxPanel panel);
     /**
      * This method will validate if build for component is available.
      * @param field

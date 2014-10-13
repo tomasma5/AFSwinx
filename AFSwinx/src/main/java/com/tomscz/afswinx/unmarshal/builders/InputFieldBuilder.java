@@ -31,14 +31,24 @@ public class InputFieldBuilder extends TwoComponentsBuilder {
 
         panel.add(textField);
         AFSwinxPanel afPanel = new AFSwinxPanel(field.getId(),field.getWidgetType(),textField, fieldLabel, panel);
+        super.crateValidators(afPanel, field);
         return afPanel;
     }
 
     @Override
-    public void setData(AFSwinxPanel panel, AFData data) {
-        JTextField textField = (JTextField) panel.getDataHolder();
-        if(textField != null){
+    public void setData(AFSwinxPanel panel, AFData data) {     
+        if(panel.getDataHolder() != null){
+            JTextField textField = (JTextField) panel.getDataHolder();
             textField.setText(data.getValue());
         }
+    }
+
+    @Override
+    public Object getData(AFSwinxPanel panel) {
+        if(panel.getDataHolder() != null){
+            JTextField textField = (JTextField) panel.getDataHolder();
+            return textField.getText();
+        }
+        return null;
     }
 }

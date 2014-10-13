@@ -16,7 +16,7 @@ public class RequiredValidator implements AFValidations{
     @Override
     public void validate(AFSwinx swinxInstance, AFSwinxPanel parentPanel, Object value)throws ValidationException {
         String valueToValidate = (String) value;
-        if(valueToValidate != null && valueToValidate.trim().isEmpty()){
+        if(valueToValidate != null && !valueToValidate.trim().isEmpty()){
             return;
         }
         throw new ValidationException("This field is required");
