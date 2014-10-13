@@ -3,7 +3,6 @@ package com.tomscz.afserver.persistence.entity;
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
-import com.codingcrayons.aspectfaces.annotations.UiSize;
 import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 
 
