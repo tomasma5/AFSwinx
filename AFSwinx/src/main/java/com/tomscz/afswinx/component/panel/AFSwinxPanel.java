@@ -45,25 +45,24 @@ public class AFSwinxPanel extends JPanel {
     }
     
     public void validateModel () throws ValidationException{
-        for(AFValidations validator:validators){
-            validator.validate(AFSwinx.getInstance(), this, WidgetBuilderFactory.getInstance().createWidgetBuilder(widgetType).getData(this));
+        //Validate only if components are visible
+        if(this.isVisible()){
+            for(AFValidations validator:validators){
+                validator.validate(AFSwinx.getInstance(), this, WidgetBuilderFactory.getInstance().createWidgetBuilder(widgetType).getData(this));
+            }
         }
     }
 
     public JComponent getDataHolder() {
         return dataHolder;
     }
-
-    public void setDataHolder(JComponent dataHolder) {
-        this.dataHolder = dataHolder;
+    
+    public JComponent getLabelHolder() {
+        return labelHolder;
     }
 
     public SupportedWidgets getWidgetType() {
         return widgetType;
-    }
-
-    public void setWidgetType(SupportedWidgets widgetType) {
-        this.widgetType = widgetType;
     }
 
     public String getPanelId() {
