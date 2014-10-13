@@ -1,13 +1,13 @@
 package com.tomscz.afswinx.rest.dto;
 
-import com.tomscz.afswinx.validation.AFSwinxValidations;
+import com.tomscz.afswinx.validation.SupportedValidations;
 
 public class AFValidationRule {
 
-    private AFSwinxValidations validationType;
+    private SupportedValidations validationType;
     private String value;
     
-    public AFValidationRule(AFSwinxValidations validationType, String value){
+    public AFValidationRule(SupportedValidations validationType, String value){
         this.validationType = validationType;
         this.value = value;
     }
@@ -16,7 +16,7 @@ public class AFValidationRule {
         return value;
     }
 
-    public AFSwinxValidations getValidationType() {
+    public SupportedValidations getValidationType() {
         return validationType;
     }
     

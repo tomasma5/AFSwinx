@@ -12,7 +12,7 @@ import com.tomscz.afswinx.rest.dto.AFClassInfo;
 import com.tomscz.afswinx.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.rest.dto.AFValidationRule;
-import com.tomscz.afswinx.validation.AFSwinxValidations;
+import com.tomscz.afswinx.validation.SupportedValidations;
 
 public class FormBuilder implements ModelBuilder {
 
@@ -86,7 +86,7 @@ public class FormBuilder implements ModelBuilder {
             }
             if (propertyType.equals(SupportedProperties.REQUIRED)) {
                 AFValidationRule requiredRule =
-                        new AFValidationRule(AFSwinxValidations.REQUIRED, propertyArray[1]);
+                        new AFValidationRule(SupportedValidations.REQUIRED, propertyArray[1]);
                 fieldInfo.addRule(requiredRule);
                 continue;
             }

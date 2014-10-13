@@ -1,8 +1,9 @@
 package com.tomscz.afswinx.validation;
 
-public enum AFSwinxValidations {
+public enum SupportedValidations {
 
     REQUIRED,
     LENGTH,
+    NUMBER,
     CONTAINS
 }
