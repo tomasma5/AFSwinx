@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://aspectfaces.com/schema/aspectfaces"
+		xsi:schemaLocation="http://aspectfaces.com/schema/aspectfaces http://www.aspectfaces.com/schema/af-configuration-1.4.0-SNAPSHOT.xsd">
+
+    <mapping>
+        <type>Insert</type>
+        <default tag="emptyTag.xhtml" />
+        <!--<condition expression="#{not empty after and after.type.equals('image') and applyImage}" tag="html/afterImage.xhtml"/>-->
+        <!--<condition expression="#{applyHelp}" tag="html/afterHelp.xhtml" />-->
+    </mapping>
+
+	<mapping>
+		<type>String</type>
+		<default tag="structure/text.xml" maxLength="255" size="30" />
+        <!--<condition expression="${type == 'state'}" tag="html/state.xhtml"/>-->
+	</mapping>
+
+    <mapping>
+        <type>Enum</type>
+        <default tag="structure/enum.xml" />
+    </mapping>
+
+	<!-- Globally ignored fields -->
+	<ignore-fields>
+        <name>fullName</name>
+	</ignore-fields>
+
+</configuration>

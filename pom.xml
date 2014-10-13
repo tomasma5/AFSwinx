@@ -8,9 +8,9 @@
 	<name>AFSwinx parent project</name>
 	<modules>
 		<module>AFSwinx</module>
-		<module>AFServer</module>
 		<module>AFRestInspector</module>
 		<module>examples/Showcase</module>
+		<module>examples/AFServer</module>
 	</modules>
 
 	<dependencies>
