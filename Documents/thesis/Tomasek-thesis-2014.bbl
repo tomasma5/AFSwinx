@@ -1,0 +1,112 @@
+\begin{thebibliography}{19}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[JMe()]{JMeter}
+\emph{Apache JMeter} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z: \url{http://jmeter.apache.org/}.
+
+\bibitem[cou()]{courseWare}
+\emph{CourseWare} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z: \url{http://cw.felk.cvut.cz/doku.php}.
+
+\bibitem[dok()]{dokuwiki}
+\emph{DokuWiki Features} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z: \url{http://www.dokuwiki.org/dokuwikii}.
+
+\bibitem[edu()]{edux}
+\emph{Edux 2} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{https://edux.feld.cvut.cz/prezentace/ukazka-2009-11}.
+
+\bibitem[fra()]{frameworkDef}
+\emph{Framework} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z: \url{http://cs.wikipedia.org/wiki/Framework}.
+
+\bibitem[gla()]{glassfish}
+\emph{What is GlassFish v3?} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{https://wikis.oracle.com/display/GlassFish/PlanForGlassFishV3}.
+
+\bibitem[jav()]{javaEE}
+\emph{Java EE at a Glance} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{http://www.oracle.com/technetwork/java/javaee/overview/index.html}.
+
+\bibitem[jqu()]{jqueryGui}
+\emph{jQuery user interface} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z: \url{http://jqueryui.com}.
+
+\bibitem[mys()]{mysql}
+\emph{MySQL 5.5 Reference Manual} [online]. [cit.~16.\,5.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{http://dev.mysql.com/doc/refman/5.5/en/index.html}.
+
+\bibitem[pri()]{primeFaces}
+\emph{PrimeFaces} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z: \url{http://primefaces.org/documentation.html}.
+
+\bibitem[wor()]{wordpress}
+\emph{Free WordPress Theme Preview} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{http://www.freewordpressthemes4u.com/preview/?preview=1&template=world_of_business_bue028&stylesheet=world_of_business_bue028}.
+
+\bibitem[Arlow -- Neustadt()Arlow, Neustadt]{UmlArlow}
+ARLOW, J. -- NEUSTADT, I.
+\newblock \emph{UML 2 a unifikovaný proces vývoje aplikací: Objektově
+  orientovaná analýza a návrh prakticky}.
+\newblock Computer Press a.s., Brno, 2nd edition.
+\newblock ISBN 978-90-251-1503-9.
+
+\bibitem[Bc. Miroslav~Široký(2007)]{sirokyDiplomka}
+BC. MIROSLAV~ŠIROKý, D.
+\newblock Diplomová práce Neradiační účinky nukleárních útoků.
+\newblock Master's thesis, Jihočeská univerzita v Českých Budějovících
+  Zdravotně sociální fakulta, 2007.
+
+\bibitem[Cerny -- Donahoo(2011)Cerny, Donahoo]{cernyBusiness}
+CERNY, T. -- DONAHOO, M.
+\newblock How to reduce costs of business logic maintenance.
+\newblock In \emph{Computer Science and Automation Engineering (CSAE), 2011
+  IEEE International Conference on}, ~1, s. 77 --82, june 2011.
+\newblock \doi{10.1109/CSAE.2011.5953174}.
+
+\bibitem[Eric~Jendrock et~al.()Eric~Jendrock, Haase, Oliveira,,
+  Srivathsa]{javaEETutorial}
+ERIC~JENDROCK, D.~G.~I.~E. et~al.
+\newblock \emph{The Java EE 6 Tutorial} [online]. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{http://docs.oracle.com/javaee/6/tutorial/doc/}.
+
+\bibitem[Fowler(2002)]{fowler}
+FOWLER, M.
+\newblock \emph{Patterns of Enterprise Application Architecture}.
+\newblock Boston, MA, USA~: Addison-Wesley Longman Publishing Co., Inc., 2002.
+\newblock ISBN 0321127420.
+
+\bibitem[Gamma et~al.(1995)Gamma, Helm, Johnson,, Vlissides]{gamma}
+GAMMA, E. et~al.
+\newblock \emph{Design Patterns: Elements of Reusable Object-Oriented
+  Software}.
+\newblock Reading, MA~: Addison-Wesley, 1995.
+\newblock ISBN 978-0-201-63361-0.
+
+\bibitem[Křena(2001)]{bugtrack}
+KřENA, B.
+\newblock The Graph Isomorphism Problem.
+\newblock In \emph{Proceedings of 7th Conference Student FEI 2001}, s.
+  343--347. Brno University of Technology, 2001.
+\newblock Dostupn{\'{e}} z:
+  \url{http://www.fit.vutbr.cz/research/view_pub.php?id=6047}.
+\newblock ISBN 80-214-1860-5.
+
+\bibitem[Velebil(1999)]{velebilLogika}
+VELEBIL, J.
+\newblock \emph{Logika programu} [online]. 1999. [cit.~8.\,4.\,2012].
+\newblock Dostupn{\'{e}} z:
+  \url{ftp://math.feld.cvut.cz/pub/velebil/01lp/logika_programu.pdf}.
+
+\end{thebibliography}
