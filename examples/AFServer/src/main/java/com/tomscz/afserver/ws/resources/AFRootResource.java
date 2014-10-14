@@ -67,6 +67,6 @@ public class AFRootResource {
     @Produces({ MediaType.APPLICATION_JSON})
     @Consumes({ MediaType.APPLICATION_JSON})
     public Response add(PersonMapper personMapper){
-        throw new UnsupportedOperationException("Not supported yet");
+        return Response.status(Response.Status.OK).build();
     }
 }

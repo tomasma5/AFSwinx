@@ -1,5 +1,9 @@
 package com.tomscz.afswinx.common;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.EnumSet;
 
 /**
@@ -37,7 +41,9 @@ public final class Utils {
     }
 
     /**
-     * This method convert String to Integer if value is null then {@link IllegalArgumentException} is thrown. 
+     * This method convert String to Integer if value is null then {@link IllegalArgumentException}
+     * is thrown.
+     * 
      * @param value to convert to Integer
      * @return integer value of String value given in parameter
      * @throws IllegalArgumentException if value is null or conversion is unsuccessful
@@ -49,6 +55,26 @@ public final class Utils {
         }
         intValue = Integer.parseInt(value);
         return intValue;
+    }
+
+    /**
+     * This method read all from input stream and return {@link StringBuilder} which holds all line
+     * form input stream
+     * 
+     * @param inputStream input stream which holds data to read
+     * @return StringBuilder which contains all data from input stream
+     * @throws IOException if during creation phase or read is thrown error
+     */
+    public static StringBuilder readInputSteam(InputStream inputStream) throws IOException {
+        StringBuilder responseStrBuilder = new StringBuilder();
+        BufferedReader streamReader;
+        streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        String line;
+        // Read data
+        while ((line = streamReader.readLine()) != null) {
+            responseStrBuilder.append(line);
+        }
+        return responseStrBuilder;
     }
 
 }

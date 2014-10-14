@@ -5,5 +5,7 @@ import java.net.ConnectException;
 public interface Connector {
     
     public <T> T getContent() throws ConnectException;
+    
+    public void doPost(String body) throws ConnectException;
 
 }

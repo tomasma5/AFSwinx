@@ -32,7 +32,7 @@ public class TestConnection {
     }
 
     @Test
-    public void testDataConnection() { 
+    public void testDataConnection() {
         System.out.println("testMedamodelConnection started");
         AFSwinxConnection connection =
                 new AFSwinxConnection("localhost", 8080, "/AFServer/rest/Person/1");
@@ -46,6 +46,24 @@ public class TestConnection {
             fail(e.getMessage());
         }
         System.out.println("testDataConnection passed");
+    }
+
+    @Test
+    public void testPostConnection() {
+        System.out.println("testPostConnection started");
+        AFSwinxConnection connection =
+                new AFSwinxConnection("localhost", 8080, "/AFServer/rest/Person");
+        AFConnector<Object> dcPost = new AFConnector<Object>(connection, Object.class);
+        String simplePerson = "{\"firstName\":\"Martin\",\"lastName\":\"Novy\"}";
+        try {
+            dcPost.doPost(simplePerson);
+            if (dcPost.getStatusCode() != 200) {
+                fail("Test post connection failed.");
+            }
+        } catch (ConnectException e) {
+            fail(e.getMessage());
+        }
+        System.out.println("testPostConnection passed");
     }
 
 }

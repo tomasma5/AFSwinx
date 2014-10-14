@@ -1,22 +1,24 @@
 package com.tomscz.afswinx.rest.connection;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.ConnectException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
 import com.google.gson.Gson;
+import com.tomscz.afswinx.common.Utils;
 
 public abstract class BaseConnector implements Connector {
 
@@ -30,18 +32,19 @@ public abstract class BaseConnector implements Connector {
     protected int statusCode = -1;
 
     public abstract HttpHost getHost();
+
     public abstract String getParameter();
 
     public String buildEndpoint(String parameters) {
         return getHost().getHostName() + ":" + getHost().getPort() + parameters;
     }
-
-    protected InputStream getResponse(HttpGet httpGet) throws ConnectException {
+    
+    protected InputStream getResponse(HttpRequest httpMethod) throws ConnectException {
         HttpResponse response = null;
         try {
             this.statusCode = -1;
-            httpGet.addHeader("Accept", accept.toString());
-            response = getClient().execute(getHost(), httpGet, getContext());
+            httpMethod.addHeader("Accept", accept.toString());
+            response = getClient().execute(getHost(), httpMethod, getContext());
             statusCode = response.getStatusLine().getStatusCode();
         } catch (ClientProtocolException e) {
             throw new ConnectException(e.getMessage());
@@ -57,24 +60,16 @@ public abstract class BaseConnector implements Connector {
             throw new ConnectException(e.getMessage());
         }
     }
-    
+
     protected <T> T getContent(Class<T> clazz) throws ConnectException {
         try {
-             HttpGetBuilder httpGetBuilder = new HttpGetBuilder(this.accept, this.contentType);
+            HttpGetBuilder httpGetBuilder = new HttpGetBuilder(this.accept, this.contentType);
             InputStream inputStream = getResponse(httpGetBuilder.getGET(getParameter()));
-            //Check if any data was received, if no throw exception
+            // Check if any data was received, if no throw exception
             if (inputStream != null && this.getStatusCode() == 200) {
-                BufferedReader streamReader =
-                        new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                StringBuilder responseStrBuilder = new StringBuilder();
-                String line;
-                //Read data
-                while ((line = streamReader.readLine()) != null) {
-                    responseStrBuilder.append(line);
-                }
-                String data = responseStrBuilder.toString();
+                String data = Utils.readInputSteam(inputStream).toString();
                 T result = null;
-                //Construct metamodel holder 
+                // Construct metamodel holder
                 if (this.accept.equals(HeaderType.JSON)) {
                     Gson gson = new Gson();
                     result = gson.fromJson(data, clazz);
@@ -83,9 +78,8 @@ public abstract class BaseConnector implements Connector {
                 }
                 return result;
             } else {
-                throw new ConnectException("Request to adress "
-                        + buildEndpoint(getParameter()) + " was unsuccessfull status code is "
-                        + this.getStatusCode());
+                throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
+                        + " was unsuccessfull status code is " + this.getStatusCode());
             }
         } catch (IOException e) {
             throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
@@ -93,6 +87,25 @@ public abstract class BaseConnector implements Connector {
         } finally {
             this.close();
         }
+    }
+    
+    @Override
+    public void doPost(String body) throws ConnectException {
+        try {
+       HttpPostBuilder postBuilder = new HttpPostBuilder(this.accept, this.contentType);
+       HttpPost post = postBuilder.getPost(getParameter());
+       post.setEntity(new StringEntity(body));
+       InputStream inputStream = getResponse(post);
+       if(inputStream != null && statusCode == 200){
+           String data = Utils.readInputSteam(inputStream).toString();
+           System.out.println(data);
+           //TODO DO some other stuff
+       }
+    } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+        
     }
 
     protected HttpContext getContext() {
@@ -149,10 +162,37 @@ public abstract class BaseConnector implements Connector {
         }
     }
 
+    public static class HttpPostBuilder {
+
+        protected HttpPost httpPost = null;
+        private HeaderType accept;
+        private HeaderType contentType;
+        
+        public HttpPostBuilder(HeaderType accept, HeaderType contentType){
+            this.accept = accept;
+            this.contentType = contentType;
+        }
+
+        protected HttpPost getPost(String endPoint) {
+            close();
+            HttpPost httPost = new HttpPost(endPoint);
+            httPost.addHeader("Content-Type", contentType.toString());
+            httPost.addHeader("Accept",accept.toString());
+            return httPost;
+        }
+
+        protected void close() {
+            if (httpPost != null) {
+                httpPost.releaseConnection();
+            }
+        }
+    }
+
     /**
      * This class specify type of supported request and response types.
+     * 
      * @author Martin Tomasek (martin@toms-cz.com)
-     *
+     * 
      * @since 1.0.0.
      */
     public enum HeaderType {
