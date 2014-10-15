@@ -21,4 +21,8 @@ import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 public @interface UILayout {
     public LayouDefinitions layout() default LayouDefinitions.FLOWLAYOUT; 
     public LabelPosition labelPossition() default LabelPosition.LEFT;
+    public String rightNeighbor() default "";
+    public String leftNeighbor() default "";
+    public String bottomNeighbor() default "";
+    public String aboveNeighbor() default "";
 }

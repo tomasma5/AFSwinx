@@ -4,8 +4,6 @@
         <field id="tpd3" name="Jméno" width="56" order="0"/>
         <field id="tpd4" name="Datum zahájení" width="21" order="1"/>
         <field id="tpd5" name="Datum ukončení" width="21" order="2"/>
-        <timeline><![CDATA[142,27,53,19,0,4,140,70]]></timeline>
-        <option id="color.recent"><![CDATA[#ccffcc #ffcc00 #ccffcc #ffcc00 #ccffcc #ffcc00 #ccffcc #ccffcc #ccffcc #ccffcc]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Jméno" width="70" order="0"/>
@@ -35,70 +33,70 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="Post method – build data based on AFData" color="#ccffcc" meeting="false" start="2014-10-17" duration="1" complete="0" expand="true"/>
-        <task id="4" name="Added validation messages tooltip." color="#ccffcc" meeting="false" start="2014-10-18" duration="1" complete="0" expand="true"/>
-        <task id="19" name="XML configuration in AF" color="#ffcc00" meeting="false" start="2014-10-18" duration="1" complete="0" expand="true"/>
-        <task id="25" name="XML Support for get and post" color="#ffcc00" meeting="false" start="2014-10-18" duration="1" complete="0" expand="true"/>
-        <task id="27" name="Inspection elements which are not POJO." color="#ffcc00" meeting="false" start="2014-10-19" duration="1" complete="0" expand="true"/>
-        <task id="51" name="Layouts builder added" color="#ccffcc" meeting="false" start="2014-10-23" duration="3" complete="0" expand="true"/>
-        <task id="35" name="InpuNumber" color="#ccffcc" meeting="false" start="2014-10-20" duration="2" complete="0" expand="true">
+        <task id="0" name="Post method – build data based on AFData"  meeting="false" start="2014-10-17" duration="1" complete="0" expand="true"/>
+        <task id="4" name="Added validation messages tooltip." meeting="false" start="2014-10-18" duration="1" complete="0" expand="true"/>
+        <task id="19" name="XML configuration in AF" meeting="false" start="2014-10-18" duration="1" complete="0" expand="true"/>
+        <task id="25" name="XML Support for get and post" meeting="false" start="2014-10-18" duration="1" complete="0" expand="true"/>
+        <task id="27" name="Inspection elements which are not POJO." meeting="false" start="2014-10-19" duration="1" complete="0" expand="true"/>
+        <task id="51" name="Layouts builder added" meeting="false" start="2014-10-23" duration="3" complete="0" expand="true"/>
+        <task id="35" name="InpuNumber" meeting="false" start="2014-10-20" duration="2" complete="0" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="37" name="RadioButton" color="#ccffcc" meeting="false" start="2014-10-20" duration="2" complete="0" expand="true">
+        <task id="37" name="RadioButton" meeting="false" start="2014-10-20" duration="2" complete="0" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="38" name="DropDownList" color="#ccffcc" meeting="false" start="2014-10-21" duration="2" complete="0" expand="true">
+        <task id="38" name="DropDownList" meeting="false" start="2014-10-21" duration="2" complete="0" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="36" name="Checkbox" color="#ccffcc" meeting="false" start="2014-10-21" duration="1" complete="0" expand="true">
+        <task id="36" name="Checkbox" meeting="false" start="2014-10-21" duration="1" complete="0" expand="true">
             <depend id="30" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="53" name="Advanced interaction" color="#ccffcc" meeting="true" start="2014-10-27" duration="0" complete="0" expand="true"/>
-        <task id="55" name="SetTextStatus" color="#ccffcc" meeting="false" start="2014-10-25" duration="2" complete="0" expand="true">
+        <task id="53" name="Advanced interaction" meeting="true" start="2014-10-27" duration="0" complete="0" expand="true"/>
+        <task id="55" name="SetTextStatus" meeting="false" start="2014-10-25" duration="2" complete="0" expand="true">
             <depend id="53" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="57" name="User can add his own validators" color="#ccffcc" meeting="false" start="2014-10-23" duration="3" complete="0" expand="true">
+        <task id="57" name="User can add his own validators" meeting="false" start="2014-10-23" duration="3" complete="0" expand="true">
             <depend id="53" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="70" name="Diploma thesis first chapter" color="#ffffcc" meeting="false" start="2014-10-20" duration="7" complete="0" expand="true"/>
-        <task id="30" name="Added builders for another components dropDown etc" color="#ccffcc" meeting="true" start="2014-10-23" duration="0" complete="0" expand="true"/>
-        <task id="56" name="Use resource bundles - for labels" color="#ccffcc" meeting="false" start="2014-10-26" duration="1" complete="0" expand="true">
+        <task id="70" name="Diploma thesis first chapter" meeting="false" start="2014-10-20" duration="7" complete="0" expand="true"/>
+        <task id="30" name="Added builders for another components dropDown etc" meeting="true" start="2014-10-23" duration="0" complete="0" expand="true"/>
+        <task id="56" name="Use resource bundles - for labels" meeting="false" start="2014-10-26" duration="1" complete="0" expand="true">
             <depend id="53" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="72" name="Table support" color="#ccffcc" meeting="true" start="2014-10-31" duration="0" complete="0" expand="true"/>
-        <task id="74" name="Table builders" color="#ccffcc" meeting="false" start="2014-10-27" duration="2" complete="0" expand="true">
+        <task id="72" name="Table support" meeting="true" start="2014-10-31" duration="0" complete="0" expand="true"/>
+        <task id="74" name="Table builders" meeting="false" start="2014-10-27" duration="2" complete="0" expand="true">
             <depend id="72" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="132" name="Server authentication" color="#ffcc00" meeting="false" start="2014-11-01" duration="2" complete="0" expand="true"/>
-        <task id="75" name="Table definitions" color="#ffcc00" meeting="false" start="2014-10-29" duration="2" complete="0" expand="true">
+        <task id="132" name="Server authentication" meeting="false" start="2014-11-01" duration="2" complete="0" expand="true"/>
+        <task id="75" name="Table definitions" meeting="false" start="2014-10-29" duration="2" complete="0" expand="true">
             <depend id="72" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="76" name="Table advanced interaction" color="#ccffcc" meeting="false" start="2014-10-29" duration="2" complete="0" expand="true">
+        <task id="76" name="Table advanced interaction" meeting="false" start="2014-10-29" duration="2" complete="0" expand="true">
             <depend id="72" type="2" difference="0" hardness="Strong"/>
             <depend id="126" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="94" name="Diploma - second chapter analysis and existed solutions" color="#ffffcc" meeting="false" start="2014-11-01" duration="9" complete="0" expand="true">
+        <task id="94" name="Diploma - second chapter analysis and existed solutions" meeting="false" start="2014-11-01" duration="9" complete="0" expand="true">
             <depend id="126" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="96" name="Diploma - third chapter architecture implementation" color="#ffffcc" meeting="false" start="2014-11-09" duration="8" complete="0" expand="true">
+        <task id="96" name="Diploma - third chapter architecture implementation" meeting="false" start="2014-11-09" duration="8" complete="0" expand="true">
             <depend id="126" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="99" name="Diploma - fourth chapter" color="#ffffcc" meeting="true" start="2014-11-23" duration="0" complete="0" expand="true">
+        <task id="99" name="Diploma - fourth chapter" meeting="true" start="2014-11-23" duration="0" complete="0" expand="true">
             <depend id="126" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="100" name="Unit test" color="#ffffcc" meeting="false" start="2014-11-17" duration="3" complete="0" expand="true">
+        <task id="100" name="Unit test" meeting="false" start="2014-11-17" duration="3" complete="0" expand="true">
             <depend id="99" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="101" name="Usability test" color="#ffffcc" meeting="false" start="2014-11-20" duration="3" complete="0" expand="true">
+        <task id="101" name="Usability test" meeting="false" start="2014-11-20" duration="3" complete="0" expand="true">
             <depend id="99" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="102" name="Write user documentation" color="#ffffcc" meeting="false" start="2014-11-08" duration="8" complete="0" expand="true">
+        <task id="102" name="Write user documentation" meeting="false" start="2014-11-08" duration="8" complete="0" expand="true">
             <depend id="99" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="123" name="Diploma fifth chapter conclusion" color="#ffffcc" meeting="false" start="2014-11-30" duration="5" complete="0" expand="true"/>
-        <task id="126" name="Diploma thesis" color="#ffffcc" meeting="true" start="2014-11-23" duration="0" complete="0" expand="true"/>
-        <task id="140" name="AFServer scenario" color="#ffcc00" meeting="false" start="2014-11-02" duration="1" complete="0" expand="true"/>
-        <task id="142" name="Showcase AFSwinx" color="#ccffcc" meeting="false" start="2014-11-03" duration="7" complete="0" expand="true"/>
+        <task id="123" name="Diploma fifth chapter conclusion" meeting="false" start="2014-11-30" duration="5" complete="0" expand="true"/>
+        <task id="126" name="Diploma thesis" meeting="true" start="2014-11-23" duration="0" complete="0" expand="true"/>
+        <task id="140" name="AFServer scenario" meeting="false" start="2014-11-02" duration="1" complete="0" expand="true"/>
+        <task id="142" name="Showcase AFSwinx" meeting="false" start="2014-11-03" duration="7" complete="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Martin" function="Default:1" contacts="martin@toms-cz.com" phone=""/>
