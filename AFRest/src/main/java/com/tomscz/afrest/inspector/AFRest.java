@@ -3,9 +3,9 @@ package com.tomscz.afrest.inspector;
 import javax.servlet.ServletContext;
 
 import com.tomscz.afrest.exceptions.AFRestException;
+import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afrest.ws.mappers.MapperType;
-import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
-import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 
 public interface AFRest {
     

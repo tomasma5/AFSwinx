@@ -13,14 +13,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceContext;
 
-import com.google.gson.Gson;
-import com.tomscz.afi.exceptions.AFRestException;
-import com.tomscz.afi.inspector.AFRestSwing;
+import com.tomscz.afrest.exceptions.AFRestException;
+import com.tomscz.afrest.inspector.AFRestSwing;
+import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.ws.resources.mapper.PersonMapper;
-import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
-import com.tomscz.afswinx.rest.dto.data.AFData;
-import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 
 @Path("/")
 public class AFRootResource {

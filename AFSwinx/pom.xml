@@ -38,6 +38,11 @@
 			<artifactId>gson</artifactId>
 			<version>2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>com.tomscz.af</groupId>
+			<artifactId>AFRest</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

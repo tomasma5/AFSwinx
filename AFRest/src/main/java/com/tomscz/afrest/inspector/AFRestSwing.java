@@ -22,15 +22,15 @@ import com.codingcrayons.aspectfaces.properties.PropertyLoader;
 import com.codingcrayons.aspectfaces.util.Strings;
 import com.tomscz.afrest.commons.Constants;
 import com.tomscz.afrest.commons.FileUtils;
+import com.tomscz.afrest.commons.SupportedComponents;
+import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
+import com.tomscz.afrest.marshal.ModelBuilder;
+import com.tomscz.afrest.marshal.ModelFactory;
+import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afrest.rest.dto.data.AFData;
+import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afrest.ws.mappers.MapperType;
-import com.tomscz.afswinx.common.SupportedComponents;
-import com.tomscz.afswinx.exception.MetamodelException;
-import com.tomscz.afswinx.marshal.ModelBuilder;
-import com.tomscz.afswinx.marshal.ModelFactory;
-import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
-import com.tomscz.afswinx.rest.dto.data.AFData;
-import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 
 public class AFRestSwing implements AFRest {
 

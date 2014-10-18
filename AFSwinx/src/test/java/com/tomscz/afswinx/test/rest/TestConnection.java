@@ -6,10 +6,10 @@ import java.net.ConnectException;
 
 import org.junit.Test;
 
+import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
-import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
-import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 
 public class TestConnection {
 

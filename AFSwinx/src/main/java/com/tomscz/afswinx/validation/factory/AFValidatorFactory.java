@@ -2,12 +2,12 @@ package com.tomscz.afswinx.validation.factory;
 
 import java.util.HashMap;
 
+import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.LengthValidator;
 import com.tomscz.afswinx.validation.NumberValidator;
 import com.tomscz.afswinx.validation.RequiredValidator;
-import com.tomscz.afswinx.validation.SupportedValidations;
 
 /**
  * This is factory which create concorete validator, based on {@link SupportedValidations} type.

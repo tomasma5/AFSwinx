@@ -2,9 +2,9 @@ package com.tomscz.afswinx.unmarshal.builders.abstraction;
 
 import javax.swing.JLabel;
 
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.factory.AFValidatorFactory;

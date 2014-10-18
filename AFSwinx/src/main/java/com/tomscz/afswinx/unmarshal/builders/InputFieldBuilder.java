@@ -4,9 +4,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.rest.dto.data.AFData;
 import com.tomscz.afswinx.unmarshal.builders.abstraction.TwoComponentsBuilder;
 
 public class InputFieldBuilder extends TwoComponentsBuilder {

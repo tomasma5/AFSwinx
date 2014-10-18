@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import com.tomscz.afswinx.common.SupportedWidgets;
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.AFValidations;

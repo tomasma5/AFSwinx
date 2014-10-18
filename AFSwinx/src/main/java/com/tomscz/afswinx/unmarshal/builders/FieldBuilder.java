@@ -1,8 +1,8 @@
 package com.tomscz.afswinx.unmarshal.builders;
 
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.rest.dto.data.AFData;
 
 public interface FieldBuilder {
     

@@ -2,8 +2,8 @@ package com.tomscz.afswinx.component.abstraction;
 
 import java.net.ConnectException;
 
-import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
-import com.tomscz.afswinx.rest.dto.data.AFDataPack;
+import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afrest.rest.dto.data.AFDataPack;
 
 public interface AFSwinxInteraction {
 
