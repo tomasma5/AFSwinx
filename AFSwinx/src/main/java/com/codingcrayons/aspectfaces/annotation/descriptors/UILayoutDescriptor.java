@@ -10,6 +10,7 @@ import com.codingcrayons.aspectfaces.annotation.registration.pointCut.properties
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.tomscz.afswinx.layout.definitions.LabelPosition;
 import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
+import com.tomscz.afswinx.layout.definitions.LayoutOrientation;
 
 /**
  * This descriptor parse annotation {@link UILayout}.
@@ -22,15 +23,19 @@ public class UILayoutDescriptor implements AnnotationDescriptor, VariableJoinPoi
     //Annotation key which holds labelPossition value
     public static final String LABEL_POSSTION_AF_VARIABLE = "labelPossition";
     //Annotation key which holds layout value
-    public static final String LAYOUT_AF_VARIABLE = "layout";
+    public static final String LAYOUT_AF_VARIABLE = "layout";    
+    //Annotation key which holds layout orienatation
+    public static final String LAYOUT_ORIENTATION_VARIABLE = "layoutOrientation";
     
     @Override
     public List<Variable> getVariables(AnnotationProvider annotationProvider) {
         List<Variable> variables = new ArrayList<Variable>();
         LayouDefinitions layout =(LayouDefinitions) annotationProvider.getValue(LAYOUT_AF_VARIABLE);
         LabelPosition labelPosstion = (LabelPosition) annotationProvider.getValue(LABEL_POSSTION_AF_VARIABLE);
+        LayoutOrientation layoutOrientation = (LayoutOrientation) annotationProvider.getValue(LAYOUT_ORIENTATION_VARIABLE);
         variables.add(new Variable(LAYOUT_AF_VARIABLE, layout));
         variables.add(new Variable(LABEL_POSSTION_AF_VARIABLE, labelPosstion));
+        variables.add(new Variable(LAYOUT_ORIENTATION_VARIABLE, layoutOrientation));
         return variables;
     }
 

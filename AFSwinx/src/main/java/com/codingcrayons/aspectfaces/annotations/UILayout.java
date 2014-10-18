@@ -9,9 +9,10 @@ import java.lang.annotation.Target;
 
 import com.tomscz.afswinx.layout.definitions.LabelPosition;
 import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
+import com.tomscz.afswinx.layout.definitions.LayoutOrientation;
 
 /**
- * This annotation provide information about {@link LayouDefinitions} and {@link LabelPosition}
+ * This annotation provide information about {@link LayouDefinitions}, {@link LabelPosition} and {@link LayoutOrientation}
  * @author Martin Tomasek (martin@toms-cz.com)
  *
  * @since 1.0.0.
@@ -19,10 +20,7 @@ import com.tomscz.afswinx.layout.definitions.LayouDefinitions;
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface UILayout {
-    public LayouDefinitions layout() default LayouDefinitions.FLOWLAYOUT; 
+    public LayouDefinitions layout() default LayouDefinitions.ONECOLUMNLAYOUT; 
     public LabelPosition labelPossition() default LabelPosition.LEFT;
-    public String rightNeighbor() default "";
-    public String leftNeighbor() default "";
-    public String bottomNeighbor() default "";
-    public String aboveNeighbor() default "";
+    public LayoutOrientation layoutOrientation() default LayoutOrientation.AXISY;
 }

@@ -7,8 +7,8 @@ package com.tomscz.afswinx.layout.definitions;
  * @since 1.0.0.
  */
 public enum LayouDefinitions {
-        BORDERLAYOUT("BorderLayout"),
-        FLOWLAYOUT("FlowLayout");
+        TWOCOLUMNSLAYOUT("TwoColumnsLayout"),
+        ONECOLUMNLAYOUT("OneColumnLayout");
         
         private final String name; 
         

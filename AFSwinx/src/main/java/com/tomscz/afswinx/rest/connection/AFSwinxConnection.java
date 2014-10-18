@@ -1,5 +1,8 @@
 package com.tomscz.afswinx.rest.connection;
 
+import java.io.File;
+import java.util.HashMap;
+
 import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 
 /**
@@ -114,6 +117,18 @@ public class AFSwinxConnection {
         this.acceptedType = acceptedType;
         this.contentType = contentType;
         this.protocol = protocol;
+    }   
+
+    public AFSwinxConnection(File connectionFilePath, String resourceKey){
+        //TODO open and parse XML
+    }
+    
+    public AFSwinxConnection(File connectionFilePath, String resourceKey, String values){
+        //TODO open and parse XML
+    }
+    
+    public AFSwinxConnection(File connectionFilePath, String resourceKey, HashMap<String, String> values){
+        //TODO open and parse XML
     }
 
     public String getAddress() {
