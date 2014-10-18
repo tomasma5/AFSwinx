@@ -1,4 +1,4 @@
-package com.tomscz.afi.ws.mappers;
+package com.tomscz.afrest.ws.mappers;
 
 public class SimpleMapper extends MapperType{
 

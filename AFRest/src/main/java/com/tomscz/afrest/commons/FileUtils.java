@@ -1,4 +1,4 @@
-package com.tomscz.afi.commons;
+package com.tomscz.afrest.commons;
 
 import java.io.File;
 import java.io.FileOutputStream;

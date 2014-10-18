@@ -1,4 +1,4 @@
-package com.tomscz.afi.commons;
+package com.tomscz.afrest.commons;
 
 public class Constants {
 

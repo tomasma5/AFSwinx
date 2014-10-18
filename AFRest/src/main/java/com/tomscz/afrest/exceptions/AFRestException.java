@@ -1,4 +1,4 @@
-package com.tomscz.afi.exceptions;
+package com.tomscz.afrest.exceptions;
 
 public class AFRestException extends Exception{
 

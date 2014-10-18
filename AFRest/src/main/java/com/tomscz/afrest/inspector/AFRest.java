@@ -1,9 +1,9 @@
-package com.tomscz.afi.inspector;
+package com.tomscz.afrest.inspector;
 
 import javax.servlet.ServletContext;
 
-import com.tomscz.afi.exceptions.AFRestException;
-import com.tomscz.afi.ws.mappers.MapperType;
+import com.tomscz.afrest.exceptions.AFRestException;
+import com.tomscz.afrest.ws.mappers.MapperType;
 import com.tomscz.afswinx.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.rest.dto.data.AFDataPack;
 

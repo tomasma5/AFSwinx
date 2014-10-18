@@ -1,4 +1,4 @@
-package com.tomscz.afi.inspector;
+package com.tomscz.afrest.inspector;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +20,10 @@ import com.codingcrayons.aspectfaces.metamodel.JavaInspector;
 import com.codingcrayons.aspectfaces.plugins.j2ee.configuration.ServerConfiguration;
 import com.codingcrayons.aspectfaces.properties.PropertyLoader;
 import com.codingcrayons.aspectfaces.util.Strings;
-import com.tomscz.afi.commons.Constants;
-import com.tomscz.afi.commons.FileUtils;
-import com.tomscz.afi.exceptions.AFRestException;
-import com.tomscz.afi.ws.mappers.MapperType;
+import com.tomscz.afrest.commons.Constants;
+import com.tomscz.afrest.commons.FileUtils;
+import com.tomscz.afrest.exceptions.AFRestException;
+import com.tomscz.afrest.ws.mappers.MapperType;
 import com.tomscz.afswinx.common.SupportedComponents;
 import com.tomscz.afswinx.exception.MetamodelException;
 import com.tomscz.afswinx.marshal.ModelBuilder;

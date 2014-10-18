@@ -1,4 +1,6 @@
-package com.tomscz.afi.staticThings;
+package com.tomscz.afrest.resource;
+
+import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,17 +10,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.junit.Test;
 
-public class TestClass {
+public class TestResource {
 
-    public static void main(String [] args){
-        new TestClass().loadResources();
+    @Test
+    public void test() {
+        loadResources();
     }
     
     public void loadResources(){
@@ -48,9 +51,12 @@ public class TestClass {
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            fail();
         } catch (DocumentException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            fail();
         }
     }
+
 }
