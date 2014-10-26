@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 
 public class PersonFormView extends JFrame {
 
@@ -24,8 +25,8 @@ public class PersonFormView extends JFrame {
     public PersonFormView() {
         JPanel panel = new JPanel();
         try {
-            panel.add(buildFormBasedOnXMLConnection("personWithEL"));
-        } catch (ConnectException e) {
+            panel.add(buildFormBasedOnXMLConnection("person2"));
+        } catch (AFSwinxConnectionException e) {
             e.printStackTrace();
         }
         button = new JButton("Validate");
@@ -40,13 +41,13 @@ public class PersonFormView extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try {
                 AFSwinx.getInstance().getExistedComponent(formId).postData();
-            } catch (ConnectException e1) {
+            } catch (AFSwinxConnectionException e1) {
                 e1.printStackTrace();
             };
         }
     };
 
-    private AFSwinxForm buildFormBasedOnXMLConnection(String connectionKey) throws ConnectException {
+    private AFSwinxForm buildFormBasedOnXMLConnection(String connectionKey) throws AFSwinxConnectionException {
         AFSwinx swinx = AFSwinx.getInstance();
         File f = new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         HashMap<String, String> parameters = new HashMap<>();
@@ -55,7 +56,7 @@ public class PersonFormView extends JFrame {
         return form;
     }
 
-    private AFSwinxForm buildFormBasedOnMyConnection() throws ConnectException {
+    private AFSwinxForm buildFormBasedOnMyConnection() throws AFSwinxConnectionException {
         AFSwinx swinx = AFSwinx.getInstance();
         AFSwinxConnection connection =
                 new AFSwinxConnection("localhost", 8080, "/AFServer/rest/Person");

@@ -42,4 +42,13 @@
 			<port>8080</port>
 		</post>
 	</connection>
+	<connection id="person2">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/Person</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<content-type>Application/Json</content-type>
+		</metaModel>
+	</connection>
 </connectionRoot>

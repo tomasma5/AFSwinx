@@ -10,6 +10,7 @@ import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.ConnectionParser;
 
@@ -53,7 +54,7 @@ public class AFSwinx {
      */
     public AFSwinxForm buildForm(String componentKeyName, AFSwinxConnection modelConnection,
             AFSwinxConnection dataConnection, AFSwinxConnection postConnection)
-            throws ConnectException {
+            throws AFSwinxConnectionException {
         AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, postConnection);
         form.buildComponent();
         form.fillData();
@@ -67,13 +68,13 @@ public class AFSwinx {
     }
 
     public AFSwinxForm buildForm(String componentKeyName, File connectionConfiguration,
-            String connectionKey) throws ConnectException {
+            String connectionKey) throws AFSwinxConnectionException {
         return this.buildForm(componentKeyName, connectionConfiguration, connectionKey, new HashMap<String, String>());
     }
 
     public AFSwinxForm buildForm(String componentKeyName, File connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters)
-            throws ConnectException {
+            throws AFSwinxConnectionException {
         ConnectionParser connectionParser =
                 new ConnectionParser(connectionKey, connectionParameters);
         AFSwinxConnectionPack connections =

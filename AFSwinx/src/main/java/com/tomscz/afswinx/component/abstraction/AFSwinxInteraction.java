@@ -1,16 +1,15 @@
 package com.tomscz.afswinx.component.abstraction;
 
-import java.net.ConnectException;
-
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 
 public interface AFSwinxInteraction {
 
-    public AFMetaModelPack getModel() throws ConnectException;
-    public AFDataPack getData() throws ConnectException;
-    public void fillData() throws ConnectException;
-    public void postData() throws ConnectException;
-    public void buildComponent() throws ConnectException;
+    public AFMetaModelPack getModel() throws AFSwinxConnectionException;
+    public AFDataPack getData() throws AFSwinxConnectionException;
+    public void fillData() throws AFSwinxConnectionException;
+    public void postData() throws AFSwinxConnectionException;
+    public void buildComponent() throws AFSwinxConnectionException;
 
 }
