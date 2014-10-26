@@ -94,14 +94,14 @@ public class FormBuilder implements ModelBuilder {
                 String layoutType = propertyArray[1];
                 Layout layout = fieldInfo.getLayout();
                 layout.setLayoutDefinition((LayouDefinitions) AFRestUtils.getEnumFromString(
-                        LayouDefinitions.class, layoutType));
+                        LayouDefinitions.class, layoutType, false));
                 continue;
             }
             if (propertyType.equals(SupportedProperties.LABELPOSSTION)) {
                 String labelPosstion = propertyArray[1];
                 Layout layout = fieldInfo.getLayout();
                 layout.setLabelPosstion((LabelPosition) AFRestUtils.getEnumFromString(
-                        LabelPosition.class, labelPosstion));
+                        LabelPosition.class, labelPosstion, false));
                 continue;
             }
         }

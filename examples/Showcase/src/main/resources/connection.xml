@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <connectionRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<connection id="person">
+	<connection id="personWithEL">
 		<metaModel>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/Person</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
+			<content-type>Application/Json</content-type>
 		</metaModel>
 		<data>
 			<endPoint>localhost</endPoint>
@@ -16,6 +17,27 @@
 		<post>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/Person/#{id}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+		</post>
+	</connection>
+		<connection id="person">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/Person</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<content-type>Application/Json</content-type>
+		</metaModel>
+		<data>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/Person/1</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+		</data>
+		<post>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/Person/1</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
 		</post>

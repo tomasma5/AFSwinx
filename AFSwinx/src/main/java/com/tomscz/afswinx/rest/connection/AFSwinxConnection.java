@@ -1,8 +1,5 @@
 package com.tomscz.afswinx.rest.connection;
 
-import java.io.File;
-import java.util.HashMap;
-
 import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 
 /**
@@ -117,18 +114,15 @@ public class AFSwinxConnection {
         this.acceptedType = acceptedType;
         this.contentType = contentType;
         this.protocol = protocol;
-    }   
+    }
 
-    public AFSwinxConnection(File connectionFilePath, String resourceKey){
-        //TODO open and parse XML
-    }
-    
-    public AFSwinxConnection(File connectionFilePath, String resourceKey, String values){
-        //TODO open and parse XML
-    }
-    
-    public AFSwinxConnection(File connectionFilePath, String resourceKey, HashMap<String, String> values){
-        //TODO open and parse XML
+    /**
+     * This constructor is protected because its used in {@link ConnectionParser}. It's easily use
+     * set method then hold all variables in memory. Default content and header type is application.json from {@link HeaderType}.
+     */
+    protected AFSwinxConnection() {
+        this.contentType = HeaderType.JSON;
+        this.acceptedType = HeaderType.JSON;
     }
 
     public String getAddress() {
