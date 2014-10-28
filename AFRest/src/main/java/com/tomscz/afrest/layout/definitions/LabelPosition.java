@@ -7,10 +7,8 @@ package com.tomscz.afrest.layout.definitions;
  * @since 1.0.0.
  */
 public enum LabelPosition {
-    LEFT("left"),
-    RIGHT("right"),
-    TOP("top"),
-    BOT("bottom"),
+    BEFORE("before"),
+    AFTER("after"),
     NONE("none");
     
     private final String name; 

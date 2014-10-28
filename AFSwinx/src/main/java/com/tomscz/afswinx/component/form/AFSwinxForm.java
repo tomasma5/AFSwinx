@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component.form;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 
 import com.tomscz.afrest.commons.SupportedComponents;

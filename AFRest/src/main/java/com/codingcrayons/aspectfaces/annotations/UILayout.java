@@ -21,6 +21,6 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 @Retention(RUNTIME)
 public @interface UILayout {
     public LayouDefinitions layout() default LayouDefinitions.ONECOLUMNLAYOUT; 
-    public LabelPosition labelPossition() default LabelPosition.LEFT;
+    public LabelPosition labelPossition() default LabelPosition.BEFORE;
     public LayoutOrientation layoutOrientation() default LayoutOrientation.AXISY;
 }

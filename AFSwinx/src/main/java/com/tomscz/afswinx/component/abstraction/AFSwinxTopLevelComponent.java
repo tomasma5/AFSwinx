@@ -1,6 +1,7 @@
 package com.tomscz.afswinx.component.abstraction;
 
 import java.net.ConnectException;
+import java.util.Properties;
 
 import javax.swing.JPanel;
 
@@ -43,6 +44,11 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
         }
+    }
+    
+    @Override
+    public void makeLocalization(Properties localization) throws AFSwinxConnectionException{
+        throw new UnsupportedOperationException("This operation is not supported yet");
     }
 
 }
