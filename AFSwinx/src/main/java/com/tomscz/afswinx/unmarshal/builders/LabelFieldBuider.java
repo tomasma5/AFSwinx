@@ -6,9 +6,9 @@ import javax.swing.JPanel;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.TwoComponentsBuilder;
+import com.tomscz.afswinx.unmarshal.builders.abstraction.component.BaseComponentsBuilder;
 
-public class LabelFieldBuider extends TwoComponentsBuilder {
+public class LabelFieldBuider extends BaseComponentsBuilder {
 
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {

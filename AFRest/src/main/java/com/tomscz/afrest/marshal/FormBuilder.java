@@ -8,12 +8,19 @@ import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
+import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 import com.tomscz.afrest.marshal.utils.DataParserHelper;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 
+/**
+ * This class create form definition. 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class FormBuilder implements ModelBuilder {
 
     private String metaModelInformation;
@@ -102,6 +109,13 @@ public class FormBuilder implements ModelBuilder {
                 Layout layout = fieldInfo.getLayout();
                 layout.setLabelPosstion((LabelPosition) AFRestUtils.getEnumFromString(
                         LabelPosition.class, labelPosstion, false));
+                continue;
+            }
+            if (propertyType.equals(SupportedProperties.LAYOUTORIENTATION)) {
+                String layoutOrientation = propertyArray[1];
+                fieldInfo.getLayout().setLayoutOrientation(
+                        (LayoutOrientation) AFRestUtils.getEnumFromString(LayoutOrientation.class,
+                                layoutOrientation, false));
                 continue;
             }
         }

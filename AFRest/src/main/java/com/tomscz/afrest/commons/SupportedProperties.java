@@ -14,7 +14,8 @@ public enum SupportedProperties {
 
     WIDGETTYPE("widgetType"), FIELDNAME("fieldname"), LAYOUT(UILayoutDescriptor.LAYOUT_AF_VARIABLE), LABEL(
             "label"), REQUIRED("required"), LABELPOSSTION(
-            UILayoutDescriptor.LABEL_POSSTION_AF_VARIABLE);
+            UILayoutDescriptor.LABEL_POSSTION_AF_VARIABLE), LAYOUTORIENTATION(
+            UILayoutDescriptor.LAYOUT_ORIENTATION_VARIABLE);
 
     private final String name;
 

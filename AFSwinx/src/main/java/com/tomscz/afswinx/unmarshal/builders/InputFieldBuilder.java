@@ -1,37 +1,49 @@
 package com.tomscz.afswinx.unmarshal.builders;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.TwoComponentsBuilder;
+import com.tomscz.afswinx.unmarshal.builders.abstraction.component.BaseComponentsBuilder;
+import com.tomscz.afswinx.unmarshal.builders.abstraction.layout.BaseLayoutBuilder;
 
-public class InputFieldBuilder extends TwoComponentsBuilder {
+/**
+ * This builder build input field editable component without any restrictions
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
+public class InputFieldBuilder extends BaseComponentsBuilder {
     
     private static final int DEFAULT_NUMBER_OF_COLUMS = 10;
 
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
-        if (!isBuildAvailable(field)) {
+    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
+        //First check if build is avaiable
+        if (!isBuildAvailable(fieldInfo)) {
             throw new IllegalArgumentException("Input field couldn't be build for this field");
         }
-
-        JPanel panel = new JPanel();
-        JLabel fieldLabel = buildSimpleLabel(field.getLabel());
+        //Create layout builder
+        BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(fieldInfo);
+        //Build label
+        JLabel fieldLabel = buildSimpleLabel(fieldInfo.getLabel());
+        //And input text field
         JTextField textField = new JTextField();
         textField.setColumns(DEFAULT_NUMBER_OF_COLUMS);
-        // TODO use swing layout builder to build right layouts
-        if (fieldLabel != null) {
-            fieldLabel.setLabelFor(textField);
-            panel.add(fieldLabel);
-        }
-
-        panel.add(textField);
-        AFSwinxPanel afPanel = new AFSwinxPanel(field.getId(),field.getWidgetType(),textField, fieldLabel, panel);
-        super.crateValidators(afPanel, field);
+        
+        //Add components to layout builder
+        layoutBuilder.addComponent(textField);
+        layoutBuilder.addLabel(fieldLabel);
+        
+        //Create panel which holds all necessary informations
+        AFSwinxPanel afPanel = new AFSwinxPanel(fieldInfo.getId(),fieldInfo.getWidgetType(),textField, fieldLabel);
+       
+        //Build layout on that panel
+        layoutBuilder.buildLayout(afPanel);
+        //Add validations
+        super.crateValidators(afPanel, fieldInfo);
         return afPanel;
     }
 

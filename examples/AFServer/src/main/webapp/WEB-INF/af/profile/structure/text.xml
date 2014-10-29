@@ -3,4 +3,7 @@ fieldName:$field$;
 widgetType:inputField;
 label:$label$;
 required:$required$;
+layoutOrientation:$layoutOrientation$;
+labelPossition:$labelPossition$;
+layout:$layout$;
 

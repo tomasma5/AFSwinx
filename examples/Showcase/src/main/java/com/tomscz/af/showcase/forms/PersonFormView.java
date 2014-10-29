@@ -3,7 +3,6 @@ package com.tomscz.af.showcase.forms;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.net.ConnectException;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -33,7 +32,7 @@ public class PersonFormView extends JFrame {
         button.addActionListener(sendData);
         panel.add(button);
         this.add(panel);
-        this.setSize(200, 400);
+        this.setSize(600, 600);
         this.setVisible(true);
     }
 

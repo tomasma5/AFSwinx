@@ -12,11 +12,18 @@ import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
+/**
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public class AFSwinxPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JComponent dataHolder;
     private JComponent labelHolder;
+    private JComponent message;
     private SupportedWidgets widgetType;
     private String panelId;
     private List<AFValidations> validators = new ArrayList<AFValidations>();
@@ -35,15 +42,6 @@ public class AFSwinxPanel extends JPanel {
         this.labelHolder = labelHolder;
     }
 
-    public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder,
-            JComponent labelHolder, JPanel content) {
-        this.panelId = panelId;
-        this.widgetType = widgetType;
-        this.dataHolder = dataHolder;
-        this.labelHolder = labelHolder;
-        this.add(content);
-    }
-    
     public void validateModel () throws ValidationException{
         //Validate only if components are visible
         if(this.isVisible()){
@@ -71,6 +69,14 @@ public class AFSwinxPanel extends JPanel {
     
     public void addValidator(AFValidations validator){
         this.validators.add(validator);
+    }
+
+    public JComponent getMessage() {
+        return message;
+    }
+
+    public void setMessage(JComponent message) {
+        this.message = message;
     }
 
 }

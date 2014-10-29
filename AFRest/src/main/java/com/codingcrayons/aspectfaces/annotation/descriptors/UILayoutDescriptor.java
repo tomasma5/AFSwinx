@@ -24,7 +24,7 @@ public class UILayoutDescriptor implements AnnotationDescriptor, VariableJoinPoi
     public static final String LABEL_POSSTION_AF_VARIABLE = "labelPossition";
     //Annotation key which holds layout value
     public static final String LAYOUT_AF_VARIABLE = "layout";    
-    //Annotation key which holds layout orienatation
+    //Annotation key which holds layout orientation
     public static final String LAYOUT_ORIENTATION_VARIABLE = "layoutOrientation";
     
     @Override

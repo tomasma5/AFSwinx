@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders.abstraction;
+package com.tomscz.afswinx.unmarshal.builders.abstraction.component;
 
 import javax.swing.JLabel;
 
@@ -9,7 +9,13 @@ import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
 
-public abstract class TwoComponentsBuilder implements FieldBuilder {
+/**
+ * This class is abstract field builder which provide some logic to their children.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
+public abstract class BaseComponentsBuilder implements FieldBuilder {
 
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
@@ -17,6 +23,11 @@ public abstract class TwoComponentsBuilder implements FieldBuilder {
         return false;
     }
 
+    /**
+     * This method create simple {@link JLabel}, if there is no text then null is returned.
+     * @param text to {@link JLabel}
+     * @return {@link JLabel} with text. If there is no text then null is returned.
+     */
     protected JLabel buildSimpleLabel(String text) {
         if (text != null && !text.isEmpty()) {
             return new JLabel(text);
@@ -34,8 +45,6 @@ public abstract class TwoComponentsBuilder implements FieldBuilder {
                 panel.addValidator(validator);
             }
         }
-
-
     }
 
 }
