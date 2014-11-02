@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.unmarshal.builders;
 
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -9,7 +11,7 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.unmarshal.builders.abstraction.component.BaseComponentsBuilder;
 
 public class LabelFieldBuider extends BaseComponentsBuilder {
-
+    
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
         if (!isBuildAvailable(field)) {
@@ -44,5 +46,10 @@ public class LabelFieldBuider extends BaseComponentsBuilder {
     public Object getData(AFSwinxPanel panel) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public Component getCoreComponent() {
+        return coreComponent;
     }
 }

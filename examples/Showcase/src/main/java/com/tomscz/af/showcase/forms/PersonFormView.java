@@ -24,7 +24,7 @@ public class PersonFormView extends JFrame {
     public PersonFormView() {
         JPanel panel = new JPanel();
         try {
-            panel.add(buildFormBasedOnXMLConnection("person2"));
+            panel.add(buildFormBasedOnXMLConnection("personWithEL"));
         } catch (AFSwinxConnectionException e) {
             e.printStackTrace();
         }

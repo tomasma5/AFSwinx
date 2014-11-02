@@ -5,6 +5,7 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 import com.tomscz.afswinx.unmarshal.builders.InputFieldBuilder;
 import com.tomscz.afswinx.unmarshal.builders.LabelFieldBuider;
+import com.tomscz.afswinx.unmarshal.builders.NumberInputBuilder;
 
 public class WidgetBuilderFactory {
 
@@ -31,6 +32,9 @@ public class WidgetBuilderFactory {
         }
         else if(widget.equals(SupportedWidgets.LABEL)){
             return new LabelFieldBuider();
+        }
+        else if(widget.equals(SupportedWidgets.NUMBERINPUT)){
+            return new NumberInputBuilder();
         }
         else{
             return null;

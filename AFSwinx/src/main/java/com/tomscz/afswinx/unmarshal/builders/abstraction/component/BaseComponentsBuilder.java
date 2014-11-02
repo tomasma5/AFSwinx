@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.unmarshal.builders.abstraction.component;
 
+import java.awt.Component;
+
 import javax.swing.JLabel;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
@@ -17,6 +19,8 @@ import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
  */
 public abstract class BaseComponentsBuilder implements FieldBuilder {
 
+    protected Component coreComponent;
+    
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
         if (fieldWithLabel != null) return true;
@@ -34,6 +38,8 @@ public abstract class BaseComponentsBuilder implements FieldBuilder {
         }
         return null;
     }
+    
+    public abstract Component getCoreComponent();
 
     protected void crateValidators(AFSwinxPanel panel, AFFieldInfo fieldInfo) {
         if (fieldInfo.getRules() != null) {

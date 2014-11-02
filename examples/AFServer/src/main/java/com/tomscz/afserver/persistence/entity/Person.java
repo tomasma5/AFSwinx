@@ -12,6 +12,7 @@ public class Person {
     private String firstName;
     private String lastName;
     private Long id;
+    private int age;
 
     public Long getId() {
         return id;
@@ -38,6 +39,15 @@ public class Person {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    @UiLabel(value = "Vek")
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
 

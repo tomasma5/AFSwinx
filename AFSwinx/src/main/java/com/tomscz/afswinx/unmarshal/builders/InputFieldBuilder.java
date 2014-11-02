@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.unmarshal.builders;
 
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -32,7 +34,7 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         //And input text field
         JTextField textField = new JTextField();
         textField.setColumns(DEFAULT_NUMBER_OF_COLUMS);
-        
+        coreComponent = textField;
         //Add components to layout builder
         layoutBuilder.addComponent(textField);
         layoutBuilder.addLabel(fieldLabel);
@@ -63,4 +65,10 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         }
         return null;
     }
+
+    @Override
+    public Component getCoreComponent() {
+        return coreComponent;
+    }
+
 }
