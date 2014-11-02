@@ -15,11 +15,13 @@ import org.apache.commons.io.IOUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestResource {
 
     @Test
+    @Ignore
     public void test() {
         loadResources();
     }

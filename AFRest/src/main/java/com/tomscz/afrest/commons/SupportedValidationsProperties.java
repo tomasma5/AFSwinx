@@ -1,21 +1,20 @@
 package com.tomscz.afrest.commons;
 
-
 /**
- * This {@link Enum} holds supported properties, which can hold variable. There should be all root
- * variables which we support. Root variables are variables without children in widget section
+ * This {@link Enum} holds supported validation properties. There should be all validation properties
+ * variables which we support. Its are variable in validation section inside widget.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
  * @since 1.0.0.
  */
-public enum SupportedProperties {
-
-    WIDGETTYPE("widgetType"), FIELDNAME("fieldName"), LABEL("label");
+public enum SupportedValidationsProperties {
+    
+    REQUIRED("required");
 
     private final String name;
 
-    private SupportedProperties(String name) {
+    private SupportedValidationsProperties(String name) {
         this.name = name;
     }
 
@@ -27,3 +26,4 @@ public enum SupportedProperties {
         return name;
     }
 }
+

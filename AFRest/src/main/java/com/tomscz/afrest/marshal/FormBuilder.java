@@ -1,22 +1,26 @@
 package com.tomscz.afrest.marshal;
 
-import com.tomscz.afrest.commons.AFRestUtils;
-import com.tomscz.afrest.commons.SupportedProperties;
-import com.tomscz.afrest.commons.SupportedValidations;
-import com.tomscz.afrest.commons.SupportedWidgets;
+import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import com.tomscz.afrest.exception.MetamodelException;
-import com.tomscz.afrest.layout.Layout;
-import com.tomscz.afrest.layout.definitions.LabelPosition;
-import com.tomscz.afrest.layout.definitions.LayouDefinitions;
-import com.tomscz.afrest.layout.definitions.LayoutOrientation;
-import com.tomscz.afrest.marshal.utils.DataParserHelper;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
-import com.tomscz.afrest.rest.dto.AFValidationRule;
 
 /**
- * This class create form definition. 
+ * This class create form definition.
+ * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
  * @since 1.0.0.
@@ -32,92 +36,106 @@ public class FormBuilder implements ModelBuilder {
     @Override
     public AFMetaModelPack buildModel() throws MetamodelException {
         if (metaModelInformation == null || metaModelInformation.isEmpty()) {
-            throw new MetamodelException();
+            throw new MetamodelException(
+                    "Model information were not initialize. Check your templates and class.");
         }
         AFMetaModelPack model = new AFMetaModelPack();
         model.setClassInfo(transforDataToModel(metaModelInformation));
         return model;
     }
 
+    /**
+     * This method transform metamodel to data. Metamodel should be XML
+     * 
+     * @param metaModelInfomation model to transform
+     * @return {@link AFClassInfo} which holds all information about model.
+     * @throws MetamodelException if error occur during building model, then
+     *         {@link MetamodelException} is thrown
+     */
     private AFClassInfo transforDataToModel(String metaModelInfomation) throws MetamodelException {
-        AFClassInfo classInfo = new AFClassInfo();
-        String[] fields = metaModelInfomation.split(DataParserHelper.getFildSplitter());
+        // Try build document builder based on metamodelInformation
+        Document doc;
+        try {
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            InputSource is = new InputSource();
+            is.setCharacterStream(new StringReader(metaModelInfomation));
+            doc = db.parse(is);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new MetamodelException(
+                    "Error during intialize DOM. Check input data or templates. String to parse is: "
+                            + metaModelInfomation + " Exception is: " + e.getLocalizedMessage());
+        }
 
-        for (int i = 1; i < fields.length; i++) {
-            AFFieldInfo fieldInfo = createFieldProperties(fields[i]);
+        // Create class info, and set top root information
+        AFClassInfo classInfo = new AFClassInfo();
+        NodeList nodeList = doc.getElementsByTagName(XMLParseUtils.ENTITYFIELD);
+        if (nodeList.getLength() >= 0) {
+            Node n = nodeList.item(0);
+            classInfo.setName(XMLParseUtils.getTextContent(n));
+        }
+
+        nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUT);
+        nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUTORIENTATION);
+        // TODO set main layout
+        nodeList = doc.getElementsByTagName(XMLParseUtils.WIDGETROOT);
+        // For each widget build fieldInfo
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node widget = nodeList.item(i);
+            AFFieldInfo fieldInfo = createFieldProperties(widget);
             classInfo.addFieldInfo(fieldInfo);
         }
         return classInfo;
     }
 
-    private AFFieldInfo createFieldProperties(String field) throws MetamodelException {
-        String properties[] = field.split(DataParserHelper.getFieldPropertySplitter());
+    /**
+     * This method build concrete field info based on widget.
+     * 
+     * @param widget which will be transformed to field info
+     * @return {@link AFFieldInfo} which holds all necessary information to build widget
+     * @throws MetamodelException if widget can not be transformed then exception is thrown
+     */
+    private AFFieldInfo createFieldProperties(Node widget) throws MetamodelException {
+        NodeList properties = widget.getChildNodes();
         AFFieldInfo fieldInfo = new AFFieldInfo();
-        for (String property : properties) {
-            if (property == null) {
-                throw new MetamodelException();
-            }
-            String propertyArray[] = property.split(DataParserHelper.getPropertyAndValueSplitter());
-            if (propertyArray.length < 2) {
+        // For every widget parameter
+        for (int i = 1; i < properties.getLength(); i++) {
+            Node propertyNode = properties.item(i);
+            String propertyName = propertyNode.getNodeName();
+            String propertyValue = XMLParseUtils.getTextContent(propertyNode);
+            if (propertyValue == null || propertyName == null) {
                 continue;
             }
-            String propertyName = propertyArray[0].toLowerCase();
-            boolean isSupported = false;
-            SupportedProperties propertyType = null;
-            for (SupportedProperties supportedProperty : SupportedProperties.values()) {
-                if (propertyName.equals(supportedProperty.toString().toLowerCase())) {
-                    isSupported = true;
-                    propertyType = supportedProperty;
-                    break;
-                }
-            }
-            if (!isSupported) {
-                throw new MetamodelException();
-            }
-            // Create field info
-            if (propertyType.equals(SupportedProperties.WIDGETTYPE)) {
-                String value = propertyArray[1].toLowerCase();
-                for (SupportedWidgets supportedWidget : SupportedWidgets.values()) {
-                    if (value.equals(supportedWidget.toString().toLowerCase())) {
-                        fieldInfo.setWidgetType(supportedWidget);
+            // If its widgetLayout or validations, then data are in their children, parse them
+            // different
+            if (propertyName.equals(XMLParseUtils.WIDGETLAYOUT)
+                    || propertyName.equals(XMLParseUtils.WIDGETVALIDATIONS)) {
+                NodeList widgetChilds = propertyNode.getChildNodes();
+                for (int j = 1; j < widgetChilds.getLength(); j++) {
+                    Node fieldNode = widgetChilds.item(j);
+                    String propertyFieldName = fieldNode.getNodeName();
+                    String propertyFieldValue = XMLParseUtils.getTextContent(fieldNode);
+                    // If value is not specify then continue
+                    if (propertyFieldValue == null || propertyFieldValue.trim().isEmpty()
+                            || propertyFieldValue == null || propertyFieldValue.trim().isEmpty()) {
+                        continue;
+                    }
+                    // Set property based on type
+                    if (propertyName.equals(XMLParseUtils.WIDGETLAYOUT)) {
+                        XMLParseUtils.setLayoutProperties(fieldInfo, propertyFieldName,
+                                propertyFieldValue);
+                    } else if (propertyName.equals(XMLParseUtils.WIDGETVALIDATIONS)) {
+                        XMLParseUtils.setValidationsProperties(fieldInfo, propertyFieldName,
+                                propertyFieldValue);
                     }
                 }
+            } else {
+                if (propertyValue.trim().isEmpty()) {
+                    continue;
+                }
+                // If there are not children then it must be root property set it then
+                XMLParseUtils.setRootProperties(fieldInfo, propertyName, propertyValue);
             }
-            if (propertyType.equals(SupportedProperties.FIELDNAME)) {
-                fieldInfo.setId(propertyArray[1]);
-                continue;
-            }
-            if (propertyType.equals(SupportedProperties.LABEL)) {
-                fieldInfo.setLabel(propertyArray[1]);
-                continue;
-            }
-            if (propertyType.equals(SupportedProperties.REQUIRED)) {
-                AFValidationRule requiredRule =
-                        new AFValidationRule(SupportedValidations.REQUIRED, propertyArray[1]);
-                fieldInfo.addRule(requiredRule);
-                continue;
-            }
-            if (propertyType.equals(SupportedProperties.LAYOUT)) {
-                String layoutType = propertyArray[1];
-                Layout layout = fieldInfo.getLayout();
-                layout.setLayoutDefinition((LayouDefinitions) AFRestUtils.getEnumFromString(
-                        LayouDefinitions.class, layoutType, false));
-                continue;
-            }
-            if (propertyType.equals(SupportedProperties.LABELPOSSTION)) {
-                String labelPosstion = propertyArray[1];
-                Layout layout = fieldInfo.getLayout();
-                layout.setLabelPosstion((LabelPosition) AFRestUtils.getEnumFromString(
-                        LabelPosition.class, labelPosstion, false));
-                continue;
-            }
-            if (propertyType.equals(SupportedProperties.LAYOUTORIENTATION)) {
-                String layoutOrientation = propertyArray[1];
-                fieldInfo.getLayout().setLayoutOrientation(
-                        (LayoutOrientation) AFRestUtils.getEnumFromString(LayoutOrientation.class,
-                                layoutOrientation, false));
-                continue;
-            }
+
         }
         return fieldInfo;
     }

@@ -14,8 +14,8 @@ public class AFRestUtils {
      * @param compareByValue flag which determine if comparison is done against string value or enum
      *        value. <br />
      *        <ul>
-     *        <li><b>True</b> comparison is done against string value of enmu. </li>
-     *        <li><b>False</b> comparision is done agains enum real value </b> </li>
+     *        <li><b>True</b> comparison is done against string value of enum. </li>
+     *        <li><b>False</b> comparison is done against enum real value </b> </li>
      *        </ul>
      * @return Enum, which has name equals enumValue in enumClass.
      * @throws IllegalArgumentException if no match is found or arguments are null or empty.

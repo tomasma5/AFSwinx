@@ -95,11 +95,14 @@ public class BaseLayoutBuilder implements LayoutBuilder {
      */
     @Override
     public void buildLayout(AFSwinxPanel swingPanel) {
-        // Based on label position determine if label will be before or after field
-        if (this.labelPosition == LabelPosition.AFTER) {
-            this.addComponent(label);
-        } else {
-            components.add(0, label);
+        // Based on label position determine if label will be before or after field, but only if
+        // label was specified
+        if (label != null) {
+            if (this.labelPosition == LabelPosition.AFTER) {
+                this.addComponent(label);
+            } else {
+                components.add(0, label);
+            }
         }
         JPanel actualPanel = null;
         List<JPanel> panels = new ArrayList<JPanel>();

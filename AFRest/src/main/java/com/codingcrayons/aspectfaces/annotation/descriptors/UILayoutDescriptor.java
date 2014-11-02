@@ -22,7 +22,6 @@ public class UILayoutDescriptor implements AnnotationDescriptor, VariableJoinPoi
 
     //Annotation key which holds labelPossition value
     public static final String LABEL_POSSTION_AF_VARIABLE = "labelPossition";
-    //Annotation key which holds layout value
     public static final String LAYOUT_AF_VARIABLE = "layout";    
     //Annotation key which holds layout orientation
     public static final String LAYOUT_ORIENTATION_VARIABLE = "layoutOrientation";
@@ -30,12 +29,12 @@ public class UILayoutDescriptor implements AnnotationDescriptor, VariableJoinPoi
     @Override
     public List<Variable> getVariables(AnnotationProvider annotationProvider) {
         List<Variable> variables = new ArrayList<Variable>();
-        LayouDefinitions layout =(LayouDefinitions) annotationProvider.getValue(LAYOUT_AF_VARIABLE);
         LabelPosition labelPosstion = (LabelPosition) annotationProvider.getValue(LABEL_POSSTION_AF_VARIABLE);
+        LayouDefinitions layout =(LayouDefinitions) annotationProvider.getValue(LAYOUT_AF_VARIABLE);
         LayoutOrientation layoutOrientation = (LayoutOrientation) annotationProvider.getValue(LAYOUT_ORIENTATION_VARIABLE);
         variables.add(new Variable(LAYOUT_AF_VARIABLE, layout));
-        variables.add(new Variable(LABEL_POSSTION_AF_VARIABLE, labelPosstion));
         variables.add(new Variable(LAYOUT_ORIENTATION_VARIABLE, layoutOrientation));
+        variables.add(new Variable(LABEL_POSSTION_AF_VARIABLE, labelPosstion));
         return variables;
     }
 
@@ -45,3 +44,4 @@ public class UILayoutDescriptor implements AnnotationDescriptor, VariableJoinPoi
     }
 
 }
+

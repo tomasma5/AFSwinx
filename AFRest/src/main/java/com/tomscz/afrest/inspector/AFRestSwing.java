@@ -2,6 +2,7 @@ package com.tomscz.afrest.inspector;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -75,16 +76,16 @@ public class AFRestSwing implements AFRest {
                 String widget = inspectAndTranslate(af, instance, context);
                 widget = widget.replaceAll("(\\r|\\n)", "");
                 System.out.println(widget);
-                ModelBuilder builder = new ModelFactory().createModelBuilder(SupportedComponents.FORM, widget);
-                try{
-                    AFMetaModelPack generatedInfo = builder.buildModel();  
+                ModelBuilder builder =
+                        new ModelFactory().createModelBuilder(SupportedComponents.FORM, widget);
+                try {
+                    AFMetaModelPack generatedInfo = builder.buildModel();
                     return generatedInfo;
-                }
-                catch (MetamodelException e){
+                } catch (MetamodelException e) {
                     e.printStackTrace();
                 }
             } else {
-                //TODO Finish it
+                // TODO Finish it
                 String[] classes = className.split("@");
                 instance = Class.forName(classes[0]);
                 for (int i = 1; i < classes.length; i++) {
@@ -102,13 +103,13 @@ public class AFRestSwing implements AFRest {
     protected Context init(ServletContext contextServlet)
             throws ConfigurationFileNotFoundException, ConfigurationParsingException,
             AnnotationDescriptorNotFoundException {
-        InputStream configPropertyStream = contextServlet.getResourceAsStream("/WEB-INF/aspectfaces.properties");
+        InputStream configPropertyStream =
+                contextServlet.getResourceAsStream("/WEB-INF/aspectfaces.properties");
         AFWeaver.init(configPropertyStream);
         AFWeaver.registerAllAnnotations();
 
-        AFWeaver.addConfiguration(
-                new ServerConfiguration("structure", contextServlet),
-                FileUtils.createTemporaryFile(AF_PATH + Constants.FILE_SWING_MAIN_CONFIG,
+        AFWeaver.addConfiguration(new ServerConfiguration("structure", contextServlet), FileUtils
+                .createTemporaryFile(AF_PATH + Constants.FILE_SWING_MAIN_CONFIG,
                         Constants.XML_FILE_TYPE, contextServlet), false, true);
 
         Context context = new Context(null);
@@ -130,8 +131,9 @@ public class AFRestSwing implements AFRest {
     }
 
     @Override
-    public AFDataPack generateDataObject(Class<?> clazz,Object objectToGenerate) throws IllegalArgumentException{
-        if(clazz == null || objectToGenerate == null){
+    public AFDataPack generateDataObject(Class<?> clazz, Object objectToGenerate)
+            throws IllegalArgumentException {
+        if (clazz == null || objectToGenerate == null) {
             throw new IllegalArgumentException("Object to generated and class cant be null");
         }
         AFDataPack data = new AFDataPack(clazz.getName());
@@ -139,23 +141,23 @@ public class AFRestSwing implements AFRest {
         for (int i = 0; i < getters.size(); i++) {
             try {
                 String value = String.valueOf(getters.get(i).invoke(objectToGenerate));
-                if(value != null && !value.equals("null")){
+                if (value != null && !value.equals("null")) {
                     String key = getters.get(i).getName();
                     char firstLetter = Character.toLowerCase(key.charAt(3));
                     key = key.substring(4);
-                    key = firstLetter+key;
-                    AFData concreteData = new AFData(key, value); 
+                    key = firstLetter + key;
+                    AFData concreteData = new AFData(key, value);
                     data.addData(concreteData);
                 }
             } catch (IllegalAccessException | InvocationTargetException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            
+
         }
         return data;
     }
-    
+
     private List<Method> getGetters(Class clazz) throws SecurityException {
         List<Method> getters = new ArrayList<Method>();
 
