@@ -19,11 +19,22 @@ public class NumberValidator implements AFValidations {
         if (value == null) {
             throw new ValidationException("Value to validate cant be null.");
         }
-        if (value instanceof Number) {
+        if (isNumber(value)) {
             return;
         } else {
             throw new ValidationException("This field must have only number values.");
         }
+    }
+    
+    private boolean isNumber(Object value){
+        try{
+            Integer.parseInt((String) value);
+            return true;
+        }
+        catch(NumberFormatException e){
+            
+        }
+        return false;
     }
 
 }

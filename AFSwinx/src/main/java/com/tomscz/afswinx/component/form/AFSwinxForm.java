@@ -3,6 +3,7 @@ package com.tomscz.afswinx.component.form;
 import java.util.HashMap;
 
 import com.tomscz.afrest.commons.SupportedComponents;
+import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -13,6 +14,7 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
+import com.tomscz.afswinx.unmarshal.builders.abstraction.layout.BaseLayoutBuilder;
 import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
@@ -58,16 +60,30 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     public void buildComponent() throws AFSwinxConnectionException {
         AFMetaModelPack metaModelPack = getModel();
         AFClassInfo classInfo = metaModelPack.getClassInfo();
-        for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
-            FieldBuilder builder =
-                    WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
-            addComponent(builder.buildComponent(fieldInfo));
+        if (classInfo != null) {
+            //Convert TopLevelLayout to layout
+            Layout layout = null;
+            if(classInfo.getLayout() != null){
+                layout = new Layout();
+                layout.setLayoutDefinition(classInfo.getLayout().getLayoutDefinition());
+                layout.setLayoutOrientation(classInfo.getLayout().getLayoutOrientation());
+            }
+            //Initialize layout builder
+            BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
+            for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
+                FieldBuilder builder =
+                        WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
+                addComponent(builder.buildComponent(fieldInfo),layoutBuilder);
+            }
+            //Build layout
+            layoutBuilder.buildLayout(this);
         }
     }
 
-    public void addComponent(AFSwinxPanel panelToAdd) {
+    public void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder) {
         this.panels.put(panelToAdd.getPanelId(), panelToAdd);
         this.add(panelToAdd);
+        layoutBuilder.addComponent(panelToAdd);
     }
 
     @Override

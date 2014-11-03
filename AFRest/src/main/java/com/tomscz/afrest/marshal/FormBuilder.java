@@ -13,7 +13,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
+import com.tomscz.afrest.layout.TopLevelLayout;
+import com.tomscz.afrest.layout.definitions.LayouDefinitions;
+import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -69,13 +73,31 @@ public class FormBuilder implements ModelBuilder {
         // Create class info, and set top root information
         AFClassInfo classInfo = new AFClassInfo();
         NodeList nodeList = doc.getElementsByTagName(XMLParseUtils.ENTITYFIELD);
-        if (nodeList.getLength() >= 0) {
-            Node n = nodeList.item(0);
+        Node n;
+        if (nodeList != null && nodeList.getLength() >= 0) {
+            n = nodeList.item(0);
             classInfo.setName(XMLParseUtils.getTextContent(n));
         }
 
-        nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUT);
         nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUTORIENTATION);
+        TopLevelLayout layout = new TopLevelLayout();
+        if (nodeList != null && nodeList.getLength() >= 0) {
+            n = nodeList.item(0);
+            String value = XMLParseUtils.getTextContent(n);
+            if(value != null && !value.trim().isEmpty()){
+                layout.setLayoutOrientation((LayoutOrientation)AFRestUtils.getEnumFromString(LayoutOrientation.class,value,true));
+            }
+        }
+        nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUT);
+        if (nodeList != null && nodeList.getLength() >= 0) {
+            n = nodeList.item(0);
+            String value = XMLParseUtils.getTextContent(n);
+            if(value != null && !value.trim().isEmpty()){
+                layout.setLayoutDefinition((LayouDefinitions)AFRestUtils.getEnumFromString(LayouDefinitions.class,value,true));
+            }
+           
+        }
+        classInfo.setLayout(layout);
         // TODO set main layout
         nodeList = doc.getElementsByTagName(XMLParseUtils.WIDGETROOT);
         // For each widget build fieldInfo

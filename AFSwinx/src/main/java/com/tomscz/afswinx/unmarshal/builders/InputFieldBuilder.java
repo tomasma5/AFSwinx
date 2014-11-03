@@ -28,7 +28,7 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
             throw new IllegalArgumentException("Input field couldn't be build for this field");
         }
         //Create layout builder
-        BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(fieldInfo);
+        BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(fieldInfo.getLayout());
         //Build label
         JLabel fieldLabel = buildSimpleLabel(fieldInfo.getLabel());
         //And input text field

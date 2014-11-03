@@ -14,21 +14,9 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
  * 
  * @since 1.0.0.
  */
-public class Layout {
+public class Layout extends TopLevelLayout{
 
     private LabelPosition labelPosstion;
-
-    private LayouDefinitions layoutDefinition;
-    
-    private LayoutOrientation layoutOrientation;
-
-    public LayouDefinitions getLayoutDefinition() {
-        return layoutDefinition;
-    }
-
-    public void setLayoutDefinition(LayouDefinitions layoutDefinition) {
-        this.layoutDefinition = layoutDefinition;
-    }
 
     public LabelPosition getLabelPosstion() {
         return labelPosstion;
@@ -36,14 +24,6 @@ public class Layout {
 
     public void setLabelPosstion(LabelPosition labelPosstion) {
         this.labelPosstion = labelPosstion;
-    }
-
-    public LayoutOrientation getLayoutOrientation() {
-        return layoutOrientation;
-    }
-
-    public void setLayoutOrientation(LayoutOrientation layoutOrientation) {
-        this.layoutOrientation = layoutOrientation;
     }
 
 }

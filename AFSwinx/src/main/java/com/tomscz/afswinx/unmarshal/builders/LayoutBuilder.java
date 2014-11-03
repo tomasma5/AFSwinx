@@ -2,8 +2,7 @@ package com.tomscz.afswinx.unmarshal.builders;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-
-import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import javax.swing.JPanel;
 
 /**
  * This interface specify all operation which must implement any of layout builder
@@ -13,7 +12,7 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
  */
 public interface LayoutBuilder {
 
-    public void buildLayout(AFSwinxPanel swingPanel);
+    public void buildLayout(JPanel swingPanel);
     
     public void addComponent(JComponent component);
     

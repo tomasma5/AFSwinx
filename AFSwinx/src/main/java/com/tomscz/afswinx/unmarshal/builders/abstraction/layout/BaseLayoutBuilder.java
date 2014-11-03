@@ -13,13 +13,11 @@ import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
-import com.tomscz.afrest.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.unmarshal.builders.LayoutBuilder;
 
 /**
- * This is base layout builder which can build layout for concrete {@link AFFieldInfo} which holds
- * fieldInfo
+ * This is base layout builder which can build layout for concrete {@link Layout}. It can build
+ * layout for field or for class as well.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -27,34 +25,33 @@ import com.tomscz.afswinx.unmarshal.builders.LayoutBuilder;
  */
 public class BaseLayoutBuilder implements LayoutBuilder {
 
-    private int numberOfComponentsInAxis;
-    private int layoutOrientation;
-    private LabelPosition labelPosition;
-    private JLabel label;
-    private JComponent message;
-    private int numberOfComponentInActualPanel;
-    List<JComponent> components = new ArrayList<JComponent>();
+    protected int numberOfComponentsInAxis;
+    protected int layoutOrientation;
+    protected LabelPosition labelPosition;
+    protected JLabel label;
+    protected JComponent message;
+    protected int numberOfComponentInActualPanel;
+    protected List<JComponent> components = new ArrayList<JComponent>();
 
-    public BaseLayoutBuilder(AFFieldInfo fieldInfo) {
-        this.initBuilder(fieldInfo);
+    public BaseLayoutBuilder(Layout layout) {
+        this.initBuilder(layout);
     }
 
     /**
      * This method initialize builder. Builder will be set to default after initialization the
      * settings will be concrete by layout if exist in this particular field info.
      * 
-     * @param fieldInfo based on will be builder initialize, important part is layout
+     * @param layout based on will be builder initialize
      */
-    private void initBuilder(AFFieldInfo fieldInfo) {
-        // First set default values in case if fieldInfo is not specify
+    private void initBuilder(Layout layout) {
+        // First set default values in case if layout is not specify
         this.numberOfComponentsInAxis = Integer.MAX_VALUE;
         this.layoutOrientation = BoxLayout.Y_AXIS;
         this.labelPosition = LabelPosition.BEFORE;
         // If layout is specify, then used it
-        if (fieldInfo != null && fieldInfo.getLayout() != null) {
+        if (layout != null) {
             // Get data, if some of them is null, then dont set which means that default value will
             // be used
-            Layout layout = fieldInfo.getLayout();
             LayoutOrientation layoutOrientation = layout.getLayoutOrientation();
             LabelPosition labelPosstion = layout.getLabelPosstion();
             LayouDefinitions layoutDefinition = layout.getLayoutDefinition();
@@ -89,12 +86,12 @@ public class BaseLayoutBuilder implements LayoutBuilder {
     }
 
     /**
-     * This method build layout to existed {@link AFSwinxPanel}
+     * This method build layout to existed {@link JPanel}
      * 
-     * @param swingPanel current swing panel to which will be added components
+     * @param outputPanel current swing panel to which will be added components
      */
     @Override
-    public void buildLayout(AFSwinxPanel swingPanel) {
+    public void buildLayout(JPanel outputPanel) {
         // Based on label position determine if label will be before or after field, but only if
         // label was specified
         if (label != null) {
@@ -124,7 +121,7 @@ public class BaseLayoutBuilder implements LayoutBuilder {
             panels.add(actualPanel);
         }
         // Put components together and add message field if should be added
-        JPanel panelWhichHoldPanels = swingPanel;
+        JPanel panelWhichHoldPanels = outputPanel;
         GridLayout gridLayout = new GridLayout(panels.size(), 1);
         // if there is message to add, then wrapper should be used around swing panel
         if (message != null) {
@@ -138,9 +135,9 @@ public class BaseLayoutBuilder implements LayoutBuilder {
         // If wrapper was used then set it to swing panel with message
         if (message != null) {
             GridLayout mainGridLayout = new GridLayout(1, 2);
-            swingPanel.setLayout(mainGridLayout);
-            swingPanel.add(panelWhichHoldPanels);
-            swingPanel.add(message);
+            outputPanel.setLayout(mainGridLayout);
+            outputPanel.add(panelWhichHoldPanels);
+            outputPanel.add(message);
         }
     }
 

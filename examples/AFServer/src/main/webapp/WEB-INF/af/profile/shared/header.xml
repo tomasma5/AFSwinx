@@ -2,4 +2,4 @@
 <afRestEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 <entityField>$fragment$</entityField>
 <mainLayoutOrientation>AxisX</mainLayoutOrientation>
-<mainLayoutDefinition>TwoColumnsLayout</mainLayoutDefinition>
+<mainLayoutDefinition>OneColumnLayout</mainLayoutDefinition>
