@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.validation.exception;
 
+import java.util.HashMap;
+
 /**
  * This exception indicate, that validations on AFSwinx components failed
  * @author Martin Tomasek (martin@toms-cz.com)
@@ -9,8 +11,30 @@ package com.tomscz.afswinx.validation.exception;
 public class ValidationException extends Exception{
 
     private static final long serialVersionUID = 1L;
+    
+    private String text;
+    private String value;
+    private HashMap<String, String> values;
 
     public ValidationException(String message){
-        super(message);
+        this.text = message;
+    }
+    
+    public ValidationException(String message, String value){
+        this.text = message;
+        this.value = value;
+    }
+    
+    public ValidationException(String message, HashMap<String, String> values){
+        this.text = message;
+        this.values = values;
+    }
+    
+    public String getValidationTextToDisplay(){
+        String validationText = text;
+        if(value != null && !value.isEmpty()){
+            validationText = validationText+value;
+        }
+        return validationText;
     }
 }

@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.unmarshal.builders.abstraction.layout;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -133,11 +135,19 @@ public class BaseLayoutBuilder implements LayoutBuilder {
             panelWhichHoldPanels.add(panel);
         }
         // If wrapper was used then set it to swing panel with message
-        if (message != null) {
-            GridLayout mainGridLayout = new GridLayout(1, 2);
-            outputPanel.setLayout(mainGridLayout);
-            outputPanel.add(panelWhichHoldPanels);
-            outputPanel.add(message);
+        if (message != null) {            
+            outputPanel.setLayout(new GridBagLayout());
+            GridBagConstraints c1 = new GridBagConstraints();
+            c1.fill = GridBagConstraints.BOTH;  
+            c1.gridx = 0;
+            c1.gridy = 0;
+            outputPanel.add(message, c1);
+            GridBagConstraints c = new GridBagConstraints();
+            c.fill = GridBagConstraints.BOTH;
+            c.weightx = 1.0;
+            c.gridx=0;
+            c.gridy=1;
+            outputPanel.add(panelWhichHoldPanels,c);
         }
     }
 

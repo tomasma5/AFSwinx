@@ -3,6 +3,7 @@ package com.tomscz.afswinx.unmarshal.builders.abstraction.component;
 import java.awt.Component;
 
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
@@ -13,14 +14,15 @@ import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
 
 /**
  * This class is abstract field builder which provide some logic to their children.
+ * 
  * @author Martin Tomasek (martin@toms-cz.com)
- *
+ * 
  * @since 1.0.0.
  */
 public abstract class BaseComponentsBuilder implements FieldBuilder {
 
     protected Component coreComponent;
-    
+
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
         if (fieldWithLabel != null) return true;
@@ -29,6 +31,7 @@ public abstract class BaseComponentsBuilder implements FieldBuilder {
 
     /**
      * This method create simple {@link JLabel}, if there is no text then null is returned.
+     * 
      * @param text to {@link JLabel}
      * @return {@link JLabel} with text. If there is no text then null is returned.
      */
@@ -38,7 +41,23 @@ public abstract class BaseComponentsBuilder implements FieldBuilder {
         }
         return null;
     }
-    
+
+    /**
+     * This method build simple message widget which will be used to display validations message
+     * 
+     * @return message widget which is used to display data
+     */
+    protected JTextArea buildSimpleMessage() {
+        //Use textarea because of data wrap
+        JTextArea textValidationComponent = new JTextArea();
+        textValidationComponent.setVisible(false);
+        textValidationComponent.setWrapStyleWord(true);
+        textValidationComponent.setLineWrap(true);
+        textValidationComponent.setEditable(false);
+        textValidationComponent.setOpaque(false);
+        return textValidationComponent;
+    }
+
     public abstract Component getCoreComponent();
 
     protected void crateValidators(AFSwinxPanel panel, AFFieldInfo fieldInfo) {

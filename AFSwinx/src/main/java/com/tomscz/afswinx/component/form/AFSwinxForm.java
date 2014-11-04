@@ -61,21 +61,21 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         AFMetaModelPack metaModelPack = getModel();
         AFClassInfo classInfo = metaModelPack.getClassInfo();
         if (classInfo != null) {
-            //Convert TopLevelLayout to layout
+            // Convert TopLevelLayout to layout
             Layout layout = null;
-            if(classInfo.getLayout() != null){
+            if (classInfo.getLayout() != null) {
                 layout = new Layout();
                 layout.setLayoutDefinition(classInfo.getLayout().getLayoutDefinition());
                 layout.setLayoutOrientation(classInfo.getLayout().getLayoutOrientation());
             }
-            //Initialize layout builder
+            // Initialize layout builder
             BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
             for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
                 FieldBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
-                addComponent(builder.buildComponent(fieldInfo),layoutBuilder);
+                addComponent(builder.buildComponent(fieldInfo), layoutBuilder);
             }
-            //Build layout
+            // Build layout
             layoutBuilder.buildLayout(this);
         }
     }
@@ -107,15 +107,28 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             throw new IllegalStateException(
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
+        // before building data and sending, validate actual data
         for (String key : panels.keySet()) {
+            // Validate all records and show all error message
             AFSwinxPanel panel = panels.get(key);
             try {
                 panel.validateModel();
+                //data are valid, hide error message
+                hideValidationText(panel);
             } catch (ValidationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                //date are invalid display error message
+                this.displayValidationText(panel, e);
             }
         }
+    }
 
+    private void displayValidationText(AFSwinxPanel panel, ValidationException e) {
+        panel.getMessage().setVisible(true);
+        panel.getMessage().setText(e.getValidationTextToDisplay());
+    }
+
+    private void hideValidationText(AFSwinxPanel panel) {
+        panel.getMessage().setVisible(false);
+        panel.getMessage().setText("");
     }
 }

@@ -3,6 +3,7 @@ package com.tomscz.afswinx.unmarshal.builders;
 import java.awt.Component;
 
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
@@ -38,9 +39,10 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         //Add components to layout builder
         layoutBuilder.addComponent(textField);
         layoutBuilder.addLabel(fieldLabel);
-        
+        JTextArea message = buildSimpleMessage();
+        layoutBuilder.addMessage(message);
         //Create panel which holds all necessary informations
-        AFSwinxPanel afPanel = new AFSwinxPanel(fieldInfo.getId(),fieldInfo.getWidgetType(),textField, fieldLabel);
+        AFSwinxPanel afPanel = new AFSwinxPanel(fieldInfo.getId(),fieldInfo.getWidgetType(),textField, fieldLabel,message);
        
         //Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
