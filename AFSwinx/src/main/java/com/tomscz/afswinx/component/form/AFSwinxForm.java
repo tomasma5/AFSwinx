@@ -3,10 +3,6 @@ package com.tomscz.afswinx.component.form;
 import java.util.HashMap;
 
 import com.tomscz.afrest.commons.SupportedComponents;
-import com.tomscz.afrest.layout.Layout;
-import com.tomscz.afrest.rest.dto.AFClassInfo;
-import com.tomscz.afrest.rest.dto.AFFieldInfo;
-import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
@@ -14,7 +10,6 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.layout.BaseLayoutBuilder;
 import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
@@ -25,7 +20,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     private AFSwinxConnection modelConnection;
     private AFSwinxConnection postConnection;
     private AFSwinxConnection dataConnection;
-    HashMap<String, AFSwinxPanel> panels = new HashMap<String, AFSwinxPanel>();
+    private HashMap<String, AFSwinxPanel> panels = new HashMap<String, AFSwinxPanel>();
 
     private SupportedComponents componentType;
 
@@ -57,47 +52,17 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     }
 
     @Override
-    public void buildComponent() throws AFSwinxConnectionException {
-        AFMetaModelPack metaModelPack = getModel();
-        AFClassInfo classInfo = metaModelPack.getClassInfo();
-        if (classInfo != null) {
-            // Convert TopLevelLayout to layout
-            Layout layout = null;
-            if (classInfo.getLayout() != null) {
-                layout = new Layout();
-                layout.setLayoutDefinition(classInfo.getLayout().getLayoutDefinition());
-                layout.setLayoutOrientation(classInfo.getLayout().getLayoutOrientation());
-            }
-            // Initialize layout builder
-            BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
-            for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
-                FieldBuilder builder =
-                        WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
-                addComponent(builder.buildComponent(fieldInfo), layoutBuilder);
-            }
-            // Build layout
-            layoutBuilder.buildLayout(this);
+    public void fillData(AFDataPack dataPack) {
+        if(dataPack.getClassName().isEmpty()){
+            return;
         }
-    }
-
-    public void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder) {
-        this.panels.put(panelToAdd.getPanelId(), panelToAdd);
-        this.add(panelToAdd);
-        layoutBuilder.addComponent(panelToAdd);
-    }
-
-    @Override
-    public void fillData() throws AFSwinxConnectionException {
-        if (getDataConnection() != null) {
-            AFDataPack data = getData();
-            for (AFData field : data.getData()) {
-                String fieldName = field.getKey();
-                AFSwinxPanel panelToSetData = panels.get(fieldName);
-                FieldBuilder builder =
-                        WidgetBuilderFactory.getInstance().createWidgetBuilder(
-                                panelToSetData.getWidgetType());
-                builder.setData(panelToSetData, field);
-            }
+        for (AFData field : dataPack.getData()) {
+            String fieldName = field.getKey();
+            AFSwinxPanel panelToSetData = panels.get(fieldName);
+            FieldBuilder builder =
+                    WidgetBuilderFactory.getInstance().createWidgetBuilder(
+                            panelToSetData.getWidgetType());
+            builder.setData(panelToSetData, field);
         }
     }
 
@@ -108,27 +73,44 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
         // before building data and sending, validate actual data
+        validateData();
+    }
+
+    @Override
+    public boolean validateData() {
+        boolean isValid = true;
         for (String key : panels.keySet()) {
             // Validate all records and show all error message
             AFSwinxPanel panel = panels.get(key);
             try {
                 panel.validateModel();
-                //data are valid, hide error message
+                // data are valid, hide error message
                 hideValidationText(panel);
             } catch (ValidationException e) {
-                //date are invalid display error message
+                // date are invalid display error message
                 this.displayValidationText(panel, e);
+                isValid = false;
             }
         }
+        return isValid;
     }
 
     private void displayValidationText(AFSwinxPanel panel, ValidationException e) {
-        panel.getMessage().setVisible(true);
-        panel.getMessage().setText(e.getValidationTextToDisplay());
+        if (panel.getMessage() != null) {
+            panel.getMessage().setVisible(true);
+            panel.getMessage().setText(e.getValidationTextToDisplay());
+        }
     }
 
     private void hideValidationText(AFSwinxPanel panel) {
-        panel.getMessage().setVisible(false);
-        panel.getMessage().setText("");
+        if (panel.getMessage() != null) {
+            panel.getMessage().setVisible(false);
+            panel.getMessage().setText("");
+        }
     }
+
+    public HashMap<String, AFSwinxPanel> getPanels() {
+        return panels;
+    }
+
 }

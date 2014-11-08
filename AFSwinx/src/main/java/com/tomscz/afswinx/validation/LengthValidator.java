@@ -10,8 +10,7 @@ import com.tomscz.afswinx.validation.exception.ValidationException;
  *
  * @since 1.0.0.
  */
-//TODO use property file to language modification
-public class LengthValidator implements AFValidations {
+public class LengthValidator extends AFBaseValidator {
 
     public final static String MIN_LENGTH_KEY = "minLength";
     public final static String MAX_LENGTH_KEY = "maxLength";

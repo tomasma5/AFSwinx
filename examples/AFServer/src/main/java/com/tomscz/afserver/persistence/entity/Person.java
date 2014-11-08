@@ -2,6 +2,7 @@ package com.tomscz.afserver.persistence.entity;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
+import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
@@ -23,6 +24,8 @@ public class Person {
     }
 
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.TWOCOLUMNSLAYOUT, layoutOrientation = LayoutOrientation.AXISX)
+    @UiLabel("person.lastName")
+    @UiOrder(value=2)
     public String getLastName() {
         return lastName;
     }
@@ -32,7 +35,8 @@ public class Person {
     }
 
     @UiRequired
-    @UiLabel(value = "Jmeno")
+    @UiLabel(value = "person.firstName")
+    @UiOrder(value=1)
     public String getFirstName() {
         return firstName;
     }
@@ -41,7 +45,9 @@ public class Person {
         this.firstName = firstName;
     }
 
-    @UiLabel(value = "Vek")
+    @UiLabel(value = "person.age")
+    @UiRequired
+    @UiOrder(value=3)
     public int getAge() {
         return age;
     }

@@ -17,7 +17,11 @@ public class NumberInputBuilder extends InputFieldBuilder {
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
         AFSwinxPanel panel = super.buildComponent(fieldInfo);
-        panel.addValidator(new NumberValidator());
+        //Add number validator which will provide number validation
+        NumberValidator validador = new NumberValidator();
+        //Use localization based on parent localization
+        validador.setLocalization(localization);
+        panel.addValidator(validador);
         return panel;
     }
 

@@ -68,9 +68,4 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         return null;
     }
 
-    @Override
-    public Component getCoreComponent() {
-        return coreComponent;
-    }
-
 }

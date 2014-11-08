@@ -9,11 +9,14 @@ import javax.swing.JTextArea;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
 /**
+ * This is AFSwinx implementation of {@link JPanel}. It holds data holder, message, and another
+ * fields which are needed to construct component and maintain it during life cycle.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -28,6 +31,9 @@ public class AFSwinxPanel extends JPanel {
     private SupportedWidgets widgetType;
     private String panelId;
     private List<AFValidations> validators = new ArrayList<AFValidations>();
+
+    // Parent of this component, its usually form, table, etc
+    private AFSwinxTopLevelComponent afParent;
 
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder) {
         this.panelId = panelId;
@@ -88,6 +94,14 @@ public class AFSwinxPanel extends JPanel {
 
     public void setMessage(JTextArea message) {
         this.message = message;
+    }
+
+    public AFSwinxTopLevelComponent getAfParent() {
+        return afParent;
+    }
+
+    public void setAfParent(AFSwinxTopLevelComponent afParent) {
+        this.afParent = afParent;
     }
 
 }

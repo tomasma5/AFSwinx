@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.unmarshal.builders;
 
+import java.util.ResourceBundle;
+
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
@@ -27,9 +29,15 @@ public interface FieldBuilder {
     public Object getData(AFSwinxPanel panel);
     /**
      * This method will validate if build for component is available.
-     * @param field
-     * @return
+     * @param field on which will be done inspection which determine if build is available or not
+     * @return true if build is available false otherwise
      */
     public boolean isBuildAvailable(AFFieldInfo field);
+    
+    /**
+     * This method set localization resource bundle, which will be used.
+     * @param localization which will be used to translate text
+     */
+    public void setLocalization(ResourceBundle localization);
 
 }

@@ -47,9 +47,5 @@ public class LabelFieldBuider extends BaseComponentsBuilder {
         // TODO Auto-generated method stub
         return null;
     }
-
-    @Override
-    public Component getCoreComponent() {
-        return coreComponent;
-    }
+    
 }
