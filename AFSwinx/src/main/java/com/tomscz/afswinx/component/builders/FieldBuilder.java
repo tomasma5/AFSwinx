@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders;
+package com.tomscz.afswinx.component.builders;
 
 import java.util.ResourceBundle;
 

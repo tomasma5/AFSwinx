@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
+import com.tomscz.afswinx.component.form.AFSwinxFormBuilder;
 
 /**
  * This class is facade to using AFSwinx. Use getInstance to get unique instance in your
@@ -48,7 +49,7 @@ public class AFSwinx {
         return new AFSwinxFormBuilder();
     }
 
-    protected void addComponent(AFSwinxTopLevelComponent componentToAdd, String key) {
+    public void addComponent(AFSwinxTopLevelComponent componentToAdd, String key) {
         components.put(key, componentToAdd);
     }
 

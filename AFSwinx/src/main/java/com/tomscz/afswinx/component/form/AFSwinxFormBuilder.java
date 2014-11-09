@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.component;
+package com.tomscz.afswinx.component.form;
 
 import java.io.File;
 import java.util.HashMap;
@@ -10,15 +10,17 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.common.Utils;
-import com.tomscz.afswinx.component.form.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
+import com.tomscz.afswinx.component.ComponentBuilder;
+import com.tomscz.afswinx.component.builders.FieldBuilder;
+import com.tomscz.afswinx.component.builders.abstraction.BaseLayoutBuilder;
+import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.ConnectionParser;
-import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.layout.BaseLayoutBuilder;
-import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
 
 /**
  * This is form builder. This class is responsible for create {@link AFSwinxForm} component.

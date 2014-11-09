@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders;
+package com.tomscz.afswinx.component.builders;
 
 import java.awt.Component;
 
@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
+import com.tomscz.afswinx.component.builders.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.component.BaseComponentsBuilder;
 
 public class LabelFieldBuider extends BaseComponentsBuilder {
     

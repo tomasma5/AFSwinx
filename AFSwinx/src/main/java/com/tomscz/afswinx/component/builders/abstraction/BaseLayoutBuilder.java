@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders.abstraction.layout;
+package com.tomscz.afswinx.component.builders.abstraction;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,7 +15,7 @@ import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
-import com.tomscz.afswinx.unmarshal.builders.LayoutBuilder;
+import com.tomscz.afswinx.component.builders.LayoutBuilder;
 
 /**
  * This is base layout builder which can build layout for concrete {@link Layout}. It can build

@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders.abstraction.component;
+package com.tomscz.afswinx.component.builders.abstraction;
 
 import java.awt.Component;
 import java.util.ResourceBundle;
@@ -8,9 +8,9 @@ import javax.swing.JTextArea;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
+import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.localization.LocalizationUtils;
-import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
 

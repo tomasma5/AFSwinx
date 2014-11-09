@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
-import com.tomscz.afswinx.unmarshal.factory.WidgetBuilderFactory;
+import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 

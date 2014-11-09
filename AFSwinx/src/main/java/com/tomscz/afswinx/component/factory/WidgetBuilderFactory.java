@@ -1,11 +1,11 @@
-package com.tomscz.afswinx.unmarshal.factory;
+package com.tomscz.afswinx.component.factory;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.unmarshal.builders.FieldBuilder;
-import com.tomscz.afswinx.unmarshal.builders.InputFieldBuilder;
-import com.tomscz.afswinx.unmarshal.builders.LabelFieldBuider;
-import com.tomscz.afswinx.unmarshal.builders.NumberInputBuilder;
+import com.tomscz.afswinx.component.builders.FieldBuilder;
+import com.tomscz.afswinx.component.builders.InputFieldBuilder;
+import com.tomscz.afswinx.component.builders.LabelFieldBuider;
+import com.tomscz.afswinx.component.builders.NumberInputBuilder;
 
 public class WidgetBuilderFactory {
 

@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders;
+package com.tomscz.afswinx.component.builders;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;

@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.unmarshal.builders;
+package com.tomscz.afswinx.component.builders;
 
 import java.awt.Component;
 
@@ -8,9 +8,9 @@ import javax.swing.JTextField;
 
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
+import com.tomscz.afswinx.component.builders.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.component.builders.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.component.BaseComponentsBuilder;
-import com.tomscz.afswinx.unmarshal.builders.abstraction.layout.BaseLayoutBuilder;
 
 /**
  * This builder build input field editable component without any restrictions
