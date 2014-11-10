@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -25,13 +27,28 @@ public class PersonFormView extends JFrame {
     private static final String formId2 = "personForm2";
 
     public PersonFormView() {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (ClassNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (InstantiationException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (IllegalAccessException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         JPanel panel = new JPanel();
         ResourceBundle czechLocalizationBundle = ResourceBundle.getBundle("cs_CZ");
         AFSwinx swinx = AFSwinx.getInstance();
         swinx.enableLocalization(czechLocalizationBundle);
         try {
             panel.add(buildFormBasedOnXMLConnection("personWithEL"));
-            panel.add(buildFormBasedOnMyConnection());
+//            panel.add(buildFormBasedOnMyConnection());
         } catch (AFSwinxBuildException e) {
             e.printStackTrace();
         }
@@ -47,7 +64,7 @@ public class PersonFormView extends JFrame {
         public void actionPerformed(ActionEvent e) {
             try {
                 AFSwinx.getInstance().getExistedComponent(formId).postData();
-                AFSwinx.getInstance().getExistedComponent(formId2).postData();              
+//                AFSwinx.getInstance().getExistedComponent(formId2).postData();              
             } catch (AFSwinxConnectionException e1) {
                 e1.printStackTrace();
             };

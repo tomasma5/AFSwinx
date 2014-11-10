@@ -20,7 +20,7 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
  * 
  * @since 1.0.0.
  */
-public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction {
+public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction, ComponentReserialization {
 
     private static final long serialVersionUID = 1L;
 

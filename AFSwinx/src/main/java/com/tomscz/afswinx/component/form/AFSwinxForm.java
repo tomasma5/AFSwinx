@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.form;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -9,8 +10,12 @@ import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
+import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
+import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
 public class AFSwinxForm extends AFSwinxTopLevelComponent {
@@ -74,6 +79,15 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         }
         // before building data and sending, validate actual data
         validateData();
+        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(getPostConnection());
+        Object data = dataBuilder.reselialize(this.resealize());
+        AFConnector<Object> dataConnector =
+                new AFConnector<Object>(getPostConnection(), Object.class);
+        try {
+            dataConnector.doPost(data.toString());
+        } catch (ConnectException e) {
+            throw new AFSwinxConnectionException(e.getMessage());
+        }
     }
 
     @Override
@@ -111,6 +125,22 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
     public HashMap<String, AFSwinxPanel> getPanels() {
         return panels;
+    }
+
+    @Override
+    public AFDataHolder resealize() {
+        AFDataHolder dataHolder = new AFDataHolder();
+//        dataHolder.setClassName(getName());
+        for (String key : panels.keySet()) {
+            AFSwinxPanel panel = panels.get(key); 
+            FieldBuilder fieldBuilder = WidgetBuilderFactory.getInstance()
+            .createWidgetBuilder(panel.getWidgetType());
+            Object data =fieldBuilder.getData(panel);
+            String propertyName = panel.getPanelId();
+            dataHolder.addPropertyAndValue(propertyName, (String)data);
+        }
+        // TODO Auto-generated method stub
+        return dataHolder ;
     }
 
 }

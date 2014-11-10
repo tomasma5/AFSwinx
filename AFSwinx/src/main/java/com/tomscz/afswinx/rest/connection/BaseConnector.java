@@ -2,6 +2,7 @@ package com.tomscz.afswinx.rest.connection;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 
 import org.apache.http.HttpEntity;
@@ -38,7 +39,7 @@ public abstract class BaseConnector implements Connector {
     public String buildEndpoint(String parameters) {
         return getHost().getHostName() + ":" + getHost().getPort() + parameters;
     }
-    
+
     protected InputStream getResponse(HttpRequest httpMethod) throws ConnectException {
         HttpResponse response = null;
         try {
@@ -66,7 +67,7 @@ public abstract class BaseConnector implements Connector {
             HttpGetBuilder httpGetBuilder = new HttpGetBuilder(this.accept, this.contentType);
             InputStream inputStream = getResponse(httpGetBuilder.getGET(getParameter()));
             // Check if any data was received, if no throw exception
-            if (inputStream != null && this.getStatusCode() == 200) {
+            if (inputStream != null && this.getStatusCode() >= 200 && this.getStatusCode() < 300) {
                 String data = Utils.readInputSteam(inputStream).toString();
                 T result = null;
                 // Construct metamodel holder
@@ -88,24 +89,25 @@ public abstract class BaseConnector implements Connector {
             this.close();
         }
     }
-    
+
     @Override
     public void doPost(String body) throws ConnectException {
         try {
-       HttpPostBuilder postBuilder = new HttpPostBuilder(this.accept, this.contentType);
-       HttpPost post = postBuilder.getPost(getParameter());
-       post.setEntity(new StringEntity(body));
-       InputStream inputStream = getResponse(post);
-       if(inputStream != null && statusCode == 200){
-           String data = Utils.readInputSteam(inputStream).toString();
-           System.out.println(data);
-           //TODO DO some other stuff
-       }
-    } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-        
+            HttpPostBuilder postBuilder = new HttpPostBuilder(this.accept, this.contentType);
+            HttpPost post = postBuilder.getPost(getParameter());
+            post.setEntity(new StringEntity(body));
+            InputStream inputStream = getResponse(post);
+            if (inputStream != null && this.getStatusCode() >= 200 && this.getStatusCode() < 300) {
+                // Do nothing post was successful
+            } else {
+                // Throws exception
+                throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
+                        + " was unsuccessfull status code is " + this.getStatusCode());
+            }
+        } catch (UnsupportedEncodingException e) {
+            //Do nothing yet
+            //TODO handle it more nicely
+        }
     }
 
     protected HttpContext getContext() {
@@ -167,8 +169,8 @@ public abstract class BaseConnector implements Connector {
         protected HttpPost httpPost = null;
         private HeaderType accept;
         private HeaderType contentType;
-        
-        public HttpPostBuilder(HeaderType accept, HeaderType contentType){
+
+        public HttpPostBuilder(HeaderType accept, HeaderType contentType) {
             this.accept = accept;
             this.contentType = contentType;
         }
@@ -177,7 +179,7 @@ public abstract class BaseConnector implements Connector {
             close();
             HttpPost httPost = new HttpPost(endPoint);
             httPost.addHeader("Content-Type", contentType.toString());
-            httPost.addHeader("Accept",accept.toString());
+            httPost.addHeader("Accept", accept.toString());
             return httPost;
         }
 

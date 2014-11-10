@@ -16,7 +16,7 @@
 		</data>
 		<post>
 			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person/#{id}</endPointParameters>
+			<endPointParameters>/AFServer/rest/Person/</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
 		</post>

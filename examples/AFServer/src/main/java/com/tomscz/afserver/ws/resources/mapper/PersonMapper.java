@@ -8,6 +8,7 @@ public class PersonMapper implements Serializable {
 
     private String firstName;
     private String lastName;
+    private int age;
 
     public PersonMapper() {}
 
@@ -30,6 +31,14 @@ public class PersonMapper implements Serializable {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
 }
