@@ -1,10 +1,14 @@
-<part class="Container" id="$field$Container">
-    <part class="Label" id="$field$Label"/>
-    <part class="Image" id="$field$Image"/>
-    <part class="Combo" id="$field$Entry"/>
-    <part class="Label" id="$field$Help"/>
-    <!--<layout>-->
-        <!--<hbox/>-->
-    <!--</layout>-->
-</part>
-
+<widget>
+	<widgetType>dropDownMenu</widgetType>
+	<fieldName>$field$</fieldName>
+	<label>$label$</label>
+	<validations>
+		<required>$required$</required>
+	</validations>
+	<fieldLayout>
+		<layoutOrientation>$layoutOrientation$</layoutOrientation>
+		<labelPossition>$labelPossition$</labelPossition>
+		<layout>$layout$</layout>
+	</fieldLayout>
+	<options>$util.getEnum$</options>
+</widget>

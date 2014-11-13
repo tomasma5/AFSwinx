@@ -14,6 +14,7 @@ public class Person {
     private String lastName;
     private Long id;
     private int age;
+    private Gender gender;
 
     public Long getId() {
         return id;
@@ -54,6 +55,14 @@ public class Person {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
 

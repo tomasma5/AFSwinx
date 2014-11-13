@@ -2,7 +2,6 @@ package com.tomscz.afrest.inspector;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,6 +20,7 @@ import com.codingcrayons.aspectfaces.metamodel.JavaInspector;
 import com.codingcrayons.aspectfaces.plugins.j2ee.configuration.ServerConfiguration;
 import com.codingcrayons.aspectfaces.properties.PropertyLoader;
 import com.codingcrayons.aspectfaces.util.Strings;
+import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.commons.Constants;
 import com.tomscz.afrest.commons.FileUtils;
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -72,6 +72,7 @@ public class AFRestSwing implements AFRest {
                 instance = Class.forName(className);
                 String profile = "structure";
                 Context context = init(servletContext);
+                context.getVariables().put("util", new AFRestUtils());
                 AFWeaver af = new AFWeaver(profile);
                 String widget = inspectAndTranslate(af, instance, context);
                 widget = widget.replaceAll("(\\r|\\n)", "");
@@ -158,7 +159,7 @@ public class AFRestSwing implements AFRest {
         return data;
     }
 
-    private List<Method> getGetters(Class clazz) throws SecurityException {
+    private List<Method> getGetters(@SuppressWarnings("rawtypes") Class clazz) throws SecurityException {
         List<Method> getters = new ArrayList<Method>();
 
         for (Method method : clazz.getMethods()) {

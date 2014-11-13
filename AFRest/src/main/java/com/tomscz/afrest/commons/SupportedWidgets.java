@@ -10,7 +10,7 @@ package com.tomscz.afrest.commons;
  */
 public enum SupportedWidgets {
 
-    INPUTFIELD("inputField"), LABEL("label"), NUMBERINPUT("numberInput");
+    INPUTFIELD("inputField"), LABEL("label"), NUMBERINPUT("numberInput"),DROPDOWNMENU("dropDownMenu");
 
     private final String name;
 

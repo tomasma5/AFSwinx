@@ -16,6 +16,7 @@ public class AFFieldInfo implements Serializable {
     private String label;
     private Layout layout;
     private List<AFValidationRule> rules;
+    private List<AFOptions> options;
     
     public AFFieldInfo(){
         this.layout = new Layout();
@@ -26,6 +27,20 @@ public class AFFieldInfo implements Serializable {
             this.rules = new ArrayList<AFValidationRule>();
         }
         this.rules.add(rule);
+    }
+    
+    public void addOption(AFOptions option){
+        if(this.options== null){
+            this.options = new ArrayList<AFOptions>();
+        }
+        this.options.add(option);
+    }
+    
+    public void addOption(List<AFOptions> option){
+        if(this.options== null){
+            this.options = new ArrayList<AFOptions>();
+        }
+        this.options.addAll(option);
     }
 
     public List<AFValidationRule> getRules() {
@@ -66,5 +81,13 @@ public class AFFieldInfo implements Serializable {
 
     public void setWidgetType(SupportedWidgets widgetType) {
         this.widgetType = widgetType;
+    }
+
+    public List<AFOptions> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<AFOptions> options) {
+        this.options = options;
     }
 }

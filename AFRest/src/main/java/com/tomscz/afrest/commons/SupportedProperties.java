@@ -11,7 +11,7 @@ package com.tomscz.afrest.commons;
  */
 public enum SupportedProperties {
 
-    WIDGETTYPE("widgetType"), FIELDNAME("fieldName"), LABEL("label");
+    WIDGETTYPE("widgetType"), FIELDNAME("fieldName"), LABEL("label"),OPTIONS("options");
 
     private final String name;
 

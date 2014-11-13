@@ -24,6 +24,9 @@ import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
 public abstract class BaseComponentsBuilder implements FieldBuilder {
 
     protected Component coreComponent;
+    protected BaseLayoutBuilder layoutBuilder;
+    protected JTextArea message;
+    protected JLabel fieldLabel;
     protected ResourceBundle localization;
 
     @Override
@@ -79,6 +82,21 @@ public abstract class BaseComponentsBuilder implements FieldBuilder {
     @Override
     public void setLocalization(ResourceBundle localization) {
         this.localization = localization;
+    }
+    
+    protected void buildBase(AFFieldInfo  fieldInfo){
+        //First check if build is available
+        if (!isBuildAvailable(fieldInfo)) {
+            throw new IllegalArgumentException("Input field couldn't be build for this field");
+        }
+        //Create layout builder
+        this.layoutBuilder = new BaseLayoutBuilder(fieldInfo.getLayout());
+        //Build label
+        this.fieldLabel = buildSimpleLabel(fieldInfo.getLabel());
+        //Add components to layout builder
+        layoutBuilder.addLabel(fieldLabel);
+        this.message = buildSimpleMessage();
+        layoutBuilder.addMessage(message);
     }
 
 }

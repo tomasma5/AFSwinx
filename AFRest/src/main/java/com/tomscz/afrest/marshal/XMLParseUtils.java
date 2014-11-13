@@ -38,6 +38,7 @@ class XMLParseUtils {
     // Subsections of root.
     public static final String WIDGETVALIDATIONS = "validations";
     public static final String WIDGETLAYOUT = "fieldLayout";
+    public static final String OPTIONS = "options";
 
     /**
      * This method return text value of node. Null if node is null.
@@ -126,6 +127,9 @@ class XMLParseUtils {
             fieldInfo.setId(propertyValue);
         } else if (propertyType.equals(SupportedProperties.LABEL)) {
             fieldInfo.setLabel(propertyValue);
+        }
+        else if(propertyType.equals(SupportedProperties.OPTIONS)){
+            //TODO set it to class
         }
     }
 

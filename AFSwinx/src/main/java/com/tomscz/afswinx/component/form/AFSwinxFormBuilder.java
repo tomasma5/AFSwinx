@@ -181,7 +181,8 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
             }
             // Initialize layout builder
             BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
-            for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
+            for (String fieldId : classInfo.getFieldInfo().keySet()) {
+                AFFieldInfo fieldInfo = classInfo.getFieldInfo().get(fieldId);
                 FieldBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
                 if (localization == null) {
