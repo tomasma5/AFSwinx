@@ -19,6 +19,9 @@ public class RestBuilderFactory {
     }
     
     public BaseRestBuilder getBuilder(AFSwinxConnection connection){
+        if(connection == null){
+            return new JSONBuilder();
+        }
         if(connection.getAcceptedType().equals(HeaderType.JSON)){
             return new JSONBuilder();
         }

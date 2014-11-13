@@ -77,13 +77,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             throw new IllegalStateException(
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
-        // before building data and sending, validate actual data
-        boolean isValid = validateData();
-        if(!isValid){
-            return;
-        }
-        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(getPostConnection());
-        Object data = dataBuilder.reselialize(this.resealize());
+        Object data = generatePostData();
         AFConnector<Object> dataConnector =
                 new AFConnector<Object>(getPostConnection(), Object.class);
         try {
@@ -144,6 +138,18 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         }
         // TODO Auto-generated method stub
         return dataHolder ;
+    }
+
+    @Override
+    public Object generatePostData() {
+        // before building data and sending, validate actual data
+        boolean isValid = validateData();
+        if(!isValid){
+            return null;
+        }
+        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(getPostConnection());
+        Object data = dataBuilder.reselialize(this.resealize());
+        return data;
     }
 
 }

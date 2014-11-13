@@ -49,5 +49,13 @@ public interface AFSwinxInteraction {
      * @return true if data in fields are valid, false otherwise
      */
     public boolean validateData();
+    
+    /**
+     * This method generate data which will be post. It do validations and create data object which
+     * will be posted. But post is not performed.
+     * 
+     * @return
+     */
+    public Object generatePostData();
 
 }
