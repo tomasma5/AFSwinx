@@ -1,9 +1,11 @@
 package com.tomscz.afserver.persistence.entity;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
+import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
@@ -47,7 +49,6 @@ public class Person {
     }
 
     @UiLabel(value = "person.age")
-    @UiRequired
     @UiOrder(value=3)
     public int getAge() {
         return age;
@@ -57,6 +58,7 @@ public class Person {
         this.age = age;
     }
 
+    @UIWidgetType(widgetType=SupportedWidgets.INPUTFIELD)
     public Gender getGender() {
         return gender;
     }

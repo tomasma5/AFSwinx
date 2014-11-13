@@ -32,6 +32,8 @@ public abstract class BaseConnector implements Connector {
 
     protected int statusCode = -1;
 
+    protected HttpResponse response = null;
+    
     public abstract HttpHost getHost();
 
     public abstract String getParameter();
@@ -41,7 +43,7 @@ public abstract class BaseConnector implements Connector {
     }
 
     protected InputStream getResponse(HttpRequest httpMethod) throws ConnectException {
-        HttpResponse response = null;
+        response = null;
         try {
             this.statusCode = -1;
             httpMethod.addHeader("Accept", accept.toString());
@@ -102,7 +104,7 @@ public abstract class BaseConnector implements Connector {
             } else {
                 // Throws exception
                 throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
-                        + " was unsuccessfull status code is " + this.getStatusCode());
+                        + " was unsuccessfull status code is " + this.getStatusCode()+" Response is: "+getResponse().toString());
             }
         } catch (UnsupportedEncodingException e) {
             //Do nothing yet
@@ -126,6 +128,10 @@ public abstract class BaseConnector implements Connector {
 
     public int getStatusCode() {
         return statusCode;
+    }
+    
+    public HttpResponse getResponse() {
+        return response;
     }
 
     public void close() throws ConnectException {

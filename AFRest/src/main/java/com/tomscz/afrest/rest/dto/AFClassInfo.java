@@ -51,7 +51,7 @@ public class AFClassInfo implements Serializable {
         for(String key:options.keySet()){
            afOptions.add(new AFOptions(key, options.get(key)));
        }
-        setOptionsToField(options, fieldId);
+        setOptionsToField(afOptions, fieldId);
     }
     
     private void setOptionsToField(List<AFOptions> options, String fieldId){

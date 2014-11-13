@@ -12,9 +12,14 @@ public class JSONBuilder extends BaseRestBuilder {
         JsonObject json = new JsonObject();
         for (String key : componentData.getPropertiesAndValues().keySet()) {
             String value = componentData.getPropertiesAndValues().get(key);
+            // Check if value is only empty string. if so then set to null, null value can be
+            // re-mapped to object but this "" wont
+            if (value != null && value.trim().isEmpty()) {
+                continue;
+            }
             json.addProperty(key, value);
         }
-        for(String childKey:componentData.getInnerClasses().keySet()){
+        for (String childKey : componentData.getInnerClasses().keySet()) {
             AFDataHolder value = componentData.getInnerClasses().get(childKey);
             JsonObject jsonInnerClass = (JsonObject) reselialize(value);
             json.add(childKey, jsonInnerClass);
