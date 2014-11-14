@@ -58,7 +58,7 @@ public class Person {
         this.age = age;
     }
 
-    @UIWidgetType(widgetType=SupportedWidgets.INPUTFIELD)
+    @UIWidgetType(widgetType=SupportedWidgets.LABEL)
     public Gender getGender() {
         return gender;
     }

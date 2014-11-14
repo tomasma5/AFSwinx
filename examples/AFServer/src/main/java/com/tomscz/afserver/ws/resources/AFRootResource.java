@@ -17,6 +17,7 @@ import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.inspector.AFRestSwing;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
+import com.tomscz.afserver.persistence.entity.Gender;
 import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.ws.resources.mapper.PersonMapper;
 
@@ -52,6 +53,7 @@ public class AFRootResource {
             Person p = new Person(); 
             p.setFirstName("Martin");
             p.setLastName("Tomasek");
+            p.setGender(Gender.MALE);
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
             AFDataPack data = afSwing.generateDataObject(p.getClass(), p);
             return Response.status(Response.Status.OK).entity(data).build();
