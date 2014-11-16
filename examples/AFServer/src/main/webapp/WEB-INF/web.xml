@@ -6,7 +6,7 @@
 	<display-name>AFServer</display-name>
 	<context-param>
 		<param-name>resteasy.resources</param-name>
-		<param-value>com.tomscz.afserver.ws.resources.AFRootResource</param-value>
+		<param-value>com.tomscz.afserver.ws.resources.AFRootResource,com.tomscz.afserver.ws.resources.UserResource</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>

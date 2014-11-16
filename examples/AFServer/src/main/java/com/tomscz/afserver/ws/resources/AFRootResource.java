@@ -36,7 +36,7 @@ public class AFRootResource {
     public Response getResources(@PathParam("param") String entityClass) {
         try {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
-            AFMetaModelPack data = afSwing.generateSkeleton(entityClass, null, request.getSession().getServletContext());
+            AFMetaModelPack data = afSwing.generateSkeleton(entityClass, request.getSession().getServletContext());
             data.setOptionsToFields(AFRestUtils.getEnumDataInClass("com.tomscz.afserver.peristence.entity.Person", "gender"), "gender");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (AFRestException e) {

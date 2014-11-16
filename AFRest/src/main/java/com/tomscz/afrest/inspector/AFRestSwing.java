@@ -61,21 +61,18 @@ public class AFRestSwing implements AFRest {
         }
     }
 
-    public AFMetaModelPack generateSkeleton(String entityClass, MapperType mapper,
-            ServletContext servletContext) throws AFRestException {
 
+    @Override
+    public AFMetaModelPack generateSkeleton(String fullClassName,
+            ServletContext servletContext) throws AFRestException {
         Class<?> instance = null;
         try {
-            // TODO crate automatic inspection for class
-            String className = "com.tomscz.afserver.persistence.entity." + entityClass;
-            if (!className.contains("@")) {
-                instance = Class.forName(className);
+                instance = Class.forName(fullClassName);
                 String profile = "structure";
                 Context context = init(servletContext);
                 context.getVariables().put("util", new AFRestUtils());
                 AFWeaver af = new AFWeaver(profile);
                 String widget = inspectAndTranslate(af, instance, context);
-                widget = widget.replaceAll("(\\r|\\n)", "");
                 System.out.println(widget);
                 ModelBuilder builder =
                         new ModelFactory().createModelBuilder(SupportedComponents.FORM, widget);
@@ -85,15 +82,7 @@ public class AFRestSwing implements AFRest {
                 } catch (MetamodelException e) {
                     e.printStackTrace();
                 }
-            } else {
-                // TODO Finish it
-                String[] classes = className.split("@");
-                instance = Class.forName(classes[0]);
-                for (int i = 1; i < classes.length; i++) {
-                    Field f = instance.getDeclaredField(classes[i]);
-                    instance = f.getType();
-                }
-            }
+            
         } catch (Exception e) {
             e.printStackTrace();
             throw new AFRestException();
@@ -159,7 +148,8 @@ public class AFRestSwing implements AFRest {
         return data;
     }
 
-    private List<Method> getGetters(@SuppressWarnings("rawtypes") Class clazz) throws SecurityException {
+    private List<Method> getGetters(@SuppressWarnings("rawtypes") Class clazz)
+            throws SecurityException {
         List<Method> getters = new ArrayList<Method>();
 
         for (Method method : clazz.getMethods()) {

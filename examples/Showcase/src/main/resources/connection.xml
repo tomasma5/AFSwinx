@@ -51,4 +51,13 @@
 			<content-type>Application/Json</content-type>
 		</metaModel>
 	</connection>
+	<connection id="loginForm">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/users/loginForm</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<content-type>Application/Json</content-type>
+		</metaModel>
+	</connection>
 </connectionRoot>
