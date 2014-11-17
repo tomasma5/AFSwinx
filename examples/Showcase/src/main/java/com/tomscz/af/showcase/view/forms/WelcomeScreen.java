@@ -1,4 +1,4 @@
-package com.tomscz.af.showcase.forms;
+package com.tomscz.af.showcase.view.forms;
 
 import java.awt.Component;
 import java.awt.Dimension;

@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
-import com.tomscz.af.showcase.forms.PersonFormView;
-import com.tomscz.af.showcase.forms.WelcomeScreen;
+import com.tomscz.af.showcase.view.forms.PersonFormView;
+import com.tomscz.af.showcase.view.forms.WelcomeScreen;
 
 public class Main {
 
