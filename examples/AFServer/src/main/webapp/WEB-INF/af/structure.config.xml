@@ -27,4 +27,9 @@
 		<default tag="structure/enum.xml" />
 	</mapping>
 
+	<mapping>
+		<type>boolean</type>
+		<default tag="structure/checkBox.xml" />
+	</mapping>
+
 </configuration>

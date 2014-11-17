@@ -2,6 +2,7 @@ package com.tomscz.afswinx.component.factory;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afswinx.component.builders.CheckBoxBuilder;
 import com.tomscz.afswinx.component.builders.DropDownMenuBuilder;
 import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.builders.InputFieldBuilder;
@@ -41,15 +42,20 @@ public class WidgetBuilderFactory {
     public FieldBuilder createWidgetBuilder(SupportedWidgets widget) {
         if (widget.equals(SupportedWidgets.INPUTFIELD)) {
             return new InputFieldBuilder();
-        } else if (widget.equals(SupportedWidgets.LABEL)) {
-            return new LabelFieldBuider();
-        } else if (widget.equals(SupportedWidgets.NUMBERINPUT)) {
-            return new NumberInputBuilder();
-        } else if (widget.equals(SupportedWidgets.DROPDOWNMENU)) {
-            return new DropDownMenuBuilder();
-        } else {
-            return null;
         }
+        if (widget.equals(SupportedWidgets.LABEL)) {
+            return new LabelFieldBuider();
+        }
+        if (widget.equals(SupportedWidgets.NUMBERINPUT)) {
+            return new NumberInputBuilder();
+        }
+        if (widget.equals(SupportedWidgets.DROPDOWNMENU)) {
+            return new DropDownMenuBuilder();
+        }
+        if (widget.equals(SupportedWidgets.CHECKBOX)) {
+            return new CheckBoxBuilder();
+        }
+        return new InputFieldBuilder();
     }
 
     private FieldBuilder createWidgetBuilderBasedOnRules(AFFieldInfo fieldInfo) {

@@ -10,13 +10,14 @@ import com.tomscz.af.showcase.view.forms.WelcomeScreen;
 public class Main {
 
     public static void main(String[] args) {
-//       PersonFormView personView = new PersonFormView();
+
         try {
             ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.ENGLISH_BUNDLE);
         } catch (FileNotFoundException e) {
             //TODO handle it with
         }
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
+//        WelcomeScreen welcomeScreen = new WelcomeScreen();
+      PersonFormView personView = new PersonFormView();
     }
 
 }

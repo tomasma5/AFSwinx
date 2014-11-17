@@ -104,7 +104,7 @@ public abstract class BaseConnector implements Connector {
             } else {
                 // Throws exception
                 throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
-                        + " was unsuccessfull status code is " + this.getStatusCode()+" Response is: "+getResponse().toString());
+                        + " was unsuccessfull status code is " + this.getStatusCode()+"\r\n Response is: "+getResponse().toString());
             }
         } catch (UnsupportedEncodingException e) {
             //Do nothing yet

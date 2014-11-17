@@ -21,7 +21,7 @@ import com.tomscz.afserver.persistence.entity.Gender;
 import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.ws.resources.mapper.PersonMapper;
 
-@Path("/")
+@Path("/person")
 public class AFRootResource {
 
     @javax.ws.rs.core.Context HttpServletRequest request;
@@ -30,14 +30,14 @@ public class AFRootResource {
     private WebServiceContext wsContext;
     
     @GET
-    @Path("/{param}")
+    @Path("/")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources(@PathParam("param") String entityClass) {
+    public Response getResources() {
         try {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
-            AFMetaModelPack data = afSwing.generateSkeleton(entityClass, request.getSession().getServletContext());
-            data.setOptionsToFields(AFRestUtils.getEnumDataInClass("com.tomscz.afserver.peristence.entity.Person", "gender"), "gender");
+            AFMetaModelPack data = afSwing.generateSkeleton("com.tomscz.afserver.persistence.entity.Person", request.getSession().getServletContext());
+            data.setOptionsToFields(AFRestUtils.getEnumDataInClass("com.tomscz.afserver.persistence.entity.Person", "gender"), "gender");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (AFRestException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -45,7 +45,7 @@ public class AFRootResource {
     }
     
     @GET
-    @Path("/{param}/{id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getResources(@PathParam("id") int id) {
@@ -64,10 +64,10 @@ public class AFRootResource {
     }
     
     @POST
-    @Path("/{param}")
+    @Path("/")
     @Produces({ MediaType.APPLICATION_JSON})
     @Consumes({ MediaType.APPLICATION_JSON})
-    public Response add(PersonMapper personMapper){
+    public Response add(Person personMapper){
         return Response.status(Response.Status.OK).build();
     }
 }

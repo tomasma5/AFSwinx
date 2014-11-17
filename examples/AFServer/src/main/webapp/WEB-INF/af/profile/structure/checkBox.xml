@@ -1,5 +1,5 @@
 <widget>
-	<widgetType>dropDownMenu</widgetType>
+	<widgetType>checkBox</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
 	<validations>
@@ -10,5 +10,4 @@
 		<labelPossition>$labelPossition$</labelPossition>
 		<layout>$layout$</layout>
 	</fieldLayout>
-	<options>$util.getEnum$</options>
 </widget>

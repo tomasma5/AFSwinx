@@ -3,25 +3,25 @@
 	<connection id="personWithEL">
 		<metaModel>
 			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person</endPointParameters>
+			<endPointParameters>/AFServer/rest/person</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
 			<content-type>Application/Json</content-type>
 		</metaModel>
 		<data>
 			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person/#{id}</endPointParameters>
+			<endPointParameters>/AFServer/rest/person/#{id}</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
 		</data>
 		<post>
 			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person/</endPointParameters>
+			<endPointParameters>/AFServer/rest/person/</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
 		</post>
 	</connection>
-		<connection id="person">
+	<connection id="person">
 		<metaModel>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/Person</endPointParameters>

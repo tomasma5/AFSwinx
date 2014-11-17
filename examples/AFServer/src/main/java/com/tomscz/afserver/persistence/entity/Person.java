@@ -1,11 +1,9 @@
 package com.tomscz.afserver.persistence.entity;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
-import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
-import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
@@ -17,6 +15,7 @@ public class Person {
     private Long id;
     private int age;
     private Gender gender;
+    private boolean confidentialAgreement;
 
     public Long getId() {
         return id;
@@ -58,7 +57,6 @@ public class Person {
         this.age = age;
     }
 
-    @UIWidgetType(widgetType=SupportedWidgets.LABEL)
     public Gender getGender() {
         return gender;
     }
@@ -67,5 +65,12 @@ public class Person {
         this.gender = gender;
     }
 
+    public boolean isConfidentialAgreement() {
+        return confidentialAgreement;
+    }
+
+    public void setConfidentialAgreement(boolean confidentialAgreement) {
+        this.confidentialAgreement = confidentialAgreement;
+    }
 
 }
