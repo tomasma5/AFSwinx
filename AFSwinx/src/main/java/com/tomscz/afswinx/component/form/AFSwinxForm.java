@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component.form;
 
-import java.net.ConnectException;
 import java.util.HashMap;
 
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -10,11 +9,7 @@ import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
-import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
-import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
-import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
@@ -70,23 +65,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             builder.setData(panelToSetData, field);
         }
     }
-
-    @Override
-    public void postData() throws AFSwinxConnectionException {
-        if (getPostConnection() == null) {
-            throw new IllegalStateException(
-                    "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
-        }
-        Object data = generatePostData();
-        AFConnector<Object> dataConnector =
-                new AFConnector<Object>(getPostConnection(), Object.class);
-        try {
-            dataConnector.doPost(data.toString());
-        } catch (ConnectException e) {
-            throw new AFSwinxConnectionException(e.getMessage());
-        }
-    }
-
+    
     @Override
     public boolean validateData() {
         boolean isValid = true;
@@ -139,17 +118,5 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         // TODO Auto-generated method stub
         return dataHolder ;
     }
-
-    @Override
-    public Object generatePostData() {
-        // before building data and sending, validate actual data
-        boolean isValid = validateData();
-        if(!isValid){
-            return null;
-        }
-        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(getPostConnection());
-        Object data = dataBuilder.reselialize(this.resealize());
-        return data;
-    }
-
+    
 }

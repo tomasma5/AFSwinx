@@ -11,6 +11,8 @@ import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
+import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
+import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 
 /**
  * This is abstract top level component. This components are used to hold another concrete
@@ -56,6 +58,35 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
             return dataConnector.getContent();
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
+        }
+    }
+    
+    @Override
+    public Object generatePostData() {
+        // before building data and sending, validate actual data
+        boolean isValid = validateData();
+        if(!isValid){
+            return null;
+        }
+        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(getPostConnection());
+        Object data = dataBuilder.reselialize(this.resealize());
+        return data;
+    }
+    
+    @Override
+    public void postData() throws AFSwinxConnectionException {
+        if (getPostConnection() == null) {
+            throw new IllegalStateException(
+                    "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
+        }
+        validateData();
+        Object data = generatePostData();
+        AFConnector<Object> dataConnector =
+                new AFConnector<Object>(getPostConnection(), Object.class);
+        try {
+            dataConnector.doPost(data.toString());
+        } catch (ConnectException e) {
+            throw new AFSwinxConnectionException(e.getMessage());
         }
     }
 
