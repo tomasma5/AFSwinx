@@ -1,0 +1,10 @@
+        try {
+            AFSwinxForm form =
+                    AFSwinx.getInstance().getFormBuilder()
+                            .initBuilder(loginFormName, connectionFile, "loginForm")
+                            .setLocalization(ApplicationContext.getInstance().getLocalization())
+                            .buildComponent();
+        } catch (AFSwinxBuildException e) {
+            dialogs.failed("afswinx.build.title.failed", "afswinx.build.text.failed",
+                    e.getMessage());
+        }
