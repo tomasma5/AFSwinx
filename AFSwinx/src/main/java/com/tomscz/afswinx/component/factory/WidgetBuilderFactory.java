@@ -8,6 +8,7 @@ import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.builders.InputFieldBuilder;
 import com.tomscz.afswinx.component.builders.LabelFieldBuider;
 import com.tomscz.afswinx.component.builders.NumberInputBuilder;
+import com.tomscz.afswinx.component.builders.TextAreaBuilder;
 
 public class WidgetBuilderFactory {
 
@@ -31,6 +32,8 @@ public class WidgetBuilderFactory {
             fieldBuilder = createWidgetBuilder(fieldInfo.getWidgetType());
         } else {
             fieldBuilder = createWidgetBuilderBasedOnRules(fieldInfo);
+            //If widgetType is not set in fieldInfo then set it locally
+            fieldInfo.setWidgetType(fieldBuilder.getWidgetType());
         }
 
         if (fieldBuilder == null) {
@@ -55,11 +58,14 @@ public class WidgetBuilderFactory {
         if (widget.equals(SupportedWidgets.CHECKBOX)) {
             return new CheckBoxBuilder();
         }
+        if(widget.equals(SupportedWidgets.TEXTAREA)){
+            return new TextAreaBuilder();
+        }
         return new InputFieldBuilder();
     }
 
     private FieldBuilder createWidgetBuilderBasedOnRules(AFFieldInfo fieldInfo) {
-        SupportedWidgets widget = null;
+        SupportedWidgets widget = SupportedWidgets.LABEL;
         // First do candidate based on options, if there are options.
         if (fieldInfo.getOptions() != null && !fieldInfo.getOptions().isEmpty()) {
 

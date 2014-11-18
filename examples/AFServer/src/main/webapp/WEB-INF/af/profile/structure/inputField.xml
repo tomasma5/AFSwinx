@@ -1,5 +1,5 @@
 <widget>
-	<widgetType>inputField</widgetType>
+	<widgetType>$widgetType$</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
 	<validations>

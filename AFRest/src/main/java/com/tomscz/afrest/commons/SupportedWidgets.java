@@ -11,7 +11,7 @@ package com.tomscz.afrest.commons;
 public enum SupportedWidgets {
 
     INPUTFIELD("inputField"), LABEL("label"), NUMBERINPUT("numberInput"), DROPDOWNMENU(
-            "dropDownMenu"), CHECKBOX("checkBox");
+            "dropDownMenu"), CHECKBOX("checkBox"), TEXTAREA("textArea");
 
     private final String name;
 

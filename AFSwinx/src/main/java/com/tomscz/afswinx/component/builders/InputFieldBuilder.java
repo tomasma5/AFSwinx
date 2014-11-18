@@ -1,7 +1,9 @@
 package com.tomscz.afswinx.component.builders;
 
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.builders.abstraction.BaseComponentsBuilder;
@@ -17,6 +19,10 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 public class InputFieldBuilder extends BaseComponentsBuilder {
 
     private static final int DEFAULT_NUMBER_OF_COLUMS = 10;
+
+    public InputFieldBuilder() {
+        widgetType = SupportedWidgets.INPUTFIELD;
+    }
 
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
@@ -40,7 +46,7 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
     @Override
     public void setData(AFSwinxPanel panel, AFData data) {
         if (panel.getDataHolder() != null) {
-            JTextField textField = (JTextField) panel.getDataHolder();
+            JTextComponent textField = (JTextComponent) panel.getDataHolder();
             textField.setText(data.getValue());
         }
     }
@@ -48,7 +54,7 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
     @Override
     public Object getData(AFSwinxPanel panel) {
         if (panel.getDataHolder() != null) {
-            JTextField textField = (JTextField) panel.getDataHolder();
+            JTextComponent textField = (JTextField) panel.getDataHolder();
             return textField.getText();
         }
         return null;

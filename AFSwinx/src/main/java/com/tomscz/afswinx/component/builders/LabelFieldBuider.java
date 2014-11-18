@@ -2,13 +2,18 @@ package com.tomscz.afswinx.component.builders;
 
 import javax.swing.JLabel;
 
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.builders.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 
 public class LabelFieldBuider extends BaseComponentsBuilder {
-
+    
+    public LabelFieldBuider(){
+        widgetType = SupportedWidgets.LABEL;
+    }
+    
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
         if (!isBuildAvailable(field)) {

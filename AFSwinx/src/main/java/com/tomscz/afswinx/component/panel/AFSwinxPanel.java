@@ -71,6 +71,10 @@ public class AFSwinxPanel extends JPanel {
     public JComponent getDataHolder() {
         return dataHolder;
     }
+    
+    public void setDataHolder(JComponent dataHolder){
+        this.dataHolder = dataHolder;
+    }
 
     public JComponent getLabelHolder() {
         return labelHolder;

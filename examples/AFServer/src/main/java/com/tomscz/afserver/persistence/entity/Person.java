@@ -1,9 +1,11 @@
 package com.tomscz.afserver.persistence.entity;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
+import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
@@ -28,6 +30,7 @@ public class Person {
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.TWOCOLUMNSLAYOUT, layoutOrientation = LayoutOrientation.AXISX)
     @UiLabel("person.lastName")
     @UiOrder(value=2)
+    @UIWidgetType(widgetType=SupportedWidgets.TEXTAREA)
     public String getLastName() {
         return lastName;
     }

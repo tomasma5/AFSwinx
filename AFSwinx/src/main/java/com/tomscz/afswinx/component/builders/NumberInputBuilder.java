@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.builders;
 
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.validation.NumberValidator;
@@ -14,6 +15,10 @@ import com.tomscz.afswinx.validation.NumberValidator;
  */
 public class NumberInputBuilder extends InputFieldBuilder {
 
+    public NumberInputBuilder(){
+        widgetType = SupportedWidgets.NUMBERINPUT;
+    }
+    
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
         AFSwinxPanel panel = super.buildComponent(fieldInfo);

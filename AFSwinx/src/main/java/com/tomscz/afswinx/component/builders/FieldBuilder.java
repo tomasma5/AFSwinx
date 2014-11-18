@@ -2,6 +2,7 @@ package com.tomscz.afswinx.component.builders;
 
 import java.util.ResourceBundle;
 
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
@@ -39,5 +40,7 @@ public interface FieldBuilder {
      * @param localization which will be used to translate text
      */
     public void setLocalization(ResourceBundle localization);
+    
+    public SupportedWidgets getWidgetType();
 
 }

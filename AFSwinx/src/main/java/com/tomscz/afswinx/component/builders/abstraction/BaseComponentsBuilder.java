@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.component.builders.FieldBuilder;
@@ -28,7 +29,8 @@ public abstract class BaseComponentsBuilder implements FieldBuilder {
     protected JTextArea message;
     protected JLabel fieldLabel;
     protected ResourceBundle localization;
-
+    protected SupportedWidgets widgetType;
+    
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
         if (fieldWithLabel != null) return true;
@@ -97,6 +99,10 @@ public abstract class BaseComponentsBuilder implements FieldBuilder {
         layoutBuilder.addLabel(fieldLabel);
         this.message = buildSimpleMessage();
         layoutBuilder.addMessage(message);
+    }
+    
+    public SupportedWidgets getWidgetType(){
+        return widgetType;
     }
 
 }
