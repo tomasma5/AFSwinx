@@ -29,7 +29,7 @@ import com.tomscz.afswinx.rest.connection.ConnectionParser;
  * 
  * @since 1.0.0.
  */
-public class AFSwinxFormBuilder implements ComponentBuilder {
+public class AFSwinxFormBuilder implements ComponentBuilder<AFSwinxFormBuilder> {
 
     private String componentKeyName;
 
@@ -55,6 +55,7 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
      *        null no request is send
      * @return it returns this builder which could be used to build {@link AFSwinxForm}
      */
+    @Override
     public AFSwinxFormBuilder initBuilder(String componentKeyName,
             AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
             AFSwinxConnection postConnection) {
@@ -76,6 +77,7 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
      * @param connectionValue value which will be added to connection configuration based on EL.
      * @return it returns this builder which could be used to build {@link AFSwinxForm}
      */
+    @Override
     public AFSwinxFormBuilder initBuilder(String componentKeyName, File connectionConfiguration,
             String connectionKey, String connectionValue) {
         this.componentKeyName = componentKeyName;
@@ -89,12 +91,14 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
      * are connection types, which are used to retrieve model definitions, data and post data back.
+     * 
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration file in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
      * @return it returns this builder which could be used to build {@link AFSwinxForm}
      */
+    @Override
     public AFSwinxFormBuilder initBuilder(String componentKeyName, File connectionConfiguration,
             String connectionKey) {
         this.componentKeyName = componentKeyName;
@@ -106,6 +110,7 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
      * are connection types, which are used to retrieve model definitions, data and post data back.
+     * 
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration file in which will be found connection
@@ -113,6 +118,7 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
      * @param connectionParameters which will be added to connection configuration file based on EL.
      * @return it returns this builder which could be used to build {@link AFSwinxForm}
      */
+    @Override
     public AFSwinxFormBuilder initBuilder(String componentKeyName, File connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters) {
         this.componentKeyName = componentKeyName;
@@ -122,18 +128,16 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public AFSwinxFormBuilder setLocalization(ResourceBundle localization) {
         this.localization = localization;
         return this;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public AFSwinxForm buildComponent() throws AFSwinxBuildException {
         AFSwinxForm form;
-        //Obtaion model connection
+        // Obtaion model connection
         if (modelConnection != null) {
             form = new AFSwinxForm(modelConnection, dataConnection, postConnection);
         } else if (connectionKey != null && connectionConfiguration != null) {
@@ -146,14 +150,14 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
                     new AFSwinxForm(connections.getMetamodelConnection(),
                             connections.getDataConnection(), connections.getPostConnection());
         } else {
-            //Model connection is important if it could be found then throw exception
+            // Model connection is important if it could be found then throw exception
             throw new AFSwinxBuildException(
                     "There is error during building AFSwinxForm. Connection was not specified. Did you used initBuilder method before build?");
         }
         try {
-            //Build component
+            // Build component
             this.buildComponent(form);
-            //Obtain data
+            // Obtain data
             AFDataPack data = form.getData();
             form.fillData(data);
             AFSwinx.getInstance().addComponent(form, componentKeyName);
@@ -165,6 +169,7 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
 
     /**
      * This method will build form based on metamodel
+     * 
      * @param form which will be build
      * @throws AFSwinxConnectionException if exception during retrieve metamodel ocurre
      */
@@ -198,6 +203,7 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
 
     /**
      * This method add component which will be created to panel and layout builder
+     * 
      * @param panelToAdd new panel which will be add
      * @param layoutBuilder builder which holds all panels in this form
      * @param form current form
@@ -209,5 +215,4 @@ public class AFSwinxFormBuilder implements ComponentBuilder {
         panelToAdd.setAfParent(form);
         layoutBuilder.addComponent(panelToAdd);
     }
-
 }
