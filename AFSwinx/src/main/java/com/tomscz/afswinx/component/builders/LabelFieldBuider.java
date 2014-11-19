@@ -31,8 +31,8 @@ public class LabelFieldBuider extends BaseComponentsBuilder {
 
     @Override
     public void setData(AFSwinxPanel panel, AFData data) {
-        if (panel.getDataHolder() != null) {
-            JLabel dataLabel = (JLabel) panel.getDataHolder();
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+            JLabel dataLabel = (JLabel) panel.getDataHolder().get(0);
             dataLabel.setText(data.getValue());
         }
 
@@ -40,8 +40,8 @@ public class LabelFieldBuider extends BaseComponentsBuilder {
 
     @Override
     public Object getData(AFSwinxPanel panel) {
-        if (panel.getDataHolder() != null) {
-            JLabel dataLabel = (JLabel) panel.getDataHolder();
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+            JLabel dataLabel = (JLabel) panel.getDataHolder().get(0);
             return dataLabel.getText();
         }
         return null;

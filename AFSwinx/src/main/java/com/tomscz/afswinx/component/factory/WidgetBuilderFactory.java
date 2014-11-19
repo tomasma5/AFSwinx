@@ -8,6 +8,7 @@ import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.builders.InputFieldBuilder;
 import com.tomscz.afswinx.component.builders.LabelFieldBuider;
 import com.tomscz.afswinx.component.builders.NumberInputBuilder;
+import com.tomscz.afswinx.component.builders.OptionBuilder;
 import com.tomscz.afswinx.component.builders.TextAreaBuilder;
 
 public class WidgetBuilderFactory {
@@ -43,13 +44,13 @@ public class WidgetBuilderFactory {
     }
 
     public FieldBuilder createWidgetBuilder(SupportedWidgets widget) {
-        if (widget.equals(SupportedWidgets.INPUTFIELD)) {
+        if (widget.equals(SupportedWidgets.TEXTFIELD)) {
             return new InputFieldBuilder();
         }
         if (widget.equals(SupportedWidgets.LABEL)) {
             return new LabelFieldBuider();
         }
-        if (widget.equals(SupportedWidgets.NUMBERINPUT)) {
+        if (widget.equals(SupportedWidgets.NUMBERFIELD)) {
             return new NumberInputBuilder();
         }
         if (widget.equals(SupportedWidgets.DROPDOWNMENU)) {
@@ -60,6 +61,9 @@ public class WidgetBuilderFactory {
         }
         if(widget.equals(SupportedWidgets.TEXTAREA)){
             return new TextAreaBuilder();
+        }
+        if(widget.equals(SupportedWidgets.OPTION)){
+            return new OptionBuilder();
         }
         return new InputFieldBuilder();
     }

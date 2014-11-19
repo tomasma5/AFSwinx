@@ -25,7 +25,7 @@ import com.tomscz.afswinx.validation.exception.ValidationException;
 public class AFSwinxPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private JComponent dataHolder;
+    private List<JComponent> dataHolder;
     private JComponent labelHolder;
     private JTextArea message;
     private SupportedWidgets widgetType;
@@ -38,24 +38,31 @@ public class AFSwinxPanel extends JPanel {
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder) {
         this.panelId = panelId;
         this.widgetType = widgetType;
-        this.dataHolder = dataHolder;
+        addDataHolderComponent(dataHolder);
     }
 
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder,
             JComponent labelHolder) {
         this.panelId = panelId;
         this.widgetType = widgetType;
-        this.dataHolder = dataHolder;
         this.labelHolder = labelHolder;
+        addDataHolderComponent(dataHolder);
+    }
+    
+    public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent labelHolder, JTextArea message) {
+        this.panelId = panelId;
+        this.widgetType = widgetType;
+        this.labelHolder = labelHolder;
+        this.message = message;
     }
 
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder,
             JComponent labelHolder, JTextArea message) {
         this.panelId = panelId;
         this.widgetType = widgetType;
-        this.dataHolder = dataHolder;
         this.labelHolder = labelHolder;
         this.message = message;
+        addDataHolderComponent(dataHolder);
     }
 
     public void validateModel() throws ValidationException {
@@ -68,12 +75,19 @@ public class AFSwinxPanel extends JPanel {
         }
     }
 
-    public JComponent getDataHolder() {
+    public List<JComponent> getDataHolder() {
         return dataHolder;
     }
     
-    public void setDataHolder(JComponent dataHolder){
+    public void setDataHolder(List<JComponent> dataHolder){
         this.dataHolder = dataHolder;
+    }
+    
+    public void addDataHolderComponent(JComponent dataHolder){
+        if(this.dataHolder == null){
+            this.dataHolder = new ArrayList<JComponent>();
+        }
+        this.dataHolder.add(dataHolder);
     }
 
     public JComponent getLabelHolder() {

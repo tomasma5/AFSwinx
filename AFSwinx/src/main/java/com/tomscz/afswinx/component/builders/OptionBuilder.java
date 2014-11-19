@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.builders;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
@@ -10,20 +11,21 @@ import com.tomscz.afswinx.component.builders.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.swing.component.AFOptionToAFSwinxOption;
 import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
-import com.tomscz.afswinx.swing.component.JCheckBox;
+import com.tomscz.afswinx.swing.component.JRadioButton;
 
 /**
- * This is builder which can build {@link JCheckBox} component.
+ * This is builder which can build {@link JRadioButton}.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
  * @since 1.0.0.
  */
-public class CheckBoxBuilder extends BaseComponentsBuilder {
+public class OptionBuilder extends BaseComponentsBuilder {
 
-    public CheckBoxBuilder() {
-        widgetType = SupportedWidgets.CHECKBOX;
+    public OptionBuilder() {
+        widgetType = SupportedWidgets.OPTION;
     }
+
 
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
@@ -31,24 +33,20 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), fieldLabel, message);
+        ButtonGroup buttonGroup = new ButtonGroup();
         if (field.getOptions() != null) {
             AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
             for (AFOptions option : field.getOptions()) {
                 AFComponentDataHolder optionToAdd = converter.convert(option, localization);
                 if (optionToAdd != null) {
-                    JCheckBox<AFComponentDataHolder> checkBox =
-                            new JCheckBox<AFComponentDataHolder>(optionToAdd);
-                    checkBox.setText(optionToAdd.getValueToDisplay());
-                    layoutBuilder.addComponent(checkBox);
-                    afPanel.addDataHolderComponent(checkBox);
+                    JRadioButton<AFComponentDataHolder> radioButton =
+                            new JRadioButton<AFComponentDataHolder>(optionToAdd);
+                    radioButton.setText(optionToAdd.getValueToDisplay());
+                    buttonGroup.add(radioButton);
+                    layoutBuilder.addComponent(radioButton);
+                    afPanel.addDataHolderComponent(radioButton);
                 }
             }
-        } else {
-            AFComponentDataHolder option = new AFComponentDataHolder("true", "true");
-            JCheckBox<AFComponentDataHolder> checkBox =
-                    new JCheckBox<AFComponentDataHolder>(option);
-            layoutBuilder.addComponent(checkBox);
-            afPanel.addDataHolderComponent(checkBox);
         }
         // Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
@@ -59,15 +57,15 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
 
     @Override
     public void setData(AFSwinxPanel panel, AFData data) {
-        if (panel.getDataHolder() != null && data.getValue() != null
-                && !panel.getDataHolder().isEmpty()) {
+        if (panel != null && panel.getDataHolder() != null && data != null) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
-                JCheckBox<AFComponentDataHolder> checkBox =
-                        (JCheckBox<AFComponentDataHolder>) component;
-                AFComponentDataHolder dataHolder = checkBox.getDataHolder();
-                if (dataHolder.getValue().equals(data.getValue())) {
-                    checkBox.setSelected(true);
+                JRadioButton<AFComponentDataHolder> radioButton =
+                        (JRadioButton<AFComponentDataHolder>) component;
+                AFComponentDataHolder concereteDataHolder = radioButton.getDataHolder();
+                if (concereteDataHolder.getValue().equals(data.getValue())) {
+                    radioButton.setSelected(true);
+                    return;
                 }
             }
         }
@@ -75,14 +73,14 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
 
     @Override
     public Object getData(AFSwinxPanel panel) {
-        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+        if (panel != null && panel.getDataHolder() != null) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
-                JCheckBox<AFComponentDataHolder> checkBox =
-                        (JCheckBox<AFComponentDataHolder>) component;
-                AFComponentDataHolder dataHolder = checkBox.getDataHolder();
-                if (checkBox.isSelected()) {
-                    return String.valueOf(dataHolder.getKey());
+                JRadioButton<AFComponentDataHolder> radioButton =
+                        (JRadioButton<AFComponentDataHolder>) component;
+                AFComponentDataHolder concereteDataHolder = radioButton.getDataHolder();
+                if (radioButton.isSelected()) {
+                    return concereteDataHolder.getKey();
                 }
             }
         }

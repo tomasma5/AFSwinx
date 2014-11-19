@@ -48,9 +48,9 @@ public class DropDownMenuBuilder extends BaseComponentsBuilder {
 
     @Override
     public void setData(AFSwinxPanel panel, AFData data) {
-        if (panel.getDataHolder() != null) {
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             @SuppressWarnings("unchecked")
-            JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder();
+            JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder().get(0);
             AFOptions option = new AFOptions(data.getKey(), data.getValue());
             comboBox.setSelectedItem(option);
         }
@@ -59,9 +59,9 @@ public class DropDownMenuBuilder extends BaseComponentsBuilder {
 
     @Override
     public Object getData(AFSwinxPanel panel) {
-        if (panel.getDataHolder() != null) {
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             @SuppressWarnings("unchecked")
-            JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder();
+            JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder().get(0);
             AFOptions selectedItem = (AFOptions) comboBox.getSelectedItem();
             return selectedItem.getKey();
         }

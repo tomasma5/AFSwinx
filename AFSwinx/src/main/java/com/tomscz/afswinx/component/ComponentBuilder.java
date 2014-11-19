@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
-import com.tomscz.afswinx.component.form.AFSwinxForm;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 
 /**
  * This interface specify operation which must provide every builder which is used to build
- * {@link AFSwinxTopLevelComponent}
+ * {@link AFSwinxTopLevelComponent}. The generic class T should be the same as is class of builder
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -37,7 +36,6 @@ public interface ComponentBuilder<T> {
      */
     public AFSwinxTopLevelComponent buildComponent() throws AFSwinxBuildException;
 
-
     /**
      * This method init builder. It set existed connection to builder. There are connection types,
      * which are used to retrieve model definitions, data and post data back.
@@ -49,7 +47,7 @@ public interface ComponentBuilder<T> {
      *        empty
      * @param postConnection connection to end point where will be send update or insert request if
      *        null no request is send
-     * @return it returns this builder which could be used to build {@link AFSwinxForm}
+     * @return it returns this builder which could be used to build
      */
     public T initBuilder(String componentKeyName, AFSwinxConnection modelConnection,
             AFSwinxConnection dataConnection, AFSwinxConnection postConnection);
@@ -63,7 +61,7 @@ public interface ComponentBuilder<T> {
      * @param connectionConfiguration file in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionValue value which will be added to connection configuration based on EL.
-     * @return it returns this builder which could be used to build {@link AFSwinxForm}
+     * @return it returns this builder which could be used to build
      */
     public T initBuilder(String componentKeyName, File connectionConfiguration,
             String connectionKey, String connectionValue);
@@ -76,7 +74,7 @@ public interface ComponentBuilder<T> {
      *        staff with it
      * @param connectionConfiguration file in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
-     * @return it returns this builder which could be used to build {@link AFSwinxForm}
+     * @return it returns this builder which could be used to build
      */
     public T initBuilder(String componentKeyName, File connectionConfiguration,
             String connectionKey);
@@ -90,7 +88,7 @@ public interface ComponentBuilder<T> {
      * @param connectionConfiguration file in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionParameters which will be added to connection configuration file based on EL.
-     * @return it returns this builder which could be used to build {@link AFSwinxForm}
+     * @return it returns this builder which could be used to build
      */
     public T initBuilder(String componentKeyName, File connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters);

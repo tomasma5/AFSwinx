@@ -21,7 +21,7 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
     private static final int DEFAULT_NUMBER_OF_COLUMS = 10;
 
     public InputFieldBuilder() {
-        widgetType = SupportedWidgets.INPUTFIELD;
+        widgetType = SupportedWidgets.TEXTFIELD;
     }
 
     @Override
@@ -45,16 +45,16 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
 
     @Override
     public void setData(AFSwinxPanel panel, AFData data) {
-        if (panel.getDataHolder() != null) {
-            JTextComponent textField = (JTextComponent) panel.getDataHolder();
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+            JTextComponent textField = (JTextComponent) panel.getDataHolder().get(0);
             textField.setText(data.getValue());
         }
     }
 
     @Override
     public Object getData(AFSwinxPanel panel) {
-        if (panel.getDataHolder() != null) {
-            JTextComponent textField = (JTextField) panel.getDataHolder();
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+            JTextComponent textField = (JTextComponent) panel.getDataHolder().get(0);
             return textField.getText();
         }
         return null;

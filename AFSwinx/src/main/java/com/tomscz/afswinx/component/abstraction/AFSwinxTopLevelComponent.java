@@ -90,4 +90,10 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
         }
     }
 
+    @Override
+    public void changeLocalization(ResourceBundle localization) {
+        // TODO Auto-generated method stub
+        
+    }
+    
 }

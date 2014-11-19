@@ -16,7 +16,7 @@ import com.tomscz.afswinx.validation.NumberValidator;
 public class NumberInputBuilder extends InputFieldBuilder {
 
     public NumberInputBuilder(){
-        widgetType = SupportedWidgets.NUMBERINPUT;
+        widgetType = SupportedWidgets.NUMBERFIELD;
     }
     
     @Override

@@ -60,6 +60,7 @@ public class Person {
         this.age = age;
     }
 
+    @UIWidgetType(widgetType=SupportedWidgets.CHECKBOX)
     public Gender getGender() {
         return gender;
     }
