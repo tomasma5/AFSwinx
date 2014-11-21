@@ -2,7 +2,6 @@ package com.tomscz.afrest.inspector;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import com.tomscz.afrest.marshal.ModelFactory;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
-import com.tomscz.afrest.ws.mappers.MapperType;
 
 public class AFRestSwing implements AFRest {
 
@@ -67,10 +65,10 @@ public class AFRestSwing implements AFRest {
             ServletContext servletContext) throws AFRestException {
         Class<?> instance = null;
         try {
-                instance = Class.forName(fullClassName);
+                instance = Class.forName(fullClassName);    
                 String profile = "structure";
                 Context context = init(servletContext);
-                context.getVariables().put("util", new AFRestUtils());
+                context.setLayout("templates/structure.xml");
                 AFWeaver af = new AFWeaver(profile);
                 String widget = inspectAndTranslate(af, instance, context);
                 System.out.println(widget);

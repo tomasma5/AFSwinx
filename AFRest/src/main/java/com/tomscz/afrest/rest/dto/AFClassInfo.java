@@ -13,6 +13,7 @@ public class AFClassInfo implements Serializable {
     private String name;
     private TopLevelLayout layout;
     private HashMap<String, AFFieldInfo> fieldInfo;
+    private List<AFClassInfo> innerClasses;
 
     public void addFieldInfo(AFFieldInfo fieldInfoToAdd) {
         if (this.fieldInfo == null) {
@@ -20,6 +21,13 @@ public class AFClassInfo implements Serializable {
         }
         this.fieldInfo.put(fieldInfoToAdd.getId(),fieldInfoToAdd);
 
+    }
+    
+    public void addInnerClass(AFClassInfo classInfoToAdd){
+        if(innerClasses == null){
+            innerClasses = new ArrayList<AFClassInfo>();
+        }
+        innerClasses.add(classInfoToAdd);
     }
 
     public String getName() {
@@ -67,6 +75,14 @@ public class AFClassInfo implements Serializable {
            afOtions.add(new AFOptions(option, option));
         }
         setOptionsToField(afOtions, fieldId);
+    }
+
+    public List<AFClassInfo> getInnerClasses() {
+        return innerClasses;
+    }
+
+    public void setInnerClasses(List<AFClassInfo> innerClasses) {
+        this.innerClasses = innerClasses;
     }
 
 }

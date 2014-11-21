@@ -1,5 +1,7 @@
 package com.tomscz.afserver.persistence.entity;
 
+import java.util.List;
+
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
@@ -18,6 +20,8 @@ public class Person {
     private int age;
     private Gender gender;
     private boolean confidentialAgreement;
+    private Address address;
+    private List<Address> adresses;
 
     public Long getId() {
         return id;
@@ -75,6 +79,23 @@ public class Person {
 
     public void setConfidentialAgreement(boolean confidentialAgreement) {
         this.confidentialAgreement = confidentialAgreement;
+    }
+
+    @UiOrder(value=0)
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Address> getAdresses() {
+        return adresses;
+    }
+
+    public void setAdresses(List<Address> adresses) {
+        this.adresses = adresses;
     }
 
 }

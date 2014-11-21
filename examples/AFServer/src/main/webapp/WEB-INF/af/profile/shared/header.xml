@@ -1,5 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <afRestEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<entityField>$fragment$</entityField>
-<mainLayoutOrientation>AxisX</mainLayoutOrientation>
-<mainLayoutDefinition>OneColumnLayout</mainLayoutDefinition>
+<entityName>$fragment$</entityName>

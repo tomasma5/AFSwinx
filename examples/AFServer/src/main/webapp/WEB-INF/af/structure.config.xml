@@ -32,4 +32,9 @@
 		<default tag="structure/checkBox.xml" />
 	</mapping>
 
+	<mapping>
+		<type>Address</type>
+		<default tag="structure/entity.xml" />
+	</mapping>
+
 </configuration>

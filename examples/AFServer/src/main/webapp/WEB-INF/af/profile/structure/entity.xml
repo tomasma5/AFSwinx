@@ -1,0 +1,4 @@
+<entityClass>
+	<entityFieldType>$DataTypeFullClassName$</entityFieldType>
+	<fieldName>$fieldName$</fieldName>
+</entityClass>
