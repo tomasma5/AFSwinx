@@ -1,5 +1,7 @@
 package com.tomscz.afrest.marshal;
 
+import java.util.Stack;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -35,56 +37,89 @@ public class FormBuilder implements ModelBuilder {
                     "Model information were not initialize. Check your templates and class.");
         }
         AFMetaModelPack model = new AFMetaModelPack();
-        model.setClassInfo(transforDataToModel(metaModelInformation));
+        model.setClassInfo(parse(metaModelInformation));
         return model;
     }
 
     /**
-     * This method transform metamodel to data. Metamodel should be XML
+     * This method transform metamodel to data. Metamodel is in XML. This parser hold entity and
+     * widget order. It use modificated DFS.
      * 
      * @param metaModelInfomation model to transform
      * @return {@link AFClassInfo} which holds all information about model.
      * @throws MetamodelException if error occur during building model, then
      *         {@link MetamodelException} is thrown
      */
-    private AFClassInfo transforDataToModel(Document metaModelInfomation) throws MetamodelException {
-        // Create class info, and set top root information
-        AFClassInfo classInfo = new AFClassInfo();
-        NodeList nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.ENTITYFIELD);
-        Node n;
-        if (nodeList != null && nodeList.getLength() >= 0) {
-            n = nodeList.item(0);
-            classInfo.setName(XMLParseUtils.getTextContent(n));
+    protected AFClassInfo parse(Document metaModelInfomation) throws MetamodelException {
+        // There must exist root entity class
+        NodeList nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.ROOTCLASS);
+        if (nodeList.getLength() <= 0) {
+            return new AFClassInfo();
         }
+        // Initialize stack by root entity. It is first parsed entity. This stack will hold node
+        // which must be parsed
+        Stack<NodeFieldClass> nodesToGo = new Stack<NodeFieldClass>();
+        AFClassInfo rootAFClassInfo = new AFClassInfo();
+        nodesToGo.add(new NodeFieldClass(nodeList.item(0), rootAFClassInfo));
+        // Until there is something which must be transformed
+        while (!nodesToGo.isEmpty()) {
+            NodeFieldClass rootNodeHolder = nodesToGo.pop();
+            Node rootNode = rootNodeHolder.node;
+            // This class info will be set up
+            AFClassInfo classInfo = rootNodeHolder.classInfo;
+            NodeList childNodes = rootNode.getChildNodes();
+            // This stack holds all entity which will be parsed in another iteration. The reason why
+            // is there second stack is that it used to hold order
+            Stack<NodeFieldClass> nodeStackOrder = new Stack<NodeFieldClass>();
+            // Initialize layout even if layout could not be specify
+            TopLevelLayout layout = new TopLevelLayout();
+            classInfo.setLayout(layout);
+            for (int i = 0; i < childNodes.getLength(); i++) {
+                // Based on tag make parsing
+                Node currentNode = childNodes.item(i);
+                String nodeName = currentNode.getNodeName();
+                if (nodeName.equals(XMLParseUtils.MAINLAYOUTORIENTATION)) {
+                    String value = XMLParseUtils.getTextContent(currentNode);
+                    if (value != null && !value.trim().isEmpty()) {
+                        layout.setLayoutOrientation((LayoutOrientation) AFRestUtils
+                                .getEnumFromString(LayoutOrientation.class, value, true));
+                    }
+                } else if (nodeName.equals(XMLParseUtils.MAINLAYOUT)) {
+                    String value = XMLParseUtils.getTextContent(currentNode);
+                    if (value != null && !value.trim().isEmpty()) {
+                        layout.setLayoutDefinition((LayouDefinitions) AFRestUtils
+                                .getEnumFromString(LayouDefinitions.class, value, true));
+                    }
 
-        nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.MAINLAYOUTORIENTATION);
-        TopLevelLayout layout = new TopLevelLayout();
-        if (nodeList != null && nodeList.getLength() >= 0) {
-            n = nodeList.item(0);
-            String value = XMLParseUtils.getTextContent(n);
-            if(value != null && !value.trim().isEmpty()){
-                layout.setLayoutOrientation((LayoutOrientation)AFRestUtils.getEnumFromString(LayoutOrientation.class,value,true));
+                } else if (nodeName.equals(XMLParseUtils.WIDGETROOT)) {
+                    AFFieldInfo fieldInfo = createFieldProperties(currentNode);
+                    classInfo.addFieldInfo(fieldInfo);
+                }
+                if (nodeName.equals(XMLParseUtils.ROOTCLASS)) {
+                    // In this case, there is some another element which should be parsed create
+                    // links and add them to stack
+                    AFClassInfo child = new AFClassInfo();
+                    // Set him as child node
+                    classInfo.addInnerClass(child);
+                    nodeStackOrder.add(new NodeFieldClass(currentNode, child));
+                }
+                if (nodeName.equals(XMLParseUtils.ENTITYFIELD)) {
+                    if (classInfo.getName() == null) {
+                        classInfo.setName(XMLParseUtils.getTextContent(currentNode));
+                    }
+                }
+                if (nodeName.equals(XMLParseUtils.FIELDNAME)) {
+                    classInfo.setName(XMLParseUtils.getTextContent(currentNode));
+                }
+            }
+            // The iteration is over, on this floor. Put all from this stack to first stack to
+            // preserve order
+            while (!nodeStackOrder.isEmpty()) {
+                NodeFieldClass nodeFieldClass = nodeStackOrder.pop();
+                nodesToGo.add(nodeFieldClass);
             }
         }
-        nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.MAINLAYOUT);
-        if (nodeList != null && nodeList.getLength() >= 0) {
-            n = nodeList.item(0);
-            String value = XMLParseUtils.getTextContent(n);
-            if(value != null && !value.trim().isEmpty()){
-                layout.setLayoutDefinition((LayouDefinitions)AFRestUtils.getEnumFromString(LayouDefinitions.class,value,true));
-            }
-           
-        }
-        classInfo.setLayout(layout);
-        // TODO set main layout
-        nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.WIDGETROOT);
-        // For each widget build fieldInfo
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node widget = nodeList.item(i);
-            AFFieldInfo fieldInfo = createFieldProperties(widget);
-            classInfo.addFieldInfo(fieldInfo);
-        }
-        return classInfo;
+        return rootAFClassInfo;
     }
 
     /**
@@ -138,6 +173,22 @@ public class FormBuilder implements ModelBuilder {
 
         }
         return fieldInfo;
+    }
+
+    /**
+     * This is helper class, which hold node and classInfo.
+     * @author Martin Tomasek (martin@toms-cz.com)
+     *
+     * @since 1.0.0.
+     */
+    class NodeFieldClass {
+        public Node node;
+        public AFClassInfo classInfo;
+
+        public NodeFieldClass(Node node, AFClassInfo classInfo) {
+            this.node = node;
+            this.classInfo = classInfo;
+        }
     }
 
 }

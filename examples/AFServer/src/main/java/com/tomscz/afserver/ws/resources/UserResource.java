@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceContext;
 
 import com.tomscz.afrest.AFRestSwing;
+import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
@@ -43,7 +44,7 @@ public class UserResource {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(fullClassName);
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (AFRestException e) {
+        } catch (AFRestException | MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

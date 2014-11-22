@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<afRestEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<entity>
+		<entityName>person</entityName>
+		<entity>
+			<entityName>address</entityName>
+			<widget>
+				<widgetType />
+				<fieldName>street</fieldName>
+				<label>Street</label>
+				<validations>
+					<required />
+				</validations>
+				<fieldLayout>
+					<layoutOrientation />
+					<labelPossition />
+					<layout />
+				</fieldLayout>
+			</widget>
+			<fieldName>myAdress</fieldName>
+		</entity>
+		<widget>
+			<widgetType />
+			<fieldName>firstName</fieldName>
+			<label>person.firstName</label>
+			<validations>
+				<required>true</required>
+			</validations>
+			<fieldLayout>
+				<layoutOrientation />
+				<labelPossition />
+				<layout />
+			</fieldLayout>
+		</widget>
+		<widget>
+			<widgetType>textArea</widgetType>
+			<fieldName>lastName</fieldName>
+			<label>person.lastName</label>
+			<validations>
+				<required />
+			</validations>
+			<fieldLayout>
+				<layoutOrientation>AxisX</layoutOrientation>
+				<labelPossition>before</labelPossition>
+				<layout>TwoColumnsLayout</layout>
+			</fieldLayout>
+		</widget>
+		<widget>
+			<widgetType>numberField</widgetType>
+			<fieldName>age</fieldName>
+			<label>person.age</label>
+			<validations>
+				<required />
+			</validations>
+			<fieldLayout>
+				<layoutOrientation />
+				<labelPossition />
+				<layout />
+			</fieldLayout>
+		</widget>
+		<entity>
+			<entityName>absenceInstance</entityName>
+			<entity>
+				<entityName>absenceType</entityName>
+				<widget>
+					<widgetType>numberField</widgetType>
+					<fieldName>id</fieldName>
+					<label>Id</label>
+					<validations>
+						<required />
+					</validations>
+					<fieldLayout>
+						<layoutOrientation />
+						<labelPossition />
+						<layout />
+					</fieldLayout>
+				</widget>
+				<widget>
+					<widgetType />
+					<fieldName>name</fieldName>
+					<label>Name</label>
+					<validations>
+						<required />
+					</validations>
+					<fieldLayout>
+						<layoutOrientation />
+						<labelPossition />
+						<layout />
+					</fieldLayout>
+				</widget>
+				<fieldName>absenceType</fieldName>
+			</entity>
+			<widget>
+				<widgetType>numberField</widgetType>
+				<fieldName>duration</fieldName>
+				<label>Duration</label>
+				<validations>
+					<required />
+				</validations>
+				<fieldLayout>
+					<layoutOrientation />
+					<labelPossition />
+					<layout />
+				</fieldLayout>
+			</widget>
+			<fieldName>absence</fieldName>
+		</entity>
+		<widget>
+			<widgetType>checkBox</widgetType>
+			<fieldName>confidentialAgreement</fieldName>
+			<label>Confidential Agreement</label>
+			<validations>
+				<required />
+			</validations>
+			<fieldLayout>
+				<layoutOrientation />
+				<labelPossition />
+				<layout />
+			</fieldLayout>
+		</widget>
+		<widget>
+			<widgetType>checkBox</widgetType>
+			<fieldName>gender</fieldName>
+			<label>Gender</label>
+			<validations>
+				<required />
+			</validations>
+			<fieldLayout>
+				<layoutOrientation />
+				<labelPossition />
+				<layout />
+			</fieldLayout>
+			<options />
+		</widget>
+	</entity>
+</afRestEntity>

@@ -12,9 +12,12 @@ public class AFClassInfo implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name;
     private TopLevelLayout layout;
+    //TODO remove it, because it cant handle order
     private HashMap<String, AFFieldInfo> fieldInfo;
     private List<AFClassInfo> innerClasses;
 
+    private int order;
+    
     public void addFieldInfo(AFFieldInfo fieldInfoToAdd) {
         if (this.fieldInfo == null) {
             this.fieldInfo = new HashMap<String, AFFieldInfo>();
@@ -83,6 +86,14 @@ public class AFClassInfo implements Serializable {
 
     public void setInnerClasses(List<AFClassInfo> innerClasses) {
         this.innerClasses = innerClasses;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
 }
