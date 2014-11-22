@@ -201,6 +201,9 @@ public class ModelInspector {
                     NodeList classes =
                             partialDocument.getElementsByTagName(XMLParseUtils.ROOTCLASS);
                     Node newClass = classes.item(0);
+                    Element newClasselement = (Element) newClass;
+                    newClasselement.setAttribute("id", fieldName);
+                    newClass = (Node) newClasselement;
                     Node parent = node.getParentNode();
                     // Replace it, we replace not inspected class by its inspected content
                     parent.replaceChild(doc.adoptNode(newClass), node);

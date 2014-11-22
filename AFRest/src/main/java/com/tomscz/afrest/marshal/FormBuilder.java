@@ -3,6 +3,7 @@ package com.tomscz.afrest.marshal;
 import java.util.Stack;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -101,6 +102,12 @@ public class FormBuilder implements ModelBuilder {
                     AFClassInfo child = new AFClassInfo();
                     // Set him as child node
                     classInfo.addInnerClass(child);
+                    AFFieldInfo classFieldInfo = new AFFieldInfo();
+                    classFieldInfo.setClass(true);
+                    Element nodeE = (Element) currentNode;
+                    String id = nodeE.getAttribute("id");
+                    classFieldInfo.setId(id);
+                    classInfo.addFieldInfo(classFieldInfo);
                     nodeStackOrder.add(new NodeFieldClass(currentNode, child));
                 }
                 if (nodeName.equals(XMLParseUtils.ENTITYFIELD)) {
