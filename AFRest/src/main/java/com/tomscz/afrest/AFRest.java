@@ -1,14 +1,12 @@
-package com.tomscz.afrest.inspector;
+package com.tomscz.afrest;
 
-import javax.servlet.ServletContext;
-
-import com.tomscz.afrest.exceptions.AFRestException;
+import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 
 public interface AFRest {
     
-    public AFMetaModelPack generateSkeleton(String entityClass,ServletContext servletContext) throws AFRestException;
+    public AFMetaModelPack generateSkeleton(String entityClass) throws MetamodelException;
     public AFDataPack generateDataObject(Class<?> clazz,Object objectToGenerate) throws IllegalArgumentException;
 
 }

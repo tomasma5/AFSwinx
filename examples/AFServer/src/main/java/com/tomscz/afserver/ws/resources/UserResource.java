@@ -12,8 +12,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceContext;
 
+import com.tomscz.afrest.AFRestSwing;
 import com.tomscz.afrest.exceptions.AFRestException;
-import com.tomscz.afrest.inspector.AFRestSwing;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
 
@@ -41,7 +41,7 @@ public class UserResource {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
-            AFMetaModelPack data = afSwing.generateSkeleton(fullClassName, request.getSession().getServletContext());
+            AFMetaModelPack data = afSwing.generateSkeleton(fullClassName);
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (AFRestException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

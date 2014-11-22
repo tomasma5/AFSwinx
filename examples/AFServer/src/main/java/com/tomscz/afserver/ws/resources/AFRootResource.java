@@ -12,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.WebServiceContext;
 
+import com.tomscz.afrest.AFRestSwing;
 import com.tomscz.afrest.commons.AFRestUtils;
+import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
-import com.tomscz.afrest.inspector.AFRestSwing;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afserver.persistence.entity.Gender;
 import com.tomscz.afserver.persistence.entity.Person;
-import com.tomscz.afserver.ws.resources.mapper.PersonMapper;
 
 @Path("/person")
 public class AFRootResource {
@@ -36,10 +36,10 @@ public class AFRootResource {
     public Response getResources() {
         try {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
-            AFMetaModelPack data = afSwing.generateSkeleton("com.tomscz.afserver.persistence.entity.Person", request.getSession().getServletContext());
+            AFMetaModelPack data = afSwing.generateSkeleton("com.tomscz.afserver.persistence.entity.Person");
             data.setOptionsToFields(AFRestUtils.getEnumDataInClass("com.tomscz.afserver.persistence.entity.Person", "gender"), "gender");
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (AFRestException e) {
+        } catch (MetamodelException | AFRestException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

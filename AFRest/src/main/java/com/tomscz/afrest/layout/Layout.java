@@ -16,6 +16,8 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
  */
 public class Layout extends TopLevelLayout{
 
+    private static final long serialVersionUID = 1L;
+    
     private LabelPosition labelPosstion;
 
     public LabelPosition getLabelPosstion() {

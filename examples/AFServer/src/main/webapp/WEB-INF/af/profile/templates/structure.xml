@@ -1,6 +1,3 @@
-<class>
-	<mainLayoutOrientation>AxisX</mainLayoutOrientation>
-	<mainLayoutDefinition>OneColumnLayout</mainLayoutDefinition>
-	<fieldName>$fragment$</fieldName>
-	<af:iteration-part maxOccurs="100">$af:next$</af:iteration-part>
-</class>
+<mainLayoutOrientation>AxisX</mainLayoutOrientation>
+<mainLayoutDefinition>OneColumnLayout</mainLayoutDefinition>
+<af:iteration-part maxOccurs="100">$af:next$</af:iteration-part>

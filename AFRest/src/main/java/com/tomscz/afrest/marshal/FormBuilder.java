@@ -1,17 +1,8 @@
 package com.tomscz.afrest.marshal;
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
@@ -31,15 +22,15 @@ import com.tomscz.afrest.rest.dto.AFMetaModelPack;
  */
 public class FormBuilder implements ModelBuilder {
 
-    private String metaModelInformation;
+    private Document metaModelInformation;
 
-    public FormBuilder(String metamodelInformation) {
+    public FormBuilder(Document metamodelInformation) {
         this.metaModelInformation = metamodelInformation;
     }
 
     @Override
     public AFMetaModelPack buildModel() throws MetamodelException {
-        if (metaModelInformation == null || metaModelInformation.isEmpty()) {
+        if (metaModelInformation == null) {
             throw new MetamodelException(
                     "Model information were not initialize. Check your templates and class.");
         }
@@ -56,30 +47,17 @@ public class FormBuilder implements ModelBuilder {
      * @throws MetamodelException if error occur during building model, then
      *         {@link MetamodelException} is thrown
      */
-    private AFClassInfo transforDataToModel(String metaModelInfomation) throws MetamodelException {
-        // Try build document builder based on metamodelInformation
-        Document doc;
-        try {
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(metaModelInfomation));
-            doc = db.parse(is);
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            throw new MetamodelException(
-                    "Error during intialize DOM. Check input data or templates. String to parse is: "
-                            + metaModelInfomation + " Exception is: " + e.getLocalizedMessage());
-        }
-
+    private AFClassInfo transforDataToModel(Document metaModelInfomation) throws MetamodelException {
         // Create class info, and set top root information
         AFClassInfo classInfo = new AFClassInfo();
-        NodeList nodeList = doc.getElementsByTagName(XMLParseUtils.ENTITYFIELD);
+        NodeList nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.ENTITYFIELD);
         Node n;
         if (nodeList != null && nodeList.getLength() >= 0) {
             n = nodeList.item(0);
             classInfo.setName(XMLParseUtils.getTextContent(n));
         }
 
-        nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUTORIENTATION);
+        nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.MAINLAYOUTORIENTATION);
         TopLevelLayout layout = new TopLevelLayout();
         if (nodeList != null && nodeList.getLength() >= 0) {
             n = nodeList.item(0);
@@ -88,7 +66,7 @@ public class FormBuilder implements ModelBuilder {
                 layout.setLayoutOrientation((LayoutOrientation)AFRestUtils.getEnumFromString(LayoutOrientation.class,value,true));
             }
         }
-        nodeList = doc.getElementsByTagName(XMLParseUtils.MAINLAYOUT);
+        nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.MAINLAYOUT);
         if (nodeList != null && nodeList.getLength() >= 0) {
             n = nodeList.item(0);
             String value = XMLParseUtils.getTextContent(n);
@@ -99,7 +77,7 @@ public class FormBuilder implements ModelBuilder {
         }
         classInfo.setLayout(layout);
         // TODO set main layout
-        nodeList = doc.getElementsByTagName(XMLParseUtils.WIDGETROOT);
+        nodeList = metaModelInfomation.getElementsByTagName(XMLParseUtils.WIDGETROOT);
         // For each widget build fieldInfo
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node widget = nodeList.item(i);

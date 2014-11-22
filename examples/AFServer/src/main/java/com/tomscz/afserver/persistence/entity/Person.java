@@ -20,8 +20,9 @@ public class Person {
     private int age;
     private Gender gender;
     private boolean confidentialAgreement;
-    private Address address;
+    private Address myAdress;
     private List<Address> adresses;
+    private AbsenceInstance absence;
 
     public Long getId() {
         return id;
@@ -33,8 +34,8 @@ public class Person {
 
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.TWOCOLUMNSLAYOUT, layoutOrientation = LayoutOrientation.AXISX)
     @UiLabel("person.lastName")
-    @UiOrder(value=2)
-    @UIWidgetType(widgetType=SupportedWidgets.TEXTAREA)
+    @UiOrder(value = 2)
+    @UIWidgetType(widgetType = SupportedWidgets.TEXTAREA)
     public String getLastName() {
         return lastName;
     }
@@ -45,7 +46,7 @@ public class Person {
 
     @UiRequired
     @UiLabel(value = "person.firstName")
-    @UiOrder(value=1)
+    @UiOrder(value = 1)
     public String getFirstName() {
         return firstName;
     }
@@ -55,7 +56,7 @@ public class Person {
     }
 
     @UiLabel(value = "person.age")
-    @UiOrder(value=3)
+    @UiOrder(value = 3)
     public int getAge() {
         return age;
     }
@@ -64,7 +65,7 @@ public class Person {
         this.age = age;
     }
 
-    @UIWidgetType(widgetType=SupportedWidgets.CHECKBOX)
+    @UIWidgetType(widgetType = SupportedWidgets.CHECKBOX)
     public Gender getGender() {
         return gender;
     }
@@ -81,21 +82,29 @@ public class Person {
         this.confidentialAgreement = confidentialAgreement;
     }
 
-    @UiOrder(value=0)
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public List<Address> getAdresses() {
         return adresses;
     }
 
     public void setAdresses(List<Address> adresses) {
         this.adresses = adresses;
+    }
+
+    public AbsenceInstance getAbsence() {
+        return absence;
+    }
+
+    public void setAbsence(AbsenceInstance absence) {
+        this.absence = absence;
+    }
+
+    @UiOrder(value = 0)
+    public Address getMyAdress() {
+        return myAdress;
+    }
+
+    public void setMyAdress(Address myAdress) {
+        this.myAdress = myAdress;
     }
 
 }

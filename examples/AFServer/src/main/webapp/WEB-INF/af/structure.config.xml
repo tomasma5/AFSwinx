@@ -2,15 +2,7 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://aspectfaces.com/schema/aspectfaces"
 	xsi:schemaLocation="http://aspectfaces.com/schema/aspectfaces http://www.aspectfaces.com/schema/af-configuration-1.4.0-SNAPSHOT.xsd">
-
-	<mapping>
-		<type>Insert</type>
-		<default tag="emptyTag.xhtml" />
-		<!--<condition expression="#{not empty after and after.type.equals('image') 
-			and applyImage}" tag="html/afterImage.xhtml"/> -->
-		<!--<condition expression="#{applyHelp}" tag="html/afterHelp.xhtml" /> -->
-	</mapping>
-
+	
 	<mapping>
 		<type>String</type>
 		<default tag="structure/inputField.xml" maxLength="255" size="30" />
@@ -34,6 +26,8 @@
 
 	<mapping>
 		<type>Address</type>
+		<type>AbsenceInstance</type>
+		<type>AbsenceType</type>
 		<default tag="structure/entity.xml" />
 	</mapping>
 

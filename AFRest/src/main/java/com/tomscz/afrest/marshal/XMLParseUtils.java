@@ -1,6 +1,16 @@
 package com.tomscz.afrest.marshal;
 
+import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.commons.SupportedLayoutsProperties;
@@ -8,6 +18,7 @@ import com.tomscz.afrest.commons.SupportedProperties;
 import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedValidationsProperties;
 import com.tomscz.afrest.commons.SupportedWidgets;
+import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
@@ -26,15 +37,21 @@ import com.tomscz.afrest.rest.dto.AFValidationRule;
  * 
  * @since 1.0.0.
  */
-class XMLParseUtils {
+public class XMLParseUtils {
 
     // ROOT OF XML
     public static final String AFRESTROOT = "afRestEntity";
-    public static final String ENTITYFIELD = "entityField";
+    public static final String ENTITYFIELD = "entityName";
     public static final String MAINLAYOUT = "mainLayoutDefinition";
     public static final String MAINLAYOUTORIENTATION = "mainLayoutOrientation";
     public static final String WIDGETROOT = "widget";
-
+    public static final String ENTITYCLASS = "entityClass";
+    public static final String ROOTCLASS = "entity";
+    
+    //Subsection of entity class
+    public static final String ENTITYFIELDTYPE = "entityFieldType";
+    public static final String FIELDNAME = "fieldName";
+    
     // Subsections of root.
     public static final String WIDGETVALIDATIONS = "validations";
     public static final String WIDGETLAYOUT = "fieldLayout";
@@ -131,6 +148,27 @@ class XMLParseUtils {
         else if(propertyType.equals(SupportedProperties.OPTIONS)){
             //TODO set it to class
         }
+    }
+    
+    /**
+     * This method transform input string to {@link Document} which can be used to search via DOM, SAX or XPath,etc.
+     * @param stringToXml string which will be converted to XML
+     * @return converted document to XML.
+     * @throws MetamodelException if transformation is not possible then this exception is thrown
+     */
+    public static Document transformStringToXml(String stringToXml) throws MetamodelException{
+        Document doc;
+        try {
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            InputSource is = new InputSource();
+            is.setCharacterStream(new StringReader(stringToXml));
+            doc = db.parse(is);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            throw new MetamodelException(
+                    "Error during intialize DOM. Check input data or templates. String to parse is: "
+                            + stringToXml + " Exception is: " + e.getLocalizedMessage());
+        }
+        return doc;
     }
 
 }
