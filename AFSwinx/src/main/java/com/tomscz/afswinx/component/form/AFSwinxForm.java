@@ -53,7 +53,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
     @Override
     public void fillData(AFDataPack dataPack) {
-        if(dataPack.getClassName().isEmpty()){
+        if (dataPack.getClassName().isEmpty()) {
             return;
         }
         for (AFData field : dataPack.getData()) {
@@ -65,7 +65,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             builder.setData(panelToSetData, field);
         }
     }
-    
+
     @Override
     public boolean validateData() {
         boolean isValid = true;
@@ -106,17 +106,34 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     @Override
     public AFDataHolder resealize() {
         AFDataHolder dataHolder = new AFDataHolder();
-//        dataHolder.setClassName(getName());
         for (String key : panels.keySet()) {
-            AFSwinxPanel panel = panels.get(key); 
-            FieldBuilder fieldBuilder = WidgetBuilderFactory.getInstance()
-            .createWidgetBuilder(panel.getWidgetType());
-            Object data =fieldBuilder.getData(panel);
+            AFSwinxPanel panel = panels.get(key);
+            FieldBuilder fieldBuilder =
+                    WidgetBuilderFactory.getInstance().createWidgetBuilder(panel.getWidgetType());
+            Object data = fieldBuilder.getData(panel);
             String propertyName = panel.getPanelId();
-            dataHolder.addPropertyAndValue(propertyName, (String)data);
+            String[] roadTrace = propertyName.split("\\.");
+            if (roadTrace.length > 1) {
+                AFDataHolder startPoint = dataHolder;
+                for (int i = 0; i < roadTrace.length; i++) {
+                    String roadPoint = roadTrace[i];
+                    if (i + 1 == roadTrace.length) {
+                        startPoint.addPropertyAndValue(roadPoint, (String) data);
+                    } else {
+                        AFDataHolder roadHolder = startPoint.getInnerClassByKey(roadPoint);
+                        if (roadHolder == null) {
+                            roadHolder = new AFDataHolder();
+                            roadHolder.setClassName(roadPoint);
+                            startPoint.addInnerClass(roadHolder);
+                        }
+                        startPoint = roadHolder;
+                    }
+                }
+            } else {
+                dataHolder.addPropertyAndValue(propertyName, (String) data);
+            }
         }
-        // TODO Auto-generated method stub
-        return dataHolder ;
+        return dataHolder;
     }
-    
+
 }

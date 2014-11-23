@@ -19,7 +19,7 @@ public class JSONBuilder extends BaseRestBuilder {
             String value = componentData.getPropertiesAndValues().get(key);
             // Check if value is only empty string. if so then set to null, null value can be
             // re-mapped to object but this "" wont
-            if (value != null && value.trim().isEmpty()) {
+            if (value == null || value.trim().isEmpty()) {
                 continue;
             }
             json.addProperty(key, value);

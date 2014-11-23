@@ -79,8 +79,10 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
             throw new IllegalStateException(
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
-        validateData();
         Object data = generatePostData();
+        if(data == null){
+            return;
+        }
         AFConnector<Object> dataConnector =
                 new AFConnector<Object>(getPostConnection(), Object.class);
         try {

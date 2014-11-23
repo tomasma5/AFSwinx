@@ -32,4 +32,8 @@ public class AFDataHolder {
         propertiesAndValues.put(propertyName, value);
     }
     
+    public AFDataHolder getInnerClassByKey(String key){
+        return innerClasses.get(key);
+    }
+    
 }
