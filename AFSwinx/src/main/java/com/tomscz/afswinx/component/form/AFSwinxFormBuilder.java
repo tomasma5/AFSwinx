@@ -21,6 +21,8 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.ConnectionParser;
+import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
+import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 
 /**
  * This is form builder. This class is responsible for create {@link AFSwinxForm} component.
@@ -157,9 +159,14 @@ public class AFSwinxFormBuilder implements ComponentBuilder<AFSwinxFormBuilder> 
         try {
             // Build component
             this.buildComponent(form);
-            // Obtain data
-            AFDataPack data = form.getData();
-            form.fillData(data);
+            // Get data
+            Object o = form.getData();
+            // Based on data type make serialization
+            BaseRestBuilder dataBuilder =
+                    RestBuilderFactory.getInstance().getBuilder(form.getDataConnection());
+            AFDataPack dataPack = dataBuilder.serialize(o);
+            // Fill data to form
+            form.fillData(dataPack);
             AFSwinx.getInstance().addComponent(form, componentKeyName);
         } catch (AFSwinxConnectionException e) {
             throw new AFSwinxBuildException(e.getMessage());
@@ -186,18 +193,50 @@ public class AFSwinxFormBuilder implements ComponentBuilder<AFSwinxFormBuilder> 
             }
             // Initialize layout builder
             BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
-            for (String fieldId : classInfo.getFieldInfo().keySet()) {
-                AFFieldInfo fieldInfo = classInfo.getFieldInfo().get(fieldId);
+            buildFields(classInfo, layoutBuilder, form, "");
+            // Build layout
+            layoutBuilder.buildLayout(form);
+        }
+    }
+
+    /**
+     * This method set data to form. It build for each widget his field
+     * 
+     * @param classInfo which will be inspected
+     * @param layoutBuilder layout builder which will be used
+     * @param form which is builded
+     * @param key of current field. It is used to determine which class belongs to which fields
+     */
+    private void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
+            AFSwinxForm form, String key) {
+        //For each field
+        for (String fieldId : classInfo.getFieldInfo().keySet()) {
+            AFFieldInfo fieldInfo = classInfo.getFieldInfo().get(fieldId);
+            //If its class then inspect it recursively 
+            if (fieldInfo.getClassType()) {
+                for (AFClassInfo classInfoChildren : classInfo.getInnerClasses()) {
+                    //There could be more inner class choose the right one
+                    if (classInfoChildren.getName() != null
+                            && classInfoChildren.getName().equals(fieldInfo.getId())) {
+                        //Recursively call this method with new key, which will specify unique link on parent
+                        buildFields(classInfoChildren, layoutBuilder, form,
+                                Utils.generateKey(key, fieldId));
+                    }
+                }
+            } else {
+                //Build field
                 FieldBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
                 if (localization == null) {
                     localization = AFSwinx.getInstance().getLocalization();
                 }
                 builder.setLocalization(localization);
-                this.addComponent(builder.buildComponent(fieldInfo), layoutBuilder, form);
+                //Use generated key
+                String uniquieKey = Utils.generateKey(key, fieldId);
+                fieldInfo.setId(uniquieKey);
+                AFSwinxPanel panelToAdd = builder.buildComponent(fieldInfo);
+                this.addComponent(panelToAdd, layoutBuilder, form);
             }
-            // Build layout
-            layoutBuilder.buildLayout(form);
         }
     }
 

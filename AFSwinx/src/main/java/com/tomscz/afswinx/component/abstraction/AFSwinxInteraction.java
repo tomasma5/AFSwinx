@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
+import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 
 /**
  * This interface specify operation which should implement all afswinx components which contains
@@ -29,11 +30,11 @@ public interface AFSwinxInteraction {
      * This method get concrete data from server to model. This data are data which will be set to
      * concrete component.
      * 
-     * @return data which will be set to components. Empty data with empty
-     *         {@link AFDataPack#getClassName()} if data connection is not specify
+     * @return data which will be set to components, it could be some of {@link HeaderType} based on
+     *         connection
      * @throws AFSwinxConnectionException if exception during obtaining data to model occur.
      */
-    public AFDataPack getData() throws AFSwinxConnectionException;
+    public Object getData() throws AFSwinxConnectionException;
 
     /**
      * This method set data to model
@@ -51,7 +52,7 @@ public interface AFSwinxInteraction {
      * @return true if data in fields are valid, false otherwise
      */
     public boolean validateData();
-    
+
     /**
      * This method generate data which will be post. It do validations and create data object which
      * will be posted. But post is not performed.
@@ -59,7 +60,7 @@ public interface AFSwinxInteraction {
      * @return
      */
     public Object generatePostData();
-    
+
     public void changeLocalization(ResourceBundle localization);
 
 }

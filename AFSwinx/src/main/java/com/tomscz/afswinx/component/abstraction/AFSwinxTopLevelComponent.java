@@ -48,13 +48,13 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
     }
 
     @Override
-    public AFDataPack getData() throws AFSwinxConnectionException {
+    public Object getData() throws AFSwinxConnectionException {
         if(getDataConnection() == null){
             return new AFDataPack("");
         }
         try {
-            AFConnector<AFDataPack> dataConnector =
-                    new AFConnector<AFDataPack>(getDataConnection(), AFDataPack.class);
+            AFConnector<Object> dataConnector =
+                    new AFConnector<Object>(getDataConnection(), Object.class);
             return dataConnector.getContent();
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());

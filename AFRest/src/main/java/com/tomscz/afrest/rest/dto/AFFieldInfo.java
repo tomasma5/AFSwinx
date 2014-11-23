@@ -14,6 +14,7 @@ public class AFFieldInfo implements Serializable {
     private SupportedWidgets widgetType;
     private String id;
     private String label;
+    private boolean classType;
     private Layout layout;
     private List<AFValidationRule> rules;
     private List<AFOptions> options;
@@ -90,4 +91,13 @@ public class AFFieldInfo implements Serializable {
     public void setOptions(List<AFOptions> options) {
         this.options = options;
     }
+
+    public boolean getClassType() {
+        return classType;
+    }
+
+    public void setClassType(boolean classType) {
+        this.classType = classType;
+    }
+    
 }

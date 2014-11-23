@@ -17,7 +17,9 @@ import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
-import com.tomscz.afrest.rest.dto.data.AFDataPack;
+import com.tomscz.afserver.persistence.entity.AbsenceInstance;
+import com.tomscz.afserver.persistence.entity.AbsenceType;
+import com.tomscz.afserver.persistence.entity.Address;
 import com.tomscz.afserver.persistence.entity.Gender;
 import com.tomscz.afserver.persistence.entity.Person;
 
@@ -49,18 +51,21 @@ public class AFRootResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getResources(@PathParam("id") int id) {
-        try{
             Person p = new Person(); 
             p.setFirstName("Martin");
             p.setLastName("Tomasek");
             p.setGender(Gender.MALE);
-            AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
-            AFDataPack data = afSwing.generateDataObject(p.getClass(), p);
-            return Response.status(Response.Status.OK).entity(data).build();
-        }
-        catch(AFRestException e){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+            Address address= new Address();
+            address.setStreet("5th evenue");
+            p.setMyAdress(address);
+            AbsenceInstance firstInstance = new AbsenceInstance();
+            firstInstance.setDuration(320);
+            AbsenceType type = new AbsenceType();
+            type.setName("Dovolena");
+            type.setId(23);
+            firstInstance.setAbsenceType(type);
+            p.setAbsence(firstInstance);
+            return Response.status(Response.Status.OK).entity(p).build();
     }
     
     @POST

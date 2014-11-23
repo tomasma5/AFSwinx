@@ -48,8 +48,9 @@ public class AFSwinxPanel extends JPanel {
         this.labelHolder = labelHolder;
         addDataHolderComponent(dataHolder);
     }
-    
-    public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent labelHolder, JTextArea message) {
+
+    public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent labelHolder,
+            JTextArea message) {
         this.panelId = panelId;
         this.widgetType = widgetType;
         this.labelHolder = labelHolder;
@@ -78,13 +79,13 @@ public class AFSwinxPanel extends JPanel {
     public List<JComponent> getDataHolder() {
         return dataHolder;
     }
-    
-    public void setDataHolder(List<JComponent> dataHolder){
+
+    public void setDataHolder(List<JComponent> dataHolder) {
         this.dataHolder = dataHolder;
     }
-    
-    public void addDataHolderComponent(JComponent dataHolder){
-        if(this.dataHolder == null){
+
+    public void addDataHolderComponent(JComponent dataHolder) {
+        if (this.dataHolder == null) {
             this.dataHolder = new ArrayList<JComponent>();
         }
         this.dataHolder.add(dataHolder);

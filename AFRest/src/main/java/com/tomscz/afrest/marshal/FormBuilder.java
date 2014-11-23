@@ -103,7 +103,7 @@ public class FormBuilder implements ModelBuilder {
                     // Set him as child node
                     classInfo.addInnerClass(child);
                     AFFieldInfo classFieldInfo = new AFFieldInfo();
-                    classFieldInfo.setClass(true);
+                    classFieldInfo.setClassType(true);
                     Element nodeE = (Element) currentNode;
                     String id = nodeE.getAttribute("id");
                     classFieldInfo.setId(id);

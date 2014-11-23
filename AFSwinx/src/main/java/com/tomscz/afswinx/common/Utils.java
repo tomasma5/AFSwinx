@@ -137,5 +137,12 @@ public final class Utils {
         }
         return replacedValue.toString();
     }
+    
+    public static String generateKey(String currentKey, String fieldName){
+        if(currentKey.isEmpty()){
+            return fieldName;
+        }
+        return currentKey+"."+fieldName;
+    }
 
 }

@@ -1,7 +1,7 @@
 package com.tomscz.afrest.rest.dto.data;
 
 public class AFData {
-
+    
     private String key;
     private String value;
 
@@ -25,4 +25,5 @@ public class AFData {
     public void setValue(String value) {
         this.value = value;
     }
+    
 }
