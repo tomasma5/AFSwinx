@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -26,7 +27,7 @@ public class AFSwinxPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private List<JComponent> dataHolder;
-    private JComponent labelHolder;
+    private JLabel labelHolder;
     private JTextArea message;
     private SupportedWidgets widgetType;
     private String panelId;
@@ -42,14 +43,14 @@ public class AFSwinxPanel extends JPanel {
     }
 
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder,
-            JComponent labelHolder) {
+            JLabel labelHolder) {
         this.panelId = panelId;
         this.widgetType = widgetType;
         this.labelHolder = labelHolder;
         addDataHolderComponent(dataHolder);
     }
 
-    public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent labelHolder,
+    public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JLabel labelHolder,
             JTextArea message) {
         this.panelId = panelId;
         this.widgetType = widgetType;
@@ -58,7 +59,7 @@ public class AFSwinxPanel extends JPanel {
     }
 
     public AFSwinxPanel(String panelId, SupportedWidgets widgetType, JComponent dataHolder,
-            JComponent labelHolder, JTextArea message) {
+            JLabel labelHolder, JTextArea message) {
         this.panelId = panelId;
         this.widgetType = widgetType;
         this.labelHolder = labelHolder;
@@ -91,7 +92,7 @@ public class AFSwinxPanel extends JPanel {
         this.dataHolder.add(dataHolder);
     }
 
-    public JComponent getLabelHolder() {
+    public JLabel getLabelHolder() {
         return labelHolder;
     }
 

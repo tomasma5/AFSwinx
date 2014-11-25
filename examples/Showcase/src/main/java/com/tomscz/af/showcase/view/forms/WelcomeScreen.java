@@ -22,7 +22,7 @@ import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.utils.FileUtils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
-import com.tomscz.afswinx.component.form.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinxForm;
 
 public class WelcomeScreen extends BaseScreen {
 

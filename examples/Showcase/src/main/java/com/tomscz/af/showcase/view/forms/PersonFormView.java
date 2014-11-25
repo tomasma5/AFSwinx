@@ -14,7 +14,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
-import com.tomscz.afswinx.component.form.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.builders.AFSwinxTableBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 
@@ -71,13 +74,14 @@ public class PersonFormView extends JFrame {
         }
     };
 
-    private AFSwinxForm buildFormBasedOnXMLConnection(String connectionKey) throws AFSwinxBuildException {
+    private AFSwinxTopLevelComponent buildFormBasedOnXMLConnection(String connectionKey) throws AFSwinxBuildException {
         AFSwinx swinx = AFSwinx.getInstance();
         File f = new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", "2");
-        AFSwinxForm form = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
-        return form;
+//        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+        AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+        return component;
     }
 
     private AFSwinxForm buildFormBasedOnMyConnection() throws AFSwinxBuildException {

@@ -4,9 +4,21 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import com.tomscz.afrest.rest.dto.AFClassInfo;
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afswinx.common.Utils;
+import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
+import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.ComponentBuilder;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
+import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
+import com.tomscz.afswinx.rest.connection.ConnectionParser;
 
 public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
 
@@ -20,7 +32,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected AFSwinxConnection postConnection;
     protected String connectionKey;
     protected File connectionConfiguration;
-    
+
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
      * are connection types, which are used to retrieve model definitions, data and post data back.
@@ -33,14 +45,13 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, File connectionConfiguration,
-            String connectionKey) {
+    public T initBuilder(String componentKeyName, File connectionConfiguration, String connectionKey) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
         this.connectionKey = connectionKey;
         return (T) this;
     }
-    
+
     /**
      * This method init builder. It set existed connection to builder. There are connection types,
      * which are used to retrieve model definitions, data and post data back.
@@ -56,9 +67,8 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName,
-            AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
-            AFSwinxConnection postConnection) {
+    public T initBuilder(String componentKeyName, AFSwinxConnection modelConnection,
+            AFSwinxConnection dataConnection, AFSwinxConnection postConnection) {
         this.componentKeyName = componentKeyName;
         this.modelConnection = modelConnection;
         this.dataConnection = dataConnection;
@@ -118,5 +128,73 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
         return (T) this;
     }
 
+    protected void initializeConnections() throws AFSwinxBuildException {
+        if (modelConnection == null && connectionKey != null && connectionConfiguration != null) {
+            ConnectionParser connectionParser =
+                    new ConnectionParser(connectionKey, connectionParameters);
+            AFSwinxConnectionPack connections =
+                    connectionParser.parseDocument(Utils
+                            .buildDocumentFromFile(connectionConfiguration));
+            modelConnection = connections.getMetamodelConnection();
+            dataConnection = connections.getDataConnection();
+            postConnection = connections.getPostConnection();
+        } else {
+            // Model connection is important if it could be found then throw exception
+            throw new AFSwinxBuildException(
+                    "There is error during building AFSwinxForm. Connection was not specified. Did you used initBuilder method before build?");
+        }
+    }
     
+    /**
+     * This method set data to form. It build for each widget his field
+     * 
+     * @param classInfo which will be inspected
+     * @param layoutBuilder layout builder which will be used
+     * @param form which is builded
+     * @param key of current field. It is used to determine which class belongs to which fields
+     */
+    protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
+            AFSwinxForm form, String key) {
+        // For each field
+        for (String fieldId : classInfo.getFieldInfo().keySet()) {
+            AFFieldInfo fieldInfo = classInfo.getFieldInfo().get(fieldId);
+            // If its class then inspect it recursively
+            if (fieldInfo.getClassType()) {
+                for (AFClassInfo classInfoChildren : classInfo.getInnerClasses()) {
+                    // There could be more inner class choose the right one
+                    if (classInfoChildren.getName() != null
+                            && classInfoChildren.getName().equals(fieldInfo.getId())) {
+                        // Recursively call this method with new key, which will specify unique link
+                        // on parent
+                        buildFields(classInfoChildren, layoutBuilder, form,
+                                Utils.generateKey(key, fieldId));
+                    }
+                }
+            } else {
+                // Build field
+                FieldBuilder builder =
+                        WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
+                if (localization == null) {
+                    localization = AFSwinx.getInstance().getLocalization();
+                }
+                builder.setLocalization(localization);
+                // Use generated key
+                String uniquieKey = Utils.generateKey(key, fieldId);
+                fieldInfo.setId(uniquieKey);
+                AFSwinxPanel panelToAdd = builder.buildComponent(fieldInfo);
+                this.addComponent(panelToAdd, layoutBuilder, form);
+            }
+        }
+    }
+    
+    /**
+     * This method add component which will be created to panel and layout builder
+     * 
+     * @param panelToAdd new panel which will be add
+     * @param layoutBuilder builder which holds all panels in this form
+     * @param form current form
+     */
+    protected abstract void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
+            AFSwinxTopLevelComponent component);
+
 }

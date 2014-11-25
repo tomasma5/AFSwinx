@@ -1,6 +1,7 @@
 package com.tomscz.afswinx.component.abstraction;
 
 import java.net.ConnectException;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
@@ -9,6 +10,8 @@ import com.google.gson.JsonObject;
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
+import com.tomscz.afswinx.component.builders.ComponentDataPacker;
+import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
@@ -25,15 +28,15 @@ import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
  */
 public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction, ComponentReserialization {
 
+    private HashMap<String, ComponentDataPacker> panels = new HashMap<String, ComponentDataPacker>();
+    
+    protected AFSwinxConnection modelConnection;
+    protected AFSwinxConnection postConnection;
+    protected AFSwinxConnection dataConnection;
+    
     private static final long serialVersionUID = 1L;
 
     public abstract SupportedComponents getComponentType();
-
-    public abstract AFSwinxConnection getModelConnection();
-
-    public abstract AFSwinxConnection getPostConnection();
-
-    public abstract AFSwinxConnection getDataConnection();
 
     public ResourceBundle localization;
 
@@ -98,5 +101,23 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
         // TODO Auto-generated method stub
         
     }
+    
+    public HashMap<String, ComponentDataPacker> getPanels() {
+        return panels;
+    }
+    
+    public AFSwinxConnection getModelConnection() {
+        return modelConnection;
+    }
+    
+    public AFSwinxConnection getPostConnection() {
+        return postConnection;
+    }
+
+    public AFSwinxConnection getDataConnection() {
+        return dataConnection;
+    }
+    
+    
     
 }

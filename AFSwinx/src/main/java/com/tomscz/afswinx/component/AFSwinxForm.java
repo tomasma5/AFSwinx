@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.component.form;
+package com.tomscz.afswinx.component;
 
 import java.util.HashMap;
 
@@ -6,6 +6,7 @@ import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.builders.ComponentDataPacker;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
@@ -17,13 +18,6 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
     private static final long serialVersionUID = 1L;
 
-    private AFSwinxConnection modelConnection;
-    private AFSwinxConnection postConnection;
-    private AFSwinxConnection dataConnection;
-    private HashMap<String, AFSwinxPanel> panels = new HashMap<String, AFSwinxPanel>();
-
-    private SupportedComponents componentType;
-
     public AFSwinxForm(AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
             AFSwinxConnection postConnection) {
         this.modelConnection = modelConnection;
@@ -33,22 +27,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
     @Override
     public SupportedComponents getComponentType() {
-        return componentType;
-    }
-
-    @Override
-    public AFSwinxConnection getModelConnection() {
-        return modelConnection;
-    }
-
-    @Override
-    public AFSwinxConnection getPostConnection() {
-        return postConnection;
-    }
-
-    @Override
-    public AFSwinxConnection getDataConnection() {
-        return dataConnection;
+        return SupportedComponents.FORM;
     }
 
     @Override
@@ -58,7 +37,8 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         }
         for (AFData field : dataPack.getData()) {
             String fieldName = field.getKey();
-            AFSwinxPanel panelToSetData = panels.get(fieldName);
+            ComponentDataPacker dataPacker = getPanels().get(fieldName);
+            AFSwinxPanel panelToSetData = dataPacker.getComponent();
             FieldBuilder builder =
                     WidgetBuilderFactory.getInstance().createWidgetBuilder(
                             panelToSetData.getWidgetType());
@@ -69,9 +49,10 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     @Override
     public boolean validateData() {
         boolean isValid = true;
-        for (String key : panels.keySet()) {
+        for (String key : getPanels().keySet()) {
             // Validate all records and show all error message
-            AFSwinxPanel panel = panels.get(key);
+            ComponentDataPacker dataPacker = getPanels().get(key);
+            AFSwinxPanel panel = dataPacker.getComponent();
             try {
                 panel.validateModel();
                 // data are valid, hide error message
@@ -99,15 +80,12 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         }
     }
 
-    public HashMap<String, AFSwinxPanel> getPanels() {
-        return panels;
-    }
-
     @Override
     public AFDataHolder resealize() {
         AFDataHolder dataHolder = new AFDataHolder();
-        for (String key : panels.keySet()) {
-            AFSwinxPanel panel = panels.get(key);
+        for (String key : getPanels().keySet()) {
+            ComponentDataPacker dataPacker = getPanels().get(key);
+            AFSwinxPanel panel = dataPacker.getComponent();
             FieldBuilder fieldBuilder =
                     WidgetBuilderFactory.getInstance().createWidgetBuilder(panel.getWidgetType());
             Object data = fieldBuilder.getData(panel);
