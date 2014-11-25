@@ -1,7 +1,10 @@
 package com.tomscz.afswinx.rest.rebuild;
 
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.common.Utils;
@@ -31,33 +34,27 @@ public class JSONBuilder extends BaseRestBuilder {
         }
         return json;
     }
-    
-    @Override 
-    public AFDataPack serialize(Object jsonObject){
-        serializeJseon(jsonObject, "");
+
+    @Override
+    public AFDataPack serialize(Object jsonObject) {
+        JsonObject object = (JsonObject) jsonObject;
+        Gson gson = new Gson();
+        JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
+        serializeJseon(jsonObjectToSerialize, "");
         return dataPack;
     }
-    
-    private void serializeJseon(Object jsonObject, String fieldKey){
-        @SuppressWarnings("unchecked")
-        LinkedTreeMap<String, Object> rootMap = (LinkedTreeMap<String, Object>) jsonObject;
-        for(String key:rootMap.keySet()){
-            Object currentObject = rootMap.get(key);
-            if(currentObject!=null){
-                String value = rootMap.get(key).toString(); 
-                if(value.contains("{")){
-                    try{
-                        @SuppressWarnings("unchecked")
-                        LinkedTreeMap<String, Object> currentSteetMap = (LinkedTreeMap<String, Object>) currentObject;
-                        serializeJseon(currentSteetMap, Utils.generateKey(fieldKey,key));
-                    }
-                    catch(Exception e){
-                        AFData data = new AFData(Utils.generateKey(fieldKey,key),value);
-                        dataPack.addData(data);
-                    }
-                }        
-                else{
-                    AFData data = new AFData(Utils.generateKey(fieldKey,key),value);
+
+    private void serializeJseon(JsonObject jsonObject, String fieldKey) {
+        for (Map.Entry<String, JsonElement> element : jsonObject.entrySet()) {
+            String key = element.getKey();
+            JsonElement currentElement = element.getValue();
+            if (!currentElement.isJsonNull()) {
+                if (currentElement.isJsonObject()) {
+                    JsonObject object = (JsonObject) currentElement;
+                    serializeJseon(object, Utils.generateKey(fieldKey, key));
+                } else {
+                    String value = currentElement.getAsString();
+                    AFData data = new AFData(Utils.generateKey(fieldKey, key), value);
                     dataPack.addData(data);
                 }
             }

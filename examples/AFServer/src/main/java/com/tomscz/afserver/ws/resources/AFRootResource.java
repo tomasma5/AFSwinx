@@ -1,5 +1,7 @@
 package com.tomscz.afserver.ws.resources;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -60,6 +62,8 @@ public class AFRootResource {
             p.setMyAdress(address);
             AbsenceInstance firstInstance = new AbsenceInstance();
             firstInstance.setDuration(320);
+            Date date = new Date();
+            firstInstance.setStartDate(date);     
             AbsenceType type = new AbsenceType();
             type.setName("Dovolena");
             type.setId(23);

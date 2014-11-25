@@ -8,6 +8,11 @@
 		<param-name>resteasy.resources</param-name>
 		<param-value>com.tomscz.afserver.ws.resources.AFRootResource,com.tomscz.afserver.ws.resources.UserResource</param-value>
 	</context-param>
+	<!-- Jackson configuration changes -->
+	<context-param>
+		<param-name>resteasy.providers</param-name>
+		<param-value>com.tomscz.afserver.ws.json.JacksonConfig</param-value>
+	</context-param>
 	<listener>
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>

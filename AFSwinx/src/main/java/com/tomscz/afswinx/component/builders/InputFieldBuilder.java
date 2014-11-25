@@ -25,8 +25,8 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
     }
 
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
-        super.buildBase(fieldInfo);
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
+        super.buildBase(field);
         // And input text field
         JTextField textField = new JTextField();
         layoutBuilder.addComponent(textField);
@@ -34,12 +34,12 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         coreComponent = textField;
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
-                new AFSwinxPanel(fieldInfo.getId(), fieldInfo.getWidgetType(), textField,
+                new AFSwinxPanel(field.getId(), field.getWidgetType(), textField,
                         fieldLabel, message);
         // Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
         // Add validations
-        super.crateValidators(afPanel, fieldInfo);
+        super.crateValidators(afPanel, field);
         return afPanel;
     }
 

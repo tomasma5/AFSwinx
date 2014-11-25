@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import com.google.gson.JsonObject;
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
