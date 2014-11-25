@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.component.builders;
+package com.tomscz.afswinx.component.widget.builder;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;

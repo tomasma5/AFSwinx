@@ -6,9 +6,9 @@ import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
-import com.tomscz.afswinx.component.builders.FieldBuilder;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import com.tomscz.afswinx.validation.exception.ValidationException;
@@ -32,22 +32,22 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     }
 
     @Override
-    protected SupportedComponents getComponentType() {
+    public SupportedComponents getComponentType() {
         return componentType;
     }
 
     @Override
-    protected AFSwinxConnection getModelConnection() {
+    public AFSwinxConnection getModelConnection() {
         return modelConnection;
     }
 
     @Override
-    protected AFSwinxConnection getPostConnection() {
+    public AFSwinxConnection getPostConnection() {
         return postConnection;
     }
 
     @Override
-    protected AFSwinxConnection getDataConnection() {
+    public AFSwinxConnection getDataConnection() {
         return dataConnection;
     }
 

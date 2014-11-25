@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.component.builders;
+package com.tomscz.afswinx.component.widget.builder;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;

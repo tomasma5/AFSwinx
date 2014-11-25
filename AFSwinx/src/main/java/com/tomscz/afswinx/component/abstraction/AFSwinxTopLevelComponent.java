@@ -27,15 +27,15 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
 
     private static final long serialVersionUID = 1L;
 
-    protected abstract SupportedComponents getComponentType();
+    public abstract SupportedComponents getComponentType();
 
-    protected abstract AFSwinxConnection getModelConnection();
+    public abstract AFSwinxConnection getModelConnection();
 
-    protected abstract AFSwinxConnection getPostConnection();
+    public abstract AFSwinxConnection getPostConnection();
 
-    protected abstract AFSwinxConnection getDataConnection();
+    public abstract AFSwinxConnection getDataConnection();
 
-    protected ResourceBundle localization;
+    public ResourceBundle localization;
 
     @Override
     public AFMetaModelPack getModel() throws AFSwinxConnectionException {

@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
 import com.tomscz.afswinx.component.form.AFSwinxForm;
-import com.tomscz.afswinx.component.form.AFSwinxFormBuilder;
 
 /**
  * This class is facade to using AFSwinx. Use getInstance to get unique instance in your

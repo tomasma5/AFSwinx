@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.component.builders;
+package com.tomscz.afswinx.component.widget.builder;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,8 +16,8 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
-import com.tomscz.afswinx.component.builders.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
 
 public class DateBuilder extends BaseComponentsBuilder {
 

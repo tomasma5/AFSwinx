@@ -2,15 +2,15 @@ package com.tomscz.afswinx.component.factory;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
-import com.tomscz.afswinx.component.builders.DateBuilder;
-import com.tomscz.afswinx.component.builders.CheckBoxBuilder;
-import com.tomscz.afswinx.component.builders.DropDownMenuBuilder;
-import com.tomscz.afswinx.component.builders.FieldBuilder;
-import com.tomscz.afswinx.component.builders.InputFieldBuilder;
-import com.tomscz.afswinx.component.builders.LabelFieldBuider;
-import com.tomscz.afswinx.component.builders.NumberInputBuilder;
-import com.tomscz.afswinx.component.builders.OptionBuilder;
-import com.tomscz.afswinx.component.builders.TextAreaBuilder;
+import com.tomscz.afswinx.component.widget.builder.CheckBoxBuilder;
+import com.tomscz.afswinx.component.widget.builder.DateBuilder;
+import com.tomscz.afswinx.component.widget.builder.DropDownMenuBuilder;
+import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.LabelFieldBuider;
+import com.tomscz.afswinx.component.widget.builder.NumberInputBuilder;
+import com.tomscz.afswinx.component.widget.builder.OptionBuilder;
+import com.tomscz.afswinx.component.widget.builder.TextAreaBuilder;
 
 public class WidgetBuilderFactory {
 
