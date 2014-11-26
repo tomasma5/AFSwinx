@@ -33,11 +33,11 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             // Build component
             this.buildComponent(form);
             // Get data
-            Object o = form.getData();
+            Object data = form.getData();
             // Based on data type make serialization
             BaseRestBuilder dataBuilder =
                     RestBuilderFactory.getInstance().getBuilder(form.getDataConnection());
-            List<AFDataPack> dataPack = dataBuilder.serialize(o);
+            List<AFDataPack> dataPack = dataBuilder.serialize(data);
             // Fill data to form
             form.fillData(dataPack);
             AFSwinx.getInstance().addComponent(form, componentKeyName);

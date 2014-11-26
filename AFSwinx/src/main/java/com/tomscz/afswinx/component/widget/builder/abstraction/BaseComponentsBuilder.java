@@ -10,7 +10,7 @@ import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
@@ -22,7 +22,7 @@ import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
  * 
  * @since 1.0.0.
  */
-public abstract class BaseComponentsBuilder implements FieldBuilder {
+public abstract class BaseComponentsBuilder implements WidgetBuilder {
 
     protected Component coreComponent;
     protected BaseLayoutBuilder layoutBuilder;

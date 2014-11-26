@@ -13,7 +13,7 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
  *
  * @since 1.0.0.
  */
-public interface FieldBuilder {
+public interface WidgetBuilder {
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException;
     /**
      * This method set data to particular component.

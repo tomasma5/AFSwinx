@@ -11,7 +11,7 @@ import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.ComponentDataPacker;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 
@@ -39,7 +39,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
                     continue;
                 }
                 AFSwinxPanel panelToSetData = dataPacker.getComponent();
-                FieldBuilder builder =
+                WidgetBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(
                                 panelToSetData.getWidgetType());
                 builder.setData(panelToSetData, field);

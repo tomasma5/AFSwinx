@@ -5,7 +5,7 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.component.widget.builder.CheckBoxBuilder;
 import com.tomscz.afswinx.component.widget.builder.DateBuilder;
 import com.tomscz.afswinx.component.widget.builder.DropDownMenuBuilder;
-import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
 import com.tomscz.afswinx.component.widget.builder.LabelFieldBuider;
 import com.tomscz.afswinx.component.widget.builder.NumberInputBuilder;
@@ -27,9 +27,9 @@ public class WidgetBuilderFactory {
         return instance;
     }
 
-    public FieldBuilder createWidgetBuilder(AFFieldInfo fieldInfo) {
+    public WidgetBuilder createWidgetBuilder(AFFieldInfo fieldInfo) {
         SupportedWidgets widgetType = fieldInfo.getWidgetType();
-        FieldBuilder fieldBuilder;
+        WidgetBuilder fieldBuilder;
         if (widgetType != null) {
             fieldBuilder = createWidgetBuilder(fieldInfo.getWidgetType());
         } else {
@@ -44,7 +44,7 @@ public class WidgetBuilderFactory {
         return fieldBuilder;
     }
 
-    public FieldBuilder createWidgetBuilder(SupportedWidgets widget) {
+    public WidgetBuilder createWidgetBuilder(SupportedWidgets widget) {
         if (widget.equals(SupportedWidgets.TEXTFIELD)) {
             return new InputFieldBuilder();
         }
@@ -72,7 +72,7 @@ public class WidgetBuilderFactory {
         return new InputFieldBuilder();
     }
 
-    private FieldBuilder createWidgetBuilderBasedOnRules(AFFieldInfo fieldInfo) {
+    private WidgetBuilder createWidgetBuilderBasedOnRules(AFFieldInfo fieldInfo) {
         SupportedWidgets widget = SupportedWidgets.LABEL;
         // First do candidate based on options, if there are options.
         if (fieldInfo.getOptions() != null && !fieldInfo.getOptions().isEmpty()) {

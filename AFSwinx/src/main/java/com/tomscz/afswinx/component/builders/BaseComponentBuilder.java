@@ -14,7 +14,7 @@ import com.tomscz.afswinx.component.ComponentBuilder;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.FieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
@@ -172,7 +172,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                 }
             } else {
                 // Build field
-                FieldBuilder builder =
+                WidgetBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
                 if (localization == null) {
                     localization = AFSwinx.getInstance().getLocalization();
