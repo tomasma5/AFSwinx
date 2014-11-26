@@ -17,6 +17,7 @@
 
 	<mapping>
 		<type>int</type>
+		<type>double</type>
 		<default tag="structure/numberInput.xml" />
 	</mapping>
 
