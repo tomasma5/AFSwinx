@@ -2,6 +2,7 @@ package com.tomscz.af.showcase.view.forms;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -34,14 +35,19 @@ public class WelcomeScreen extends BaseScreen {
 
 
     public WelcomeScreen() {
+        intialize();
+    }
+    
+    @Override
+    protected void intialize(){
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
         //Generate content
         JPanel contentPanel = new JPanel();
-        JButton companyCenters = new JButton(Localization.getLocalizationText("login.company.center.show.button"));
-        companyCenters.addActionListener(onPrivateButtonExec);
+        JButton countries = new JButton(Localization.getLocalizationText("login.countries.supported.show.button"));
+        countries.addActionListener(onPrivateButtonExec);
         JPanel publicPanel = new JPanel();
-        publicPanel.add(companyCenters);
+        publicPanel.add(countries);
         publicPanel.setBorder(BorderFactory.createTitledBorder(Localization.getLocalizationText("login.content.public")));
         JPanel privatePanel = createAFSwinxLoginForm();
         privatePanel.setBorder(BorderFactory.createTitledBorder(Localization.getLocalizationText("login.content.private")));
@@ -74,8 +80,20 @@ public class WelcomeScreen extends BaseScreen {
         headerBuilder.append("</html>");
         label.setText(headerBuilder.toString());
         JPanel translationPanel = createLocalizationToolbar();
-        mainPanel.add(label);
-        mainPanel.add(translationPanel);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        mainPanel.add(translationPanel, c);    
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 40;      //make this component tall
+        c.weightx = 0.0;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.anchor = GridBagConstraints.NORTHWEST;
+        mainPanel.add(label,c);
         return mainPanel;
     }
 

@@ -32,6 +32,9 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
     @Override
     public void fillData(List<AFDataPack> dataPack) {
+        if(dataPack == null || dataPack.isEmpty()){
+            return;
+        }
         AFDataPack dataToSet = dataPack.get(0);
         if (dataToSet.getClassName().isEmpty()) {
             return;

@@ -43,6 +43,9 @@ public class JSONBuilder extends BaseRestBuilder {
 
     @Override
     public List<AFDataPack> serialize(Object jsonObject) {
+        if(jsonObject == null){
+            return moreDatas;
+        }
         JsonElement element = (JsonElement) jsonObject;
         if(element.isJsonArray()){
             JsonArray array = (JsonArray) jsonObject;

@@ -75,7 +75,8 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
     @Override
     protected void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent component) {
-        ComponentDataPacker dataPacker = new ComponentDataPacker(0, panelToAdd.getPanelId(), panelToAdd);
+        ComponentDataPacker dataPacker =
+                new ComponentDataPacker(0, panelToAdd.getPanelId(), panelToAdd);
         component.getPanels().put(dataPacker.getId(), dataPacker);
         component.add(panelToAdd);
         panelToAdd.setAfParent(component);
