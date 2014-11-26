@@ -16,6 +16,7 @@ import com.tomscz.afrest.AFRestSwing;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
 
 @Path("/users/")
@@ -50,10 +51,26 @@ public class UserResource {
     }
     
     @POST
-    @Path("/")
+    @Path("/login")
     @Produces({ MediaType.APPLICATION_JSON})
     @Consumes({ MediaType.APPLICATION_JSON})
     public Response login(LoginFormDefinitions loginForm){
+        return Response.status(Response.Status.OK).build();
+    }
+    
+    @POST
+    @Path("/update")
+    @Produces({ MediaType.APPLICATION_JSON})
+    @Consumes({ MediaType.APPLICATION_JSON})
+    public Response update(Person personToAdd){
+        return Response.status(Response.Status.OK).build();
+    }
+    
+    @GET
+    @Path("/allUsers/{countryId}")
+    @Produces({ MediaType.APPLICATION_JSON})
+    @Consumes({ MediaType.APPLICATION_JSON})
+    public Response getAllUsersByCountry(@PathParam("param") int countryId){
         return Response.status(Response.Status.OK).build();
     }
     

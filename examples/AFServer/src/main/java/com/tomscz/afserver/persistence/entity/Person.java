@@ -1,6 +1,6 @@
 package com.tomscz.afserver.persistence.entity;
 
-import java.util.List;
+import java.util.Date;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
@@ -16,12 +16,14 @@ public class Person {
 
     private String firstName;
     private String lastName;
+    private String email;
+    private Date hireDate;
+    private boolean active;
     private Long id;
     private int age;
     private Gender gender;
     private boolean confidentialAgreement;
     private Address myAdress;
-    private List<Address> adresses;
     private AbsenceInstance absence;
 
     public Long getId() {
@@ -82,14 +84,6 @@ public class Person {
         this.confidentialAgreement = confidentialAgreement;
     }
 
-    public List<Address> getAdresses() {
-        return adresses;
-    }
-
-    public void setAdresses(List<Address> adresses) {
-        this.adresses = adresses;
-    }
-
     public AbsenceInstance getAbsence() {
         return absence;
     }
@@ -105,6 +99,30 @@ public class Person {
 
     public void setMyAdress(Address myAdress) {
         this.myAdress = myAdress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Date getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
     }
 
 }

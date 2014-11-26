@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -40,6 +39,9 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         for (AFData field : dataToSet.getData()) {
             String fieldName = field.getKey();
             ComponentDataPacker dataPacker = getPanels().get(fieldName);
+            if(dataPacker == null){
+                continue;
+            }
             AFSwinxPanel panelToSetData = dataPacker.getComponent();
             FieldBuilder builder =
                     WidgetBuilderFactory.getInstance().createWidgetBuilder(

@@ -73,10 +73,12 @@ public class DateBuilder extends BaseComponentsBuilder {
             JDatePickerImpl dataPicker = (JDatePickerImpl) panel.getDataHolder().get(0);
             JFormattedTextField textField = dataPicker.getJFormattedTextField();
             GregorianCalendar calendar = (GregorianCalendar) textField.getValue();
-            Date date = calendar.getTime();
-            DateFormat df = new SimpleDateFormat(ISO8601DATEFORMAT);
-            String nowAsISO = df.format(date);
-            return nowAsISO;
+            if(calendar != null){
+                Date date = calendar.getTime();
+                DateFormat df = new SimpleDateFormat(ISO8601DATEFORMAT);
+                String nowAsISO = df.format(date);
+                return nowAsISO;
+            }
         }
         return null;
     }

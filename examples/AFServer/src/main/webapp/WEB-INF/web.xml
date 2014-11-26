@@ -6,7 +6,7 @@
 	<display-name>AFServer</display-name>
 	<context-param>
 		<param-name>resteasy.resources</param-name>
-		<param-value>com.tomscz.afserver.ws.resources.AFRootResource,com.tomscz.afserver.ws.resources.UserResource</param-value>
+		<param-value>com.tomscz.afserver.ws.resources.AFRootResource,com.tomscz.afserver.ws.resources.UserResource,com.tomscz.afserver.ws.resources.CountryResource</param-value>
 	</context-param>
 	<!-- Jackson configuration changes -->
 	<context-param>

@@ -35,6 +35,9 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
             for (AFData field : data.getData()) {
                 String fieldName = field.getKey();
                 ComponentDataPacker dataPacker = getPanels().get(fieldName);
+                if(dataPacker == null){
+                    continue;
+                }
                 AFSwinxPanel panelToSetData = dataPacker.getComponent();
                 FieldBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(

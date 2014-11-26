@@ -6,6 +6,8 @@ public class AbsenceInstance {
 
     private AbsenceType absenceType;
     private Date startDate;
+    private Date endDate;
+    private AbsenceInstanceState status;
     private int duration;
 
     public AbsenceType getAbsenceType() {
@@ -30,6 +32,22 @@ public class AbsenceInstance {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public AbsenceInstanceState getStatus() {
+        return status;
+    }
+
+    public void setStatus(AbsenceInstanceState status) {
+        this.status = status;
     }
 
 }

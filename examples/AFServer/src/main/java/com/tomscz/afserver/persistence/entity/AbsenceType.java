@@ -3,6 +3,7 @@ package com.tomscz.afserver.persistence.entity;
 public class AbsenceType {
 
     private int id;
+    private double maxDaysPerYear;
     private String name;
     private Country country;
 
@@ -28,5 +29,13 @@ public class AbsenceType {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public double getMaxDaysPerYear() {
+        return maxDaysPerYear;
+    }
+
+    public void setMaxDaysPerYear(double maxDaysPerYear) {
+        this.maxDaysPerYear = maxDaysPerYear;
     }
 }
