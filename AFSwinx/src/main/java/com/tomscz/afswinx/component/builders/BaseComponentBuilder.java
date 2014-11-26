@@ -156,8 +156,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
             AFSwinxForm form, String key) {
         // For each field
-        for (String fieldId : classInfo.getFieldInfo().keySet()) {
-            AFFieldInfo fieldInfo = classInfo.getFieldInfo().get(fieldId);
+        for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
             // If its class then inspect it recursively
             if (fieldInfo.getClassType()) {
                 for (AFClassInfo classInfoChildren : classInfo.getInnerClasses()) {
@@ -167,7 +166,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                         // Recursively call this method with new key, which will specify unique link
                         // on parent
                         buildFields(classInfoChildren, layoutBuilder, form,
-                                Utils.generateKey(key, fieldId));
+                                Utils.generateKey(key, fieldInfo.getId()));
                     }
                 }
             } else {
@@ -179,7 +178,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                 }
                 builder.setLocalization(localization);
                 // Use generated key
-                String uniquieKey = Utils.generateKey(key, fieldId);
+                String uniquieKey = Utils.generateKey(key, fieldInfo.getId());
                 fieldInfo.setId(uniquieKey);
                 AFSwinxPanel panelToAdd = builder.buildComponent(fieldInfo);
                 this.addComponent(panelToAdd, layoutBuilder, form);

@@ -13,16 +13,16 @@ public class AFClassInfo implements Serializable {
     private String name;
     private TopLevelLayout layout;
     //TODO remove it, because it cant handle order
-    private HashMap<String, AFFieldInfo> fieldInfo;
+    private List<AFFieldInfo> fieldInfo;
     private List<AFClassInfo> innerClasses;
 
     private int order;
     
     public void addFieldInfo(AFFieldInfo fieldInfoToAdd) {
         if (this.fieldInfo == null) {
-            this.fieldInfo = new HashMap<String, AFFieldInfo>();
+            this.fieldInfo = new ArrayList<AFFieldInfo>();
         }
-        this.fieldInfo.put(fieldInfoToAdd.getId(),fieldInfoToAdd);
+        this.fieldInfo.add(fieldInfoToAdd);
 
     }
     
@@ -41,11 +41,11 @@ public class AFClassInfo implements Serializable {
         this.name = name;
     }
 
-    public HashMap<String,AFFieldInfo> getFieldInfo() {
+    public List<AFFieldInfo> getFieldInfo() {
         return fieldInfo;
     }
 
-    public void setFieldInfo(HashMap<String, AFFieldInfo> fieldInfo) {
+    public void setFieldInfo(List<AFFieldInfo> fieldInfo) {
         this.fieldInfo = fieldInfo;
     }
 
@@ -66,10 +66,12 @@ public class AFClassInfo implements Serializable {
     }
     
     private void setOptionsToField(List<AFOptions> options, String fieldId){
-        AFFieldInfo fiedlInfo = fieldInfo.get(fieldId);
-        if(fiedlInfo != null){
-            fiedlInfo.addOption(options);
+        for(AFFieldInfo fiedlInfo:fieldInfo){
+            if(fiedlInfo != null && fiedlInfo.getId().equals(fieldId)){
+                fiedlInfo.addOption(options);
+            }
         }
+
     }
 
     public void setOptionsToFields(List<String> options, String fieldId) {
