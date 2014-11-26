@@ -16,9 +16,9 @@ public class CountryManager implements Serializable, Manager<Country> {
         List<Country> resultList = new ArrayList<Country>();
         Country country = new Country("Germany","GER",true);
         resultList.add(country);
-        country = new Country("Czech republic","CZ",true);
+        country = new Country("Czech republic","CZ",false);
         resultList.add(country);
-        country = new Country("Uganda","UG",false);
+        country = new Country("Uganda","UG",true);
         resultList.add(country);
         return resultList;
     }

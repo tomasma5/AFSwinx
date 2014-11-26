@@ -69,6 +69,9 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                 if (dataHolder.getKey().equals(data.getValue())) {
                     checkBox.setSelected(true);
                 }
+                else{
+                    checkBox.setSelected(false);
+                }
             }
         }
     }
@@ -87,6 +90,13 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
         AFComponentDataHolder dataHolder = getSelectedDataObject(panel);
         if (dataHolder != null) {
             return String.valueOf(dataHolder.getValueToDisplay());
+        }
+        else if(panel.getDataHolder() != null && panel.getDataHolder().size()==1){
+            @SuppressWarnings("unchecked")
+            JCheckBox<AFComponentDataHolder> checkBox = (JCheckBox<AFComponentDataHolder>)panel.getDataHolder().get(0);
+            if(checkBox.getDataHolder().getValueToDisplay().equals("true")){
+                return "false";
+            }
         }
         return null;
     }

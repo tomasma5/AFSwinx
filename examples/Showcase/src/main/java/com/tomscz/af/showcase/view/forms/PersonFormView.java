@@ -82,8 +82,8 @@ public class PersonFormView extends JFrame {
         File f = new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", "2");
-        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, person_resource_key, parameters).buildComponent();
-//        AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+//        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, person_resource_key, parameters).buildComponent();
+        AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
         return component;
     }
 
