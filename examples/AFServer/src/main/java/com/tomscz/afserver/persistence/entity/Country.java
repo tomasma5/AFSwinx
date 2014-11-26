@@ -1,5 +1,8 @@
 package com.tomscz.afserver.persistence.entity;
 
+import com.codingcrayons.aspectfaces.annotations.UiLabel;
+import com.codingcrayons.aspectfaces.annotations.UiOrder;
+
 public class Country {
 
     private Long id;
@@ -21,10 +24,14 @@ public class Country {
         return active;
     }
 
+    @UiLabel(value="country.isActive")
+    @UiOrder(value=3)
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    @UiLabel(value="country.shortCut")
+    @UiOrder(value=1)
     public String getShortCut() {
         return shortCut;
     }
@@ -33,6 +40,8 @@ public class Country {
         this.shortCut = shortCut;
     }
 
+    @UiLabel(value="country.name")
+    @UiOrder(value=0)
     public String getName() {
         return name;
     }

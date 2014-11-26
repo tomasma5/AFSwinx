@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.builders;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -24,6 +26,7 @@ import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
+import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
@@ -47,9 +50,15 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
             }
             String columns[] = new String[components.size()];
             int i = 0;
+            int[] columsWidht = new int[components.size()];
             for (String key : components) {
                 ComponentDataPacker dataPacker = table.getPanels().get(key);
-                columns[i] = dataPacker.getComponent().getLabelHolder().getText();
+                String label = dataPacker.getComponent().getLabelHolder().getText();
+                int widht = label.length()*5+20;
+                if(widht >columsWidht[i]){
+                    columsWidht[i] = widht;
+                }
+                columns[i] = label;
                 i++;
             }
             Object o = table.getData();
@@ -58,21 +67,43 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
             List<AFDataPack> dataPack = dataBuilder.serialize(o);
             // Fill data to table
             table.fillData(dataPack);
+           
             Object row[][] = new String[dataPack.size()][components.size()];
             for (i = 0; i < row.length; i++) {
                 HashMap<String, String> rowData = table.getTableRow().get(i);
                 for (int j = 0; j < row[i].length; j++) {
                     String key = components.get(j);
                     String value = rowData.get(key);
+                    if(value != null){
+                        int width = value.length()*5+20;
+                        if(width > columsWidht[j]){
+                            columsWidht[j] = width;
+                        }
+                        if(value.equals("true") || value.equals("false")){
+                            value =  LocalizationUtils.getTextFromExtendBundle(value, localization, null);
+                        }
+                    }
                     Object data = value;
                     row[i][j] = data;
                 }
             }
             TableModel model = new DefaultTableModel(row, columns);
             JTable tableimp = new JTable(model);
+            int columnWidthAll = 0;
+            for(i=0;i<columsWidht.length;i++){
+                TableColumn column = tableimp.getColumnModel().getColumn(i);
+                int columnWidth = columsWidht[i];
+                column.setMinWidth(columnWidth);
+                column.setMaxWidth(columnWidth);
+                column.setPreferredWidth(columnWidth);
+                columnWidthAll+=columnWidth;
+            }
+           
             RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
             tableimp.setRowSorter(sorter);
             JScrollPane pane = new JScrollPane(tableimp);
+            int tableHeigth =  tableimp.getRowHeight() * tableimp.getRowCount() + 35;
+            pane.setPreferredSize(new Dimension(columnWidthAll, tableHeigth));
             table.add(pane);
             AFSwinx.getInstance().addComponent(table, componentKeyName);
         } catch (AFSwinxConnectionException e) {

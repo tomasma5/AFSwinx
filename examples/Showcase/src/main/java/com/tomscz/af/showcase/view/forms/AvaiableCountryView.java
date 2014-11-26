@@ -1,18 +1,12 @@
 package com.tomscz.af.showcase.view.forms;
 
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -24,35 +18,27 @@ import com.tomscz.af.showcase.utils.FileUtils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinxTable;
 
-public class WelcomeScreen extends BaseScreen {
+public class AvaiableCountryView extends BaseScreen {
 
     private static final long serialVersionUID = 1L;
+    
+    private static final String COUNTRY_TABLE = "countryTable";
+    private static final String COUNTRY_TABLE_CONNECTION_KEY = "tableCountryPublic";
 
-    private JButton afSwinxLoginButton;
-
-    private final static String loginFormName = "loginForm";
-
-
-    public WelcomeScreen() {
+    public AvaiableCountryView(){
         intialize();
     }
     
     @Override
-    protected void intialize(){
+    protected void intialize() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
         //Generate content
         JPanel contentPanel = new JPanel();
-        JButton countries = new JButton(Localization.getLocalizationText("login.countries.supported.show.button"));
-        countries.addActionListener(onPrivateButtonExec);
-        JPanel publicPanel = new JPanel();
-        publicPanel.add(countries);
-        publicPanel.setBorder(BorderFactory.createTitledBorder(Localization.getLocalizationText("login.content.public")));
-        JPanel privatePanel = createAFSwinxLoginForm();
-        privatePanel.setBorder(BorderFactory.createTitledBorder(Localization.getLocalizationText("login.content.private")));
-        contentPanel.setLayout(new GridLayout(0,2));
-        contentPanel.add(publicPanel);
+        JPanel privatePanel = createSupportedCountry();
+        contentPanel.setLayout(new GridLayout(0,1));
         contentPanel.add(privatePanel);
         //add semi-generated parts
         mainPanel.add(createHeader());
@@ -65,18 +51,16 @@ public class WelcomeScreen extends BaseScreen {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setSize(800, 600);
         this.setVisible(true);
+        
     }
-
+    
     private JPanel createHeader() {
         JPanel mainPanel = new JPanel();
         JLabel label = new JLabel();
         mainPanel.setLayout(new GridBagLayout());
         StringBuilder headerBuilder = new StringBuilder();
         headerBuilder.append("<html>");
-        headerBuilder.append(Localization.getLocalizationText("login.header.mainText",
-                ShowcaseConstants.APPLICATION_VERSION));
-        headerBuilder.append("<br />");
-        headerBuilder.append(Localization.getLocalizationText("login.header.information"));
+        headerBuilder.append(Localization.getLocalizationText("avaiableCountryView.header.information"));
         headerBuilder.append("</html>");
         label.setText(headerBuilder.toString());
         JPanel translationPanel = createLocalizationToolbar();
@@ -97,23 +81,18 @@ public class WelcomeScreen extends BaseScreen {
         return mainPanel;
     }
 
-    private JPanel createAFSwinxLoginForm() {
+    private JPanel createSupportedCountry() {
         JPanel mainPanel = new JPanel();
         File connectionFile =
                 new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         try {
-            AFSwinxForm form =
-                    AFSwinx.getInstance().getFormBuilder()
-                            .initBuilder(loginFormName, connectionFile, "loginForm")
+            AFSwinxTable table =
+                    AFSwinx.getInstance().getTableBuilder()
+                            .initBuilder(COUNTRY_TABLE, connectionFile, COUNTRY_TABLE_CONNECTION_KEY)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .buildComponent();
-            mainPanel.add(form);
+            mainPanel.add(table);
             mainPanel.add(Box.createVerticalStrut(20));
-            afSwinxLoginButton = new JButton(Localization.getLocalizationText("login.button"));
-            afSwinxLoginButton.addActionListener(onLoginButtonExec);
-            afSwinxLoginButton.setPreferredSize(new Dimension(60, 20));
-            afSwinxLoginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            mainPanel.add(afSwinxLoginButton);
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             return mainPanel;
         } catch (AFSwinxBuildException e) {
@@ -127,32 +106,11 @@ public class WelcomeScreen extends BaseScreen {
         JLabel label = new JLabel(Localization.getLocalizationText("source.view"));
         mainPanel.add(label);
         JTextArea textArea = new JTextArea(10, 70);
-        textArea.setText(new FileUtils().readClass("login.txt"));
+        textArea.setText(new FileUtils().readClass("countryTable.txt"));
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBounds(10, 60, 780, 500);
         mainPanel.add(scrollPane);
         return mainPanel;
     }
-
-    private ActionListener onLoginButtonExec = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Object body =
-                    AFSwinx.getInstance().getExistedComponent(loginFormName).generatePostData();
-            if (body != null) {
-                // SEND
-            }
-        }
-    };
-    
-    private ActionListener onPrivateButtonExec=new ActionListener() {
-        
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            AvaiableCountryView view = new AvaiableCountryView();
-            setVisible(false);
-        }
-    };
-
 }
