@@ -44,7 +44,7 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                 }
             }
         } else {
-            AFComponentDataHolder option = new AFComponentDataHolder("true", "true");
+            AFComponentDataHolder option = new AFComponentDataHolder("true", "true", "true");
             JCheckBox<AFComponentDataHolder> checkBox =
                     new JCheckBox<AFComponentDataHolder>(option);
             layoutBuilder.addComponent(checkBox);
@@ -66,7 +66,7 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                 JCheckBox<AFComponentDataHolder> checkBox =
                         (JCheckBox<AFComponentDataHolder>) component;
                 AFComponentDataHolder dataHolder = checkBox.getDataHolder();
-                if (dataHolder.getValue().equals(data.getValue())) {
+                if (dataHolder.getKey().equals(data.getValue())) {
                     checkBox.setSelected(true);
                 }
             }
@@ -75,6 +75,23 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
 
     @Override
     public Object getData(AFSwinxPanel panel) {
+        AFComponentDataHolder dataHolder = getSelectedDataObject(panel);
+        if (dataHolder != null) {
+            return String.valueOf(dataHolder.getKey());
+        }
+        return null;
+    }
+
+    @Override
+    public Object getPlainData(AFSwinxPanel panel) {
+        AFComponentDataHolder dataHolder = getSelectedDataObject(panel);
+        if (dataHolder != null) {
+            return String.valueOf(dataHolder.getValueToDisplay());
+        }
+        return null;
+    }
+
+    private AFComponentDataHolder getSelectedDataObject(AFSwinxPanel panel) {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
@@ -82,7 +99,7 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                         (JCheckBox<AFComponentDataHolder>) component;
                 AFComponentDataHolder dataHolder = checkBox.getDataHolder();
                 if (checkBox.isSelected()) {
-                    return String.valueOf(dataHolder.getKey());
+                    return dataHolder;
                 }
             }
         }

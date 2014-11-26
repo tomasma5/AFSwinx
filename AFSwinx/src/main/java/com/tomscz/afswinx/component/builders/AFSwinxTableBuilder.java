@@ -1,6 +1,7 @@
 package com.tomscz.afswinx.component.builders;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -54,14 +55,15 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
             Object o = table.getData();
             BaseRestBuilder dataBuilder =
                     RestBuilderFactory.getInstance().getBuilder(table.getDataConnection());
-            AFDataPack dataPack = dataBuilder.serialize(o);
+            List<AFDataPack> dataPack = dataBuilder.serialize(o);
             // Fill data to table
             table.fillData(dataPack);
-            Object row[][] = new String[1][components.size()];
+            Object row[][] = new String[dataPack.size()][components.size()];
             for (i = 0; i < row.length; i++) {
+                HashMap<String, String> rowData = table.getTableRow().get(i);
                 for (int j = 0; j < row[i].length; j++) {
                     String key = components.get(j);
-                    String value = table.getTableRow().get(key);
+                    String value = rowData.get(key);
                     Object data = value;
                     row[i][j] = data;
                 }

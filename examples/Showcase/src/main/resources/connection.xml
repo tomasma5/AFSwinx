@@ -21,6 +21,21 @@
 			<port>8080</port>
 		</post>
 	</connection>
+		<connection id="tablePerson">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/person/list/definition</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<content-type>Application/Json</content-type>
+		</metaModel>
+		<data>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/person/list</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+		</data>
+	</connection>
 	<connection id="person">
 		<metaModel>
 			<endPoint>localhost</endPoint>

@@ -73,6 +73,24 @@ public class OptionBuilder extends BaseComponentsBuilder {
 
     @Override
     public Object getData(AFSwinxPanel panel) {
+        AFComponentDataHolder selectedObject = getSelectedObject(panel);
+        if (selectedObject != null) {
+            return selectedObject.getKey();
+        }
+        return null;
+    }
+
+
+    @Override
+    public Object getPlainData(AFSwinxPanel panel) {
+        AFComponentDataHolder selectedObject = getSelectedObject(panel);
+        if (selectedObject != null) {
+            return selectedObject.getValueToDisplay();
+        }
+        return null;
+    }
+
+    private AFComponentDataHolder getSelectedObject(AFSwinxPanel panel) {
         if (panel != null && panel.getDataHolder() != null) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
@@ -80,11 +98,12 @@ public class OptionBuilder extends BaseComponentsBuilder {
                         (JRadioButton<AFComponentDataHolder>) component;
                 AFComponentDataHolder concereteDataHolder = radioButton.getDataHolder();
                 if (radioButton.isSelected()) {
-                    return concereteDataHolder.getKey();
+                    return concereteDataHolder;
                 }
             }
         }
         return null;
     }
+
 
 }

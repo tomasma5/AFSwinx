@@ -3,6 +3,7 @@ package com.tomscz.afrest;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -26,6 +27,11 @@ public class AFRestSwing implements AFRest {
     public AFMetaModelPack generateSkeleton(String fullClassName) throws MetamodelException {
         ModelInspector mi = new ModelInspector(this.servletContext);
         return mi.generateModel(fullClassName);
+    }
+    
+    public AFMetaModelPack generateSkeleton(String fullClassName, String structureConfig) throws MetamodelException {
+        ModelInspector mi = new ModelInspector(this.servletContext);
+        return mi.generateModel(fullClassName,structureConfig,"","");
     }
 
     @Override

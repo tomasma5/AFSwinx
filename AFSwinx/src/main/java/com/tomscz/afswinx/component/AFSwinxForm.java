@@ -1,6 +1,7 @@
 package com.tomscz.afswinx.component;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.data.AFData;
@@ -31,11 +32,12 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
     }
 
     @Override
-    public void fillData(AFDataPack dataPack) {
-        if (dataPack.getClassName().isEmpty()) {
+    public void fillData(List<AFDataPack> dataPack) {
+        AFDataPack dataToSet = dataPack.get(0);
+        if (dataToSet.getClassName().isEmpty()) {
             return;
         }
-        for (AFData field : dataPack.getData()) {
+        for (AFData field : dataToSet.getData()) {
             String fieldName = field.getKey();
             ComponentDataPacker dataPacker = getPanels().get(fieldName);
             AFSwinxPanel panelToSetData = dataPacker.getComponent();

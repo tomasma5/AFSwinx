@@ -1,6 +1,8 @@
 package com.tomscz.afswinx.component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.data.AFData;
@@ -16,8 +18,8 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 public class AFSwinxTable extends AFSwinxTopLevelComponent {
 
     private static final long serialVersionUID = 1L;
-    
-    private HashMap<String, String> tableRow = new HashMap<String, String>();
+
+    private List<HashMap<String, String>> tableRow = new ArrayList<HashMap<String, String>>();
 
     public AFSwinxTable(AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
             AFSwinxConnection postConnection) {
@@ -27,42 +29,40 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     }
 
     @Override
-    public void fillData(AFDataPack dataPack) {
-        if (dataPack.getClassName().isEmpty()) {
-            return;
+    public void fillData(List<AFDataPack> dataPack) {
+        for (AFDataPack data : dataPack) {
+            HashMap<String, String> row = new HashMap<String, String>();
+            for (AFData field : data.getData()) {
+                String fieldName = field.getKey();
+                ComponentDataPacker dataPacker = getPanels().get(fieldName);
+                AFSwinxPanel panelToSetData = dataPacker.getComponent();
+                FieldBuilder builder =
+                        WidgetBuilderFactory.getInstance().createWidgetBuilder(
+                                panelToSetData.getWidgetType());
+                builder.setData(panelToSetData, field);
+                row.put(fieldName, (String)builder.getPlainData(panelToSetData));
+            }
+            tableRow.add(row);
         }
-        for (AFData field : dataPack.getData()) {
-            String fieldName = field.getKey();
-            tableRow.put(fieldName, field.getValue());
-            ComponentDataPacker dataPacker = getPanels().get(fieldName);
-            AFSwinxPanel panelToSetData = dataPacker.getComponent();
-            FieldBuilder builder =
-                    WidgetBuilderFactory.getInstance().createWidgetBuilder(
-                            panelToSetData.getWidgetType());
-            builder.setData(panelToSetData, field);
-        }
-
     }
 
     @Override
     public boolean validateData() {
-        // TODO Auto-generated method stub
-        return false;
+        throw new UnsupportedOperationException("This opertion is not supported yet");
     }
 
     @Override
     public AFDataHolder resealize() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("This opertion is not supported yet");
     }
 
     @Override
     public SupportedComponents getComponentType() {
         return SupportedComponents.TABLE;
     }
-    
-    public HashMap<String, String> getTableRow() {
+
+    public List<HashMap<String, String>> getTableRow() {
         return tableRow;
     }
-    
+
 }

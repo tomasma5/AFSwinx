@@ -76,7 +76,7 @@ public class ModelInspector {
     public AFMetaModelPack generateModel(String fullClassName, String templateMapping,
             HashMap<String, String> classStructureMapping,
             HashMap<String, String> classTemplateMapping) throws MetamodelException {
-        return generateModel(templateMapping, fullClassName, classStructureMapping,
+        return generateModel(fullClassName, templateMapping, classStructureMapping,
                 classTemplateMapping, DEFAULT_DEPTH);
     }
 
@@ -137,7 +137,7 @@ public class ModelInspector {
      */
     public AFMetaModelPack generateModel(String fullClassName, String structureMapping,
             String templateMapping, String templateInnerClass) throws MetamodelException {
-        return generateModel(fullClassName, structureMapping, templateMapping, fullClassName,
+        return generateModel(fullClassName, structureMapping, templateMapping, templateInnerClass,
                 DEFAULT_DEPTH);
     }
 
@@ -318,7 +318,8 @@ public class ModelInspector {
      * @return structure name as XML file which will be used based on fieldName
      */
     private String getMapping(String fieldName) {
-        if (classStructureMapping != null && classStructureMapping.get(fieldName) != null) {
+        if (classStructureMapping != null && !classStructureMapping.isEmpty()
+                && classStructureMapping.get(fieldName) != null) {
             return classStructureMapping.get(fieldName);
         }
         if (structureMapping != null && !structureMapping.isEmpty()) {
@@ -333,15 +334,16 @@ public class ModelInspector {
      * specific layout for this
      * 
      * @param fieldName which will determine which layout will be used.
-     * @param isRoot 
+     * @param isRoot
      * @return layout name as XML file which will be used based on fieldName
      */
     private String getLayout(String fieldName, boolean isRoot) {
-        if (isRoot && classTemplateMapping == null && classTemplateMapping.get(fieldName) == null
-                && templateMapping == null) {
+        if (isRoot && classTemplateMapping == null && classTemplateMapping.isEmpty()
+                && classTemplateMapping.get(fieldName) == null && templateMapping == null) {
             return DEFAULT_LAYOUT;
         }
-        if (classTemplateMapping != null && classTemplateMapping.get(fieldName) != null) {
+        if (classTemplateMapping != null && !classTemplateMapping.isEmpty()
+                && classTemplateMapping.get(fieldName) != null) {
             return classTemplateMapping.get(fieldName);
         }
         if (templateMapping != null && !templateMapping.isEmpty()) {

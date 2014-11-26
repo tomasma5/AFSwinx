@@ -28,6 +28,14 @@ public interface FieldBuilder {
      * @return data representation of panel
      */
     public Object getData(AFSwinxPanel panel);
+    
+    /**
+     * This method retrieve data from input panel.
+     * @param panel from which will be data extracted
+     * @return data representation of panel
+     */
+    public Object getPlainData(AFSwinxPanel panel);
+    
     /**
      * This method will validate if build for component is available.
      * @param field on which will be done inspection which determine if build is available or not

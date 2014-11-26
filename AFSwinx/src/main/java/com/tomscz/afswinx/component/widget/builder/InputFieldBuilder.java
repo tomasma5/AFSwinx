@@ -60,4 +60,9 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         return null;
     }
 
+    @Override
+    public Object getPlainData(AFSwinxPanel panel) {
+        return getData(panel);
+    }
+
 }

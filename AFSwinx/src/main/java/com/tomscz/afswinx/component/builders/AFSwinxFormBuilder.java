@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.component.builders;
 
+import java.util.List;
+
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -35,7 +37,7 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             // Based on data type make serialization
             BaseRestBuilder dataBuilder =
                     RestBuilderFactory.getInstance().getBuilder(form.getDataConnection());
-            AFDataPack dataPack = dataBuilder.serialize(o);
+            List<AFDataPack> dataPack = dataBuilder.serialize(o);
             // Fill data to form
             form.fillData(dataPack);
             AFSwinx.getInstance().addComponent(form, componentKeyName);

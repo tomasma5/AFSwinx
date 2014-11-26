@@ -81,4 +81,14 @@ public class DateBuilder extends BaseComponentsBuilder {
         return null;
     }
 
+    @Override
+    public Object getPlainData(AFSwinxPanel panel) {
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+            JDatePickerImpl dataPicker = (JDatePickerImpl) panel.getDataHolder().get(0);
+            JFormattedTextField textField = dataPicker.getJFormattedTextField();
+            return textField.getText();
+        }
+        return null;
+    }
+
 }

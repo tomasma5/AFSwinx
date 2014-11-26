@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -57,8 +58,8 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
             return new AFDataPack("");
         }
         try {
-            AFConnector<JsonObject> dataConnector =
-                    new AFConnector<JsonObject>(getDataConnection(), JsonObject.class);
+            AFConnector<JsonElement> dataConnector =
+                    new AFConnector<JsonElement>(getDataConnection(), JsonElement.class);
             return dataConnector.getContent();
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());

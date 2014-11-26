@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.abstraction;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -41,7 +42,7 @@ public interface AFSwinxInteraction {
      * 
      * @throws AFSwinxConnectionException
      */
-    public void fillData(AFDataPack dataPack);
+    public void fillData(List<AFDataPack> dataPack);
 
     public void postData() throws AFSwinxConnectionException;
 

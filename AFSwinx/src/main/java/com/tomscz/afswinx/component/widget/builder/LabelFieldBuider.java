@@ -47,4 +47,9 @@ public class LabelFieldBuider extends BaseComponentsBuilder {
         return null;
     }
 
+    @Override
+    public Object getPlainData(AFSwinxPanel panel) {
+        return getData(panel);
+    }
+
 }

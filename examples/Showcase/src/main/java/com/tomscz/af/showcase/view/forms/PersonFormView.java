@@ -28,6 +28,8 @@ public class PersonFormView extends JFrame {
     private JButton button;
     private static final String formId = "personForm";
     private static final String formId2 = "personForm2";
+    private static final String tableId_resource = "tablePerson";
+    private static final String person_resource_key = "personWithEL";
 
     public PersonFormView() {
         try {
@@ -50,7 +52,7 @@ public class PersonFormView extends JFrame {
         AFSwinx swinx = AFSwinx.getInstance();
         swinx.enableLocalization(czechLocalizationBundle);
         try {
-            panel.add(buildFormBasedOnXMLConnection("personWithEL"));
+            panel.add(buildFormBasedOnXMLConnection(person_resource_key));
 //            panel.add(buildFormBasedOnMyConnection());
         } catch (AFSwinxBuildException e) {
             e.printStackTrace();

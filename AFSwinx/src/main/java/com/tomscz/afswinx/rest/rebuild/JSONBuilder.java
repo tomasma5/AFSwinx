@@ -1,8 +1,11 @@
 package com.tomscz.afswinx.rest.rebuild;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.tomscz.afrest.rest.dto.data.AFData;
@@ -12,8 +15,11 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 
 public class JSONBuilder extends BaseRestBuilder {
 
+    private static String baseClass = "dummy";
+    
     StringBuilder sb = new StringBuilder();
-    AFDataPack dataPack = new AFDataPack("notKnow");
+    AFDataPack dataPack = new AFDataPack(baseClass);
+    List<AFDataPack> moreDatas = new ArrayList<AFDataPack>();
 
     @Override
     public Object reselialize(AFDataHolder componentData) {
@@ -36,12 +42,29 @@ public class JSONBuilder extends BaseRestBuilder {
     }
 
     @Override
-    public AFDataPack serialize(Object jsonObject) {
-        JsonObject object = (JsonObject) jsonObject;
-        Gson gson = new Gson();
-        JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
-        serializeJseon(jsonObjectToSerialize, "");
-        return dataPack;
+    public List<AFDataPack> serialize(Object jsonObject) {
+        JsonElement element = (JsonElement) jsonObject;
+        if(element.isJsonArray()){
+            JsonArray array = (JsonArray) jsonObject;
+            for(JsonElement currentElement:array){
+                if(currentElement.isJsonObject()){
+                    JsonObject object = (JsonObject) currentElement;
+                    Gson gson = new Gson();
+                    JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
+                    serializeJseon(jsonObjectToSerialize, "");
+                    moreDatas.add(dataPack);
+                    dataPack = new AFDataPack(baseClass);
+                }
+            }
+        }
+        else if(element.isJsonObject()){
+            JsonObject object = (JsonObject) jsonObject;
+            Gson gson = new Gson();
+            JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
+            serializeJseon(jsonObjectToSerialize, "");
+            moreDatas.add(dataPack);
+        }
+        return moreDatas;
     }
 
     private void serializeJseon(JsonObject jsonObject, String fieldKey) {
