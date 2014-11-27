@@ -1,7 +1,9 @@
 package com.tomscz.afswinx.component;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
@@ -69,8 +71,12 @@ public class AFSwinx {
         }
     }
 
-    public void removeAllComponents() {
+    public synchronized void removeAllComponents() {
+        Set<String> componentsKey = new HashSet<String>();
         for(String key:components.keySet()){
+            componentsKey.add(key);
+        }
+        for(String key:componentsKey){
             components.remove(key);
         }
     }

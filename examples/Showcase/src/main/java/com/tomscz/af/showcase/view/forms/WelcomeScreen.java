@@ -150,6 +150,7 @@ public class WelcomeScreen extends BaseScreen {
         
         @Override
         public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
             AvaiableCountryView view = new AvaiableCountryView();
             setVisible(false);
         }
