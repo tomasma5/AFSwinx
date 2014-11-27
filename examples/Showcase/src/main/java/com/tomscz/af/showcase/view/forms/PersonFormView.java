@@ -29,7 +29,7 @@ public class PersonFormView extends JFrame {
     private static final String formId = "personForm";
     private static final String formId2 = "personForm2";
     private static final String tableId_resource = "tablePerson";
-    private static final String person_resource_key = "personWithEL";
+    private static final String PERSON_RESOURCE_KEY = "personWithEL";
     private static final String COUNTRY_TABLE_CONNECTION_KEY = "tableCountryPublic";
 
     public PersonFormView() {
@@ -53,7 +53,7 @@ public class PersonFormView extends JFrame {
         AFSwinx swinx = AFSwinx.getInstance();
         swinx.enableLocalization(czechLocalizationBundle);
         try {
-            panel.add(buildFormBasedOnXMLConnection(person_resource_key));
+            panel.add(buildFormBasedOnXMLConnection(COUNTRY_TABLE_CONNECTION_KEY));
 //            panel.add(buildFormBasedOnMyConnection());
         } catch (AFSwinxBuildException e) {
             e.printStackTrace();
@@ -82,8 +82,8 @@ public class PersonFormView extends JFrame {
         File f = new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", "2");
-//        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, person_resource_key, parameters).buildComponent();
-        AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+        //        AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
         return component;
     }
 

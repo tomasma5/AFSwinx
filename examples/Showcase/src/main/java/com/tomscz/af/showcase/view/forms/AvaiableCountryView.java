@@ -17,7 +17,6 @@ import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.utils.FileUtils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
-import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
 public class AvaiableCountryView extends BaseScreen {
