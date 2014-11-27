@@ -35,11 +35,6 @@ public class AFSwinx {
         return instance;
     }
 
-    public AFSwinxTopLevelComponent buildTable() {
-        // TODO finish it
-        return null;
-    }
-
     /**
      * This method return builder which must be used to build {@link AFSwinxForm}
      * 
@@ -48,7 +43,7 @@ public class AFSwinx {
     public AFSwinxFormBuilder getFormBuilder() {
         return new AFSwinxFormBuilder();
     }
-    
+
     /**
      * This method return builder which must be used to build {@link AFSwinxForm}
      * 
@@ -59,11 +54,25 @@ public class AFSwinx {
     }
 
     public void addComponent(AFSwinxTopLevelComponent componentToAdd, String key) {
+        removeComponent(key);
         components.put(key, componentToAdd);
     }
 
     public AFSwinxTopLevelComponent getExistedComponent(String componentName) {
         return components.get(componentName);
+    }
+
+    public void removeComponent(String key) {
+        AFSwinxTopLevelComponent component = components.get(key);
+        if (component != null) {
+            components.remove(key);
+        }
+    }
+
+    public void removeAllComponents() {
+        for(String key:components.keySet()){
+            components.remove(key);
+        }
     }
 
     public ResourceBundle getLocalization() {
