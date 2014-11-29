@@ -42,7 +42,7 @@ public abstract class BaseConnector implements Connector {
         return getHost().getHostName() + ":" + getHost().getPort() + parameters;
     }
 
-    protected InputStream getResponse(HttpRequest httpMethod) throws ConnectException {
+    private InputStream getResponse(HttpRequest httpMethod) throws ConnectException {
         response = null;
         try {
             this.statusCode = -1;

@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JPanel;
 
+import org.apache.http.HttpResponse;
+
 import com.google.gson.JsonElement;
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -13,6 +15,7 @@ import com.tomscz.afswinx.component.builders.ComponentDataPacker;
 import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
+import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 
@@ -24,14 +27,19 @@ import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
  * 
  * @since 1.0.0.
  */
-public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinxInteraction, ComponentReserialization {
+public abstract class AFSwinxTopLevelComponent extends JPanel
+        implements
+            AFSwinxInteraction,
+            ComponentReserialization {
 
-    private HashMap<String, ComponentDataPacker> panels = new HashMap<String, ComponentDataPacker>();
-    
+    private HashMap<String, ComponentDataPacker> panels =
+            new HashMap<String, ComponentDataPacker>();
+
     protected AFSwinxConnection modelConnection;
     protected AFSwinxConnection postConnection;
     protected AFSwinxConnection dataConnection;
-    
+    private HttpResponse lastResponse;
+
     private static final long serialVersionUID = 1L;
 
     public abstract SupportedComponents getComponentType();
@@ -43,6 +51,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
         try {
             AFConnector<AFMetaModelPack> modelConnector =
                     new AFConnector<AFMetaModelPack>(getModelConnection(), AFMetaModelPack.class);
+            this.lastResponse = modelConnector.getResponse();
             return modelConnector.getContent();
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
@@ -51,30 +60,40 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
 
     @Override
     public Object getData() throws AFSwinxConnectionException {
-        if(getDataConnection() == null){
+        if (getDataConnection() == null) {
             return null;
         }
         try {
-            AFConnector<JsonElement> dataConnector =
-                    new AFConnector<JsonElement>(getDataConnection(), JsonElement.class);
+            AFConnector<?> dataConnector;
+            if (getDataConnection().getAcceptedType().equals(HeaderType.XML)) {
+                // TODO finish XML
+                throw new UnsupportedOperationException("XML File is not supperted yet");
+            } else {
+                dataConnector =
+                        new AFConnector<JsonElement>(getDataConnection(), JsonElement.class);
+            }
+            // Set response for future use
+            this.lastResponse = dataConnector.getResponse();
             return dataConnector.getContent();
+
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
         }
     }
-    
+
     @Override
     public Object generatePostData() {
         // before building data and sending, validate actual data
         boolean isValid = validateData();
-        if(!isValid){
+        if (!isValid) {
             return null;
         }
-        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(getPostConnection());
+        BaseRestBuilder dataBuilder =
+                RestBuilderFactory.getInstance().getBuilder(getPostConnection());
         Object data = dataBuilder.reselialize(this.resealize());
         return data;
     }
-    
+
     @Override
     public void postData() throws AFSwinxConnectionException {
         if (getPostConnection() == null) {
@@ -82,13 +101,15 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
         Object data = generatePostData();
-        if(data == null){
+        if (data == null) {
             return;
         }
         AFConnector<Object> dataConnector =
                 new AFConnector<Object>(getPostConnection(), Object.class);
         try {
-            dataConnector.doPost(data.toString());
+            dataConnector.doPost(data.toString());    
+            // Set response for future use
+            this.lastResponse = dataConnector.getResponse();
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getMessage());
         }
@@ -97,17 +118,17 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
     @Override
     public void changeLocalization(ResourceBundle localization) {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
     public HashMap<String, ComponentDataPacker> getPanels() {
         return panels;
     }
-    
+
     public AFSwinxConnection getModelConnection() {
         return modelConnection;
     }
-    
+
     public AFSwinxConnection getPostConnection() {
         return postConnection;
     }
@@ -115,7 +136,9 @@ public abstract class AFSwinxTopLevelComponent extends JPanel implements AFSwinx
     public AFSwinxConnection getDataConnection() {
         return dataConnection;
     }
-    
-    
-    
+
+    public HttpResponse getLastResponse() {
+        return lastResponse;
+    }
+
 }
