@@ -30,6 +30,8 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     private JScrollPane scrollPanel;
     private boolean dynamicSize = false;
     private boolean fitSize = false;
+    private int tableWidth;
+    private int tableHeight;
     private int[] columsWidth;
     private static final int PLUS_HEIGHT = 30;
 
@@ -106,7 +108,10 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     }
 
     public void resize() {
-        if (fitSize) {
+        if(tableHeight != 0 && tableWidth != 0){
+            scrollPanel.setPreferredSize(new Dimension(tableWidth, tableHeight));
+        }
+        else if (fitSize) {
             if (columsWidth == null) {
                 setColumnsWidths();
             }
@@ -163,6 +168,22 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
 
     public void setScrollPanel(JScrollPane scrollPanel) {
         this.scrollPanel = scrollPanel;
+    }
+
+    public int getTableWidth() {
+        return tableWidth;
+    }
+
+    public void setTableWidth(int tableWidth) {
+        this.tableWidth = tableWidth;
+    }
+
+    public int getTableHeight() {
+        return tableHeight;
+    }
+
+    public void setTableHeight(int tableHeight) {
+        this.tableHeight = tableHeight;
     }
 
 }

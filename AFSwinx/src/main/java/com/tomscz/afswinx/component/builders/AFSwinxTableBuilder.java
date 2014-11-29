@@ -35,6 +35,8 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
     private int componentPossition = 0;
     private boolean fitSize = false;
     private boolean dynamicSize = true;
+    private int width;
+    private int height;
     private List<String> components = new ArrayList<String>();
 
     @Override
@@ -43,6 +45,8 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
         AFSwinxTable table = new AFSwinxTable(modelConnection, dataConnection, postConnection);
         table.setDynamicSize(dynamicSize);
         table.setFitSize(fitSize);
+        table.setTableHeight(width);
+        table.setTableWidth(height);
         try {
             AFMetaModelPack metaModelPack = table.getModel();
             AFClassInfo classInfo = metaModelPack.getClassInfo();
@@ -157,6 +161,17 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
 
     public AFSwinxTableBuilder setFitSize(boolean fitSize) {
         this.fitSize = fitSize;
+        return this;
+    }
+
+    public AFSwinxTableBuilder setHeight(int size) {
+        this.height = size;
+        return this;
+    }
+
+
+    public AFSwinxTableBuilder setWidth(int width) {
+        this.width = width;
         return this;
     }
 
