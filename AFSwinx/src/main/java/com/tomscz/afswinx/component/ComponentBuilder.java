@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 
 /**
@@ -27,6 +28,16 @@ public interface ComponentBuilder<T> {
      */
     public T setLocalization(ResourceBundle localization);
 
+    /**
+     * This method set localization to builder. The generic is used because you have to return any
+     * type of builder.
+     * 
+     * @param localization resource bundle with localization
+     * @return actual builder class which will be used to another builder settings or to return
+     *         object which was build
+     */
+    public T setSkin(Skin skin);
+    
     /**
      * This method build concrete component. The generic is used because you can build various
      * components.

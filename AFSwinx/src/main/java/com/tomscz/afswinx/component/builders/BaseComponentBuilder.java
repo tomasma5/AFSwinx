@@ -14,6 +14,8 @@ import com.tomscz.afswinx.component.ComponentBuilder;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.skin.BaseSkin;
+import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
@@ -25,7 +27,8 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected String componentKeyName;
 
     protected ResourceBundle localization;
-
+    protected Skin skin;
+    
     protected HashMap<String, String> connectionParameters;
     protected AFSwinxConnection modelConnection;
     protected AFSwinxConnection dataConnection;
@@ -154,7 +157,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param key of current field. It is used to determine which class belongs to which fields
      */
     protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
-            AFSwinxForm form, String key) {
+            AFSwinxTopLevelComponent form, String key) {
         // For each field
         for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
             // If its class then inspect it recursively
@@ -176,7 +179,14 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                 if (localization == null) {
                     localization = AFSwinx.getInstance().getLocalization();
                 }
+                if(skin == null){
+                    skin = AFSwinx.getInstance().getApplicationSkin();
+                    if(skin == null){
+                        skin = new BaseSkin();
+                    }
+                }
                 builder.setLocalization(localization);
+                builder.setSkin(skin);
                 // Use generated key
                 String uniquieKey = Utils.generateKey(key, fieldInfo.getId());
                 fieldInfo.setId(uniquieKey);

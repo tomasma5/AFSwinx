@@ -2,6 +2,7 @@ package com.tomscz.afserver.persistence.entity;
 
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
+import com.codingcrayons.aspectfaces.annotations.UiRequired;
 
 public class Country {
 
@@ -42,6 +43,7 @@ public class Country {
 
     @UiLabel(value="country.name")
     @UiOrder(value=0)
+    @UiRequired
     public String getName() {
         return name;
     }

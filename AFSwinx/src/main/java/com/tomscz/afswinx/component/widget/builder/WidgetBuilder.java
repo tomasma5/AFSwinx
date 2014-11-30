@@ -2,10 +2,13 @@ package com.tomscz.afswinx.component.widget.builder;
 
 import java.util.ResourceBundle;
 
+import javax.swing.JComponent;
+
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.skin.Skin;
 
 /**
  * This interface specify operation which must implement each field builder.    
@@ -48,6 +51,14 @@ public interface WidgetBuilder {
      * @param localization which will be used to translate text
      */
     public void setLocalization(ResourceBundle localization);
+    
+    /**
+     * This method set localization resource bundle, which will be used.
+     * @param localization which will be used to translate text
+     */
+    public void setSkin(Skin skin);
+    
+    public void skinComponent(JComponent componentToSkin);
     
     public SupportedWidgets getWidgetType();
 

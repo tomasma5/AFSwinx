@@ -21,7 +21,7 @@ public class LabelFieldBuider extends BaseComponentsBuilder {
         }
         super.buildBase(field);
         JLabel dataLabel = new JLabel();
-        // TODO add layout based on label position, but its for top level class
+
         layoutBuilder.addComponent(dataLabel);
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), dataLabel, fieldLabel);

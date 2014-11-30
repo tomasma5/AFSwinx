@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.widget.builder;
 
+import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,7 @@ public class DateBuilder extends BaseComponentsBuilder {
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model);
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
+        skinComponent(datePicker);
         layoutBuilder.addComponent(datePicker);
         coreComponent = datePicker;
         // Create panel which holds all necessary informations

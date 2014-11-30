@@ -1,15 +1,22 @@
 package com.tomscz.afswinx.component.widget.builder.abstraction;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ResourceBundle;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.skin.Skin;
+import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.validation.AFValidations;
@@ -29,8 +36,9 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
     protected JTextArea message;
     protected JLabel fieldLabel;
     protected ResourceBundle localization;
+    protected Skin skin;
     protected SupportedWidgets widgetType;
-    
+
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
         if (fieldWithLabel != null) return true;
@@ -47,7 +55,16 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
     protected JLabel buildSimpleLabel(String text) {
         if (text != null && !text.isEmpty()) {
             text = LocalizationUtils.getTextFromExtendBundle(text, localization, null);
-            return new JLabel(text);
+            JLabel label = new JLabel(text);
+            if (skin != null) {
+                if (skin.getLabelFont() != null) {
+                    label.setFont(skin.getLabelFont());
+                }
+                if (skin.getLabelColor() != null) {
+                    label.setForeground(skin.getLabelColor());
+                }
+            }
+            return label;
         }
         return null;
     }
@@ -65,6 +82,14 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
         textValidationComponent.setLineWrap(true);
         textValidationComponent.setEditable(false);
         textValidationComponent.setOpaque(false);
+        if (skin != null) {
+            if (skin.getValidationColor() != null) {
+                textValidationComponent.setForeground(skin.getValidationColor());
+            }
+            if (skin.getValidationFont() != null) {
+                textValidationComponent.setFont(skin.getValidationFont());
+            }
+        }
         return textValidationComponent;
     }
 
@@ -85,24 +110,75 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
     public void setLocalization(ResourceBundle localization) {
         this.localization = localization;
     }
-    
-    protected void buildBase(AFFieldInfo  fieldInfo){
-        //First check if build is available
+
+    @Override
+    public void setSkin(Skin skin) {
+        this.skin = skin;
+
+    }
+
+    protected void buildBase(AFFieldInfo fieldInfo) {
+        // First check if build is available
         if (!isBuildAvailable(fieldInfo)) {
             throw new IllegalArgumentException("Input field couldn't be build for this field");
         }
-        //Create layout builder
+        // Create layout builder
         this.layoutBuilder = new BaseLayoutBuilder(fieldInfo.getLayout());
-        //Build label
+        // Build label
         this.fieldLabel = buildSimpleLabel(fieldInfo.getLabel());
-        //Add components to layout builder
+        // Add components to layout builder
         layoutBuilder.addLabel(fieldLabel);
         this.message = buildSimpleMessage();
         layoutBuilder.addMessage(message);
     }
-    
-    public SupportedWidgets getWidgetType(){
+
+    public SupportedWidgets getWidgetType() {
         return widgetType;
     }
+
+    @Override
+    public void skinComponent(JComponent componentToSkin) {
+        if (skin != null) {
+            if (skin.getFieldColor() != null) {
+                componentToSkin.setForeground(skin.getFieldColor());
+            }
+            if (skin.getFieldFont() != null) {
+                componentToSkin.setFont(skin.getFieldFont());
+            }
+            if (getWidgetType() == null) {
+                return;
+            }
+            if (getWidgetType().equals(SupportedWidgets.TEXTAREA)) {
+                int rows = skin.getTextAreaRows();
+                int colums = skin.getTextAreaColums();
+                JTextArea texArea = (JTextArea) componentToSkin;
+                if (rows > 0) {
+                    texArea.setRows(rows);
+                }
+                if (colums > 0) {
+                    texArea.setColumns(colums);
+                }
+            }
+            if (getWidgetType().equals(SupportedWidgets.NUMBERFIELD)
+                    || getWidgetType().equals(SupportedWidgets.TEXTFIELD)) {
+                JTextField textField = (JTextField) componentToSkin;
+                int colums = skin.getInputColum();
+                if (colums > 0) {
+                    textField.setColumns(colums);
+                } else {
+                    textField.setColumns(InputFieldBuilder.DEFAULT_NUMBER_OF_COLUMS);
+                }
+            }
+            if(getWidgetType().equals(SupportedWidgets.CALENDAR)){
+                JDatePickerImpl dataPicker = (JDatePickerImpl) componentToSkin;
+                int colums = skin.getInputColum();
+                if(colums > 0){
+                    Dimension currentSize = dataPicker.getPreferredSize();
+                    dataPicker.setPreferredSize(new Dimension(colums, currentSize.height));
+                }     
+            }
+        }
+    }
+
 
 }

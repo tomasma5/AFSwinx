@@ -11,6 +11,8 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+
+import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
@@ -81,6 +83,12 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
         component.add(panelToAdd);
         panelToAdd.setAfParent(component);
         layoutBuilder.addComponent(panelToAdd);
+    }
+
+    @Override
+    public AFSwinxFormBuilder setSkin(Skin skin) {
+       this.skin = skin;
+       return this;
     }
 
 }

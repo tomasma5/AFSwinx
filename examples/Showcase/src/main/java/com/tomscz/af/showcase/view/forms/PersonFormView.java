@@ -53,7 +53,7 @@ public class PersonFormView extends JFrame {
         AFSwinx swinx = AFSwinx.getInstance();
         swinx.enableLocalization(czechLocalizationBundle);
         try {
-            panel.add(buildFormBasedOnXMLConnection(COUNTRY_TABLE_CONNECTION_KEY));
+            panel.add(buildFormBasedOnXMLConnection(PERSON_RESOURCE_KEY));
 //            panel.add(buildFormBasedOnMyConnection());
         } catch (AFSwinxBuildException e) {
             e.printStackTrace();
@@ -82,8 +82,8 @@ public class PersonFormView extends JFrame {
         File f = new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         HashMap<String, String> parameters = new HashMap<>();
         parameters.put("id", "2");
-        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
-        //        AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+//        AFSwinxTable component = swinx.getTableBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
+                AFSwinxForm component  = swinx.getFormBuilder().initBuilder(formId, f, connectionKey, parameters).buildComponent();
         return component;
     }
 

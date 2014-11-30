@@ -10,7 +10,8 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
 
 /**
- * This builder build input field editable component without any restrictions
+ * This builder build input field editable component without any restrictions. Restriction could be
+ * specify as validation rules.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -18,7 +19,7 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBui
  */
 public class InputFieldBuilder extends BaseComponentsBuilder {
 
-    private static final int DEFAULT_NUMBER_OF_COLUMS = 10;
+   public static final int DEFAULT_NUMBER_OF_COLUMS = 10;
 
     public InputFieldBuilder() {
         widgetType = SupportedWidgets.TEXTFIELD;
@@ -29,13 +30,13 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         super.buildBase(field);
         // And input text field
         JTextField textField = new JTextField();
+        skinComponent(textField);
         layoutBuilder.addComponent(textField);
-        textField.setColumns(DEFAULT_NUMBER_OF_COLUMS);
         coreComponent = textField;
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
-                new AFSwinxPanel(field.getId(), field.getWidgetType(), textField,
-                        fieldLabel, message);
+                new AFSwinxPanel(field.getId(), field.getWidgetType(), textField, fieldLabel,
+                        message);
         // Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
         // Add validations

@@ -8,6 +8,7 @@ import java.util.Set;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
 import com.tomscz.afswinx.component.builders.AFSwinxTableBuilder;
+import com.tomscz.afswinx.component.skin.Skin;
 
 /**
  * This class is facade to using AFSwinx. Use getInstance to get unique instance in your
@@ -25,6 +26,8 @@ public class AFSwinx {
     private HashMap<String, AFSwinxTopLevelComponent> components;
 
     private ResourceBundle localization;
+    
+    private Skin applicationSkin;
 
     private AFSwinx() {
         components = new HashMap<>();
@@ -95,5 +98,13 @@ public class AFSwinx {
      */
     public void enableLocalization(ResourceBundle localization) {
         this.localization = localization;
+    }
+
+    public Skin getApplicationSkin() {
+        return applicationSkin;
+    }
+
+    public void setApplicationSkin(Skin applicationSkin) {
+        this.applicationSkin = applicationSkin;
     }
 }

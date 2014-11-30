@@ -22,6 +22,8 @@ import com.tomscz.afswinx.component.AFSwinxTable;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.skin.BaseSkin;
+import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
@@ -51,7 +53,7 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
             AFMetaModelPack metaModelPack = table.getModel();
             AFClassInfo classInfo = metaModelPack.getClassInfo();
             if (classInfo != null) {
-                buildFields(classInfo, table, "");
+                buildFields(classInfo, null,table, "");
             }
             String columns[] = new String[components.size()];
             int i = 0;
@@ -67,16 +69,18 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
             List<AFDataPack> dataPack = dataBuilder.serialize(o);
             // Fill data to table
             table.fillData(dataPack);
-           
+
             Object row[][] = new String[dataPack.size()][components.size()];
             for (i = 0; i < row.length; i++) {
                 HashMap<String, String> rowData = table.getTableRow().get(i);
                 for (int j = 0; j < row[i].length; j++) {
                     String key = components.get(j);
                     String value = rowData.get(key);
-                    if(value != null){
-                        if(value.equals("true") || value.equals("false")){
-                            value =  LocalizationUtils.getTextFromExtendBundle(value, localization, null);
+                    if (value != null) {
+                        if (value.equals("true") || value.equals("false")) {
+                            value =
+                                    LocalizationUtils.getTextFromExtendBundle(value, localization,
+                                            null);
                         }
                     }
                     Object data = value;
@@ -84,7 +88,7 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
                 }
             }
             TableModel model = new DefaultTableModel(row, columns);
-            JTable tableimp = new JTable(model);           
+            JTable tableimp = new JTable(model);
             RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
             tableimp.setRowSorter(sorter);
             JScrollPane pane = new JScrollPane();
@@ -101,47 +105,6 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
         return table;
     }
 
-
-    /**
-     * This method set data to form. It build for each widget his field
-     * 
-     * @param classInfo which will be inspected
-     * @param layoutBuilder layout builder which will be used
-     * @param form which is builded
-     * @param key of current field. It is used to determine which class belongs to which fields
-     */
-    private void buildFields(AFClassInfo classInfo, AFSwinxTable table, String key) {
-        // For each field
-        for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
-            // If its class then inspect it recursively
-            if (fieldInfo.getClassType()) {
-                for (AFClassInfo classInfoChildren : classInfo.getInnerClasses()) {
-                    // There could be more inner class choose the right one
-                    if (classInfoChildren.getName() != null
-                            && classInfoChildren.getName().equals(fieldInfo.getId())) {
-                        // Recursively call this method with new key, which will specify unique link
-                        // on parent
-                        buildFields(classInfoChildren, table, Utils.generateKey(key, fieldInfo.getId()));
-                    }
-                }
-            } else {
-                // Build field
-                WidgetBuilder builder =
-                        WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
-                if (localization == null) {
-                    localization = AFSwinx.getInstance().getLocalization();
-                }
-                builder.setLocalization(localization);
-                // Use generated key
-                String uniquieKey = Utils.generateKey(key, fieldInfo.getId());
-                fieldInfo.setId(uniquieKey);
-                AFSwinxPanel panelToAdd = builder.buildComponent(fieldInfo);
-                this.addComponent(panelToAdd, null, table);
-            }
-        }
-    }
-
-
     @Override
     protected void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent component) {
@@ -152,7 +115,6 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
         // component.add(panelToAdd);
         panelToAdd.setAfParent(component);
     }
-
 
     public AFSwinxTableBuilder setDynamicSize(boolean dynamicSize) {
         this.dynamicSize = dynamicSize;
@@ -169,9 +131,14 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
         return this;
     }
 
-
     public AFSwinxTableBuilder setWidth(int width) {
         this.width = width;
+        return this;
+    }
+
+    @Override
+    public AFSwinxTableBuilder setSkin(Skin skin) {
+        this.skin = skin;
         return this;
     }
 
