@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
@@ -30,7 +31,7 @@ public class BaseLayoutBuilder implements LayoutBuilder {
     protected int numberOfComponentsInAxis;
     protected int layoutOrientation;
     protected LabelPosition labelPosition;
-    protected JLabel label;
+    protected JTextArea label;
     protected JComponent message;
     protected int numberOfComponentInActualPanel;
     protected List<JComponent> components = new ArrayList<JComponent>();
@@ -83,7 +84,7 @@ public class BaseLayoutBuilder implements LayoutBuilder {
     }
 
     @Override
-    public void addLabel(JLabel label) {
+    public void addLabel(JTextArea label) {
         if (label != null) this.label = label;
     }
 

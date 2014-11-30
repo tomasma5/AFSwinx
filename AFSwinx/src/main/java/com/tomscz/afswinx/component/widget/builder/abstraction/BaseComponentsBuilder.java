@@ -34,10 +34,13 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
     protected Component coreComponent;
     protected BaseLayoutBuilder layoutBuilder;
     protected JTextArea message;
-    protected JLabel fieldLabel;
+    protected JTextArea fieldLabel;
     protected ResourceBundle localization;
     protected Skin skin;
     protected SupportedWidgets widgetType;
+
+    private static final int LABEL_WIDHT = 50;
+    private static final int LABEL_HEIGHT = 20;
 
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
@@ -52,19 +55,36 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
      * @param text to {@link JLabel}
      * @return {@link JLabel} with text. If there is no text then null is returned.
      */
-    protected JLabel buildSimpleLabel(String text) {
+    protected JTextArea buildSimpleLabel(String text) {
         if (text != null && !text.isEmpty()) {
             text = LocalizationUtils.getTextFromExtendBundle(text, localization, null);
-            JLabel label = new JLabel(text);
+            JTextArea labelArea = new JTextArea();
+            labelArea.setText(text);
+            labelArea.setVisible(true);
+            labelArea.setWrapStyleWord(true);
+            labelArea.setLineWrap(true);
+            labelArea.setEditable(false);
+            labelArea.setOpaque(false);
+            int height = LABEL_HEIGHT;
+            int width = LABEL_WIDHT;
             if (skin != null) {
                 if (skin.getLabelFont() != null) {
-                    label.setFont(skin.getLabelFont());
+                    labelArea.setFont(skin.getLabelFont());
                 }
                 if (skin.getLabelColor() != null) {
-                    label.setForeground(skin.getLabelColor());
+                    labelArea.setForeground(skin.getLabelColor());
+                }
+                if (skin.getLabelWidht() > 0) {
+                    width = skin.getLabelWidht();
+                }
+                if (skin.getLabelHeight() > 0) {
+                    height = skin.getLabelHeight();
                 }
             }
-            return label;
+            Dimension dimension = new Dimension(width,height);
+            labelArea.setPreferredSize(dimension);
+            labelArea.setMaximumSize(dimension);
+            return labelArea;
         }
         return null;
     }
@@ -162,20 +182,23 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
             if (getWidgetType().equals(SupportedWidgets.NUMBERFIELD)
                     || getWidgetType().equals(SupportedWidgets.TEXTFIELD)) {
                 JTextField textField = (JTextField) componentToSkin;
-                int colums = skin.getInputColum();
-                if (colums > 0) {
-                    textField.setColumns(colums);
-                } else {
-                    textField.setColumns(InputFieldBuilder.DEFAULT_NUMBER_OF_COLUMS);
+                int width = InputFieldBuilder.DEFAULT_WIDTH;
+                int height = textField.getPreferredSize().height;
+                if (skin.getInputWidth() > 0) {
+                   width = skin.getInputWidth();
                 }
+                Dimension dimension = new Dimension(width,height);
+                textField.setPreferredSize(dimension);
+                textField.setMinimumSize(dimension);
+                textField.setMaximumSize(dimension);
             }
-            if(getWidgetType().equals(SupportedWidgets.CALENDAR)){
+            if (getWidgetType().equals(SupportedWidgets.CALENDAR)) {
                 JDatePickerImpl dataPicker = (JDatePickerImpl) componentToSkin;
-                int colums = skin.getInputColum();
-                if(colums > 0){
+                int colums = skin.getInputWidth();
+                if (colums > 0) {
                     Dimension currentSize = dataPicker.getPreferredSize();
                     dataPicker.setPreferredSize(new Dimension(colums, currentSize.height));
-                }     
+                }
             }
         }
     }

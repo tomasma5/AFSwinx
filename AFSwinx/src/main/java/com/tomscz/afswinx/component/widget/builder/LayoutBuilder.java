@@ -3,6 +3,7 @@ package com.tomscz.afswinx.component.widget.builder;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  * This interface specify all operation which must implement any of layout builder
@@ -16,7 +17,7 @@ public interface LayoutBuilder {
     
     public void addComponent(JComponent component);
     
-    public void addLabel(JLabel label);
+    public void addLabel(JTextArea label);
     
     public void addMessage(JComponent messageComponent);
 }

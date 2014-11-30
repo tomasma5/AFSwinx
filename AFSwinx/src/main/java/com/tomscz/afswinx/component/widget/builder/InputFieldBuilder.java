@@ -19,7 +19,7 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBui
  */
 public class InputFieldBuilder extends BaseComponentsBuilder {
 
-   public static final int DEFAULT_NUMBER_OF_COLUMS = 10;
+   public static final int DEFAULT_WIDTH = 10;
 
     public InputFieldBuilder() {
         widgetType = SupportedWidgets.TEXTFIELD;

@@ -11,9 +11,11 @@ public class BaseSkin implements Skin {
     private Font validationFont = new Font("Verdana", Font.BOLD, 12);
     private Font labelFont = new Font("Verdana", Font.PLAIN, 10);
     private Font fieldFont = new Font("Verdana", Font.PLAIN, 15);
-    private int inputColumn = 1;
+    private int inputWidth= 100;
     private int textAreaColums;
     private int textAreaRows;
+    private int labelWidht = 100;
+    private int labelHeight = 0;
 
     @Override
     public Color getLabelColor() {
@@ -30,12 +32,8 @@ public class BaseSkin implements Skin {
     }
 
     @Override
-    public int getInputColum() {
-        return inputColumn;
-    }
-
-    public void setInputWidth(int inputWidth) {
-        this.inputColumn = inputWidth;
+    public int getInputWidth() {
+        return inputWidth;
     }
 
     @Override
@@ -74,6 +72,16 @@ public class BaseSkin implements Skin {
     @Override
     public Color getFieldColor() {
        return fieldColor;
+    }
+
+    @Override
+    public int getLabelWidht() {
+        return labelWidht;
+    }
+
+    @Override
+    public int getLabelHeight() {
+        return labelHeight;
     }
 
 }
