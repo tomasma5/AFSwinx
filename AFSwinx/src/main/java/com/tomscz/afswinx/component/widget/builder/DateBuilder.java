@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component.widget.builder;
 
-import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

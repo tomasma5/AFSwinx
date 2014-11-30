@@ -338,8 +338,8 @@ public class ModelInspector {
      * @return layout name as XML file which will be used based on fieldName
      */
     private String getLayout(String fieldName, boolean isRoot) {
-        if (isRoot && classTemplateMapping == null && classTemplateMapping.isEmpty()
-                && classTemplateMapping.get(fieldName) == null && templateMapping == null) {
+        if (isRoot && (classTemplateMapping == null || classTemplateMapping.isEmpty()
+                || classTemplateMapping.get(fieldName) == null) && (templateMapping == null || templateMapping.isEmpty())) {
             return DEFAULT_LAYOUT;
         }
         if (classTemplateMapping != null && !classTemplateMapping.isEmpty()

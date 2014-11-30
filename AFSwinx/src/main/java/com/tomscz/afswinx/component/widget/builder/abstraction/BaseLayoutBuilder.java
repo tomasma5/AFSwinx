@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -125,7 +124,13 @@ public class BaseLayoutBuilder implements LayoutBuilder {
         }
         // Put components together and add message field if should be added
         JPanel panelWhichHoldPanels = outputPanel;
-        GridLayout gridLayout = new GridLayout(panels.size(), 1);
+        GridLayout gridLayout;
+        if(layoutOrientation == BoxLayout.X_AXIS){
+            gridLayout = new GridLayout(panels.size(), 0,0,0);
+        }
+        else{
+            gridLayout = new GridLayout(0, panels.size(),0 ,0);
+        }
         // if there is message to add, then wrapper should be used around swing panel
         if (message != null) {
             panelWhichHoldPanels = new JPanel();

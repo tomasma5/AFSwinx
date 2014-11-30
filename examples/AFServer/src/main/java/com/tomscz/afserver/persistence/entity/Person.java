@@ -34,10 +34,9 @@ public class Person {
         this.id = id;
     }
 
-    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.TWOCOLUMNSLAYOUT, layoutOrientation = LayoutOrientation.AXISX)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.TWOCOLUMNSLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     @UiLabel("person.lastName")
     @UiOrder(value = 2)
-    @UIWidgetType(widgetType = SupportedWidgets.TEXTAREA)
     public String getLastName() {
         return lastName;
     }

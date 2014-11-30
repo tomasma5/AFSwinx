@@ -1,7 +1,6 @@
 package com.tomscz.afswinx.component.widget.builder;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 

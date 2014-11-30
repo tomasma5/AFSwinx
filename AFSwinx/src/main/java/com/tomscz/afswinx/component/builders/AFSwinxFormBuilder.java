@@ -11,7 +11,6 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-
 import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;

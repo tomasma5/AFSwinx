@@ -15,7 +15,7 @@ public class BaseSkin implements Skin {
     private int textAreaColums;
     private int textAreaRows;
     private int labelWidht = 100;
-    private int labelHeight = 0;
+    private int labelHeight = 30;
 
     @Override
     public Color getLabelColor() {
