@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  29 NOV 2014 16:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  1 DEC 2014 22:06
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -805,38 +805,14 @@ Kapitola 6.
 
 
 ]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 10.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
  (C:\Latex\tex\latex\base\t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-Underfull \hbox (badness 1845) in paragraph at lines 21--24
-[]\T1/cmr/m/it/10.95 Edux 2 \T1/cmr/m/n/10.95 [on-line]. [cit. 8.4.2012].  Do-s
-tupné z: <[][]$\T1/cmtt/m/n/10.95 https : / / edux . feld . cvut . cz /$
- []
-
-
-Underfull \hbox (badness 2846) in paragraph at lines 49--51
-[]\T1/cmr/m/it/10.95 PrimeFaces \T1/cmr/m/n/10.95 [on-line]. [cit. 8.4.2012].  
-Do-stupné z: <[][]$\T1/cmtt/m/n/10.95 http : / / primefaces . org /$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--56
-[]\T1/cmr/m/it/10.95 Free Wor-d-Press Theme Pre-view \T1/cmr/m/n/10.95 [on-line
-]. [cit. 8.4.2012].  Do-stupné z:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--56
-\T1/cmr/m/n/10.95 <[][]$\T1/cmtt/m/n/10.95 http : / / www . freewordpressthemes
-4u . com / preview / ?preview = 1 & template = world _$
- []
-
-[17]) [18]
-P\v {r}\'{\i }loha A.
-[19
+)) [17] [18
 
 ]
+P\v {r}\'{\i }loha A.
+[19]
 No file pages/7_install.tex.
 [20
 
@@ -844,14 +820,14 @@ No file pages/7_install.tex.
 
 ]
 P\v {r}\'{\i }loha B.
-<images/deploymentDiagram.pdf, id=326, 284.06125pt x 426.59375pt>
+<images/deploymentDiagram.pdf, id=288, 284.06125pt x 426.59375pt>
 File: images/deploymentDiagram.pdf Graphic file (type pdf)
 
 <use images/deploymentDiagram.pdf>
 Package pdftex.def Info: images/deploymentDiagram.pdf used on input line 341.
 (pdftex.def)             Requested size: 284.06053pt x 426.5927pt.
 
-<images/architektura.pdf, id=327, 284.06125pt x 455.7025pt>
+<images/architektura.pdf, id=289, 284.06125pt x 455.7025pt>
 File: images/architektura.pdf Graphic file (type pdf)
 
 <use images/architektura.pdf>
@@ -862,7 +838,7 @@ Overfull \hbox (20.18623pt too wide) in paragraph at lines 349--350
  [] 
  []
 
-<images/domainModel.pdf, id=328, 511.9125pt x 511.9125pt>
+<images/domainModel.pdf, id=290, 511.9125pt x 511.9125pt>
 File: images/domainModel.pdf Graphic file (type pdf)
 
 <use images/domainModel.pdf>
@@ -872,14 +848,14 @@ Package pdftex.def Info: images/domainModel.pdf used on input line 359.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<images/kantorUseCase.pdf, id=329, 426.59375pt x 455.7025pt>
+<images/kantorUseCase.pdf, id=291, 426.59375pt x 455.7025pt>
 File: images/kantorUseCase.pdf Graphic file (type pdf)
 
 <use images/kantorUseCase.pdf>
 Package pdftex.def Info: images/kantorUseCase.pdf used on input line 367.
 (pdftex.def)             Requested size: 426.5927pt x 455.70137pt.
 
-<images/assignmentRelation.pdf, id=330, 597.23125pt x 845.1575pt>
+<images/assignmentRelation.pdf, id=292, 597.23125pt x 845.1575pt>
 File: images/assignmentRelation.pdf Graphic file (type pdf)
 
 <use images/assignmentRelation.pdf>
@@ -889,7 +865,7 @@ Package pdftex.def Info: images/assignmentRelation.pdf used on input line 375.
 
 LaTeX Warning: Float too large for page by 26.31477pt on input line 379.
 
-<images/assignmentSubmitRelational.pdf, id=331, 597.23125pt x 845.1575pt>
+<images/assignmentSubmitRelational.pdf, id=293, 597.23125pt x 845.1575pt>
 File: images/assignmentSubmitRelational.pdf Graphic file (type pdf)
 
 <use images/assignmentSubmitRelational.pdf>
@@ -900,7 +876,7 @@ ne 383.
 
 LaTeX Warning: Float too large for page by 26.31477pt on input line 387.
 
-<images/sdRate.pdf, id=332, 845.1575pt x 597.23125pt>
+<images/sdRate.pdf, id=294, 845.1575pt x 597.23125pt>
 File: images/sdRate.pdf Graphic file (type pdf)
  <use images/sdRate.pdf>
 Package pdftex.def Info: images/sdRate.pdf used on input line 391.
@@ -915,7 +891,7 @@ po/AFServer/Documents/thesis/images/assignmentRelation.pdf>] [27 <D:/Skola/repo
 a/repo/AFServer/Documents/thesis/images/sdRate.pdf, page is rotated 90 degrees>
 ]
 P\v {r}\'{\i }loha C.
-<images/cdContent.png, id=405, 368.87813pt x 188.95593pt>
+<images/cdContent.png, id=367, 368.87813pt x 188.95593pt>
 File: images/cdContent.png Graphic file (type png)
 
 <use images/cdContent.png>
@@ -942,13 +918,13 @@ Package rerunfilecheck Info: File `Tomasek-thesis-2014.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 409.
  ) 
 Here is how much of TeX's memory you used:
- 11484 strings out of 493921
- 160164 string characters out of 3144882
- 228674 words of memory out of 3000000
- 14499 multiletter control sequences out of 15000+200000
+ 11416 strings out of 493921
+ 159059 string characters out of 3144882
+ 228177 words of memory out of 3000000
+ 14448 multiletter control sequences out of 15000+200000
  17392 words of font info for 38 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
- 29i,9n,40p,2009b,470s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,9n,40p,2020b,354s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
 tt1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
 pi600\ecti1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
@@ -963,9 +939,9 @@ Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1440.
 pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
 cbx1440.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\
 dpi600\ecrm1200.pk>
-Output written on Tomasek-thesis-2014.pdf (45 pages, 365346 bytes).
+Output written on Tomasek-thesis-2014.pdf (45 pages, 332572 bytes).
 PDF statistics:
- 1001 PDF objects out of 1200 (max. 8388607)
- 97 named destinations out of 1000 (max. 500000)
+ 895 PDF objects out of 1000 (max. 8388607)
+ 80 named destinations out of 1000 (max. 500000)
  190 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -13,23 +13,5 @@ I was expecting a `,' or a `}'---line 7 of file reference.bib
  :   year   = 2008,
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-You're missing a field name---line 52 of file reference.bib
- :   cited = "8.\,4.\,2012",
- :                          ,
-I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in javaEE
-Warning--to sort, need author or key in edux
-Warning--to sort, need author or key in dokuwiki
-Warning--to sort, need author or key in courseWare
-Warning--to sort, need author or key in frameworkDef
-Warning--to sort, need author or key in primeFaces
-Warning--to sort, need author or key in mysql
-Warning--to sort, need author or key in glassfish
-Warning--to sort, need author or key in wordpress
-Warning--to sort, need author or key in jqueryGui
-Warning--to sort, need author or key in JMeter
-`address' is a missing field, not a string, for entry UmlArlow
-while executing---line 1484 of file csplainnat.bst
-Warning--empty year in UmlArlow
-Warning--empty year in UmlArlow
-(There were 3 error messages)
+(There was 1 error message)
