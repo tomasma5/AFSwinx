@@ -16,5 +16,8 @@ public class AFSwinxLocaleConstants {
     public static final String VALIDATION_REQUIRED = "validation.required";
 
     public static final String VALIDATION_NUMBER = "validation.number";
+    
+    public final static String VALIDATION_TO_SMALL_NUMBER = "validation.number.toSmall";
+    public final static String VALIDATION_TO_GREAT_NUMBER = "validation.number.toBig";
     //Validation section EDN
 }

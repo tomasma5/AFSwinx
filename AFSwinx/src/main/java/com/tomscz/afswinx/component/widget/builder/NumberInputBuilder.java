@@ -24,10 +24,10 @@ public class NumberInputBuilder extends InputFieldBuilder {
     public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException, AFSwinxBuildException {
         AFSwinxPanel panel = super.buildComponent(fieldInfo);
         //Add number validator which will provide number validation
-        NumberValidator validador = new NumberValidator();
+        NumberValidator validator = new NumberValidator(fieldInfo.getWidgetType());
         //Use localization based on parent localization
-        validador.setLocalization(localization);
-        panel.addValidator(validador);
+        validator.setLocalization(localization);
+        panel.addValidator(validator);
         return panel;
     }
 

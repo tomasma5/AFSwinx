@@ -1,13 +1,14 @@
 package com.tomscz.afswinx.validation.factory;
 
 import com.tomscz.afrest.commons.SupportedValidations;
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.MinAndMaxValueValidator;
 import com.tomscz.afswinx.validation.NumberValidator;
 import com.tomscz.afswinx.validation.RequiredValidator;
 
 /**
- * This is factory which create concorete validator, based on {@link SupportedValidations} type.
+ * This is factory which create concrete validator, based on {@link SupportedValidations} type.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -24,8 +25,8 @@ public class AFValidatorFactory {
         return instance;
     }
 
-    public AFValidations createValidator(SupportedValidations validation, String value)
-            throws NumberFormatException {
+    public AFValidations createValidator(SupportedValidations validation, String value,
+            SupportedWidgets widgetType) throws NumberFormatException {
         if (validation.equals(SupportedValidations.LENGTH)) {
             return null;
         }
@@ -33,18 +34,16 @@ public class AFValidatorFactory {
             return new RequiredValidator();
         }
         if (validation.equals(SupportedValidations.NUMBER)) {
-            return new NumberValidator();
+            return new NumberValidator(widgetType);
         }
         if (validation.equals(SupportedValidations.CONTAINS)) {
             return null;
         }
         if (validation.equals(SupportedValidations.MIN)) {
-            Double validationValue = Double.parseDouble(value);
-            return new MinAndMaxValueValidator(validationValue, true);
+            return new MinAndMaxValueValidator(widgetType, value, true);
         }
         if (validation.equals(SupportedValidations.MAX)) {
-            Double validationValue = Double.parseDouble(value);
-            return new MinAndMaxValueValidator(validationValue, false);
+            return new MinAndMaxValueValidator(widgetType, value, false);
         }
         return null;
     }

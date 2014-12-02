@@ -38,7 +38,7 @@ public class WidgetBuilderFactory {
     }
 
     public WidgetBuilder createWidgetBuilder(SupportedWidgets widget) {
-        if(widget == null){
+        if (widget == null) {
             return new InputFieldBuilder();
         }
         if (widget.equals(SupportedWidgets.TEXTFIELD)) {
@@ -47,7 +47,9 @@ public class WidgetBuilderFactory {
         if (widget.equals(SupportedWidgets.LABEL)) {
             return new LabelFieldBuider();
         }
-        if (widget.equals(SupportedWidgets.NUMBERFIELD)) {
+        if (widget.equals(SupportedWidgets.NUMBERFIELD)
+                || widget.equals(SupportedWidgets.NUMBERDOUBLEFIELD)
+                || widget.equals(SupportedWidgets.NUMBERLONGFIELD)) {
             return new NumberInputBuilder();
         }
         if (widget.equals(SupportedWidgets.DROPDOWNMENU)) {

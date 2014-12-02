@@ -1,0 +1,15 @@
+<widget>
+	<widgetType>numberDoubleField</widgetType>
+	<fieldName>$field$</fieldName>
+	<label>$label$</label>
+	<validations>
+		<required>$required$</required>
+		<minValue>$min$</minValue>
+		<maxValue>$max$</maxValue>
+	</validations>
+	<fieldLayout>
+		<layoutOrientation>$layoutOrientation$</layoutOrientation>
+		<labelPossition>$labelPossition$</labelPossition>
+		<layout>$layout$</layout>
+	</fieldLayout>
+</widget>

@@ -17,8 +17,14 @@
 
 	<mapping>
 		<type>int</type>
-		<type>double</type>
+		<type>long</type>
 		<default tag="structure/numberInput.xml" />
+	</mapping>
+
+	<mapping>
+		<type>Double</type>
+		<type>double</type>
+		<default tag="structure/doubleNumberInput.xml" />
 	</mapping>
 
 	<mapping>

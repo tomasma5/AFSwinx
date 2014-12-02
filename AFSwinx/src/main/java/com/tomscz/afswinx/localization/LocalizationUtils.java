@@ -27,6 +27,7 @@ public class LocalizationUtils {
 
     /**
      * This method return string from bundle based on bundle.
+     * 
      * @param text which will be found in bundle
      * @param bundle in which will be found text
      * @param tags another parameters which will be given to bundle in order in which was received
@@ -41,7 +42,8 @@ public class LocalizationUtils {
     /**
      * This method return string from bundle based on bundle. See
      * {@link LocalizationUtils#chooseBundle(ResourceBundle, ResourceBundle, ResourceBundle)} for
-     * more detail about choosing process.
+     * more detail about choosing process. If text is not found there then default AFSwinxBundle is
+     * tried to found string
      * 
      * @param formBundle form bundle
      * @param afSwinxBundle global swinx bundle
@@ -54,7 +56,12 @@ public class LocalizationUtils {
             ResourceBundle afSwinxBundle, String text, ArrayList<String> tags) {
         try {
             ResourceBundle bundle = chooseBundle(formBundle, afSwinxBundle, createDefaultBundle());
-            return getTextFromBundle(text, bundle, tags);
+            String textFromBundle = getTextFromBundle(text, bundle, tags);
+            // Try default resource bundle. Maybe there are few strings which are not covered yet
+            if (textFromBundle.equals(text)) {
+                textFromBundle = getTextFromBundle(text, createDefaultBundle(), tags);
+            }
+            return textFromBundle;
         } catch (IllegalArgumentException e) {
             return text;
         }

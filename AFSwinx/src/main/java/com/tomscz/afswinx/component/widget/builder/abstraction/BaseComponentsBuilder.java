@@ -119,17 +119,17 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
             throws AFSwinxBuildException {
         if (fieldInfo.getRules() != null) {
             for (AFValidationRule rules : fieldInfo.getRules()) {
+                SupportedWidgets widget = fieldInfo.getWidgetType();
                 try {
                     AFValidations validator =
                             AFValidatorFactory.getInstance().createValidator(
-                                    rules.getValidationType(), rules.getValue());
+                                    rules.getValidationType(), rules.getValue(), widget);
                     validator.setLocalization(localization);
                     panel.addValidator(validator);
                 } catch (NumberFormatException e) {
                     throw new AFSwinxBuildException(buildValidationBuilderFailedMessage(fieldInfo,
                             rules, "This value cannot be converted to number."));
-                }
-                catch (NullPointerException e) {
+                } catch (NullPointerException e) {
                     throw new AFSwinxBuildException(buildValidationBuilderFailedMessage(fieldInfo,
                             rules, "There was null pointer exception."));
                 }
