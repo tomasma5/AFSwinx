@@ -32,4 +32,6 @@ public interface AFValidations {
             throws ValidationException;
 
     public void setLocalization(ResourceBundle localization);
+    
+    public int getPriority();
 }

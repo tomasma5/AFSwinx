@@ -13,10 +13,17 @@ import java.util.ResourceBundle;
 public abstract class AFBaseValidator implements AFValidations {
 
     protected ResourceBundle localization;
+    
+    protected int priority = Integer.MIN_VALUE; 
 
     @Override
     public void setLocalization(ResourceBundle localization) {
         this.localization = localization;
+    }
+    
+    @Override
+    public int getPriority(){
+        return priority;
     }
 
 }

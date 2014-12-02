@@ -2,6 +2,7 @@ package com.tomscz.afswinx.component.panel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -12,6 +13,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.validation.AFValidations;
+import com.tomscz.afswinx.validation.ValidatorPriorityComparator;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
 /**
@@ -30,7 +32,8 @@ public class AFSwinxPanel extends JPanel {
     private JTextArea message;
     private SupportedWidgets widgetType;
     private String panelId;
-    private List<AFValidations> validators = new ArrayList<AFValidations>();
+    
+    private PriorityQueue<AFValidations> validators = new PriorityQueue<AFValidations>(10,new ValidatorPriorityComparator());
 
     // Parent of this component, its usually form, table, etc
     private AFSwinxTopLevelComponent afParent;

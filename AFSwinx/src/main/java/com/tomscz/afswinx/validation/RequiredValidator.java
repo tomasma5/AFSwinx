@@ -14,6 +14,10 @@ import com.tomscz.afswinx.validation.exception.ValidationException;
  */
 public class RequiredValidator extends AFBaseValidator{
 
+    public RequiredValidator(){
+        priority = Integer.MAX_VALUE;
+    }
+    
     @Override
     public void validate(AFSwinx swinxInstance, AFSwinxPanel parentPanel, Object value)throws ValidationException {
         String valueToValidate = (String) value;

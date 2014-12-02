@@ -46,6 +46,7 @@ public class MinAndMaxValueValidator extends NumberValidator {
     public MinAndMaxValueValidator(SupportedWidgets widget, String value, boolean isMinValidation)
             throws NumberFormatException {
         super(widget);
+        priority = 50;
         if (isMinValidation) {
             if (isDoubleType) {
                 this.minValue = Double.parseDouble(value);
@@ -115,7 +116,7 @@ public class MinAndMaxValueValidator extends NumberValidator {
                     throw new ValidationException(
                             LocalizationUtils
                                     .getTextValueFromLocalOrExtendBundle(
-                                            AFSwinxLocaleConstants.VALIDATION_TO_SMALL_NUMBER,
+                                            AFSwinxLocaleConstants.VALIDATION_TO_GREAT_NUMBER,
                                             localization)
                                     + maxDisplayValue);
             }

@@ -63,6 +63,7 @@ public class Person {
     @UiOrder(value = 3)
     @Min(value=1)
     @Max(value=12)
+    @UiRequired
     public int getAge() {
         return age;
     }
