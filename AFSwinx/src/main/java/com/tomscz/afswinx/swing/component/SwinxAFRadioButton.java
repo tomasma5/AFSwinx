@@ -1,10 +1,12 @@
 package com.tomscz.afswinx.swing.component;
 
-public class JRadioButton<E> extends javax.swing.JRadioButton {
+import javax.swing.JRadioButton;
+
+public class SwinxAFRadioButton<E> extends JRadioButton {
 
     private static final long serialVersionUID = 1L;
 
-    public JRadioButton(E dataHolder) {
+    public SwinxAFRadioButton(E dataHolder) {
         this.dataHolder = dataHolder;
     }
 

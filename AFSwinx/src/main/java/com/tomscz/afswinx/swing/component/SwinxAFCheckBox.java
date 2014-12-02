@@ -1,14 +1,12 @@
 package com.tomscz.afswinx.swing.component;
 
-public class JCheckBox<E> extends javax.swing.JCheckBox{
+import javax.swing.JCheckBox;
+
+public class SwinxAFCheckBox<E> extends JCheckBox{
 
     private static final long serialVersionUID = 1L;
-
-    public JCheckBox(){
-        
-    }
     
-    public JCheckBox(E dataHolder){
+    public SwinxAFCheckBox(E dataHolder){
         this.dataHolder = dataHolder;
     }
 

@@ -22,5 +22,4 @@ public class AFOptionToAFSwinxOption implements ModelConverter<AFOptions, AFComp
         return result;
     }
     
-    
 }

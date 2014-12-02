@@ -11,10 +11,10 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.swing.component.AFOptionToAFSwinxOption;
 import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
-import com.tomscz.afswinx.swing.component.JRadioButton;
+import com.tomscz.afswinx.swing.component.SwinxAFRadioButton;
 
 /**
- * This is builder which can build {@link JRadioButton}.
+ * This is builder which can build {@link SwinxAFRadioButton}.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -39,8 +39,8 @@ public class OptionBuilder extends BaseComponentsBuilder {
             for (AFOptions option : field.getOptions()) {
                 AFComponentDataHolder optionToAdd = converter.convert(option, localization);
                 if (optionToAdd != null) {
-                    JRadioButton<AFComponentDataHolder> radioButton =
-                            new JRadioButton<AFComponentDataHolder>(optionToAdd);
+                    SwinxAFRadioButton<AFComponentDataHolder> radioButton =
+                            new SwinxAFRadioButton<AFComponentDataHolder>(optionToAdd);
                     radioButton.setText(optionToAdd.getValueToDisplay());
                     buttonGroup.add(radioButton);
                     layoutBuilder.addComponent(radioButton);
@@ -61,8 +61,8 @@ public class OptionBuilder extends BaseComponentsBuilder {
         if (panel != null && panel.getDataHolder() != null && data != null) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
-                JRadioButton<AFComponentDataHolder> radioButton =
-                        (JRadioButton<AFComponentDataHolder>) component;
+                SwinxAFRadioButton<AFComponentDataHolder> radioButton =
+                        (SwinxAFRadioButton<AFComponentDataHolder>) component;
                 AFComponentDataHolder concereteDataHolder = radioButton.getDataHolder();
                 if (concereteDataHolder.getValue().equals(data.getValue())) {
                     radioButton.setSelected(true);
@@ -95,8 +95,8 @@ public class OptionBuilder extends BaseComponentsBuilder {
         if (panel != null && panel.getDataHolder() != null) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
-                JRadioButton<AFComponentDataHolder> radioButton =
-                        (JRadioButton<AFComponentDataHolder>) component;
+                SwinxAFRadioButton<AFComponentDataHolder> radioButton =
+                        (SwinxAFRadioButton<AFComponentDataHolder>) component;
                 AFComponentDataHolder concereteDataHolder = radioButton.getDataHolder();
                 if (radioButton.isSelected()) {
                     return concereteDataHolder;

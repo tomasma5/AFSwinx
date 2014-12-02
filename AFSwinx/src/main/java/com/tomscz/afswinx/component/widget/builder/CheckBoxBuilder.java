@@ -10,10 +10,10 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.swing.component.AFOptionToAFSwinxOption;
 import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
-import com.tomscz.afswinx.swing.component.JCheckBox;
+import com.tomscz.afswinx.swing.component.SwinxAFCheckBox;
 
 /**
- * This is builder which can build {@link JCheckBox} component.
+ * This is builder which can build {@link SwinxAFCheckBox} component.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -36,8 +36,8 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
             for (AFOptions option : field.getOptions()) {
                 AFComponentDataHolder optionToAdd = converter.convert(option, localization);
                 if (optionToAdd != null) {
-                    JCheckBox<AFComponentDataHolder> checkBox =
-                            new JCheckBox<AFComponentDataHolder>(optionToAdd);
+                    SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                            new SwinxAFCheckBox<AFComponentDataHolder>(optionToAdd);
                     checkBox.setText(optionToAdd.getValueToDisplay());
                     layoutBuilder.addComponent(checkBox);
                     afPanel.addDataHolderComponent(checkBox);
@@ -46,8 +46,8 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
             }
         } else {
             AFComponentDataHolder option = new AFComponentDataHolder("true", "true", "true");
-            JCheckBox<AFComponentDataHolder> checkBox =
-                    new JCheckBox<AFComponentDataHolder>(option);
+            SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                    new SwinxAFCheckBox<AFComponentDataHolder>(option);
             layoutBuilder.addComponent(checkBox);
             afPanel.addDataHolderComponent(checkBox);
             customizeComponent(checkBox, field);
@@ -66,8 +66,8 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                 && !panel.getDataHolder().isEmpty()) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
-                JCheckBox<AFComponentDataHolder> checkBox =
-                        (JCheckBox<AFComponentDataHolder>) component;
+                SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                        (SwinxAFCheckBox<AFComponentDataHolder>) component;
                 AFComponentDataHolder dataHolder = checkBox.getDataHolder();
                 if (dataHolder.getKey().equals(data.getValue())) {
                     checkBox.setSelected(true);
@@ -96,7 +96,7 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
         }
         else if(panel.getDataHolder() != null && panel.getDataHolder().size()==1){
             @SuppressWarnings("unchecked")
-            JCheckBox<AFComponentDataHolder> checkBox = (JCheckBox<AFComponentDataHolder>)panel.getDataHolder().get(0);
+            SwinxAFCheckBox<AFComponentDataHolder> checkBox = (SwinxAFCheckBox<AFComponentDataHolder>)panel.getDataHolder().get(0);
             if(checkBox.getDataHolder().getValueToDisplay().equals("true")){
                 return "false";
             }
@@ -108,8 +108,8 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             for (JComponent component : panel.getDataHolder()) {
                 @SuppressWarnings("unchecked")
-                JCheckBox<AFComponentDataHolder> checkBox =
-                        (JCheckBox<AFComponentDataHolder>) component;
+                SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                        (SwinxAFCheckBox<AFComponentDataHolder>) component;
                 AFComponentDataHolder dataHolder = checkBox.getDataHolder();
                 if (checkBox.isSelected()) {
                     return dataHolder;
