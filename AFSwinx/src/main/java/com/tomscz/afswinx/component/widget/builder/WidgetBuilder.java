@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.skin.Skin;
 
@@ -17,7 +18,7 @@ import com.tomscz.afswinx.component.skin.Skin;
  * @since 1.0.0.
  */
 public interface WidgetBuilder {
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException;
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException, AFSwinxBuildException;
     /**
      * This method set data to particular component.
      * @param panel Panel which holds structure and to which will be data set up.

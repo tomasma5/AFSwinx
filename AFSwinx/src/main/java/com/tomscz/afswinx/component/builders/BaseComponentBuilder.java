@@ -156,7 +156,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param key of current field. It is used to determine which class belongs to which fields
      */
     protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
-            AFSwinxTopLevelComponent form, String key) {
+            AFSwinxTopLevelComponent form, String key) throws AFSwinxBuildException {
         // For each field
         for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
             // If its class then inspect it recursively

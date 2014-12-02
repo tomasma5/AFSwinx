@@ -2,13 +2,14 @@ package com.tomscz.afserver.persistence.entity;
 
 import java.util.Date;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
-import com.codingcrayons.aspectfaces.annotations.UiRestrict;
-import com.codingcrayons.aspectfaces.annotations.UiType;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
@@ -60,6 +61,8 @@ public class Person {
 
     @UiLabel(value = "person.age")
     @UiOrder(value = 3)
+    @Min(value=1)
+    @Max(value=12)
     public int getAge() {
         return age;
     }

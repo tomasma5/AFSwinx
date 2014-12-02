@@ -16,7 +16,6 @@ import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.commons.SupportedLayoutsProperties;
 import com.tomscz.afrest.commons.SupportedProperties;
 import com.tomscz.afrest.commons.SupportedValidations;
-import com.tomscz.afrest.commons.SupportedValidationsProperties;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.layout.Layout;
@@ -28,8 +27,8 @@ import com.tomscz.afrest.rest.dto.AFValidationRule;
 
 /**
  * This class holds all string value of XML tags which are allowed in AFRest and not inside enum
- * {@link SupportedLayoutsProperties}, {@link SupportedValidationsProperties},
- * {@link SupportedProperties} class, which holds supported variables.
+ * {@link SupportedLayoutsProperties}, {@link SupportedProperties} class, which holds supported
+ * variables.
  * 
  * This constants should reflect XSD
  * 
@@ -108,22 +107,19 @@ public class XMLParseUtils {
      * 
      * @param fieldInfo to which will be property set
      * @param propertyName name of property which will be localized in
-     *        {@link SupportedValidationsProperties}
      * @param propertyValue value of property which will be set to concrete property
      */
     public static void setValidationsProperties(AFFieldInfo fieldInfo, String propertyName,
             String propertyValue) {
-        SupportedValidationsProperties propertyType =
-                (SupportedValidationsProperties) AFRestUtils.getEnumFromString(
-                        SupportedValidationsProperties.class, propertyName, true);
+        SupportedValidations propertyType =
+                (SupportedValidations) AFRestUtils.getEnumFromString(
+                    SupportedValidations.class, propertyName, true);
         if (propertyType == null) {
             return;
         }
-        if (propertyType.equals(SupportedValidationsProperties.REQUIRED)) {
-            AFValidationRule requiredRule =
-                    new AFValidationRule(SupportedValidations.REQUIRED, propertyValue);
-            fieldInfo.addRule(requiredRule);
-        }
+        AFValidationRule requiredRule =
+                new AFValidationRule(propertyType, propertyValue);
+        fieldInfo.addRule(requiredRule);
     }
 
     /**

@@ -4,6 +4,8 @@
 	<label>$label$</label>
 	<validations>
 		<required>$required$</required>
+		<minValue>$min$</minValue>
+		<maxValue>$max$</maxValue>
 	</validations>
 	<fieldLayout>
 		<layoutOrientation>$layoutOrientation$</layoutOrientation>

@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.skin.BaseSkin;
 import com.tomscz.afswinx.component.skin.Skin;
@@ -114,17 +115,33 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
         return textValidationComponent;
     }
 
-    protected void crateValidators(AFSwinxPanel panel, AFFieldInfo fieldInfo) {
+    protected void crateValidators(AFSwinxPanel panel, AFFieldInfo fieldInfo)
+            throws AFSwinxBuildException {
         if (fieldInfo.getRules() != null) {
             for (AFValidationRule rules : fieldInfo.getRules()) {
-                // TODO add parameters
-                AFValidations validator =
-                        AFValidatorFactory.getInstance().createValidator(rules.getValidationType(),
-                                null);
-                validator.setLocalization(localization);
-                panel.addValidator(validator);
+                try {
+                    AFValidations validator =
+                            AFValidatorFactory.getInstance().createValidator(
+                                    rules.getValidationType(), rules.getValue());
+                    validator.setLocalization(localization);
+                    panel.addValidator(validator);
+                } catch (NumberFormatException e) {
+                    throw new AFSwinxBuildException(buildValidationBuilderFailedMessage(fieldInfo,
+                            rules, "This value cannot be converted to number."));
+                }
+                catch (NullPointerException e) {
+                    throw new AFSwinxBuildException(buildValidationBuilderFailedMessage(fieldInfo,
+                            rules, "There was null pointer exception."));
+                }
             }
         }
+    }
+
+    private String buildValidationBuilderFailedMessage(AFFieldInfo fieldInfo,
+            AFValidationRule rule, String cause) {
+        return "Validation builder failed on field" + fieldInfo.getId()
+                + " during building validation" + rule.getValidationType().name() + " with value "
+                + rule.getValue() + ". " + cause;
     }
 
     @Override
@@ -134,20 +151,19 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
 
     @Override
     public void setSkin(Skin skin) {
-        if(skin != null){
+        if (skin != null) {
             this.skin = skin;
-        }
-        else{
+        } else {
             this.skin = new BaseSkin();
         }
-       
+
 
     }
 
     protected void buildBase(AFFieldInfo fieldInfo) {
         // First check if build is available
         if (!isBuildAvailable(fieldInfo)) {
-            throw new IllegalArgumentException("Input field couldn't be build for this field");
+            throw new IllegalArgumentException("Component couldn't be build for this field");
         }
         // Create layout builder
         this.layoutBuilder = new BaseLayoutBuilder(fieldInfo.getLayout());

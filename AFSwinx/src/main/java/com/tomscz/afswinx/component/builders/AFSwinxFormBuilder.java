@@ -54,7 +54,7 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
      * @param form which will be build
      * @throws AFSwinxConnectionException if exception during retrieve metamodel ocurre
      */
-    private void buildComponent(AFSwinxForm form) throws AFSwinxConnectionException {
+    private void buildComponent(AFSwinxForm form) throws AFSwinxConnectionException, AFSwinxBuildException {
         AFMetaModelPack metaModelPack = form.getModel();
         AFClassInfo classInfo = metaModelPack.getClassInfo();
         if (classInfo != null) {

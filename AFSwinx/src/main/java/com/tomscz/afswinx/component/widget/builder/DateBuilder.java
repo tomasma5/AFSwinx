@@ -12,6 +12,7 @@ import javax.swing.JFormattedTextField;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.swing.component.SwinxAFDatePicker;
@@ -27,7 +28,7 @@ public class DateBuilder extends BaseComponentsBuilder {
     }
 
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException, AFSwinxBuildException {
         super.buildBase(field);
         // Add input calendar
         SwinxAFDatePicker swingDatePicker = new SwinxAFDatePicker();

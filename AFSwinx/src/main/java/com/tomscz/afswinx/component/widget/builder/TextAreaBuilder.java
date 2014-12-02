@@ -4,6 +4,7 @@ import javax.swing.JTextArea;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 
 /**
@@ -22,7 +23,7 @@ public class TextAreaBuilder extends InputFieldBuilder{
     }
     
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException, AFSwinxBuildException {
         super.buildBase(field);
         // And input text field
         JTextArea textArea = new JTextArea();

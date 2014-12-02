@@ -2,6 +2,7 @@ package com.tomscz.afswinx.component.widget.builder;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.validation.NumberValidator;
 
@@ -20,7 +21,7 @@ public class NumberInputBuilder extends InputFieldBuilder {
     }
     
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
+    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException, AFSwinxBuildException {
         AFSwinxPanel panel = super.buildComponent(fieldInfo);
         //Add number validator which will provide number validation
         NumberValidator validador = new NumberValidator();

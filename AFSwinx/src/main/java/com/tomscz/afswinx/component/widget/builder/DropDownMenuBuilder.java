@@ -6,6 +6,7 @@ import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afrest.rest.dto.data.AFData;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
@@ -17,7 +18,7 @@ public class DropDownMenuBuilder extends BaseComponentsBuilder {
     }
     
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException {
+    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException, AFSwinxBuildException {
         super.buildBase(fieldInfo);
         AFOptions[] dataToCombo;
         if (fieldInfo.getOptions() != null) {
