@@ -15,6 +15,7 @@ public class AFFieldInfo implements Serializable {
     private String id;
     private String label;
     private boolean classType;
+    private boolean readOnly;
     private Layout layout;
     private List<AFValidationRule> rules;
     private List<AFOptions> options;
@@ -98,6 +99,14 @@ public class AFFieldInfo implements Serializable {
 
     public void setClassType(boolean classType) {
         this.classType = classType;
+    }
+
+    public boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
     }
     
 }

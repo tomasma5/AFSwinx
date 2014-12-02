@@ -1,7 +1,8 @@
 <widget>
 	<widgetType>$widgetType$</widgetType>
 	<fieldName>$field$</fieldName>
-	<label>$label$</label>
+	<label>$label$</label>	
+	<readonly>true</readonly>
 	<validations>
 		<required>$required$</required>
 	</validations>

@@ -41,6 +41,7 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                     checkBox.setText(optionToAdd.getValueToDisplay());
                     layoutBuilder.addComponent(checkBox);
                     afPanel.addDataHolderComponent(checkBox);
+                    customizeComponent(checkBox, field);
                 }
             }
         } else {
@@ -49,7 +50,9 @@ public class CheckBoxBuilder extends BaseComponentsBuilder {
                     new JCheckBox<AFComponentDataHolder>(option);
             layoutBuilder.addComponent(checkBox);
             afPanel.addDataHolderComponent(checkBox);
+            customizeComponent(checkBox, field);
         }
+
         // Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
         // Add validations

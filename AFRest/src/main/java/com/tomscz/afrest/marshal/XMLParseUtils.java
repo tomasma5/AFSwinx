@@ -47,11 +47,11 @@ public class XMLParseUtils {
     public static final String WIDGETROOT = "widget";
     public static final String ENTITYCLASS = "entityClass";
     public static final String ROOTCLASS = "entity";
-    
-    //Subsection of entity class
+
+    // Subsection of entity class
     public static final String ENTITYFIELDTYPE = "entityFieldType";
     public static final String FIELDNAME = "fieldName";
-    
+
     // Subsections of root.
     public static final String WIDGETVALIDATIONS = "validations";
     public static final String WIDGETLAYOUT = "fieldLayout";
@@ -71,9 +71,12 @@ public class XMLParseUtils {
     }
 
     /**
-     * This method set layout property to fieldInfo. It set only one property. All parameters must be not null.
+     * This method set layout property to fieldInfo. It set only one property. All parameters must
+     * be not null.
+     * 
      * @param fieldInfo to which will be property set
-     * @param propertyName name of property which will be localized in {@link SupportedLayoutsProperties}
+     * @param propertyName name of property which will be localized in
+     *        {@link SupportedLayoutsProperties}
      * @param propertyValue value of property which will be set to concrete property
      */
     public static void setLayoutProperties(AFFieldInfo fieldInfo, String propertyName,
@@ -98,11 +101,14 @@ public class XMLParseUtils {
                             propertyValue, false));
         }
     }
-    
+
     /**
-     * This method set validation property to fieldInfo. It set only one property. All parameters must be not null.
+     * This method set validation property to fieldInfo. It set only one property. All parameters
+     * must be not null.
+     * 
      * @param fieldInfo to which will be property set
-     * @param propertyName name of property which will be localized in {@link SupportedValidationsProperties}
+     * @param propertyName name of property which will be localized in
+     *        {@link SupportedValidationsProperties}
      * @param propertyValue value of property which will be set to concrete property
      */
     public static void setValidationsProperties(AFFieldInfo fieldInfo, String propertyName,
@@ -119,14 +125,17 @@ public class XMLParseUtils {
             fieldInfo.addRule(requiredRule);
         }
     }
-    
+
     /**
-     * This method set root property to fieldInfo. It set only one property. All parameters must be not null.
+     * This method set root property to fieldInfo. It set only one property. All parameters must be
+     * not null.
+     * 
      * @param fieldInfo to which will be property set
      * @param propertyName name of property which will be localized in {@link SupportedProperties}
      * @param propertyValue value of property which will be set to concrete property
      */
-    public static void setRootProperties(AFFieldInfo fieldInfo, String propertyName, String propertyValue) {
+    public static void setRootProperties(AFFieldInfo fieldInfo, String propertyName,
+            String propertyValue) {
         SupportedProperties propertyType =
                 (SupportedProperties) AFRestUtils.getEnumFromString(SupportedProperties.class,
                         propertyName, true);
@@ -144,19 +153,28 @@ public class XMLParseUtils {
             fieldInfo.setId(propertyValue);
         } else if (propertyType.equals(SupportedProperties.LABEL)) {
             fieldInfo.setLabel(propertyValue);
-        }
-        else if(propertyType.equals(SupportedProperties.OPTIONS)){
-            //TODO set it to class
+        } else if (propertyType.equals(SupportedProperties.OPTIONS)) {
+            // TODO set it to class
+        } else if (propertyType.equals(SupportedProperties.READNOLY)) {
+            if (propertyValue != null && !propertyValue.isEmpty()) {
+                if (propertyValue.toLowerCase().equals("true")) {
+                    fieldInfo.setReadOnly(true);
+                }
+            } else {
+                fieldInfo.setReadOnly(false);
+            }
         }
     }
-    
+
     /**
-     * This method transform input string to {@link Document} which can be used to search via DOM, SAX or XPath,etc.
+     * This method transform input string to {@link Document} which can be used to search via DOM,
+     * SAX or XPath,etc.
+     * 
      * @param stringToXml string which will be converted to XML
      * @return converted document to XML.
      * @throws MetamodelException if transformation is not possible then this exception is thrown
      */
-    public static Document transformStringToXml(String stringToXml) throws MetamodelException{
+    public static Document transformStringToXml(String stringToXml) throws MetamodelException {
         Document doc;
         try {
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();

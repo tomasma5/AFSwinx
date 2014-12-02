@@ -7,6 +7,8 @@ import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.codingcrayons.aspectfaces.annotations.UiRestrict;
+import com.codingcrayons.aspectfaces.annotations.UiType;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;

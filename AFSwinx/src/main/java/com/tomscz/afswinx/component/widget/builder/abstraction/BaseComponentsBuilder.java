@@ -9,16 +9,17 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
+import com.tomscz.afswinx.component.skin.BaseSkin;
 import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.TextAreaBuilder;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
+import com.tomscz.afswinx.swing.component.SwinxAFDatePicker;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
 
@@ -81,7 +82,7 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
                     height = skin.getLabelHeight();
                 }
             }
-            Dimension dimension = new Dimension(width,height);
+            Dimension dimension = new Dimension(width, height);
             labelArea.setPreferredSize(dimension);
             labelArea.setMaximumSize(dimension);
             return labelArea;
@@ -133,7 +134,13 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
 
     @Override
     public void setSkin(Skin skin) {
-        this.skin = skin;
+        if(skin != null){
+            this.skin = skin;
+        }
+        else{
+            this.skin = new BaseSkin();
+        }
+       
 
     }
 
@@ -157,51 +164,58 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
     }
 
     @Override
-    public void skinComponent(JComponent componentToSkin) {
-        if (skin != null) {
-            if (skin.getFieldColor() != null) {
-                componentToSkin.setForeground(skin.getFieldColor());
+    public void customizeComponent(JComponent component, AFFieldInfo fieldInfo) {
+        if (fieldInfo.getReadOnly()) {
+            component.setEnabled(!fieldInfo.getReadOnly());
+        }
+        skinComponent(component);
+    }
+
+    private void skinComponent(JComponent componentToSkin) {
+        if (skin.getFieldColor() != null) {
+            componentToSkin.setForeground(skin.getFieldColor());
+        }
+        if (skin.getFieldFont() != null) {
+            componentToSkin.setFont(skin.getFieldFont());
+        }
+        if (getWidgetType() == null) {
+            return;
+        }
+        if (getWidgetType().equals(SupportedWidgets.TEXTAREA)) {
+            int rows = TextAreaBuilder.rows;
+            int colums = TextAreaBuilder.columns;
+            JTextArea texArea = (JTextArea) componentToSkin;
+            if (skin.getTextAreaColums() > 0) {
+                colums = skin.getTextAreaColums();
             }
-            if (skin.getFieldFont() != null) {
-                componentToSkin.setFont(skin.getFieldFont());
+            if (skin.getTextAreaRows() > 0) {
+                rows = skin.getTextAreaRows();
             }
-            if (getWidgetType() == null) {
-                return;
+            texArea.setRows(rows);
+            texArea.setColumns(colums);
+        }
+        if (getWidgetType().equals(SupportedWidgets.NUMBERFIELD)
+                || getWidgetType().equals(SupportedWidgets.TEXTFIELD)) {
+            JTextField textField = (JTextField) componentToSkin;
+            int width = InputFieldBuilder.DEFAULT_WIDTH;
+            int height = textField.getPreferredSize().height;
+            if (skin.getInputWidth() > 0) {
+                width = skin.getInputWidth();
             }
-            if (getWidgetType().equals(SupportedWidgets.TEXTAREA)) {
-                int rows = skin.getTextAreaRows();
-                int colums = skin.getTextAreaColums();
-                JTextArea texArea = (JTextArea) componentToSkin;
-                if (rows > 0) {
-                    texArea.setRows(rows);
-                }
-                if (colums > 0) {
-                    texArea.setColumns(colums);
-                }
-            }
-            if (getWidgetType().equals(SupportedWidgets.NUMBERFIELD)
-                    || getWidgetType().equals(SupportedWidgets.TEXTFIELD)) {
-                JTextField textField = (JTextField) componentToSkin;
-                int width = InputFieldBuilder.DEFAULT_WIDTH;
-                int height = textField.getPreferredSize().height;
-                if (skin.getInputWidth() > 0) {
-                   width = skin.getInputWidth();
-                }
-                Dimension dimension = new Dimension(width,height);
-                textField.setPreferredSize(dimension);
-                textField.setMinimumSize(dimension);
-                textField.setMaximumSize(dimension);
-            }
-            if (getWidgetType().equals(SupportedWidgets.CALENDAR)) {
-                JDatePickerImpl dataPicker = (JDatePickerImpl) componentToSkin;
-                int colums = skin.getInputWidth();
-                if (colums > 0) {
-                    Dimension currentSize = dataPicker.getPreferredSize();
-                    dataPicker.setPreferredSize(new Dimension(colums, currentSize.height));
-                }
+            Dimension dimension = new Dimension(width, height);
+            textField.setPreferredSize(dimension);
+            textField.setMinimumSize(dimension);
+            textField.setMaximumSize(dimension);
+        }
+        if (getWidgetType().equals(SupportedWidgets.CALENDAR)) {
+            SwinxAFDatePicker dataPicker = (SwinxAFDatePicker) componentToSkin;
+            JComponent componentToskin = dataPicker.getVisibleComponent();
+            int colums = skin.getInputWidth();
+            if (colums > 0) {
+                Dimension currentSize = componentToskin.getPreferredSize();
+                componentToskin.setPreferredSize(new Dimension(colums, currentSize.height));
             }
         }
     }
-
 
 }

@@ -30,14 +30,7 @@ public class WidgetBuilderFactory {
     public WidgetBuilder createWidgetBuilder(AFFieldInfo fieldInfo) {
         SupportedWidgets widgetType = fieldInfo.getWidgetType();
         WidgetBuilder fieldBuilder;
-        if (widgetType != null) {
-            fieldBuilder = createWidgetBuilder(fieldInfo.getWidgetType());
-        } else {
-            fieldBuilder = createWidgetBuilderBasedOnRules(fieldInfo);
-            //If widgetType is not set in fieldInfo then set it locally
-            fieldInfo.setWidgetType(fieldBuilder.getWidgetType());
-        }
-
+        fieldBuilder = createWidgetBuilder(widgetType);
         if (fieldBuilder == null) {
             fieldBuilder = new InputFieldBuilder();
         }
@@ -45,6 +38,9 @@ public class WidgetBuilderFactory {
     }
 
     public WidgetBuilder createWidgetBuilder(SupportedWidgets widget) {
+        if(widget == null){
+            return new InputFieldBuilder();
+        }
         if (widget.equals(SupportedWidgets.TEXTFIELD)) {
             return new InputFieldBuilder();
         }
@@ -60,27 +56,16 @@ public class WidgetBuilderFactory {
         if (widget.equals(SupportedWidgets.CHECKBOX)) {
             return new CheckBoxBuilder();
         }
-        if(widget.equals(SupportedWidgets.TEXTAREA)){
+        if (widget.equals(SupportedWidgets.TEXTAREA)) {
             return new TextAreaBuilder();
         }
-        if(widget.equals(SupportedWidgets.OPTION)){
+        if (widget.equals(SupportedWidgets.OPTION)) {
             return new OptionBuilder();
         }
-        if(widget.equals(SupportedWidgets.CALENDAR)){
+        if (widget.equals(SupportedWidgets.CALENDAR)) {
             return new DateBuilder();
         }
         return new InputFieldBuilder();
-    }
-
-    private WidgetBuilder createWidgetBuilderBasedOnRules(AFFieldInfo fieldInfo) {
-        SupportedWidgets widget = SupportedWidgets.LABEL;
-        // First do candidate based on options, if there are options.
-        if (fieldInfo.getOptions() != null && !fieldInfo.getOptions().isEmpty()) {
-
-        } else {
-            // TODO
-        }
-        return createWidgetBuilder(widget);
     }
 
 }

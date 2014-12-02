@@ -2,6 +2,7 @@
 	<widgetType>checkBox</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
+	<readonly>true</readonly>
 	<validations>
 		<required>$required$</required>
 	</validations>

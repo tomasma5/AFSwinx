@@ -35,6 +35,7 @@ public class DropDownMenuBuilder extends BaseComponentsBuilder {
         JComboBox<AFOptions> comboBox = new JComboBox<AFOptions>(dataToCombo);
         layoutBuilder.addComponent(comboBox);
         coreComponent = comboBox;
+        customizeComponent(comboBox, fieldInfo);
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(fieldInfo.getId(), fieldInfo.getWidgetType(), comboBox,

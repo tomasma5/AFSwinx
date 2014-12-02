@@ -30,7 +30,7 @@ public class InputFieldBuilder extends BaseComponentsBuilder {
         super.buildBase(field);
         // And input text field
         JTextField textField = new JTextField();
-        skinComponent(textField);
+        customizeComponent(textField,field);
         layoutBuilder.addComponent(textField);
         coreComponent = textField;
         // Create panel which holds all necessary informations

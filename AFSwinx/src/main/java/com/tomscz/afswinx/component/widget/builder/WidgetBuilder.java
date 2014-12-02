@@ -58,7 +58,7 @@ public interface WidgetBuilder {
      */
     public void setSkin(Skin skin);
     
-    public void skinComponent(JComponent componentToSkin);
+    public void customizeComponent(JComponent componentToSkin, AFFieldInfo fieldInfo);
     
     public SupportedWidgets getWidgetType();
 

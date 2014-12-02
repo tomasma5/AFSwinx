@@ -45,6 +45,7 @@ public class OptionBuilder extends BaseComponentsBuilder {
                     buttonGroup.add(radioButton);
                     layoutBuilder.addComponent(radioButton);
                     afPanel.addDataHolderComponent(radioButton);
+                    customizeComponent(radioButton, field);
                 }
             }
         }

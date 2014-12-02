@@ -2,6 +2,7 @@
 	<widgetType>calendar</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
+	<readonly>false</readonly>
 	<validations>
 		<required>$required$</required>
 	</validations>

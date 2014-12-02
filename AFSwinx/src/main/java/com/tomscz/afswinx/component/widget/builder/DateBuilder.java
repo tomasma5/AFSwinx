@@ -9,15 +9,12 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JFormattedTextField;
 
-import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
-import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
-import net.sourceforge.jdatepicker.impl.UtilDateModel;
-
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.swing.component.SwinxAFDatePicker;
 
 public class DateBuilder extends BaseComponentsBuilder {
 
@@ -25,24 +22,23 @@ public class DateBuilder extends BaseComponentsBuilder {
     // Default date formatter we will parametrize it
     final static String ISO8601DATEFORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-    public DateBuilder(){
+    public DateBuilder() {
         widgetType = SupportedWidgets.CALENDAR;
     }
-    
+
     @Override
     public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException {
         super.buildBase(field);
-        // And input calendar field
-        UtilDateModel model = new UtilDateModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(model);
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel);
-        skinComponent(datePicker);
-        layoutBuilder.addComponent(datePicker);
-        coreComponent = datePicker;
+        // Add input calendar
+        SwinxAFDatePicker swingDatePicker = new SwinxAFDatePicker();
+        customizeComponent(swingDatePicker, field);
+        layoutBuilder.addComponent(swingDatePicker.getVisibleComponent());
+        coreComponent = swingDatePicker;
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
-                new AFSwinxPanel(field.getId(), field.getWidgetType(), datePicker, fieldLabel,
+                new AFSwinxPanel(field.getId(), field.getWidgetType(), swingDatePicker, fieldLabel,
                         message);
+        afPanel.setEnabled(false);
         // Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
         // Add validations
@@ -53,10 +49,10 @@ public class DateBuilder extends BaseComponentsBuilder {
     @Override
     public void setData(AFSwinxPanel panel, AFData data) {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
-            JDatePickerImpl dataPicker = (JDatePickerImpl) panel.getDataHolder().get(0);
-            JFormattedTextField textField = dataPicker.getJFormattedTextField();
+            SwinxAFDatePicker swingDatepicker = (SwinxAFDatePicker) panel.getDataHolder().get(0);
             String value = data.getValue();
             Calendar calendar = Calendar.getInstance();
+            JFormattedTextField textField = swingDatepicker.getVisibleTextField();
             SimpleDateFormat dateformat = new SimpleDateFormat(ISO8601DATEFORMAT);
             try {
                 Date date = dateformat.parse(value);
@@ -71,10 +67,10 @@ public class DateBuilder extends BaseComponentsBuilder {
     @Override
     public Object getData(AFSwinxPanel panel) {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
-            JDatePickerImpl dataPicker = (JDatePickerImpl) panel.getDataHolder().get(0);
-            JFormattedTextField textField = dataPicker.getJFormattedTextField();
+            SwinxAFDatePicker dataPicker = (SwinxAFDatePicker) panel.getDataHolder().get(0);
+            JFormattedTextField textField = dataPicker.getVisibleTextField();
             GregorianCalendar calendar = (GregorianCalendar) textField.getValue();
-            if(calendar != null){
+            if (calendar != null) {
                 Date date = calendar.getTime();
                 DateFormat df = new SimpleDateFormat(ISO8601DATEFORMAT);
                 String nowAsISO = df.format(date);
@@ -87,8 +83,8 @@ public class DateBuilder extends BaseComponentsBuilder {
     @Override
     public Object getPlainData(AFSwinxPanel panel) {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
-            JDatePickerImpl dataPicker = (JDatePickerImpl) panel.getDataHolder().get(0);
-            JFormattedTextField textField = dataPicker.getJFormattedTextField();
+            SwinxAFDatePicker dataPicker = (SwinxAFDatePicker) panel.getDataHolder().get(0);
+            JFormattedTextField textField = dataPicker.getVisibleTextField();
             return textField.getText();
         }
         return null;

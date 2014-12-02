@@ -14,8 +14,8 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
  */
 public class TextAreaBuilder extends InputFieldBuilder{
 
-    private final int rows = 3;
-    private final int columns = 20;
+    public static final int rows = 3;
+    public static final int columns = 20;
     
     public TextAreaBuilder(){
         widgetType = SupportedWidgets.TEXTAREA;
@@ -26,10 +26,9 @@ public class TextAreaBuilder extends InputFieldBuilder{
         super.buildBase(field);
         // And input text field
         JTextArea textArea = new JTextArea();
-        textArea.setRows(rows);
-        textArea.setColumns(columns);
         layoutBuilder.addComponent(textArea);
         coreComponent = textArea;
+        customizeComponent(textArea, field);
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), textArea,
