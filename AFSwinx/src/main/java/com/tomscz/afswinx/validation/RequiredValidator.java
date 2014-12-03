@@ -15,7 +15,7 @@ import com.tomscz.afswinx.validation.exception.ValidationException;
 public class RequiredValidator extends AFBaseValidator{
 
     public RequiredValidator(){
-        priority = Integer.MAX_VALUE;
+        priority = AFValidatorPriority.REQUIRED_PRIORITY;
     }
     
     @Override

@@ -29,7 +29,7 @@ public class NumberValidator extends AFBaseValidator {
      * @param widgetType type of widget. 
      */
     public NumberValidator(SupportedWidgets widgetType) {
-        priority = 100;
+        priority = AFValidatorPriority.NUMBER_PRIORITY;
         if (widgetType == null || widgetType.equals(SupportedWidgets.NUMBERFIELD)) {
             isIntegerType = true;
         } else if (widgetType.equals(SupportedWidgets.NUMBERLONGFIELD)) {

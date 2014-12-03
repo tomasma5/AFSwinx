@@ -27,7 +27,10 @@ public class AFValidatorFactory {
 
     public AFValidations createValidator(SupportedValidations validation, String value,
             SupportedWidgets widgetType) throws NumberFormatException {
-        if (validation.equals(SupportedValidations.LENGTH)) {
+        if (validation.equals(SupportedValidations.MINLENGTH)) {
+            return null;
+        }
+        if (validation.equals(SupportedValidations.MAXLENGTH)) {
             return null;
         }
         if (validation.equals(SupportedValidations.REQUIRED)) {

@@ -46,7 +46,7 @@ public class MinAndMaxValueValidator extends NumberValidator {
     public MinAndMaxValueValidator(SupportedWidgets widget, String value, boolean isMinValidation)
             throws NumberFormatException {
         super(widget);
-        priority = 50;
+        priority = AFValidatorPriority.MIN_AND_MAX_VALUE_PRIORITY;
         if (isMinValidation) {
             if (isDoubleType) {
                 this.minValue = Double.parseDouble(value);
