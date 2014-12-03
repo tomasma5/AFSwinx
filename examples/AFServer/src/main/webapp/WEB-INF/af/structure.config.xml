@@ -11,7 +11,7 @@
 
 	<mapping>
 		<type>String</type>
-		<default tag="structure/inputField.xml" maxLength="255" size="30" />
+		<default tag="structure/inputField.xml" maxLength="255" minLength="30" />
 		<!--<condition expression="${type == 'state'}" tag="html/state.xhtml"/> -->
 	</mapping>
 

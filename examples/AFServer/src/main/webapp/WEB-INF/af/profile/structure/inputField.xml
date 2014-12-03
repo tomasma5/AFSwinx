@@ -5,6 +5,8 @@
 	<readonly>true</readonly>
 	<validations>
 		<required>$required$</required>
+		<minLength>$minLength$</minLength>
+		<maxLength>$maxLength$</maxLength>
 	</validations>
 	<fieldLayout>
 		<layoutOrientation>$layoutOrientation$</layoutOrientation>

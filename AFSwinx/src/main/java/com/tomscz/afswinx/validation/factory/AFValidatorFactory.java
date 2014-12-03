@@ -3,6 +3,7 @@ package com.tomscz.afswinx.validation.factory;
 import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.validation.AFValidations;
+import com.tomscz.afswinx.validation.MinAndMaxLenghtValidator;
 import com.tomscz.afswinx.validation.MinAndMaxValueValidator;
 import com.tomscz.afswinx.validation.NumberValidator;
 import com.tomscz.afswinx.validation.RequiredValidator;
@@ -28,10 +29,10 @@ public class AFValidatorFactory {
     public AFValidations createValidator(SupportedValidations validation, String value,
             SupportedWidgets widgetType) throws NumberFormatException {
         if (validation.equals(SupportedValidations.MINLENGTH)) {
-            return null;
+            return new MinAndMaxLenghtValidator(value, true);
         }
         if (validation.equals(SupportedValidations.MAXLENGTH)) {
-            return null;
+            return new MinAndMaxLenghtValidator(value, false);
         }
         if (validation.equals(SupportedValidations.REQUIRED)) {
             return new RequiredValidator();
