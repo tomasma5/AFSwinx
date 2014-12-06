@@ -194,10 +194,11 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
         if (skin.getFieldFont() != null) {
             componentToSkin.setFont(skin.getFieldFont());
         }
-        if (getWidgetType() == null) {
+        SupportedWidgets widgetType = getWidgetType();
+        if (widgetType == null) {
             return;
         }
-        if (getWidgetType().equals(SupportedWidgets.TEXTAREA)) {
+        if (widgetType.equals(SupportedWidgets.TEXTAREA)) {
             int rows = TextAreaBuilder.rows;
             int colums = TextAreaBuilder.columns;
             JTextArea texArea = (JTextArea) componentToSkin;
@@ -210,8 +211,11 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
             texArea.setRows(rows);
             texArea.setColumns(colums);
         }
-        if (getWidgetType().equals(SupportedWidgets.NUMBERFIELD)
-                || getWidgetType().equals(SupportedWidgets.TEXTFIELD)) {
+        if (widgetType.equals(SupportedWidgets.NUMBERFIELD)
+                || widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD)
+                || widgetType.equals(SupportedWidgets.NUMBERLONGFIELD)
+                || widgetType.equals(SupportedWidgets.TEXTFIELD)
+                || widgetType.equals(SupportedWidgets.PASSWORD)) {
             JTextField textField = (JTextField) componentToSkin;
             int width = InputFieldBuilder.DEFAULT_WIDTH;
             int height = textField.getPreferredSize().height;
@@ -223,7 +227,7 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
             textField.setMinimumSize(dimension);
             textField.setMaximumSize(dimension);
         }
-        if (getWidgetType().equals(SupportedWidgets.CALENDAR)) {
+        if (widgetType.equals(SupportedWidgets.CALENDAR)) {
             SwinxAFDatePicker dataPicker = (SwinxAFDatePicker) componentToSkin;
             JComponent componentToskin = dataPicker.getVisibleComponent();
             int colums = skin.getInputWidth();
