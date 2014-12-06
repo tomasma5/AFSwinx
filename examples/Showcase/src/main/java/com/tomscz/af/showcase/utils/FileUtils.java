@@ -1,7 +1,6 @@
 package com.tomscz.af.showcase.utils;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,11 +31,9 @@ public class FileUtils {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    // Do nothing, if stream could be closed
                 }
             }
-
         }
         return classContent;
     }

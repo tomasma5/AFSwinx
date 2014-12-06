@@ -14,7 +14,6 @@ public class ValidationException extends Exception{
     
     private String text;
     private String value;
-    private HashMap<String, String> values;
 
     public ValidationException(String message){
         this.text = message;
@@ -27,7 +26,6 @@ public class ValidationException extends Exception{
     
     public ValidationException(String message, HashMap<String, String> values){
         this.text = message;
-        this.values = values;
     }
     
     public String getValidationTextToDisplay(){
