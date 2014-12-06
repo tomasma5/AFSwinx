@@ -74,6 +74,13 @@
 			<port>8080</port>
 			<content-type>Application/Json</content-type>
 		</metaModel>
+		<post>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/users/login</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<content-type>Application/Json</content-type>
+		</post>
 	</connection>
 	<connection id="tableCountryPublic">
 		<metaModel>

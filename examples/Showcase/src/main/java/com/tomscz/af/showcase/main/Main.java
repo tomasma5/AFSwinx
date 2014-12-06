@@ -16,8 +16,8 @@ public class Main {
         } catch (FileNotFoundException e) {
             //TODO handle it with
         }
-//        WelcomeScreen welcomeScreen = new WelcomeScreen();
-      PersonFormView personView = new PersonFormView();
+        WelcomeScreen welcomeScreen = new WelcomeScreen();
+//      PersonFormView personView = new PersonFormView();
     }
 
 }

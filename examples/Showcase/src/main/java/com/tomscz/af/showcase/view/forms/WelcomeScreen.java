@@ -24,6 +24,7 @@ import com.tomscz.af.showcase.utils.FileUtils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 
 public class WelcomeScreen extends BaseScreen {
 
@@ -141,7 +142,12 @@ public class WelcomeScreen extends BaseScreen {
             Object body =
                     AFSwinx.getInstance().getExistedComponent(loginFormName).generatePostData();
             if (body != null) {
-                // SEND
+               try {
+                AFSwinx.getInstance().getExistedComponent(loginFormName).postData();
+            } catch (AFSwinxConnectionException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
             }
         }
     };

@@ -12,7 +12,7 @@ public enum SupportedWidgets {
 
     TEXTFIELD("textField"), LABEL("label"), NUMBERFIELD("numberField"), NUMBERLONGFIELD(
             "numberLongField"), NUMBERDOUBLEFIELD("numberDoubleField"), DROPDOWNMENU("dropDownMenu"), CHECKBOX(
-            "checkBox"), TEXTAREA("textArea"), OPTION("option"), CALENDAR("calendar");
+            "checkBox"), TEXTAREA("textArea"), OPTION("option"), CALENDAR("calendar"), PASSWORD("password");
 
     private final String name;
 

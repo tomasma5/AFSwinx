@@ -5,6 +5,7 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.component.widget.builder.CheckBoxBuilder;
 import com.tomscz.afswinx.component.widget.builder.DateBuilder;
 import com.tomscz.afswinx.component.widget.builder.DropDownMenuBuilder;
+import com.tomscz.afswinx.component.widget.builder.PasswordBuilder;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
 import com.tomscz.afswinx.component.widget.builder.LabelFieldBuider;
@@ -66,6 +67,9 @@ public class WidgetBuilderFactory {
         }
         if (widget.equals(SupportedWidgets.CALENDAR)) {
             return new DateBuilder();
+        }
+        if(widget.equals(SupportedWidgets.PASSWORD)){
+            return new PasswordBuilder();
         }
         return new InputFieldBuilder();
     }

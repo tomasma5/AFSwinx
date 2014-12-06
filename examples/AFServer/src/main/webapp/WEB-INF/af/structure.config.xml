@@ -11,8 +11,8 @@
 
 	<mapping>
 		<type>String</type>
-		<default tag="structure/inputField.xml" maxLength="255" minLength="30" />
-		<!--<condition expression="${type == 'state'}" tag="html/state.xhtml"/> -->
+		<default tag="structure/inputField.xml" maxLength="255" minLength="4" />
+		<condition expression="${type == 'password'}" tag="structure/inputPassword.xml"/>
 	</mapping>
 
 	<mapping>
