@@ -112,13 +112,12 @@ public class XMLParseUtils {
     public static void setValidationsProperties(AFFieldInfo fieldInfo, String propertyName,
             String propertyValue) {
         SupportedValidations propertyType =
-                (SupportedValidations) AFRestUtils.getEnumFromString(
-                    SupportedValidations.class, propertyName, true);
+                (SupportedValidations) AFRestUtils.getEnumFromString(SupportedValidations.class,
+                        propertyName, true);
         if (propertyType == null) {
             return;
         }
-        AFValidationRule requiredRule =
-                new AFValidationRule(propertyType, propertyValue);
+        AFValidationRule requiredRule = new AFValidationRule(propertyType, propertyValue);
         fieldInfo.addRule(requiredRule);
     }
 
@@ -145,20 +144,39 @@ public class XMLParseUtils {
                     fieldInfo.setWidgetType(supportedWidget);
                 }
             }
-        } else if (propertyType.equals(SupportedProperties.FIELDNAME)) {
+            return;
+        }
+        if (propertyType.equals(SupportedProperties.FIELDNAME)) {
             fieldInfo.setId(propertyValue);
-        } else if (propertyType.equals(SupportedProperties.LABEL)) {
+            return;
+        }
+        if (propertyType.equals(SupportedProperties.LABEL)) {
             fieldInfo.setLabel(propertyValue);
-        } else if (propertyType.equals(SupportedProperties.OPTIONS)) {
+            return;
+        }
+        if (propertyType.equals(SupportedProperties.OPTIONS)) {
             // TODO set it to class
-        } else if (propertyType.equals(SupportedProperties.READNOLY)) {
+        }
+        if (propertyType.equals(SupportedProperties.READNOLY)) {
+            //readonly is default false
             if (propertyValue != null && !propertyValue.isEmpty()) {
                 if (propertyValue.toLowerCase().equals("true")) {
                     fieldInfo.setReadOnly(true);
+                    return;
                 }
-            } else {
-                fieldInfo.setReadOnly(false);
             }
+            fieldInfo.setReadOnly(false);
+            return;
+        }
+        if (propertyType.equals(SupportedProperties.VISIBLE)) {
+            // Visible is default true
+            if (propertyValue != null && !propertyValue.isEmpty()) {
+                if (propertyValue.toLowerCase().equals("false")) {
+                    fieldInfo.setVisible(false);
+                    return;
+                }
+            }
+            fieldInfo.setVisible(true);
         }
     }
 

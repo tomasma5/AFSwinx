@@ -54,7 +54,8 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
      * @param form which will be build
      * @throws AFSwinxConnectionException if exception during retrieve metamodel ocurre
      */
-    private void buildComponent(AFSwinxForm form) throws AFSwinxConnectionException, AFSwinxBuildException {
+    private void buildComponent(AFSwinxForm form) throws AFSwinxConnectionException,
+            AFSwinxBuildException {
         AFMetaModelPack metaModelPack = form.getModel();
         AFClassInfo classInfo = metaModelPack.getClassInfo();
         if (classInfo != null) {
@@ -79,15 +80,17 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
         ComponentDataPacker dataPacker =
                 new ComponentDataPacker(0, panelToAdd.getPanelId(), panelToAdd);
         component.getPanels().put(dataPacker.getId(), dataPacker);
-        component.add(panelToAdd);
         panelToAdd.setAfParent(component);
-        layoutBuilder.addComponent(panelToAdd);
+        if(panelToAdd.isVisible()){
+            component.add(panelToAdd);
+            layoutBuilder.addComponent(panelToAdd); 
+        }
     }
 
     @Override
     public AFSwinxFormBuilder setSkin(Skin skin) {
-       this.skin = skin;
-       return this;
+        this.skin = skin;
+        return this;
     }
 
 }

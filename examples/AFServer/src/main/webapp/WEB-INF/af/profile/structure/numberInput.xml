@@ -2,6 +2,7 @@
 	<widgetType>numberField</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
+	<visible>true</visible>
 	<validations>
 		<required>$required$</required>
 		<minValue>$min$</minValue>

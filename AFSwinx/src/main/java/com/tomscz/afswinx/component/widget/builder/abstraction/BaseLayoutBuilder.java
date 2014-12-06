@@ -79,7 +79,9 @@ public class BaseLayoutBuilder implements LayoutBuilder {
 
     @Override
     public void addComponent(JComponent component) {
-        if (component != null) this.components.add(component);
+        if (component != null) {
+            this.components.add(component);
+        }
     }
 
     @Override
@@ -161,4 +163,5 @@ public class BaseLayoutBuilder implements LayoutBuilder {
     public void addMessage(JComponent messageComponent) {
         if (messageComponent != null) this.message = messageComponent;
     }
+
 }

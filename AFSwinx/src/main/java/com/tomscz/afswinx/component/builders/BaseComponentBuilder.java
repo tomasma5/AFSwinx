@@ -190,6 +190,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                 String uniquieKey = Utils.generateKey(key, fieldInfo.getId());
                 fieldInfo.setId(uniquieKey);
                 AFSwinxPanel panelToAdd = builder.buildComponent(fieldInfo);
+                panelToAdd.setVisible(fieldInfo.getVisible());
                 this.addComponent(panelToAdd, layoutBuilder, form);
             }
         }

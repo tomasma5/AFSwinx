@@ -12,19 +12,14 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.tomscz.afrest.rest.dto.AFClassInfo;
-import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
-import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxTable;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
-import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.skin.BaseSkin;
 import com.tomscz.afswinx.component.skin.Skin;
-import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
@@ -108,12 +103,14 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
     @Override
     protected void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent component) {
-        components.add(panelToAdd.getPanelId());
-        ComponentDataPacker dataPacker =
-                new ComponentDataPacker(componentPossition++, panelToAdd.getPanelId(), panelToAdd);
-        component.getPanels().put(dataPacker.getId(), dataPacker);
-        // component.add(panelToAdd);
-        panelToAdd.setAfParent(component);
+        if(panelToAdd.isVisible()){
+            components.add(panelToAdd.getPanelId());
+            ComponentDataPacker dataPacker =
+                    new ComponentDataPacker(componentPossition++, panelToAdd.getPanelId(), panelToAdd);
+            component.getPanels().put(dataPacker.getId(), dataPacker);
+            // component.add(panelToAdd);
+            panelToAdd.setAfParent(component);
+        }
     }
 
     public AFSwinxTableBuilder setDynamicSize(boolean dynamicSize) {

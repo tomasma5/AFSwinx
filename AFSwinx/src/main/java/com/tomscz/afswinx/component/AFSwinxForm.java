@@ -60,6 +60,10 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             // Validate all records and show all error message
             ComponentDataPacker dataPacker = getPanels().get(key);
             AFSwinxPanel panel = dataPacker.getComponent();
+            //If panel is not visible, then don't validate it
+            if(!panel.isVisible()){
+                continue;
+            }
             try {
                 panel.validateModel();
                 // data are valid, hide error message
