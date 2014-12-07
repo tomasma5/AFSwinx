@@ -8,7 +8,7 @@ import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder;
 import com.tomscz.afswinx.swing.component.AFOptionToAFSwinxOption;
 import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
 import com.tomscz.afswinx.swing.component.SwinxAFCheckBox;
@@ -20,7 +20,7 @@ import com.tomscz.afswinx.swing.component.SwinxAFCheckBox;
  * 
  * @since 1.0.0.
  */
-public class CheckBoxBuilder extends BaseComponentsBuilder {
+public class CheckBoxBuilder extends BaseWidgetBuilder {
 
     public CheckBoxBuilder() {
         widgetType = SupportedWidgets.CHECKBOX;

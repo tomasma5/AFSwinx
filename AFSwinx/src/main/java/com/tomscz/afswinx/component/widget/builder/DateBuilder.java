@@ -14,10 +14,10 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder;
 import com.tomscz.afswinx.swing.component.SwinxAFDatePicker;
 
-public class DateBuilder extends BaseComponentsBuilder {
+public class DateBuilder extends BaseWidgetBuilder {
 
     // TODO
     // Default date formatter we will parametrize it

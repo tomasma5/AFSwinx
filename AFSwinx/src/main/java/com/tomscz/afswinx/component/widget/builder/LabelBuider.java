@@ -6,11 +6,11 @@ import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder;
 
-public class LabelFieldBuider extends BaseComponentsBuilder {
+public class LabelBuider extends BaseWidgetBuilder {
     
-    public LabelFieldBuider(){
+    public LabelBuider(){
         widgetType = SupportedWidgets.LABEL;
     }
     

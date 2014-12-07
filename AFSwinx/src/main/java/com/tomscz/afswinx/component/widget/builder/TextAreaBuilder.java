@@ -13,7 +13,7 @@ import com.tomscz.afswinx.component.panel.AFSwinxPanel;
  *
  * @since 1.0.0.
  */
-public class TextAreaBuilder extends InputFieldBuilder{
+public class TextAreaBuilder extends InputBuilder{
 
     public static final int rows = 3;
     public static final int columns = 20;

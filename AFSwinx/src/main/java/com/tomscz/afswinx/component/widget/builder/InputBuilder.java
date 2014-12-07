@@ -8,7 +8,7 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder;
 
 /**
  * This builder build input field editable component without any restrictions. Restriction could be
@@ -18,11 +18,11 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBui
  * 
  * @since 1.0.0.
  */
-public class InputFieldBuilder extends BaseComponentsBuilder {
+public class InputBuilder extends BaseWidgetBuilder {
 
    public static final int DEFAULT_WIDTH = 10;
 
-    public InputFieldBuilder() {
+    public InputBuilder() {
         widgetType = SupportedWidgets.TEXTFIELD;
     }
 

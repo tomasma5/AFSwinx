@@ -17,7 +17,7 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.skin.BaseSkin;
 import com.tomscz.afswinx.component.skin.Skin;
-import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
+import com.tomscz.afswinx.component.widget.builder.InputBuilder;
 import com.tomscz.afswinx.component.widget.builder.TextAreaBuilder;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
@@ -32,7 +32,7 @@ import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
  * 
  * @since 1.0.0.
  */
-public abstract class BaseComponentsBuilder implements WidgetBuilder {
+public abstract class BaseWidgetBuilder implements WidgetBuilder {
 
     protected Component coreComponent;
     protected BaseLayoutBuilder layoutBuilder;
@@ -222,7 +222,7 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
                 || widgetType.equals(SupportedWidgets.TEXTFIELD)
                 || widgetType.equals(SupportedWidgets.PASSWORD)) {
             JTextField textField = (JTextField) componentToSkin;
-            int width = InputFieldBuilder.DEFAULT_WIDTH;
+            int width = InputBuilder.DEFAULT_WIDTH;
             int height = textField.getPreferredSize().height;
             if (skin.getInputWidth() > 0) {
                 width = skin.getInputWidth();

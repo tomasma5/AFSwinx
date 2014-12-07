@@ -8,10 +8,10 @@ import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
-import com.tomscz.afswinx.component.widget.builder.abstraction.BaseComponentsBuilder;
+import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder;
 import com.tomscz.afswinx.localization.LocalizationUtils;
 
-public class DropDownMenuBuilder extends BaseComponentsBuilder {
+public class DropDownMenuBuilder extends BaseWidgetBuilder {
 
     public DropDownMenuBuilder(){
         widgetType = SupportedWidgets.DROPDOWNMENU;

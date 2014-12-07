@@ -7,8 +7,8 @@ import com.tomscz.afswinx.component.widget.builder.DateBuilder;
 import com.tomscz.afswinx.component.widget.builder.DropDownMenuBuilder;
 import com.tomscz.afswinx.component.widget.builder.PasswordBuilder;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
-import com.tomscz.afswinx.component.widget.builder.InputFieldBuilder;
-import com.tomscz.afswinx.component.widget.builder.LabelFieldBuider;
+import com.tomscz.afswinx.component.widget.builder.InputBuilder;
+import com.tomscz.afswinx.component.widget.builder.LabelBuider;
 import com.tomscz.afswinx.component.widget.builder.NumberInputBuilder;
 import com.tomscz.afswinx.component.widget.builder.OptionBuilder;
 import com.tomscz.afswinx.component.widget.builder.TextAreaBuilder;
@@ -33,20 +33,20 @@ public class WidgetBuilderFactory {
         WidgetBuilder fieldBuilder;
         fieldBuilder = createWidgetBuilder(widgetType);
         if (fieldBuilder == null) {
-            fieldBuilder = new InputFieldBuilder();
+            fieldBuilder = new InputBuilder();
         }
         return fieldBuilder;
     }
 
     public WidgetBuilder createWidgetBuilder(SupportedWidgets widget) {
         if (widget == null) {
-            return new InputFieldBuilder();
+            return new InputBuilder();
         }
         if (widget.equals(SupportedWidgets.TEXTFIELD)) {
-            return new InputFieldBuilder();
+            return new InputBuilder();
         }
         if (widget.equals(SupportedWidgets.LABEL)) {
-            return new LabelFieldBuider();
+            return new LabelBuider();
         }
         if (widget.equals(SupportedWidgets.NUMBERFIELD)
                 || widget.equals(SupportedWidgets.NUMBERDOUBLEFIELD)
@@ -71,7 +71,7 @@ public class WidgetBuilderFactory {
         if(widget.equals(SupportedWidgets.PASSWORD)){
             return new PasswordBuilder();
         }
-        return new InputFieldBuilder();
+        return new InputBuilder();
     }
 
 }

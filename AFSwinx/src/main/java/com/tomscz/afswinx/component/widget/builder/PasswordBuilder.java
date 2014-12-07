@@ -7,7 +7,7 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 
-public class PasswordBuilder extends InputFieldBuilder{
+public class PasswordBuilder extends InputBuilder{
 
     public PasswordBuilder(){
         super.widgetType = SupportedWidgets.PASSWORD;
