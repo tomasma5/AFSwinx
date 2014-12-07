@@ -144,5 +144,9 @@ public final class Utils {
         }
         return currentKey+"."+fieldName;
     }
+    
+    public static String generateCloneKey(String key){
+        return key+AFSwinxConstants.DUMMY_KEY;
+    }
 
 }

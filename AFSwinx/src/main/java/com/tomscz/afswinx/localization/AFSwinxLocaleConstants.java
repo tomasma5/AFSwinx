@@ -19,7 +19,10 @@ public class AFSwinxLocaleConstants {
     
     public final static String VALIDATION_TO_SMALL_NUMBER = "validation.number.toSmall";
     public final static String VALIDATION_TO_GREAT_NUMBER = "validation.number.toBig";
+    
     public final static String VALIDATION_LENHTH_TO_SMALL = "validation.length.toSmall";
     public final static String VALIDATION_LENGTH_TO_GREAT = "validation.length.toBig";
+    
+    public final static String VALIDATION_RETYPE = "validation.retype";
     //Validation section EDN
 }

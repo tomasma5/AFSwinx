@@ -32,6 +32,7 @@ public class AFSwinxPanel extends JPanel {
     private JTextArea message;
     private SupportedWidgets widgetType;
     private String panelId;
+    private boolean retype = false;
     
     private PriorityQueue<AFValidations> validators = new PriorityQueue<AFValidations>(10,new ValidatorPriorityComparator());
 
@@ -124,6 +125,18 @@ public class AFSwinxPanel extends JPanel {
 
     public void setAfParent(AFSwinxTopLevelComponent afParent) {
         this.afParent = afParent;
+    }
+
+    public boolean isRetype() {
+        return retype;
+    }
+
+    public void setRetype(boolean retype) {
+        this.retype = retype;
+    }
+
+    public void setPanelId(String panelId) {
+        this.panelId = panelId;
     }
 
 }

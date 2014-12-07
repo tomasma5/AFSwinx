@@ -14,8 +14,8 @@ public class AFFieldInfo implements Serializable {
     private SupportedWidgets widgetType;
     private String id;
     private String label;
-    private boolean classType;
-    private boolean readOnly;
+    private boolean classType = false;
+    private boolean readOnly = false;
     private boolean visible = true;
     private Layout layout;
     private List<AFValidationRule> rules;

@@ -114,11 +114,11 @@ public class XMLParseUtils {
         SupportedValidations propertyType =
                 (SupportedValidations) AFRestUtils.getEnumFromString(SupportedValidations.class,
                         propertyName, true);
-        if (propertyType == null) {
+        if (propertyType == null || propertyValue == null || propertyValue.isEmpty()) {
             return;
         }
-        AFValidationRule requiredRule = new AFValidationRule(propertyType, propertyValue);
-        fieldInfo.addRule(requiredRule);
+        AFValidationRule rule = new AFValidationRule(propertyType, propertyValue);
+        fieldInfo.addRule(rule);
     }
 
     /**

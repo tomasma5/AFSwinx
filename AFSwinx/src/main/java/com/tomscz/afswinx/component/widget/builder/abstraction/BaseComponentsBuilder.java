@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
@@ -119,6 +120,12 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
             throws AFSwinxBuildException {
         if (fieldInfo.getRules() != null) {
             for (AFValidationRule rules : fieldInfo.getRules()) {
+                // If there is no specify validation type, or type is retype then do nothing.
+                // Retype validator is specific one and must be set outside builders
+                if (rules.getValidationType().equals(SupportedValidations.RETYPE)) {
+                    panel.setRetype(true);
+                    continue;
+                }
                 SupportedWidgets widget = fieldInfo.getWidgetType();
                 try {
                     AFValidations validator =
@@ -156,8 +163,6 @@ public abstract class BaseComponentsBuilder implements WidgetBuilder {
         } else {
             this.skin = new BaseSkin();
         }
-
-
     }
 
     protected void buildBase(AFFieldInfo fieldInfo) {

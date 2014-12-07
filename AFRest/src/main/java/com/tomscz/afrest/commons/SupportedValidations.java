@@ -3,7 +3,7 @@ package com.tomscz.afrest.commons;
 public enum SupportedValidations {
 
     REQUIRED("required"), NUMBER("number"), CONTAINS("contains"), MIN("minValue"), MAX(
-            "maxValue"), MINLENGTH("minLength"), MAXLENGTH("maxLength");
+            "maxValue"), MINLENGTH("minLength"), MAXLENGTH("maxLength"),RETYPE("retype");
 
     private final String name;
 

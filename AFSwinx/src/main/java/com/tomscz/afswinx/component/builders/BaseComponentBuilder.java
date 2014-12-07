@@ -20,6 +20,7 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.ConnectionParser;
+import com.tomscz.afswinx.validation.RetypeValidator;
 
 public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
 
@@ -187,11 +188,26 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                 builder.setLocalization(localization);
                 builder.setSkin(skin);
                 // Use generated key
-                String uniquieKey = Utils.generateKey(key, fieldInfo.getId());
-                fieldInfo.setId(uniquieKey);
+                String uniqueKey = Utils.generateKey(key, fieldInfo.getId());
+                fieldInfo.setId(uniqueKey);
                 AFSwinxPanel panelToAdd = builder.buildComponent(fieldInfo);
                 panelToAdd.setVisible(fieldInfo.getVisible());
                 this.addComponent(panelToAdd, layoutBuilder, form);
+                // If panel should be retype, then create validator and add it
+                if(panelToAdd.isRetype()){
+                    //Retyped panel. This will be clone
+                    AFSwinxPanel retypePanel = builder.buildComponent(fieldInfo);
+                    retypePanel.setVisible(fieldInfo.getVisible());
+                    //Generate clone id
+                    retypePanel.setPanelId(Utils.generateCloneKey(retypePanel.getPanelId()));
+                    RetypeValidator retype = new RetypeValidator(panelToAdd);
+                    retype.setLocalization(localization);
+                    retypePanel.addValidator(retype);
+                    RetypeValidator panelRetype = new RetypeValidator(retypePanel);
+                    panelRetype.setLocalization(localization);
+                    panelToAdd.addValidator(panelRetype);
+                    this.addComponent(retypePanel, layoutBuilder, form);
+                }
             }
         }
     }
