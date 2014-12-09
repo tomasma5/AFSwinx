@@ -10,8 +10,10 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -33,7 +35,7 @@ public abstract class BaseConnector implements Connector {
     protected int statusCode = -1;
 
     protected HttpResponse response = null;
-    
+
     public abstract HttpHost getHost();
 
     public abstract String getParameter();
@@ -104,11 +106,12 @@ public abstract class BaseConnector implements Connector {
             } else {
                 // Throws exception
                 throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
-                        + " was unsuccessfull status code is " + this.getStatusCode()+"\r\n Response is: "+getResponse().toString());
+                        + " was unsuccessfull status code is " + this.getStatusCode()
+                        + "\r\n Response is: " + getResponse().toString());
             }
         } catch (UnsupportedEncodingException e) {
-            //Do nothing yet
-            //TODO handle it more nicely
+            // Do nothing yet
+            // TODO handle it more nicely
         }
     }
 
@@ -129,7 +132,7 @@ public abstract class BaseConnector implements Connector {
     public int getStatusCode() {
         return statusCode;
     }
-    
+
     public HttpResponse getResponse() {
         return response;
     }
@@ -192,6 +195,56 @@ public abstract class BaseConnector implements Connector {
         protected void close() {
             if (httpPost != null) {
                 httpPost.releaseConnection();
+            }
+        }
+    }
+
+    public static class HttpDeleteBuilder {
+        protected HttpDelete httpDelete = null;
+        private HeaderType accept;
+        private HeaderType contentType;
+
+        public HttpDeleteBuilder(HeaderType accept, HeaderType contentType) {
+            this.accept = accept;
+            this.contentType = contentType;
+        }
+
+        protected HttpDelete getDelete(String endPoint) {
+            close();
+            HttpDelete httpDelete = new HttpDelete(endPoint);
+            httpDelete.addHeader("Content-Type", contentType.toString());
+            httpDelete.addHeader("Accept", accept.toString());
+            return httpDelete;
+        }
+
+        protected void close() {
+            if (httpDelete != null) {
+                httpDelete.releaseConnection();
+            }
+        }
+    }
+
+    public static class HttpPutBuilder {
+        protected HttpPut httpPut = null;
+        private HeaderType accept;
+        private HeaderType contentType;
+
+        public HttpPutBuilder(HeaderType accept, HeaderType contentType) {
+            this.accept = accept;
+            this.contentType = contentType;
+        }
+
+        protected HttpPut getDelete(String endPoint) {
+            close();
+            HttpPut httpPut = new HttpPut(endPoint);
+            httpPut.addHeader("Content-Type", contentType.toString());
+            httpPut.addHeader("Accept", accept.toString());
+            return httpPut;
+        }
+
+        protected void close() {
+            if (httpPut != null) {
+                httpPut.releaseConnection();
             }
         }
     }

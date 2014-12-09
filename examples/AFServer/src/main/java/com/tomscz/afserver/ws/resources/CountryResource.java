@@ -7,6 +7,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -77,6 +78,20 @@ public class CountryResource extends BaseResource {
         final GenericEntity<List<Country>> personGeneric =
                 new GenericEntity<List<Country>>(countries) {};
         return Response.status(Response.Status.OK).entity(personGeneric).build();
+    }
+    
+    @GET
+    @Path("/{#id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response getCountry(@PathParam("param") int id) {
+        try {
+            CountryManager cm = new CountryManager();
+            Country country = cm.findById(id);
+            return Response.status(Response.Status.OK).entity(country).build();
+        } catch (BusinessException e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
 
 

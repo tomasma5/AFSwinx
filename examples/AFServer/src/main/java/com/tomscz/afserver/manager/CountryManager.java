@@ -35,4 +35,10 @@ public class CountryManager implements Serializable, Manager<Country> {
         
     }
 
+    @Override
+    public Country findById(int id) throws BusinessException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

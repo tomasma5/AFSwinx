@@ -8,5 +8,7 @@ public interface Manager<T> {
     
     public void delete(T T) throws BusinessException;
     
+    public T findById(int id) throws BusinessException;
+    
     
 }
