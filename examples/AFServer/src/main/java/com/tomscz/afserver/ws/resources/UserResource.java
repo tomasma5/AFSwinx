@@ -1,6 +1,5 @@
 package com.tomscz.afserver.ws.resources;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -10,7 +9,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.WebServiceContext;
 
 import com.tomscz.afrest.AFRestSwing;
 import com.tomscz.afrest.exception.MetamodelException;
@@ -20,19 +18,13 @@ import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
 
 @Path("/users/")
-public class UserResource {
-    
-    @javax.ws.rs.core.Context HttpServletRequest request;
-    
-    @Resource
-    private WebServiceContext wsContext;
-    
+public class UserResource {    
     
     @GET
     @Path("/{param}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources(@PathParam("param") String type) {
+    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request, @PathParam("param") String type) {
         try {
             String fullClassName;
             //add if-else if you want add more form type definition

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.WebServiceContext;
 
 import com.tomscz.afrest.AFRestSwing;
 import com.tomscz.afrest.commons.AFRestUtils;
@@ -31,17 +29,11 @@ import com.tomscz.afserver.persistence.entity.Person;
 @Path("/person")
 public class AFRootResource {
 
-    @javax.ws.rs.core.Context
-    HttpServletRequest request;
-
-    @Resource
-    private WebServiceContext wsContext;
-
     @GET
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources() {
+    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
             AFMetaModelPack data =
@@ -104,7 +96,7 @@ public class AFRootResource {
     @Path("/list/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getListDefinition() {
+    public Response getListDefinition(@javax.ws.rs.core.Context HttpServletRequest request ) {
         try {
             AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
             AFMetaModelPack data =
