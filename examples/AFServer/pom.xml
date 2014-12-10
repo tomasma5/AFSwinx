@@ -20,6 +20,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>javax.ejb-api</artifactId>
+			<version>3.2</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>2.2.1.GA</version>
@@ -36,7 +42,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.tomscz.af</groupId>
-			<artifactId>AFSwinx</artifactId>
+			<artifactId>AFRest</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

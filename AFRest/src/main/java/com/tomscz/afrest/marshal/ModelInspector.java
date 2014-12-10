@@ -285,10 +285,10 @@ public class ModelInspector {
     private Context init(ServletContext contextServlet, String mapping)
             throws ConfigurationFileNotFoundException, ConfigurationParsingException,
             AnnotationDescriptorNotFoundException {
-        InputStream configPropertyStream =
-                contextServlet.getResourceAsStream("/WEB-INF/aspectfaces.properties");
-        AFWeaver.init(configPropertyStream);
-        AFWeaver.registerAllAnnotations();
+//        InputStream configPropertyStream =
+//                contextServlet.getResourceAsStream("/WEB-INF/aspectfaces.properties");
+//        AFWeaver.init(configPropertyStream);
+//        AFWeaver.registerAllAnnotations();
 
         AFWeaver.addConfiguration(new ServerConfiguration(mapping, contextServlet), FileUtils
                 .createTemporaryFile(Constants.ASPECT_FACES_RESOURCE_ROOT_FOLDER + mapping,

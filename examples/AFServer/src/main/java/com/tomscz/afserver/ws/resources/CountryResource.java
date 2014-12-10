@@ -2,6 +2,10 @@ package com.tomscz.afserver.ws.resources;
 
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,21 +21,24 @@ import com.tomscz.afrest.AFRestSwing;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afserver.manager.CountryInterfaceIn;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Country;
 
 @Path("/country")
-public class CountryResource extends BaseResource {
+public class CountryResource {
 
+    @javax.ws.rs.core.Context
+    HttpServletRequest request;
 
     @GET
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources() {
+    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest requestObject) {
         try {
-            AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
+            AFRestSwing afSwing = new AFRestSwing(requestObject.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException | AFRestException e) {
@@ -68,20 +75,26 @@ public class CountryResource extends BaseResource {
     }
     
     
+    @SuppressWarnings("unchecked")
     @GET
     @Path("/list")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getAllCountries() {
-        CountryManager cm = new CountryManager();
-        List<Country> countries = cm.findAllCountry();
-        final GenericEntity<List<Country>> personGeneric =
-                new GenericEntity<List<Country>>(countries) {};
-        return Response.status(Response.Status.OK).entity(personGeneric).build();
+    public Response getAllCountries() {       
+        try {
+            Context ctx = new InitialContext();
+            CountryInterfaceIn<Country> cmm = (CountryInterfaceIn<Country>) ctx.lookup("java:global/AFServer/CountryManager");
+            List<Country> countries = cmm.findAllCountry();
+            final GenericEntity<List<Country>> countryGeneric =
+                    new GenericEntity<List<Country>>(countries) {};
+                    return Response.status(Response.Status.OK).entity(countryGeneric).build();
+        } catch (NamingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }        
     }
     
     @GET
-    @Path("/{#id}")
+    @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getCountry(@PathParam("param") int id) {
@@ -93,7 +106,5 @@ public class CountryResource extends BaseResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-
-
 
 }

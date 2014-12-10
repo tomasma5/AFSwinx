@@ -10,7 +10,7 @@
 
 	<artifactId>AFRest</artifactId>
 	<name>AFRest</name>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.codingcrayons.aspectfaces</groupId>
@@ -28,4 +28,11 @@
 			<version>2.3</version>
 		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>codingcrayons-repository</id>
+			<name>CodingCrayons Maven Repository</name>
+			<url>http://maven.codingcrayons.com/content/groups/public/</url>
+		</repository>
+	</repositories>
 </project>

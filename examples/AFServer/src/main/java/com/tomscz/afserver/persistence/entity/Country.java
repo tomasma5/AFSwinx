@@ -1,8 +1,12 @@
 package com.tomscz.afserver.persistence.entity;
 
+import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.tomscz.afrest.layout.definitions.LabelPosition;
+import com.tomscz.afrest.layout.definitions.LayouDefinitions;
+import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 
 public class Country {
 
@@ -32,6 +36,7 @@ public class Country {
     }
 
     @UiLabel(value="country.shortCut")
+    @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.TWOCOLUMNSLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
     @UiOrder(value=1)
     public String getShortCut() {
         return shortCut;

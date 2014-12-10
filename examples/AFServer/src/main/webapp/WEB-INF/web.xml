@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	version="2.5">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
 	<display-name>AFServer</display-name>
-	<context-param>
-		<param-name>resteasy.resources</param-name>
-		<param-value>com.tomscz.afserver.ws.resources.AFRootResource,com.tomscz.afserver.ws.resources.UserResource,com.tomscz.afserver.ws.resources.CountryResource</param-value>
-	</context-param>
 	<!-- Jackson configuration changes -->
 	<context-param>
 		<param-name>resteasy.providers</param-name>
@@ -16,10 +12,20 @@
 	<listener>
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
+	<listener>
+		<!-- Include Aspect Faces listener to perform proper framework initialization 
+			during application start -->
+		<listener-class>com.codingcrayons.aspectfaces.plugins.j2ee.AspectFacesListener</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>resteasy-servlet</servlet-name>
 		<servlet-class>
-			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+		</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>com.tomscz.afserver.ws.resources.AFApplication</param-value>
+		</init-param>
 	</servlet>
 	<context-param>
 		<param-name>resteasy.servlet.mapping.prefix</param-name>
