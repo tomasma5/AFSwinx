@@ -1,14 +1,12 @@
 package com.tomscz.afserver.persistence.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class AbsenceTypeEmployee {
 
     @Id
-    @GeneratedValue
     private Long id;
     private Person person;
     private AbsenceType absenceType;

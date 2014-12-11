@@ -1,23 +1,22 @@
 package com.tomscz.afserver.manager;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
-import org.dom4j.Branch;
+import com.tomscz.afserver.persistence.IdGenerator;
+import com.tomscz.afserver.persistence.entity.Address;
+import com.tomscz.afserver.persistence.entity.Country;
+import com.tomscz.afserver.persistence.entity.Gender;
+import com.tomscz.afserver.persistence.entity.Person;
 
 @Singleton
 @Startup
@@ -32,22 +31,42 @@ public class StartUpBean implements Serializable {
 
     @PostConstruct
     public void initApp() {
-        try  {
-            URL url = this.getClass().getResource("/import.sql");
-            if(url == null){
-                return;
-            }
-            InputStream importStream = this.getClass().getResource("/import.sql").openStream();
-            BufferedReader inbf = new BufferedReader(new InputStreamReader(importStream));
-            String line = null;
-            while ((line = inbf.readLine()) != null) {
-                int aafectedNumber=em.createNativeQuery(line).executeUpdate();
-                System.out.println(aafectedNumber);
-            }
-        } catch (IOException e) {
+        try {
+            generateCountries();
+            generateUsers();
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
+    private void generateCountries() {
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Czech republic", "CR", true));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Denmark", "DNK", true));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Switzerland", "CHE", true));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Slovakia", "SLO", true));
+    }
+
+    private void generateUsers() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date date = sdf.parse("21/12/2012");
+            Person person =
+                    new Person(IdGenerator.getNextPersonId(), "John", "Doe", "jdoe@toms-cz.com,",
+                            date, true, 30, Gender.MALE, true);
+            TypedQuery<Country> query =
+                    em.createQuery("SELECT c FROM Country c WHERE c.shortCut = :shortCut",
+                            Country.class);
+            Country c = query.setParameter("shortCut", "CR").getSingleResult();
+            Address personAddress =
+                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 22222, c);
+            em.persist(personAddress);
+            person.setMyAdress(personAddress);
+            em.persist(person);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -27,8 +26,7 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 public class Person {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -42,11 +40,29 @@ public class Person {
     @OneToOne
     private Address myAdress;
 
-    public Long getId() {
+    public Person(){
+        
+    }
+    
+    public Person(int id,String firstName, String lastName, String email, Date hireDate, boolean active,
+            int age, Gender gender, boolean confidentialAgreement) {
+        super();
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.hireDate = hireDate;
+        this.active = active;
+        this.age = age;
+        this.gender = gender;
+        this.confidentialAgreement = confidentialAgreement;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -74,8 +90,8 @@ public class Person {
 
     @UiLabel(value = "person.age")
     @UiOrder(value = 3)
-    @Min(value=1)
-    @Max(value=12)
+    @Min(value=15)
+    @Max(value=60)
     @UiRequired
     public int getAge() {
         return age;

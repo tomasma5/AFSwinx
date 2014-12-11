@@ -1,16 +1,15 @@
 package com.tomscz.afserver.manager;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Country;
-import com.tomscz.afserver.persistence.entity.Person;
 
 @Stateless(name=CountryManagerImp.name)
 public class CountryManagerImp implements Serializable, CountryManager<Country> {
@@ -24,39 +23,29 @@ public class CountryManagerImp implements Serializable, CountryManager<Country> 
     
     @Override
     public List<Country> findAllCountry() {
-        List<Country> c = em.createQuery("select c from Country c", Country.class).getResultList();
-        List<Person> cp = em.createQuery("select c from Person c", Person.class).getResultList();
-        List<Country> resultList = new ArrayList<Country>();
-        Country country = new Country("Germany","GER",true);
-//        country.setId(23L);
-//        em.persist(country);
-//        em.flush();
-        c = em.createQuery("select c from Country c", Country.class).getResultList();
-        resultList.add(country);
-        country = new Country("Czech republic","CZ",false);
-        resultList.add(country);
-        country = new Country("Uganda","UG",true);
-        resultList.add(country);
+        List<Country> resultList = em.createQuery("select c from Country c", Country.class).getResultList();
         return resultList;
     }
 
 
     @Override
-    public void createOrupdate(Country T) throws BusinessException {
-        // TODO Auto-generated method stub
-        
+    public void createOrupdate(Country entity) throws BusinessException {
+       em.merge(entity);
     }
 
     @Override
-    public void delete(Country T) throws BusinessException {
-        // TODO Auto-generated method stub
-        
+    public void delete(Country entity) throws BusinessException {
+        em.merge(entity);
+        em.remove(entity);
     }
 
     @Override
     public Country findById(int id) throws BusinessException {
-        // TODO Auto-generated method stub
-        return null;
+        TypedQuery<Country> query =
+                em.createQuery("SELECT c FROM Country c WHERE c.id = :id",
+                        Country.class);
+        Country country = query.setParameter("id", id).getSingleResult();
+        return country;
     }
 
 }

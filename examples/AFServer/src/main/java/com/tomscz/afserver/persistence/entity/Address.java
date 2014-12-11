@@ -1,19 +1,30 @@
 package com.tomscz.afserver.persistence.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Address {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private int id;
     private String street;
     private String city;
     private int postCode;
     private Country country;
+
+    public Address(){
+        
+    }
+    
+    public Address(int id, String street, String city, int postCode, Country country) {
+        super();
+        this.id = id;
+        this.street = street;
+        this.city = city;
+        this.postCode = postCode;
+        this.country = country;
+    }
 
     public String getStreet() {
         return street;
@@ -45,5 +56,13 @@ public class Address {
 
     public void setCountry(Country country) {
         this.country = country;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

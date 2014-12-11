@@ -15,7 +15,7 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 public class Country {
 
     @Id
-    private Long id;
+    private int id;
     private String name;
     private String shortCut;
     private boolean active;
@@ -24,7 +24,8 @@ public class Country {
         super();
     }
     
-    public Country(String name, String shortCut, boolean active){
+    public Country(int id, String name, String shortCut, boolean active){
+        this.id = id;
         this.name = name;
         this.shortCut = shortCut;
         this.active = active;
@@ -62,11 +63,11 @@ public class Country {
         this.name = name;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
