@@ -17,6 +17,7 @@ import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.utils.FileUtils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
+import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
 public class AvaiableCountryView extends BaseScreen {
@@ -85,12 +86,17 @@ public class AvaiableCountryView extends BaseScreen {
         File connectionFile =
                 new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         try {
-            AFSwinxTable table =
-                    AFSwinx.getInstance().getTableBuilder()
+//            AFSwinxTable table =
+//                    AFSwinx.getInstance().getTableBuilder()
+//                            .initBuilder(COUNTRY_TABLE, connectionFile, COUNTRY_TABLE_CONNECTION_KEY)
+//                            .setLocalization(ApplicationContext.getInstance().getLocalization())
+//                            .buildComponent();
+            AFSwinxForm form =
+                    AFSwinx.getInstance().getFormBuilder()
                             .initBuilder(COUNTRY_TABLE, connectionFile, COUNTRY_TABLE_CONNECTION_KEY)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .buildComponent();
-            mainPanel.add(table);
+            mainPanel.add(form);
             mainPanel.add(Box.createVerticalStrut(20));
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             return mainPanel;

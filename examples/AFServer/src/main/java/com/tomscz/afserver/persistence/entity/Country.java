@@ -1,5 +1,8 @@
 package com.tomscz.afserver.persistence.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
@@ -8,8 +11,10 @@ import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 
+@Entity
 public class Country {
 
+    @Id
     private Long id;
     private String name;
     private String shortCut;

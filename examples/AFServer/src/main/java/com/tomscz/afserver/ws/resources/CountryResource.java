@@ -2,6 +2,9 @@ package com.tomscz.afserver.ws.resources;
 
 import java.util.List;
 
+import javax.ejb.SessionSynchronization;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -20,6 +23,7 @@ import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
+import com.tomscz.afserver.manager.StartUpBean;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Country;
 
@@ -29,6 +33,9 @@ public class CountryResource extends BaseResource {
     @javax.ws.rs.core.Context
     HttpServletRequest request;
 
+    @Inject
+    StartUpBean startUp;
+    
     @GET
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
