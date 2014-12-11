@@ -65,9 +65,8 @@ public class AFRootResource {
         firstInstance.setStartDate(date);
         AbsenceType type = new AbsenceType();
         type.setName("Dovolena");
-        type.setId(23);
+        type.setId(23L);
         firstInstance.setAbsenceType(type);
-        p.setAbsence(firstInstance);
         return Response.status(Response.Status.OK).entity(p).build();
     }
 

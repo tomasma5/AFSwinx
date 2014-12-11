@@ -1,10 +1,21 @@
 package com.tomscz.afserver.persistence.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class AbsenceType {
 
-    private int id;
+    @Id
+    @GeneratedValue
+    private Long id;
     private double maxDaysPerYear;
     private String name;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
     private Country country;
 
     public String getName() {
@@ -15,11 +26,11 @@ public class AbsenceType {
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

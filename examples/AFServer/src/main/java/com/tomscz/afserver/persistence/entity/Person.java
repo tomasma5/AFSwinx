@@ -2,6 +2,14 @@ package com.tomscz.afserver.persistence.entity;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -15,19 +23,24 @@ import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 
+@Entity
 public class Person {
 
+    @Id
+    @GeneratedValue
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date hireDate;
     private boolean active;
-    private Long id;
     private int age;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private boolean confidentialAgreement;
+    @OneToOne
     private Address myAdress;
-    private AbsenceInstance absence;
 
     public Long getId() {
         return id;
@@ -87,14 +100,6 @@ public class Person {
 
     public void setConfidentialAgreement(boolean confidentialAgreement) {
         this.confidentialAgreement = confidentialAgreement;
-    }
-
-    public AbsenceInstance getAbsence() {
-        return absence;
-    }
-
-    public void setAbsence(AbsenceInstance absence) {
-        this.absence = absence;
     }
 
     @UiOrder(value = 0)
