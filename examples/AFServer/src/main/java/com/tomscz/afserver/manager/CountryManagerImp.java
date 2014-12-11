@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Country;
+import com.tomscz.afserver.persistence.entity.Person;
 
 @Stateless(name=CountryManagerImp.name)
 public class CountryManagerImp implements Serializable, CountryManager<Country> {
@@ -24,6 +25,7 @@ public class CountryManagerImp implements Serializable, CountryManager<Country> 
     @Override
     public List<Country> findAllCountry() {
         List<Country> c = em.createQuery("select c from Country c", Country.class).getResultList();
+        List<Person> cp = em.createQuery("select c from Person c", Person.class).getResultList();
         List<Country> resultList = new ArrayList<Country>();
         Country country = new Country("Germany","GER",true);
 //        country.setId(23L);

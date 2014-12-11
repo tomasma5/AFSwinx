@@ -5,7 +5,12 @@
 	<persistence-unit name="AFServerPU">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:app/jdbc/AFServerDS</jta-data-source>
-		<class>com.tomscz.afserver.persistence.entity.Country</class> <!-- transaction-type="JTA" -->
+		<class>com.tomscz.afserver.persistence.entity.Country</class>
+		<class>com.tomscz.afserver.persistence.entity.AbsenceInstance</class>
+		<class>com.tomscz.afserver.persistence.entity.AbsenceType</class>
+		<class>com.tomscz.afserver.persistence.entity.AbsenceTypeEmployee</class>
+		<class>com.tomscz.afserver.persistence.entity.Address</class>
+		<class>com.tomscz.afserver.persistence.entity.Person</class> <!-- transaction-type="JTA" -->
 		<properties>
 			<property name="eclipselink.target-database" value="DERBY" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
