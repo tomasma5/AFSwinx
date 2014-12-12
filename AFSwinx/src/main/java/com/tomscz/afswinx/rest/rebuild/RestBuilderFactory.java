@@ -1,7 +1,7 @@
 package com.tomscz.afswinx.rest.rebuild;
 
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
-import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
+import com.tomscz.afswinx.rest.connection.HeaderType;
 
 public class RestBuilderFactory {
 

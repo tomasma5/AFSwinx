@@ -1,7 +1,5 @@
 package com.tomscz.afswinx.rest.connection;
 
-import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
-
 /**
  * This class holds information which are necessary to get model or data and post them. Based on
  * this are created concrete connectors.
@@ -14,6 +12,9 @@ public class AFSwinxConnection {
 
     // Default protocol to perform request on resource
     public static final String PROTOCOL_HTTP = "http";
+    
+    // Default protocol to perform request on resource
+    public static final String PROTOCOL_HTTPS = "https";
 
     // Address ex: localhost or toms-cz.com without http or https
     private String address;
@@ -26,6 +27,8 @@ public class AFSwinxConnection {
     private HeaderType acceptedType;
     // Type of header request
     private HeaderType contentType;
+    // Type of send method
+   private HttpMethod httpMethod = null;
 
     /**
      * Constructor to create connection.
@@ -38,13 +41,13 @@ public class AFSwinxConnection {
      *        /AFserver/rest/personService
      */
     public AFSwinxConnection(String address, int port, String parameters) {
-        super();
         this.address = address;
         this.port = port;
         this.parameters = parameters;
         this.acceptedType = HeaderType.JSON;
         this.contentType = HeaderType.JSON;
         this.protocol = PROTOCOL_HTTP;
+        this.httpMethod = HttpMethod.GET;
     }
 
     /**
@@ -59,13 +62,13 @@ public class AFSwinxConnection {
      * @param protocol ex: http, https, etc.
      */
     public AFSwinxConnection(String address, int port, String parameters, String protocol) {
-        super();
         this.address = address;
         this.port = port;
         this.parameters = parameters;
         this.acceptedType = HeaderType.JSON;
         this.contentType = HeaderType.JSON;
         this.protocol = protocol;
+        this.httpMethod = HttpMethod.GET;
     }
 
     /**
@@ -83,13 +86,38 @@ public class AFSwinxConnection {
      */
     public AFSwinxConnection(String address, int port, String parameters, HeaderType acceptedType,
             HeaderType contentType) {
-        super();
         this.address = address;
         this.port = port;
         this.parameters = parameters;
         this.acceptedType = acceptedType;
         this.contentType = contentType;
         this.protocol = PROTOCOL_HTTP;
+        this.httpMethod = HttpMethod.GET;
+    }
+    
+    /**
+     * 
+     * Constructor to create connection.
+     * 
+     * @param address end point without protocol ex: localhost, toms-cz.com, google.com
+     * @param port port in which service available.
+     * @param parameters url parameters if service is available on localhost:8080/rest/personService
+     *        then parameter are /rest/personService include slash, or
+     *        localhost:8080/AFServer/rest/personService then parameter is
+     *        /AFserver/rest/personService
+     * @param acceptedType type of accepted response see {@link HeaderType} for more information
+     * @param contentType type of request on end point see {@link HeaderType} for more information
+     * @param httpMethod method which will be used see {@link HttpMethod}
+     */
+    public AFSwinxConnection(String address, int port, String parameters, HeaderType acceptedType,
+            HeaderType contentType, HttpMethod httpMethod) {
+        this.address = address;
+        this.port = port;
+        this.parameters = parameters;
+        this.acceptedType = acceptedType;
+        this.contentType = contentType;
+        this.protocol = PROTOCOL_HTTP;
+        this.httpMethod = httpMethod;
     }
 
     /**
@@ -107,6 +135,31 @@ public class AFSwinxConnection {
      */
     public AFSwinxConnection(String address, int port, String parameters, HeaderType acceptedType,
             HeaderType contentType, String protocol) {
+        this.address = address;
+        this.port = port;
+        this.parameters = parameters;
+        this.acceptedType = acceptedType;
+        this.contentType = contentType;
+        this.protocol = protocol;
+        this.httpMethod = HttpMethod.GET;
+    }
+    
+    /**
+     * 
+     * Constructor to create connection.
+     * 
+     * @param address end point without protocol ex: localhost, toms-cz.com, google.com
+     * @param port port in which service available.
+     * @param parameters url parameters if service is available on localhost:8080/rest/personService
+     *        then parameter are /rest/personService include slash, or
+     *        localhost:8080/AFServer/rest/personService then parameter is
+     *        /AFserver/rest/personServicer more information
+     * @param contentType type of request on end point see {@link HeaderType} for more information
+     * @param protocol ex: http, https, etc.
+     * @param httpMethod method which will be used see {@link HttpMethod}
+     */
+    public AFSwinxConnection(String address, int port, String parameters, HeaderType acceptedType,
+            HeaderType contentType, String protocol, HttpMethod httpMethod) {
         super();
         this.address = address;
         this.port = port;
@@ -114,6 +167,7 @@ public class AFSwinxConnection {
         this.acceptedType = acceptedType;
         this.contentType = contentType;
         this.protocol = protocol;
+        this.httpMethod = httpMethod;
     }
 
     /**
@@ -171,6 +225,14 @@ public class AFSwinxConnection {
 
     public void setProtocol(String protocol) {
         this.protocol = protocol;
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
     }
 
 }

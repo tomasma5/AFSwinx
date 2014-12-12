@@ -23,7 +23,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             AFSwinxConnection postConnection) {
         this.modelConnection = modelConnection;
         this.dataConnection = dataConnection;
-        this.postConnection = postConnection;
+        this.setSendConnection(postConnection);
     }
 
     @Override

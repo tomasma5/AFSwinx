@@ -29,7 +29,7 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
     @Override
     public AFSwinxForm buildComponent() throws AFSwinxBuildException {
         super.initializeConnections();
-        AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, postConnection);
+        AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, sendConnection);
         try {
             // Build component
             this.buildComponent(form);
@@ -37,7 +37,7 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             Object data = form.getData();
             // Based on data type make serialization
             BaseRestBuilder dataBuilder =
-                    RestBuilderFactory.getInstance().getBuilder(form.getDataConnection());
+                    RestBuilderFactory.getInstance().getBuilder(form.getSendConnection());
             List<AFDataPack> dataPack = dataBuilder.serialize(data);
             // Fill data to form
             form.fillData(dataPack);

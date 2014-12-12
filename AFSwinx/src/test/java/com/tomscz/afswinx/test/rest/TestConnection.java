@@ -21,7 +21,7 @@ public class TestConnection {
         AFConnector<AFMetaModelPack> mc =
                 new AFConnector<AFMetaModelPack>(connection, AFMetaModelPack.class);
         try {
-            AFMetaModelPack metamodel = mc.getContent();
+            AFMetaModelPack metamodel = mc.doRequest(null);
             if (metamodel == null || metamodel.getClassInfo() == null) {
                 fail();
             }
@@ -38,7 +38,7 @@ public class TestConnection {
                 new AFSwinxConnection("localhost", 8080, "/AFServer/rest/Person/1");
         AFConnector<AFDataPack> dc = new AFConnector<AFDataPack>(connection, AFDataPack.class);
         try {
-            AFDataPack data = dc.getContent();
+            AFDataPack data = dc.doRequest(null);
             if (data == null || data.getData() == null || data.getData().isEmpty()) {
                 fail();
             }
@@ -56,7 +56,7 @@ public class TestConnection {
         AFConnector<Object> dcPost = new AFConnector<Object>(connection, Object.class);
         String simplePerson = "{\"firstName\":\"Martin\",\"lastName\":\"Novy\"}";
         try {
-            dcPost.doPost(simplePerson);
+            dcPost.doRequest(simplePerson);
             if (dcPost.getStatusCode() != 200) {
                 fail("Test post connection failed.");
             }

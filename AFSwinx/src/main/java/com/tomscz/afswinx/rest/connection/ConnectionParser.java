@@ -9,7 +9,6 @@ import org.w3c.dom.NodeList;
 
 import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.common.XMLParser;
-import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 import com.tomscz.afrest.commons.AFRestUtils;
 
 /**
@@ -28,7 +27,7 @@ public class ConnectionParser implements XMLParser {
     // Tags which separate connection type
     private static final String METAMODEL_CONNECTION = "metaModel";
     private static final String DATA_CONNECTION = "data";
-    private static final String POST_CONNECTION = "post";
+    private static final String SEND_CONNECTION = "send";
 
     // Concrete value of connection
     private static final String END_POINT = "endPoint";
@@ -37,6 +36,7 @@ public class ConnectionParser implements XMLParser {
     private static final String PORT = "port";
     private static final String CONTENT_TYPE = "content-type";
     private static final String ACCEPT_TYPE = "accept-type";
+    private static final String HTTP_METHOD = "method";
 
     private HashMap<String, String> elConnectionData;
 
@@ -119,14 +119,24 @@ public class ConnectionParser implements XMLParser {
                             connection.setAcceptedType((HeaderType) AFRestUtils.getEnumFromString(
                                     HeaderType.class, acceptType, true));
                         }
+                        else if(nodeName.equals(HTTP_METHOD)){
+                            String method = evaluateEL(nodeValue);
+                            HttpMethod httpMethod = (HttpMethod) AFRestUtils.getEnumFromString(HttpMethod.class, method.toLowerCase(), true);
+                            connection.setHttpMethod(httpMethod);
+                        }
                     }
                     //Set created connection to connection holder based on connection type
                     if (connectionName.equals(METAMODEL_CONNECTION)) {
+                        connection.setHttpMethod(HttpMethod.GET);
                         connectionPack.setMetamodelConnection(connection);
                     } else if (connectionName.equals(DATA_CONNECTION)) {
+                        connection.setHttpMethod(HttpMethod.GET);
                         connectionPack.setDataConnection(connection);
-                    } else if (connectionName.equals(POST_CONNECTION)) {
-                        connectionPack.setPostConnection(connection);
+                    } else if (connectionName.equals(SEND_CONNECTION)) {
+                        if(connection.getHttpMethod() == null){
+                            connection.setHttpMethod(HttpMethod.POST);
+                        }
+                        connectionPack.setSendConnection(connection);
                     }
                 }
             }

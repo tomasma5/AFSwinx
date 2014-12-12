@@ -2,10 +2,10 @@ package com.tomscz.afswinx.rest.connection;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -14,6 +14,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -31,6 +32,7 @@ public abstract class BaseConnector implements Connector {
     protected HttpContext context = null;
     protected HeaderType accept = HeaderType.JSON;
     protected HeaderType contentType = HeaderType.JSON;
+    protected HttpMethod httpMethod = HttpMethod.GET;
 
     protected int statusCode = -1;
 
@@ -66,12 +68,26 @@ public abstract class BaseConnector implements Connector {
         }
     }
 
-    protected <T> T getContent(Class<T> clazz) throws ConnectException {
+    protected <T> T doRequest(Class<T> clazz, String body) throws ConnectException {
         try {
-            HttpGetBuilder httpGetBuilder = new HttpGetBuilder(this.accept, this.contentType);
-            InputStream inputStream = getResponse(httpGetBuilder.getGET(getParameter()));
+            HttpRequestBuilder requestBuilder =
+                    new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod);
+            HttpRequest request = requestBuilder.getRequest(getParameter());
+            InputStream inputStream;
+            boolean transformResponseData = true;
+            if (body != null
+                    && (requestBuilder.httpMethod.equals(HttpMethod.POST) || requestBuilder.httpMethod
+                            .equals(HttpMethod.PUT))) {
+                HttpEntityEnclosingRequest requestWithBody = (HttpEntityEnclosingRequest) request;
+                requestWithBody.setEntity(new StringEntity(body));
+                inputStream = getResponse(requestWithBody);
+                transformResponseData = false;
+            } else {
+                inputStream = getResponse(request);
+            }
             // Check if any data was received, if no throw exception
-            if (inputStream != null && this.getStatusCode() >= 200 && this.getStatusCode() < 300) {
+            if (transformResponseData && inputStream != null && this.getStatusCode() >= 200
+                    && this.getStatusCode() < 300) {
                 String data = Utils.readInputSteam(inputStream).toString();
                 T result = null;
                 // Construct metamodel holder
@@ -91,27 +107,6 @@ public abstract class BaseConnector implements Connector {
                     + " was unsuccessfull status code is " + this.getStatusCode());
         } finally {
             this.close();
-        }
-    }
-
-    @Override
-    public void doPost(String body) throws ConnectException {
-        try {
-            HttpPostBuilder postBuilder = new HttpPostBuilder(this.accept, this.contentType);
-            HttpPost post = postBuilder.getPost(getParameter());
-            post.setEntity(new StringEntity(body));
-            InputStream inputStream = getResponse(post);
-            if (inputStream != null && this.getStatusCode() >= 200 && this.getStatusCode() < 300) {
-                // Do nothing post was successful
-            } else {
-                // Throws exception
-                throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
-                        + " was unsuccessfull status code is " + this.getStatusCode()
-                        + "\r\n Response is: " + getResponse().toString());
-            }
-        } catch (UnsupportedEncodingException e) {
-            // Do nothing yet
-            // TODO handle it more nicely
         }
     }
 
@@ -147,130 +142,39 @@ public abstract class BaseConnector implements Connector {
         }
     }
 
-    public static class HttpGetBuilder {
+    public static class HttpRequestBuilder {
 
-        protected HttpGet httpGet = null;
+        protected HttpRequestBase request = null;
         private HeaderType accept;
         private HeaderType contentType;
+        private HttpMethod httpMethod;
 
-        public HttpGetBuilder(HeaderType accept, HeaderType contentType) {
+        public HttpRequestBuilder(HeaderType accept, HeaderType contentType, HttpMethod httpMethod) {
             this.accept = accept;
             this.contentType = contentType;
+            this.httpMethod = httpMethod;
         }
 
-        public HttpGet getGET(String endPoint) {
+        protected HttpRequestBase getRequest(String endPoint) {
             close();
-            HttpGet httpGet = new HttpGet(endPoint);
-            httpGet.addHeader("Accept", accept.toString());
-            httpGet.addHeader("Content-Type", contentType.toString());
-            return httpGet;
+            if (httpMethod.equals(HttpMethod.GET)) {
+                request = new HttpGet(endPoint);
+            } else if (httpMethod.equals(HttpMethod.POST)) {
+                request = new HttpPost(endPoint);
+            } else if (httpMethod.equals(HttpMethod.PUT)) {
+                request = new HttpPut(endPoint);
+            } else if (httpMethod.equals(HttpMethod.DELETE)) {
+                request = new HttpDelete(endPoint);
+            }
+            request.addHeader("Content-Type", contentType.toString());
+            request.addHeader("Accept", accept.toString());
+            return request;
         }
 
         protected void close() {
-            if (httpGet != null) {
-                httpGet.releaseConnection();
+            if (request != null) {
+                request.releaseConnection();
             }
-        }
-    }
-
-    public static class HttpPostBuilder {
-
-        protected HttpPost httpPost = null;
-        private HeaderType accept;
-        private HeaderType contentType;
-
-        public HttpPostBuilder(HeaderType accept, HeaderType contentType) {
-            this.accept = accept;
-            this.contentType = contentType;
-        }
-
-        protected HttpPost getPost(String endPoint) {
-            close();
-            HttpPost httPost = new HttpPost(endPoint);
-            httPost.addHeader("Content-Type", contentType.toString());
-            httPost.addHeader("Accept", accept.toString());
-            return httPost;
-        }
-
-        protected void close() {
-            if (httpPost != null) {
-                httpPost.releaseConnection();
-            }
-        }
-    }
-
-    public static class HttpDeleteBuilder {
-        protected HttpDelete httpDelete = null;
-        private HeaderType accept;
-        private HeaderType contentType;
-
-        public HttpDeleteBuilder(HeaderType accept, HeaderType contentType) {
-            this.accept = accept;
-            this.contentType = contentType;
-        }
-
-        protected HttpDelete getDelete(String endPoint) {
-            close();
-            HttpDelete httpDelete = new HttpDelete(endPoint);
-            httpDelete.addHeader("Content-Type", contentType.toString());
-            httpDelete.addHeader("Accept", accept.toString());
-            return httpDelete;
-        }
-
-        protected void close() {
-            if (httpDelete != null) {
-                httpDelete.releaseConnection();
-            }
-        }
-    }
-
-    public static class HttpPutBuilder {
-        protected HttpPut httpPut = null;
-        private HeaderType accept;
-        private HeaderType contentType;
-
-        public HttpPutBuilder(HeaderType accept, HeaderType contentType) {
-            this.accept = accept;
-            this.contentType = contentType;
-        }
-
-        protected HttpPut getDelete(String endPoint) {
-            close();
-            HttpPut httpPut = new HttpPut(endPoint);
-            httpPut.addHeader("Content-Type", contentType.toString());
-            httpPut.addHeader("Accept", accept.toString());
-            return httpPut;
-        }
-
-        protected void close() {
-            if (httpPut != null) {
-                httpPut.releaseConnection();
-            }
-        }
-    }
-
-    /**
-     * This class specify type of supported request and response types.
-     * 
-     * @author Martin Tomasek (martin@toms-cz.com)
-     * 
-     * @since 1.0.0.
-     */
-    public enum HeaderType {
-        XML("application/xml"), JSON("application/json");
-
-        private final String name;
-
-        private HeaderType(String name) {
-            this.name = name;
-        }
-
-        public boolean equalsName(String otherName) {
-            return (otherName == null) ? false : name.equals(otherName);
-        }
-
-        public String toString() {
-            return name;
         }
     }
 

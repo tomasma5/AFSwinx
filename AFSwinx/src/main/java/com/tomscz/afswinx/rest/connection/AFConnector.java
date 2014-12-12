@@ -19,6 +19,10 @@ public class AFConnector<T> extends BaseConnector {
         this.accept = connection.getAcceptedType();
         this.contentType = connection.getContentType();
         this.type = type;
+        if(connection.getHttpMethod()!= null){
+            this.httpMethod = connection.getHttpMethod();
+        }
+            
     }
 
     @Override
@@ -28,8 +32,8 @@ public class AFConnector<T> extends BaseConnector {
 
     @SuppressWarnings("unchecked")
     @Override
-    public T getContent() throws ConnectException {
-        return super.getContent(type);
+    public T doRequest(String body) throws ConnectException {
+        return super.doRequest(type, body);
     }
 
     @Override

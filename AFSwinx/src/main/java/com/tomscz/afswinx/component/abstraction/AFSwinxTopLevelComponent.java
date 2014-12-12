@@ -15,7 +15,7 @@ import com.tomscz.afswinx.component.builders.ComponentDataPacker;
 import com.tomscz.afswinx.rest.connection.AFConnector;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
-import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
+import com.tomscz.afswinx.rest.connection.HeaderType;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 
@@ -36,7 +36,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
             new HashMap<String, ComponentDataPacker>();
 
     protected AFSwinxConnection modelConnection;
-    protected AFSwinxConnection postConnection;
+    private AFSwinxConnection sendConnection;
     protected AFSwinxConnection dataConnection;
     private HttpResponse lastResponse;
 
@@ -52,7 +52,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
             AFConnector<AFMetaModelPack> modelConnector =
                     new AFConnector<AFMetaModelPack>(getModelConnection(), AFMetaModelPack.class);
             this.lastResponse = modelConnector.getResponse();
-            return modelConnector.getContent();
+            return modelConnector.doRequest(null);
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
         }
@@ -74,7 +74,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
             }
             // Set response for future use
             this.lastResponse = dataConnector.getResponse();
-            return dataConnector.getContent();
+            return dataConnector.doRequest(null);
 
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
@@ -82,32 +82,32 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
     }
 
     @Override
-    public Object generatePostData() {
+    public Object generateSendData() {
         // before building data and sending, validate actual data
         boolean isValid = validateData();
         if (!isValid) {
             return null;
         }
         BaseRestBuilder dataBuilder =
-                RestBuilderFactory.getInstance().getBuilder(getPostConnection());
+                RestBuilderFactory.getInstance().getBuilder(getSendConnection());
         Object data = dataBuilder.reselialize(this.resealize());
         return data;
     }
 
     @Override
-    public void postData() throws AFSwinxConnectionException {
-        if (getPostConnection() == null) {
+    public void sendData() throws AFSwinxConnectionException {
+        if (getSendConnection() == null) {
             throw new IllegalStateException(
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
-        Object data = generatePostData();
+        Object data = generateSendData();
         if (data == null) {
             return;
         }
         AFConnector<Object> dataConnector =
-                new AFConnector<Object>(getPostConnection(), Object.class);
+                new AFConnector<Object>(getSendConnection(), Object.class);
         try {
-            dataConnector.doPost(data.toString());    
+            dataConnector.doRequest(data.toString());    
             // Set response for future use
             this.lastResponse = dataConnector.getResponse();
         } catch (ConnectException e) {
@@ -129,16 +129,20 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
         return modelConnection;
     }
 
-    public AFSwinxConnection getPostConnection() {
-        return postConnection;
-    }
-
     public AFSwinxConnection getDataConnection() {
         return dataConnection;
     }
-
+    
     public HttpResponse getLastResponse() {
         return lastResponse;
+    }
+
+    public AFSwinxConnection getSendConnection() {
+        return sendConnection;
+    }
+
+    public void setSendConnection(AFSwinxConnection sendConnection) {
+        this.sendConnection = sendConnection;
     }
 
 }

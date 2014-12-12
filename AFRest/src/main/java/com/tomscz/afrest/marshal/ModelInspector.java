@@ -1,7 +1,6 @@
 package com.tomscz.afrest.marshal;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.HashMap;
 

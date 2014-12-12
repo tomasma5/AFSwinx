@@ -17,8 +17,9 @@ public abstract class BaseManager<T> implements Manager<T>{
 
     @Override
     public void delete(T entity) throws BusinessException {
-        em.merge(entity);
+        entity = em.merge(entity);
         em.remove(entity);   
+        em.flush();
     }
     
 }

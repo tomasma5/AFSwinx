@@ -32,8 +32,11 @@ public class CountryManagerImp extends BaseManager<Country> implements Serializa
         TypedQuery<Country> query =
                 em.createQuery("SELECT c FROM Country c WHERE c.id = :id",
                         Country.class);
-        Country country = query.setParameter("id", id).getSingleResult();
-        return country;
+        List<Country> countries = query.setParameter("id", id).getResultList();
+        if(!countries.isEmpty()){
+            return countries.get(0);
+        }
+        return null;
     }
 
 }

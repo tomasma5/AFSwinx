@@ -69,7 +69,7 @@ public class PersonFormView extends JFrame {
     private ActionListener sendData = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             try {
-                AFSwinx.getInstance().getExistedComponent(formId).postData();
+                AFSwinx.getInstance().getExistedComponent(formId).sendData();
 //                AFSwinx.getInstance().getExistedComponent(formId2).postData();              
             } catch (AFSwinxConnectionException e1) {
                 e1.printStackTrace();

@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
-import com.tomscz.afswinx.rest.connection.BaseConnector.HeaderType;
 
 /**
  * This interface specify operation which should implement all afswinx components which contains
@@ -44,7 +43,7 @@ public interface AFSwinxInteraction {
      */
     public void fillData(List<AFDataPack> dataPack);
 
-    public void postData() throws AFSwinxConnectionException;
+    public void sendData() throws AFSwinxConnectionException;
 
     /**
      * This method validate all fields and if there is no valid field then return false. If there
@@ -60,7 +59,7 @@ public interface AFSwinxInteraction {
      * 
      * @return
      */
-    public Object generatePostData();
+    public Object generateSendData();
 
     public void changeLocalization(ResourceBundle localization);
 

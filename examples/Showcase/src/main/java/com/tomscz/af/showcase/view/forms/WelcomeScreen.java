@@ -140,10 +140,10 @@ public class WelcomeScreen extends BaseScreen {
         @Override
         public void actionPerformed(ActionEvent e) {
             Object body =
-                    AFSwinx.getInstance().getExistedComponent(loginFormName).generatePostData();
+                    AFSwinx.getInstance().getExistedComponent(loginFormName).generateSendData();
             if (body != null) {
                try {
-                AFSwinx.getInstance().getExistedComponent(loginFormName).postData();
+                AFSwinx.getInstance().getExistedComponent(loginFormName).sendData();
             } catch (AFSwinxConnectionException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();

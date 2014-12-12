@@ -14,12 +14,12 @@
 			<protocol>http</protocol>
 			<port>8080</port>
 		</data>
-		<post>
+		<send>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/person/</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-		</post>
+		</send>
 	</connection>
 	<connection id="tablePerson">
 		<metaModel>
@@ -50,12 +50,12 @@
 			<protocol>http</protocol>
 			<port>8080</port>
 		</data>
-		<post>
+		<send>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/Person/1</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-		</post>
+		</send>
 	</connection>
 	<connection id="person2">
 		<metaModel>
@@ -74,13 +74,13 @@
 			<port>8080</port>
 			<content-type>Application/Json</content-type>
 		</metaModel>
-		<post>
+		<send>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/users/login</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
 			<content-type>Application/Json</content-type>
-		</post>
+		</send>
 	</connection>
 	<connection id="tableCountryPublic">
 		<metaModel>
@@ -96,11 +96,12 @@
 			<protocol>http</protocol>
 			<port>8080</port>
 		</data>
-		<post>
+		<send>
 			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/country</endPointParameters>
+			<endPointParameters>/AFServer/rest/country/remove/#{id}</endPointParameters>
 			<protocol>http</protocol>
+			<method>delete</method>
 			<port>8080</port>
-		</post>
+		</send>
 	</connection>
 </connectionRoot>

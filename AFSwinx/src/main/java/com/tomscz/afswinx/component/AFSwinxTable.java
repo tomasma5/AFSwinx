@@ -39,10 +39,10 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     private List<HashMap<String, String>> tableRow = new ArrayList<HashMap<String, String>>();
 
     public AFSwinxTable(AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
-            AFSwinxConnection postConnection) {
+            AFSwinxConnection sendConnection) {
         this.modelConnection = modelConnection;
         this.dataConnection = dataConnection;
-        this.postConnection = postConnection;
+        this.setSendConnection(sendConnection);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
     @Override
     public AFSwinxTable buildComponent() throws AFSwinxBuildException {
         super.initializeConnections();
-        AFSwinxTable table = new AFSwinxTable(modelConnection, dataConnection, postConnection);
+        AFSwinxTable table = new AFSwinxTable(modelConnection, dataConnection, sendConnection);
         table.setDynamicSize(dynamicSize);
         table.setFitSize(fitSize);
         table.setTableHeight(width);
@@ -60,7 +60,7 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
             }
             Object o = table.getData();
             BaseRestBuilder dataBuilder =
-                    RestBuilderFactory.getInstance().getBuilder(table.getDataConnection());
+                    RestBuilderFactory.getInstance().getBuilder(table.getSendConnection());
             List<AFDataPack> dataPack = dataBuilder.serialize(o);
             // Fill data to table
             table.fillData(dataPack);

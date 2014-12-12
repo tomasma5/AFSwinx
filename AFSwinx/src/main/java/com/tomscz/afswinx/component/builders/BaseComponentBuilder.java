@@ -32,7 +32,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected HashMap<String, String> connectionParameters;
     protected AFSwinxConnection modelConnection;
     protected AFSwinxConnection dataConnection;
-    protected AFSwinxConnection postConnection;
+    protected AFSwinxConnection sendConnection;
     protected String connectionKey;
     protected File connectionConfiguration;
 
@@ -64,18 +64,18 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param modelConnection connection to end point where model is defined couldn't be null
      * @param dataConnection connection to end point where data are, if null then component will be
      *        empty
-     * @param postConnection connection to end point where will be send update or insert request if
-     *        null no request is send
+     * @param sendConnection connection to end point where will be send update or insert request if
+     *        null no request is send. It also could be used HTTP method as put, send and delete.
      * @return it returns this builder which could be used to build {@link AFSwinxTopLevelComponent}
      */
     @SuppressWarnings("unchecked")
     @Override
     public T initBuilder(String componentKeyName, AFSwinxConnection modelConnection,
-            AFSwinxConnection dataConnection, AFSwinxConnection postConnection) {
+            AFSwinxConnection dataConnection, AFSwinxConnection sendConnection) {
         this.componentKeyName = componentKeyName;
         this.modelConnection = modelConnection;
         this.dataConnection = dataConnection;
-        this.postConnection = postConnection;
+        this.sendConnection = sendConnection;
         return (T) this;
     }
 
@@ -140,7 +140,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                             .buildDocumentFromFile(connectionConfiguration));
             modelConnection = connections.getMetamodelConnection();
             dataConnection = connections.getDataConnection();
-            postConnection = connections.getPostConnection();
+            sendConnection = connections.getSendConnection();
         } else {
             // Model connection is important if it could be found then throw exception
             throw new AFSwinxBuildException(

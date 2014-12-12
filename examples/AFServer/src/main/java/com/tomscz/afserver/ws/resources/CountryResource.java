@@ -2,8 +2,6 @@ package com.tomscz.afserver.ws.resources;
 
 import java.util.List;
 
-import javax.ejb.SessionSynchronization;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,13 +65,17 @@ public class CountryResource extends BaseResource {
     }
 
     @DELETE
-    @Path("/")
+    @Path("/remove/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response deleteCountry(Country country) {
+    public Response deleteCountry(@PathParam("id") int id) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
-            countryManager.delete(country);
+            Country coutryToDelete = countryManager.findById(id);
+            if(coutryToDelete == null){
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }            
+            countryManager.delete(coutryToDelete);
             return Response.status(Response.Status.OK).build();
         } catch (BusinessException e) {
             return Response.status(e.getStatus()).build();

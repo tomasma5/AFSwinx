@@ -11,26 +11,18 @@ public class AFSwinxConnectionPack {
 
     private AFSwinxConnection metamodelConnection;
     private AFSwinxConnection dataConnection;
-    private AFSwinxConnection postConnection;
+    private AFSwinxConnection sendConnection;
 
     public AFSwinxConnectionPack() {
 
     }
 
     public AFSwinxConnectionPack(AFSwinxConnection metamodelConnection,
-            AFSwinxConnection dataConnection, AFSwinxConnection postConnection) {
+            AFSwinxConnection dataConnection, AFSwinxConnection sendConnection) {
         super();
         this.metamodelConnection = metamodelConnection;
         this.dataConnection = dataConnection;
-        this.postConnection = postConnection;
-    }
-
-    public AFSwinxConnection getPostConnection() {
-        return postConnection;
-    }
-
-    public void setPostConnection(AFSwinxConnection postConnection) {
-        this.postConnection = postConnection;
+        this.sendConnection = sendConnection;
     }
 
     public AFSwinxConnection getDataConnection() {
@@ -47,6 +39,14 @@ public class AFSwinxConnectionPack {
 
     public void setMetamodelConnection(AFSwinxConnection metamodelConnection) {
         this.metamodelConnection = metamodelConnection;
+    }
+
+    public AFSwinxConnection getSendConnection() {
+        return sendConnection;
+    }
+
+    public void setSendConnection(AFSwinxConnection sendConnection) {
+        this.sendConnection = sendConnection;
     }
 
 }
