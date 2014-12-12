@@ -12,7 +12,7 @@ import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Country;
 
 @Stateless(name=CountryManagerImp.name)
-public class CountryManagerImp implements Serializable, CountryManager<Country> {
+public class CountryManagerImp extends BaseManager<Country> implements Serializable, CountryManager<Country> {
 
     @Inject
     EntityManager em;
@@ -25,18 +25,6 @@ public class CountryManagerImp implements Serializable, CountryManager<Country> 
     public List<Country> findAllCountry() {
         List<Country> resultList = em.createQuery("select c from Country c", Country.class).getResultList();
         return resultList;
-    }
-
-
-    @Override
-    public void createOrupdate(Country entity) throws BusinessException {
-       em.merge(entity);
-    }
-
-    @Override
-    public void delete(Country entity) throws BusinessException {
-        em.merge(entity);
-        em.remove(entity);
     }
 
     @Override
