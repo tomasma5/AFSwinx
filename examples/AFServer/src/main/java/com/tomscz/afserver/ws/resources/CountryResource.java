@@ -1,5 +1,6 @@
 package com.tomscz.afserver.ws.resources;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.StartUpBean;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
+import com.tomscz.afserver.persistence.IdGenerator;
 import com.tomscz.afserver.persistence.entity.Country;
 
 @Path("/country")
@@ -42,6 +44,10 @@ public class CountryResource extends BaseResource {
         try {
             AFRestSwing afSwing = new AFRestSwing(requestObject.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
+            HashMap<String, String> values = new HashMap<String, String>();
+            values.put("true", "true");
+            values.put("false", "false");
+            data.setOptionsToFields(values,"active");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException | AFRestException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -55,6 +61,9 @@ public class CountryResource extends BaseResource {
     public Response updateCountry(Country country) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
+            if(country.getId() == 0){
+                country.setId(IdGenerator.getNextCountryId());
+            }
             countryManager.createOrupdate(country);
             return Response.status(Response.Status.OK).build();
         } catch (BusinessException e) {
@@ -105,7 +114,7 @@ public class CountryResource extends BaseResource {
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getCountry(@PathParam("param") int id) {
+    public Response getCountry(@PathParam("id") int id) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
             Country country = countryManager.findById(id);

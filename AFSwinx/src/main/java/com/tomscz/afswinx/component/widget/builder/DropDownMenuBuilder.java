@@ -24,7 +24,7 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
         AFOptions[] dataToCombo;
         if (fieldInfo.getOptions() != null) {
             // If this field is not required then add dummy field
-            if (!fieldInfo.isRequired()) {
+            if (!fieldInfo.required()) {
                 fieldInfo.addOption(new AFOptions("", "options.unselected"));
             }
             dataToCombo =

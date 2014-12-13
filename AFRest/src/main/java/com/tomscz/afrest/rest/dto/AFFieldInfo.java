@@ -119,7 +119,7 @@ public class AFFieldInfo implements Serializable {
         this.visible = visible;
     }
     
-    public boolean isRequired(){
+    public boolean required(){
         if(rules == null){
             return false;
         }

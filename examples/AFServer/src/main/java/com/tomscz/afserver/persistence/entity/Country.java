@@ -7,6 +7,7 @@ import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.codingcrayons.aspectfaces.annotations.UiType;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
@@ -31,12 +32,13 @@ public class Country {
         this.active = active;
     }
 
+    @UiLabel(value="country.isActive")
+    @UiOrder(value=3)
+    @UiRequired
     public boolean isActive() {
         return active;
     }
 
-    @UiLabel(value="country.isActive")
-    @UiOrder(value=3)
     public void setActive(boolean active) {
         this.active = active;
     }
@@ -62,7 +64,8 @@ public class Country {
     public void setName(String name) {
         this.name = name;
     }
-
+    
+    @UiType(value="id")
     public int getId() {
         return id;
     }

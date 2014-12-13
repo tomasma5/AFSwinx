@@ -11,14 +11,15 @@
 
 	<mapping>
 		<type>String</type>
-		<default tag="structure/inputField.xml" maxLength="255" minLength="4" />
-		<condition expression="${type == 'password'}" tag="structure/inputPassword.xml"/>
+		<default tag="structure/inputField.xml" maxLength="255"/>
+		<condition expression="${type == 'password'}" tag="structure/inputPassword.xml" />
 	</mapping>
 
 	<mapping>
 		<type>int</type>
 		<type>long</type>
 		<default tag="structure/numberInput.xml" />
+		<condition expression="${type == 'id'}" tag="structure/numberInputNotVisible.xml" />
 	</mapping>
 
 	<mapping>
@@ -34,13 +35,11 @@
 
 	<mapping>
 		<type>boolean</type>
-		<default tag="structure/checkBox.xml" />
+		<default tag="structure/dropDownMenu.xml" />
 	</mapping>
 
 	<mapping>
 		<type>Address</type>
-		<type>AbsenceInstance</type>
-		<type>AbsenceType</type>
 		<default tag="structure/entity.xml" />
 	</mapping>
 

@@ -100,10 +100,12 @@ public abstract class BaseConnector implements Connector {
                     // TODO add support for xml
                 }
                 return result;
-            } else {
+            } else if(inputStream == null || this.getStatusCode() < 200
+                    || this.getStatusCode() >= 300) {
                 throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
                         + " was unsuccessfull status code is " + this.getStatusCode());
             }
+            return null;
         } catch (IOException e) {
             throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
                     + " was unsuccessfull status code is " + this.getStatusCode());

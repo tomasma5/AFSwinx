@@ -1,0 +1,7 @@
+<widget>
+	<widgetType>numberField</widgetType>
+	<fieldName>$field$</fieldName>
+	<label>$label$</label>
+	<visible>false</visible>
+	<readonly>true</readonly>
+</widget>
