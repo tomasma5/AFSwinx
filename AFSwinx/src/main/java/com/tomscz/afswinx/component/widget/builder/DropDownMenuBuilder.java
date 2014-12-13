@@ -13,15 +13,20 @@ import com.tomscz.afswinx.localization.LocalizationUtils;
 
 public class DropDownMenuBuilder extends BaseWidgetBuilder {
 
-    public DropDownMenuBuilder(){
+    public DropDownMenuBuilder() {
         widgetType = SupportedWidgets.DROPDOWNMENU;
     }
-    
+
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException, AFSwinxBuildException {
+    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException,
+            AFSwinxBuildException {
         super.buildBase(fieldInfo);
         AFOptions[] dataToCombo;
         if (fieldInfo.getOptions() != null) {
+            // If this field is not required then add dummy field
+            if (!fieldInfo.isRequired()) {
+                fieldInfo.addOption(new AFOptions("", "options.unselected"));
+            }
             dataToCombo =
                     fieldInfo.getOptions().toArray(new AFOptions[fieldInfo.getOptions().size()]);
             for (AFOptions option : dataToCombo) {
@@ -75,8 +80,8 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
         }
         return null;
     }
-    
-    private AFOptions getSelectedOption(AFSwinxPanel panel){
+
+    private AFOptions getSelectedOption(AFSwinxPanel panel) {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             @SuppressWarnings("unchecked")
             JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder().get(0);

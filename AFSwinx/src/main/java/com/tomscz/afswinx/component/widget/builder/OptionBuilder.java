@@ -35,6 +35,7 @@ public class OptionBuilder extends BaseWidgetBuilder {
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), fieldLabel, message);
         ButtonGroup buttonGroup = new ButtonGroup();
+        //TODO add dummy field is field is not required
         if (field.getOptions() != null) {
             AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
             for (AFOptions option : field.getOptions()) {

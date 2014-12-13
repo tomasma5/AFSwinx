@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.Layout;
 
@@ -116,6 +117,21 @@ public class AFFieldInfo implements Serializable {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+    
+    public boolean isRequired(){
+        if(rules == null){
+            return false;
+        }
+        for(AFValidationRule  rule:rules){
+            if(rule.getValidationType().equals(SupportedValidations.REQUIRED)){
+                String value = rule.getValue();
+                if(value.equals("true")){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
 }
