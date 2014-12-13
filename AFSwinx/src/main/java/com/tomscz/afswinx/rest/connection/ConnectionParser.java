@@ -34,6 +34,9 @@ public class ConnectionParser implements XMLParser {
     private static final String END_POINT_PARAMETERS = "endPointParameters";
     private static final String PROTOCOL = "protocol";
     private static final String PORT = "port";
+    private static final String HEADER_PARAM = "header-param";
+    private static final String PARAM = "param";
+    private static final String VALUE = "value";
     private static final String CONTENT_TYPE = "content-type";
     private static final String ACCEPT_TYPE = "accept-type";
     private static final String HTTP_METHOD = "method";
@@ -46,7 +49,8 @@ public class ConnectionParser implements XMLParser {
     private String connectionId;
 
     /**
-     * Constructor. 
+     * Constructor.
+     * 
      * @param id of connection which will be parsed
      * @param elConnectionData data which will be used to replace EL variables.
      */
@@ -60,6 +64,7 @@ public class ConnectionParser implements XMLParser {
 
     /**
      * Constructor
+     * 
      * @param id of connection will will be parsed
      */
     public ConnectionParser(String id) {
@@ -75,16 +80,16 @@ public class ConnectionParser implements XMLParser {
     @SuppressWarnings("unchecked")
     @Override
     public AFSwinxConnectionPack parseDocument(Document documentToParse) {
-        //Prepare connection pack
+        // Prepare connection pack
         AFSwinxConnectionPack connectionPack = new AFSwinxConnectionPack();
-        //Find root of document
+        // Find root of document
         NodeList childs = documentToParse.getElementsByTagName(CONNECTION_TAG);
         for (int i = 0; i < childs.getLength(); i++) {
             Node connectionRoot = childs.item(i);
             if (connectionRoot.getNodeType() != Node.ELEMENT_NODE) {
                 continue;
             }
-            //For each connection check if it's id is id which must be parsed
+            // For each connection check if it's id is id which must be parsed
             Element nodeElement = (Element) connectionRoot;
             if (nodeElement.getAttribute(CONNECTION_ID_ATTRIBUTE).equals(connectionId)) {
                 NodeList connectionsTypes = connectionRoot.getChildNodes();
@@ -95,10 +100,10 @@ public class ConnectionParser implements XMLParser {
                     }
                     String connectionName = concreteConnection.getNodeName();
                     NodeList nodeProperties = concreteConnection.getChildNodes();
-                    //Create new connection
+                    // Create new connection
                     AFSwinxConnection connection = new AFSwinxConnection();
                     for (int k = 0; k < nodeProperties.getLength(); k++) {
-                        //Set connection properties
+                        // Set connection properties
                         Node property = nodeProperties.item(k);
                         String nodeName = property.getNodeName();
                         String nodeValue = property.getTextContent();
@@ -110,22 +115,17 @@ public class ConnectionParser implements XMLParser {
                             connection.setProtocol(evaluateEL(nodeValue));
                         } else if (nodeName.equals(PORT)) {
                             connection.setPort(Utils.convertStringToInteger(evaluateEL(nodeValue)));
-                        } else if (nodeName.equals(CONTENT_TYPE)) {
-                            String contentType = evaluateEL(nodeValue);
-                            connection.setContentType((HeaderType) AFRestUtils.getEnumFromString(
-                                    HeaderType.class, contentType, true));
-                        } else if (nodeName.equals(ACCEPT_TYPE)) {
-                            String acceptType = evaluateEL(nodeValue);
-                            connection.setAcceptedType((HeaderType) AFRestUtils.getEnumFromString(
-                                    HeaderType.class, acceptType, true));
-                        }
-                        else if(nodeName.equals(HTTP_METHOD)){
+                        } else if (nodeName.equals(HEADER_PARAM)) {
+                            parseHeaderParam(connection, property.getChildNodes());
+                        } else if (nodeName.equals(HTTP_METHOD)) {
                             String method = evaluateEL(nodeValue);
-                            HttpMethod httpMethod = (HttpMethod) AFRestUtils.getEnumFromString(HttpMethod.class, method.toLowerCase(), true);
+                            HttpMethod httpMethod =
+                                    (HttpMethod) AFRestUtils.getEnumFromString(HttpMethod.class,
+                                            method.toLowerCase(), true);
                             connection.setHttpMethod(httpMethod);
                         }
                     }
-                    //Set created connection to connection holder based on connection type
+                    // Set created connection to connection holder based on connection type
                     if (connectionName.equals(METAMODEL_CONNECTION)) {
                         connection.setHttpMethod(HttpMethod.GET);
                         connectionPack.setMetamodelConnection(connection);
@@ -133,7 +133,7 @@ public class ConnectionParser implements XMLParser {
                         connection.setHttpMethod(HttpMethod.GET);
                         connectionPack.setDataConnection(connection);
                     } else if (connectionName.equals(SEND_CONNECTION)) {
-                        if(connection.getHttpMethod() == null){
+                        if (connection.getHttpMethod() == null) {
                             connection.setHttpMethod(HttpMethod.POST);
                         }
                         connectionPack.setSendConnection(connection);
@@ -142,6 +142,36 @@ public class ConnectionParser implements XMLParser {
             }
         }
         return connectionPack;
+    }
+
+    private void parseHeaderParam(AFSwinxConnection connection, NodeList headerParam) {
+        String key = "";
+        String value = "";
+        for (int i = 0; i < headerParam.getLength(); i++) {
+            Node concreteParam = headerParam.item(i);
+            if (concreteParam.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            String nodeName = concreteParam.getNodeName();
+            String nodeValue = concreteParam.getTextContent();
+            if(nodeName.equals(PARAM)){
+                key = evaluateEL(nodeValue);
+            }
+            else if(nodeName.equals(VALUE)){
+                value = evaluateEL(nodeValue);
+            }
+        }
+        // Parse content type and accept type separately
+        if (key.equals(CONTENT_TYPE)) {
+            connection.setContentType((HeaderType) AFRestUtils.getEnumFromString(
+                    HeaderType.class, value, true));
+        } else if (key.equals(ACCEPT_TYPE)) {
+            connection.setAcceptedType((HeaderType) AFRestUtils.getEnumFromString(
+                    HeaderType.class, value, true));
+        }
+        else{
+            connection.addHeaderParam(key, value);
+        }
     }
 
     /**

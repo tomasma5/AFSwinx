@@ -6,7 +6,10 @@
 			<endPointParameters>/AFServer/rest/person</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</metaModel>
 		<data>
 			<endPoint>localhost</endPoint>
@@ -27,7 +30,10 @@
 			<endPointParameters>/AFServer/rest/person/list/definition</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</metaModel>
 		<data>
 			<endPoint>localhost</endPoint>
@@ -42,7 +48,10 @@
 			<endPointParameters>/AFServer/rest/Person</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</metaModel>
 		<data>
 			<endPoint>localhost</endPoint>
@@ -63,7 +72,10 @@
 			<endPointParameters>/AFServer/rest/Person</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</metaModel>
 	</connection>
 	<connection id="loginForm">
@@ -72,14 +84,20 @@
 			<endPointParameters>/AFServer/rest/users/loginForm</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</metaModel>
 		<send>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/users/login</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</send>
 	</connection>
 	<connection id="tableCountryPublic">
@@ -88,7 +106,10 @@
 			<endPointParameters>/AFServer/rest/country/definition</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-			<content-type>Application/Json</content-type>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
 		</metaModel>
 		<data>
 			<endPoint>localhost</endPoint>

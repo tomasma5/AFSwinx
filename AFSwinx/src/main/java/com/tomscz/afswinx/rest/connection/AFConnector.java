@@ -22,6 +22,7 @@ public class AFConnector<T> extends BaseConnector {
         if(connection.getHttpMethod()!= null){
             this.httpMethod = connection.getHttpMethod();
         }
+        this.headersParams = connection.getHeaderParams();
             
     }
 

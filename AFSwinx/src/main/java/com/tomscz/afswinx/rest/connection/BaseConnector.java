@@ -3,6 +3,7 @@ package com.tomscz.afswinx.rest.connection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
+import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -33,7 +34,8 @@ public abstract class BaseConnector implements Connector {
     protected HeaderType accept = HeaderType.JSON;
     protected HeaderType contentType = HeaderType.JSON;
     protected HttpMethod httpMethod = HttpMethod.GET;
-
+    protected HashMap<String, String> headersParams;
+    
     protected int statusCode = -1;
 
     protected HttpResponse response = null;
@@ -71,7 +73,7 @@ public abstract class BaseConnector implements Connector {
     protected <T> T doRequest(Class<T> clazz, String body) throws ConnectException {
         try {
             HttpRequestBuilder requestBuilder =
-                    new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod);
+                    new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod, this.headersParams);
             HttpRequest request = requestBuilder.getRequest(getParameter());
             InputStream inputStream;
             boolean transformResponseData = true;
@@ -148,11 +150,13 @@ public abstract class BaseConnector implements Connector {
         private HeaderType accept;
         private HeaderType contentType;
         private HttpMethod httpMethod;
+        private HashMap<String, String> headersParam;
 
-        public HttpRequestBuilder(HeaderType accept, HeaderType contentType, HttpMethod httpMethod) {
+        public HttpRequestBuilder(HeaderType accept, HeaderType contentType, HttpMethod httpMethod, HashMap<String, String> headersParams) {
             this.accept = accept;
             this.contentType = contentType;
             this.httpMethod = httpMethod;
+            this.headersParam = headersParams;
         }
 
         protected HttpRequestBase getRequest(String endPoint) {
@@ -168,6 +172,14 @@ public abstract class BaseConnector implements Connector {
             }
             request.addHeader("Content-Type", contentType.toString());
             request.addHeader("Accept", accept.toString());
+            if(headersParam != null){
+                for(String key:headersParam.keySet()){
+                    String value = headersParam.get(key);
+                    if(value != null && !value.isEmpty()){
+                        request.addHeader(key, value);
+                    }
+                }
+            }
             return request;
         }
 

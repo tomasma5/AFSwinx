@@ -1,5 +1,7 @@
 package com.tomscz.afswinx.rest.connection;
 
+import java.util.HashMap;
+
 /**
  * This class holds information which are necessary to get model or data and post them. Based on
  * this are created concrete connectors.
@@ -12,7 +14,7 @@ public class AFSwinxConnection {
 
     // Default protocol to perform request on resource
     public static final String PROTOCOL_HTTP = "http";
-    
+
     // Default protocol to perform request on resource
     public static final String PROTOCOL_HTTPS = "https";
 
@@ -28,7 +30,9 @@ public class AFSwinxConnection {
     // Type of header request
     private HeaderType contentType;
     // Type of send method
-   private HttpMethod httpMethod = null;
+    private HttpMethod httpMethod = null;
+    
+    private HashMap<String, String> headerParams = new HashMap<String, String>();
 
     /**
      * Constructor to create connection.
@@ -94,7 +98,7 @@ public class AFSwinxConnection {
         this.protocol = PROTOCOL_HTTP;
         this.httpMethod = HttpMethod.GET;
     }
-    
+
     /**
      * 
      * Constructor to create connection.
@@ -143,7 +147,7 @@ public class AFSwinxConnection {
         this.protocol = protocol;
         this.httpMethod = HttpMethod.GET;
     }
-    
+
     /**
      * 
      * Constructor to create connection.
@@ -172,7 +176,8 @@ public class AFSwinxConnection {
 
     /**
      * This constructor is protected because its used in {@link ConnectionParser}. It's easily use
-     * set method then hold all variables in memory. Default content and header type is application.json from {@link HeaderType}.
+     * set method then hold all variables in memory. Default content and header type is
+     * application.json from {@link HeaderType}.
      */
     protected AFSwinxConnection() {
         this.contentType = HeaderType.JSON;
@@ -234,5 +239,19 @@ public class AFSwinxConnection {
     public void setHttpMethod(HttpMethod httpMethod) {
         this.httpMethod = httpMethod;
     }
+
+    public HashMap<String, String> getHeaderParams() {
+        return headerParams;
+    }
+
+    public void setHeaderParams(HashMap<String, String> headerParams){
+        this.headerParams = headerParams;
+    }
+    
+    public void addHeaderParam(String key, String value) {
+        this.headerParams.put(key, value);
+    }
+    
+    
 
 }
