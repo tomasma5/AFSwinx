@@ -17,9 +17,8 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.tomscz.afrest.AFRestSwing;
+import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.exception.MetamodelException;
-import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.StartUpBean;
@@ -42,14 +41,14 @@ public class CountryResource extends BaseResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getResources(@javax.ws.rs.core.Context HttpServletRequest requestObject) {
         try {
-            AFRestSwing afSwing = new AFRestSwing(requestObject.getSession().getServletContext());
+            AFRestGenerator afSwing = new AFRestGenerator(requestObject.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
             HashMap<String, String> values = new HashMap<String, String>();
             values.put("true", "true");
             values.put("false", "false");
             data.setOptionsToFields(values,"active");
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (MetamodelException | AFRestException e) {
+        } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

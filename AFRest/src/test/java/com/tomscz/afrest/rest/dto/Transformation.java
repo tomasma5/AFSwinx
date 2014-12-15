@@ -14,7 +14,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.tomscz.afrest.exception.MetamodelException;
-import com.tomscz.afrest.marshal.FormBuilder;
+import com.tomscz.afrest.marshal.MetaModelBuilder;
 
 public class Transformation {
 
@@ -28,7 +28,7 @@ public class Transformation {
         try {
             builder = dbf.newDocumentBuilder();
             Document document = builder.parse(file);
-            FormBuilder formBuilder = new FormBuilder(document);
+            MetaModelBuilder formBuilder = new MetaModelBuilder(document);
             formBuilder.buildModel();   
         } catch (ParserConfigurationException | SAXException | IOException | MetamodelException e) {
             fail("Test transformation failed");

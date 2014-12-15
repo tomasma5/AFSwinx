@@ -15,10 +15,9 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.tomscz.afrest.AFRestSwing;
+import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
-import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.persistence.entity.AbsenceInstance;
 import com.tomscz.afserver.persistence.entity.AbsenceType;
@@ -35,13 +34,13 @@ public class AFRootResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
-            AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
+            AFRestGenerator afSwing = new AFRestGenerator(request.getSession().getServletContext());
             AFMetaModelPack data =
                     afSwing.generateSkeleton("com.tomscz.afserver.persistence.entity.Person");
             data.setOptionsToFields(AFRestUtils.getEnumDataInClass(
                     "com.tomscz.afserver.persistence.entity.Person", "gender"), "gender");
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (MetamodelException | AFRestException e) {
+        } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -97,14 +96,14 @@ public class AFRootResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getListDefinition(@javax.ws.rs.core.Context HttpServletRequest request ) {
         try {
-            AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
+            AFRestGenerator afSwing = new AFRestGenerator(request.getSession().getServletContext());
             AFMetaModelPack data =
                     afSwing.generateSkeleton("com.tomscz.afserver.persistence.entity.Person",
                             "simple.config.xml");
             data.setOptionsToFields(AFRestUtils.getEnumDataInClass(
                     "com.tomscz.afserver.persistence.entity.Person", "gender"), "gender");
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (MetamodelException | AFRestException e) {
+        } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

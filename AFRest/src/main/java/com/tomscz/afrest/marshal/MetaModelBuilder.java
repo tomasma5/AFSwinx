@@ -17,17 +17,17 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 
 /**
- * This class create form definition.
+ * This class create definition.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
  * @since 1.0.0.
  */
-public class FormBuilder implements ModelBuilder {
+public class MetaModelBuilder implements ModelBuilder {
 
     private Document metaModelInformation;
 
-    public FormBuilder(Document metamodelInformation) {
+    public MetaModelBuilder(Document metamodelInformation) {
         this.metaModelInformation = metamodelInformation;
     }
 

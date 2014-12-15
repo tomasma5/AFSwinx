@@ -11,9 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.tomscz.afrest.AFRestSwing;
+import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.exception.MetamodelException;
-import com.tomscz.afrest.exceptions.AFRestException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.PersonManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
@@ -40,10 +39,10 @@ public class UserResource extends BaseResource{
             else{
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
-            AFRestSwing afSwing = new AFRestSwing(request.getSession().getServletContext());
+            AFRestGenerator afSwing = new AFRestGenerator(request.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(fullClassName);
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (AFRestException | MetamodelException e) {
+        } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

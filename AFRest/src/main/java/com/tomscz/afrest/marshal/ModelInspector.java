@@ -275,8 +275,7 @@ public class ModelInspector {
     }
 
     private AFMetaModelPack generateFullModel(Document modelDefinition) throws MetamodelException {
-        ModelBuilder builder =
-                new ModelFactory().createModelBuilder(SupportedComponents.FORM, modelDefinition);
+        ModelBuilder builder = new MetaModelBuilder(modelDefinition);
         AFMetaModelPack generatedInfo = builder.buildModel();
         return generatedInfo;
     }
