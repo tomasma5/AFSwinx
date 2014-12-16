@@ -14,8 +14,31 @@ I was expecting a `,' or a `}'---line 7 of file reference.bib
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in javaEE
+Warning--to sort, need author or key in aspectFaces
+Warning--to sort, need author or key in glassfish
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1402 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1402 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1402 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1402 of file csplainnat.bst
+Warning--empty year in aspectFaces
 `address' is a missing field, not a string, for entry UmlArlow
 while executing---line 1484 of file csplainnat.bst
 Warning--empty year in UmlArlow
 Warning--empty year in UmlArlow
-(There were 2 error messages)
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1484 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1484 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1484 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1484 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1484 of file csplainnat.bst
+Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
+while executing---line 1484 of file csplainnat.bst
+(There were 12 error messages)
