@@ -17,6 +17,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.tomscz.afrest.AFRest;
 import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -34,19 +35,15 @@ public class CountryResource extends BaseResource {
 
     @Inject
     StartUpBean startUp;
-    
+
     @GET
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest requestObject) {
+    public Response getResources() {
         try {
-            AFRestGenerator afSwing = new AFRestGenerator(requestObject.getSession().getServletContext());
+            AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
-            HashMap<String, String> values = new HashMap<String, String>();
-            values.put("true", "true");
-            values.put("false", "false");
-            data.setOptionsToFields(values,"active");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -60,7 +57,7 @@ public class CountryResource extends BaseResource {
     public Response updateCountry(Country country) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
-            if(country.getId() == 0){
+            if (country.getId() == 0) {
                 country.setId(IdGenerator.getNextCountryId());
             }
             countryManager.createOrupdate(country);
@@ -80,9 +77,9 @@ public class CountryResource extends BaseResource {
         try {
             CountryManager<Country> countryManager = getCountryManager();
             Country coutryToDelete = countryManager.findById(id);
-            if(coutryToDelete == null){
+            if (coutryToDelete == null) {
                 return Response.status(Response.Status.BAD_REQUEST).build();
-            }            
+            }
             countryManager.delete(coutryToDelete);
             return Response.status(Response.Status.OK).build();
         } catch (BusinessException e) {

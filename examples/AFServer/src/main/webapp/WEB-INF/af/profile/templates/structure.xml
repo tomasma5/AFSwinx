@@ -1,3 +1,3 @@
 <mainLayoutOrientation>AxisX</mainLayoutOrientation>
-<mainLayoutDefinition>OneColumnLayout</mainLayoutDefinition>
+<mainLayoutDefinition>TwoColumnsLayout</mainLayoutDefinition>
 <af:iteration-part maxOccurs="100">$af:next$</af:iteration-part>
