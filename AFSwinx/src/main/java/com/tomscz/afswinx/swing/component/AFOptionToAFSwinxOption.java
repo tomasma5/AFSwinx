@@ -6,8 +6,8 @@ import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.swing.component.converter.ModelConverter;
 
-public class AFOptionToAFSwinxOption implements ModelConverter<AFOptions, AFComponentDataHolder> {
 
+public class AFOptionToAFSwinxOption implements ModelConverter<AFOptions, AFComponentDataHolder> {
     @Override
     public AFComponentDataHolder convert(AFOptions source, ResourceBundle localization) {
         AFComponentDataHolder result = null;

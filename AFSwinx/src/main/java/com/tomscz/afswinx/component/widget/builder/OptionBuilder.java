@@ -23,39 +23,53 @@ import com.tomscz.afswinx.swing.component.SwinxAFRadioButton;
  */
 public class OptionBuilder extends BaseWidgetBuilder {
 
+    AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
+
     public OptionBuilder() {
         widgetType = SupportedWidgets.OPTION;
     }
 
-
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException, AFSwinxBuildException {
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException,
+            AFSwinxBuildException {
         super.buildBase(field);
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), fieldLabel, message);
         ButtonGroup buttonGroup = new ButtonGroup();
-        //TODO add dummy field is field is not required
-        if (field.getOptions() != null) {
-            AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
-            for (AFOptions option : field.getOptions()) {
-                AFComponentDataHolder optionToAdd = converter.convert(option, localization);
-                if (optionToAdd != null) {
-                    SwinxAFRadioButton<AFComponentDataHolder> radioButton =
-                            new SwinxAFRadioButton<AFComponentDataHolder>(optionToAdd);
-                    radioButton.setText(optionToAdd.getValueToDisplay());
-                    buttonGroup.add(radioButton);
-                    layoutBuilder.addComponent(radioButton);
-                    afPanel.addDataHolderComponent(radioButton);
-                    customizeComponent(radioButton, field);
-                }
-            }
+
+        if (field.getOptions() == null || field.getOptions().isEmpty()) {
+            // If there is no option, then create true and false
+            AFOptions trueOption = new AFOptions("true", "true");
+            AFOptions falseOption = new AFOptions("false", "false");
+            field.addOption(falseOption);
+            field.addOption(trueOption);
+        }
+        if (!field.required()) {
+            super.addDummyFieldOption(field);
+        }
+        for (AFOptions option : field.getOptions()) {
+            setOptions(field, option, buttonGroup, afPanel);
         }
         // Build layout on that panel
         layoutBuilder.buildLayout(afPanel);
         // Add validations
         super.crateValidators(afPanel, field);
         return afPanel;
+    }
+
+    private void setOptions(AFFieldInfo field, AFOptions option, ButtonGroup buttonGroup,
+            AFSwinxPanel afPanel) {
+        AFComponentDataHolder optionToAdd = converter.convert(option, localization);
+        if (optionToAdd != null) {
+            SwinxAFRadioButton<AFComponentDataHolder> radioButton =
+                    new SwinxAFRadioButton<AFComponentDataHolder>(optionToAdd);
+            radioButton.setText(optionToAdd.getValueToDisplay());
+            buttonGroup.add(radioButton);
+            layoutBuilder.addComponent(radioButton);
+            afPanel.addDataHolderComponent(radioButton);
+            customizeComponent(radioButton, field);
+        }
     }
 
     @Override

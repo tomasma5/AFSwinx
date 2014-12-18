@@ -23,11 +23,11 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
             AFSwinxBuildException {
         super.buildBase(fieldInfo);
         AFOptions[] dataToCombo;
+        // If this field is not required then add dummy field
+        if (!fieldInfo.required()) {
+            super.addDummyFieldOption(fieldInfo);
+        }
         if (fieldInfo.getOptions() != null) {
-            // If this field is not required then add dummy field
-            if (!fieldInfo.required()) {
-                fieldInfo.addOption(new AFOptions("", "options.unselected"));
-            }
             dataToCombo =
                     fieldInfo.getOptions().toArray(new AFOptions[fieldInfo.getOptions().size()]);
             for (AFOptions option : dataToCombo) {
@@ -61,23 +61,21 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
             JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder().get(0);
             AFOptions option = new AFOptions(data.getKey(), data.getValue());
             String valueLocalized =
-                    LocalizationUtils.getTextFromExtendBundle(option.getValue(), localization,
-                            null);
+                    LocalizationUtils
+                            .getTextFromExtendBundle(option.getValue(), localization, null);
             option.setValue(valueLocalized);
             comboBox.setSelectedItem(option);
             // Verify if data were selected
             AFOptions selectedOption = getSelectedOption(panel);
             if (selectedOption == null || !selectedOption.equals(option)) {
-                AFOptions[] dataToCombo = new AFOptions[comboBox.getModel().getSize()+1];
-                for(int i=0;i<comboBox.getModel().getSize();i++){
+                AFOptions[] dataToCombo = new AFOptions[comboBox.getModel().getSize() + 1];
+                for (int i = 0; i < comboBox.getModel().getSize(); i++) {
                     AFOptions optionInComboBox = comboBox.getModel().getElementAt(i);
                     dataToCombo[i] = optionInComboBox;
                 }
-
-                dataToCombo[dataToCombo.length-1] = option;
+                dataToCombo[dataToCombo.length - 1] = option;
                 comboBox.setModel(new DefaultComboBoxModel<>(dataToCombo));
                 comboBox.setSelectedItem(option);
-
             }
         }
     }

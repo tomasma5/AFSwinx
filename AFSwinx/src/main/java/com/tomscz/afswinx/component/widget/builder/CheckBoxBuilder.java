@@ -32,26 +32,30 @@ public class CheckBoxBuilder extends BaseWidgetBuilder {
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), fieldLabel, message);
-        if (field.getOptions() != null) {
-            AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
-            for (AFOptions option : field.getOptions()) {
-                AFComponentDataHolder optionToAdd = converter.convert(option, localization);
-                if (optionToAdd != null) {
-                    SwinxAFCheckBox<AFComponentDataHolder> checkBox =
-                            new SwinxAFCheckBox<AFComponentDataHolder>(optionToAdd);
-                    checkBox.setText(optionToAdd.getValueToDisplay());
-                    layoutBuilder.addComponent(checkBox);
-                    afPanel.addDataHolderComponent(checkBox);
-                    customizeComponent(checkBox, field);
-                }
+        // If this field is not required then add dummy field
+        if (field.getOptions() == null || field.getOptions().isEmpty()) {
+        AFComponentDataHolder option = new AFComponentDataHolder("true", "true", "true");
+        SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                new SwinxAFCheckBox<AFComponentDataHolder>(option);
+        layoutBuilder.addComponent(checkBox);
+        afPanel.addDataHolderComponent(checkBox);
+        customizeComponent(checkBox, field);
+        }
+
+        if (!field.required()) {
+            super.addDummyFieldOption(field);
+          }
+        AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
+        for (AFOptions option : field.getOptions()) {
+            AFComponentDataHolder optionToAdd = converter.convert(option, localization);
+            if (optionToAdd != null) {
+                SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                        new SwinxAFCheckBox<AFComponentDataHolder>(optionToAdd);
+                checkBox.setText(optionToAdd.getValueToDisplay());
+                layoutBuilder.addComponent(checkBox);
+                afPanel.addDataHolderComponent(checkBox);
+                customizeComponent(checkBox, field);
             }
-        } else {
-            AFComponentDataHolder option = new AFComponentDataHolder("true", "true", "true");
-            SwinxAFCheckBox<AFComponentDataHolder> checkBox =
-                    new SwinxAFCheckBox<AFComponentDataHolder>(option);
-            layoutBuilder.addComponent(checkBox);
-            afPanel.addDataHolderComponent(checkBox);
-            customizeComponent(checkBox, field);
         }
 
         // Build layout on that panel
@@ -72,8 +76,7 @@ public class CheckBoxBuilder extends BaseWidgetBuilder {
                 AFComponentDataHolder dataHolder = checkBox.getDataHolder();
                 if (dataHolder.getKey().equals(data.getValue())) {
                     checkBox.setSelected(true);
-                }
-                else{
+                } else {
                     checkBox.setSelected(false);
                 }
             }
@@ -94,11 +97,11 @@ public class CheckBoxBuilder extends BaseWidgetBuilder {
         AFComponentDataHolder dataHolder = getSelectedDataObject(panel);
         if (dataHolder != null) {
             return String.valueOf(dataHolder.getValueToDisplay());
-        }
-        else if(panel.getDataHolder() != null && panel.getDataHolder().size()==1){
+        } else if (panel.getDataHolder() != null && panel.getDataHolder().size() >0) {
             @SuppressWarnings("unchecked")
-            SwinxAFCheckBox<AFComponentDataHolder> checkBox = (SwinxAFCheckBox<AFComponentDataHolder>)panel.getDataHolder().get(0);
-            if(checkBox.getDataHolder().getValueToDisplay().equals("true")){
+            SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                    (SwinxAFCheckBox<AFComponentDataHolder>) panel.getDataHolder().get(0);
+            if (checkBox.getDataHolder().getValueToDisplay().equals("true")) {
                 return "false";
             }
         }

@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
@@ -241,6 +242,12 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
                 componentToskin.setPreferredSize(new Dimension(colums, currentSize.height));
             }
         }
+    }
+    
+    protected void addDummyFieldOption(AFFieldInfo fieldInfo){
+        String valueLocalized =
+                LocalizationUtils.getTextValueFromLocalOrExtendBundle("options.unselected", localization);
+        fieldInfo.addOption(new AFOptions("", valueLocalized));
     }
 
 }
