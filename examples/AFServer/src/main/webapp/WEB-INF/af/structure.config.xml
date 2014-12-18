@@ -35,7 +35,7 @@
 
 	<mapping>
 		<type>boolean</type>
-		<default tag="structure/checkBox.xml" />
+		<default tag="structure/dropDownMenu.xml" />
 	</mapping>
 
 	<mapping>

@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.widget.builder;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
@@ -36,7 +37,7 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
                 option.setValue(valueLocalized);
             }
         } else {
-            dataToCombo = new AFOptions[1];
+            dataToCombo = new AFOptions[0];
         }
         JComboBox<AFOptions> comboBox = new JComboBox<AFOptions>(dataToCombo);
         layoutBuilder.addComponent(comboBox);
@@ -59,7 +60,25 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
             @SuppressWarnings("unchecked")
             JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder().get(0);
             AFOptions option = new AFOptions(data.getKey(), data.getValue());
+            String valueLocalized =
+                    LocalizationUtils.getTextFromExtendBundle(option.getValue(), localization,
+                            null);
+            option.setValue(valueLocalized);
             comboBox.setSelectedItem(option);
+            // Verify if data were selected
+            AFOptions selectedOption = getSelectedOption(panel);
+            if (selectedOption == null || !selectedOption.equals(option)) {
+                AFOptions[] dataToCombo = new AFOptions[comboBox.getModel().getSize()+1];
+                for(int i=0;i<comboBox.getModel().getSize();i++){
+                    AFOptions optionInComboBox = comboBox.getModel().getElementAt(i);
+                    dataToCombo[i] = optionInComboBox;
+                }
+
+                dataToCombo[dataToCombo.length-1] = option;
+                comboBox.setModel(new DefaultComboBoxModel<>(dataToCombo));
+                comboBox.setSelectedItem(option);
+
+            }
         }
     }
 
@@ -75,7 +94,8 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
     @Override
     public Object getPlainData(AFSwinxPanel panel) {
         AFOptions selectedItem = getSelectedOption(panel);
-        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
+        if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()
+                && selectedItem != null) {
             return selectedItem.getValue();
         }
         return null;

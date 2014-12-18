@@ -9,8 +9,8 @@ package com.tomscz.afrest.rest.dto;
  * 
  * @since 1.0.0.
  */
-public class AFOptions {
 
+public class AFOptions {
     private String key;
     private String value;
 
@@ -38,6 +38,13 @@ public class AFOptions {
     @Override
     public String toString() {
         return value;
+    }
+    
+    public boolean equals(AFOptions options) {
+       if(options.getKey().equals(key) && options.getValue().equals(value)){
+           return true;
+       }
+       return false;
     }
 
 }

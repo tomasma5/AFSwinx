@@ -6,7 +6,6 @@ import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.view.forms.AvaiableCountryView;
 import com.tomscz.af.showcase.view.forms.PersonFormView;
-import com.tomscz.af.showcase.view.forms.TestView;
 import com.tomscz.af.showcase.view.forms.WelcomeScreen;
 
 public class Main {
@@ -19,9 +18,8 @@ public class Main {
             //TODO handle it with
         }
 //        WelcomeScreen welcomeScreen = new WelcomeScreen();
-//        AvaiableCountryView avaiableCountryView = new AvaiableCountryView();
+        AvaiableCountryView avaiableCountryView = new AvaiableCountryView();
 //      PersonFormView personView = new PersonFormView();
-        TestView t = new TestView();
     }
 
 }
