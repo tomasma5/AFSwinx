@@ -123,6 +123,11 @@
 			<protocol>http</protocol>
 			<method>delete</method>
 			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>sa2</userName>
+				<password>jaina</password>
+			</security-params>
 		</send>
 	</connection>
 </connectionRoot>

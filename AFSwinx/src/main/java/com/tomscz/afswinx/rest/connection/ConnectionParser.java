@@ -28,6 +28,12 @@ public class ConnectionParser implements XMLParser {
     private static final String METAMODEL_CONNECTION = "metaModel";
     private static final String DATA_CONNECTION = "data";
     private static final String SEND_CONNECTION = "send";
+    
+    // Tags which will specify security
+    private static final String SECURITY_METHOD = "security-method";
+    private static final String USER_NAME = "userName";
+    private static final String PASSOWORD = "password";
+    
 
     // Concrete value of connection
     private static final String END_POINT = "endPoint";
@@ -35,6 +41,7 @@ public class ConnectionParser implements XMLParser {
     private static final String PROTOCOL = "protocol";
     private static final String PORT = "port";
     private static final String HEADER_PARAM = "header-param";
+    private static final String SECURITY_PARAMS = "security-params";
     private static final String PARAM = "param";
     private static final String VALUE = "value";
     private static final String CONTENT_TYPE = "content-type";
@@ -124,6 +131,9 @@ public class ConnectionParser implements XMLParser {
                                             method.toLowerCase(), true);
                             connection.setHttpMethod(httpMethod);
                         }
+                        else if(nodeName.equals(SECURITY_PARAMS)){
+                            parseSecurityParams(connection, property.getChildNodes());
+                        }
                     }
                     // Set created connection to connection holder based on connection type
                     if (connectionName.equals(METAMODEL_CONNECTION)) {
@@ -142,6 +152,32 @@ public class ConnectionParser implements XMLParser {
             }
         }
         return connectionPack;
+    }
+    
+    /**
+     * This method parse security and set it to connection.
+     * @param connection current connection
+     * @param securityParams node with security options
+     */
+    private void parseSecurityParams(AFSwinxConnection connection, NodeList securityParams){
+        ConnectionSecurity security = new ConnectionSecurity();
+        for(int i=0;i<securityParams.getLength();i++){
+            Node node = securityParams.item(i);
+            String nodeName = node.getNodeName();
+            String nodeValue = evaluateEL(node.getTextContent()).toLowerCase();
+            if(nodeName.equals(SECURITY_METHOD)){
+                if(nodeValue.equals(SecurityMethod.BASIC.name())){
+                    security.setMethod(SecurityMethod.BASIC);
+                }
+            }
+            else if(nodeName.equals(USER_NAME)){
+                security.setUserName(nodeValue);
+            }
+            else if(nodeName.equals(PASSOWORD)){
+                security.setPassword(nodeValue);
+            }
+        }
+        connection.setSecurity(security);
     }
 
     private void parseHeaderParam(AFSwinxConnection connection, NodeList headerParam) {

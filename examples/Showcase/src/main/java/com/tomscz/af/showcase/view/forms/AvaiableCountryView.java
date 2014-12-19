@@ -96,22 +96,22 @@ public class AvaiableCountryView extends BaseScreen {
         File connectionFile =
                 new File(getClass().getClassLoader().getResource("connection.xml").getFile());
         try {
-             AFSwinxTable table =
-             AFSwinx.getInstance().getTableBuilder()
-             .initBuilder(COUNTRY_TABLE, connectionFile, COUNTRY_TABLE_CONNECTION_KEY)
-             .setLocalization(ApplicationContext.getInstance().getLocalization())
-             .buildComponent();
-            mainPanel.add(table);
-//            HashMap<String, String> params = new HashMap<String, String>();
-//            params.put("id", "1");
-//            AFSwinxForm form =
-//                    AFSwinx.getInstance()
-//                            .getFormBuilder()
-//                            .initBuilder(COUNTRY_TABLE, connectionFile,
-//                                    COUNTRY_TABLE_CONNECTION_KEY,params)
-//                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-//                            .buildComponent();
-//            mainPanel.add(form);
+//             AFSwinxTable table =
+//             AFSwinx.getInstance().getTableBuilder()
+//             .initBuilder(COUNTRY_TABLE, connectionFile, COUNTRY_TABLE_CONNECTION_KEY)
+//             .setLocalization(ApplicationContext.getInstance().getLocalization())
+//             .buildComponent();
+//            mainPanel.add(table);
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("id", "1");
+            AFSwinxForm form =
+                    AFSwinx.getInstance()
+                            .getFormBuilder()
+                            .initBuilder(COUNTRY_TABLE, connectionFile,
+                                    COUNTRY_TABLE_CONNECTION_KEY,params)
+                            .setLocalization(ApplicationContext.getInstance().getLocalization())
+                            .buildComponent();
+            mainPanel.add(form);
             mainPanel.add(Box.createVerticalStrut(20));
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             actionButton.addActionListener(onActionButton);

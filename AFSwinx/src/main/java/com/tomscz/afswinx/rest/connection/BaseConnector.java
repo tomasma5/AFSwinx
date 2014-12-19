@@ -10,6 +10,8 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthenticationException;
+import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -17,6 +19,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.BasicHttpContext;
@@ -35,9 +38,8 @@ public abstract class BaseConnector implements Connector {
     protected HeaderType contentType = HeaderType.JSON;
     protected HttpMethod httpMethod = HttpMethod.GET;
     protected HashMap<String, String> headersParams;
-    
+    protected ConnectionSecurity security;
     protected int statusCode = -1;
-
     protected HttpResponse response = null;
 
     public abstract HttpHost getHost();
@@ -52,7 +54,6 @@ public abstract class BaseConnector implements Connector {
         response = null;
         try {
             this.statusCode = -1;
-            httpMethod.addHeader("Accept", accept.toString());
             response = getClient().execute(getHost(), httpMethod, getContext());
             statusCode = response.getStatusLine().getStatusCode();
         } catch (ClientProtocolException e) {
@@ -73,7 +74,8 @@ public abstract class BaseConnector implements Connector {
     protected <T> T doRequest(Class<T> clazz, String body) throws ConnectException {
         try {
             HttpRequestBuilder requestBuilder =
-                    new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod, this.headersParams);
+                    new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod,
+                            this.headersParams, getContext(), this.security);
             HttpRequest request = requestBuilder.getRequest(getParameter());
             InputStream inputStream;
             boolean transformResponseData = true;
@@ -100,7 +102,7 @@ public abstract class BaseConnector implements Connector {
                     // TODO add support for xml
                 }
                 return result;
-            } else if(inputStream == null || this.getStatusCode() < 200
+            } else if (inputStream == null || this.getStatusCode() < 200
                     || this.getStatusCode() >= 300) {
                 throw new ConnectException("Request to adress " + buildEndpoint(getParameter())
                         + " was unsuccessfull status code is " + this.getStatusCode());
@@ -144,6 +146,7 @@ public abstract class BaseConnector implements Connector {
                 throw new ConnectException("Could not close http client session");
             }
         }
+        httpClient = null;
     }
 
     public static class HttpRequestBuilder {
@@ -153,12 +156,18 @@ public abstract class BaseConnector implements Connector {
         private HeaderType contentType;
         private HttpMethod httpMethod;
         private HashMap<String, String> headersParam;
+        private HttpContext context;
+        private ConnectionSecurity security;
 
-        public HttpRequestBuilder(HeaderType accept, HeaderType contentType, HttpMethod httpMethod, HashMap<String, String> headersParams) {
+        public HttpRequestBuilder(HeaderType accept, HeaderType contentType, HttpMethod httpMethod,
+                HashMap<String, String> headersParams, HttpContext context,
+                ConnectionSecurity security) {
             this.accept = accept;
             this.contentType = contentType;
             this.httpMethod = httpMethod;
             this.headersParam = headersParams;
+            this.context = context;
+            this.security = security;
         }
 
         protected HttpRequestBase getRequest(String endPoint) {
@@ -174,12 +183,25 @@ public abstract class BaseConnector implements Connector {
             }
             request.addHeader("Content-Type", contentType.toString());
             request.addHeader("Accept", accept.toString());
-            if(headersParam != null){
-                for(String key:headersParam.keySet()){
+            if (headersParam != null) {
+                for (String key : headersParam.keySet()) {
                     String value = headersParam.get(key);
-                    if(value != null && !value.isEmpty()){
+                    if (value != null && !value.isEmpty()) {
                         request.addHeader(key, value);
                     }
+                }
+            }
+            // If there is security setting then set it
+            if (security != null) {
+                UsernamePasswordCredentials s =
+                        new UsernamePasswordCredentials(security.getUserName(),
+                                security.getPassword());
+                try {
+                    // So far only basic method is supported
+                    request.addHeader(new BasicScheme().authenticate(s, request, context));
+                } catch (AuthenticationException e) {
+                    // Do nothing source wont be secured, if it failed then upper layer inform user
+                    // about it
                 }
             }
             return request;

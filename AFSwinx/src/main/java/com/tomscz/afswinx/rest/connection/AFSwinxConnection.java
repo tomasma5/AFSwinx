@@ -32,6 +32,8 @@ public class AFSwinxConnection {
     // Type of send method
     private HttpMethod httpMethod = null;
     
+    private ConnectionSecurity security;
+    
     private HashMap<String, String> headerParams = new HashMap<String, String>();
 
     /**
@@ -251,7 +253,13 @@ public class AFSwinxConnection {
     public void addHeaderParam(String key, String value) {
         this.headerParams.put(key, value);
     }
-    
-    
+
+    public ConnectionSecurity getSecurity() {
+        return security;
+    }
+
+    public void setSecurity(ConnectionSecurity security) {
+        this.security = security;
+    }    
 
 }

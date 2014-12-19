@@ -23,7 +23,7 @@ public class AFConnector<T> extends BaseConnector {
             this.httpMethod = connection.getHttpMethod();
         }
         this.headersParams = connection.getHeaderParams();
-            
+        this.security = connection.getSecurity();   
     }
 
     @Override
