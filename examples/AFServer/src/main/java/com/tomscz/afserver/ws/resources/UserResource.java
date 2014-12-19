@@ -1,5 +1,8 @@
 package com.tomscz.afserver.ws.resources;
 
+import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -8,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,26 +21,27 @@ import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.PersonManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Person;
+import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
+import com.tomscz.afserver.ws.security.AFSecurityContext;
 
 @Path("/users/")
-public class UserResource extends BaseResource{    
-    
+public class UserResource extends BaseResource {
+
     @GET
     @Path("/{param}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request, @PathParam("param") String type) {
+    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request,
+            @PathParam("param") String type) {
         try {
             String fullClassName;
-            //add if-else if you want add more form type definition
-            if(type.equals(LoginFormDefinitions.LOGIN_FORM)){
+            // add if-else if you want add more form type definition
+            if (type.equals(LoginFormDefinitions.LOGIN_FORM)) {
                 fullClassName = LoginFormDefinitions.class.getCanonicalName();
-            }
-            else if(type.equals("create")){
+            } else if (type.equals("create")) {
                 fullClassName = Person.class.getCanonicalName();
-            }
-            else{
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
             }
             AFRestGenerator afSwing = new AFRestGenerator(request.getSession().getServletContext());
@@ -46,28 +51,28 @@ public class UserResource extends BaseResource{
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @POST
     @Path("/login")
-    @Produces({ MediaType.APPLICATION_JSON})
-    @Consumes({ MediaType.APPLICATION_JSON})
-    public Response login(LoginFormDefinitions loginForm){
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response login(LoginFormDefinitions loginForm) {
         return Response.status(Response.Status.OK).build();
     }
-    
+
     @POST
     @Path("/update")
-    @Produces({ MediaType.APPLICATION_JSON})
-    @Consumes({ MediaType.APPLICATION_JSON})
-    public Response update(Person personToAdd){
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response update(Person personToAdd) {
         return Response.status(Response.Status.OK).build();
     }
-    
+
     @POST
     @Path("/")
-    @Produces({ MediaType.APPLICATION_JSON})
-    @Consumes({ MediaType.APPLICATION_JSON})
-    public Response create(Person personToAdd){
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response create(Person personToAdd) {
         try {
             PersonManager<Person> personManager = getPersonManager();
             personManager.createOrupdate(personToAdd);
@@ -78,13 +83,41 @@ public class UserResource extends BaseResource{
         }
         return Response.status(Response.Status.OK).build();
     }
-    
+
     @GET
     @Path("/allUsers/{countryId}")
-    @Produces({ MediaType.APPLICATION_JSON})
-    @Consumes({ MediaType.APPLICATION_JSON})
-    public Response getAllUsersByCountry(@PathParam("param") int countryId){
-        return Response.status(Response.Status.OK).build();
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public Response getAllUsersByCountry(@PathParam("countryId") int countryId) {
+        try {
+            List<Person> persons = getPersonManager().findUsersByCountry(countryId);
+            final GenericEntity<List<Person>> personGeneric =
+                    new GenericEntity<List<Person>>(persons) {};
+            return Response.status(Response.Status.OK).entity(personGeneric).build();
+        } catch (NamingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (BusinessException e) {
+            return Response.status(e.getStatus()).build();
+        }
+        
     }
-    
+
+    @GET
+    @Path("/allUsers")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public Response getAllUsers(@javax.ws.rs.core.Context HttpServletRequest request) {
+        try {
+            List<Person> persons = getPersonManager().findAllUsers();
+            final GenericEntity<List<Person>> personGeneric =
+                    new GenericEntity<List<Person>>(persons) {};
+            return Response.status(Response.Status.OK).entity(personGeneric).build();
+        } catch (NamingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
+
 }

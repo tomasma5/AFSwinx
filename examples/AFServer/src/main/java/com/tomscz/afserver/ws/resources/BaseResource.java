@@ -10,18 +10,15 @@ import com.tomscz.afserver.manager.PersonManager;
 import com.tomscz.afserver.manager.PersonManagerImpl;
 import com.tomscz.afserver.persistence.entity.Country;
 import com.tomscz.afserver.persistence.entity.Person;
+import com.tomscz.afserver.utils.Utils;
 
 public abstract class BaseResource {
-
-    private String getJNDIName(String lookupClassName){
-        return "java:global/AFServer/"+lookupClassName;
-    }
     
     @SuppressWarnings("unchecked")
     protected CountryManager<Country> getCountryManager() throws NamingException {
         Context ctx = new InitialContext();
         CountryManager<Country> cmm =
-                (CountryManager<Country>) ctx.lookup(getJNDIName(CountryManagerImp.name));
+                (CountryManager<Country>) ctx.lookup(Utils.getJNDIName(CountryManagerImp.name));
         return cmm;
     }
     
@@ -29,7 +26,7 @@ public abstract class BaseResource {
     protected PersonManager<Person> getPersonManager() throws NamingException {
         Context ctx = new InitialContext();
         PersonManager<Person> personManager =
-                (PersonManager<Person>) ctx.lookup(getJNDIName(PersonManagerImpl.name));
+                (PersonManager<Person>) ctx.lookup(Utils.getJNDIName(PersonManagerImpl.name));
         return personManager;
     }
 }

@@ -17,6 +17,7 @@ import com.tomscz.afserver.persistence.entity.Address;
 import com.tomscz.afserver.persistence.entity.Country;
 import com.tomscz.afserver.persistence.entity.Gender;
 import com.tomscz.afserver.persistence.entity.Person;
+import com.tomscz.afserver.persistence.entity.UserRoles;
 
 @Singleton
 @Startup
@@ -35,7 +36,7 @@ public class StartUpBean implements Serializable {
             generateCountries();
             generateUsers();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
+            // Just print stack trace, this mean, that there are no data initialized
             e.printStackTrace();
         }
     }
@@ -52,8 +53,9 @@ public class StartUpBean implements Serializable {
         try {
             Date date = sdf.parse("21/12/2012");
             Person person =
-                    new Person(IdGenerator.getNextPersonId(), "John", "Doe", "jdoe@toms-cz.com,",
+                    new Person(IdGenerator.getNextPersonId(), "sa","john","John", "Doe", "jdoe@toms-cz.com,",
                             date, true, 30, Gender.MALE, true);
+            person.addRole(UserRoles.USER);
             TypedQuery<Country> query =
                     em.createQuery("SELECT c FROM Country c WHERE c.shortCut = :shortCut",
                             Country.class);
@@ -63,10 +65,17 @@ public class StartUpBean implements Serializable {
             em.persist(personAddress);
             person.setMyAdress(personAddress);
             em.persist(person);
+            Person secondPerson =
+                    new Person(IdGenerator.getNextPersonId(),"sa2","jaina", "Jaina", "Proudmore",
+                            "jproud@toms-cz.com,", date, true, 30, Gender.FEMALE, true);
+            secondPerson.addRole(UserRoles.USER);
+            secondPerson.addRole(UserRoles.ADMIN);
+            secondPerson.setMyAdress(personAddress);
+            em.persist(secondPerson);
         } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-    
+
 }

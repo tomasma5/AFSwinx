@@ -3,6 +3,7 @@ package com.tomscz.afserver.ws.resources;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,11 @@ public class CountryResource extends BaseResource {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
+            HashMap<String, String> activeFlag = new HashMap<String, String>();
+            //Define possibilities about active
+            activeFlag.put("true", "true");
+            activeFlag.put("false", "false");
+            data.setOptionsToFields(activeFlag, "active");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -73,6 +79,7 @@ public class CountryResource extends BaseResource {
     @Path("/remove/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
     public Response deleteCountry(@PathParam("id") int id) {
         try {
             CountryManager<Country> countryManager = getCountryManager();

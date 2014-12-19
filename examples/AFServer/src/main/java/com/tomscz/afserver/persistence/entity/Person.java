@@ -1,5 +1,7 @@
 package com.tomscz.afserver.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -27,8 +29,14 @@ public class Person {
 
     @Id
     private int id;
+
+    @Enumerated(EnumType.STRING)
+    private List<UserRoles> userRole;
+
     private String firstName;
     private String lastName;
+    private String login;
+    private String password;
     private String email;
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date hireDate;
@@ -40,14 +48,17 @@ public class Person {
     @OneToOne
     private Address myAdress;
 
-    public Person(){
-        
+    public Person() {
+
     }
-    
-    public Person(int id,String firstName, String lastName, String email, Date hireDate, boolean active,
-            int age, Gender gender, boolean confidentialAgreement) {
+
+    public Person(int id, String login, String password, String firstName, String lastName,
+            String email, Date hireDate, boolean active, int age, Gender gender,
+            boolean confidentialAgreement) {
         super();
         this.id = id;
+        this.login = login;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -90,8 +101,8 @@ public class Person {
 
     @UiLabel(value = "person.age")
     @UiOrder(value = 3)
-    @Min(value=15)
-    @Max(value=60)
+    @Min(value = 15)
+    @Max(value = 60)
     @UiRequired
     public int getAge() {
         return age;
@@ -149,6 +160,37 @@ public class Person {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+
+    public List<UserRoles> getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(List<UserRoles> userRole) {
+        this.userRole = userRole;
+    }
+
+    public void addRole(UserRoles userRole) {
+        if (this.userRole == null) {
+            this.userRole = new ArrayList<UserRoles>();
+        }
+        this.userRole.add(userRole);
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
 }

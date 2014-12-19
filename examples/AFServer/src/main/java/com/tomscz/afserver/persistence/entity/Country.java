@@ -46,6 +46,7 @@ public class Country {
     @UiLabel(value="country.shortCut")
     @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.TWOCOLUMNSLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
     @UiOrder(value=1)
+    @UiRequired
     public String getShortCut() {
         return shortCut;
     }

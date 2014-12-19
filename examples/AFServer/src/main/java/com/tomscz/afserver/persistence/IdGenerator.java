@@ -8,6 +8,7 @@ public class IdGenerator {
     private static int absenceInstanceId=0;
     private static int absenceTypeId=0;
     private static int absenceTypeEmployeeId=0;
+    private static int userRoleId=0;
     
     public static synchronized int getNextPersonId(){
         return personId++;
@@ -32,5 +33,9 @@ public class IdGenerator {
     
     public static synchronized int getNextAbsenceTypeEmployeeId(){
         return absenceTypeEmployeeId++;
+    }
+    
+    public static synchronized int getNextUserRoleId(){
+        return userRoleId++;
     }
 }

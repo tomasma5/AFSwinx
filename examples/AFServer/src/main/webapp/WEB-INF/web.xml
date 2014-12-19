@@ -7,7 +7,7 @@
 	<!-- Jackson configuration changes -->
 	<context-param>
 		<param-name>resteasy.providers</param-name>
-		<param-value>com.tomscz.afserver.ws.json.JacksonConfig</param-value>
+		<param-value>com.tomscz.afserver.ws.json.JacksonConfig, com.tomscz.afserver.ws.security.SecurityInterceptor</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
