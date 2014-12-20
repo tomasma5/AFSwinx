@@ -1,5 +1,7 @@
 package com.tomscz.af.showcase.view.forms;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -17,10 +19,18 @@ import com.tomscz.af.showcase.view.dialogs.Dialogs;
 public abstract class BaseScreen extends JFrame {
 
     protected abstract void intialize();
+    private JButton loginButton;
+    private JButton avaiableCountryPublicButton;
 
-    protected Dialogs dialogs = new Dialogs(this);
+    private Dialogs dialogs = new Dialogs(this);
     private static final long serialVersionUID = 1L;
 
+    protected JPanel createHeader(){
+        JPanel headerPanel = new JPanel();
+        headerPanel.add(createLocalizationToolbar());
+        return headerPanel;
+    }
+    
     protected JPanel createLocalizationToolbar() {
         JPanel localiztionToolbar = new JPanel();
         JButton czech =
@@ -35,7 +45,31 @@ public abstract class BaseScreen extends JFrame {
         english.addActionListener(onEnglishButtonExec);
         localiztionToolbar.add(czech);
         localiztionToolbar.add(english);
+        localiztionToolbar.setBackground(Color.BLUE);
+        localiztionToolbar.setAlignmentX(LEFT_ALIGNMENT);
         return localiztionToolbar;
+    }
+    
+    protected JPanel createLeftMenu(){
+        JPanel menu = new JPanel();
+        loginButton = new JButton(Localization.getLocalizationText("link.login"));
+        menu.add(loginButton);
+        avaiableCountryPublicButton = new JButton(Localization.getLocalizationText("link.supportedCountries"));
+        menu.setBackground(Color.WHITE);
+        menu.setPreferredSize(new Dimension(200, 500));
+        return menu;
+    }
+    
+    public void addLoginButtonListener(ActionListener a){
+        loginButton.addActionListener(a);
+    }
+    
+    public void addAvaiableCountryListener(ActionListener a){
+        avaiableCountryPublicButton.addActionListener(a);
+    }
+
+    public Dialogs getDialogs() {
+        return dialogs;
     }
 
     private ActionListener onEnglishButtonExec = new ActionListener() {
@@ -55,6 +89,8 @@ public abstract class BaseScreen extends JFrame {
 
         }
     };
+    
+    
 
     private ActionListener onCzechButtonExec = new ActionListener() {
 
@@ -69,7 +105,7 @@ public abstract class BaseScreen extends JFrame {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-
         }
     };
+    
 }

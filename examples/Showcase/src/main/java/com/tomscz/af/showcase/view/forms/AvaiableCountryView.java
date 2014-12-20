@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Observable;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -63,7 +64,7 @@ public class AvaiableCountryView extends BaseScreen {
 
     }
 
-    private JPanel createHeader() {
+    protected JPanel createHeader() {
         JPanel mainPanel = new JPanel();
         JLabel label = new JLabel();
         mainPanel.setLayout(new GridBagLayout());
@@ -117,7 +118,7 @@ public class AvaiableCountryView extends BaseScreen {
             actionButton.addActionListener(onActionButton);
             return mainPanel;
         } catch (AFSwinxBuildException e) {
-            dialogs.failed("afswinx.build.title.failed", "afswinx.build.text.failed",
+            getDialogs().failed("afswinx.build.title.failed", "afswinx.build.text.failed",
                     e.getMessage());
         }
         return mainPanel;
@@ -151,4 +152,5 @@ public class AvaiableCountryView extends BaseScreen {
 
         }
     };
+    
 }

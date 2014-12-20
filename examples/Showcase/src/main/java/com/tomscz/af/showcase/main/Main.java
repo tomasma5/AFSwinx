@@ -4,8 +4,7 @@ import java.io.FileNotFoundException;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
-import com.tomscz.af.showcase.view.forms.AvaiableCountryView;
-import com.tomscz.af.showcase.view.forms.PersonFormView;
+import com.tomscz.af.showcase.view.controller.WelcomeScreenController;
 import com.tomscz.af.showcase.view.forms.WelcomeScreen;
 
 public class Main {
@@ -17,9 +16,9 @@ public class Main {
         } catch (FileNotFoundException e) {
             //TODO handle it with
         }
-//        WelcomeScreen welcomeScreen = new WelcomeScreen();
-        AvaiableCountryView avaiableCountryView = new AvaiableCountryView();
-//      PersonFormView personView = new PersonFormView();
+        WelcomeScreen welcomeScreen = new WelcomeScreen();
+        WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
+        welcomeScreen.setVisible(true);
     }
 
 }

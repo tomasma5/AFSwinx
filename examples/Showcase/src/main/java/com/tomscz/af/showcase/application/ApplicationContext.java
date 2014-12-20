@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 public class ApplicationContext {
 
     private static ApplicationContext instance;
+    
+    private SecurityContext securityContext;
 
     public static synchronized ApplicationContext getInstance() {
         if (instance == null) {
@@ -36,6 +38,14 @@ public class ApplicationContext {
 
     public ResourceBundle getLocalization() {
         return localization;
+    }
+
+    public SecurityContext getSecurityContext() {
+        return securityContext;
+    }
+
+    public void setSecurityContext(SecurityContext securityContext) {
+        this.securityContext = securityContext;
     }
 
 }

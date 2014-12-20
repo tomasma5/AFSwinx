@@ -21,9 +21,7 @@ import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.PersonManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Person;
-import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
-import com.tomscz.afserver.ws.security.AFSecurityContext;
 
 @Path("/users/")
 public class UserResource extends BaseResource {
@@ -57,7 +55,19 @@ public class UserResource extends BaseResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response login(LoginFormDefinitions loginForm) {
-        return Response.status(Response.Status.OK).build();
+        try {
+            Person loggedPerson = getPersonManager().findUser(loginForm.getUsername(), loginForm.getPassword());
+            if(loggedPerson != null){
+                return Response.status(Response.Status.OK).build();
+            }
+            else{
+                return Response.status(Response.Status.FORBIDDEN).build();
+            }
+        } catch (BusinessException e) {
+            return Response.status(e.getStatus()).build();
+        } catch (NamingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @POST
@@ -99,8 +109,7 @@ public class UserResource extends BaseResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (BusinessException e) {
             return Response.status(e.getStatus()).build();
-        }
-        
+        }    
     }
 
     @GET
@@ -117,7 +126,6 @@ public class UserResource extends BaseResource {
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 
 }
