@@ -8,10 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.tomscz.afrest.rest.dto.data.AFData;
-import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.common.Utils;
+import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 public class JSONBuilder extends BaseRestBuilder {
 

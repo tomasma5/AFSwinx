@@ -1,4 +1,4 @@
-package com.tomscz.afrest.rest.dto.data;
+package com.tomscz.afswinx.rest.rebuild.holder;
 
 public class AFData {
     

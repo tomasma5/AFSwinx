@@ -2,8 +2,8 @@ package com.tomscz.afswinx.rest.rebuild;
 
 import java.util.List;
 
-import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 public interface Reselization {
 

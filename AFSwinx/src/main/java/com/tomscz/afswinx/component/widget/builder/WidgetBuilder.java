@@ -6,10 +6,10 @@ import javax.swing.JComponent;
 
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
-import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.skin.Skin;
+import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 
 /**
  * This interface specify operation which must implement each field builder.    

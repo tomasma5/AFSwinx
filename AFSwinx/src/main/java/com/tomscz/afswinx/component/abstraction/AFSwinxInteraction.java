@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
-import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 /**
  * This interface specify operation which should implement all afswinx components which contains

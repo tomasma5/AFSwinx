@@ -1,10 +1,10 @@
-package com.tomscz.afswinx.swing.component;
+package com.tomscz.afswinx.swing.component.converter;
 
 import java.util.ResourceBundle;
 
 import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afswinx.localization.LocalizationUtils;
-import com.tomscz.afswinx.swing.component.converter.ModelConverter;
+import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
 
 
 public class AFOptionToAFSwinxOption implements ModelConverter<AFOptions, AFComponentDataHolder> {

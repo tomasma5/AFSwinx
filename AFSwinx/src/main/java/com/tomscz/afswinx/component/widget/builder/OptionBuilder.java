@@ -6,13 +6,13 @@ import javax.swing.JComponent;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFOptions;
-import com.tomscz.afrest.rest.dto.data.AFData;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder;
-import com.tomscz.afswinx.swing.component.AFOptionToAFSwinxOption;
+import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
 import com.tomscz.afswinx.swing.component.SwinxAFRadioButton;
+import com.tomscz.afswinx.swing.component.converter.AFOptionToAFSwinxOption;
 
 /**
  * This is builder which can build {@link SwinxAFRadioButton}.

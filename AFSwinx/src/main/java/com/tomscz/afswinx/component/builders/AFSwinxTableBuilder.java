@@ -13,7 +13,6 @@ import javax.swing.table.TableRowSorter;
 
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
-import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxTable;
@@ -25,6 +24,7 @@ import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 
 public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilder> {

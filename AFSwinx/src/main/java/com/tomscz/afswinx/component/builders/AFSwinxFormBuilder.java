@@ -5,7 +5,6 @@ import java.util.List;
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
-import com.tomscz.afrest.rest.dto.data.AFDataPack;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -16,6 +15,7 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 /**
  * This is form builder. This class is responsible for create {@link AFSwinxForm} component.

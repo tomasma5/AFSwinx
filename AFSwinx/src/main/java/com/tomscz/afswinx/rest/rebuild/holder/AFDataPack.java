@@ -1,4 +1,4 @@
-package com.tomscz.afrest.rest.dto.data;
+package com.tomscz.afswinx.rest.rebuild.holder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
