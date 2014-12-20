@@ -39,6 +39,9 @@
 \contentsline {subsubsection}{\numberline {3.6.4.3}EJB}{21}{subsubsection.3.6.4.3}
 \contentsline {subsection}{\numberline {3.6.5}Derby DB}{21}{subsection.3.6.5}
 \contentsline {chapter}{\numberline {4}Iimplementace}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}Architektura}{23}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Server}{23}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Klient}{23}{subsection.4.1.2}
 \contentsline {chapter}{\numberline {5}Testov\IeC {\'a}n\IeC {\'\i }}{25}{chapter.5}
 \contentsline {chapter}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{27}{chapter.6}
 \contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{31}{appendix.A}

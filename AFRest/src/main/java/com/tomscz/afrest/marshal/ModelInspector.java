@@ -27,7 +27,6 @@ import com.codingcrayons.aspectfaces.plugins.j2ee.configuration.ServerConfigurat
 import com.codingcrayons.aspectfaces.util.Strings;
 import com.tomscz.afrest.commons.Constants;
 import com.tomscz.afrest.commons.FileUtils;
-import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 
