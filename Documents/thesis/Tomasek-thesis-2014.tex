@@ -333,7 +333,6 @@ Dnešní aplikace využívají grafické uživatelské rozhraní k interakci s u
 %*****************************************************************************
 \include{pages/7_install}
 
-
 \chapter{UML diagramy}
 V této sekci naleznete použité UML diagramy, na které bylo v textu odkazováno.
 \begin{figure}
@@ -345,7 +344,7 @@ V této sekci naleznete použité UML diagramy, na které bylo v textu odkazová
 \end{figure}
 
 \begin{figure}
-\includegraphics{images/model}
+\includegraphics{images/businessModel}
 \caption{Business model}
 \label{img:businessModel}
 \end{figure}
@@ -372,6 +371,72 @@ V této sekci naleznete použité UML diagramy, na které bylo v textu odkazová
 \label{img:metaModelFinal}
 \end{figure}	
 
+\chapter{Ukázky zdrojového kódu a XML souborů}
+\begin{lstlisting}[caption=Ukázka definice komponenty,
+  label={code:xmlCompleteDefinition}]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<afRestEntity xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<entity>
+		<entityName>person</entityName>
+		<entity>
+			<entityName>address</entityName>
+			<widget>
+				<widgetType />
+				<fieldName>street</fieldName>
+				<label>Street</label>
+				<validations>
+					<required />
+				</validations>
+				<fieldLayout>
+					<layoutOrientation />
+					<labelPossition />
+					<layout />
+				</fieldLayout>
+			</widget>
+			<fieldName>myAdress</fieldName>
+		</entity>
+		<widget>
+			<widgetType />
+			<fieldName>firstName</fieldName>
+			<label>person.firstName</label>
+			<validations>
+				<required>true</required>
+			</validations>
+			<fieldLayout>
+				<layoutOrientation />
+				<labelPossition />
+				<layout />
+			</fieldLayout>
+		</widget>
+		<widget>
+			<widgetType>textArea</widgetType>
+			<fieldName>lastName</fieldName>
+			<label>person.lastName</label>
+			<validations>
+				<required />
+			</validations>
+			<fieldLayout>
+				<layoutOrientation>AxisX</layoutOrientation>
+				<labelPossition>before</labelPossition>
+				<layout>TwoColumnsLayout</layout>
+			</fieldLayout>
+		</widget>
+		<widget>
+			<widgetType>checkBox</widgetType>
+			<fieldName>confidentialAgreement</fieldName>
+			<label>Confidential Agreement</label>
+			<validations>
+				<required />
+			</validations>
+			<fieldLayout>
+				<layoutOrientation />
+				<labelPossition />
+				<layout />
+			</fieldLayout>
+		</widget>
+	</entity>
+</afRestEntity>
+\end{lstlisting}
 
 
 %*****************************************************************************

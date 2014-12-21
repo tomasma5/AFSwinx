@@ -1,4 +1,4 @@
-\begin{thebibliography}{8}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -34,7 +34,7 @@ CERNY, T. -- CHALUPA, V. -- DONAHOO, M.
 \newblock \doi{10.1109/ICISA.2012.6220929}.
 
 \bibitem[Eric~Jendrock()]{javaEETutorial}
-ERIC~JENDROCK, R. C.-N. K. H. W.~M.~I.~E.
+ERIC~JENDROCK, R. C.-N.-K. H. W.~M.~I.~E.
 \newblock \emph{The Java EE 7 Tutorial} [online]. [cit.~1.\,9.\,2014].
 \newblock Dostupn{\'{e}} z:
   \url{http://docs.oracle.com/javaee/7/tutorial/doc/}.
@@ -45,6 +45,12 @@ GAMMA, E. et~al.
   Software}.
 \newblock Reading, MA~: Addison-Wesley, 1995.
 \newblock ISBN 978-0-201-63361-0.
+
+\bibitem[Tim~Bray()]{xml}
+TIM~BRAY, C. M. S.-M. E. M. F.~Y.~J.~P.
+\newblock \emph{Extensible Markup Language (XML) 1.0 (Fifth Edition)} [online].
+  [cit.~20.\,12.\,2014].
+\newblock Dostupn{\'{e}} z: \url{http://www.w3.org/TR/REC-xml/l}.
 
 \bibitem[Tuchinda et~al.(2008)Tuchinda, Szekely, Knoblock, Hild, Wach,
   Biörnstad,, Pautasso]{Tuchinda2008}

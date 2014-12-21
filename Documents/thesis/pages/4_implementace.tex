@@ -7,6 +7,81 @@ Jak již bylo zmíňěno, tak server využívá ke generování serverou část 
 \item @UIWidgeType - tato anotace určuje typ widgetu, který se použije do xml šablon, které se používají při generování definic je propagován jako proměnná s názvem widgetType
 \item @UILayout - tato anotace definuje layout na dané proměnné. Lze specifikovat typ layoutu, jeho orientace a pozice popisu prvku. Do xml šablon jsou tyto hodnoty propagovány jako layout, layoutOrientation a labelPossition. 
 \end{enumerate}
-Výše zmíněné anotace akceptují pouze hodnoty z výčtových typů v balíčku common. V případě typu komponenty nebo-li widgetType přijímá anotace hodnoty ze třídy SupportedWidgets a v případě anotace určující layout lze vložit pouze hodnoty z výčtových typů LayoutDefinitions, LayoutOrientation a LabelPosition. Hlavní výhodou tohoto řešení, je typová kontrola a jistota, že klient obdrží od serveru pouze takové hodnoty, s kterými je schopný pracovat.
+Výše zmíněné anotace akceptují pouze hodnoty z výčtových typů v balíčku common. V případě typu komponenty nebo-li widgetType přijímá anotace hodnoty ze třídy SupportedWidgets a v případě anotace určující layout lze vložit pouze hodnoty z výčtových typů LayoutDefinitions, LayoutOrientation a LabelPosition. Hlavní výhodou tohoto řešení, je typová kontrola a jistota, že klient obdrží od serveru pouze takové hodnoty, s kterými je schopný pracovat. Stejným principem jsou řešeny validace a proměnné, které definují vlastnosti jednotlových komponent. 
+
+\subsubsection{Generování modelu}
+Výsledkem inspekce objektu je model, který nese informace potřebné k tomu, aby klient mohl sestavit formulář či tabulku a byl do těchto komponent schopný vložit data získaná ze serveru. Na obrázku \ref{img:metaModelFinal} je konečná podoba modelu, který je vytvořen k tomuto účelu. Model je výsledkem hledání analytických tříd z doménového modelu na obrázku \ref{img:metadataMode}. Tento model již byl posán v analytické části, nicméně v této části je již model kompletní a proto zde budou uvedeny pouze změny oproti původnímu modelu. Proměnné, které nesou informace o layoutu, typu komponenty validátorech a jejich typech jsou výčtové typy. Jak již bylo zmíněno výhodou je typová bezpečnost a jednoznačnost vlastností, které framework podporuje. Model slouží také jako fásada, k nastavení dodatečných atributů. Jedním z těchto atributů je proměnná options ve třídě AFFieldInfo. Tato proměnná drží informace o možných hodnotách, které může komponenta nabývat. V současné verzi je tento atribut využit u komponent výběrového typu, mezi které patří například zaškrtávací políčka, či výběrová menu. Programátor specifikuje množinu těchto hodnot, v které klíč určuje hodnotu, jenž bude odeslána na server a text, který bude zobrazen uživateli je určen proměnnou value. Tyto možnosti nejsou generovány automaticky a v případě potřeby je musí programátor specifikovat ručně a to tak, že určí množinu dat a pole, ke kterému je přiřazeno. Třída AFMetaModelPack poskytuje zapouzdřuje způsob jakým se množina dat nastaví na konkrétní políčko a nabízí uživateli funkci, která je schopná nastavení provést na základě dat, zadaných uživatelem.
+
+K dynamickému generování definic se využívá framework AspectFaces \cite{aspectFaces}, který umožňuje na základě mapování rozhodnout jaká komponenta bude použita pro konkrétní proměnnou dané třídy. Dále nabízí určení layoutu, který bude použit a samozřejmě určení mapovacího souboru. Tímto lze docílit mnoha různých transformací. Tento framework je potřeba nejprve nastavit, nicméně toto nastavení provede za vývojáře serverová část frameworku AFRest. Rozhranní AFRest z obrázku \ref{img:metaModelFinal} a jeho implementace AFRestGenerator provedou kompletní nastavení a spustí generování dat. Rozhranní umožňuje uživateli určit mapovací soubor a template, která bude použita. Mapování lze použít na všechny promměné obejktu, či může vývojář určit, které mapování se použije na konkrétní proměnnou. Ukázka mapování z frameworku AspectFaces je na znázorněna v ukázce zdrojových kódu \ref{code:xmlMapping}. Proměnná typu String se bude mapovat na vstupní textové pole, kterýé je definováno v structure/inputField.xml, v případě že se bude jednat o typ password, tak se bude proměnná typu String mapovat na vstupní textové pole typu, které místo vepsaných znaků zobrazuje zástupné znaky, komponenta je definována v structure/inputPassword.xml. Typ Address, což je neprimitivní datový typ se bude mapovat na entitní typ, jehož definice je v structure/entity.xml.
+\begin{lstlisting}[caption=Ukázka mapování proměnných na komponenty,
+  label={code:xmlMapping}]
+<mapping>
+	<type>String</type>
+	<default tag="structure/inputField.xml" maxLength="255"/>
+	<condition expression="${type == 'password'}" tag="structure/inputPassword.xml" />
+</mapping>
+<mapping>
+	<type>Address</type>
+	<default tag="structure/entity.xml" />
+</mapping>
+\end{lstlisting}
+Mapování tedy určí soubor s komponentou, který bude reprezentovat aktuální proměnnou. Soubor s definicí komponenty, je pak dále využit k finálnímu definici proměnné. Ukázka vstupního textového pole je v ukázce zdrojových kódu \ref{code:xmlInputField}. Komponenta je v kořenovém elementu widget. Jelikož se jedná pouze o fragment xml, který je použit ke složení celé definice, jenž je uvedena v příloze v ukázce zdrojových kódů \ref{code:xmlCompleteDefinition}, tak zde není uvedena deklarace XML \cite{xml}. Ve výsledném XML již však deklarace již uvedena je. Popis jednotlivých uzlů je v tabulce \ref{table:xmlComponentAttributes}.
+\begin{lstlisting}[caption=Ukázka definice komponenty,
+  label={code:xmlInputField}]
+<widget>
+	<widgetType>textField</widgetType>
+	<fieldName>$field$</fieldName>
+	<label>$label$</label>
+	<validations>
+		<required>$required$</required>
+		<minLength>$minLength$</minLength>
+		<maxLength>$maxLength$</maxLength>
+	</validations>
+	<fieldLayout>
+		<layoutOrientation>$layoutOrientation$</layoutOrientation>
+		<labelPossition>$labelPossition$</labelPossition>
+		<layout>$layout$</layout>
+	</fieldLayout>
+</widget>
+\end{lstlisting}
+Knihovna AspectFaces umožňuje určovat způsob jakým bude prováděna inspekce. Tento způsob se určuje v šablonách. K optimálnímu využití je nejvýhodnější použít způsob, při kterém je provedena inspekce všech proměnných, které mají definováno mapování. V případě jednoduchých datových typů je vše v pořádku, nicméně knihovna neobsahovala nativní podporu pro neprimitivní datové typu, v případě že byla použita inspekce, která by nevyužívala JSF. Z tohoto důvodu je důležité, aby se všechny neprimitivní datové typy mapovali na entity.xml, která je znázorněna v části zdrojového kódu \ref{code:xmlEntity}. Framework totiž pro všechny tyto entity provede inspekci znovu a následně části sestaví sestaví a vznikne tak kompletní definice. V tomto bodě, lze určit mapování a šablony, které se mají při rekurzivní inspekci použít. Framework AspectFaces byl proto doplněn o proměnné, které umí vrátit kanoický název třídy a na základě tohoto názvu lze provést nad touto třídou inspekci. 
+\begin{lstlisting}[caption=Ukázka definice neprimitvního datového typu,
+  label={code:xmlEntity}]
+<entityClass>
+	<entityFieldType>$DataTypeFullClassName$</entityFieldType>
+	<fieldName>$fieldName$</fieldName>
+</entityClass>
+\end{lstlisting}
+
+Jak je patrné z výsledné definice, tak každý uzel má svého rodiče. Na základě rodiče lze určit jednoznačně určit kam uzel patří. Tato vlastnost umožňuje provádět inspekci i nad třídami, které mají více proměnných stejného datového typu. Klient totiž potřebuje znát strukturu objektu, aby ho mohl zpětně sestavit a odeslat zpět na server, který objekt přijme. Znalost struktury klient taktéž vyžaduje v případě získávání dat.
+
+\begin{table}[width=\linewidth]
+\begin{center}
+\caption{Uzly XML, které definuje strukturu dat}
+\label{table:xmlComponentAttributes}
+\begin{tabular}{|p{7cm}|p{7cm}|}
+\hline
+\textbf{Uzel} & \textbf{Popis} \\
+\hline
+widget & 
+Typ komponenty. Určuje jak komponentu bude klient interpretovat.\\
+\hline
+fieldName &
+Název aktuální proměnné, kterou komponenta zastupuje.\\
+\hline
+Label &
+Popis komponenty, který bude zobrazen uživateli. \\
+\hline
+validations &
+Validace, které bude umět komponenta ověřit. \\
+\hline
+fieldLayout&
+Popis layoutu, který bude na komponentě použit. \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 
 \subsection{Klient}
+
