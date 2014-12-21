@@ -26,7 +26,7 @@
 \contentsline {subsection}{\numberline {3.2.3}Klient}{13}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}\IeC {\v Z}ivotn\IeC {\'\i } cyklus formul\IeC {\'a}\IeC {\v r}e}{15}{subsection.3.2.4}
 \contentsline {section}{\numberline {3.3}P\IeC {\v r}\IeC {\'\i }pady u\IeC {\v z}it\IeC {\'\i }}{16}{section.3.3}
-\contentsline {subsubsection}{\numberline {3.3.0.1}Validace komponenty}{17}{subsubsection.3.3.0.1}
+\contentsline {subsubsection}{\numberline {3.3.0.1}Validace komponenty}{16}{subsubsection.3.3.0.1}
 \contentsline {section}{\numberline {3.4}Omezen\IeC {\'\i } frameworku}{19}{section.3.4}
 \contentsline {section}{\numberline {3.5}U\IeC {\v z}ivatel\IeC {\'e} a zabezpe\IeC {\v c}en\IeC {\'\i }}{19}{section.3.5}
 \contentsline {section}{\numberline {3.6}Pou\IeC {\v z}it\IeC {\'e} technologie}{20}{section.3.6}
@@ -38,12 +38,12 @@
 \contentsline {subsubsection}{\numberline {3.6.4.2}RestEasy}{21}{subsubsection.3.6.4.2}
 \contentsline {subsubsection}{\numberline {3.6.4.3}EJB}{21}{subsubsection.3.6.4.3}
 \contentsline {subsection}{\numberline {3.6.5}Derby DB}{21}{subsection.3.6.5}
-\contentsline {chapter}{\numberline {4}Iimplementace}{23}{chapter.4}
+\contentsline {chapter}{\numberline {4}Implementace}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}Architektura}{23}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Server}{23}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Klient}{23}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.2}Klient}{24}{subsection.4.1.2}
 \contentsline {chapter}{\numberline {5}Testov\IeC {\'a}n\IeC {\'\i }}{25}{chapter.5}
 \contentsline {chapter}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{27}{chapter.6}
 \contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{31}{appendix.A}
 \contentsline {chapter}{\numberline {B}UML diagramy}{33}{appendix.B}
-\contentsline {chapter}{\numberline {C}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{37}{appendix.C}
+\contentsline {chapter}{\numberline {C}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{39}{appendix.C}

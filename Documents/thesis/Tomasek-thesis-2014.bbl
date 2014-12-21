@@ -6,7 +6,8 @@
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
 \bibitem[asp()]{aspectFaces}
-Dostupn{\'{e}} z: \url{http://www.aspectfaces.com/overview}.
+Framework AspectFaces.
+\newblock Dostupn{\'{e}} z: \url{http://www.aspectfaces.com/overview}.
 
 \bibitem[gla()]{glassfish}
 \emph{What is GlassFish v3?} [online]. [cit.~8.\,4.\,2012].
