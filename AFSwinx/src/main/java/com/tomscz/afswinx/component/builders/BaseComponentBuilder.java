@@ -9,7 +9,6 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
-import com.tomscz.afswinx.component.ComponentBuilder;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.factory.WidgetBuilderFactory;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;

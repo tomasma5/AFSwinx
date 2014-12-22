@@ -1,7 +1,6 @@
 package com.tomscz.afswinx.component.abstraction;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
@@ -60,7 +59,5 @@ public interface AFSwinxInteraction {
      * @return
      */
     public Object generateSendData();
-
-    public void changeLocalization(ResourceBundle localization);
 
 }

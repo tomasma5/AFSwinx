@@ -1,12 +1,9 @@
 package com.tomscz.afswinx.rest.rebuild.holder;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AFDataPack implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class AFDataPack {
 
     private List<AFData> data;
     private String className;

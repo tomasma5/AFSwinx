@@ -32,6 +32,7 @@ Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve M
 while executing---line 1402 of file csplainnat.bst
 Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
 while executing---line 1402 of file csplainnat.bst
+Warning--to sort, need author or key in gson
 Warning--empty year in aspectFaces
 `address' is a missing field, not a string, for entry UmlArlow
 while executing---line 1484 of file csplainnat.bst

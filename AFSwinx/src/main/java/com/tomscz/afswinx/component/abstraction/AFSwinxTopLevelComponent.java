@@ -115,12 +115,6 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
         }
     }
 
-    @Override
-    public void changeLocalization(ResourceBundle localization) {
-        // TODO Auto-generated method stub
-
-    }
-
     public HashMap<String, ComponentDataPacker> getPanels() {
         return panels;
     }
