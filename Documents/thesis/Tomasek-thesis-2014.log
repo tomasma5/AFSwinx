@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  22 DEC 2014 23:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  23 DEC 2014 15:38
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -736,7 +736,7 @@ Nazev prace:  Aspektov\IeC {\v e} orientovan\IeC {\'y} v\IeC {\'y}voj u\IeC {\v
 Vedouci prace: Ing. Tom\IeC {\'a}\IeC {\v s} \IeC {\v C}ern\IeC {\'y} M.S.C.S. 
 
 ***************************************************
-<figures/LogoCVUT.pdf, id=247, 93.34875pt x 70.2625pt>
+<figures/LogoCVUT.pdf, id=271, 93.34875pt x 70.2625pt>
 File: figures/LogoCVUT.pdf Graphic file (type pdf)
 
 <use figures/LogoCVUT.pdf>
@@ -804,7 +804,7 @@ Kapitola 2.
 
 ]
 Kapitola 3.
-[9] [10] <images/domainModel.pdf, id=505, 457.71pt x 286.06876pt>
+[9] [10] <images/domainModel.pdf, id=540, 457.71pt x 286.06876pt>
 File: images/domainModel.pdf Graphic file (type pdf)
 
 <use images/domainModel.pdf>
@@ -830,7 +830,7 @@ Overfull \hbox (11.40277pt too wide) in paragraph at lines 92--93
 [][][][][][][][][][][][][][][][][] 
  []
 
-[14] <images/formLifecCycle.pdf, id=578, 457.71pt x 314.17375pt>
+[14] <images/formLifecCycle.pdf, id=613, 457.71pt x 314.17375pt>
 File: images/formLifecCycle.pdf Graphic file (type pdf)
 
 <use images/formLifecCycle.pdf>
@@ -842,7 +842,7 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 120--121
  []
 
 [15 <D:/Skola/repo/AFServer/Documents/thesis/images/formLifecCycle.pdf>]
-<images/useCaseSmall.pdf, id=607, 400.49625pt x 200.75pt>
+<images/useCaseSmall.pdf, id=642, 400.49625pt x 200.75pt>
 File: images/useCaseSmall.pdf Graphic file (type pdf)
 
 <use images/useCaseSmall.pdf>
@@ -861,20 +861,7 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 
 ]
 Kapitola 4.
-[23]
-
-LaTeX Warning: Reference `img:metaModelFinal' on page 24 undefined on input lin
-e 13.
-
-
-LaTeX Warning: Reference `img:metadataMode' on page 24 undefined on input line 
-13.
-
-
-LaTeX Warning: Reference `img:metaModelFinal' on page 24 undefined on input lin
-e 15.
-
-[24]
+[23] [24]
 LaTeX Font Info:    Try loading font information for TS1+cmss on input line 21.
 
  (C:\Latex\tex\latex\base\ts1cmss.fd
@@ -889,7 +876,7 @@ Overfull \hbox (14.65222pt too wide) in paragraph at lines 140--141
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-<images/connectionPack.pdf, id=796, 457.71pt x 143.53625pt>
+<images/connectionPack.pdf, id=834, 457.71pt x 143.53625pt>
 File: images/connectionPack.pdf Graphic file (type pdf)
 
 <use images/connectionPack.pdf>
@@ -900,12 +887,8 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 148--149
 [][] 
  []
 
-
-LaTeX Warning: Reference `img:metaModelFinal' on page 29 undefined on input lin
-e 154.
-
 [29 <D:/Skola/repo/AFServer/Documents/thesis/images/connectionPack.pdf>]
-<images/dataPack.pdf, id=824, 315.1775pt x 86.3225pt>
+<images/dataPack.pdf, id=863, 315.1775pt x 86.3225pt>
 File: images/dataPack.pdf Graphic file (type pdf)
 
 <use images/dataPack.pdf>
@@ -917,7 +900,7 @@ Overfull \hbox (60.31656pt too wide) in paragraph at lines 171--172
  []
 
 [31 <D:/Skola/repo/AFServer/Documents/thesis/images/dataPack.pdf>] [32]
-<images/AFDataHolder.pdf, id=879, 287.0725pt x 143.53625pt>
+<images/AFDataHolder.pdf, id=918, 287.0725pt x 143.53625pt>
 File: images/AFDataHolder.pdf Graphic file (type pdf)
 
 <use images/AFDataHolder.pdf>
@@ -927,21 +910,29 @@ Package pdftex.def Info: images/AFDataHolder.pdf used on input line 257.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[33]) [34 <D:/Skola/repo/AFServer/Documents/thesis/images/AFDataHolder.pdf>]
-(D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.tex
+[33] [34 <D:/Skola/repo/AFServer/Documents/thesis/images/AFDataHolder.pdf>]
+<images/validationModel.pdf, id=945, 415.5525pt x 100.375pt>
+File: images/validationModel.pdf Graphic file (type pdf)
+
+<use images/validationModel.pdf>
+Package pdftex.def Info: images/validationModel.pdf used on input line 299.
+(pdftex.def)             Requested size: 415.55148pt x 100.37474pt.
+ [35] [36 <D:/Skola/repo/AFServer/Documents/thesis/images/validationModel.pdf>]
+ [37]) [38] [39]
+(D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.tex [40
+
+
+
+]
 Kapitola 5.
-) [35
-
-
-
-] (D:\Skola\repo\AFServer\Documents\thesis\pages/6_zaver.tex [36
+) [41] (D:\Skola\repo\AFServer\Documents\thesis\pages/6_zaver.tex [42
 
 
 
 ]
 Kapitola 6.
-) [37] (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.bbl
-[38
+) [43] (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.bbl
+[44
 
 
 ]
@@ -949,37 +940,37 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 10.
  (C:\Latex\tex\latex\base\t1cmtt.fd
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-Underfull \hbox (badness 4479) in paragraph at lines 54--58
+Underfull \hbox (badness 4479) in paragraph at lines 63--67
 []\T1/cmr/m/n/10.95 KALNICHEVSKI, O.  \T1/cmr/m/it/10.95 Http-Core Tu-to-rial \
 T1/cmr/m/n/10.95 [on-line]. [cit. 20.12.2014].  Do-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 54--58
+Underfull \hbox (badness 10000) in paragraph at lines 63--67
 \T1/cmr/m/n/10.95 stupné z: <[][]$\T1/cmtt/m/n/10.95 http : / / hc . apache . o
 rg / httpcomponents-[]core-[]ga / tutorial / pdf /$
  []
 
-) [39] [40
+) [45] [46
 
 ]
 P\v {r}\'{\i }loha A.
-[41]
+[47]
 No file pages/7_install.tex.
-[42
+[48
 
 
 
 ]
 P\v {r}\'{\i }loha B.
-<images/useCase.pdf, id=952, 571.13374pt x 399.4925pt>
+<images/useCase.pdf, id=1043, 571.13374pt x 399.4925pt>
 File: images/useCase.pdf Graphic file (type pdf)
 
 <use images/useCase.pdf>
 Package pdftex.def Info: images/useCase.pdf used on input line 340.
 (pdftex.def)             Requested size: 571.13235pt x 399.49152pt.
 
-<images/businessModel.pdf, id=953, 457.71pt x 570.13pt>
+<images/businessModel.pdf, id=1044, 457.71pt x 570.13pt>
 File: images/businessModel.pdf Graphic file (type pdf)
 
 <use images/businessModel.pdf>
@@ -990,7 +981,7 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 347--348
 [][] 
  []
 
-<images/deploymentDiagram.pdf, id=954, 514.92375pt x 256.96pt>
+<images/deploymentDiagram.pdf, id=1045, 514.92375pt x 256.96pt>
 File: images/deploymentDiagram.pdf Graphic file (type pdf)
 
 <use images/deploymentDiagram.pdf>
@@ -1001,14 +992,14 @@ Overfull \hbox (79.40735pt too wide) in paragraph at lines 354--355
  [] 
  []
 
-<images/serverSide.pdf, id=955, 400.49625pt x 456.70625pt>
+<images/serverSide.pdf, id=1046, 400.49625pt x 456.70625pt>
 File: images/serverSide.pdf Graphic file (type pdf)
 
 <use images/serverSide.pdf>
 Package pdftex.def Info: images/serverSide.pdf used on input line 362.
 (pdftex.def)             Requested size: 400.49527pt x 456.70512pt.
 
-<images/metaModelFinal.pdf, id=956, 600.2425pt x 456.70625pt>
+<images/metaModelFinal.pdf, id=1047, 600.2425pt x 456.70625pt>
 File: images/metaModelFinal.pdf Graphic file (type pdf)
 
 <use images/metaModelFinal.pdf>
@@ -1019,7 +1010,7 @@ Overfull \hbox (21.18999pt too wide) in paragraph at lines 369--370
 [][] 
  []
 
-<images/sdDiagram.pdf, id=957, 713.66624pt x 427.5975pt>
+<images/sdDiagram.pdf, id=1048, 713.66624pt x 427.5975pt>
 File: images/sdDiagram.pdf Graphic file (type pdf)
 
 <use images/sdDiagram.pdf>
@@ -1029,7 +1020,7 @@ Package pdftex.def Info: images/sdDiagram.pdf used on input line 375.
 
 LaTeX Warning: Float too large for page by 108.73433pt on input line 378.
 
-<images/abstractBuilder.pdf, id=958, 571.13374pt x 484.81125pt>
+<images/abstractBuilder.pdf, id=1049, 571.13374pt x 484.81125pt>
 File: images/abstractBuilder.pdf Graphic file (type pdf)
 
 <use images/abstractBuilder.pdf>
@@ -1040,34 +1031,34 @@ Overfull \hbox (49.29492pt too wide) in paragraph at lines 381--382
 [][] 
  []
 
-<images/sdResealization.pdf, id=959, 514.92375pt x 286.06876pt>
+<images/sdResealization.pdf, id=1050, 514.92375pt x 286.06876pt>
 File: images/sdResealization.pdf Graphic file (type pdf)
 
 <use images/sdResealization.pdf>
 Package pdftex.def Info: images/sdResealization.pdf used on input line 387.
 (pdftex.def)             Requested size: 514.92249pt x 286.06805pt.
- [43] [44 <D:/Skola/repo/AFServer/Documents/thesis/images/useCase.pdf>] [45 <D:
+ [49] [50 <D:/Skola/repo/AFServer/Documents/thesis/images/useCase.pdf>] [51 <D:
 /Skola/repo/AFServer/Documents/thesis/images/businessModel.pdf, page is rotated
- 90 degrees>] [46 <D:/Skola/repo/AFServer/Documents/thesis/images/deploymentDia
-gram.pdf>] [47 <D:/Skola/repo/AFServer/Documents/thesis/images/serverSide.pdf, 
-page is rotated 90 degrees>] [48 <D:/Skola/repo/AFServer/Documents/thesis/image
-s/metaModelFinal.pdf>] [49 <D:/Skola/repo/AFServer/Documents/thesis/images/sdDi
-agram.pdf>] [50 <D:/Skola/repo/AFServer/Documents/thesis/images/abstractBuilder
-.pdf>] [51 <D:/Skola/repo/AFServer/Documents/thesis/images/sdResealization.pdf>
-] [52
+ 90 degrees>] [52 <D:/Skola/repo/AFServer/Documents/thesis/images/deploymentDia
+gram.pdf>] [53 <D:/Skola/repo/AFServer/Documents/thesis/images/serverSide.pdf, 
+page is rotated 90 degrees>] [54 <D:/Skola/repo/AFServer/Documents/thesis/image
+s/metaModelFinal.pdf>] [55 <D:/Skola/repo/AFServer/Documents/thesis/images/sdDi
+agram.pdf>] [56 <D:/Skola/repo/AFServer/Documents/thesis/images/abstractBuilder
+.pdf>] [57 <D:/Skola/repo/AFServer/Documents/thesis/images/sdResealization.pdf>
+] [58
 
 ]
 P\v {r}\'{\i }loha C.
-[53] [54]
+[59] [60]
 P\v {r}\'{\i }loha D.
-<images/cdContent.png, id=1172, 368.87813pt x 188.95593pt>
+<images/cdContent.png, id=1263, 368.87813pt x 188.95593pt>
 File: images/cdContent.png Graphic file (type png)
 
 <use images/cdContent.png>
 Package pdftex.def Info: images/cdContent.png used on input line 468.
 (pdftex.def)             Requested size: 368.87721pt x 188.95546pt.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 473.
- [55
+ [61
 
  <D:/Skola/repo/AFServer/Documents/thesis/images/cdContent.png>]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
@@ -1083,21 +1074,17 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 473.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 473.
 Package rerunfilecheck Info: File `Tomasek-thesis-2014.out' has not changed.
-(rerunfilecheck)             Checksum: 2A7847F4C56F75EC29E7D100B2195F8D;9074.
-
-
-LaTeX Warning: There were undefined references.
-
+(rerunfilecheck)             Checksum: 904A070DB1B25E2E5FDE7AE5E9358207;9699.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 473.
  ) 
 Here is how much of TeX's memory you used:
- 12412 strings out of 493921
- 172149 string characters out of 3144882
- 239051 words of memory out of 3000000
- 15091 multiletter control sequences out of 15000+200000
+ 12448 strings out of 493921
+ 172694 string characters out of 3144882
+ 239279 words of memory out of 3000000
+ 15107 multiletter control sequences out of 15000+200000
  21173 words of font info for 44 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
- 30i,10n,40p,2914b,1859s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,11n,40p,2914b,1859s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
 ti1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
 pi600\ectt1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
@@ -1118,9 +1105,9 @@ s\pk\ljfour\jknappen\ec\dpi600\ecti1440.pk> <C:\Users\Tom\AppData\Local\MiKTeX\
 2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Tom\AppData\Local
 \MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/Latex/fonts/type
 1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Tomasek-thesis-2014.pdf (71 pages, 689140 bytes).
+Output written on Tomasek-thesis-2014.pdf (77 pages, 729352 bytes).
 PDF statistics:
- 2014 PDF objects out of 2073 (max. 8388607)
- 414 named destinations out of 1000 (max. 500000)
- 569 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2123 PDF objects out of 2487 (max. 8388607)
+ 433 named destinations out of 1000 (max. 500000)
+ 622 words of extra memory for PDF output out of 10000 (max. 10000000)
 

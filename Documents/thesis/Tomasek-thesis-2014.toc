@@ -53,11 +53,17 @@
 \contentsline {section}{\numberline {4.3}P\IeC {\v r}enos a generov\IeC {\'a}n\IeC {\'\i } dat klient server}{33}{section.4.3}
 \contentsline {section}{\numberline {4.4}Lokalizace}{34}{section.4.4}
 \contentsline {section}{\numberline {4.5}Validace dat a vlastn\IeC {\'\i } valid\IeC {\'a}tory}{34}{section.4.5}
-\contentsline {section}{\numberline {4.6}Zabezpe\IeC {\v c}en\IeC {\'\i }}{34}{section.4.6}
-\contentsline {section}{\numberline {4.7}Rozd\IeC {\'\i }l mezi komponenty generovan\IeC {\'y}mi frameworkem a ru\IeC {\v c}n\IeC {\v e} psan\IeC {\'y}mi}{34}{section.4.7}
-\contentsline {chapter}{\numberline {5}Testov\IeC {\'a}n\IeC {\'\i }}{35}{chapter.5}
-\contentsline {chapter}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{37}{chapter.6}
-\contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{41}{appendix.A}
-\contentsline {chapter}{\numberline {B}UML diagramy}{43}{appendix.B}
-\contentsline {chapter}{\numberline {C}Uk\IeC {\'a}zky zdrojov\IeC {\'e}ho k\IeC {\'o}du a XML soubor\IeC {\r u}}{53}{appendix.C}
-\contentsline {chapter}{\numberline {D}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{55}{appendix.D}
+\contentsline {subsection}{\numberline {4.5.1}Podporovan\IeC {\'e} validace}{35}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Vyhodnocen\IeC {\'\i } validac\IeC {\'\i }}{35}{subsection.4.5.2}
+\contentsline {section}{\numberline {4.6}Layouty}{36}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Layout builder}{37}{subsection.4.6.1}
+\contentsline {section}{\numberline {4.7}Bezpe\IeC {\v c}nost}{37}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}P\IeC {\v r}enos dat}{37}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Autentizace a autorizace}{38}{subsection.4.7.2}
+\contentsline {section}{\numberline {4.8}Porovn\IeC {\'a}n\IeC {\'\i } p\IeC {\v r}\IeC {\'\i }stup\IeC {\r u}}{38}{section.4.8}
+\contentsline {chapter}{\numberline {5}Testov\IeC {\'a}n\IeC {\'\i }}{41}{chapter.5}
+\contentsline {chapter}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{43}{chapter.6}
+\contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{47}{appendix.A}
+\contentsline {chapter}{\numberline {B}UML diagramy}{49}{appendix.B}
+\contentsline {chapter}{\numberline {C}Uk\IeC {\'a}zky zdrojov\IeC {\'e}ho k\IeC {\'o}du a XML soubor\IeC {\r u}}{59}{appendix.C}
+\contentsline {chapter}{\numberline {D}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{61}{appendix.D}

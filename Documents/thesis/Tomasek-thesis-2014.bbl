@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -14,9 +14,18 @@ Framework AspectFaces.
 \newblock Dostupn{\'{e}} z:
   \url{https://wikis.oracle.com/display/GlassFish/PlanForGlassFishV3}.
 
+\bibitem[gri()]{gridBagLayout}
+\emph{How to Use GridBagLayout} [online]. [cit.~21 .\,12.\,2014].
+\newblock Dostupn{\'{e}} z:
+  \url{http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html/}.
+
 \bibitem[gso()]{gson}
 \emph{Google-GSON} [online]. [cit.~20.\,12.\,2014].
 \newblock Dostupn{\'{e}} z: \url{https://code.google.com/p/google-gson/}.
+
+\bibitem[htt(2001)]{https}
+\emph{SSL and TLS}, s. 292 -- 307.
+\newblock Addison-Wesley, Boston, vyd. 1. edition, 2001.
 
 \bibitem[jav()]{javaEE}
 \emph{Java EE at a Glance} [online]. [cit.~8.\,4.\,2012].
