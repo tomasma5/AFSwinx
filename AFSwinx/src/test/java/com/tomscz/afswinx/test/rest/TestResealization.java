@@ -19,7 +19,7 @@ public class TestResealization {
         dataToTest.addPropertyAndValue("name", "Martin");
         dataToTest.addPropertyAndValue("lastName", "Tomasek");
         AFDataHolder innerClass = new AFDataHolder();
-        innerClass.setClassName("Adress");
+        innerClass.setClassName("adress");
         innerClass.addPropertyAndValue("Street", "Repice");
         dataToTest.addInnerClass(innerClass);
     }

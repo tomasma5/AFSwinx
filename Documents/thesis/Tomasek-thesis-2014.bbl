@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{14}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -10,9 +10,9 @@ Framework AspectFaces.
 \newblock Dostupn{\'{e}} z: \url{http://www.aspectfaces.com/overview}.
 
 \bibitem[gla()]{glassfish}
-\emph{What is GlassFish v3?} [online]. [cit.~8.\,4.\,2012].
+\emph{GlassFish Server Open Source Edition} [online]. [cit.~20.\,12.\,2014].
 \newblock Dostupn{\'{e}} z:
-  \url{https://wikis.oracle.com/display/GlassFish/PlanForGlassFishV3}.
+  \url{https://glassfish.java.net/docs/4.0/quick-start-guide.pdf}.
 
 \bibitem[gri()]{gridBagLayout}
 \emph{How to Use GridBagLayout} [online]. [cit.~21 .\,12.\,2014].
@@ -31,6 +31,10 @@ Framework AspectFaces.
 \emph{Java EE at a Glance} [online]. [cit.~8.\,4.\,2012].
 \newblock Dostupn{\'{e}} z:
   \url{http://www.oracle.com/technetwork/java/javaee/overview/index.html}.
+
+\bibitem[jun()]{junit}
+\emph{JUnit} [online]. [cit.~22.\,12.\,2014].
+\newblock Dostupn{\'{e}} z: \url{http://junit.org/}.
 
 \bibitem[Arlow -- Neustadt()Arlow, Neustadt]{UmlArlow}
 ARLOW, J. -- NEUSTADT, I.

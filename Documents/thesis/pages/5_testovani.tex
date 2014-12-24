@@ -1,1 +1,76 @@
 \chapter{Testování}
+Testování je nedílnou součástí při vývoji software. Mimo ověření správné funkčnosti aplikace, se také testuje, zdali bylo vytvořeno přesně to, co bylo v zadání. Rozeznáváme automatické a manuální testování. Manuální testování dělají lidé. Výběr těchto testerů by měl odpovídat cílové skupině, pro kterou je aplikace designována. Na toto testování lze nahlížet z několika aspektů. Prvním z nich je zdali aplikace opravdu dělá to co má a druhým aspektem je jak se uživateli s aplikací pracuje. V této kapitole budou popsány různé typy testování, které byly na frameworku provedeny a testovací projekt, který byl v této souvislosti vytvořen. Software disponuje několika Unit testy, které pokrývají chování systému, které provádí složitější generování či parsování. Uživatelský test prověřil použitelnost frameworku a poskytl informace o tom, jak uživatelé pracují s aktuální verzí. Showcase demonstrují možnosti a svým způsobem také testují software v tomto případě se jednalo o Alfa test.
+
+\section{Unit testy}
+Unit testy testují určitou část software, které by měla být co nejmenší, od toho pochází název unit, neboť se jedná o malou jednotku, jenž test pokrývá. Unit testy pokrývají většinou  metody či spolupráci metod a neměli by testovat celkové chování systému. Při návrhu testů je potřeba zvážit, zdali test přinese užitek a zdali může odhalit potencionální chybu. Například testování getterů a setterů je zbytečné. Absolutní pokrytí testů není možné z důvodů časové náročnosti vývoje testů, udržování a možností, které by se museli vygenerovat. Proto je vhodné testovat krajní případy. 
+
+K testování byl využit framework JUnit \cite{junit}. JUnit testy se spouští při každém buildu aplikace pomocí Mavenu, pokud není určeno jinak. Framework disponuje spoustou vlastností, které lze použít. Integrace do existujících projektů je jednoduchá a framework podporuje anotace, pomocí kterých lze přizpůsobovat test a určovat chování testy či specifikovat vyjímky, které test očekává. Testy mohou být spouštěny ve skupinách. Automatické testování pokrývají následující vlastnosti:
+\begin{enumerate}
+\item Test správné propagace proměnných do XML souboru s definicemi zdrojů - Do XML souborů je možné vložit hodnoty z hash mapy. Tyto hodnoty mohou za běhu ovlivňovat definici zdrojů a způsob jejich připojení. 
+\item Test správné serializace dat získaných z formuláře na JSON - Z formuláře jsou získána data, která mají pouze textovou reprezentaci a na jejich základě je potřeba sestavit JSON. Sestavení JSONu je potřeba ověřit.
+\item Test správné vytvoření modelu na základě XML - Model je vytvářen na základě definic. Statické definice jsou součástí zdrojů a testuje se, zdali je na jejich základě možné vygenerovat model. Netestují se tedy definice, ale generátor.
+\item Test správného získání možností z určeného výčtového typu - V mnoha případech je potřeba získat data z výčtových typů. V tomto testu se definuje zdali algoritmus, který data získává funguje korektně.
+\end{enumerate}
+
+Software využívá několik
+\section{Uživatelský test}
+Návrh frameworku zohledňoval cílovou skupinu uživatelů a snažil se přizpůsobit jejich potřebám. Při návrhu jsem čerpal ze svých vlastních zkušeností, které jsem získal při vývoji software a při své stáži v RedHatu. Firma RedHat vyvíjí v rámci jejich projektu WFK produkt RichFaces. Jedná se o open source komponentový framework pro webové aplikace využívající technologii JSF. Tento projekt má početný tým testerů, který je napojen na upstream. K testování se využívají JUnit testy a Arquillian testy. I přes komplexnost projektu a stabilnost frameworku, bylo rozhodnuto o jeho ukončení. Jedním z důvodem je fakt, že projekt dostatečně rychle nepřinesl podporu mobilních zařízení, dalším důvodem je skutečnost, že narozdíl od svého přímého konkurenta PrimeFaces, není tak často používaný. Tento fakt lze přikládat použitelnosti framewoku. Při použití komponent je potřeba udělat několik operací, které nemusí být pro začínající uživatele intuitivní. 
+
+\subsection{Cílová skupina}
+V mém návrhu jsem se proto soustředil na použitelnost. Cílovou skupinou jsou vývojáři, kteří chtějí knihovnu použít v nové či v stávající aplikaci. Tito vývojáři by měli mít základní zkušenost s webovými službami a v případě využítí Swingové části samozřejmě s frameworkem Swing. Architekturu a způsob použití jsem se koncipoval tak aby bylo přímočaré, nicméně bylo potřeba ověřit tuto skutečnost s uživateli během testu. Účastníky testu jsem vybíral ze svých kolegů studentů o nichž jsem věděl, že patří do cílové skupiny. Také jsem zvolil jako dva z testerů své kolegy z práce, kteří se vývojem softwaru zabývají již nejaký čas. Tímto jsem chtěl zajistit různorodost informací, které jsem mohl zjistit. Test jsem provedl se čtyřmi participanty.
+
+\subsection{Test setup}
+Vzhledem k tomu, že má framework dvě části, tak bylo potřeba vytvořit prostředí pro serverou i klientskou část. Serverová část je mnohem komplikovanější, neboť vytvoření aplikace na platformě Java EE s restovým rozhranním a vrstvou jež bude poskytovat data není triviální věc a samotné nastavení serveru a tvorba tříd, které jsou zodpovědné za tuto funkcionalitu. Testujícímu byla tedy připravena aplikace, která již tyto vlastnosti splňovala a obsahovala výchozí data. Uvažoval jsem případ, kdy chce vývojář rozšířit aktuální aplikaci o tento framework. Myslím, si že toto bude v praxi nejčastější použití, neboť zatím nepředpokládáme, že by vývojáři tvořili aplikace na míru našemu frameworku. Co se týče klientské strany, tak byla připravena aplikace Swingová aplikace, kterou mohl participant upravovat. Klientská aplikace nedisponovala, žádnými knihovny třetích stran. Test probíhal na mém notebooku, který měl předpřipravené prostředí. Tester mohl používat nástroj RestClient pro ověření funkčnosti serverové strany a byla mu dodána uživatelská příručka. Před testem mu byla vysvětlena základní idea frameworku a byl mu představen framework AspectFaces, který je využit pro generování definic dat. Po testu bylo prostředí resetován a test se mohl opakovat.
+
+\subsection{Test case}
+Při sestavování úkolů pro testera bylo potřeba vzít v úvahu náročnost jednotlivých úkolů. Z tohoto důvodu byly koncipovány úkoly tak, aby na sebe navazovaly. Participantovi byly zadány následující úkoly v níže uvedeném pořadí.
+\begin{enumerate}
+\item Seznamte se s serverou a klientskou částí. Prostudujte uživatelskou příručkou.
+\item Vytvořte v serverové části zdroj, který bude vracet definici dat objektu Country. Předvěďte funkčnost pomocí RestClienta
+\item Vytvořte v klientské části prázdný formulář, který bude sestaven na základě definice z předchozího bodu.
+\item Naplňte formulář daty ze serveru. Konkrétně zobrazte ve formuláři zemi s identifkačním číslem 1.
+\item Vytvořte prázdný formulář stejný jako v bodu 3, který lze odeslat zpět na server a po jeho odeslání bude přidána nová země do databáze.
+\item Vytvořte tabulky se všemi zeměmi v databázi a přesvědčte se, zdali byla země s předchozího bodu vložna.
+\item Upravte tabulku s předhchozího bodu tak, aby byla její velikost závislá na velikosti textů, které zobrazuje.
+\item Vytvořte formulář z bodu 3, který bude moci upravovat zemi s idetifikačním číslem 1 a po jeho odeslání se změna projeví na serveru v databázy.
+\item Vytvořte formulář z bodu 3, který zobrazí zemi s identifiakčním číslem 1 a po jeho odeslání bude země ze serverové databáze smazána.
+\item Vytvořte formulář z bodu 3. Změntě komponentu, tak aby u proměnné active bylo místo checkboxu dropDownMenu.
+\end{enumerate}
+Cílem bylo zjisti, zdali je jsou uživatelé schopni s frameworkem pracovat, jakým způsobem ho využívají a zdali jsou schopni pracovat s vygenerovanými komponentami.
+\subsection{Vyhodnocení}
+Všichni uživatelé byli schopni splnit všechny zadané úkoly. V některých případech bylo potřeba testera trochu navést. Tyto případy zde budou rozvedeny. Po skončení testů dostali uživatelé otázku, jak se jim s frameworkem pracovalo. Participanti hodnotili práci kladně, ale měli i pár výtek. Konkrétně jim příšlo, že je framework moc chytrý. Jako příklad zde uvedu bod 3. Při plnění tohoto bodu postupovali podle uživatelské příručky, v které jsou zobrazeny příklady definic zdrojů. Uživatelé vždy zkopírovali zdroj celý a upravili cesty ke zdrojům. To způsobilo, že byl vygenerován formulář, který již obsahoval data. Testeři jako první zkusili vyhledat na formuláři metodu, která data odstraní či se snažili metodu, která zakáže zobrazování dat. Až po nějaké době zkusili vymazat definici zdroje. Tento problém se vyskytl u téměr u všech participantů, vyjímkou byl pouze jeden z nich, který nezkopíroval celou definici zdroje, ale jen jeho část. Tento participant však, strávil mnohem větší čas definici zdroje než jeho kolegové.
+
+\begin{table}[width=\linewidth]
+\begin{center}
+\caption{Problémy se splněním jednotlivých bodů}
+\label{table:userTestResult}
+\begin{tabular}{|p{7cm}|p{7cm}|}
+\hline
+\textbf{Popis problému} & \textbf{Návrh řešení} \\
+\hline
+Pokud je specifikován zdroj, tak jsou zobrazena data ve formuláři, pokud není tak nejsou. Framework si formulář automaticky přizpůsobí. & 
+Uživatelé by měli rádi větší kontrolu nad tím, jak se formulář chová. Je vhodné přidat metodu, která zapne či vypne plnění dat do formuláře.\\
+\hline
+Určení zdroje na základě XML. Problém byl s identifikátorem. Uživatel sice správně identifikátor zvolil, důvodem byl fakt, že ve třídě, která načítá data je identifikátor značen jako connectionKey a v konkrétních XML je reprezentován jako id. & 
+Předělat název proměnné ve třídě, tak aby odpovídala XML.\\
+\hline
+Při vytváření tabulky chtěl uživatel provádět akce navíc. Uživatel nebyl přesvědčený o tom, zdali výměna builderu při zachování zdrojů umožní sestavit tabulku. & Je potřeba upravit uživatelskou příručku, aby tuto informaci přesně specifikovala.\\
+\hline
+Získání přístupu k již existující komponentě. Uživatel chvilku tápal jak získat komponentu, kterou vygeneroval.  Důvodem bylo to, že uživatel chtěl komponentu získávát z panelu do kterého ji vložil. Použití sprváce komponent AFSwinx mu došlo až po té co si znovu přečetl uživatelskou příručku. & Možná by bylo vhodné zvážit zdali nepřejemnovat třídu na ComponentManager či použít jiný název, který by více odrážel její funkci. Dále je potřeba upravit uživatelskou příručku a věnovat této komponentě vlastní sekci.\\
+\hline
+Odesílání dat na severu. Uživatel zde chvilku hledal metodu, jakou lze data odeslat. Problémem bylo to, že výsledná komponenta je oddědena od JPanel a nabízí tedy velké množství metod. & Řešením by bylo přidat metodu k odeslání do AFSwinx a předat jí formulář, metodu k posílání dat na komponentě je ale potřeba rozhodně zachovat.\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+Uživatelé byly s frameworkem spokojeni. Jeden z uživatelů si poté vytvořil vlastní view v kterém zobrazil formulář pro vložení země do databáze a vedle něj umístil tabulku se zeměmi a sledoval jak se data mění. Další z nich při vytváření tabulky použil již existující kód, který mu vygeneruje formulář a pouze změnil slovo Form na Table a prohlásil, že by to takto mohlo fungovat a program spustil. Tabulka se mu sestavila, ale obsahovala pouze jeden prvek. Změnu zdroje, který vrátí všechny země pak uživatel zvládl bez problémů. Test byl pro uživatele i časové náročný neboť se museli seznámit s frameworkem, začít ho správně používat a chybějící metody a chování dopgrogramovat pomocí frameworku. Během testování bylo sledováno, jak participanti ovládají vygenerované komponenty. S ovládáním komponent neměl žádný participant problém. Vygenerované formuláře a tabulky jim přišli dostatečně velké a přehledné. Při odesílání dat na server byli uživatelé schopni opravit vstupní data pokud neprošla validací. 
+
+\section{Ukázkový projekt}
+Součástí práce je i poměrně rozsáhlý ukázkový projekt. Tento projekt je rozdělen na dvě části. Serverou a klientskou část a demonstruje použití frameworku. Serverou část je oddladěna pro aplikační server Glassfish \cite{glassfish}. Ukázkové projekty se využívají k tomu, aby uživateli ukázali jak framework funguje a v některých případech i k testování, nejčastěji pokud jde vývoj knihoven. Projekt se pak používá k odladění behěm fáze implementace, poté k testování během fáze testování a k smoke testům před závěrečným relasem. Pokud je ukázkový projekt dostatečně rozsáhlý zabere mnoho času rozšiřování tohoto projektu. V našem případě bylo potřeba implmentovat jak serverovou tak klientskou část.
+\subsection{Popis projektu}
+Ukázkový projekt je zjednodušená aplikace sloužící k zadávání dovolených. Aplikace umožňuje žádat o dovolenou a mazat tyto žádost. Umí spravovat uživatele a přidávat je do databáze, také umí vytvářet země, v kterých se uživatel nachází. Serverová strana využívá in memory DerbyDB. Databázová a business vrstva je v ukázkové aplikaci spojená a manažeři, kteří jsou zodpovědní za správu dat jsou stateless EJB. Webová API je poskytováno pomocí knihovny RestEasy. Zabezpečení realizováno pomocí interceptoru, který na základě basic autorizace a anotacím z javax.annotation.security určí zdali má uživatel právo k přístupu ke zdroji či nikoliv.
+
+Klientská část aplikace využívá frameworku AFSwinx a získává data ze serverových zdrojů a ty prezentuje uživatelům. Také nabízí vytvoření formulářů a vkládání, mazání či úpravy dat. V aplikaci existuje tzv security context, který udržuje informace o přihlášeném uživateli a v případě potřeby je odesílá na server. 
+
+\subsection{Nasazení}
+Aplikaci lze bez nutnosti konfigurace nasadit na aplikační server Glassfish verze 4. K využítí lze použít asaadmin, což je nástroj, který umožňuje ovládat aplikační server pomocí příkazové řádky. Soubor s WAR je součástí přiloženého CD či ho lze získat po spuštění mvn clean install v kořenovém adresáři. dopsat nasazení a otestovat na jiném počítači.

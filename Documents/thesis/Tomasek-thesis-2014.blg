@@ -35,6 +35,7 @@ while executing---line 1402 of file csplainnat.bst
 Warning--to sort, need author or key in gson
 Warning--to sort, need author or key in gridBagLayout
 Warning--to sort, need author, editor, or key in https
+Warning--to sort, need author or key in junit
 Warning--empty year in aspectFaces
 Warning--empty author and editor in https
 `address' is a missing field, not a string, for entry UmlArlow

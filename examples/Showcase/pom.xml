@@ -18,6 +18,14 @@
 			<artifactId>AFSwinx</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.uispec4j</groupId>
+			<artifactId>uispec4j</artifactId>
+			<version>2.4</version>
+			<classifier>jdk16</classifier>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>Showcase</finalName>
