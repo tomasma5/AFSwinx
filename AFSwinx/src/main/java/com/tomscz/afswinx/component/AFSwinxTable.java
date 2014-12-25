@@ -30,9 +30,8 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     private JScrollPane scrollPanel;
     private boolean dynamicSize = false;
     private boolean fitSize = false;
-    private int tableWidth;
-    private int tableHeight;
     private int[] columsWidth;
+    private int totalWidth = -1;
     private static final int PLUS_HEIGHT = 30;
 
 
@@ -59,6 +58,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
                 WidgetBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(
                                 panelToSetData.getWidgetType());
+                builder.setLocalization(localization);
                 builder.setData(panelToSetData, field);
                 row.put(fieldName, (String) builder.getPlainData(panelToSetData));
             }
@@ -108,10 +108,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     }
 
     public void resize() {
-        if(tableHeight != 0 && tableWidth != 0){
-            scrollPanel.setPreferredSize(new Dimension(tableWidth, tableHeight));
-        }
-        else if (fitSize) {
+        if (fitSize) {
             if (columsWidth == null) {
                 setColumnsWidths();
             }
@@ -131,6 +128,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
                 columnWidthAll += columnWidth;
             }
             scrollPanel.setPreferredSize(new Dimension(columnWidthAll, tableHeigth));
+            this.totalWidth = columnWidthAll;
         }
     }
 
@@ -170,20 +168,8 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
         this.scrollPanel = scrollPanel;
     }
 
-    public int getTableWidth() {
-        return tableWidth;
-    }
-
-    public void setTableWidth(int tableWidth) {
-        this.tableWidth = tableWidth;
-    }
-
-    public int getTableHeight() {
-        return tableHeight;
-    }
-
-    public void setTableHeight(int tableHeight) {
-        this.tableHeight = tableHeight;
+    public int getTotalWidth() {
+        return totalWidth;
     }
 
 }

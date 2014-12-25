@@ -59,12 +59,17 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             @SuppressWarnings("unchecked")
             JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) panel.getDataHolder().get(0);
-            AFOptions option = new AFOptions(data.getKey(), data.getValue());
+            AFOptions option = new AFOptions(data.getValue(), data.getValue());
             String valueLocalized =
                     LocalizationUtils
                             .getTextFromExtendBundle(option.getValue(), localization, null);
             option.setValue(valueLocalized);
-            comboBox.setSelectedItem(option);
+            for (int i = 0; i < comboBox.getModel().getSize(); i++) {
+                AFOptions optionInComboBox = comboBox.getModel().getElementAt(i);
+                if (optionInComboBox.equals(option)) {
+                    comboBox.setSelectedItem(optionInComboBox);
+                }
+            }
             // Verify if data were selected
             AFOptions selectedOption = getSelectedOption(panel);
             if (selectedOption == null || !selectedOption.equals(option)) {

@@ -3,6 +3,7 @@ package com.tomscz.afserver.ws.resources;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.naming.NamingException;
@@ -60,6 +61,7 @@ public class CountryResource extends BaseResource {
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
     public Response updateCountry(Country country) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
@@ -101,6 +103,7 @@ public class CountryResource extends BaseResource {
     @Path("/list")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
+    @PermitAll
     public Response getAllCountries() {
         try {
             CountryManager<Country> countryManager = getCountryManager();

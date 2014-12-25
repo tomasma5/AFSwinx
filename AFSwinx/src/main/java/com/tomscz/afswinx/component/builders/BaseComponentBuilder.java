@@ -157,6 +157,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent form, String key) throws AFSwinxBuildException {
+        form.localization = localization;
         // For each field
         for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
             // If its class then inspect it recursively

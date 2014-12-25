@@ -15,31 +15,43 @@ public class WelcomeScreenController extends BaseController {
 
     public WelcomeScreenController(WelcomeScreen screen) {
         super(screen);
+        registerListeners();
+    }
+    
+    @Override
+    protected void registerListeners(){
+        super.registerListeners();
         WelcomeScreen ws = (WelcomeScreen) view;
         ws.addSwinxLoginButtonListner(onLoginButtonExec);
     }
-
+    
     private ActionListener onLoginButtonExec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).sendData();
-                AFDataHolder data =
-                        AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName)
-                                .resealize();
-                // Parse send userName and password. This part is depend on server source.
-                String userName = null;
-                String password = null;
-                for (String key : data.getPropertiesAndValues().keySet()) {
-                    String value = data.getPropertiesAndValues().get(key);
-                    if (key.toLowerCase().equals("username")) {
-                        userName = value;
-                    } else if (key.toLowerCase().equals("password")) {
-                        password = value;
+                if(AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).validateData()){
+                    AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).sendData();
+                    AFDataHolder data =
+                            AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName)
+                                    .resealize();
+                    // Parse send userName and password. This part is depend on server source.
+                    String userName = null;
+                    String password = null;
+                    for (String key : data.getPropertiesAndValues().keySet()) {
+                        String value = data.getPropertiesAndValues().get(key);
+                        if (key.toLowerCase().equals("username")) {
+                            userName = value;
+                        } else if (key.toLowerCase().equals("password")) {
+                            password = value;
+                        }
                     }
+                    SecurityContext securityContext = new ShowcaseSecurity(userName, password, true);
+                    ApplicationContext.getInstance().setSecurityContext(securityContext);
+                    view.getContentPane().removeAll();
+                    view.intialize();
+                    registerListeners();
+                    view.getContentPane().repaint();
                 }
-                SecurityContext securityContext = new ShowcaseSecurity(userName, password, true);
-                ApplicationContext.getInstance().setSecurityContext(securityContext);
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("login.failed", "login.failed", e1.getMessage());
             }

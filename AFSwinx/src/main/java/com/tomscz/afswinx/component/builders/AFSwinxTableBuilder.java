@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component.builders;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,42 +33,39 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
     private int componentPossition = 0;
     private boolean fitSize = false;
     private boolean dynamicSize = true;
-    private int width;
-    private int height;
     private List<String> components = new ArrayList<String>();
 
     @Override
     public AFSwinxTable buildComponent() throws AFSwinxBuildException {
         super.initializeConnections();
-        AFSwinxTable table = new AFSwinxTable(modelConnection, dataConnection, sendConnection);
-        table.setDynamicSize(dynamicSize);
-        table.setFitSize(fitSize);
-        table.setTableHeight(width);
-        table.setTableWidth(height);
+        AFSwinxTable afSwinxTable = new AFSwinxTable(modelConnection, dataConnection, sendConnection);
+        afSwinxTable.setLayout(new GridLayout(1,1));
+        afSwinxTable.setDynamicSize(dynamicSize);
+        afSwinxTable.setFitSize(fitSize);
         try {
-            AFMetaModelPack metaModelPack = table.getModel();
+            AFMetaModelPack metaModelPack = afSwinxTable.getModel();
             AFClassInfo classInfo = metaModelPack.getClassInfo();
             if (classInfo != null) {
-                buildFields(classInfo, null,table, "");
+                buildFields(classInfo, null,afSwinxTable, "");
             }
             String columns[] = new String[components.size()];
             int i = 0;
             for (String key : components) {
-                ComponentDataPacker dataPacker = table.getPanels().get(key);
+                ComponentDataPacker dataPacker = afSwinxTable.getPanels().get(key);
                 String label = dataPacker.getComponent().getLabelHolder().getText();
                 columns[i] = label;
                 i++;
             }
-            Object o = table.getData();
+            Object o = afSwinxTable.getData();
             BaseRestBuilder dataBuilder =
-                    RestBuilderFactory.getInstance().getBuilder(table.getSendConnection());
+                    RestBuilderFactory.getInstance().getBuilder(afSwinxTable.getSendConnection());
             List<AFDataPack> dataPack = dataBuilder.serialize(o);
             // Fill data to table
-            table.fillData(dataPack);
+            afSwinxTable.fillData(dataPack);
 
             Object row[][] = new String[dataPack.size()][components.size()];
             for (i = 0; i < row.length; i++) {
-                HashMap<String, String> rowData = table.getTableRow().get(i);
+                HashMap<String, String> rowData = afSwinxTable.getTableRow().get(i);
                 for (int j = 0; j < row[i].length; j++) {
                     String key = components.get(j);
                     String value = rowData.get(key);
@@ -83,21 +81,22 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
                 }
             }
             TableModel model = new DefaultTableModel(row, columns);
-            JTable tableimp = new JTable(model);
+            JTable table = new JTable(model);
             RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-            tableimp.setRowSorter(sorter);
-            JScrollPane pane = new JScrollPane();
-            pane.setViewportView(tableimp);;
-            table.setTable(tableimp);
-            table.setScrollPanel(pane);
-            table.resize();
-            table.add(pane);
-            AFSwinx.getInstance().addComponent(table, componentKeyName);
+            table.setRowSorter(sorter);
+            JScrollPane pane = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+            table.setEnabled(false);
+            afSwinxTable.setTable(table);
+            afSwinxTable.setScrollPanel(pane);
+            afSwinxTable.resize();
+            afSwinxTable.add(pane);
+            AFSwinx.getInstance().addComponent(afSwinxTable, componentKeyName);
         } catch (AFSwinxConnectionException e) {
             throw new AFSwinxBuildException(e.getMessage());
         }
 
-        return table;
+        return afSwinxTable;
     }
 
     @Override
@@ -120,16 +119,6 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
 
     public AFSwinxTableBuilder setFitSize(boolean fitSize) {
         this.fitSize = fitSize;
-        return this;
-    }
-
-    public AFSwinxTableBuilder setHeight(int size) {
-        this.height = size;
-        return this;
-    }
-
-    public AFSwinxTableBuilder setWidth(int width) {
-        this.width = width;
         return this;
     }
 

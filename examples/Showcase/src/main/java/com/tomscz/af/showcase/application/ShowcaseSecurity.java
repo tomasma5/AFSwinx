@@ -1,10 +1,12 @@
 package com.tomscz.af.showcase.application;
 
+import java.util.HashMap;
+
 public class ShowcaseSecurity implements SecurityContext{
 
     private String userName;
     private String password;
-    private boolean isValid;
+    private boolean isValid = false;
     
     public ShowcaseSecurity(String userName, String password, boolean isValid){
         this.userName = userName;
@@ -25,6 +27,14 @@ public class ShowcaseSecurity implements SecurityContext{
     @Override
     public String getUserPassword() {
         return password;
+    }
+
+    @Override
+    public HashMap<String, String> getUserNameAndPasswodr() {
+        HashMap<String, String> security = new HashMap<String, String>();
+        security.put("username", userName);
+        security.put("password", password);
+        return security;
     }
 
     

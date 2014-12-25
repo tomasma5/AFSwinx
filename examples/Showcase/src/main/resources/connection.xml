@@ -117,16 +117,28 @@
 			<protocol>http</protocol>
 			<port>8080</port>
 		</data>
+	</connection>
+	<connection id="countryAdd">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/country/definition</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
 		<send>
 			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/country/remove/#{id}</endPointParameters>
+			<endPointParameters>/AFServer/rest/country</endPointParameters>
 			<protocol>http</protocol>
-			<method>delete</method>
+			<method>post</method>
 			<port>8080</port>
 			<security-params>
 				<security-method>basic</security-method>
-				<userName>sa2</userName>
-				<password>jaina</password>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
 			</security-params>
 		</send>
 	</connection>

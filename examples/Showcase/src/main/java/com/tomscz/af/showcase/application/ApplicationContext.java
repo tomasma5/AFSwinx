@@ -15,7 +15,7 @@ public class ApplicationContext {
 
     private static ApplicationContext instance;
     
-    private SecurityContext securityContext;
+    private SecurityContext securityContext = new ShowcaseSecurity("sa2","jaina",true);
 
     public static synchronized ApplicationContext getInstance() {
         if (instance == null) {

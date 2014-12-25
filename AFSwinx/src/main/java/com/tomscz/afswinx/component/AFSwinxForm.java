@@ -63,6 +63,7 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         WidgetBuilder builder =
                 WidgetBuilderFactory.getInstance().createWidgetBuilder(
                         panelToSetData.getWidgetType());
+        builder.setLocalization(localization);
         builder.setData(panelToSetData, field);
     }
 
