@@ -1,0 +1,656 @@
+[2014-12-25T20:09:27.187+0100] [] [INFO] [NCLS-GFLAUNCHER-00005] [javax.enterprise.launcher] [tid: _ThreadID=1 _ThreadName=main] [timeMillis: 1419534567187] [levelValue: 800] [[
+  JVM invocation command line:
+D:\Program Files\Java\jdk1.7.0_45\bin\java.exe
+-cp
+D:/glassfish-4.1/glassfish4/glassfish/modules/glassfish.jar
+-XX:+UnlockDiagnosticVMOptions
+-XX:MaxPermSize=192m
+-XX:NewRatio=2
+-Xmx512m
+-client
+-javaagent:D:/glassfish-4.1/glassfish4/glassfish/lib/monitor/flashlight-agent.jar
+-Dfelix.fileinstall.disableConfigSave=false
+-Djavax.net.ssl.keyStore=D:\glassfish-4.1\glassfish4\glassfish\domains\domain1/config/keystore.jks
+-Djava.awt.headless=true
+-Dcom.ctc.wstx.returnNullForDefaultNamespace=true
+-Dfelix.fileinstall.poll=5000
+-Djava.endorsed.dirs=D:\glassfish-4.1\glassfish4\glassfish/modules/endorsed;D:\glassfish-4.1\glassfish4\glassfish/lib/endorsed
+-Dfelix.fileinstall.bundles.startTransient=true
+-Djavax.net.ssl.trustStore=D:\glassfish-4.1\glassfish4\glassfish\domains\domain1/config/cacerts.jks
+-Djavax.xml.accessExternalSchema=all
+-Dcom.sun.enterprise.security.httpsOutboundKeyAlias=s1as
+-Djava.security.auth.login.config=D:\glassfish-4.1\glassfish4\glassfish\domains\domain1/config/login.conf
+-DANTLR_USE_DIRECT_CLASS_LOADING=true
+-Dgosh.args=--nointeractive
+-Dosgi.shell.telnet.maxconn=1
+-Djdbc.drivers=org.apache.derby.jdbc.ClientDriver
+-Dfelix.fileinstall.dir=D:\glassfish-4.1\glassfish4\glassfish/modules/autostart/
+-Dosgi.shell.telnet.port=6666
+-Djava.security.policy=D:\glassfish-4.1\glassfish4\glassfish\domains\domain1/config/server.policy
+-Dfelix.fileinstall.log.level=2
+-Dcom.sun.aas.instanceRoot=D:\glassfish-4.1\glassfish4\glassfish\domains\domain1
+-Dcom.sun.enterprise.config.config_environment_factory_class=com.sun.enterprise.config.serverbeans.AppserverConfigEnvironmentFactory
+-Dosgi.shell.telnet.ip=127.0.0.1
+-Dcom.sun.aas.installRoot=D:\glassfish-4.1\glassfish4\glassfish
+-Djava.ext.dirs=D:\Program Files\Java\jdk1.7.0_45/lib/ext;D:\Program Files\Java\jdk1.7.0_45/jre/lib/ext;D:\glassfish-4.1\glassfish4\glassfish\domains\domain1/lib/ext
+-Dfelix.fileinstall.bundles.new.start=true
+-Dorg.glassfish.additionalOSGiBundlesToStart=org.apache.felix.shell,org.apache.felix.gogo.runtime,org.apache.felix.gogo.shell,org.apache.felix.gogo.command,org.apache.felix.shell.remote,org.apache.felix.fileinstall
+-Djdk.corba.allowOutputStreamSubclass=true
+-Djava.library.path=D:/glassfish-4.1/glassfish4/glassfish/lib;C:/Windows/System32;C:/Windows/Sun/Java/bin;C:/Windows;D:/oraclexe/app/oracle/product/11.2.0/server/bin;C:/Program Files/PHP/v5.3;C:/Program Files/Common Files/Microsoft Shared/Windows Live;C:/Program Files (x86)/Common Files/microsoft shared/Windows Live;C:/Program Files/ImageMagick-6.8.8-Q16;C:/Program Files (x86)/PC Connectivity Solution;C:/Program Files (x86)/Common Files/ArcSoft/Bin;C:/Windows/System32/wbem;C:/Windows/System32/WindowsPowerShell/v1.0;D:/Program Files/ATI Technologies/ATI.ACE/Core-Static;D:/Program Files (x86)/Firebird/Firebird_2_5/bin;D:/WinMerge;D:/Program Files/Microsoft SQL Server/110/Tools/Binn;C:/Program Files/Microsoft/Web Platform Installer;C:/Program Files (x86)/Microsoft ASP.NET/ASP.NET Web Pages/v1.0;C:/Program Files (x86)/Windows Kits/8.0/Windows Performance Toolkit;D:/Servers/JBoss7/bin;D:/Program Files/Java/jdk1.7.0_40/bin;D:/Servers/apache-maven-3.2.3/bin;C:/Program Files/Intel/WiFi/bin;C:/Program Files/Common Files/Intel/WirelessCommon;C:/Program Files/MySQL/MySQL Server 5.6/bin;D:/Program Files/MySQL/MySQL Utilities 1.3.4;C:/Program;D:/Program Files (x86)/MiKTeX 2.9/miktex/bin;C:/Latex/miktex/bin;D:/glassfish-4.1/glassfish4/bin
+com.sun.enterprise.glassfish.bootstrap.ASMain
+-domainname
+domain1
+-asadmin-args
+--host,,,localhost,,,--port,,,4848,,,--secure=false,,,--terse=false,,,--echo=false,,,--interactive=true,,,start-domain,,,--verbose=false,,,--watchdog=false,,,--debug=false,,,--domaindir,,,D:\glassfish-4.1\glassfish4\glassfish\domains,,,domain1
+-instancename
+server
+-verbose
+false
+-debug
+false
+-asadmin-classpath
+D:/glassfish-4.1/glassfish4/glassfish/lib/client/appserver-cli.jar
+-asadmin-classname
+com.sun.enterprise.admin.cli.AdminMain
+-upgrade
+false
+-type
+DAS
+-domaindir
+D:/glassfish-4.1/glassfish4/glassfish/domains/domain1
+-read-stdin
+true]]
+
+[2014-12-25T20:09:38.604+0100] [glassfish 4.1] [INFO] [NCLS-LOGGING-00009] [javax.enterprise.logging] [tid: _ThreadID=17 _ThreadName=RunLevelControllerThread-1419534578476] [timeMillis: 1419534578604] [levelValue: 800] [[
+  Running GlassFish Version: GlassFish Server Open Source Edition  4.1  (build 13)]]
+
+[2014-12-25T20:09:38.607+0100] [glassfish 4.1] [INFO] [NCLS-LOGGING-00010] [javax.enterprise.logging] [tid: _ThreadID=17 _ThreadName=RunLevelControllerThread-1419534578476] [timeMillis: 1419534578607] [levelValue: 800] [[
+  Server log file is using Formatter class: com.sun.enterprise.server.logging.ODLLogFormatter]]
+
+[2014-12-25T20:09:38.948+0100] [glassfish 4.1] [INFO] [] [org.hibernate.validator.internal.util.Version] [tid: _ThreadID=19 _ThreadName=RunLevelControllerThread-1419534578487] [timeMillis: 1419534578948] [levelValue: 800] [[
+  HV000001: Hibernate Validator 5.0.0.Final]]
+
+[2014-12-25T20:09:39.011+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01115] [javax.enterprise.system.core.security] [tid: _ThreadID=17 _ThreadName=RunLevelControllerThread-1419534578476] [timeMillis: 1419534579011] [levelValue: 800] [[
+  Realm [admin-realm] of classtype [com.sun.enterprise.security.auth.realm.file.FileRealm] successfully created.]]
+
+[2014-12-25T20:09:39.017+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01115] [javax.enterprise.system.core.security] [tid: _ThreadID=17 _ThreadName=RunLevelControllerThread-1419534578476] [timeMillis: 1419534579017] [levelValue: 800] [[
+  Realm [file] of classtype [com.sun.enterprise.security.auth.realm.file.FileRealm] successfully created.]]
+
+[2014-12-25T20:09:39.080+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01115] [javax.enterprise.system.core.security] [tid: _ThreadID=17 _ThreadName=RunLevelControllerThread-1419534578476] [timeMillis: 1419534579080] [levelValue: 800] [[
+  Realm [certificate] of classtype [com.sun.enterprise.security.auth.realm.certificate.CertificateRealm] successfully created.]]
+
+[2014-12-25T20:09:39.235+0100] [glassfish 4.1] [INFO] [SEC-SVCS-00100] [javax.enterprise.security.services] [tid: _ThreadID=17 _ThreadName=RunLevelControllerThread-1419534578476] [timeMillis: 1419534579235] [levelValue: 800] [[
+  Authorization Service has successfully initialized.]]
+
+[2014-12-25T20:09:39.579+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00087] [javax.enterprise.system.core] [tid: _ThreadID=18 _ThreadName=RunLevelControllerThread-1419534578487] [timeMillis: 1419534579579] [levelValue: 800] [[
+  Grizzly Framework 2.3.15 started in: 100ms - bound to [/0.0.0.0:8080]]]
+
+[2014-12-25T20:09:39.619+0100] [glassfish 4.1] [INFO] [] [org.glassfish.ha.store.spi.BackingStoreFactoryRegistry] [tid: _ThreadID=16 _ThreadName=RunLevelControllerThread-1419534578474] [timeMillis: 1419534579619] [levelValue: 800] [[
+  Registered org.glassfish.ha.store.adapter.cache.ShoalBackingStoreProxy for persistence-type = replicated in BackingStoreFactoryRegistry]]
+
+[2014-12-25T20:09:39.675+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00087] [javax.enterprise.system.core] [tid: _ThreadID=18 _ThreadName=RunLevelControllerThread-1419534578487] [timeMillis: 1419534579675] [levelValue: 800] [[
+  Grizzly Framework 2.3.15 started in: 27ms - bound to [/0.0.0.0:8181]]]
+
+[2014-12-25T20:09:39.727+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00087] [javax.enterprise.system.core] [tid: _ThreadID=18 _ThreadName=RunLevelControllerThread-1419534578487] [timeMillis: 1419534579727] [levelValue: 800] [[
+  Grizzly Framework 2.3.15 started in: 4ms - bound to [/0.0.0.0:4848]]]
+
+[2014-12-25T20:09:39.864+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00087] [javax.enterprise.system.core] [tid: _ThreadID=16 _ThreadName=RunLevelControllerThread-1419534578474] [timeMillis: 1419534579864] [levelValue: 800] [[
+  Grizzly Framework 2.3.15 started in: 2ms - bound to [/0.0.0.0:3700]]]
+
+[2014-12-25T20:09:39.970+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00017] [javax.enterprise.system.core] [tid: _ThreadID=1 _ThreadName=main] [timeMillis: 1419534579970] [levelValue: 800] [[
+  GlassFish Server Open Source Edition  4.1  (13) startup time : Felix (11 014ms), startup services(1 503ms), total(12 517ms)]]
+
+[2014-12-25T20:09:41.287+0100] [glassfish 4.1] [INFO] [NCLS-JMX-00005] [javax.enterprise.system.jmx] [tid: _ThreadID=61 _ThreadName=Thread-14] [timeMillis: 1419534581287] [levelValue: 800] [[
+  JMXStartupService has started JMXConnector on JMXService URL service:jmx:rmi://Tom-ntb:8686/jndi/rmi://Tom-ntb:8686/jmxrmi]]
+
+[2014-12-25T20:09:41.831+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00087] [javax.enterprise.system.core] [tid: _ThreadID=19 _ThreadName=RunLevelControllerThread-1419534578487] [timeMillis: 1419534581831] [levelValue: 800] [[
+  Grizzly Framework 2.3.15 started in: 3ms - bound to [/0.0.0.0:7676]]]
+
+[2014-12-25T20:09:41.846+0100] [glassfish 4.1] [INFO] [NCLS-BOOTSTRAP-00027] [javax.enterprise.bootstrap] [tid: _ThreadID=1 _ThreadName=main] [timeMillis: 1419534581846] [levelValue: 800] [[
+  Registered com.sun.enterprise.glassfish.bootstrap.osgi.EmbeddedOSGiGlassFishImpl@517f2ca0 as OSGi service registration: org.apache.felix.framework.ServiceRegistrationImpl@5c1f95eb.]]
+
+[2014-12-25T20:09:47.727+0100] [glassfish 4.1] [INFO] [] [org.glassfish.jersey.server.ApplicationHandler] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534587727] [levelValue: 800] [[
+  Initiating Jersey application, version Jersey: 2.10.4 2014-08-08 15:09:00...]]
+
+[2014-12-25T20:09:48.060+0100] [glassfish 4.1] [INFO] [NCLS-REST-00001] [javax.enterprise.admin.rest] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534588060] [levelValue: 800] [[
+  Listening to REST requests at context: /command/domain.]]
+
+[2014-12-25T20:10:05.093+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534605093] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:06.235+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01002] [javax.enterprise.system.core.security] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606235] [levelValue: 800] [[
+  Java security manager is disabled.]]
+
+[2014-12-25T20:10:06.236+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01010] [javax.enterprise.system.core.security] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606236] [levelValue: 800] [[
+  Entering Security Startup Service.]]
+
+[2014-12-25T20:10:06.241+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01143] [javax.enterprise.system.core.security] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606241] [levelValue: 800] [[
+  Loading policy provider com.sun.enterprise.security.provider.PolicyWrapper.]]
+
+[2014-12-25T20:10:06.314+0100] [glassfish 4.1] [INFO] [NCLS-SECURITY-01011] [javax.enterprise.system.core.security] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606314] [levelValue: 800] [[
+  Security Service(s) started successfully.]]
+
+[2014-12-25T20:10:06.622+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00198] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606622] [levelValue: 800] [[
+  Created HTTP listener http-listener-1 on host/port 0.0.0.0:8080]]
+
+[2014-12-25T20:10:06.639+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00198] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606639] [levelValue: 800] [[
+  Created HTTP listener http-listener-2 on host/port 0.0.0.0:8181]]
+
+[2014-12-25T20:10:06.648+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00198] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606648] [levelValue: 800] [[
+  Created HTTP listener admin-listener on host/port 0.0.0.0:4848]]
+
+[2014-12-25T20:10:06.687+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00200] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606687] [levelValue: 800] [[
+  Created virtual server server]]
+
+[2014-12-25T20:10:06.691+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00200] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606691] [levelValue: 800] [[
+  Created virtual server __asadmin]]
+
+[2014-12-25T20:10:06.889+0100] [glassfish 4.1] [INFO] [AS-WEB-CORE-00306] [javax.enterprise.web.core] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606889] [levelValue: 800] [[
+  Setting JAAS app name glassfish-web]]
+
+[2014-12-25T20:10:06.890+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00201] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534606890] [levelValue: 800] [[
+  Virtual server server loaded default web module ]]
+
+[2014-12-25T20:10:07.354+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607354] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.770+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607770] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.838+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607838] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.841+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607841] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.844+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607844] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.847+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607847] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.850+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607850] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.853+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607853] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.856+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607856] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.858+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607858] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.861+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607861] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.864+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607864] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.867+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607867] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.870+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607870] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.872+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607872] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.875+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607875] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.877+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607877] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.880+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607880] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.882+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607882] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.885+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607885] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.888+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607888] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.890+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607890] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.894+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607894] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.896+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607896] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.898+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607898] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.900+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607900] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.901+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607901] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.903+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607903] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.905+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607905] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.907+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607907] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.910+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607910] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.911+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607911] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.914+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607914] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.915+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607915] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.918+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607918] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.920+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607920] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.921+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607921] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.923+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607923] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.924+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607924] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.926+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607926] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.928+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607928] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.930+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607930] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.932+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607932] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.934+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607934] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.936+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607936] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:07.938+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534607938] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:08.219+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.dol] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534608219] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:08.428+0100] [glassfish 4.1] [WARNING] [invalid.dynamic-reconfig.value] [javax.enterprise.resource.resourceadapter.com.sun.appserv.connectors.internal.api] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534608428] [levelValue: 900] [[
+  RAR8705: Invalid value for property dynamic-reconfiguration-wait-timeout-in-seconds : null]]
+
+[2014-12-25T20:10:08.489+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.dol] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534608489] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:10:09.469+0100] [glassfish 4.1] [INFO] [] [org.eclipse.persistence.session.file:/D:/glassfish-4.1/glassfish4/glassfish/domains/domain1/applications/AFServer/WEB-INF/classes/_AFServerPU] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534609469] [levelValue: 800] [[
+  EclipseLink, version: Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd]]
+
+[2014-12-25T20:10:11.025+0100] [glassfish 4.1] [INFO] [] [org.eclipse.persistence.session.file:/D:/glassfish-4.1/glassfish4/glassfish/domains/domain1/applications/AFServer/WEB-INF/classes/_AFServerPU.connection] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534611025] [levelValue: 800] [[
+  file:/D:/glassfish-4.1/glassfish4/glassfish/domains/domain1/applications/AFServer/WEB-INF/classes/_AFServerPU login successful]]
+
+[2014-12-25T20:10:11.557+0100] [glassfish 4.1] [INFO] [AS-EJB-00054] [javax.enterprise.ejb.container] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534611557] [levelValue: 800] [[
+  Portable JNDI names for EJB StartUpBean: [java:global/AFServer/StartUpBean, java:global/AFServer/StartUpBean!com.tomscz.afserver.manager.StartUpBean]]]
+
+[2014-12-25T20:10:11.610+0100] [glassfish 4.1] [INFO] [AS-EJB-00054] [javax.enterprise.ejb.container] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534611610] [levelValue: 800] [[
+  Portable JNDI names for EJB CountryManager: [java:global/AFServer/CountryManager!com.tomscz.afserver.manager.CountryManager, java:global/AFServer/CountryManager]]]
+
+[2014-12-25T20:10:11.629+0100] [glassfish 4.1] [INFO] [AS-EJB-00054] [javax.enterprise.ejb.container] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534611629] [levelValue: 800] [[
+  Portable JNDI names for EJB PersonManager: [java:global/AFServer/PersonManager!com.tomscz.afserver.manager.PersonManager, java:global/AFServer/PersonManager]]]
+
+[2014-12-25T20:10:11.641+0100] [glassfish 4.1] [INFO] [AS-EJB-00054] [javax.enterprise.ejb.container] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534611641] [levelValue: 800] [[
+  Portable JNDI names for EJB AdressManager: [java:global/AFServer/AdressManager, java:global/AFServer/AdressManager!com.tomscz.afserver.manager.AddressManager]]]
+
+[2014-12-25T20:10:11.665+0100] [glassfish 4.1] [INFO] [] [org.jboss.weld.Version] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534611665] [levelValue: 800] [[
+  WELD-000900: 2.2.2 (Final)]]
+
+[2014-12-25T20:10:12.468+0100] [glassfish 4.1] [WARN] [] [org.jboss.weld.Interceptor] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534612468] [levelValue: 900] [[
+  WELD-001700: Interceptor annotation class javax.ejb.PostActivate not found, interception based on it is not enabled]]
+
+[2014-12-25T20:10:12.468+0100] [glassfish 4.1] [WARN] [] [org.jboss.weld.Interceptor] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534612468] [levelValue: 900] [[
+  WELD-001700: Interceptor annotation class javax.ejb.PrePassivate not found, interception based on it is not enabled]]
+
+[2014-12-25T20:10:12.640+0100] [glassfish 4.1] [WARN] [] [org.jboss.weld.Event] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534612640] [levelValue: 900] [[
+  WELD-000411: Observer method [BackedAnnotatedMethod] public org.glassfish.jms.injection.JMSCDIExtension.processAnnotatedType(@Observes ProcessAnnotatedType<Object>) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.]]
+
+[2014-12-25T20:10:12.647+0100] [glassfish 4.1] [WARN] [] [org.jboss.weld.Event] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534612647] [levelValue: 900] [[
+  WELD-000411: Observer method [BackedAnnotatedMethod] org.glassfish.sse.impl.ServerSentEventCdiExtension.processAnnotatedType(@Observes ProcessAnnotatedType<Object>, BeanManager) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.]]
+
+[2014-12-25T20:10:12.660+0100] [glassfish 4.1] [WARN] [] [org.jboss.weld.Event] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534612660] [levelValue: 900] [[
+  WELD-000411: Observer method [BackedAnnotatedMethod] private org.glassfish.jersey.gf.cdi.internal.CdiComponentProvider.processAnnotatedType(@Observes ProcessAnnotatedType<Object>) receives events for all annotated types. Consider restricting events using @WithAnnotations or a generic type with bounds.]]
+
+[2014-12-25T20:10:15.070+0100] [glassfish 4.1] [SEVERE] [] [] [tid: _ThreadID=53 _ThreadName=Thread-9] [timeMillis: 1419534615070] [levelValue: 1000] [[
+  SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".]]
+
+[2014-12-25T20:10:15.070+0100] [glassfish 4.1] [SEVERE] [] [] [tid: _ThreadID=53 _ThreadName=Thread-9] [timeMillis: 1419534615070] [levelValue: 1000] [[
+  SLF4J: Defaulting to no-operation (NOP) logger implementation]]
+
+[2014-12-25T20:10:15.070+0100] [glassfish 4.1] [SEVERE] [] [] [tid: _ThreadID=53 _ThreadName=Thread-9] [timeMillis: 1419534615070] [levelValue: 1000] [[
+  SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.]]
+
+[2014-12-25T20:10:16.385+0100] [glassfish 4.1] [INFO] [jsf.config.listener.version] [javax.enterprise.resource.webcontainer.jsf.config] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534616385] [levelValue: 800] [[
+  Initializing Mojarra 2.2.7 ( 20140610-1547 https://svn.java.net/svn/mojarra~svn/tags/2.2.7@13362) for context '/AFServer']]
+
+[2014-12-25T20:10:18.955+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00172] [javax.enterprise.web] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534618955] [levelValue: 800] [[
+  Loading application [AFServer] at [/AFServer]]]
+
+[2014-12-25T20:10:19.110+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.core] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534619110] [levelValue: 800] [[
+  AFServer was successfully deployed in 19 126 milliseconds.]]
+
+[2014-12-25T20:10:19.133+0100] [glassfish 4.1] [INFO] [NCLS-REST-00003] [javax.enterprise.admin.rest] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534619133] [levelValue: 800] [[
+  An error occurred while processing the request. Please see the server logs for details.
+org.glassfish.jersey.server.ContainerException: java.lang.AbstractMethodError: javax.ws.rs.core.Response.getStatusInfo()Ljavax/ws/rs/core/Response$StatusType;
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer$ResponseWriter.rethrow(GrizzlyHttpContainer.java:317)
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer$ResponseWriter.failure(GrizzlyHttpContainer.java:299)
+	at org.glassfish.jersey.server.ServerRuntime$Responder.process(ServerRuntime.java:439)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:297)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:254)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1028)
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer.service(GrizzlyHttpContainer.java:365)
+	at org.glassfish.admin.rest.adapter.JerseyContainerCommandService$3.service(JerseyContainerCommandService.java:173)
+	at org.glassfish.admin.rest.adapter.RestAdapter.service(RestAdapter.java:179)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:459)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:167)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.lang.AbstractMethodError: javax.ws.rs.core.Response.getStatusInfo()Ljavax/ws/rs/core/Response$StatusType;
+	at org.glassfish.jersey.message.internal.OutboundJaxrsResponse.from(OutboundJaxrsResponse.java:97)
+	at org.glassfish.jersey.server.ContainerResponse.<init>(ContainerResponse.java:88)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:331)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:103)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:271)
+	... 30 more
+]]
+
+[2014-12-25T20:10:19.137+0100] [glassfish 4.1] [WARNING] [NCLS-CORE-00090] [javax.enterprise.system.core] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534619137] [levelValue: 900] [[
+  Internal Server error: /command/deploy
+java.lang.RuntimeException: java.lang.IllegalStateException: Illegal attempt to call getOutputStream() after getWriter() has already been called.
+	at org.glassfish.admin.rest.adapter.RestAdapter.reportError(RestAdapter.java:346)
+	at org.glassfish.admin.rest.adapter.RestAdapter.service(RestAdapter.java:209)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:459)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:167)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.lang.IllegalStateException: Illegal attempt to call getOutputStream() after getWriter() has already been called.
+	at org.glassfish.grizzly.http.server.Response.getNIOOutputStream(Response.java:624)
+	at org.glassfish.grizzly.http.server.Response.getOutputStream(Response.java:649)
+	at org.glassfish.admin.rest.adapter.RestAdapter.reportError(RestAdapter.java:342)
+	... 20 more
+]]
+
+[2014-12-25T20:10:19.137+0100] [glassfish 4.1] [WARNING] [NCLS-CORE-00091] [javax.enterprise.system.core] [tid: _ThreadID=53 _ThreadName=admin-listener(5)] [timeMillis: 1419534619137] [levelValue: 900] [[
+  Unable to set customized error page
+java.lang.IllegalStateException: Illegal attempt to call sendError() after the response has been committed.
+	at org.glassfish.grizzly.http.server.Response.sendError(Response.java:1327)
+	at org.glassfish.grizzly.http.server.Response.sendError(Response.java:1309)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:175)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+]]
+
+[2014-12-25T20:11:42.607+0100] [glassfish 4.1] [INFO] [] [] [tid: _ThreadID=75 _ThreadName=PingService] [timeMillis: 1419534702607] [levelValue: 800] [[
+  Domain Pinged: release.glassfish.org]]
+
+[2014-12-25T20:16:22.193+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534982193] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:16:22.802+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534982802] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:16:22.809+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534982809] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:16:22.811+0100] [glassfish 4.1] [INFO] [] [javax.enterprise.system.tools.deployment.common] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534982811] [levelValue: 800] [[
+  visiting unvisited references]]
+
+[2014-12-25T20:16:23.988+0100] [glassfish 4.1] [INFO] [jsf.config.listener.version] [javax.enterprise.resource.webcontainer.jsf.config] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534983988] [levelValue: 800] [[
+  Initializing Mojarra 2.2.7 ( 20140610-1547 https://svn.java.net/svn/mojarra~svn/tags/2.2.7@13362) for context '']]
+
+[2014-12-25T20:16:24.481+0100] [glassfish 4.1] [INFO] [] [org.glassfish.jersey.server.ApplicationHandler] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534984481] [levelValue: 800] [[
+  Initiating Jersey application, version Jersey: 2.10.4 2014-08-08 15:09:00...]]
+
+[2014-12-25T20:16:24.957+0100] [glassfish 4.1] [INFO] [NCLS-REST-00001] [javax.enterprise.admin.rest] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534984957] [levelValue: 800] [[
+  Listening to REST requests at context: /management/domain.]]
+
+[2014-12-25T20:16:25.097+0100] [glassfish 4.1] [INFO] [NCLS-REST-00003] [javax.enterprise.admin.rest] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534985097] [levelValue: 800] [[
+  An error occurred while processing the request. Please see the server logs for details.
+org.glassfish.jersey.server.ContainerException: java.lang.AbstractMethodError: javax.ws.rs.core.Response.getStatusInfo()Ljavax/ws/rs/core/Response$StatusType;
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer$ResponseWriter.rethrow(GrizzlyHttpContainer.java:317)
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer$ResponseWriter.failure(GrizzlyHttpContainer.java:299)
+	at org.glassfish.jersey.server.ServerRuntime$Responder.process(ServerRuntime.java:439)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:277)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:271)
+	at org.glassfish.jersey.internal.Errors$1.call(Errors.java:267)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:315)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:297)
+	at org.glassfish.jersey.internal.Errors.process(Errors.java:267)
+	at org.glassfish.jersey.process.internal.RequestScope.runInScope(RequestScope.java:297)
+	at org.glassfish.jersey.server.ServerRuntime.process(ServerRuntime.java:254)
+	at org.glassfish.jersey.server.ApplicationHandler.handle(ApplicationHandler.java:1028)
+	at org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpContainer.service(GrizzlyHttpContainer.java:365)
+	at org.glassfish.admin.rest.adapter.RestAdapter$2.service(RestAdapter.java:316)
+	at org.glassfish.admin.rest.adapter.RestAdapter.service(RestAdapter.java:179)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:459)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:167)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.lang.AbstractMethodError: javax.ws.rs.core.Response.getStatusInfo()Ljavax/ws/rs/core/Response$StatusType;
+	at org.glassfish.jersey.message.internal.OutboundJaxrsResponse.from(OutboundJaxrsResponse.java:97)
+	at org.glassfish.jersey.server.ContainerResponse.<init>(ContainerResponse.java:88)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:331)
+	at org.glassfish.jersey.server.model.ResourceMethodInvoker.apply(ResourceMethodInvoker.java:103)
+	at org.glassfish.jersey.server.ServerRuntime$1.run(ServerRuntime.java:271)
+	... 30 more
+]]
+
+[2014-12-25T20:16:25.098+0100] [glassfish 4.1] [WARNING] [NCLS-CORE-00090] [javax.enterprise.system.core] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534985098] [levelValue: 900] [[
+  Internal Server error: null
+java.lang.RuntimeException: java.lang.IllegalStateException: Illegal attempt to call getOutputStream() after getWriter() has already been called.
+	at org.glassfish.admin.rest.adapter.RestAdapter.reportError(RestAdapter.java:346)
+	at org.glassfish.admin.rest.adapter.RestAdapter.service(RestAdapter.java:209)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:459)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:167)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.lang.IllegalStateException: Illegal attempt to call getOutputStream() after getWriter() has already been called.
+	at org.glassfish.grizzly.http.server.Response.getNIOOutputStream(Response.java:624)
+	at org.glassfish.grizzly.http.server.Response.getOutputStream(Response.java:649)
+	at org.glassfish.admin.rest.adapter.RestAdapter.reportError(RestAdapter.java:342)
+	... 20 more
+]]
+
+[2014-12-25T20:16:25.098+0100] [glassfish 4.1] [WARNING] [NCLS-CORE-00091] [javax.enterprise.system.core] [tid: _ThreadID=49 _ThreadName=admin-listener(1)] [timeMillis: 1419534985098] [levelValue: 900] [[
+  Unable to set customized error page
+java.lang.IllegalStateException: Illegal attempt to call sendError() after the response has been committed.
+	at org.glassfish.grizzly.http.server.Response.sendError(Response.java:1327)
+	at org.glassfish.grizzly.http.server.Response.sendError(Response.java:1309)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:175)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+]]
+
+[2014-12-25T20:16:25.258+0100] [glassfish 4.1] [INFO] [AS-WEB-GLUE-00172] [javax.enterprise.web] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534985258] [levelValue: 800] [[
+  Loading application [__admingui] at [/]]]
+
+[2014-12-25T20:16:25.260+0100] [glassfish 4.1] [INFO] [NCLS-CORE-00022] [javax.enterprise.system.core] [tid: _ThreadID=127 _ThreadName=Thread-35] [timeMillis: 1419534985260] [levelValue: 800] [[
+  Loading application __admingui done in 3 244 ms]]
+
+[2014-12-25T20:16:25.288+0100] [glassfish 4.1] [WARNING] [] [javax.enterprise.system.container.web.com.sun.web.security] [tid: _ThreadID=50 _ThreadName=admin-listener(2)] [timeMillis: 1419534985288] [levelValue: 900] [[
+  Context path from ServletContext:  differs from path from bundle: /]]
+
+[2014-12-25T20:16:26.305+0100] [glassfish 4.1] [WARNING] [] [javax.enterprise.web.core] [tid: _ThreadID=50 _ThreadName=admin-listener(2)] [timeMillis: 1419534986305] [levelValue: 900] [[
+  Servlet.service() for servlet FacesServlet threw exception
+java.lang.AbstractMethodError: javax.ws.rs.core.UriBuilder.uri(Ljava/lang/String;)Ljavax/ws/rs/core/UriBuilder;
+	at javax.ws.rs.core.UriBuilder.fromUri(UriBuilder.java:119)
+	at org.glassfish.jersey.client.JerseyWebTarget.<init>(JerseyWebTarget.java:71)
+	at org.glassfish.jersey.client.JerseyClient.target(JerseyClient.java:177)
+	at org.glassfish.jersey.client.JerseyClient.target(JerseyClient.java:68)
+	at org.glassfish.admingui.common.util.RestUtil.get(RestUtil.java:862)
+	at org.glassfish.admingui.common.util.RestUtil.restRequest(RestUtil.java:209)
+	at org.glassfish.admingui.common.handlers.RestApiHandlers.restRequest(RestApiHandlers.java:224)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at com.sun.jsftemplating.layout.descriptors.handler.Handler.invoke(Handler.java:442)
+	at com.sun.jsftemplating.layout.descriptors.LayoutElementBase.dispatchHandlers(LayoutElementBase.java:420)
+	at com.sun.jsftemplating.layout.descriptors.LayoutElementBase.dispatchHandlers(LayoutElementBase.java:394)
+	at com.sun.jsftemplating.layout.descriptors.LayoutComponent.beforeCreate(LayoutComponent.java:348)
+	at com.sun.jsftemplating.layout.descriptors.LayoutComponent.getChild(LayoutComponent.java:288)
+	at com.sun.jsftemplating.layout.LayoutViewHandler.buildUIComponentTree(LayoutViewHandler.java:556)
+	at com.sun.jsftemplating.layout.LayoutViewHandler.createView(LayoutViewHandler.java:255)
+	at com.sun.faces.lifecycle.RestoreViewPhase.execute(RestoreViewPhase.java:254)
+	at com.sun.faces.lifecycle.Phase.doPhase(Phase.java:101)
+	at com.sun.faces.lifecycle.RestoreViewPhase.doPhase(RestoreViewPhase.java:121)
+	at com.sun.faces.lifecycle.LifecycleImpl.execute(LifecycleImpl.java:198)
+	at javax.faces.webapp.FacesServlet.service(FacesServlet.java:646)
+	at org.apache.catalina.core.StandardWrapper.service(StandardWrapper.java:1682)
+	at org.apache.catalina.core.ApplicationDispatcher.doInvoke(ApplicationDispatcher.java:875)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:739)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:575)
+	at org.apache.catalina.core.ApplicationDispatcher.doDispatch(ApplicationDispatcher.java:546)
+	at org.apache.catalina.core.ApplicationDispatcher.dispatch(ApplicationDispatcher.java:428)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:378)
+	at org.glassfish.admingui.common.security.AdminConsoleAuthModule.validateRequest(AdminConsoleAuthModule.java:224)
+	at com.sun.enterprise.security.jmac.config.GFServerConfigProvider$GFServerAuthContext.validateRequest(GFServerConfigProvider.java:1175)
+	at com.sun.web.security.RealmAdapter.validate(RealmAdapter.java:1654)
+	at com.sun.web.security.RealmAdapter.invokeAuthenticateDelegate(RealmAdapter.java:1521)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:606)
+	at org.apache.catalina.core.StandardPipeline.doInvoke(StandardPipeline.java:702)
+	at org.apache.catalina.core.StandardPipeline.doChainInvoke(StandardPipeline.java:678)
+	at com.sun.enterprise.web.WebPipeline.invoke(WebPipeline.java:97)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:174)
+	at org.apache.catalina.connector.CoyoteAdapter.doService(CoyoteAdapter.java:415)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:282)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper$HttpHandlerCallable.call(ContainerMapper.java:459)
+	at com.sun.enterprise.v3.services.impl.ContainerMapper.service(ContainerMapper.java:167)
+	at org.glassfish.grizzly.http.server.HttpHandler.runService(HttpHandler.java:201)
+	at org.glassfish.grizzly.http.server.HttpHandler.doHandle(HttpHandler.java:175)
+	at org.glassfish.grizzly.http.server.HttpServerFilter.handleRead(HttpServerFilter.java:235)
+	at org.glassfish.grizzly.filterchain.ExecutorResolver$9.execute(ExecutorResolver.java:119)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeFilter(DefaultFilterChain.java:284)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.executeChainPart(DefaultFilterChain.java:201)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.execute(DefaultFilterChain.java:133)
+	at org.glassfish.grizzly.filterchain.DefaultFilterChain.process(DefaultFilterChain.java:112)
+	at org.glassfish.grizzly.ProcessorExecutor.execute(ProcessorExecutor.java:77)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.fireIOEvent(TCPNIOTransport.java:561)
+	at org.glassfish.grizzly.strategies.AbstractIOStrategy.fireIOEvent(AbstractIOStrategy.java:112)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.run0(WorkerThreadIOStrategy.java:117)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy.access$100(WorkerThreadIOStrategy.java:56)
+	at org.glassfish.grizzly.strategies.WorkerThreadIOStrategy$WorkerThreadRunnable.run(WorkerThreadIOStrategy.java:137)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork(AbstractThreadPool.java:565)
+	at org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.run(AbstractThreadPool.java:545)
+	at java.lang.Thread.run(Thread.java:744)
+]]
+
