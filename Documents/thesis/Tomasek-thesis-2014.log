@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  25 DEC 2014 10:38
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  25 DEC 2014 17:13
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -974,17 +974,17 @@ P\v {r}\'{\i }loha C.
 File: images/useCase.pdf Graphic file (type pdf)
 
 <use images/useCase.pdf>
-Package pdftex.def Info: images/useCase.pdf used on input line 340.
+Package pdftex.def Info: images/useCase.pdf used on input line 339.
 (pdftex.def)             Requested size: 571.13235pt x 399.49152pt.
 
 <images/businessModel.pdf, id=1162, 457.71pt x 570.13pt>
 File: images/businessModel.pdf Graphic file (type pdf)
 
 <use images/businessModel.pdf>
-Package pdftex.def Info: images/businessModel.pdf used on input line 347.
+Package pdftex.def Info: images/businessModel.pdf used on input line 346.
 (pdftex.def)             Requested size: 457.7089pt x 570.12862pt.
 
-Overfull \hbox (22.19376pt too wide) in paragraph at lines 347--348
+Overfull \hbox (22.19376pt too wide) in paragraph at lines 346--347
 [][] 
  []
 
@@ -992,10 +992,10 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 347--348
 File: images/deploymentDiagram.pdf Graphic file (type pdf)
 
 <use images/deploymentDiagram.pdf>
-Package pdftex.def Info: images/deploymentDiagram.pdf used on input line 354.
+Package pdftex.def Info: images/deploymentDiagram.pdf used on input line 353.
 (pdftex.def)             Requested size: 514.92249pt x 256.95937pt.
 
-Overfull \hbox (79.40735pt too wide) in paragraph at lines 354--355
+Overfull \hbox (79.40735pt too wide) in paragraph at lines 353--354
  [] 
  []
 
@@ -1003,17 +1003,17 @@ Overfull \hbox (79.40735pt too wide) in paragraph at lines 354--355
 File: images/serverSide.pdf Graphic file (type pdf)
 
 <use images/serverSide.pdf>
-Package pdftex.def Info: images/serverSide.pdf used on input line 362.
+Package pdftex.def Info: images/serverSide.pdf used on input line 361.
 (pdftex.def)             Requested size: 400.49527pt x 456.70512pt.
 
 <images/metaModelFinal.pdf, id=1165, 600.2425pt x 456.70625pt>
 File: images/metaModelFinal.pdf Graphic file (type pdf)
 
 <use images/metaModelFinal.pdf>
-Package pdftex.def Info: images/metaModelFinal.pdf used on input line 369.
+Package pdftex.def Info: images/metaModelFinal.pdf used on input line 368.
 (pdftex.def)             Requested size: 600.24103pt x 456.70512pt.
 
-Overfull \hbox (21.18999pt too wide) in paragraph at lines 369--370
+Overfull \hbox (21.18999pt too wide) in paragraph at lines 368--369
 [][] 
  []
 
@@ -1021,20 +1021,20 @@ Overfull \hbox (21.18999pt too wide) in paragraph at lines 369--370
 File: images/sdDiagram.pdf Graphic file (type pdf)
 
 <use images/sdDiagram.pdf>
-Package pdftex.def Info: images/sdDiagram.pdf used on input line 375.
+Package pdftex.def Info: images/sdDiagram.pdf used on input line 374.
 (pdftex.def)             Requested size: 713.66449pt x 427.59645pt.
 
 
-LaTeX Warning: Float too large for page by 108.73433pt on input line 378.
+LaTeX Warning: Float too large for page by 108.73433pt on input line 377.
 
 <images/abstractBuilder.pdf, id=1167, 571.13374pt x 484.81125pt>
 File: images/abstractBuilder.pdf Graphic file (type pdf)
 
 <use images/abstractBuilder.pdf>
-Package pdftex.def Info: images/abstractBuilder.pdf used on input line 381.
+Package pdftex.def Info: images/abstractBuilder.pdf used on input line 380.
 (pdftex.def)             Requested size: 571.13235pt x 484.81006pt.
 
-Overfull \hbox (49.29492pt too wide) in paragraph at lines 381--382
+Overfull \hbox (49.29492pt too wide) in paragraph at lines 380--381
 [][] 
  []
 
@@ -1042,7 +1042,7 @@ Overfull \hbox (49.29492pt too wide) in paragraph at lines 381--382
 File: images/sdResealization.pdf Graphic file (type pdf)
 
 <use images/sdResealization.pdf>
-Package pdftex.def Info: images/sdResealization.pdf used on input line 387.
+Package pdftex.def Info: images/sdResealization.pdf used on input line 386.
 (pdftex.def)             Requested size: 514.92249pt x 286.06805pt.
  [55] [56 <D:/Skola/repo/AFServer/Documents/thesis/images/useCase.pdf>] [57 <D:
 /Skola/repo/AFServer/Documents/thesis/images/businessModel.pdf, page is rotated
@@ -1062,13 +1062,13 @@ P\v {r}\'{\i }loha E.
 File: images/cdContent.png Graphic file (type png)
 
 <use images/cdContent.png>
-Package pdftex.def Info: images/cdContent.png used on input line 468.
+Package pdftex.def Info: images/cdContent.png used on input line 467.
 (pdftex.def)             Requested size: 368.87721pt x 188.95546pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 473.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 472.
  [67
 
  <D:/Skola/repo/AFServer/Documents/thesis/images/cdContent.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 472.
 
 (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.aux
 (D:\Skola\repo\AFServer\Documents\thesis\pages/1_uvod.aux)
@@ -1078,11 +1078,11 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
 (D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/6_zaver.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/7_install.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 473.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 473.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 472.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 472.
 Package rerunfilecheck Info: File `Tomasek-thesis-2014.out' has not changed.
 (rerunfilecheck)             Checksum: 8A1A7B84606BB11B699D8B7C1D56FFDC;11442.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 473.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 472.
  ) 
 Here is how much of TeX's memory you used:
  12504 strings out of 493921
@@ -1112,7 +1112,7 @@ s\pk\ljfour\jknappen\ec\dpi600\ecti1440.pk> <C:\Users\Tom\AppData\Local\MiKTeX\
 2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Tom\AppData\Local
 \MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/Latex/fonts/type
 1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Tomasek-thesis-2014.pdf (85 pages, 767273 bytes).
+Output written on Tomasek-thesis-2014.pdf (85 pages, 768009 bytes).
 PDF statistics:
  2251 PDF objects out of 2487 (max. 8388607)
  470 named destinations out of 1000 (max. 500000)
