@@ -1,6 +1,7 @@
 \select@language {english}
 \select@language {czech}
 \contentsline {chapter}{\numberline {1}\IeC {\'U}vod}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Motivace}{1}{section.1.1}
 \contentsline {chapter}{\numberline {2}Popis probl\IeC {\'e}mu a specifikace c\IeC {\'\i }le}{3}{chapter.2}
 \contentsline {section}{\numberline {2.1}Popis problematiky}{3}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}Typy u\IeC {\v z}ivatelsk\IeC {\'y}ch rozhran\IeC {\'\i }}{3}{subsection.2.1.1}
@@ -75,6 +76,7 @@
 \contentsline {section}{\numberline {6.1}Budouc\IeC {\'\i } v\IeC {\'y}voj}{47}{section.6.1}
 \contentsline {section}{\numberline {6.2}Zhodnocen\IeC {\'\i } pr\IeC {\'a}ce}{47}{section.6.2}
 \contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{51}{appendix.A}
-\contentsline {chapter}{\numberline {B}UML diagramy}{53}{appendix.B}
-\contentsline {chapter}{\numberline {C}Uk\IeC {\'a}zky zdrojov\IeC {\'e}ho k\IeC {\'o}du a XML soubor\IeC {\r u}}{63}{appendix.C}
-\contentsline {chapter}{\numberline {D}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{65}{appendix.D}
+\contentsline {chapter}{\numberline {B}Instala\IeC {\v c}n\IeC {\'\i } a u\IeC {\v z}ivatelsk\IeC {\'a} p\IeC {\v r}\IeC {\'\i }ru\IeC {\v c}ka}{53}{appendix.B}
+\contentsline {chapter}{\numberline {C}UML diagramy}{55}{appendix.C}
+\contentsline {chapter}{\numberline {D}Uk\IeC {\'a}zky zdrojov\IeC {\'e}ho k\IeC {\'o}du a XML soubor\IeC {\r u}}{65}{appendix.D}
+\contentsline {chapter}{\numberline {E}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{67}{appendix.E}
