@@ -2,7 +2,7 @@ package com.tomscz.af.showcase.view.forms;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.InputStream;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -20,13 +20,13 @@ public class WelcomeScreen extends BaseScreen {
 
     private static final long serialVersionUID = 1L;
     public final static String loginFormName = "loginForm";
-    
+
     private JButton afSwinxLoginButton;
 
     public WelcomeScreen() {
         intialize();
     }
-    
+
     @Override
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
@@ -35,12 +35,11 @@ public class WelcomeScreen extends BaseScreen {
             mainPanel.add(new JLabel("Welcome user:"+sc.getUserLogin()));
         }
         else{
-            File connectionFile =
-                    new File(getClass().getClassLoader().getResource("connection.xml").getFile());
+            InputStream connectionResrouce = getClass().getClassLoader().getResourceAsStream("connection.xml");
             try {
                 AFSwinxForm form =
                         AFSwinx.getInstance().getFormBuilder()
-                                .initBuilder(loginFormName, connectionFile, "loginForm")
+                                .initBuilder(loginFormName, connectionResrouce, "loginForm")
                                 .setLocalization(ApplicationContext.getInstance().getLocalization())
                                 .buildComponent();
                 afSwinxLoginButton = new JButton(Localization.getLocalizationText("login.button"));
@@ -58,11 +57,11 @@ public class WelcomeScreen extends BaseScreen {
         }
         return mainPanel;
     }
-    
-    public void addSwinxLoginButtonListner(ActionListener a){
-        if(afSwinxLoginButton != null){
+
+    public void addSwinxLoginButtonListner(ActionListener a) {
+        if (afSwinxLoginButton != null) {
             this.afSwinxLoginButton.addActionListener(a);
         }
     }
-    
+
 }

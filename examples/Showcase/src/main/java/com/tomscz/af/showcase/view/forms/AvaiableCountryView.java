@@ -2,7 +2,7 @@ package com.tomscz.af.showcase.view.forms;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.swing.BoxLayout;
@@ -38,28 +38,30 @@ public class AvaiableCountryView extends BaseScreen {
     @Override
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
-        File connectionFile =
-                new File(getClass().getClassLoader().getResource("connection.xml").getFile());
+        InputStream connectionResource =
+                getClass().getClassLoader().getResourceAsStream("connection.xml");
         try {
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(COUNTRY_TABLE, connectionFile,
+                            .initBuilder(COUNTRY_TABLE, connectionResource,
                                     COUNTRY_TABLE_CONNECTION_KEY)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization()).setFitSize(true).setDynamicSize(false)
-                            .buildComponent();
-            table.setPreferredSize(new Dimension(table.getTotalWidth()+15,200));
-            table.setMinimumSize(new Dimension(table.getTotalWidth()+15,200));
-            table.setMaximumSize(new Dimension(table.getTotalWidth()+15,200));
+                            .setLocalization(ApplicationContext.getInstance().getLocalization())
+                            .setFitSize(true).setDynamicSize(false).buildComponent();
+            table.setPreferredSize(new Dimension(table.getTotalWidth() + 15, 200));
+            table.setMinimumSize(new Dimension(table.getTotalWidth() + 15, 200));
+            table.setMaximumSize(new Dimension(table.getTotalWidth() + 15, 200));
             mainPanel.add(table);
             JPanel centerPanel = new JPanel();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
+            connectionResource =
+                    getClass().getClassLoader().getResourceAsStream("connection.xml");
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(COUNTRY_FORM, connectionFile, COUNTRY_FORM_CONNECTION_KEY,
+                            .initBuilder(COUNTRY_FORM, connectionResource, COUNTRY_FORM_CONNECTION_KEY,
                                     securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .buildComponent();

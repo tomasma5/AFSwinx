@@ -1,4 +1,60 @@
 \chapter{Instalační a uživatelská příručka}
-
-
+Framework byl vytvořen jako Maven projekt, jeho přidání do již existující aplikace lze buďto jako knihovnu nebo jako Maven závislost. Způsob jakým lze integrovat projekt a jak ho používat je detailně popsán v uživatelské příručce na přiloženém CD. 
+\section{Maven závislosti}
+Nejprve je potřeba provést build frameworku. Zdorojové kódy jsou na přiloženém CD. Framework zatím není v žádném z veřejně dostupných repozitářích. Poté lze na serverou stranu přidat následující závislosti:
+\begin{lstlisting}[caption={Závislosti na serveru},
+  label={code:mavenDependency}]
+<dependency>
+	<groupId>com.tomscz.af</groupId>
+	<artifactId>AFRest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+</dependency>
+<dependency>
+	<groupId>com.codingcrayons.aspectfaces</groupId>
+	<artifactId>javaee-connector</artifactId>
+	<version>1.5.0-SNAPSHOT</version>
+</dependency>
+<dependency>
+	<groupId>com.codingcrayons.aspectfaces</groupId>
+	<artifactId>annotation-descriptors</artifactId>
+	<version>1.5.0-SNAPSHOT</version>
+</dependency>
+\end{lstlisting}
+Repozitář pro aspectFaces je zde:
+\begin{lstlisting}[caption={Aspect faces repozitář	},
+  label={code:mavenAspectFacesRepo]
+<repository>
+	<id>codingcrayons-repository</id>
+	<name>CodingCrayons Maven Repository</name>
+	<url>http://maven.codingcrayons.com/content/groups/public/</url>
+</repository>
+\end{lstlisting}
+Do složky WEB-INF je potřeba rozbalit soubor templates.zip, v kterém je předpřipravená konfigurace a do web.xml je potřeba přidat listener, který provede nastavení AspectFaces během startu. 
+\begin{lstlisting}[caption={Aspect faces repozitář	},
+  label={code:mavenAspectFacesBootStrap]
+<listener>
+	<!-- Include Aspect Faces listener to perform proper framework initialization 
+		during application start -->
+	<listener-class>com.codingcrayons.aspectfaces.plugins.j2ee.AspectFacesListener</listener-class>
+</listener>
+\end{lstlisting}
+Na klientskou stranu je potřeba přidat následující závistlost:
+\begin{lstlisting}[caption={Závislost na klientské straně},
+  label={code:mavenAFSwinx]
+<dependency>
+	<groupId>com.tomscz.af</groupId>
+	<artifactId>AFSwinx</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+</dependency>
+\end{lstlisting}
+\section{Ukázkový projekt}
+Ukázkový projekt se svojí klientskou a serverou částí jsou již vytvořeny a přiloženy na CD. Serverovou část lze bez dodatečné konfigurace spusti na serveru GlassFish V4. Je potřeba provést následující:
+\begin{enumerate}
+\item Stáhněte si aplikační server GlassFish http://dlc.sun.com.edgesuite.net/glassfish/4.1/release/glassfish-4.1.zip
+\item Rozbalte soubor a v bin složce spusttě utilitu asadmin
+\item Vložte následující příkaz: start-domain domain1
+\item Vložte následující příkaz deploy CESTA_K_SOUBORU/AFServer.war
+\item Jdětě na http://localhost:8080/AFServer - zobrazí se text: It alive. Serverová strana nedisponuje grafickým uživatelským rozhranním. Funkčnost můžete otestovat rest clienta například na adrese http://localhost:8080/AFServer/rest/country/list - content-type: application/json metoda GET.
+\end{enumerate}
+Nyní je potřeba spustit klientskou část aplikace. Ve složce s Showcase.jar, který je přiložen na CD spusťte java -jar Showcase.jar . Aplikace bude spuštěna.
 

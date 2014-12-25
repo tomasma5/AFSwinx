@@ -1,7 +1,6 @@
 package com.tomscz.afswinx.common;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -70,11 +69,12 @@ public final class Utils {
      *         {@link IllegalArgumentException} is thrown, because input file given in parameter is
      *         illegal
      */
-    public static Document buildDocumentFromFile(File file) throws IllegalArgumentException {
+    public static Document buildDocumentFromFile(InputStream is) throws IllegalArgumentException {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(file);
+            Document doc = dBuilder.parse(is);
+            is.close();
             return doc;
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new IllegalArgumentException("This file cannot be parsed." + e.getMessage());

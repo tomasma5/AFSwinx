@@ -1,6 +1,6 @@
 package com.tomscz.afswinx.component.builders;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -75,7 +75,7 @@ public interface ComponentBuilder<T> {
      * @param connectionValue value which will be added to connection configuration based on EL.
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, File connectionConfiguration,
+    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
             String connectionKey, String connectionValue);
 
     /**
@@ -88,7 +88,7 @@ public interface ComponentBuilder<T> {
      * @param connectionKey key of connection which will be found in connection configuration file
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, File connectionConfiguration,
+    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
             String connectionKey);
 
     /**
@@ -102,6 +102,6 @@ public interface ComponentBuilder<T> {
      * @param connectionParameters which will be added to connection configuration file based on EL.
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, File connectionConfiguration,
+    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters);
 }

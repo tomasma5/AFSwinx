@@ -1,6 +1,6 @@
 package com.tomscz.afswinx.component.builders;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -33,7 +33,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected AFSwinxConnection dataConnection;
     protected AFSwinxConnection sendConnection;
     protected String connectionKey;
-    protected File connectionConfiguration;
+    protected InputStream connectionConfiguration;
 
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
@@ -47,7 +47,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, File connectionConfiguration, String connectionKey) {
+    public T initBuilder(String componentKeyName, InputStream connectionConfiguration, String connectionKey) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
         this.connectionKey = connectionKey;
@@ -91,7 +91,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, File connectionConfiguration,
+    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
             String connectionKey, String connectionValue) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
@@ -114,7 +114,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, File connectionConfiguration,
+    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;

@@ -42,7 +42,6 @@ public abstract class BaseController {
             AvaiableCountryView avaiableCountry = new AvaiableCountryView();
             AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
             avaiableCountry.setVisible(true);
-            
         }
     };
     
