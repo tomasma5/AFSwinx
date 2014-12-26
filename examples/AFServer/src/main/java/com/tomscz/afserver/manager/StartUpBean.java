@@ -10,7 +10,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import com.tomscz.afserver.persistence.IdGenerator;
 import com.tomscz.afserver.persistence.entity.Address;
@@ -56,12 +55,8 @@ public class StartUpBean implements Serializable {
                     new Person(IdGenerator.getNextPersonId(), "sa","john","John", "Doe", "jdoe@toms-cz.com,",
                             date, true, 30, Gender.MALE, true);
             person.addRole(UserRoles.USER);
-            TypedQuery<Country> query =
-                    em.createQuery("SELECT c FROM Country c WHERE c.shortCut = :shortCut",
-                            Country.class);
-            Country c = query.setParameter("shortCut", "CR").getSingleResult();
             Address personAddress =
-                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 22222, c);
+                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 22222, "Czech republic");
             em.persist(personAddress);
             person.setMyAdress(personAddress);
             em.persist(person);

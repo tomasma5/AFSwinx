@@ -33,6 +33,7 @@ public class Country {
     }
 
     @UiLabel(value="country.isActive")
+    @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.ONECOLUMNLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
     @UiOrder(value=3)
     @UiRequired
     public boolean isActive() {
@@ -44,7 +45,7 @@ public class Country {
     }
 
     @UiLabel(value="country.shortCut")
-    @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.TWOCOLUMNSLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
+    @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.ONECOLUMNLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
     @UiOrder(value=1)
     @UiRequired
     public String getShortCut() {
@@ -57,6 +58,7 @@ public class Country {
 
     @UiLabel(value="country.name")
     @UiOrder(value=0)
+    @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.ONECOLUMNLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
     @UiRequired
     public String getName() {
         return name;

@@ -24,18 +24,18 @@
 \contentsline {subsubsection}{\numberline {3.2.1.5}AFOptions}{12}{subsubsection.3.2.1.5}
 \contentsline {subsection}{\numberline {3.2.2}Server}{12}{subsection.3.2.2}
 \contentsline {subsection}{\numberline {3.2.3}Klient}{13}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}\IeC {\v Z}ivotn\IeC {\'\i } cyklus formul\IeC {\'a}\IeC {\v r}e}{14}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}P\IeC {\v r}\IeC {\'\i }pady u\IeC {\v z}it\IeC {\'\i }}{15}{section.3.3}
+\contentsline {subsection}{\numberline {3.2.4}\IeC {\v Z}ivotn\IeC {\'\i } cyklus formul\IeC {\'a}\IeC {\v r}e}{15}{subsection.3.2.4}
+\contentsline {section}{\numberline {3.3}P\IeC {\v r}\IeC {\'\i }pady u\IeC {\v z}it\IeC {\'\i }}{16}{section.3.3}
 \contentsline {subsubsection}{\numberline {3.3.0.1}Validace komponenty}{16}{subsubsection.3.3.0.1}
-\contentsline {section}{\numberline {3.4}Omezen\IeC {\'\i } frameworku}{18}{section.3.4}
+\contentsline {section}{\numberline {3.4}Omezen\IeC {\'\i } frameworku}{19}{section.3.4}
 \contentsline {section}{\numberline {3.5}U\IeC {\v z}ivatel\IeC {\'e} a zabezpe\IeC {\v c}en\IeC {\'\i }}{19}{section.3.5}
-\contentsline {section}{\numberline {3.6}Pou\IeC {\v z}it\IeC {\'e} technologie}{19}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Java SE - Swing}{19}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.6}Pou\IeC {\v z}it\IeC {\'e} technologie}{20}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Java SE - Swing}{20}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}Java EE}{20}{subsection.3.6.2}
 \contentsline {subsection}{\numberline {3.6.3}AspectFaces}{20}{subsection.3.6.3}
 \contentsline {subsection}{\numberline {3.6.4}Uk\IeC {\'a}zkov\IeC {\'y} projekt}{20}{subsection.3.6.4}
-\contentsline {subsubsection}{\numberline {3.6.4.1}GlassFish}{20}{subsubsection.3.6.4.1}
-\contentsline {subsubsection}{\numberline {3.6.4.2}RestEasy}{20}{subsubsection.3.6.4.2}
+\contentsline {subsubsection}{\numberline {3.6.4.1}GlassFish}{21}{subsubsection.3.6.4.1}
+\contentsline {subsubsection}{\numberline {3.6.4.2}RestEasy}{21}{subsubsection.3.6.4.2}
 \contentsline {subsubsection}{\numberline {3.6.4.3}EJB}{21}{subsubsection.3.6.4.3}
 \contentsline {subsection}{\numberline {3.6.5}Derby DB}{21}{subsection.3.6.5}
 \contentsline {chapter}{\numberline {4}Implementace}{23}{chapter.4}

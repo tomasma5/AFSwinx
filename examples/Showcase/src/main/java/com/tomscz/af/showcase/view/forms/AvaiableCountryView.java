@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class AvaiableCountryView extends BaseScreen {
     @Override
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
+        Box b1 = Box.createVerticalBox();
         InputStream connectionResource =
                 getClass().getClassLoader().getResourceAsStream("connection.xml");
         try {
@@ -67,8 +69,13 @@ public class AvaiableCountryView extends BaseScreen {
             addCountryButton.setAlignmentX(CENTER_ALIGNMENT);
             centerPanel.add(addCountryButton);
             centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-            mainPanel.add(table);
-            mainPanel.add(centerPanel);
+            b1.add(table);
+            b1.add(Box.createVerticalStrut(40));
+            b1.add(centerPanel);
+            b1.add(Box.createVerticalStrut(40));
+            mainPanel.add(b1);
+//            mainPanel.add(table);
+//            mainPanel.add(centerPanel);
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             return mainPanel;
         } catch (AFSwinxBuildException e) {

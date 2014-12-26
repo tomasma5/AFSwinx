@@ -11,13 +11,13 @@ public class Address {
     private String street;
     private String city;
     private int postCode;
-    private Country country;
+    private String country;
 
     public Address(){
         
     }
     
-    public Address(int id, String street, String city, int postCode, Country country) {
+    public Address(int id, String street, String city, int postCode, String country) {
         super();
         this.id = id;
         this.street = street;
@@ -50,11 +50,11 @@ public class Address {
         this.city = city;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
