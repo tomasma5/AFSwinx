@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ResourceBundle;
 
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -18,6 +19,7 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.panel.AFSwinxPanel;
 import com.tomscz.afswinx.component.skin.BaseSkin;
 import com.tomscz.afswinx.component.skin.Skin;
+import com.tomscz.afswinx.component.widget.builder.DropDownMenuBuilder;
 import com.tomscz.afswinx.component.widget.builder.InputBuilder;
 import com.tomscz.afswinx.component.widget.builder.TextAreaBuilder;
 import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
@@ -193,6 +195,7 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
         skinComponent(component);
     }
 
+    @SuppressWarnings("unchecked")
     private void skinComponent(JComponent componentToSkin) {
         if (skin.getFieldColor() != null) {
             componentToSkin.setForeground(skin.getFieldColor());
@@ -241,6 +244,17 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
                 Dimension currentSize = componentToskin.getPreferredSize();
                 componentToskin.setPreferredSize(new Dimension(colums, currentSize.height));
             }
+        }
+        if(widgetType.equals(SupportedWidgets.DROPDOWNMENU)){
+            JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) componentToSkin;
+            int height = comboBox.getPreferredSize().height;
+            int width = DropDownMenuBuilder.DEFAULT_WIDTH;
+            if (skin.getInputWidth() > 0) {
+                width = skin.getInputWidth();
+            }
+            comboBox.setPreferredSize(new Dimension(width,height));
+            comboBox.setMinimumSize(new Dimension(width, height));
+            comboBox.setMaximumSize(new Dimension(width, height));
         }
     }
     

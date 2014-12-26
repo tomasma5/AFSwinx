@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.SecurityContext;
+import com.tomscz.af.showcase.view.skin.MySkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -40,7 +41,7 @@ public class WelcomeScreen extends BaseScreen {
                 AFSwinxForm form =
                         AFSwinx.getInstance().getFormBuilder()
                                 .initBuilder(loginFormName, connectionResrouce, "loginForm")
-                                .setLocalization(ApplicationContext.getInstance().getLocalization())
+                                .setLocalization(ApplicationContext.getInstance().getLocalization()).setSkin(new MySkin())
                                 .buildComponent();
                 afSwinxLoginButton = new JButton(Localization.getLocalizationText("login.button"));
                 JPanel componentPanel = new JPanel();

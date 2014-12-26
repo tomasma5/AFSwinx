@@ -14,6 +14,8 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 
 public class DropDownMenuBuilder extends BaseWidgetBuilder {
 
+    public static final int DEFAULT_WIDTH = 20;
+    
     public DropDownMenuBuilder() {
         widgetType = SupportedWidgets.DROPDOWNMENU;
     }

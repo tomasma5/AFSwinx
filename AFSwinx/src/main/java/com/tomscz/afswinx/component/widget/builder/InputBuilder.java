@@ -20,7 +20,7 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFData;
  */
 public class InputBuilder extends BaseWidgetBuilder {
 
-   public static final int DEFAULT_WIDTH = 10;
+   public static final int DEFAULT_WIDTH = 20;
 
     public InputBuilder() {
         widgetType = SupportedWidgets.TEXTFIELD;

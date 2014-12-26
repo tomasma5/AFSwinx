@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.view.skin.MySkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -47,29 +48,26 @@ public class AvaiableCountryView extends BaseScreen {
                             .initBuilder(COUNTRY_TABLE, connectionResource,
                                     COUNTRY_TABLE_CONNECTION_KEY)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setFitSize(true).setDynamicSize(false).buildComponent();
-            table.setPreferredSize(new Dimension(table.getTotalWidth() + 15, 200));
-            table.setMinimumSize(new Dimension(table.getTotalWidth() + 15, 200));
-            table.setMaximumSize(new Dimension(table.getTotalWidth() + 15, 200));
-            mainPanel.add(table);
+                            .buildComponent();
             JPanel centerPanel = new JPanel();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            connectionResource =
-                    getClass().getClassLoader().getResourceAsStream("connection.xml");
+            connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(COUNTRY_FORM, connectionResource, COUNTRY_FORM_CONNECTION_KEY,
-                                    securityConstrains)
+                            .initBuilder(COUNTRY_FORM, connectionResource,
+                                    COUNTRY_FORM_CONNECTION_KEY, securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .buildComponent();
+                            .setSkin(new MySkin()).buildComponent();
             centerPanel.add(form);
             addCountryButton =
                     new JButton(Localization.getLocalizationText("avaiableCountryView.buttton.add"));
             addCountryButton.setAlignmentX(CENTER_ALIGNMENT);
             centerPanel.add(addCountryButton);
+            centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+            mainPanel.add(table);
             mainPanel.add(centerPanel);
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             return mainPanel;

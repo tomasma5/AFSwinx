@@ -11,4 +11,8 @@ public interface AFRest {
     
     public AFMetaModelPack generateSkeleton(String fullClassName, String structureConfig, String mainLayout) throws MetamodelException;
   
+    public void setMainLayout(String layout);
+    
+    public void setMapping(String mapping);
+    
 }

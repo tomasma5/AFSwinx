@@ -33,17 +33,18 @@ public class UserResource extends BaseResource {
     public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request,
             @PathParam("param") String type) {
         try {
+            AFRestGenerator afRest = new AFRestGenerator(request.getSession().getServletContext());
             String fullClassName;
             // add if-else if you want add more form type definition
             if (type.equals(LoginFormDefinitions.LOGIN_FORM)) {
                 fullClassName = LoginFormDefinitions.class.getCanonicalName();
+                afRest.setMainLayout("templates/oneColumnLayout.xml");
             } else if (type.equals("create")) {
                 fullClassName = Person.class.getCanonicalName();
             } else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
-            }
-            AFRestGenerator afSwing = new AFRestGenerator(request.getSession().getServletContext());
-            AFMetaModelPack data = afSwing.generateSkeleton(fullClassName);
+            }    
+            AFMetaModelPack data = afRest.generateSkeleton(fullClassName);
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

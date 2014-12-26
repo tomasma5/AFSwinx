@@ -8,7 +8,9 @@ import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 
 public class AFRestGenerator implements AFRest {
 
-    ModelInspector modelInspector;
+    private ModelInspector modelInspector;
+    private String mainLayout;
+    private String mainMapping;
 
     public AFRestGenerator(ServletContext servletContext) {
         this.modelInspector = new ModelInspector(servletContext);
@@ -16,7 +18,7 @@ public class AFRestGenerator implements AFRest {
 
     @Override
     public AFMetaModelPack generateSkeleton(String fullClassName) throws MetamodelException {
-        return modelInspector.generateModel(fullClassName);
+        return modelInspector.generateModel(fullClassName, mainMapping, mainLayout, "");
     }
 
     public AFMetaModelPack generateSkeleton(String fullClassName, String structureConfig)
@@ -28,6 +30,16 @@ public class AFRestGenerator implements AFRest {
     public AFMetaModelPack generateSkeleton(String fullClassName, String structureConfig,
             String mainLayout) throws MetamodelException {
         return modelInspector.generateModel(fullClassName, structureConfig, mainLayout, "");
+    }
+
+    @Override
+    public void setMainLayout(String layout) {
+        this.mainLayout = layout;
+    }
+
+    @Override
+    public void setMapping(String mapping) {
+        this.mainMapping = mapping;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.tomscz.af.showcase.view.forms;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +20,19 @@ import com.tomscz.af.showcase.view.dialogs.Dialogs;
 
 public abstract class BaseScreen extends JFrame {
 
+    private JButton loginButton;
+    private JButton avaiableCountryButton;
+    private JButton myProfileButton;
+    private JButton myAbsencesButton;
+    private JButton editAbsenceButton;
+    private JButton addAbsenceButton;
+    private JButton addAbsenceTypeButton;
+
+    private Dialogs dialogs = new Dialogs(this);
+    private static final long serialVersionUID = 1L;
+
+    protected abstract JPanel createContent();
+
     public void intialize() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -30,17 +42,14 @@ public abstract class BaseScreen extends JFrame {
         b1.add(createLeftMenu());
         b1.add(Box.createHorizontalGlue());
         JPanel content = createContent();
-        content.setPreferredSize(new Dimension(500, 500));
         JScrollPane panel =
-                new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-                        JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         panel.setViewportView(content);
         b1.add(panel);
-        b1.setBackground(Color.RED);
         contentPanel.add(b1);
-        contentPanel.setBackground(Color.GREEN);
         mainPanel.add(contentPanel);
-        content.setPreferredSize(new Dimension(500, 500));
+        content.setPreferredSize(new Dimension(540, 500));
         JScrollPane panel2 =
                 new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -52,14 +61,6 @@ public abstract class BaseScreen extends JFrame {
         this.setSize(840, 640);
         this.setVisible(true);
     }
-
-    protected abstract JPanel createContent();
-
-    private JButton loginButton;
-    private JButton avaiableCountryButton;
-
-    private Dialogs dialogs = new Dialogs(this);
-    private static final long serialVersionUID = 1L;
 
     protected JPanel createHeader() {
         JPanel headerPanel = new JPanel();
@@ -81,24 +82,44 @@ public abstract class BaseScreen extends JFrame {
         english.addActionListener(onEnglishButtonExec);
         localiztionToolbar.add(czech);
         localiztionToolbar.add(english);
-        localiztionToolbar.setBackground(Color.BLUE);
         localiztionToolbar.setAlignmentX(LEFT_ALIGNMENT);
         return localiztionToolbar;
     }
 
     protected JPanel createLeftMenu() {
         JPanel menu = new JPanel();
-        loginButton = new JButton(Localization.getLocalizationText("link.login"));
-        loginButton.setPreferredSize(new Dimension(150, 30));
+        Dimension buttonSize = new Dimension(200, 30);
         avaiableCountryButton =
                 new JButton(Localization.getLocalizationText("link.supportedCountries"));
         avaiableCountryButton.setPreferredSize(new Dimension(150, 30));
-        menu.add(loginButton);
-        menu.setBackground(Color.WHITE);
-        menu.setPreferredSize(new Dimension(200, 500));
+        avaiableCountryButton.setPreferredSize(buttonSize);
+        myProfileButton = new JButton(Localization.getLocalizationText("link.myProfile"));
+        myProfileButton.setPreferredSize(buttonSize);
+        myAbsencesButton = new JButton(Localization.getLocalizationText("link.myAbsence"));
+        myAbsencesButton.setPreferredSize(buttonSize);
+        editAbsenceButton = new JButton(Localization.getLocalizationText("link.editMyAbsences"));
+        editAbsenceButton.setPreferredSize(buttonSize);
+        addAbsenceButton = new JButton(Localization.getLocalizationText("link.createAbsence"));
+        addAbsenceButton.setPreferredSize(buttonSize);
+        addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.createAbsenceType"));
+        addAbsenceTypeButton.setPreferredSize(buttonSize);
+        menu.setPreferredSize(new Dimension(250, 500));
         if (ApplicationContext.getInstance().getSecurityContext() != null
                 && ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
+            loginButton = new JButton(Localization.getLocalizationText("link.home"));
+            loginButton.setPreferredSize(buttonSize);
+            menu.add(loginButton);
             menu.add(avaiableCountryButton);
+            menu.add(myProfileButton);
+            menu.add(myAbsencesButton);
+            menu.add(editAbsenceButton);
+            menu.add(addAbsenceButton);
+            menu.add(addAbsenceTypeButton);
+        }
+        else{
+            loginButton = new JButton(Localization.getLocalizationText("link.login"));
+            loginButton.setPreferredSize(buttonSize);
+            menu.add(loginButton); 
         }
         return menu;
     }

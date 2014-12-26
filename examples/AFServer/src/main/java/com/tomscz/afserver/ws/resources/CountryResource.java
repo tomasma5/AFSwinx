@@ -45,6 +45,7 @@ public class CountryResource extends BaseResource {
     public Response getResources() {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
+            afSwing.setMainLayout("templates/oneColumnLayout.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
             HashMap<String, String> activeFlag = new HashMap<String, String>();
             //Define possibilities about active
