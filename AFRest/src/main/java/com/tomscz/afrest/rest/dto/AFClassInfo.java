@@ -14,7 +14,7 @@ public class AFClassInfo implements Serializable {
     private TopLevelLayout layout;
     private List<AFFieldInfo> fieldInfo;
     private List<AFClassInfo> innerClasses;
-    
+
     public void addFieldInfo(AFFieldInfo fieldInfoToAdd) {
         if (this.fieldInfo == null) {
             this.fieldInfo = new ArrayList<AFFieldInfo>();
@@ -22,9 +22,9 @@ public class AFClassInfo implements Serializable {
         this.fieldInfo.add(fieldInfoToAdd);
 
     }
-    
-    public void addInnerClass(AFClassInfo classInfoToAdd){
-        if(innerClasses == null){
+
+    public void addInnerClass(AFClassInfo classInfoToAdd) {
+        if (innerClasses == null) {
             innerClasses = new ArrayList<AFClassInfo>();
         }
         innerClasses.add(classInfoToAdd);
@@ -55,26 +55,45 @@ public class AFClassInfo implements Serializable {
     }
 
     public void setOptionsToField(HashMap<String, String> options, String fieldId) {
-       ArrayList<AFOptions> afOptions = new ArrayList<AFOptions>();
-        for(String key:options.keySet()){
-           afOptions.add(new AFOptions(key, options.get(key)));
-       }
+        ArrayList<AFOptions> afOptions = new ArrayList<AFOptions>();
+        for (String key : options.keySet()) {
+            afOptions.add(new AFOptions(key, options.get(key)));
+        }
         setOptionsToField(afOptions, fieldId);
     }
-    
-    private void setOptionsToField(List<AFOptions> options, String fieldId){
-        for(AFFieldInfo fiedlInfo:fieldInfo){
-            if(fiedlInfo != null && fiedlInfo.getId().equals(fieldId)){
-                fiedlInfo.addOption(options);
+
+    private void setOptionsToField(List<AFOptions> options, String fieldId) {
+        String[] path = fieldId.split("//.");
+        String fieldInfoId = "";
+        boolean findInClasses = false;
+        if (path.length > 1) {
+            fieldInfoId = path[0];
+            findInClasses = true;
+        }
+        if (findInClasses) {
+            for (AFClassInfo currentClass : innerClasses) {
+                if (currentClass.name.equals(fieldInfoId)) {
+                    StringBuffer sb = new StringBuffer();
+                    for (int i = 1; i < path.length; i++) {
+                        sb.append(path[i]);
+                    }
+                    currentClass.setOptionsToField(options, sb.toString());
+                    return;
+                }
+            }
+        } else {
+            for (AFFieldInfo fiedlInfo : fieldInfo) {
+                if (fiedlInfo != null && fiedlInfo.getId().equals(fieldId)) {
+                    fiedlInfo.addOption(options);
+                }
             }
         }
-
     }
 
     public void setOptionsToFields(List<String> options, String fieldId) {
         ArrayList<AFOptions> afOtions = new ArrayList<AFOptions>();
         for (String option : options) {
-           afOtions.add(new AFOptions(option, option));
+            afOtions.add(new AFOptions(option, option));
         }
         setOptionsToField(afOtions, fieldId);
     }
