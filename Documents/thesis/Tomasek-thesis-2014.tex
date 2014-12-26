@@ -210,11 +210,11 @@ unicode=true,
 
 \acknowledgements
 \noindent
-Tímto bych rád poděkoval celé svojí rodině za podporu během studia. Dále bych rád poděkoval vedoucíme mé diplomové práce panu Ing. Tomáši Černému za ochotu, pomoc, čas, zkušenosti a příležitosti, které mi poskytoval během celého mého studia. 
+Tímto bych rád poděkoval celé svojí rodině za podporu během studia. Dále bych rád poděkoval vedoucímu mé diplomové práce panu Ing. Tomáši Černému za ochotu, pomoc, čas, zkušenosti a příležitosti, které mi poskytoval během celého mého studia. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%   Prohlaseni / Declaration 
 
-\declaration{Ve~Strakonicích 1.\,12.\,2014}
+\declaration{Ve~Strakonicích 28.\,12.\,2014}
 %\declaration{In Kořenovice nad Bečvárkou on May 15, 2008}
 
 
@@ -231,7 +231,7 @@ Present-day applications use graphical user interface in order to interact with 
 \vskip 2.75\baselineskip
 
 \noindent
-Současní aplikace využívají grafické uživatelské rozhraní k interakci s uživatelem. V každé aplikaci můžeme najít vstupní pole, výstupní pole a další komponenty, které slouží k ovládání aplikace. Generování formulářů, která obsahují data, jenž chceme vkládat, editovat nebo prohlížet je časově náročné. Kromě generování správných vstupních polí je také potřeba nahlížet na tvorbu uživatelského rozhraní z pohledu validací, rozložení komponent a bezpečnosti. V těchto případech by bylo vhodné, aby se části rozhraní generovala na základě modelu. V případě aplikací typu klient server může model a data poskytovat server. Toto řešení zajistí centralizovanou správu dat a jejich definicí a umožní klientovi pružně reagovat na změnu datového modelu.
+Současné aplikace využívají grafické uživatelské rozhraní k interakci s uživatelem. V každé aplikaci můžeme najít vstupní pole, výstupní pole a další komponenty, které slouží k ovládání aplikace. Generování formulářů, která obsahují data, jenž chceme vkládat, editovat nebo prohlížet je časově náročné. Kromě generování správných vstupních polí je také potřeba nahlížet na tvorbu uživatelského rozhraní z pohledu validací, rozložení komponent a bezpečnosti. V~těchto případech by bylo vhodné, aby se části rozhraní generovala na základě modelu. V~případě aplikací typu klient server může model a data poskytovat server. Toto řešení zajistí centralizovanou správu dat a jejich definicí a umožní klientovi pružně reagovat na změnu datového modelu.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  Obsah / Table of Contents 
 
@@ -311,12 +311,8 @@ Současní aplikace využívají grafické uživatelské rozhraní k interakci s
 
 \begin{description}
 \item[GNU GPL] GNU General Public License
-\item[OCL] Object Constraint Language
 \item[UML] Unified Modeling Language
 \item[MVC] Model-view-controller
-\item[AJAX] Asynchronous JavaScript and XML
-\item[JAAS] Java Authentication and Authorization Service
-\item[SSH] Secure Shell
 \item[REST] Representational State Transfer
 \item[JDBC] Java Database Connectivity
 \item[OSGI] Open Services Gateway Initiative
@@ -326,7 +322,14 @@ Současní aplikace využívají grafické uživatelské rozhraní k interakci s
 \item[JPA] Java Persistence API
 \item[API] Application programming interface
 \item[EL] Expression language
-
+\item[HTML] HyperText Markup Language
+\item[XML] Extensible Markup Language
+\item[JSF] JavaServer Faces
+\item[LGPL EPL] Lesser GPL Eclipse Public Licence
+\item[SSL] Secure Sockets Layer
+\item[HTTPS] Hypertext Transfer Protocol Secure
+\item[WAR] Web Application Archive
+\item[JAR] Java Archive
 \end{description}
 
 %*****************************************************************************
@@ -378,7 +381,7 @@ V této sekci naleznete použité UML diagramy, na které bylo v textu odkazová
 
 \begin{figure}
 \includegraphics[angle=270]{images/abstractBuilder}
-\caption{SD diagram sestavení formuláře}
+\caption{Doménový model, znázorňující buildery, které jsou použity při vytváření aktivních prvků}
 \label{img:abstractBuilder}
 \end{figure}	
 
@@ -389,6 +392,7 @@ V této sekci naleznete použité UML diagramy, na které bylo v textu odkazová
 \end{figure}	
 
 \chapter{Ukázky zdrojového kódu a XML souborů}
+V této sekci naleznete ukázky zdrojového kódu, na které bylo v textu odkazováno.
 \begin{lstlisting}[caption=Ukázka definice komponenty,
   label={code:xmlCompleteDefinition}]
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>

@@ -3,15 +3,16 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Dom\IeC {\'e}nov\IeC {\'y} model obejkt\IeC {\r u} obsahuj\IeC {\'\i }c\IeC {\'\i } metadat o objektu, nad kter\IeC {\'y}m byla provedena inspekce}}{11}{figure.3.1}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Dom\IeC {\'e}nov\IeC {\'y} model objekt\IeC {\r u} obsahuj\IeC {\'\i }c\IeC {\'\i } metadata o objektu, nad kter\IeC {\'y}m byla provedena inspekce}}{11}{figure.3.1}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces \IeC {\v Z}ivotn\IeC {\'\i } cyklus formul\IeC {\'a}\IeC {\v r}e}}{15}{figure.3.2}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces \IeC {\v C}\IeC {\'a}st p\IeC {\v r}\IeC {\'\i }pad\IeC {\r u} u\IeC {\v z}it\IeC {\'\i } zn\IeC {\'a}zor\IeC {\v n}uj\IeC {\'\i }c\IeC {\'\i } odesl\IeC {\'a}n\IeC {\'\i } dat na server z vygenerovan\IeC {\'e}ho formul\IeC {\'a}\IeC {\v r}e}}{16}{figure.3.3}
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces T\IeC {\v r}\IeC {\'\i }dy zodpov\IeC {\v e}dn\IeC {\'e} za specifikaci zdroj\IeC {\r u} a zp\IeC {\r u}sobu p\IeC {\v r}ipojen\IeC {\'\i }.}}{29}{figure.4.1}
 \contentsline {figure}{\numberline {4.2}{\ignorespaces T\IeC {\v r}\IeC {\'\i }dy, na kter\IeC {\'e} jsou p\IeC {\v r}evedena v\IeC {\v s}echna data, jen\IeC {\v z} klient obdr\IeC {\v z}\IeC {\'\i }.}}{31}{figure.4.2}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces T\IeC {\v r}\IeC {\'\i }dy, kter\IeC {\'e} reprezentuje data ve formul\IeC {\'a}\IeC {\v r}i. Na jej\IeC {\'\i }m\IeC {\v z} z\IeC {\'a}klad\IeC {\v e} je sestaven objekt, kter\IeC {\'y} je odesl\IeC {\'a}n na server.}}{34}{figure.4.3}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces T\IeC {\v r}\IeC {\'\i }da, kter\IeC {\'a} reprezentue data ve formul\IeC {\'a}\IeC {\v r}i. Na jej\IeC {\'\i }m\IeC {\v z} z\IeC {\'a}klad\IeC {\v e} je sestaven objekt, kter\IeC {\'y} je odesl\IeC {\'a}n na server.}}{34}{figure.4.3}
 \contentsline {figure}{\numberline {4.4}{\ignorespaces Abstraktn\IeC {\'\i } t\IeC {\v r}\IeC {\'\i }dy valid\IeC {\'a}tor\IeC {\r u}, kter\IeC {\'e} lze pou\IeC {\v z}\IeC {\'\i }t k implementaci vlastn\IeC {\'\i }ho valid\IeC {\'a}toru.}}{36}{figure.4.4}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Uk\IeC {\'a}zkov\IeC {\'y} projekt - klientsk\IeC {\'a} \IeC {\v c}\IeC {\'a}st}}{46}{figure.5.1}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -22,7 +23,7 @@
 \contentsline {figure}{\numberline {C.4}{\ignorespaces Diagram bal\IeC {\'\i }\IeC {\v c}k\IeC {\r u} a jejich t\IeC {\v r}\IeC {\'\i }d z AFRest}}{59}{figure.C.4}
 \contentsline {figure}{\numberline {C.5}{\ignorespaces Dom\IeC {\'e}nov\IeC {\'y} model obecn\IeC {\'y}ch definic komponent}}{60}{figure.C.5}
 \contentsline {figure}{\numberline {C.6}{\ignorespaces SD diagram sestaven\IeC {\'\i } formul\IeC {\'a}\IeC {\v r}e}}{61}{figure.C.6}
-\contentsline {figure}{\numberline {C.7}{\ignorespaces SD diagram sestaven\IeC {\'\i } formul\IeC {\'a}\IeC {\v r}e}}{62}{figure.C.7}
+\contentsline {figure}{\numberline {C.7}{\ignorespaces Dom\IeC {\'e}nov\IeC {\'y} model, zn\IeC {\'a}zor\IeC {\v n}uj\IeC {\'\i }c\IeC {\'\i } buildery, kter\IeC {\'e} jsou pou\IeC {\v z}ity p\IeC {\v r}i vytv\IeC {\'a}\IeC {\v r}en\IeC {\'\i } aktivn\IeC {\'\i }ch prvk\IeC {\r u}}}{62}{figure.C.7}
 \contentsline {figure}{\numberline {C.8}{\ignorespaces SD diagram odesl\IeC {\'a}n\IeC {\'\i } dat na server}}{63}{figure.C.8}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
