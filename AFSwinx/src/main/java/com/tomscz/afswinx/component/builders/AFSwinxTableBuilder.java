@@ -97,6 +97,9 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
         } catch (AFSwinxConnectionException e) {
             throw new AFSwinxBuildException(e.getMessage());
         }
+        catch (NullPointerException e) {
+            throw new AFSwinxBuildException(e.getMessage());
+        }
 
         return afSwinxTable;
     }

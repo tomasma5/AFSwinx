@@ -88,8 +88,12 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
         if (!isValid) {
             return null;
         }
+        AFSwinxConnection sendConnection = getSendConnection();
+        if (sendConnection == null) {
+            sendConnection = new AFSwinxConnection("",0,"");
+        }
         BaseRestBuilder dataBuilder =
-                RestBuilderFactory.getInstance().getBuilder(getSendConnection());
+                RestBuilderFactory.getInstance().getBuilder(sendConnection);
         Object data = dataBuilder.reselialize(this.resealize());
         return data;
     }
@@ -107,7 +111,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
         AFConnector<Object> dataConnector =
                 new AFConnector<Object>(getSendConnection(), Object.class);
         try {
-            dataConnector.doRequest(data.toString());    
+            dataConnector.doRequest(data.toString());
             // Set response for future use
             this.lastResponse = dataConnector.getResponse();
         } catch (ConnectException e) {
@@ -126,7 +130,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
     public AFSwinxConnection getDataConnection() {
         return dataConnection;
     }
-    
+
     public HttpResponse getLastResponse() {
         return lastResponse;
     }

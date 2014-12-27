@@ -99,4 +99,58 @@
 			</security-params>
 		</send>
 	</connection>
+	<connection id="absenceCountryConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absencetype/definition/supportedCountries</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
+	</connection>
+	<connection id="absenceTypeTableConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absencetype/definition/</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
+		<data>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absencetype/country/#{id}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+		</data>
+	</connection>
+	<connection id="tableAbsenceTypeFormConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absencetype/definition/</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
+		<send>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absencetype/country/#{id}</endPointParameters>
+			<protocol>http</protocol>
+			<method>post</method>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</send>
+	</connection>
 </connectionRoot>

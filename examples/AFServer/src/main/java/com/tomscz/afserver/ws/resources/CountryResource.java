@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.inject.Inject;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -24,19 +23,12 @@ import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
-import com.tomscz.afserver.manager.StartUpBean;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.IdGenerator;
 import com.tomscz.afserver.persistence.entity.Country;
 
 @Path("/country")
 public class CountryResource extends BaseResource {
-
-    @javax.ws.rs.core.Context
-    HttpServletRequest request;
-
-    @Inject
-    StartUpBean startUp;
 
     @GET
     @Path("/definition")

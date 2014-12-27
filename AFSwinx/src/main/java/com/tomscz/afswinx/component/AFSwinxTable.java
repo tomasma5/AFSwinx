@@ -137,7 +137,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
         return tableRow;
     }
 
-    public List<AFDataPack> getSelectedData() {
+    public List<AFDataPack> getSelectedData() throws IndexOutOfBoundsException{
         int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
         List<AFDataPack> datas = new ArrayList<AFDataPack>();
         datas.add(receivedData.get(selectedRow));

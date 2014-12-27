@@ -1,0 +1,180 @@
+package com.tomscz.af.showcase.view;
+
+import java.awt.event.ActionListener;
+import java.io.InputStream;
+import java.util.HashMap;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.view.skin.MySkin;
+import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
+import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinxTable;
+
+public class AbsenceTypManagementView extends BaseScreen {
+
+    private static final long serialVersionUID = 1L;
+
+    public static final String ABSENCE_TYPE_TABLE = "absenceTypeTable";
+    public static final String ABSENCY_TYPE_FORM = "absenceTypeForm";
+    public static final String COUNTRY_FORM = "absenceCountryForm";
+    public static final String COUNTRY_CONNECTION = "absenceCountryConnection";
+    public static final String ABSENCY_TYPE_FORM_CONNECTION = "tableAbsenceTypeFormConnection";
+    public static final String ABSENCY_TYPE_TABLE_CONNECTION = "absenceTypeTableConnection";
+
+    private JButton chooseButton;
+    private JButton chooseCountryButton;
+    private JButton performButton;
+    private JButton resetForm;
+    private boolean displayAdditionalsField = false;
+    private int selectedCountry=0;
+    
+    public AbsenceTypManagementView() {
+        intialize();
+    }
+
+    public void addChooseButtonActionListener(ActionListener a) {
+        if (chooseButton != null) {
+            chooseButton.addActionListener(a);
+        }
+    }
+
+    public void addResetForm(ActionListener a) {
+        if (resetForm != null) {
+            this.resetForm.addActionListener(a);
+        }
+    }
+
+    public void addPerformButtonActionListener(ActionListener a) {
+        if (performButton != null) {
+            performButton.addActionListener(a);
+        }
+    }
+
+    public void addChooseCountryButtonActionListener(ActionListener a) {
+        if (chooseCountryButton != null) {
+            chooseCountryButton.addActionListener(a);
+        }
+    }
+
+    @Override
+    protected JPanel createContent() {
+        JPanel mainPanel = new JPanel();
+        Box b1 = Box.createVerticalBox();
+        InputStream connectionResource =
+                getClass().getClassLoader().getResourceAsStream("connection.xml");
+        try {
+            Box horizontalTopBox = Box.createHorizontalBox();
+            horizontalTopBox.setAlignmentX(CENTER_ALIGNMENT);
+            AFSwinxForm chooseCountry =
+                    AFSwinx.getInstance().getFormBuilder()
+                            .initBuilder(COUNTRY_FORM, connectionResource, COUNTRY_CONNECTION)
+                            .setLocalization(ApplicationContext.getInstance().getLocalization())
+                            .setSkin(new MySkin()).buildComponent();
+            chooseCountryButton = new JButton(Localization.getLocalizationText("button.choose"));
+            horizontalTopBox.add(chooseCountry);
+            horizontalTopBox.add(Box.createHorizontalStrut(10));
+            horizontalTopBox.add(chooseCountryButton);
+            horizontalTopBox.add(Box.createHorizontalStrut(130));
+            b1.add(horizontalTopBox);
+        } catch (AFSwinxBuildException e) {
+            getDialogs().failed("afswinx.build.title.failed", "afswinx.build.text.failed",
+                    e.getMessage());
+        }
+        if (isDisplayAdditionalsField()) {
+            try {
+                connectionResource =
+                        getClass().getClassLoader().getResourceAsStream("connection.xml");
+                HashMap<String, String> parameters = new HashMap<String, String>();
+                parameters.put("id", String.valueOf(selectedCountry));
+                AFSwinxTable table =
+                        AFSwinx.getInstance()
+                                .getTableBuilder()
+                                .initBuilder(ABSENCE_TYPE_TABLE, connectionResource,
+                                        ABSENCY_TYPE_TABLE_CONNECTION,parameters)
+                                .setLocalization(ApplicationContext.getInstance().getLocalization())
+                                .buildComponent();
+                Box centerPanel = Box.createVerticalBox();
+                centerPanel.setAlignmentX(CENTER_ALIGNMENT);
+                HashMap<String, String> securityConstrains =
+                        ApplicationContext.getInstance().getSecurityContext()
+                                .getUserNameAndPasswodr();
+                securityConstrains.put("id", String.valueOf(selectedCountry));
+                connectionResource =
+                        getClass().getClassLoader().getResourceAsStream("connection.xml");
+                AFSwinxForm form =
+                        AFSwinx.getInstance()
+                                .getFormBuilder()
+                                .initBuilder(ABSENCY_TYPE_FORM, connectionResource,
+                                        ABSENCY_TYPE_FORM_CONNECTION, securityConstrains)
+                                .setLocalization(ApplicationContext.getInstance().getLocalization())
+                                .setSkin(new MySkin()).buildComponent();
+                centerPanel.add(form);
+                performButton =
+                        new JButton(
+                                Localization.getLocalizationText("avaiableCountryView.buttton.add"));
+                performButton.setAlignmentX(CENTER_ALIGNMENT);
+                resetForm =
+                        new JButton(
+                                Localization.getLocalizationText("button.reset"));
+                resetForm.setAlignmentX(CENTER_ALIGNMENT);
+                Box buttonBox = Box.createHorizontalBox();
+                buttonBox.add(performButton);
+                buttonBox.add(Box.createHorizontalStrut(60));
+                buttonBox.add(resetForm);
+                centerPanel.add(Box.createVerticalStrut(20));
+                centerPanel.add(buttonBox);
+                chooseButton =
+                        new JButton(
+                                Localization
+                                        .getLocalizationText("avaiableCountryView.buttton.choose"));
+                chooseButton.setAlignmentX(RIGHT_ALIGNMENT);
+                resetForm =
+                        new JButton(
+                                Localization
+                                        .getLocalizationText("avaiableCountryView.buttton.reset"));
+                resetForm.setAlignmentX(CENTER_ALIGNMENT);
+                Box centerBox = Box.createHorizontalBox();
+                centerBox.add(Box.createHorizontalStrut(100));
+                centerBox.add(centerPanel);
+                centerBox.add(Box.createHorizontalStrut(100));
+                b1.add(table);
+                b1.add(chooseButton);
+                b1.add(Box.createVerticalStrut(40));
+                b1.add(centerBox);
+                b1.add(Box.createVerticalStrut(40));
+            } catch (AFSwinxBuildException e) {
+                getDialogs().failed("afswinx.build.title.failed", "afswinx.build.text.failed",
+                        e.getMessage());
+                b1.add(Box.createVerticalStrut(400));
+            }
+        } else {
+            b1.add(Box.createVerticalStrut(400));
+        }
+        mainPanel.add(b1);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        return mainPanel;
+    }
+
+    public boolean isDisplayAdditionalsField() {
+        return displayAdditionalsField;
+    }
+
+    public void setDisplayAdditionalsField(boolean displayAdditionalsField) {
+        this.displayAdditionalsField = displayAdditionalsField;
+    }
+
+    public int getSelectedCountry() {
+        return selectedCountry;
+    }
+
+    public void setSelectedCountry(int selectedCountry) {
+        this.selectedCountry = selectedCountry;
+    }
+
+}

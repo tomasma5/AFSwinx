@@ -13,6 +13,7 @@ public class AFApplication extends Application {
         singletons.add(new CountryResource());
         singletons.add(new AFRootResource());
         singletons.add(new UserResource());
+        singletons.add(new AbsenceTypeResource());
     }
 
     @Override

@@ -19,18 +19,12 @@ import com.tomscz.afserver.persistence.entity.Country;
 @Stateless(name=AddressManagerImpl.name)
 public class AddressManagerImpl extends BaseManager<Address> implements AddressManager<Address>, Serializable{
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-
-
     @Inject
     EntityManager em;
     
+    private static final long serialVersionUID = 1L;
     
     public static final String name="AdressManager";
-
 
     @Override
     public Address findById(int id) throws BusinessException {

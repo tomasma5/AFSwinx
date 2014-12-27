@@ -82,7 +82,7 @@ public class AvaiableCountryView extends BaseScreen {
             addCountryButton.setAlignmentX(CENTER_ALIGNMENT);
             resetForm =
                     new JButton(
-                            Localization.getLocalizationText("avaiableCountryView.buttton.reset"));
+                            Localization.getLocalizationText("button.reset"));
             resetForm.setAlignmentX(CENTER_ALIGNMENT);
             Box buttonBox = Box.createHorizontalBox();
             buttonBox.add(addCountryButton);

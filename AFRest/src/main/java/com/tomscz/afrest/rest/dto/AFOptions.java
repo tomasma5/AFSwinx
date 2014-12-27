@@ -41,7 +41,7 @@ public class AFOptions {
     }
     
     public boolean equals(AFOptions options) {
-       if(options.getKey().equals(key) && options.getValue().equals(value)){
+       if(options.getKey().equals(key)){
            return true;
        }
        return false;

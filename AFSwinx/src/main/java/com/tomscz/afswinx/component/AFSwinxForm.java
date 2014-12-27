@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component;
 
-import java.util.HashMap;
 import java.util.List;
 
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -161,10 +160,6 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             }
         }
         return dataHolder;
-    }
-    
-    public void setData(HashMap<String, String> data){
-        
     }
 
 }
