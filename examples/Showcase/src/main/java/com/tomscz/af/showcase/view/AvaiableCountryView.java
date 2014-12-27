@@ -1,4 +1,4 @@
-package com.tomscz.af.showcase.view.forms;
+package com.tomscz.af.showcase.view;
 
 import java.awt.event.ActionListener;
 import java.io.InputStream;

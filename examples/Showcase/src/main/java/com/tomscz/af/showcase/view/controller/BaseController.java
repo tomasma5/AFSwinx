@@ -3,10 +3,10 @@ package com.tomscz.af.showcase.view.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.tomscz.af.showcase.view.forms.AvaiableCountryView;
-import com.tomscz.af.showcase.view.forms.BaseScreen;
-import com.tomscz.af.showcase.view.forms.PersonView;
-import com.tomscz.af.showcase.view.forms.WelcomeScreen;
+import com.tomscz.af.showcase.view.AvaiableCountryView;
+import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.PersonView;
+import com.tomscz.af.showcase.view.WelcomeScreen;
 import com.tomscz.afswinx.component.AFSwinx;
 
 public abstract class BaseController {

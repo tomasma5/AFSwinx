@@ -4,7 +4,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.tomscz.af.showcase.view.forms.Localization;
+import com.tomscz.af.showcase.view.Localization;
 
 /**
  * This is dialog class which can display custom message to user in new dialog windows
