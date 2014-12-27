@@ -35,6 +35,14 @@ public class Dialogs extends JDialog {
                 Localization.getLocalizationText(message), JOptionPane.ERROR_MESSAGE);
     }
 
+    public void succes(String title, String message, String... parameters) {
+        setModal(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        JOptionPane.showMessageDialog(dialogOwner,
+                Localization.getLocalizationText(message, parameters),
+                Localization.getLocalizationText(message), JOptionPane.INFORMATION_MESSAGE);
+    }
+    
     
 
     

@@ -30,6 +30,7 @@ public class PersonController extends BaseController {
                         .validateData()) {
                     AFSwinx.getInstance().getExistedComponent(PersonView.PERSON_FORM)
                             .sendData();
+                    view.getDialogs().succes("action.succes", "personView.button.update.succes","");
                 }
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",

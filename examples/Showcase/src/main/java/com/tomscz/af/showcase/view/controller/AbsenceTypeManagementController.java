@@ -28,7 +28,7 @@ public class AbsenceTypeManagementController extends BaseController {
         AbsenceTypManagementView ws = (AbsenceTypManagementView) view;
         ws.addPerformButtonActionListener(onPerformActionExec);
         ws.addChooseButtonActionListener(onChooseAbsenceTypeExec);
-        ws.addResetForm(onResetForm);
+        ws.addResetFormActionListener(onResetFormExec);
         ws.addChooseCountryButtonActionListener(onChooseCountryExec);
         super.registerListeners();
     }
@@ -45,6 +45,7 @@ public class AbsenceTypeManagementController extends BaseController {
                             .sendData();
                     rebuildView();
                 }
+                view.getDialogs().succes("action.succes", "absencetype.action.addOrModify","");
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",
                         "avaiableCountryVeiw.button.add.failed", e1.getMessage());
@@ -91,7 +92,7 @@ public class AbsenceTypeManagementController extends BaseController {
         }
     };
 
-    private ActionListener onResetForm = new ActionListener() {
+    private ActionListener onResetFormExec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinxForm form =

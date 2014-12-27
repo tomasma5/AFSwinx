@@ -39,6 +39,7 @@ public class AvaiableCountryController extends BaseController {
                     view.intialize();
                     registerListeners();
                     view.getContentPane().repaint();
+                    view.getDialogs().succes("action.succes", "avaiableCountryView.action.addOrUpdate.succes","");
                 }
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",

@@ -30,7 +30,7 @@ public class AbsenceTypManagementView extends BaseScreen {
     private JButton chooseButton;
     private JButton chooseCountryButton;
     private JButton performButton;
-    private JButton resetForm;
+    private JButton formResetButton;
     private boolean displayAdditionalsField = false;
     private int selectedCountry=0;
     
@@ -44,9 +44,9 @@ public class AbsenceTypManagementView extends BaseScreen {
         }
     }
 
-    public void addResetForm(ActionListener a) {
-        if (resetForm != null) {
-            this.resetForm.addActionListener(a);
+    public void addResetFormActionListener(ActionListener a) {
+        if (formResetButton != null) {
+            formResetButton.addActionListener(a);
         }
     }
 
@@ -119,14 +119,14 @@ public class AbsenceTypManagementView extends BaseScreen {
                         new JButton(
                                 Localization.getLocalizationText("avaiableCountryView.buttton.add"));
                 performButton.setAlignmentX(CENTER_ALIGNMENT);
-                resetForm =
+                formResetButton =
                         new JButton(
                                 Localization.getLocalizationText("button.reset"));
-                resetForm.setAlignmentX(CENTER_ALIGNMENT);
+                formResetButton.setAlignmentX(CENTER_ALIGNMENT);
                 Box buttonBox = Box.createHorizontalBox();
                 buttonBox.add(performButton);
                 buttonBox.add(Box.createHorizontalStrut(60));
-                buttonBox.add(resetForm);
+                buttonBox.add(formResetButton);
                 centerPanel.add(Box.createVerticalStrut(20));
                 centerPanel.add(buttonBox);
                 chooseButton =
@@ -134,11 +134,6 @@ public class AbsenceTypManagementView extends BaseScreen {
                                 Localization
                                         .getLocalizationText("avaiableCountryView.buttton.choose"));
                 chooseButton.setAlignmentX(RIGHT_ALIGNMENT);
-                resetForm =
-                        new JButton(
-                                Localization
-                                        .getLocalizationText("avaiableCountryView.buttton.reset"));
-                resetForm.setAlignmentX(CENTER_ALIGNMENT);
                 Box centerBox = Box.createHorizontalBox();
                 centerBox.add(Box.createHorizontalStrut(100));
                 centerBox.add(centerPanel);
