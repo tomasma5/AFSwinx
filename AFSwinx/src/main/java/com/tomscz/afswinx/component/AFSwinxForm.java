@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.component;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -37,34 +38,53 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             return;
         }
         AFDataPack dataToSet = dataPack.get(0);
-        if (dataToSet.getClassName().isEmpty()) {
-            return;
-        }
         for (AFData field : dataToSet.getData()) {
             String fieldName = field.getKey();
             ComponentDataPacker dataPacker = getPanels().get(fieldName);
             if (dataPacker == null) {
                 continue;
             }
-            AFSwinxPanel panelToSetData = dataPacker.getComponent();
-            setDataToField(panelToSetData, field);
-            // If this component should has been retyped, then set value to their clone
-            if (panelToSetData.isRetype()) {
-                dataPacker = getPanels().get(Utils.generateCloneKey(fieldName));
-                if (dataPacker != null) {
-                    panelToSetData = dataPacker.getComponent();
-                    setDataToField(panelToSetData, field);
-                }
-            }
+            setDataToField(dataPacker,field,fieldName);
+//            AFSwinxPanel panelToSetData = dataPacker.getComponent();
+//            setDataToField(panelToSetData, field);
+//            // If this component should has been retyped, then set value to their clone
+//            if (panelToSetData.isRetype()) {
+//                dataPacker = getPanels().get(Utils.generateCloneKey(fieldName));
+//                if (dataPacker != null) {
+//                    panelToSetData = dataPacker.getComponent();
+//                    setDataToField(panelToSetData, field);
+//                }
+//            }
         }
     }
 
+    private void setDataToField(ComponentDataPacker dataPacker, AFData field, String fieldName){
+        AFSwinxPanel panelToSetData = dataPacker.getComponent();
+        setDataToField(panelToSetData, field);
+        // If this component should has been retyped, then set value to their clone
+        if (panelToSetData.isRetype()) {
+            dataPacker = getPanels().get(Utils.generateCloneKey(fieldName));
+            if (dataPacker != null) {
+                panelToSetData = dataPacker.getComponent();
+                setDataToField(panelToSetData, field);
+            }
+        }
+    }
+    
     private void setDataToField(AFSwinxPanel panelToSetData, AFData field) {
         WidgetBuilder builder =
                 WidgetBuilderFactory.getInstance().createWidgetBuilder(
                         panelToSetData.getWidgetType());
         builder.setLocalization(localization);
         builder.setData(panelToSetData, field);
+    }
+    
+    @Override
+    public void clearData() {
+        for(String key:getPanels().keySet()){
+            ComponentDataPacker dataPacker = getPanels().get(key);
+            setDataToField(dataPacker, new AFData("", ""), key);
+        }
     }
 
     @Override
@@ -141,6 +161,10 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             }
         }
         return dataHolder;
+    }
+    
+    public void setData(HashMap<String, String> data){
+        
     }
 
 }

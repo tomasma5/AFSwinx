@@ -1,6 +1,5 @@
 package com.tomscz.af.showcase.view.forms;
 
-import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -22,10 +21,12 @@ public class AvaiableCountryView extends BaseScreen {
     private static final long serialVersionUID = 1L;
 
     public static final String COUNTRY_TABLE = "countryTable";
-    public static final String COUNTRY_FORM = "countryTable";
+    public static final String COUNTRY_FORM = "countryForm";
     public static final String COUNTRY_TABLE_CONNECTION_KEY = "tableCountryPublic";
     public static final String COUNTRY_FORM_CONNECTION_KEY = "countryAdd";
     private JButton addCountryButton;
+    private JButton chooseCountry;
+    private JButton resetForm;
 
     public AvaiableCountryView() {
         intialize();
@@ -37,6 +38,18 @@ public class AvaiableCountryView extends BaseScreen {
         }
     }
 
+    public void addChooseCountryListener(ActionListener a) {
+        if (chooseCountry != null) {
+            this.chooseCountry.addActionListener(a);
+        }
+    }
+
+    public void addResetForm(ActionListener a) {
+        if (resetForm != null) {
+            this.resetForm.addActionListener(a);
+        }
+    }
+    
     @Override
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
@@ -51,7 +64,7 @@ public class AvaiableCountryView extends BaseScreen {
                                     COUNTRY_TABLE_CONNECTION_KEY)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .buildComponent();
-            JPanel centerPanel = new JPanel();
+            Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
@@ -67,15 +80,30 @@ public class AvaiableCountryView extends BaseScreen {
             addCountryButton =
                     new JButton(Localization.getLocalizationText("avaiableCountryView.buttton.add"));
             addCountryButton.setAlignmentX(CENTER_ALIGNMENT);
-            centerPanel.add(addCountryButton);
-            centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+            resetForm =
+                    new JButton(
+                            Localization.getLocalizationText("avaiableCountryView.buttton.reset"));
+            resetForm.setAlignmentX(CENTER_ALIGNMENT);
+            Box buttonBox = Box.createHorizontalBox();
+            buttonBox.add(addCountryButton);
+            buttonBox.add(Box.createHorizontalStrut(60));
+            buttonBox.add(resetForm);
+            centerPanel.add(Box.createVerticalStrut(20));
+            centerPanel.add(buttonBox);
+            chooseCountry =
+                    new JButton(
+                            Localization.getLocalizationText("avaiableCountryView.buttton.choose"));
+            chooseCountry.setAlignmentX(RIGHT_ALIGNMENT);
+            Box centerBox = Box.createHorizontalBox();
+            centerBox.add(Box.createHorizontalStrut(100));
+            centerBox.add(centerPanel);
+            centerBox.add(Box.createHorizontalStrut(100));
             b1.add(table);
+            b1.add(chooseCountry);
             b1.add(Box.createVerticalStrut(40));
-            b1.add(centerPanel);
+            b1.add(centerBox);
             b1.add(Box.createVerticalStrut(40));
             mainPanel.add(b1);
-//            mainPanel.add(table);
-//            mainPanel.add(centerPanel);
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             return mainPanel;
         } catch (AFSwinxBuildException e) {

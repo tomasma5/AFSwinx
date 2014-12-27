@@ -34,7 +34,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
     private int totalWidth = -1;
     private static final int PLUS_HEIGHT = 30;
 
-
+    private List<AFDataPack> receivedData;
     private List<HashMap<String, String>> tableRow = new ArrayList<HashMap<String, String>>();
 
     public AFSwinxTable(AFSwinxConnection modelConnection, AFSwinxConnection dataConnection,
@@ -46,6 +46,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
 
     @Override
     public void fillData(List<AFDataPack> dataPack) {
+        receivedData = dataPack;
         for (AFDataPack data : dataPack) {
             HashMap<String, String> row = new HashMap<String, String>();
             for (AFData field : data.getData()) {
@@ -136,6 +137,13 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
         return tableRow;
     }
 
+    public List<AFDataPack> getSelectedData() {
+        int selectedRow = table.convertRowIndexToModel(table.getSelectedRow());
+        List<AFDataPack> datas = new ArrayList<AFDataPack>();
+        datas.add(receivedData.get(selectedRow));
+        return datas;
+    }
+
     public JTable getTable() {
         return table;
     }
@@ -170,6 +178,11 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
 
     public int getTotalWidth() {
         return totalWidth;
+    }
+
+    @Override
+    public void clearData() {
+       throw new UnsupportedOperationException("This opertion is not supported yet");  
     }
 
 }

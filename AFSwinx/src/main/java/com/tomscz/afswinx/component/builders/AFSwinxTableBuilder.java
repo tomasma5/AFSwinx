@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowSorter;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -26,6 +26,7 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
+import com.tomscz.afswinx.swing.component.model.UnEditableTableModel;
 
 
 public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilder> {
@@ -80,13 +81,14 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
                     row[i][j] = data;
                 }
             }
-            TableModel model = new DefaultTableModel(row, columns);
+            TableModel model = new UnEditableTableModel(row, columns);
             JTable table = new JTable(model);
+            table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             RowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
             table.setRowSorter(sorter);
             JScrollPane pane = new JScrollPane(table);
             table.setFillsViewportHeight(true);
-            table.setEnabled(false);
+//            table.setEnabled(false);
             afSwinxTable.setTable(table);
             afSwinxTable.setScrollPanel(pane);
             afSwinxTable.resize();

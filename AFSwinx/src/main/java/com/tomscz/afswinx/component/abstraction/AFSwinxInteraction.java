@@ -59,5 +59,7 @@ public interface AFSwinxInteraction {
      * @return
      */
     public Object generateSendData();
+    
+    public void clearData();
 
 }

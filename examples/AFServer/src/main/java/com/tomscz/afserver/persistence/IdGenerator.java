@@ -2,13 +2,13 @@ package com.tomscz.afserver.persistence;
 
 public class IdGenerator {
 
-    private static int personId=0;
-    private static int addressId=0;
-    private static int countryId=0;
-    private static int absenceInstanceId=0;
-    private static int absenceTypeId=0;
-    private static int absenceTypeEmployeeId=0;
-    private static int userRoleId=0;
+    private static int personId=1;
+    private static int addressId=1;
+    private static int countryId=1;
+    private static int absenceInstanceId=1;
+    private static int absenceTypeId=1;
+    private static int absenceTypeEmployeeId=1;
+    private static int userRoleId=1;
     
     public static synchronized int getNextPersonId(){
         return personId++;
