@@ -19,6 +19,7 @@ import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.codingcrayons.aspectfaces.annotations.UiType;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.definitions.LabelPosition;
 import com.tomscz.afrest.layout.definitions.LayouDefinitions;
@@ -46,7 +47,7 @@ public class Person {
     private Gender gender;
     private boolean confidentialAgreement;
     @OneToOne
-    private Address myAdress;
+    private Address myAddress;
 
     public Person() {
 
@@ -69,6 +70,7 @@ public class Person {
         this.confidentialAgreement = confidentialAgreement;
     }
 
+    @UiType(value = "id")
     public int getId() {
         return id;
     }
@@ -77,7 +79,7 @@ public class Person {
         this.id = id;
     }
 
-    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.TWOCOLUMNSLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     @UiLabel("person.lastName")
     @UiOrder(value = 2)
     public String getLastName() {
@@ -91,6 +93,7 @@ public class Person {
     @UiRequired
     @UiLabel(value = "person.firstName")
     @UiOrder(value = 1)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public String getFirstName() {
         return firstName;
     }
@@ -104,6 +107,7 @@ public class Person {
     @Min(value = 15)
     @Max(value = 60)
     @UiRequired
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public int getAge() {
         return age;
     }
@@ -112,7 +116,9 @@ public class Person {
         this.age = age;
     }
 
-    @UIWidgetType(widgetType = SupportedWidgets.CHECKBOX)
+    @UIWidgetType(widgetType = SupportedWidgets.OPTION)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UiRequired
     public Gender getGender() {
         return gender;
     }
@@ -121,7 +127,9 @@ public class Person {
         this.gender = gender;
     }
 
-    public boolean isConfidentialAgreement() {
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UiType(value = "confidentianlAgreement")
+    public boolean getConfidentialAgreement() {
         return confidentialAgreement;
     }
 
@@ -129,15 +137,16 @@ public class Person {
         this.confidentialAgreement = confidentialAgreement;
     }
 
-    @UiOrder(value = 0)
-    public Address getMyAdress() {
-        return myAdress;
+    @UiOrder(value = 4)
+    public Address getMyAddress() {
+        return myAddress;
     }
 
-    public void setMyAdress(Address myAdress) {
-        this.myAdress = myAdress;
+    public void setMyAddress(Address myAddress) {
+        this.myAddress = myAddress;
     }
 
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public String getEmail() {
         return email;
     }
@@ -146,7 +155,10 @@ public class Person {
         this.email = email;
     }
 
-    public boolean isActive() {
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UiType(value = "option")
+    @UiRequired
+    public boolean getActive() {
         return active;
     }
 
@@ -154,6 +166,7 @@ public class Person {
         this.active = active;
     }
 
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public Date getHireDate() {
         return hireDate;
     }
@@ -162,6 +175,7 @@ public class Person {
         this.hireDate = hireDate;
     }
 
+    
     public List<UserRoles> getUserRole() {
         return userRole;
     }
@@ -174,9 +188,15 @@ public class Person {
         if (this.userRole == null) {
             this.userRole = new ArrayList<UserRoles>();
         }
-        this.userRole.add(userRole);
+        if (!this.userRole.contains(userRole)) {
+            this.userRole.add(userRole);
+        }
     }
 
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UiOrder(value = -1)
+    @UiType(value = "password")
+    @UiRequired
     public String getPassword() {
         return password;
     }
@@ -185,6 +205,9 @@ public class Person {
         this.password = password;
     }
 
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UiOrder(value = -2)
+    @UiRequired
     public String getLogin() {
         return login;
     }

@@ -27,34 +27,37 @@ public class CheckBoxBuilder extends BaseWidgetBuilder {
     }
 
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException, AFSwinxBuildException {
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException,
+            AFSwinxBuildException {
         super.buildBase(field);
         // Create panel which holds all necessary informations
         AFSwinxPanel afPanel =
                 new AFSwinxPanel(field.getId(), field.getWidgetType(), fieldLabel, message);
         // If this field is not required then add dummy field
         if (field.getOptions() == null || field.getOptions().isEmpty()) {
-        AFComponentDataHolder option = new AFComponentDataHolder("true", "true", "true");
-        SwinxAFCheckBox<AFComponentDataHolder> checkBox =
-                new SwinxAFCheckBox<AFComponentDataHolder>(option);
-        layoutBuilder.addComponent(checkBox);
-        afPanel.addDataHolderComponent(checkBox);
-        customizeComponent(checkBox, field);
+            AFComponentDataHolder option = new AFComponentDataHolder("true", "true", "true");
+            SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                    new SwinxAFCheckBox<AFComponentDataHolder>(option);
+            layoutBuilder.addComponent(checkBox);
+            afPanel.addDataHolderComponent(checkBox);
+            customizeComponent(checkBox, field);
+        } else {
+            if (!field.required()) {
+                super.addDummyFieldOption(field);
+            }
         }
-
-        if (!field.required()) {
-            super.addDummyFieldOption(field);
-          }
         AFOptionToAFSwinxOption converter = new AFOptionToAFSwinxOption();
-        for (AFOptions option : field.getOptions()) {
-            AFComponentDataHolder optionToAdd = converter.convert(option, localization);
-            if (optionToAdd != null) {
-                SwinxAFCheckBox<AFComponentDataHolder> checkBox =
-                        new SwinxAFCheckBox<AFComponentDataHolder>(optionToAdd);
-                checkBox.setText(optionToAdd.getValueToDisplay());
-                layoutBuilder.addComponent(checkBox);
-                afPanel.addDataHolderComponent(checkBox);
-                customizeComponent(checkBox, field);
+        if (field.getOptions() != null) {
+            for (AFOptions option : field.getOptions()) {
+                AFComponentDataHolder optionToAdd = converter.convert(option, localization);
+                if (optionToAdd != null) {
+                    SwinxAFCheckBox<AFComponentDataHolder> checkBox =
+                            new SwinxAFCheckBox<AFComponentDataHolder>(optionToAdd);
+                    checkBox.setText(optionToAdd.getValueToDisplay());
+                    layoutBuilder.addComponent(checkBox);
+                    afPanel.addDataHolderComponent(checkBox);
+                    customizeComponent(checkBox, field);
+                }
             }
         }
 
@@ -97,7 +100,7 @@ public class CheckBoxBuilder extends BaseWidgetBuilder {
         AFComponentDataHolder dataHolder = getSelectedDataObject(panel);
         if (dataHolder != null) {
             return String.valueOf(dataHolder.getValueToDisplay());
-        } else if (panel.getDataHolder() != null && panel.getDataHolder().size() >0) {
+        } else if (panel.getDataHolder() != null && panel.getDataHolder().size() > 0) {
             @SuppressWarnings("unchecked")
             SwinxAFCheckBox<AFComponentDataHolder> checkBox =
                     (SwinxAFCheckBox<AFComponentDataHolder>) panel.getDataHolder().get(0);

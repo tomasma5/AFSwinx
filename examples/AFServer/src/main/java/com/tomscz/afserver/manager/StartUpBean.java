@@ -52,23 +52,26 @@ public class StartUpBean implements Serializable {
         try {
             Date date = sdf.parse("21/12/2012");
             Person person =
-                    new Person(IdGenerator.getNextPersonId(), "sa","john","John", "Doe", "jdoe@toms-cz.com,",
+                    new Person(IdGenerator.getNextPersonId(), "sa","john","John", "Doe", "jdoe@toms-cz.com",
                             date, true, 30, Gender.MALE, true);
             person.addRole(UserRoles.USER);
             Address personAddress =
-                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 22222, "Czech republic");
+                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 48601, "Czech republic");
             em.persist(personAddress);
-            person.setMyAdress(personAddress);
+            person.setMyAddress(personAddress);
             em.persist(person);
+            date = sdf.parse("1/1/2013");
             Person secondPerson =
                     new Person(IdGenerator.getNextPersonId(),"sa2","jaina", "Jaina", "Proudmore",
-                            "jproud@toms-cz.com,", date, true, 30, Gender.FEMALE, true);
+                            "jproud@toms-cz.com", date, true, 30, Gender.FEMALE, true);
             secondPerson.addRole(UserRoles.USER);
             secondPerson.addRole(UserRoles.ADMIN);
-            secondPerson.setMyAdress(personAddress);
+            personAddress =
+                    new Address(IdGenerator.getNextAddressId(), "Nowhere", "Strakonice", 38601, "Czech republic");
+            em.persist(personAddress);
+            secondPerson.setMyAddress(personAddress);
             em.persist(secondPerson);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

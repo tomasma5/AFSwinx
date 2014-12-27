@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import com.tomscz.af.showcase.view.forms.AvaiableCountryView;
 import com.tomscz.af.showcase.view.forms.BaseScreen;
+import com.tomscz.af.showcase.view.forms.PersonView;
 import com.tomscz.af.showcase.view.forms.WelcomeScreen;
 import com.tomscz.afswinx.component.AFSwinx;
 
@@ -19,6 +20,7 @@ public abstract class BaseController {
     protected void registerListeners(){
         view.addLoginButtonListener(loginButtonListener);
         view.addAvaiableCountryListener(avaiableCountryPublicListener);
+        view.addMyProfileListener(myProfileListener);
     }
     
     private ActionListener loginButtonListener = new ActionListener() {
@@ -45,6 +47,16 @@ public abstract class BaseController {
         }
     };
     
-    
+    private ActionListener myProfileListener = new ActionListener() {
+        
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
+            view.setVisible(false);
+            PersonView personView = new PersonView();
+            PersonController controller = new PersonController(personView);
+            personView.setVisible(true);
+        }
+    };    
     
 }

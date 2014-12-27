@@ -57,7 +57,7 @@ public class AFRootResource {
         p.setConfidentialAgreement(true);
         Address address = new Address();
         address.setStreet("5th evenue");
-        p.setMyAdress(address);
+        p.setMyAddress(address);
         AbsenceInstance firstInstance = new AbsenceInstance();
         firstInstance.setDuration(320);
         Date date = new Date();

@@ -42,13 +42,13 @@ public class CountryResource extends BaseResource {
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources() {
+    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             afSwing.setMainLayout("templates/oneColumnLayout.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
             HashMap<String, String> activeFlag = new HashMap<String, String>();
-            //Define possibilities about active
+            // Define possibilities about active
             activeFlag.put("true", "true");
             activeFlag.put("false", "false");
             data.setOptionsToFields(activeFlag, "active");

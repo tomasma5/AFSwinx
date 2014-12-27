@@ -12,7 +12,14 @@ public abstract class BaseManager<T> implements Manager<T>{
 
     @Override
     public void createOrupdate(T entity) throws BusinessException {
-        em.merge(entity);    
+        try{
+        entity = em.merge(entity);
+        em.persist(entity);
+        em.flush();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

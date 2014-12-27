@@ -2,7 +2,6 @@
 	<widgetType>$widgetType$</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>	
-	<readonly>true</readonly>
 	<validations>
 		<required>$required$</required>
 	</validations>
@@ -11,5 +10,4 @@
 		<labelPossition>$labelPossition$</labelPossition>
 		<layout>$layout$</layout>
 	</fieldLayout>
-	<options>$util.getEnum$</options>
 </widget>

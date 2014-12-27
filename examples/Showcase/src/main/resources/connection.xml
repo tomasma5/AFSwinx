@@ -1,83 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <connectionRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<connection id="personWithEL">
-		<metaModel>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/person</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-			<header-param>
-				<param>content-type</param>
-				<value>Application/Json</value>
-			</header-param>
-		</metaModel>
-		<data>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/person/#{id}</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-		</data>
-		<send>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/person/</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-		</send>
-	</connection>
-	<connection id="tablePerson">
-		<metaModel>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/person/list/definition</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-			<header-param>
-				<param>content-type</param>
-				<value>Application/Json</value>
-			</header-param>
-		</metaModel>
-		<data>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/person/list</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-		</data>
-	</connection>
-	<connection id="person">
-		<metaModel>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-			<header-param>
-				<param>content-type</param>
-				<value>Application/Json</value>
-			</header-param>
-		</metaModel>
-		<data>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person/1</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-		</data>
-		<send>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person/1</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-		</send>
-	</connection>
-	<connection id="person2">
-		<metaModel>
-			<endPoint>localhost</endPoint>
-			<endPointParameters>/AFServer/rest/Person</endPointParameters>
-			<protocol>http</protocol>
-			<port>8080</port>
-			<header-param>
-				<param>content-type</param>
-				<value>Application/Json</value>
-			</header-param>
-		</metaModel>
-	</connection>
 	<connection id="loginForm">
 		<metaModel>
 			<endPoint>localhost</endPoint>
@@ -132,6 +54,41 @@
 		<send>
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/country</endPointParameters>
+			<protocol>http</protocol>
+			<method>post</method>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</send>
+	</connection>
+	<connection id="personProfile">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/users/profile</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
+		<data>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/users/user/#{username}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</data>
+		<send>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/users/update</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
 			<port>8080</port>

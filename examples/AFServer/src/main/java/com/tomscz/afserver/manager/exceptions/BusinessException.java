@@ -6,6 +6,10 @@ public class BusinessException extends Exception{
 
     private static final long serialVersionUID = 1L;
 
+    public BusinessException(Status status){
+        this.status = status;
+    }
+    
     private Status status;
 
     public Status getStatus() {

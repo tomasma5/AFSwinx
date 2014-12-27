@@ -63,7 +63,7 @@ public class AFClassInfo implements Serializable {
     }
 
     private void setOptionsToField(List<AFOptions> options, String fieldId) {
-        String[] path = fieldId.split("//.");
+        String[] path = fieldId.split("\\.");
         String fieldInfoId = "";
         boolean findInClasses = false;
         if (path.length > 1) {

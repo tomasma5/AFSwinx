@@ -16,7 +16,7 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 public class JSONBuilder extends BaseRestBuilder {
 
     private static String baseClass = "dummy";
-    
+
     StringBuilder sb = new StringBuilder();
     AFDataPack dataPack = new AFDataPack(baseClass);
     List<AFDataPack> moreDatas = new ArrayList<AFDataPack>();
@@ -43,14 +43,14 @@ public class JSONBuilder extends BaseRestBuilder {
 
     @Override
     public List<AFDataPack> serialize(Object jsonObject) {
-        if(jsonObject == null){
+        if (jsonObject == null) {
             return moreDatas;
         }
         JsonElement element = (JsonElement) jsonObject;
-        if(element.isJsonArray()){
+        if (element.isJsonArray()) {
             JsonArray array = (JsonArray) jsonObject;
-            for(JsonElement currentElement:array){
-                if(currentElement.isJsonObject()){
+            for (JsonElement currentElement : array) {
+                if (currentElement.isJsonObject()) {
                     JsonObject object = (JsonObject) currentElement;
                     Gson gson = new Gson();
                     JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
@@ -59,8 +59,7 @@ public class JSONBuilder extends BaseRestBuilder {
                     dataPack = new AFDataPack(baseClass);
                 }
             }
-        }
-        else if(element.isJsonObject()){
+        } else if (element.isJsonObject()) {
             JsonObject object = (JsonObject) jsonObject;
             Gson gson = new Gson();
             JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
@@ -78,6 +77,9 @@ public class JSONBuilder extends BaseRestBuilder {
                 if (currentElement.isJsonObject()) {
                     JsonObject object = (JsonObject) currentElement;
                     serializeJseon(object, Utils.generateKey(fieldKey, key));
+                } else if (currentElement.isJsonArray()) {
+                    //We don't support arrays in this version
+                    continue;
                 } else {
                     String value = currentElement.getAsString();
                     AFData data = new AFData(Utils.generateKey(fieldKey, key), value);

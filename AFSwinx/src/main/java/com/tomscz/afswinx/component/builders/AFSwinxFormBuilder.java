@@ -42,7 +42,7 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             // Fill data to form
             form.fillData(dataPack);
             AFSwinx.getInstance().addComponent(form, componentKeyName);
-        } catch (AFSwinxConnectionException e) {
+        } catch (Exception e) {
             throw new AFSwinxBuildException(e.getMessage());
         }
         return form;

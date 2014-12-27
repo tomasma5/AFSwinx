@@ -11,24 +11,30 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.ws.rs.core.Response.Status;
 
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Address;
 import com.tomscz.afserver.persistence.entity.Country;
 import com.tomscz.afserver.persistence.entity.Person;
+import com.tomscz.afserver.persistence.entity.UserRoles;
+import com.tomscz.afserver.ws.security.AFSecurityContext;
 
-@Stateless(name=PersonManagerImpl.name)
-public class PersonManagerImpl extends BaseManager<Person> implements Serializable, PersonManager<Person>{
+@Stateless(name = PersonManagerImpl.name)
+public class PersonManagerImpl extends BaseManager<Person>
+        implements
+            Serializable,
+            PersonManager<Person> {
 
     @EJB
     CountryManager<Country> countryManager;
-    
+
     @EJB
     AddressManager<Address> addressManager;
-    
+
     private static final long serialVersionUID = 1L;
 
-    public static final String name="PersonManager";
+    public static final String name = "PersonManager";
 
     @Override
     public Person findById(int id) throws BusinessException {
@@ -39,7 +45,7 @@ public class PersonManagerImpl extends BaseManager<Person> implements Serializab
         personQuery.where(idPredicate);
         TypedQuery<Person> typedQuery = em.createQuery(personQuery);
         List<Person> resultList = typedQuery.getResultList();
-        if(resultList.isEmpty()){
+        if (resultList.isEmpty()) {
             return null;
         }
         return resultList.get(0);
@@ -54,7 +60,7 @@ public class PersonManagerImpl extends BaseManager<Person> implements Serializab
         personQuery.where(loginPredicate);
         TypedQuery<Person> typedQuery = em.createQuery(personQuery);
         List<Person> resultList = typedQuery.getResultList();
-        if(resultList.isEmpty()){
+        if (resultList.isEmpty()) {
             return null;
         }
         return resultList.get(0);
@@ -67,10 +73,10 @@ public class PersonManagerImpl extends BaseManager<Person> implements Serializab
         Root<Person> rootPersonQuery = personQuery.from(Person.class);
         Predicate loginPredicate = cb.equal(rootPersonQuery.get("login"), login);
         Predicate passwordPredicate = cb.equal(rootPersonQuery.get("password"), password);
-        personQuery.where(cb.and(loginPredicate,passwordPredicate));
+        personQuery.where(cb.and(loginPredicate, passwordPredicate));
         TypedQuery<Person> typedQuery = em.createQuery(personQuery);
         List<Person> resultList = typedQuery.getResultList();
-        if(resultList.isEmpty()){
+        if (resultList.isEmpty()) {
             return null;
         }
         return resultList.get(0);
@@ -89,7 +95,7 @@ public class PersonManagerImpl extends BaseManager<Person> implements Serializab
     public List<Person> findUsersByCountry(int countryId) throws BusinessException {
         try {
             Country country = countryManager.findById(countryId);
-            if(country !=null){
+            if (country != null) {
                 List<Address> addressInCountry = addressManager.findAddressInCountry(country);
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery<Person> personQuery = cb.createQuery(Person.class);
@@ -102,8 +108,7 @@ public class PersonManagerImpl extends BaseManager<Person> implements Serializab
                 return resultList;
             }
         } catch (BusinessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw e;
         }
         // TODO Auto-generated method stub
         return null;
@@ -111,8 +116,26 @@ public class PersonManagerImpl extends BaseManager<Person> implements Serializab
 
     @Override
     public Person findUserByCountry(String countryName) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException("This operation is not supported");
+    }
+
+    @Override
+    public void updateExistedUser(Person personToUpdate, AFSecurityContext securityContext)
+            throws BusinessException {
+        if (personToUpdate.getLogin().equals(securityContext.getLoggedUserName())
+                || securityContext.isUserInRole(UserRoles.ADMIN)) {
+            Person existedPerson = findUser(personToUpdate.getLogin());
+            if(existedPerson.getId() != personToUpdate.getId()){
+                throw new BusinessException(Status.BAD_REQUEST);
+            }
+            for(UserRoles role : existedPerson.getUserRole()){
+                personToUpdate.addRole(role);
+            }
+            createOrupdate(personToUpdate);
+            addressManager.createOrupdate(personToUpdate.getMyAddress());
+        } else {
+            throw new BusinessException(Status.FORBIDDEN);
+        }
     }
 
 }

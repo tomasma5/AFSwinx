@@ -42,11 +42,7 @@ public abstract class BaseScreen extends JFrame {
         b1.add(createLeftMenu());
         b1.add(Box.createHorizontalGlue());
         JPanel content = createContent();
-        JScrollPane panel =
-                new JScrollPane(content, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                        JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panel.setViewportView(content);
-        b1.add(panel);
+        b1.add(content);
         contentPanel.add(b1);
         mainPanel.add(contentPanel);
         content.setPreferredSize(new Dimension(540, 500));
@@ -101,7 +97,7 @@ public abstract class BaseScreen extends JFrame {
         editAbsenceButton.setPreferredSize(buttonSize);
         addAbsenceButton = new JButton(Localization.getLocalizationText("link.createAbsence"));
         addAbsenceButton.setPreferredSize(buttonSize);
-        addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.createAbsenceType"));
+        addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
         addAbsenceTypeButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
         if (ApplicationContext.getInstance().getSecurityContext() != null
@@ -131,6 +127,12 @@ public abstract class BaseScreen extends JFrame {
     public void addAvaiableCountryListener(ActionListener a) {
         if (avaiableCountryButton != null) {
             avaiableCountryButton.addActionListener(a);
+        }
+    }
+    
+    public void addMyProfileListener(ActionListener a) {
+        if (myProfileButton != null) {
+            myProfileButton.addActionListener(a);
         }
     }
 

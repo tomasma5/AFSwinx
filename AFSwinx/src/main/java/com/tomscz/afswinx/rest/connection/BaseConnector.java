@@ -181,8 +181,8 @@ public abstract class BaseConnector implements Connector {
             } else if (httpMethod.equals(HttpMethod.DELETE)) {
                 request = new HttpDelete(endPoint);
             }
-            request.addHeader("Content-Type", contentType.toString());
-            request.addHeader("Accept", accept.toString());
+            request.addHeader("Content-Type", contentType.toString()+";charset=UTF-8");
+            request.addHeader("Accept", accept.toString()+";charset=UTF-8");
             if (headersParam != null) {
                 for (String key : headersParam.keySet()) {
                     String value = headersParam.get(key);

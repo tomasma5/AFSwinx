@@ -11,8 +11,9 @@
 
 	<mapping>
 		<type>String</type>
-		<default tag="structure/inputField.xml" maxLength="255"/>
+		<default tag="structure/inputField.xml" maxLength="255" />
 		<condition expression="${type == 'password'}" tag="structure/inputPassword.xml" />
+		<condition expression="${type == 'country'}" tag="structure/dropDownMenu.xml" />
 	</mapping>
 
 	<mapping>
@@ -36,6 +37,9 @@
 	<mapping>
 		<type>boolean</type>
 		<default tag="structure/dropDownMenu.xml" />
+		<condition expression="${type == 'option'}" tag="structure/optionField.xml" />
+		<condition expression="${type == 'confidentianlAgreement'}"
+			tag="structure/checkBox.xml" />
 	</mapping>
 
 	<mapping>
