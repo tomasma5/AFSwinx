@@ -43,6 +43,10 @@ public class AbsenceTypeResource extends BaseResource {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             afSwing.setMainLayout("templates/oneColumnLayout.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(AbsenceType.class.getCanonicalName());
+            HashMap<String, String> options = new HashMap<String, String>();
+            options.put("true", "true");
+            options.put("false", "false");
+            data.setOptionsToFields(options, "active");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

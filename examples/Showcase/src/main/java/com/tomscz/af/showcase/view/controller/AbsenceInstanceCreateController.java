@@ -32,8 +32,8 @@ public class AbsenceInstanceCreateController extends BaseController {
                     AFSwinx.getInstance()
                             .getExistedComponent(AbsenceInstanceCreateView.ABSENCE_INSTANCE_ADD_FORM)
                             .sendData();
+                    view.getDialogs().succes("absenceInstance.action.add.inform", "absenceInstance.action.add.inform.good","");
                 }
-                view.getDialogs().succes("absenceInstance.action.add.inform", "absenceInstance.action.add.inform.good","");
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("absenceInstance.action.add.inform",
                         "absenceInstance.action.add.inform.failed", e1.getMessage());

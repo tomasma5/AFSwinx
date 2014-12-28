@@ -44,8 +44,8 @@ public class AbsenceTypeManagementController extends BaseController {
                             .getExistedComponent(AbsenceTypManagementView.ABSENCY_TYPE_FORM)
                             .sendData();
                     rebuildView();
+                    view.getDialogs().succes("action.succes", "absencetype.action.addOrModify","");
                 }
-                view.getDialogs().succes("action.succes", "absencetype.action.addOrModify","");
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",
                         "avaiableCountryVeiw.button.add.failed", e1.getMessage());

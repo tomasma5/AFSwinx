@@ -20,6 +20,7 @@ public class AbsenceType {
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH,
             CascadeType.MERGE, CascadeType.PERSIST})
     private Country country;
+    private boolean active;
 
     @UiOrder(value=1)
     @UiRequired
@@ -57,5 +58,15 @@ public class AbsenceType {
 
     public void setMaxDaysPerYear(double maxDaysPerYear) {
         this.maxDaysPerYear = maxDaysPerYear;
+    }
+
+    @UiOrder(value=3)
+    @UiRequired
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
