@@ -62,7 +62,7 @@ public class AbsenceInstanceManagerImpl extends BaseManager<AbsenceInstance>
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<AbsenceInstance> absenceInstanceQuery = cb.createQuery(AbsenceInstance.class);
         Root<AbsenceInstance> rootAbsenceInstanceQuery = absenceInstanceQuery.from(AbsenceInstance.class);
-        Predicate personPredicate = cb.equal(rootAbsenceInstanceQuery.get("person"), person);
+        Predicate personPredicate = cb.equal(rootAbsenceInstanceQuery.get("affectedPerson"), person);
         absenceInstanceQuery.where(personPredicate);
         TypedQuery<AbsenceInstance> typedQuery = em.createQuery(absenceInstanceQuery);
         List<AbsenceInstance> resultList = typedQuery.getResultList();

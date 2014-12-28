@@ -7,6 +7,7 @@ import com.tomscz.af.showcase.view.AbsenceInstanceCreateView;
 import com.tomscz.af.showcase.view.AbsenceTypManagementView;
 import com.tomscz.af.showcase.view.AvaiableCountryView;
 import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.MyAbsenceInstanceView;
 import com.tomscz.af.showcase.view.PersonView;
 import com.tomscz.af.showcase.view.WelcomeScreen;
 import com.tomscz.af.showcase.view.model.AbsenceTypeManagementModel;
@@ -28,6 +29,7 @@ public abstract class BaseController {
         view.addMyProfileListener(myProfileListener);
         view.addAbsenceTypeListener(absenceTypeListener);
         view.addAbsenceAddListener(absenceInstanceCreateListener);
+        view.addMyAbsencesListener(myAbsenceInstanceListener);
     }
 
     public BaseModel getModel() {
@@ -103,6 +105,20 @@ public abstract class BaseController {
             view.setVisible(false);
             view = null;
             absenceInstanceCreateView.setVisible(true);
+        }
+    };
+    
+    private ActionListener myAbsenceInstanceListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
+            MyAbsenceInstanceView myAbsenceInstanceView = new MyAbsenceInstanceView();
+            MyAbsenceInstanceController controller =
+                    new MyAbsenceInstanceController(myAbsenceInstanceView);
+            view.setVisible(false);
+            view = null;
+            myAbsenceInstanceView.setVisible(true);
         }
     };
     

@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
 import com.codingcrayons.aspectfaces.annotations.UiType;
@@ -24,6 +25,7 @@ public class AbsenceType {
 
     @UiOrder(value=1)
     @UiRequired
+    @UiLabel(value="absenceType.name")
     public String getName() {
         return name;
     }
@@ -52,6 +54,7 @@ public class AbsenceType {
 
     @UiOrder(value=2)
     @UiRequired
+    @UiLabel(value="absenceType.maxDaysPerYear")
     public double getMaxDaysPerYear() {
         return maxDaysPerYear;
     }
@@ -62,6 +65,7 @@ public class AbsenceType {
 
     @UiOrder(value=3)
     @UiRequired
+    @UiLabel(value="absenceType.active")
     public boolean getActive() {
         return active;
     }

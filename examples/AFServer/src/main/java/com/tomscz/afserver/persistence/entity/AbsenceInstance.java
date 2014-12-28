@@ -11,10 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
 import com.codingcrayons.aspectfaces.annotations.UiType;
+import com.tomscz.afrest.commons.SupportedWidgets;
 
 @Entity
 public class AbsenceInstance {
@@ -75,6 +77,7 @@ public class AbsenceInstance {
     }
     
     @UiLabel(value="absenceInstance.state")
+    @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
     public AbsenceInstanceState getStatus() {
         return status;
     }

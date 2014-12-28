@@ -43,9 +43,9 @@ public class AbsenceInstanceResource extends BaseResource {
             String mainlayout = "templates/oneColumnLayout.xml";
             afSwing.setMapping("absenceInstanceAdd.xml");
             HashMap<String, String> customStructureMapping = new HashMap<String, String>();
-            customStructureMapping.put("absenceType",
-                    "absenceInstanceType.xml");
-            customStructureMapping.put(AbsenceInstance.class.getCanonicalName(), "absenceInstanceAdd.xml");
+            customStructureMapping.put("absenceType", "absenceInstanceType.xml");
+            customStructureMapping.put(AbsenceInstance.class.getCanonicalName(),
+                    "absenceInstanceAdd.xml");
             AFMetaModelPack data =
                     afSwing.generateSkeleton(AbsenceInstance.class.getCanonicalName(),
                             customStructureMapping, mainlayout);
@@ -69,39 +69,19 @@ public class AbsenceInstanceResource extends BaseResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @GET
     @Path("/definition/{userName}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin", "user"})
-    public Response getDefinitionToShowAbsenceInstanceByUser(@javax.ws.rs.core.Context HttpServletRequest request,
+    public Response getDefinitionToShowAbsenceInstanceByUser(
+            @javax.ws.rs.core.Context HttpServletRequest request,
             @PathParam("userName") String userName) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
-            String mainlayout = "templates/oneColumnLayout.xml";
-            afSwing.setMapping("absenceInstanceAdd.xml");
-            HashMap<String, String> customStructureMapping = new HashMap<String, String>();
-            customStructureMapping.put("absenceType",
-                    "absenceInstanceType.xml");
             AFMetaModelPack data =
-                    afSwing.generateSkeleton(AbsenceInstance.class.getCanonicalName(),
-                            customStructureMapping, mainlayout);
-            try {
-                Person person = getPersonManager().findUser(userName);
-                List<AbsenceType> absenceTypesInCountry =
-                        getAbsenceTypeManager().findAbsenceTypeInCountry(
-                                person.getCountry().getId());
-                HashMap<String, String> options = new HashMap<String, String>();
-                for (AbsenceType absenceType : absenceTypesInCountry) {
-                    options.put(String.valueOf(absenceType.getId()), absenceType.getName());
-                }
-                data.setOptionsToFields(options, "absenceType.id");                
-            } catch (BusinessException e) {
-                return Response.status(e.getStatus()).build();
-            } catch (NamingException e) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-            }
+                    afSwing.generateSkeleton(AbsenceInstance.class.getCanonicalName());
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -129,13 +109,15 @@ public class AbsenceInstanceResource extends BaseResource {
             return Response.status(e.getStatus()).build();
         }
     }
-    
+
     @POST
     @Path("/add/{username}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin","user"})
-    public Response createOrUpdateAbsenceType(@javax.ws.rs.core.Context HttpServletRequest request, @PathParam("username") String username, AbsenceInstance absenceInstance) {
+    @RolesAllowed({"admin", "user"})
+    public Response createOrUpdateAbsenceInstance(
+            @javax.ws.rs.core.Context HttpServletRequest request,
+            @PathParam("username") String username, AbsenceInstance absenceInstance) {
         try {
             AFSecurityContext securityContex =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
@@ -147,6 +129,5 @@ public class AbsenceInstanceResource extends BaseResource {
             return Response.status(e.getStatus()).build();
         }
     }
-
 
 }
