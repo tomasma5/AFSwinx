@@ -41,9 +41,10 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            view.setVisible(false);
             WelcomeScreen welcomeScreen = new WelcomeScreen();
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
+            view.setVisible(false);
+            view = null;
             welcomeScreen.setVisible(true);
         }
     };
@@ -53,9 +54,10 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            view.setVisible(false);
             AvaiableCountryView avaiableCountry = new AvaiableCountryView();
             AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
+            view.setVisible(false);
+            view = null;
             avaiableCountry.setVisible(true);
         }
     };
@@ -65,9 +67,9 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            view.setVisible(false);
             PersonView personView = new PersonView();
             PersonController controller = new PersonController(personView);
+            view.setVisible(false);
             personView.setVisible(true);
         }
     };
@@ -77,12 +79,13 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            view.setVisible(false);
             AbsenceTypeManagementModel model = new AbsenceTypeManagementModel();
             AbsenceTypManagementView absenceTypeManagementView = new AbsenceTypManagementView();
             AbsenceTypeManagementController controller =
                     new AbsenceTypeManagementController(absenceTypeManagementView);
             controller.setModel(model);
+            view.setVisible(false);
+            view = null;
             absenceTypeManagementView.setVisible(true);
         }
     };

@@ -2,7 +2,6 @@ package com.tomscz.afserver.persistence.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +16,7 @@ public class AbsenceInstance {
 
     @Id
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY)
     private AbsenceType absenceType;
     @Temporal(value = TemporalType.DATE)
     private Date startDate;
@@ -26,7 +25,7 @@ public class AbsenceInstance {
     @Enumerated(EnumType.STRING)
     private AbsenceInstanceState status;
     private int duration;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY)
     private Person affectedPerson;
 
     public AbsenceType getAbsenceType() {

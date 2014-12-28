@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,9 +16,6 @@ import com.tomscz.afserver.persistence.entity.Country;
 
 @Stateless(name=AddressManagerImpl.name)
 public class AddressManagerImpl extends BaseManager<Address> implements AddressManager<Address>, Serializable{
-
-    @Inject
-    EntityManager em;
     
     private static final long serialVersionUID = 1L;
     

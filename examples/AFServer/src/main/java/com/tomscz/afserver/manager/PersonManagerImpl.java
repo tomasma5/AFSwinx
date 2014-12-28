@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.Response.Status;
@@ -96,13 +95,11 @@ public class PersonManagerImpl extends BaseManager<Person>
         try {
             Country country = countryManager.findById(countryId);
             if (country != null) {
-                List<Address> addressInCountry = addressManager.findAddressInCountry(country);
                 CriteriaBuilder cb = em.getCriteriaBuilder();
                 CriteriaQuery<Person> personQuery = cb.createQuery(Person.class);
                 Root<Person> rootPersonQuery = personQuery.from(Person.class);
-                Expression<Address> exp = rootPersonQuery.get("myAdress");
-                Predicate loginPredicate = exp.in(addressInCountry);
-                personQuery.where(loginPredicate);
+                Predicate countryPredicate = cb.equal(rootPersonQuery.get("country"), country);
+                personQuery.where(countryPredicate);
                 TypedQuery<Person> typedQuery = em.createQuery(personQuery);
                 List<Person> resultList = typedQuery.getResultList();
                 return resultList;
@@ -130,6 +127,13 @@ public class PersonManagerImpl extends BaseManager<Person>
             }
             for(UserRoles role : existedPerson.getUserRole()){
                 personToUpdate.addRole(role);
+            }
+            Country c = countryManager.findByName(personToUpdate.getMyAddress().getCountry());
+            if(c == null){
+                throw new BusinessException(Status.BAD_REQUEST);
+            }
+            if(c.getId() != existedPerson.getCountry().getId()){
+                personToUpdate.setCountry(c);
             }
             createOrupdate(personToUpdate);
             addressManager.createOrupdate(personToUpdate.getMyAddress());

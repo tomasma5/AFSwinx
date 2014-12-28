@@ -4,19 +4,24 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import com.tomscz.afserver.manager.AbsenceInstanceManager;
+import com.tomscz.afserver.manager.AbsenceInstanceManagerImpl;
+import com.tomscz.afserver.manager.AbsenceTypeEmployeeManager;
+import com.tomscz.afserver.manager.AbsenceTypeEmployeeManagerImpl;
 import com.tomscz.afserver.manager.AbsenceTypeManager;
 import com.tomscz.afserver.manager.AbsenceTypeManagerImpl;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.CountryManagerImp;
 import com.tomscz.afserver.manager.PersonManager;
 import com.tomscz.afserver.manager.PersonManagerImpl;
+import com.tomscz.afserver.persistence.entity.AbsenceInstance;
 import com.tomscz.afserver.persistence.entity.AbsenceType;
 import com.tomscz.afserver.persistence.entity.Country;
 import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.utils.Utils;
 
 public abstract class BaseResource {
-    
+
     @SuppressWarnings("unchecked")
     protected CountryManager<Country> getCountryManager() throws NamingException {
         Context ctx = new InitialContext();
@@ -24,7 +29,7 @@ public abstract class BaseResource {
                 (CountryManager<Country>) ctx.lookup(Utils.getJNDIName(CountryManagerImp.name));
         return cmm;
     }
-    
+
     @SuppressWarnings("unchecked")
     protected PersonManager<Person> getPersonManager() throws NamingException {
         Context ctx = new InitialContext();
@@ -32,12 +37,33 @@ public abstract class BaseResource {
                 (PersonManager<Person>) ctx.lookup(Utils.getJNDIName(PersonManagerImpl.name));
         return personManager;
     }
-    
+
     @SuppressWarnings("unchecked")
     protected AbsenceTypeManager<AbsenceType> getAbsenceTypeManager() throws NamingException {
         Context ctx = new InitialContext();
         AbsenceTypeManager<AbsenceType> absenceTypeManager =
-                (AbsenceTypeManager<AbsenceType>) ctx.lookup(Utils.getJNDIName(AbsenceTypeManagerImpl.NAME));
+                (AbsenceTypeManager<AbsenceType>) ctx.lookup(Utils
+                        .getJNDIName(AbsenceTypeManagerImpl.NAME));
         return absenceTypeManager;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected AbsenceInstanceManager<AbsenceInstance> getAbsenceInstantManager()
+            throws NamingException {
+        Context ctx = new InitialContext();
+        AbsenceInstanceManager<AbsenceInstance> absenceTypeManager =
+                (AbsenceInstanceManager<AbsenceInstance>) ctx.lookup(Utils
+                        .getJNDIName(AbsenceInstanceManagerImpl.NAME));
+        return absenceTypeManager;
+    }
+    
+    @SuppressWarnings("unchecked")
+    protected AbsenceTypeEmployeeManager<AbsenceType> getAbsenceTypeEmployeeManager()
+            throws NamingException {
+        Context ctx = new InitialContext();
+        AbsenceTypeEmployeeManager<AbsenceType> absenceTypeEmploeyeeManager =
+                (AbsenceTypeEmployeeManager<AbsenceType>) ctx.lookup(Utils
+                        .getJNDIName(AbsenceTypeEmployeeManagerImpl.NAME));
+        return absenceTypeEmploeyeeManager;
     }
 }

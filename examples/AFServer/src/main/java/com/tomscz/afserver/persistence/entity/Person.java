@@ -16,6 +16,7 @@ import javax.validation.constraints.Min;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
+import com.codingcrayons.aspectfaces.annotations.UiIgnore;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
@@ -48,6 +49,7 @@ public class Person {
     private boolean confidentialAgreement;
     @OneToOne
     private Address myAddress;
+    private Country country;
 
     public Person() {
 
@@ -214,6 +216,15 @@ public class Person {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    @UiIgnore
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
 }

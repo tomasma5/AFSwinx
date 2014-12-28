@@ -24,7 +24,6 @@ import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
-import com.tomscz.afserver.persistence.IdGenerator;
 import com.tomscz.afserver.persistence.entity.Country;
 
 @Path("/country")
@@ -58,9 +57,6 @@ public class CountryResource extends BaseResource {
     public Response updateCountry(Country country) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
-            if (country.getId() == 0) {
-                country.setId(IdGenerator.getNextCountryId());
-            }
             countryManager.createOrupdate(country);
             return Response.status(Response.Status.OK).build();
         } catch (BusinessException e) {

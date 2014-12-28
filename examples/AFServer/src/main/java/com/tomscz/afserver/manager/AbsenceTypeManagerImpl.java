@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,9 +22,6 @@ public class AbsenceTypeManagerImpl extends BaseManager<AbsenceType>
         implements
             AbsenceTypeManager<AbsenceType>,
             Serializable {
-
-    @Inject
-    EntityManager em;
 
     @EJB
     CountryManager<Country> countryManager;
