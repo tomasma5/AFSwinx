@@ -153,4 +153,33 @@
 			</security-params>
 		</send>
 	</connection>
+	<connection id="absenceInstanceAddConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absenceInstance/definitionAdd/#{user}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</metaModel>
+				<send>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absenceInstance/add/#{user}</endPointParameters>
+			<protocol>http</protocol>
+			<method>post</method>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</send>
+	</connection>
 </connectionRoot>

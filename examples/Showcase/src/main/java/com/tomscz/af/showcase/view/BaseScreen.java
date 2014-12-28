@@ -17,7 +17,6 @@ import javax.swing.JScrollPane;
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
-import com.tomscz.af.showcase.view.model.BaseModel;
 
 public abstract class BaseScreen extends JFrame {
 
@@ -140,6 +139,12 @@ public abstract class BaseScreen extends JFrame {
     public void addAbsenceTypeListener(ActionListener a) {
         if (addAbsenceTypeButton != null) {
             addAbsenceTypeButton.addActionListener(a);
+        }
+    }
+    
+    public void addAbsenceAddListener(ActionListener a) {
+        if (addAbsenceButton != null) {
+            addAbsenceButton.addActionListener(a);
         }
     }
 

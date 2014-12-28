@@ -3,6 +3,7 @@ package com.tomscz.af.showcase.view.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.tomscz.af.showcase.view.AbsenceInstanceCreateView;
 import com.tomscz.af.showcase.view.AbsenceTypManagementView;
 import com.tomscz.af.showcase.view.AvaiableCountryView;
 import com.tomscz.af.showcase.view.BaseScreen;
@@ -26,6 +27,7 @@ public abstract class BaseController {
         view.addAvaiableCountryListener(avaiableCountryPublicListener);
         view.addMyProfileListener(myProfileListener);
         view.addAbsenceTypeListener(absenceTypeListener);
+        view.addAbsenceAddListener(absenceInstanceCreateListener);
     }
 
     public BaseModel getModel() {
@@ -90,4 +92,18 @@ public abstract class BaseController {
         }
     };
 
+    private ActionListener absenceInstanceCreateListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
+            AbsenceInstanceCreateView absenceInstanceCreateView = new AbsenceInstanceCreateView();
+            AbsenceInstanceCreateController controller =
+                    new AbsenceInstanceCreateController(absenceInstanceCreateView);
+            view.setVisible(false);
+            view = null;
+            absenceInstanceCreateView.setVisible(true);
+        }
+    };
+    
 }

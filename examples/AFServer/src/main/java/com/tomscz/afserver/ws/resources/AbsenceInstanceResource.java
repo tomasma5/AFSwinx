@@ -3,12 +3,12 @@ package com.tomscz.afserver.ws.resources;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -36,11 +36,51 @@ public class AbsenceInstanceResource extends BaseResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin", "user"})
-    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request,
+    public Response getDefinitionToCreateAI(@javax.ws.rs.core.Context HttpServletRequest request,
             @PathParam("userName") String userName) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             String mainlayout = "templates/oneColumnLayout.xml";
+            afSwing.setMapping("absenceInstanceAdd.xml");
+            HashMap<String, String> customStructureMapping = new HashMap<String, String>();
+            customStructureMapping.put("absenceType",
+                    "absenceInstanceType.xml");
+            customStructureMapping.put(AbsenceInstance.class.getCanonicalName(), "absenceInstanceAdd.xml");
+            AFMetaModelPack data =
+                    afSwing.generateSkeleton(AbsenceInstance.class.getCanonicalName(),
+                            customStructureMapping, mainlayout);
+            try {
+                Person person = getPersonManager().findUser(userName);
+                List<AbsenceType> absenceTypesInCountry =
+                        getAbsenceTypeManager().findAbsenceTypeInCountry(
+                                person.getCountry().getId());
+                HashMap<String, String> options = new HashMap<String, String>();
+                for (AbsenceType absenceType : absenceTypesInCountry) {
+                    options.put(String.valueOf(absenceType.getId()), absenceType.getName());
+                }
+                data.setOptionsToFields(options, "absenceType.id");
+            } catch (BusinessException e) {
+                return Response.status(e.getStatus()).build();
+            } catch (NamingException e) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            }
+            return Response.status(Response.Status.OK).entity(data).build();
+        } catch (MetamodelException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("/definition/{userName}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public Response getDefinitionToShowAbsenceInstanceByUser(@javax.ws.rs.core.Context HttpServletRequest request,
+            @PathParam("userName") String userName) {
+        try {
+            AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
+            String mainlayout = "templates/oneColumnLayout.xml";
+            afSwing.setMapping("absenceInstanceAdd.xml");
             HashMap<String, String> customStructureMapping = new HashMap<String, String>();
             customStructureMapping.put("absenceType",
                     "absenceInstanceType.xml");
@@ -56,7 +96,7 @@ public class AbsenceInstanceResource extends BaseResource {
                 for (AbsenceType absenceType : absenceTypesInCountry) {
                     options.put(String.valueOf(absenceType.getId()), absenceType.getName());
                 }
-                data.setOptionsToFields(options, "absenceType.id");
+                data.setOptionsToFields(options, "absenceType.id");                
             } catch (BusinessException e) {
                 return Response.status(e.getStatus()).build();
             } catch (NamingException e) {
@@ -83,6 +123,24 @@ public class AbsenceInstanceResource extends BaseResource {
             final GenericEntity<List<AbsenceInstance>> absenceInstanceGeneric =
                     new GenericEntity<List<AbsenceInstance>>(usersInstances) {};
             return Response.status(Response.Status.OK).entity(absenceInstanceGeneric).build();
+        } catch (NamingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (BusinessException e) {
+            return Response.status(e.getStatus()).build();
+        }
+    }
+    
+    @POST
+    @Path("/add/{username}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin","user"})
+    public Response createOrUpdateAbsenceType(@javax.ws.rs.core.Context HttpServletRequest request, @PathParam("username") String username, AbsenceInstance absenceInstance) {
+        try {
+            AFSecurityContext securityContex =
+                    (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
+            getAbsenceInstantManager().createOrUpdate(absenceInstance, username, securityContex);
+            return Response.status(Response.Status.OK).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (BusinessException e) {

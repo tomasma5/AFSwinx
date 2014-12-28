@@ -32,6 +32,7 @@ public class AbsenceType {
     }
 
     @UiType(value = "id")
+    @UiRequired
     public int getId() {
         return id;
     }

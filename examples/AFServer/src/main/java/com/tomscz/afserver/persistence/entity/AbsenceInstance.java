@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.codingcrayons.aspectfaces.annotations.UiLabel;
+import com.codingcrayons.aspectfaces.annotations.UiOrder;
+import com.codingcrayons.aspectfaces.annotations.UiRequired;
+import com.codingcrayons.aspectfaces.annotations.UiType;
+
 @Entity
 public class AbsenceInstance {
 
@@ -28,6 +33,7 @@ public class AbsenceInstance {
     @ManyToOne(fetch = FetchType.LAZY)
     private Person affectedPerson;
 
+    @UiOrder(value=2)
     public AbsenceType getAbsenceType() {
         return absenceType;
     }
@@ -36,6 +42,8 @@ public class AbsenceInstance {
         this.absenceType = absenceType;
     }
 
+    @UiLabel(value="absenceInstance.duration")
+    @UiType(value = "readOnly")
     public int getDuration() {
         return duration;
     }
@@ -44,6 +52,9 @@ public class AbsenceInstance {
         this.duration = duration;
     }
 
+    @UiRequired
+    @UiOrder(value=0)
+    @UiLabel(value="absenceInstance.startDate")
     public Date getStartDate() {
         return startDate;
     }
@@ -52,6 +63,9 @@ public class AbsenceInstance {
         this.startDate = startDate;
     }
 
+    @UiRequired
+    @UiOrder(value=1)
+    @UiLabel(value="absenceInstance.endDate")
     public Date getEndDate() {
         return endDate;
     }
@@ -59,7 +73,8 @@ public class AbsenceInstance {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
-
+    
+    @UiLabel(value="absenceInstance.state")
     public AbsenceInstanceState getStatus() {
         return status;
     }
@@ -68,6 +83,7 @@ public class AbsenceInstance {
         this.status = status;
     }
 
+    @UiType(value = "id")
     public int getId() {
         return id;
     }
