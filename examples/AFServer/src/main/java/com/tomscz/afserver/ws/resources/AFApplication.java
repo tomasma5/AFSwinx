@@ -14,6 +14,7 @@ public class AFApplication extends Application {
         singletons.add(new AFRootResource());
         singletons.add(new UserResource());
         singletons.add(new AbsenceTypeResource());
+        singletons.add(new AbsenceInstanceResource());
     }
 
     @Override

@@ -44,6 +44,7 @@
 
 	<mapping>
 		<type>Address</type>
+		<type>AbsenceType</type>
 		<default tag="structure/entity.xml" />
 	</mapping>
 

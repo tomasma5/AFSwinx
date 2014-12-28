@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 public class AbsenceInstance {
 
     @Id
-    private Long id;
+    private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     private AbsenceType absenceType;
     @Temporal(value = TemporalType.DATE)
@@ -68,11 +68,11 @@ public class AbsenceInstance {
         this.status = status;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
