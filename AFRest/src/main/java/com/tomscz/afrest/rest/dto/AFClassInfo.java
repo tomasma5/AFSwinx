@@ -71,6 +71,11 @@ public class AFClassInfo implements Serializable {
             findInClasses = true;
         }
         if (findInClasses) {
+            // If there are no inner classes that fieldId might be wrong or inspection for this
+            // class was not setup, simply do nothing and return
+            if (innerClasses == null || innerClasses.isEmpty()) {
+                return;
+            }
             for (AFClassInfo currentClass : innerClasses) {
                 if (currentClass.name.equals(fieldInfoId)) {
                     StringBuffer sb = new StringBuffer();
