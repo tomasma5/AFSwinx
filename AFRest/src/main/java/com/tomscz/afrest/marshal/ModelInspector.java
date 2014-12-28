@@ -67,6 +67,7 @@ public class ModelInspector {
      * @param templateMapping template mapping, layout which will be used to root entity
      * @param classStructureMapping this set structure which will be used based on field.
      * @param classTemplateMapping this set layout which will be used based on field.
+     * @param depth it determine how many child non-primitive element will be inspected.
      * @return model which can be used to create form, tables, etc.
      * @throws MetamodelException if error during generation module occur then this exception is
      *         thrown.
@@ -74,51 +75,10 @@ public class ModelInspector {
     public AFMetaModelPack generateModel(String fullClassName, String templateMapping,
             HashMap<String, String> classStructureMapping,
             HashMap<String, String> classTemplateMapping) throws MetamodelException {
-        return generateModel(fullClassName, templateMapping, classStructureMapping,
-                classTemplateMapping, DEFAULT_DEPTH);
-    }
-
-    /**
-     * This method generate model which can be used to create form, widget and etc. Key is name of
-     * field and value is name of xml file
-     * 
-     * @param fullClassName className to generate
-     * @param templateMapping template mapping, layout which will be used to root entity
-     * @param classStructureMapping this set structure which will be used based on field.
-     * @param classTemplateMapping this set layout which will be used based on field.
-     * @param depth it determine how many child non-primitive element will be inspected.
-     * @return model which can be used to create form, tables, etc.
-     * @throws MetamodelException if error during generation module occur then this exception is
-     *         thrown.
-     */
-    public AFMetaModelPack generateModel(String fullClassName, String templateMapping,
-            HashMap<String, String> classStructureMapping,
-            HashMap<String, String> classTemplateMapping, int depth) throws MetamodelException {
         this.templateMapping = templateMapping;
         this.classStructureMapping = classStructureMapping;
         this.classTemplateMapping = classTemplateMapping;
-        return generateModel(fullClassName, depth);
-    }
-
-    /**
-     * This method generate model which can be used to create form, widget and etc. Key is name of
-     * field and value is name of xml file
-     * 
-     * @param fullClassName className to generate
-     * @param structureMapping structure which will be used.
-     * @param templateMapping layout (template) which will be used on root element
-     * @param templateInnerClass layout (template) which will be used on non-primitive root children
-     * @param depth it determine how many child non-primitive element will be inspected.
-     * @return model which can be used to create form, tables, etc.
-     * @throws MetamodelException if error during generation module occur then this exception is
-     *         thrown.
-     */
-    public AFMetaModelPack generateModel(String fullClassName, String structureMapping,
-            String templateMapping, String templateInnerClass, int depth) throws MetamodelException {
-        this.structureMapping = structureMapping;
-        this.templateMapping = templateMapping;
-        this.templateInnerClass = templateInnerClass;
-        return generateModel(fullClassName, depth);
+        return generateModel(fullClassName);
     }
 
     /**
@@ -135,8 +95,10 @@ public class ModelInspector {
      */
     public AFMetaModelPack generateModel(String fullClassName, String structureMapping,
             String templateMapping, String templateInnerClass) throws MetamodelException {
-        return generateModel(fullClassName, structureMapping, templateMapping, templateInnerClass,
-                DEFAULT_DEPTH);
+        this.structureMapping = structureMapping;
+        this.templateMapping = templateMapping;
+        this.templateInnerClass = templateInnerClass;
+        return generateModel(fullClassName);
     }
 
     public AFMetaModelPack generateModel(String fullClassName) throws MetamodelException {

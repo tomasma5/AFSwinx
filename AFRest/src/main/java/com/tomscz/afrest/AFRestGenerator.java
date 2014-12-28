@@ -1,5 +1,7 @@
 package com.tomscz.afrest;
 
+import java.util.HashMap;
+
 import javax.servlet.ServletContext;
 
 import com.tomscz.afrest.exception.MetamodelException;
@@ -30,6 +32,12 @@ public class AFRestGenerator implements AFRest {
     public AFMetaModelPack generateSkeleton(String fullClassName, String structureConfig,
             String mainLayout) throws MetamodelException {
         return modelInspector.generateModel(fullClassName, structureConfig, mainLayout, "");
+    }
+    
+    @Override
+    public AFMetaModelPack generateSkeleton(String fullClassName,
+            HashMap<String, String> structureConfig, String mainLayout) throws MetamodelException {
+        return modelInspector.generateModel(fullClassName, mainLayout ,structureConfig, null);
     }
 
     @Override
