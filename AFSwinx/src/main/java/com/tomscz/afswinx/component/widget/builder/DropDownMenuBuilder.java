@@ -89,9 +89,11 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
 
     @Override
     public Object getData(AFSwinxPanel panel) {
-        AFOptions selectedItem = getSelectedOption(panel);
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
-            return selectedItem.getKey();
+            AFOptions selectedItem = getSelectedOption(panel);
+            if(selectedItem != null){
+                return selectedItem.getKey();
+            }         
         }
         return null;
     }
