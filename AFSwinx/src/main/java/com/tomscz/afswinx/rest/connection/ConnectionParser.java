@@ -166,7 +166,7 @@ public class ConnectionParser implements XMLParser {
             String nodeName = node.getNodeName();
             String nodeValue = evaluateEL(node.getTextContent()).toLowerCase();
             if(nodeName.equals(SECURITY_METHOD)){
-                if(nodeValue.equals(SecurityMethod.BASIC.name())){
+                if(nodeValue.equals(SecurityMethod.BASIC.toString())){
                     security.setMethod(SecurityMethod.BASIC);
                 }
             }

@@ -50,6 +50,11 @@
 				<param>content-type</param>
 				<value>Application/Json</value>
 			</header-param>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
 		</metaModel>
 		<send>
 			<endPoint>localhost</endPoint>

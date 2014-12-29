@@ -71,9 +71,10 @@ public abstract class BaseController {
         public void actionPerformed(ActionEvent e) {
             ApplicationContext.getInstance().setSecurityContext(null);
             WelcomeScreen welcomeScreen = new WelcomeScreen();
-            view = welcomeScreen;
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
-            reloadView(controller);
+            view.setVisible(false);
+            view = null;
+            welcomeScreen.setVisible(true);
         }
     };
 
@@ -83,9 +84,10 @@ public abstract class BaseController {
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
             AvaiableCountryView avaiableCountry = new AvaiableCountryView();
-            view = avaiableCountry;
             AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
-            reloadView(controller);
+            view.setVisible(false);
+            view = null;
+            avaiableCountry.setVisible(true);
         }
     };
 
@@ -209,12 +211,5 @@ public abstract class BaseController {
                 exception.getMessage());
         }
     }
-    
-    protected void reloadView(BaseController controller){
-        view.getMainFrame().getContentPane().removeAll();
-        view.intialize();
-        controller.registerListeners();
-        view.getMainFrame().getContentPane().repaint();
-    }
-    
+        
 }

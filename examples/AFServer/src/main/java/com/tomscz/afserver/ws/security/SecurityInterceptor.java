@@ -40,20 +40,20 @@ public class SecurityInterceptor implements PreProcessInterceptor {
 
     private AFSecurityContext securityContext = null;
     private boolean isPermitAll = false;
-    
+
     public SecurityInterceptor() {}
 
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod method) throws Failure,
             WebApplicationException {
         ServerResponse securityResponse = checkPermissions(request, method);
-        //Always remove security context
+        // Always remove security context
         request.removeAttribute(AFServerConstants.SECURITY_CONTEXT);
-        if(securityContext != null){
-            request.setAttribute(AFServerConstants.SECURITY_CONTEXT, securityContext);   
+        if (securityContext != null) {
+            request.setAttribute(AFServerConstants.SECURITY_CONTEXT, securityContext);
         }
         if (securityResponse != null) {
-            if(isPermitAll){
+            if (isPermitAll) {
                 return null;
             }
             return securityResponse;
@@ -91,31 +91,30 @@ public class SecurityInterceptor implements PreProcessInterceptor {
         final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
         final String nickname = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
-        if (methodToVerify.isAnnotationPresent(RolesAllowed.class)) {
-            PersonManager<Person> personManager = getPersonManager();
-            if (personManager == null) {
+        PersonManager<Person> personManager = getPersonManager();
+        if (personManager == null) {
+            return AFServerConstants.ACCESS_DENIED;
+        }
+        Person authenticatedUser;
+        try {
+            authenticatedUser = personManager.findUser(nickname, password);
+            if (authenticatedUser == null) {
                 return AFServerConstants.ACCESS_DENIED;
-            }
-            Person authenticatedUser;
-            try {
-                authenticatedUser = personManager.findUser(nickname, password);
-                if (authenticatedUser == null) {
-                    return AFServerConstants.ACCESS_DENIED;
-                } else {
-                    securityContext = new AFSecurityContext(nickname);
-                    securityContext.userRoles = authenticatedUser.getUserRole();
+            } else {
+                securityContext = new AFSecurityContext(nickname);
+                securityContext.userRoles = authenticatedUser.getUserRole();
+                if (methodToVerify.isAnnotationPresent(RolesAllowed.class)) {
                     RolesAllowed rolesAnnotation = methodToVerify.getAnnotation(RolesAllowed.class);
                     if (!isUserInRoles(new HashSet<String>(Arrays.asList(rolesAnnotation.value())),
                             authenticatedUser)) {
                         return AFServerConstants.ACCESS_DENIED;
                     }
                 }
-            } catch (BusinessException e) {
-                return AFServerConstants.SERVER_ERROR;
             }
+        } catch (BusinessException e) {
+            return AFServerConstants.SERVER_ERROR;
         }
         return null;
-
     }
 
     private boolean isUserInRoles(Set<String> roleSet, Person authenticatedUser) {
@@ -142,7 +141,7 @@ public class SecurityInterceptor implements PreProcessInterceptor {
                     (PersonManager<Person>) ctx.lookup(Utils.getJNDIName(PersonManagerImpl.name));
             return personManager;
         } catch (NamingException e) {
-            // Do nothing
+            // Do nothing, null will be returned
         }
         return null;
     }
