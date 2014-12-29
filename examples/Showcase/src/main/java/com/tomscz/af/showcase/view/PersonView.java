@@ -65,8 +65,9 @@ public class PersonView extends BaseView {
             centerPanel.add(buttonBox);
             //Content
             Box centerBox = Box.createHorizontalBox();
+            centerBox.add(Box.createHorizontalStrut(40));
             centerBox.add(centerPanel);
-            centerBox.add(Box.createHorizontalStrut(10));
+            centerBox.add(Box.createHorizontalStrut(80));
             //Vertical box
             b1.add(Box.createVerticalStrut(20));
             b1.add(centerBox);

@@ -45,7 +45,7 @@ public abstract class BaseView extends JPanel {
         b1.add(content);
         contentPanel.add(b1);
         mainPanel.add(contentPanel);
-        content.setPreferredSize(new Dimension(540, 500));
+        content.setPreferredSize(new Dimension(640, 500));
         JScrollPane panel2 =
                 new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

@@ -110,7 +110,7 @@ public class AbsenceInstanceResource extends BaseResource {
             customMapping.put("country", "absence.instance.inner.simple.xml");
             AFMetaModelPack data =
                     afSwing.generateSkeleton(AbsenceInstance.class.getCanonicalName(),
-                            customMapping, mainlayout);
+                            customMapping, "");
             AFSecurityContext securityContex =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
             if (securityContex.isUserInRole(UserRoles.ADMIN)) {

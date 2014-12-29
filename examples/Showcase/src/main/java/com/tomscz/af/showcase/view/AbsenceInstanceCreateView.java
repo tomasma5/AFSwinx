@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
-import com.tomscz.af.showcase.view.skin.MySkin;
+import com.tomscz.af.showcase.view.skin.AbsenceInstanceCreateSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -25,8 +25,8 @@ public class AbsenceInstanceCreateView extends BaseView {
             "absenceInstanceAddConnection";
 
     private JButton createButton;
-    
-    public AbsenceInstanceCreateView    () {
+
+    public AbsenceInstanceCreateView() {
         intialize();
     }
 
@@ -57,7 +57,7 @@ public class AbsenceInstanceCreateView extends BaseView {
                             .initBuilder(ABSENCE_INSTANCE_ADD_FORM, connectionResource,
                                     ABSENCE_INSTANCE_ADD_FORM_CONNECTION, securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new MySkin()).buildComponent();
+                            .setSkin(new AbsenceInstanceCreateSkin()).buildComponent();
             centerPanel.add(form);
             Box buttonBox = Box.createHorizontalBox();
             buttonBox.add(Box.createHorizontalStrut(60));

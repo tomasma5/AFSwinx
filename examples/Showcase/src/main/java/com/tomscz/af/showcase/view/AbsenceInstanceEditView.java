@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
-import com.tomscz.af.showcase.view.skin.MySkin;
+import com.tomscz.af.showcase.view.skin.AbsenceInstanceEditSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -71,7 +71,7 @@ public class AbsenceInstanceEditView extends BaseView {
                             .initBuilder(ABSENCE_INSTANCE_EDIT_FORM, connectionResource,
                                     ABSENCE_INSTANCE_EDIT_FORM_CONNECTION, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new MySkin()).buildComponent();
+                            .setSkin(new AbsenceInstanceEditSkin()).buildComponent();
             centerPanel.add(form);
             performButton =
                     new JButton(Localization.getLocalizationText("avaiableCountryView.buttton.add"));
@@ -85,7 +85,6 @@ public class AbsenceInstanceEditView extends BaseView {
                             Localization.getLocalizationText("avaiableCountryView.buttton.choose"));
             chooseButton.setAlignmentX(RIGHT_ALIGNMENT);
             Box centerBox = Box.createHorizontalBox();
-            centerBox.add(Box.createHorizontalStrut(80));
             centerBox.add(centerPanel);
             centerBox.add(Box.createHorizontalStrut(100));
             b1.add(table);
