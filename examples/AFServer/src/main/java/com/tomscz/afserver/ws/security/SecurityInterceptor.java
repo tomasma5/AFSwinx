@@ -38,19 +38,26 @@ import com.tomscz.afserver.utils.Utils;
 @ServerInterceptor
 public class SecurityInterceptor implements PreProcessInterceptor {
 
-    private AFSecurityContext securityContext;
-
+    private AFSecurityContext securityContext = null;
+    private boolean isPermitAll = false;
+    
     public SecurityInterceptor() {}
 
     @Override
     public ServerResponse preProcess(HttpRequest request, ResourceMethod method) throws Failure,
             WebApplicationException {
         ServerResponse securityResponse = checkPermissions(request, method);
+        //Always remove security context
+        request.removeAttribute(AFServerConstants.SECURITY_CONTEXT);
+        if(securityContext != null){
+            request.setAttribute(AFServerConstants.SECURITY_CONTEXT, securityContext);   
+        }
         if (securityResponse != null) {
+            if(isPermitAll){
+                return null;
+            }
             return securityResponse;
         }
-        request.removeAttribute(AFServerConstants.SECURITY_CONTEXT);
-        request.setAttribute(AFServerConstants.SECURITY_CONTEXT, securityContext);
         return null;
     }
 
@@ -62,7 +69,7 @@ public class SecurityInterceptor implements PreProcessInterceptor {
         }
         if (methodToVerify.isAnnotationPresent(PermitAll.class)
                 || !methodToVerify.isAnnotationPresent(RolesAllowed.class)) {
-            return null;
+            this.isPermitAll = true;
         }
         final MultivaluedMap<String, String> headers = request.getHttpHeaders().getRequestHeaders();
 

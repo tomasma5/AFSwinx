@@ -2,6 +2,7 @@
 	<widgetType>dropDownMenu</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
+	<readonly>$readonly$</readonly>
 	<validations>
 		<required>$required$</required>
 	</validations>

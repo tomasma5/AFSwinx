@@ -25,6 +25,9 @@ import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.Country;
+import com.tomscz.afserver.persistence.entity.UserRoles;
+import com.tomscz.afserver.utils.AFServerConstants;
+import com.tomscz.afserver.ws.security.AFSecurityContext;
 
 @Path("/country")
 public class CountryResource extends BaseResource {
@@ -35,7 +38,19 @@ public class CountryResource extends BaseResource {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
+            HashMap<String, Object> readOnlyVariables = new HashMap<String, Object>();
+            if (request.getAttribute(AFServerConstants.SECURITY_CONTEXT) != null) {
+                AFSecurityContext securityContext =
+                        (AFSecurityContext) request
+                                .getAttribute(AFServerConstants.SECURITY_CONTEXT);
+                if (!securityContext.isUserInRole(UserRoles.ADMIN)) {
+                    readOnlyVariables.put("readonly", "true");
+                }
+            } else {
+                readOnlyVariables.put("readonly", "true");
+            }
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
+            afSwing.setVariablesToContext(readOnlyVariables);
             afSwing.setMainLayout("templates/oneColumnLayout.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(Country.class.getCanonicalName());
             HashMap<String, String> activeFlag = new HashMap<String, String>();
