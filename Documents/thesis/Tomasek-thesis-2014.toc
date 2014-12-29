@@ -49,12 +49,12 @@
 \contentsline {subsection}{\numberline {4.2.1}Generov\IeC {\'a}n\IeC {\'\i } komponent}{30}{subsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.1.1}Vkl\IeC {\'a}d\IeC {\'a}n\IeC {\'\i } dat do komponenty}{30}{subsubsection.4.2.1.1}
 \contentsline {subsubsection}{\numberline {4.2.1.2}Widget builder}{31}{subsubsection.4.2.1.2}
-\contentsline {subsubsection}{\numberline {4.2.1.3}Skin}{32}{subsubsection.4.2.1.3}
-\contentsline {section}{\numberline {4.3}P\IeC {\v r}enos a generov\IeC {\'a}n\IeC {\'\i } dat klient server}{32}{section.4.3}
+\contentsline {subsubsection}{\numberline {4.2.1.3}Skin}{33}{subsubsection.4.2.1.3}
+\contentsline {section}{\numberline {4.3}P\IeC {\v r}enos a generov\IeC {\'a}n\IeC {\'\i } dat klient server}{33}{section.4.3}
 \contentsline {section}{\numberline {4.4}Lokalizace}{34}{section.4.4}
-\contentsline {section}{\numberline {4.5}Validace dat a vlastn\IeC {\'\i } valid\IeC {\'a}tory}{35}{section.4.5}
+\contentsline {section}{\numberline {4.5}Validace dat a vlastn\IeC {\'\i } valid\IeC {\'a}tory}{34}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}Podporovan\IeC {\'e} validace}{35}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Vyhodnocen\IeC {\'\i } validac\IeC {\'\i }}{36}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.2}Vyhodnocen\IeC {\'\i } validac\IeC {\'\i }}{35}{subsection.4.5.2}
 \contentsline {section}{\numberline {4.6}Layouty}{36}{section.4.6}
 \contentsline {subsection}{\numberline {4.6.1}Layout builder}{37}{subsection.4.6.1}
 \contentsline {section}{\numberline {4.7}Bezpe\IeC {\v c}nost}{37}{section.4.7}

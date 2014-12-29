@@ -3,7 +3,7 @@ Framework byl vytvořen jako Maven projekt, jeho přidání do již existující
 \section{Maven závislosti}
 Nejprve je potřeba provést build frameworku. Zdrojové kódy jsou na přiloženém CD. Framework zatím není v žádném z veřejně dostupných repositářích. Poté lze na serveru stranu přidat následující závislosti:
 \begin{lstlisting}[caption={Závislosti na serveru},
-label={code:mavenDependency}]
+label={code:mavenDependency}, basicstyle=\footnotesize]
 <dependency>
 	<groupId>com.tomscz.af</groupId>
 	<artifactId>AFRest</artifactId>
@@ -31,7 +31,7 @@ label={code:mavenAspectFacesRepo}]
 \end{lstlisting}
 Do složky WEB-INF je potřeba rozbalit soubor templates.zip, v kterém je předpřipravená konfigurace a do web.xml je potřeba přidat listener, který provede nastavení AspectFaces během startu. 
 \begin{lstlisting}[caption={AspectFaces listener},
-label={code:mavenAspectFacesBootStrap}]
+label={code:mavenAspectFacesBootStrap}, basicstyle=\footnotesize]
 <listener>
 	<!-- Include Aspect Faces listener to perform proper framework initialization 
 	during application start -->
@@ -40,7 +40,7 @@ label={code:mavenAspectFacesBootStrap}]
 \end{lstlisting}
 Na klientskou stranu je potřeba přidat následující závislost:
 \begin{lstlisting}[caption={Závislost na klientské straně},
-label={code:mavenAFSwinx}]
+label={code:mavenAFSwinx}, basicstyle=\footnotesize]
 <dependency>
 	<groupId>com.tomscz.af</groupId>
 	<artifactId>AFSwinx</artifactId>

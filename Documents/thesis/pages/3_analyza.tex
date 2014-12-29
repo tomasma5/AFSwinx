@@ -79,7 +79,7 @@ Klientská část frameworku bude vytvářet komponenty na základě metadat, kt
 Klient tedy bude muset vždy specifikovat tyto parametry. Z hlediska použitelnosti je vhodné mít tyto specifikace v XML souboru, který bude umět klient jednoduše načíst. Pro usnadnění bude načítání provádět framework. Ukázka je na obrázku \ref{code:xmlSource}. V ukázkovém příkladu je specifikován zdroj z metadaty, který je vždy povinný. Zdroj se nachází na adrese\\ http://localhost:8080/AFServer/rest/users/loginForm. Zdroj s daty není specifikován, což způsobí, že ve formuláři nebudou žádná data. Formulář bude možné odeslat na adresu http://localhost:8080/AFServer/rest/users/login. Zdroj má identifikátor loginForm. V jednom XML dokumentu lze mít více zdrojů. Data to konkrétního zdroje lze vkládat pomocí EL. V hlavičce může být 0 až N parametrů, přičemž každý parametr musí být uveden ve stejném formátu, jako je znázorněno na obrázku \ref{code:xmlSource}. Obdobný způsob se využívá v JavaEE aplikací v deskriptoru web.xml. Klient umí sestavit požadavek na základě tohoto popisu a interpretovat odpověď od serveru. Není tedy nutné, aby uživatel implementoval třídy, které se umožní aplikaci připojení na server a získání dat.
 
 \begin{lstlisting}[caption=Ukázka XML specifikace zdrojů,
-label=code:xmlSource, basicstyle=\footnotesize]
+label={code:xmlSource}, basicstyle=\footnotesize]
 <?xml version="1.0" encoding="UTF-8"?>
 <connectionRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<connection id="loginForm">

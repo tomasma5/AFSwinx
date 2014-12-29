@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  26 DEC 2014 23:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  29 DEC 2014 09:34
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -859,27 +859,15 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 
 ]
 Kapitola 4.
-[23] [24]
-LaTeX Font Info:    Try loading font information for T1+cmss on input line 17.
+[23] [24] [25]
+LaTeX Font Info:    Try loading font information for T1+cmss on input line 49.
  (C:\Latex\tex\latex\base\t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Try loading font information for TS1+cmss on input line 21.
+) [26]
+Underfull \vbox (badness 1062) has occurred while \output is active []
 
-
-(C:\Latex\tex\latex\base\ts1cmss.fd
-File: ts1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [25]
-Overfull \hbox (8.60092pt too wide) in paragraph at lines 68--69
-[][][][][][][][][][][][][][][][][][][][] 
- []
-
-[26] [27] [28]
-Overfull \hbox (7.4878pt too wide) in paragraph at lines 132--133
-[][][][][][][][][][][][][][][][][][][][][] 
- []
-
-<images/connectionPack.pdf, id=948, 457.71pt x 143.53625pt>
+ [27]
+[28] <images/connectionPack.pdf, id=948, 457.71pt x 143.53625pt>
 File: images/connectionPack.pdf Graphic file (type pdf)
 
 <use images/connectionPack.pdf>
@@ -890,7 +878,10 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 147--148
 [][] 
  []
 
-[29 <D:/Skola/repo/AFServer/Documents/thesis/images/connectionPack.pdf>]
+
+Underfull \vbox (badness 5189) has occurred while \output is active []
+
+ [29 <D:/Skola/repo/AFServer/Documents/thesis/images/connectionPack.pdf>]
 <images/dataPack.pdf, id=976, 315.1775pt x 86.3225pt>
 File: images/dataPack.pdf Graphic file (type pdf)
 
@@ -898,19 +889,17 @@ File: images/dataPack.pdf Graphic file (type pdf)
 Package pdftex.def Info: images/dataPack.pdf used on input line 161.
 (pdftex.def)             Requested size: 315.17673pt x 86.32227pt.
  [30] [31 <D:/Skola/repo/AFServer/Documents/thesis/images/dataPack.pdf>] [32]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [33]
-<images/AFDataHolder.pdf, id=1041, 287.0725pt x 143.53625pt>
+<images/AFDataHolder.pdf, id=1033, 287.0725pt x 143.53625pt>
 File: images/AFDataHolder.pdf Graphic file (type pdf)
 
 <use images/AFDataHolder.pdf>
 Package pdftex.def Info: images/AFDataHolder.pdf used on input line 260.
 (pdftex.def)             Requested size: 287.0718pt x 143.53589pt.
 
-Underfull \vbox (badness 2334) has occurred while \output is active []
 
- [34 <D:/Skola/repo/AFServer/Documents/thesis/images/AFDataHolder.pdf>]
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[33] [34 <D:/Skola/repo/AFServer/Documents/thesis/images/AFDataHolder.pdf>]
 <images/validationModel.pdf, id=1059, 415.5525pt x 100.375pt>
 File: images/validationModel.pdf Graphic file (type pdf)
 
@@ -989,9 +978,9 @@ P\v {r}\'{\i }loha A.
 ]
 P\v {r}\'{\i }loha B.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 10.
+(Font)              <7> on input line 27.
 [53]
-Overfull \hbox (20.07721pt too wide) in paragraph at lines 38--39
+Overfull \hbox (4.12532pt too wide) in paragraph at lines 38--39
 [][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
@@ -1009,14 +998,14 @@ ese http://localhost:8080/AFServer/rest/country/list
 
 ) [54]
 P\v {r}\'{\i }loha C.
-<images/useCase.pdf, id=1260, 571.13374pt x 399.4925pt>
+<images/useCase.pdf, id=1261, 571.13374pt x 399.4925pt>
 File: images/useCase.pdf Graphic file (type pdf)
 
 <use images/useCase.pdf>
 Package pdftex.def Info: images/useCase.pdf used on input line 342.
 (pdftex.def)             Requested size: 571.13235pt x 399.49152pt.
 
-<images/businessModel.pdf, id=1261, 457.71pt x 570.13pt>
+<images/businessModel.pdf, id=1262, 457.71pt x 570.13pt>
 File: images/businessModel.pdf Graphic file (type pdf)
 
 <use images/businessModel.pdf>
@@ -1027,7 +1016,7 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 349--350
 [][] 
  []
 
-<images/deploymentDiagram.pdf, id=1262, 514.92375pt x 256.96pt>
+<images/deploymentDiagram.pdf, id=1263, 514.92375pt x 256.96pt>
 File: images/deploymentDiagram.pdf Graphic file (type pdf)
 
 <use images/deploymentDiagram.pdf>
@@ -1038,14 +1027,14 @@ Overfull \hbox (79.40735pt too wide) in paragraph at lines 356--357
  [] 
  []
 
-<images/serverSide.pdf, id=1263, 400.49625pt x 456.70625pt>
+<images/serverSide.pdf, id=1264, 400.49625pt x 456.70625pt>
 File: images/serverSide.pdf Graphic file (type pdf)
 
 <use images/serverSide.pdf>
 Package pdftex.def Info: images/serverSide.pdf used on input line 364.
 (pdftex.def)             Requested size: 400.49527pt x 456.70512pt.
 
-<images/metaModelFinal.pdf, id=1264, 600.2425pt x 456.70625pt>
+<images/metaModelFinal.pdf, id=1265, 600.2425pt x 456.70625pt>
 File: images/metaModelFinal.pdf Graphic file (type pdf)
 
 <use images/metaModelFinal.pdf>
@@ -1056,7 +1045,7 @@ Overfull \hbox (21.18999pt too wide) in paragraph at lines 371--372
 [][] 
  []
 
-<images/sdDiagram.pdf, id=1265, 713.66624pt x 427.5975pt>
+<images/sdDiagram.pdf, id=1266, 713.66624pt x 427.5975pt>
 File: images/sdDiagram.pdf Graphic file (type pdf)
 
 <use images/sdDiagram.pdf>
@@ -1066,7 +1055,7 @@ Package pdftex.def Info: images/sdDiagram.pdf used on input line 377.
 
 LaTeX Warning: Float too large for page by 108.73433pt on input line 380.
 
-<images/abstractBuilder.pdf, id=1266, 571.13374pt x 484.81125pt>
+<images/abstractBuilder.pdf, id=1267, 571.13374pt x 484.81125pt>
 File: images/abstractBuilder.pdf Graphic file (type pdf)
 
 <use images/abstractBuilder.pdf>
@@ -1077,7 +1066,7 @@ Overfull \hbox (49.29492pt too wide) in paragraph at lines 383--384
 [][] 
  []
 
-<images/sdResealization.pdf, id=1267, 514.92375pt x 286.06876pt>
+<images/sdResealization.pdf, id=1268, 514.92375pt x 286.06876pt>
 File: images/sdResealization.pdf Graphic file (type pdf)
 
 <use images/sdResealization.pdf>
@@ -1100,7 +1089,7 @@ m.pdf>] [62 <D:/Skola/repo/AFServer/Documents/thesis/images/abstractBuilder.pdf
 P\v {r}\'{\i }loha D.
 [65] [66]
 P\v {r}\'{\i }loha E.
-<images/cdContent.png, id=1480, 368.87813pt x 188.95593pt>
+<images/cdContent.png, id=1481, 368.87813pt x 188.95593pt>
 File: images/cdContent.png Graphic file (type png)
 
 <use images/cdContent.png>
@@ -1127,38 +1116,39 @@ Package rerunfilecheck Info: File `Tomasek-thesis-2014.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 476.
  ) 
 Here is how much of TeX's memory you used:
- 12637 strings out of 493921
- 175270 string characters out of 3144882
+ 12624 strings out of 493921
+ 174791 string characters out of 3144882
  240923 words of memory out of 3000000
- 15197 multiletter control sequences out of 15000+200000
- 22850 words of font info for 48 fonts, out of 3000000 for 9000
+ 15186 multiletter control sequences out of 15000+200000
+ 23549 words of font info for 49 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
  30i,11n,40p,3025b,1861s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
-ti1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
-pi600\ectt1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
-pen\ec\dpi600\ecsi1000.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
-ur\jknappen\ec\dpi600\tcss1000.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts
-\pk\ljfour\jknappen\ec\dpi600\ecsx1000.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2
-.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecss1000.pk> <C:\Users\Tom\AppData\Local\
-MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0900.pk> <C:\Users\Tom\AppDat
-a\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1095.pk> <C:\Users\To
-m\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\
-Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsl1095.
+si1000.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
+pi600\ecti1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
+pen\ec\dpi600\ectt1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
+ur\jknappen\ec\dpi600\ecti0900.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts
+\pk\ljfour\jknappen\ec\dpi600\ecss1000.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2
+.9\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm0900.pk> <C:\Users\Tom\AppData\Local\
+MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx0900.pk> <C:\Users\Tom\AppDat
+a\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm0900.pk> <C:\Users\To
+m\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1095.pk> <C:\
+Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.
 pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
-cbx1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\
-dpi600\ecbx2488.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkna
-ppen\ec\dpi600\ecrm0600.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
-our\jknappen\ec\dpi600\ecbx2074.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\font
-s\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\
-2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1440.pk> <C:\Users\Tom\AppData\Local
-\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\Tom\AppDa
-ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/Latex/fo
-nts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Latex/fonts/type1/public/amsfonts/c
-m/cmsy9.pfb>
-Output written on Tomasek-thesis-2014.pdf (85 pages, 877558 bytes).
+csl1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\
+dpi600\ecbx1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkna
+ppen\ec\dpi600\ecbx2488.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljf
+our\jknappen\ec\dpi600\ecrm0600.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\font
+s\pk\ljfour\jknappen\ec\dpi600\ecbx2074.pk> <C:\Users\Tom\AppData\Local\MiKTeX\
+2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk> <C:\Users\Tom\AppData\Local
+\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1440.pk> <C:\Users\Tom\AppDa
+ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\T
+om\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/
+Latex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Latex/fonts/type1/public/am
+sfonts/cm/cmsy9.pfb>
+Output written on Tomasek-thesis-2014.pdf (85 pages, 880078 bytes).
 PDF statistics:
- 2423 PDF objects out of 2487 (max. 8388607)
+ 2431 PDF objects out of 2487 (max. 8388607)
  525 named destinations out of 1000 (max. 500000)
  739 words of extra memory for PDF output out of 10000 (max. 10000000)
 

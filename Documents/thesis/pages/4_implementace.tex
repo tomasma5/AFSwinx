@@ -14,7 +14,7 @@ Výsledkem inspekce objektu je model, který nese informace potřebné k tomu, a
 
 K dynamickému generování definic se využívá framework AspectFaces \cite{aspectFaces}, který umožňuje na základě mapování rozhodnout, jaká komponenta bude použita pro konkrétní proměnnou dané třídy. Dále nabízí určení layoutu, který bude použit a samozřejmě určení mapovacího souboru. Tímto lze docílit mnoha různých transformací. Tento framework je potřeba nejprve nastavit, nicméně toto nastavení provede za vývojáře serverová část frameworku AFRest. Rozhraní AFRest z obrázku \ref{img:finalModel} a jeho implementace AFRestGenerator provedou kompletní nastavení a spustí generování dat. Rozhraní umožňuje uživateli určit mapovací soubor a šablonu, která bude použita. Mapování lze použít na všechny proměnné objektu, či může vývojář určit, které mapování se použije na konkrétní proměnnou. Ukázka mapování z frameworku AspectFaces je znázorněna v ukázce zdrojových kódu \ref{code:xmlMapping}. Proměnná typu String se bude mapovat na vstupní textové pole, které je definováno v structure/inputField.xml, v případě že se bude jednat o typ password, tak se bude proměnná typu String mapovat na vstupní textové pole typu, které místo vepsaných znaků zobrazuje zástupné znaky, komponenta je definována v structure/inputPassword.xml. Typ Address, což je neprimitivní datový typ se bude mapovat na entitní typ, jehož definice je v structure/entity.xml.
 \begin{lstlisting}[caption=Ukázka mapování proměnných na komponenty,
-label={code:xmlMapping}]
+label={code:xmlMapping}, basicstyle=\footnotesize]
 <mapping>
 	<type>String</type>
 	<default tag="structure/inputField.xml" maxLength="255"/>
@@ -27,7 +27,7 @@ label={code:xmlMapping}]
 \end{lstlisting}
 Mapování tedy určí soubor s komponentou, který bude reprezentovat aktuální proměnnou. Soubor s definicí komponenty, je pak dále využit k finální definici proměnné. Ukázka vstupního textového pole je v ukázce zdrojových kódu \ref{code:xmlInputField}. Komponenta je v kořenovém elementu widget. Jelikož se jedná pouze o fragment xml, který je použit ke složení celé definice, jenž je uvedena v příloze v ukázce zdrojových kódů \ref{code:xmlCompleteDefinition}, tak zde není uvedena deklarace XML \cite{xml}. Ve výsledném XML již však deklarace již uvedena je. Popis jednotlivých uzlů je v tabulce \ref{table:xmlComponentAttributes}.
 \begin{lstlisting}[caption=Ukázka definice komponenty,
-label={code:xmlInputField}]
+label={code:xmlInputField}, basicstyle=\footnotesize]
 <widget>
 	<widgetType>textField</widgetType>
 	<fieldName>$field$</fieldName>
@@ -56,7 +56,7 @@ label={code:xmlEntity}]
 Aby byl klient schopný získat definice dat, tak musí serverová strana poskytovat zdroj těchto definic. V tomto zdroji server využije serverovou část frameworku ke generování dat. Použití je přímočaré a ukázka zdroje je zobrazena v části zdrojového kódu \ref{code:serverDefinition}. Nejprve je vytvořena instance třídy AFrestGenerator, která umožňuje generování dat, jenž jsou následně odeslána klientovi. Generátor nastaví framework AspectFaces automaticky, nicméně očekává, že bude framework AspectFaces použit. K správnému použití je potřeba, aby ve WEB-INF byly konfigurační soubory a aby existovali mapovací soubory a definice komponent. V tomto případě využije implicitního nastavení pro mapování i šablony. Bude použito mapování v souboru structure.config.xml a šablona v template/structure.xml. Tyto ukázkové soubory jsou poskytovány spolu s frameworkem.
 
 \begin{lstlisting}[caption={Ukázka zdroje, sloužícího k vygenerování definice třídy Country},
-label={code:serverDefinition}]
+label={code:serverDefinition}, basicstyle=\footnotesize]
 @GET
 @Path("/definition")
 @Produces({MediaType.APPLICATION_JSON})
@@ -74,7 +74,7 @@ public Response getResources(@javax.ws.rs.core.Context HttpServletRequest reques
 \end{lstlisting}
 Zdroj poskytuje definice dat. V případě, že klient požaduje data do vygenerované definice, tak je potřeba poskytnout klientovi objekt stejného typu, nad kterým byla prováděna definice, nebo objekt se stejnými proměnnými a datovými typy. V tomto případě třídu Country. Klientská strana nerozlišuje datový typ obdrženého objektu, avšak očekává, že objekt bude mít určité proměnné, ke kterým se budou vázat specifické validace. V některých případech je žádoucí, aby se na úrovni business a view nepracovalo s databázovou entitou, ale s jejím mapovacím objektem. V části zdrojových kódu \ref{code:serverData} je příklad získání dat do již vygenerovaného formuláře či tabulky. Zdroj využije EJB \cite{javaEE} managera CountryManager k získání konkrétní instance třídy Country z databáze. Tuto instanci vrátí klientovi. Tento zdroj nemá žádnou vazbu na předchozí zdroj, který generoval definice. Vývojář tedy v případě použití frameworku nemusí měnit stávající implementaci, pokud již nějaká existuje. Stejně tak nemá použití frameworku dopad ne klienty, kteří již používají webové API serveru. Zodpovědnost za správnou interpretaci dat je na klientské straně.
 \begin{lstlisting}[caption=Zdroj poskytující konkrétní instanci třídy Country,
-label={code:serverData}]
+label={code:serverData}, basicstyle=\footnotesize]
 @GET
 @Path("/{id}")
 @Produces({MediaType.APPLICATION_JSON})
@@ -128,7 +128,7 @@ Klientská část umožňuje generovat tabulky nebo formuláře. Tyto celky ozna
 Při návrhu jsem se zaměřil i na použitelnost, neboť je potřeba aby framework umožňoval dodatečná nastavení, nicméně pokud se vývojář bude s frameworkem učit, tak je pravděpodobné, že bude chtít vytvořit první prototyp, aby si vyzkoušel funkčnost. Z tohoto důvodu byla zavedena třída AFSwinx, která slouží jako správce komponent. Třída je singleton \cite{gamma} a slouží jako fasáda \cite{gamma}pro ovládání frameworku.  Umožňuje komponenty vytvářet, přidávat, mazat nastavovat globální skin a lokalizace. Důležitou součástí je i získání již sestavené komponenty. Každá komponenta je jednoznačně určena svým identifikátorem, který si vývojář zvolí. Na základě tohoto identifikátoru je zaregistrována a lze k ní získat přístup a provádět nad ní operace. Vzhled jednotlivých prvků v komponentě již není možné po vygenerování měnit. Skiny a lokalizace musí být tedy nastaveny před samotným vygenerováním. Také je potřeba určit způsoby připojení ke zdrojům a jejich URI. Proces vytváření komponent vyžaduje několik operací, které na sebe navazují. V případě že by byl tento proces ponechán na vývojáři, tak by byl framework nepoužitelný. Z tohoto důvodu poskytuje třída AFSwinx buildery \cite{gamma} pro tabulky a formuláře, které komponenty sestaví, vloží do nich data a vývojáři vrátí výsledný JPanel. Typ komponenty určuje vývojář a buildery umí vytvořit formulář či tabulku na základě jedné definice. V případě tabulky je možné ještě provést dodatečné nastavení. Jedná se o automatické nastavení šířky sloupečků a automatické nastavení velikosti tabulky. Ukázka vytvoření formuláře je zobrazena v části zdrojových kódu \ref{code:formGeneration}. Nejprve je potřeba získat instanci builderu, který bude použit. Typ builderu určí, zdali bude vytvořena tabulka či formulář. V tomto konkrétním případě bude vytvořen formulář. Metamodel získává klient ze serveru. Framework zapouzdřuje způsob získání dat, vývojář tedy musí definovat pouze zdroje. Jednou z možností je specifikovat zdroje jako samostatné objekty, druhou možností je využít XML. V případě použití XML souboru musí být uveden soubor a identifikátor připojení. Tyto vlastnosti jsou nastaveny builderu pomocí metody initBuilder, která očekává identifikátor formuláře, soubor se specifikací připojení a identifikátor připojení. Builder má samozřejmě několik přetížených metod initBuilder. Tímto lze docílit různých způsobů počátečního nastavení. Metoda buildComponent již vygeneruje výsledný formulář. Pokud se při generování vyskytne chyba, pak je vyhozena výjimka AFSwinxBuildException. Je na vývojáři jak výjimku zpracuje. V ukázce je zobrazen dialog s chybovou hláškou.
 
 \begin{lstlisting}[caption={Generování formuláře na klientovi},
-label={code:formGeneration}]
+label={code:formGeneration}, basicstyle=\footnotesize]
 InputStream connectionResrouce = getClass().getClassLoader().getResourceAsStream("connection.xml");
 try {
 	AFSwinxForm form =
@@ -168,7 +168,7 @@ Klíč určuje umístění proměnné v hierarchii. V klíči je použita standa
 V tabulce \ref{table:widgetBuilders} jsou popsány všechny widget buildery, které je možné použít. Všechny buildery mají společného předka. Abstraktní reprezentace buildera je znázorněna na obrázku \ref{img:abstractBuilder}. Konkrétní instance pak využívá společných metod, jež jsou implementovány v jeho předkovi. Předek umí sestavit placeholder určený k zobrazení výsledku validací, popis ke každé komponentě, nastavit lokalizace, skiny včetně jejich aplikace a přidat validátory na pole. Tato abstraktní třída také umí vygenerovat dummy field, který je vytvořen, pouze pokud komponenta dostala list hodnot jež může nabývat a současně není volba z tohoto listu povinná. Pak je zapotřebí udržovat informaci o tom, že uživatel volbu neučinil. Konkrétní prvky builderu z tabulky \ref{table:widgetBuilders} pak vytváří každý builder sám. 
 
 \begin{lstlisting}[caption={Vytváření vstupního pole builderem.},
-label={code:textInputBuilder}]
+label={code:textInputBuilder}, basicstyle=\footnotesize]
 public AFSwinxPanel buildComponent(AFFieldInfo field) 
 throws IllegalArgumentException, AFSwinxBuildException {
 	super.buildBase(field);
@@ -192,7 +192,7 @@ throws IllegalArgumentException, AFSwinxBuildException {
 Ukázka metody, která vygeneruje vstupní textové pole je znázorněna v části zdrojových kódu \ref{code:textInputBuilder}. Nejprve jsou vytvořeny společné vlastnosti pro všechny buildery. Tyto vlastnosti vytváří abstraktní předek. Poté je vytvořeno vstupné pole a na toto pole je aplikován skin. Komponenta je poté přidána do layout builderu. Následně je vytvořen AFSwinxPanel, jenž nese všechny nezbytné informace o aktuální komponentě. Tento panel je také přidán do layout, který poté vytvoří konečné uspořádání komponent. Nakonec jsou v panelu registrovány všechny validátory, které se postupně spustí v případě odeslání dat, či v případě žádosti o zjištění validnosti formuláře.
 
 \begin{lstlisting}[caption={Vložení dat do vstupního pole vytvořeného builderem.},
-label={code:textInputBuilderSetData}]
+label={code:textInputBuilderSetData}, basicstyle=\footnotesize]
 public void setData(AFSwinxPanel panel, AFData data) {
 	if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
 		JTextComponent textField = (JTextComponent) panel.getDataHolder().get(0);
