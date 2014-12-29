@@ -3,6 +3,7 @@
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
 	<visible>true</visible>
+	<readonly>$readonly$</readonly>
 	<validations>
 		<required>$required$</required>
 		<minValue>$min$</minValue>

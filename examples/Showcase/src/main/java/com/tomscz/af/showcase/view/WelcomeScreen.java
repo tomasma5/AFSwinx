@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.SecurityContext;
-import com.tomscz.af.showcase.view.skin.MySkin;
+import com.tomscz.af.showcase.view.skin.LoginSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -23,7 +23,7 @@ public class WelcomeScreen extends BaseScreen {
     public final static String loginFormName = "loginForm";
 
     private JButton afSwinxLoginButton;
-
+    
     public WelcomeScreen() {
         intialize();
     }
@@ -34,6 +34,8 @@ public class WelcomeScreen extends BaseScreen {
         SecurityContext sc = ApplicationContext.getInstance().getSecurityContext();
         if(sc != null && sc.isUserLogged()){
             mainPanel.add(new JLabel("Welcome user:"+sc.getUserLogin()));
+            afSwinxLoginButton = new JButton(Localization.getLocalizationText("logout.button"));
+            mainPanel.add(afSwinxLoginButton);
         }
         else{
             InputStream connectionResrouce = getClass().getClassLoader().getResourceAsStream("connection.xml");
@@ -41,7 +43,7 @@ public class WelcomeScreen extends BaseScreen {
                 AFSwinxForm form =
                         AFSwinx.getInstance().getFormBuilder()
                                 .initBuilder(loginFormName, connectionResrouce, "loginForm")
-                                .setLocalization(ApplicationContext.getInstance().getLocalization()).setSkin(new MySkin())
+                                .setLocalization(ApplicationContext.getInstance().getLocalization()).setSkin(new LoginSkin())
                                 .buildComponent();
                 afSwinxLoginButton = new JButton(Localization.getLocalizationText("login.button"));
                 JPanel componentPanel = new JPanel();

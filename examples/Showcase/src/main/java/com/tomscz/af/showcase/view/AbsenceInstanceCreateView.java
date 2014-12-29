@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
-import com.tomscz.af.showcase.view.skin.LongInputSkin;
 import com.tomscz.af.showcase.view.skin.MySkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -69,9 +68,9 @@ public class AbsenceInstanceCreateView extends BaseScreen {
             centerPanel.add(buttonBox);
             // Content
             Box centerBox = Box.createHorizontalBox();
-            centerBox.add(Box.createHorizontalStrut(200));
+            centerBox.add(Box.createHorizontalStrut(80));
             centerBox.add(centerPanel);
-            centerBox.add(Box.createHorizontalStrut(180));
+            centerBox.add(Box.createHorizontalStrut(150));
             // Vertical box
             b1.add(Box.createVerticalStrut(10));
             b1.add(centerBox);

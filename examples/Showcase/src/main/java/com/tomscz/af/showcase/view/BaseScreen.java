@@ -153,6 +153,12 @@ public abstract class BaseScreen extends JFrame {
             myAbsencesButton.addActionListener(a);
         }
     }
+    
+    public void addAbsencesInstanceEditListener(ActionListener a){
+        if(editAbsenceButton != null){
+            editAbsenceButton.addActionListener(a);
+        }
+    }
 
     public Dialogs getDialogs() {
         return dialogs;

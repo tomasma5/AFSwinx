@@ -203,11 +203,68 @@
 			<endPointParameters>/AFServer/rest/absenceInstance/user/#{username}</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
-						<security-params>
+			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
 				<password>#{password}</password>
 			</security-params>
 		</data>
+	</connection>
+	<connection id="absenceInstaceEditTableConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absenceInstance/definitionManaged/#{username}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</metaModel>
+		<data>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absenceInstance/editable/#{username}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</data>
+	</connection>
+	<connection id="absenceInstaceEditFormConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absenceInstance/definitionManaged/#{username}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</metaModel>
+		<send>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/absenceInstance/add/#{username}</endPointParameters>
+			<protocol>http</protocol>
+			<method>post</method>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</send>
 	</connection>
 </connectionRoot>

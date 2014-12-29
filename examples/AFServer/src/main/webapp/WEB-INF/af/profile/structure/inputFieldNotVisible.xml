@@ -2,7 +2,7 @@
 	<widgetType>textField</widgetType>
 	<fieldName>$field$</fieldName>
 	<label>$label$</label>
-	<readonly>$readonly$</readonly>
+	<visible>false</visible>
 	<validations>
 		<required>$required$</required>
 		<minLength>$minLength$</minLength>

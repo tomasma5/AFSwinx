@@ -29,7 +29,14 @@ public class WelcomeScreenController extends BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                if(AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).validateData()){
+                if(ApplicationContext.getInstance().getSecurityContext() != null && ApplicationContext.getInstance().getSecurityContext().isUserLogged()){
+                    ApplicationContext.getInstance().setSecurityContext(null);
+                    view.getContentPane().removeAll();
+                    view.intialize();
+                    registerListeners();
+                    view.getContentPane().repaint();
+                }
+                else if(AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).validateData()){
                     AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).sendData();
                     AFDataHolder data =
                             AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName)

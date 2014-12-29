@@ -11,12 +11,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
 import com.codingcrayons.aspectfaces.annotations.UiType;
 import com.tomscz.afrest.commons.SupportedWidgets;
+import com.tomscz.afrest.layout.definitions.LabelPosition;
+import com.tomscz.afrest.layout.definitions.LayouDefinitions;
+import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 
 @Entity
 public class AbsenceInstance {
@@ -46,6 +50,7 @@ public class AbsenceInstance {
 
     @UiLabel(value="absenceInstance.duration")
     @UiType(value = "readOnly")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public int getDuration() {
         return duration;
     }
@@ -57,6 +62,7 @@ public class AbsenceInstance {
     @UiRequired
     @UiOrder(value=0)
     @UiLabel(value="absenceInstance.startDate")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public Date getStartDate() {
         return startDate;
     }
@@ -68,6 +74,7 @@ public class AbsenceInstance {
     @UiRequired
     @UiOrder(value=1)
     @UiLabel(value="absenceInstance.endDate")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public Date getEndDate() {
         return endDate;
     }
@@ -78,6 +85,7 @@ public class AbsenceInstance {
     
     @UiLabel(value="absenceInstance.state")
     @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public AbsenceInstanceState getStatus() {
         return status;
     }
@@ -87,6 +95,7 @@ public class AbsenceInstance {
     }
 
     @UiType(value = "id")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public int getId() {
         return id;
     }
@@ -95,6 +104,7 @@ public class AbsenceInstance {
         this.id = id;
     }
 
+    @UiOrder(value = -1)
     public Person getAffectedPerson() {
         return affectedPerson;
     }

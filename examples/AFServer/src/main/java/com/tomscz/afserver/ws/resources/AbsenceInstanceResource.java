@@ -18,12 +18,15 @@ import javax.ws.rs.core.Response;
 
 import com.tomscz.afrest.AFRest;
 import com.tomscz.afrest.AFRestGenerator;
+import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.AbsenceInstance;
+import com.tomscz.afserver.persistence.entity.AbsenceInstanceState;
 import com.tomscz.afserver.persistence.entity.AbsenceType;
 import com.tomscz.afserver.persistence.entity.Person;
+import com.tomscz.afserver.persistence.entity.UserRoles;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
@@ -89,17 +92,57 @@ public class AbsenceInstanceResource extends BaseResource {
     }
 
     @GET
-    @Path("/user/{userName}")
+    @Path("/definitionManaged/{userName}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin", "user"})
-    public Response getUsersInstances(@javax.ws.rs.core.Context HttpServletRequest request,
+    public Response getDefinitionToManageAbsenceInstance(
+            @javax.ws.rs.core.Context HttpServletRequest request,
             @PathParam("userName") String userName) {
+        try {
+            AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
+            String mainlayout = "templates/oneColumnLayout.xml";
+            HashMap<String, String> customMapping = new HashMap<String, String>();
+            customMapping.put(AbsenceInstance.class.getCanonicalName(),
+                    "absenceInstanceManagement.config.xml");
+            customMapping.put("affectedPerson", "absence.instance.inner.simple.xml");
+            customMapping.put("absenceType", "absence.instance.inner.simple.xml");
+            customMapping.put("country", "absence.instance.inner.simple.xml");
+            AFMetaModelPack data =
+                    afSwing.generateSkeleton(AbsenceInstance.class.getCanonicalName(),
+                            customMapping, mainlayout);
+            AFSecurityContext securityContex =
+                    (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
+            if (securityContex.isUserInRole(UserRoles.ADMIN)) {
+                HashMap<String, String> stateOptions;
+                stateOptions =
+                        AFRestUtils.getDataInEnumClass(AbsenceInstanceState.class
+                                .getCanonicalName());
+                data.setOptionsToFields(stateOptions, "status");
+            } else {
+                HashMap<String, String> stateOptions = new HashMap<String, String>();
+                stateOptions.put(AbsenceInstanceState.CANCELLED.name(), AbsenceInstanceState.CANCELLED.name());
+                stateOptions.put(AbsenceInstanceState.REQUESTED.name(), AbsenceInstanceState.REQUESTED.name());
+                data.setOptionsToFields(stateOptions, "status");
+            }
+            return Response.status(Response.Status.OK).entity(data).build();
+        } catch (MetamodelException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GET
+    @Path("/user/{username}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public Response getUsersAllInstances(@javax.ws.rs.core.Context HttpServletRequest request,
+            @PathParam("username") String username) {
         try {
             AFSecurityContext securityContex =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
             List<AbsenceInstance> usersInstances =
-                    getAbsenceInstantManager().findInstanceByUser(userName, securityContex);
+                    getAbsenceInstantManager().findInstanceByUser(username, securityContex);
             final GenericEntity<List<AbsenceInstance>> absenceInstanceGeneric =
                     new GenericEntity<List<AbsenceInstance>>(usersInstances) {};
             return Response.status(Response.Status.OK).entity(absenceInstanceGeneric).build();
@@ -123,6 +166,28 @@ public class AbsenceInstanceResource extends BaseResource {
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
             getAbsenceInstantManager().createOrUpdate(absenceInstance, username, securityContex);
             return Response.status(Response.Status.OK).build();
+        } catch (NamingException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (BusinessException e) {
+            return Response.status(e.getStatus()).build();
+        }
+    }
+
+    @GET
+    @Path("/editable/{username}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public Response getUsersInstancesManaged(@javax.ws.rs.core.Context HttpServletRequest request,
+            @PathParam("username") String username) {
+        try {
+            AFSecurityContext securityContex =
+                    (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
+            List<AbsenceInstance> usersInstances =
+                    getAbsenceInstantManager().findEditableInstanceByUser(username, securityContex);
+            final GenericEntity<List<AbsenceInstance>> absenceInstanceGeneric =
+                    new GenericEntity<List<AbsenceInstance>>(usersInstances) {};
+            return Response.status(Response.Status.OK).entity(absenceInstanceGeneric).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (BusinessException e) {

@@ -6,10 +6,14 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.codingcrayons.aspectfaces.annotations.UILayout;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
 import com.codingcrayons.aspectfaces.annotations.UiRequired;
 import com.codingcrayons.aspectfaces.annotations.UiType;
+import com.tomscz.afrest.layout.definitions.LabelPosition;
+import com.tomscz.afrest.layout.definitions.LayouDefinitions;
+import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 
 @Entity
 public class AbsenceType {
@@ -26,6 +30,7 @@ public class AbsenceType {
     @UiOrder(value=1)
     @UiRequired
     @UiLabel(value="absenceType.name")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public String getName() {
         return name;
     }
@@ -36,6 +41,7 @@ public class AbsenceType {
 
     @UiType(value = "id")
     @UiRequired
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public int getId() {
         return id;
     }
@@ -44,6 +50,7 @@ public class AbsenceType {
         this.id = id;
     }
 
+    @UiOrder(value = 4)
     public Country getCountry() {
         return country;
     }
@@ -55,6 +62,7 @@ public class AbsenceType {
     @UiOrder(value=2)
     @UiRequired
     @UiLabel(value="absenceType.maxDaysPerYear")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public double getMaxDaysPerYear() {
         return maxDaysPerYear;
     }
@@ -66,6 +74,7 @@ public class AbsenceType {
     @UiOrder(value=3)
     @UiRequired
     @UiLabel(value="absenceType.active")
+    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public boolean getActive() {
         return active;
     }

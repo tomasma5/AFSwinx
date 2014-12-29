@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://aspectfaces.com/schema/aspectfaces"
+	xsi:schemaLocation="http://aspectfaces.com/schema/aspectfaces http://www.aspectfaces.com/schema/af-configuration-1.4.0-SNAPSHOT.xsd">
+
+	<mapping>
+		<type>Date</type>
+		<default tag="structure/date.xml" maxLength="255" size="30" />
+		<!--<condition expression="${type == 'state'}" tag="html/state.xhtml"/> -->
+	</mapping>
+
+	<mapping>
+		<type>int</type>
+		<type>long</type>
+		<default tag="structure/numberInput.xml" readonly="true" />
+		<condition expression="${type == 'id'}" tag="structure/numberInputNotVisible.xml" />
+	</mapping>
+
+	<mapping>
+		<type>Enum</type>
+		<default tag="structure/enum.xml" />
+	</mapping>
+
+	<mapping>
+		<type>Person</type>
+		<type>AbsenceType</type>
+		<default tag="structure/entity.xml" />
+	</mapping>
+
+	<ignore-fields>
+		<name>duration</name>
+	</ignore-fields>
+
+</configuration>

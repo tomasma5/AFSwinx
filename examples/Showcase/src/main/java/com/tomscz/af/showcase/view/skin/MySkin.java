@@ -15,5 +15,5 @@ public class MySkin extends BaseSkin {
     public int getInputWidth() {
         return 150;
     }
-
+ 
 }

@@ -96,6 +96,7 @@ public class SecurityInterceptor implements PreProcessInterceptor {
                     return AFServerConstants.ACCESS_DENIED;
                 } else {
                     securityContext = new AFSecurityContext(nickname);
+                    securityContext.userRoles = authenticatedUser.getUserRole();
                     RolesAllowed rolesAnnotation = methodToVerify.getAnnotation(RolesAllowed.class);
                     if (!isUserInRoles(new HashSet<String>(Arrays.asList(rolesAnnotation.value())),
                             authenticatedUser)) {
@@ -116,7 +117,6 @@ public class SecurityInterceptor implements PreProcessInterceptor {
             return false;
         }
         for (UserRoles currentRole : userRole) {
-            securityContext.userRoles.add(currentRole);
             for (String role : roleSet) {
                 String curentRoleInString = currentRole.name().toLowerCase();
                 if (role.equals(curentRoleInString)) {

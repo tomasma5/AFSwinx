@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.tomscz.af.showcase.view.AbsenceInstanceCreateView;
+import com.tomscz.af.showcase.view.AbsenceInstanceEditView;
 import com.tomscz.af.showcase.view.AbsenceTypManagementView;
 import com.tomscz.af.showcase.view.AvaiableCountryView;
 import com.tomscz.af.showcase.view.BaseScreen;
@@ -30,6 +31,7 @@ public abstract class BaseController {
         view.addAbsenceTypeListener(absenceTypeListener);
         view.addAbsenceAddListener(absenceInstanceCreateListener);
         view.addMyAbsencesListener(myAbsenceInstanceListener);
+        view.addAbsencesInstanceEditListener(absenceInstanceEditListener);
     }
 
     public BaseModel getModel() {
@@ -119,6 +121,20 @@ public abstract class BaseController {
             view.setVisible(false);
             view = null;
             myAbsenceInstanceView.setVisible(true);
+        }
+    };
+    
+    private ActionListener absenceInstanceEditListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
+            AbsenceInstanceEditView absenceInstanceEditView = new AbsenceInstanceEditView();
+            AbsenceInstanceEditController controller =
+                    new AbsenceInstanceEditController(absenceInstanceEditView);
+            view.setVisible(false);
+            view = null;
+            absenceInstanceEditView.setVisible(true);
         }
     };
     

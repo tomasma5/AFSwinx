@@ -8,5 +8,5 @@
 		<type>long</type>
 		<default tag="structure/dropDownMenu.xml" />
 	</mapping>
-	
+
 </configuration>

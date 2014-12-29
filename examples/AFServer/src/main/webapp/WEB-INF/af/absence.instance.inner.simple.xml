@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://aspectfaces.com/schema/aspectfaces"
+	xsi:schemaLocation="http://aspectfaces.com/schema/aspectfaces http://www.aspectfaces.com/schema/af-configuration-1.4.0-SNAPSHOT.xsd">
+
+	<mapping>
+		<type>String</type>
+		<default tag="structure/inputFieldNotVisible.xml" readonly="true" />
+		<condition expression="${fieldName == 'lastName'}" tag="structure/inputField.xml" />
+		<condition expression="${fieldName == 'login'}" tag="structure/inputField.xml" />
+		<condition expression="${fieldName == 'name'}" tag="structure/inputField.xml" />
+	</mapping>
+
+	<mapping>
+		<type>Country</type>
+		<default tag="structure/entity.xml" />
+	</mapping>
+
+	<ignore-fields>
+		<name>password</name>
+		<name>email</name>
+		<name>firstName</name>
+		<name>shortCut</name>
+	</ignore-fields>
+
+</configuration>

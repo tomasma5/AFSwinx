@@ -8,7 +8,9 @@ import com.tomscz.afserver.ws.security.AFSecurityContext;
 
 public interface AbsenceInstanceManager <T> extends Manager<T> {
 
-    public List<T> findInstanceByUser(String userName, AFSecurityContext securityContext) throws BusinessException;
+    public List<T> findInstanceByUser(String username, AFSecurityContext securityContext) throws BusinessException;
+    
+    public List<T> findEditableInstanceByUser(String username, AFSecurityContext securityContext) throws BusinessException;
   
     public void createOrUpdate(AbsenceInstance absenceInstance, String username, AFSecurityContext securityContext) throws BusinessException;
     
