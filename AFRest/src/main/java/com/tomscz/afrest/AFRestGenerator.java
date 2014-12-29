@@ -33,11 +33,11 @@ public class AFRestGenerator implements AFRest {
             String mainLayout) throws MetamodelException {
         return modelInspector.generateModel(fullClassName, structureConfig, mainLayout, "");
     }
-    
+
     @Override
     public AFMetaModelPack generateSkeleton(String fullClassName,
             HashMap<String, String> structureConfig, String mainLayout) throws MetamodelException {
-        return modelInspector.generateModel(fullClassName, mainLayout ,structureConfig, null);
+        return modelInspector.generateModel(fullClassName, mainLayout, structureConfig, null);
     }
 
     @Override
@@ -48,6 +48,21 @@ public class AFRestGenerator implements AFRest {
     @Override
     public void setMapping(String mapping) {
         this.mainMapping = mapping;
+    }
+
+    @Override
+    public void setVariablesToContext(HashMap<String, Object> variables) {
+        modelInspector.setContextVariable(variables);
+    }
+
+    @Override
+    public void setRoles(String[] roles) {
+        modelInspector.setRoles(roles);
+    }
+
+    @Override
+    public void setProfile(String[] profiles) {
+        modelInspector.setProfiles(profiles);
     }
 
 }

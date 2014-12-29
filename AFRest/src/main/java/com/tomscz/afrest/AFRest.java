@@ -19,4 +19,10 @@ public interface AFRest {
     
     public void setMapping(String mapping);
     
+    public void setVariablesToContext(HashMap<String, Object> variables);
+    
+    public void setRoles(String [] roles);
+    
+    public void setProfile(String []profiles);
+    
 }

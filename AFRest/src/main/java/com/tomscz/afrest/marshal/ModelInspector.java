@@ -1,15 +1,9 @@
 package com.tomscz.afrest.marshal;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -46,10 +40,13 @@ public class ModelInspector {
     private static final String DEFAULT_MAPPING = "structure.config.xml";
     private static final String DEFAULT_LAYOUT = "templates/structure.xml";
     private static final String DEFAULT_CLASS_LAYOUT = "templates/simpleLayout.xml";
-    private static final int DEFAULT_DEPTH = Integer.MAX_VALUE;
+    private static final int DEPTH = 100;
 
     private HashMap<String, String> classTemplateMapping = new HashMap<String, String>();
     private HashMap<String, String> classStructureMapping = new HashMap<String, String>();
+    private HashMap<String, Object> contextVariable = new HashMap<String, Object>();
+    private String[] roles;
+    private String[] profiles;
     private ServletContext servletContext;
     private String templateMapping;
     private String templateInnerClass;
@@ -67,7 +64,6 @@ public class ModelInspector {
      * @param templateMapping template mapping, layout which will be used to root entity
      * @param classStructureMapping this set structure which will be used based on field.
      * @param classTemplateMapping this set layout which will be used based on field.
-     * @param depth it determine how many child non-primitive element will be inspected.
      * @return model which can be used to create form, tables, etc.
      * @throws MetamodelException if error during generation module occur then this exception is
      *         thrown.
@@ -101,21 +97,16 @@ public class ModelInspector {
         return generateModel(fullClassName);
     }
 
-    public AFMetaModelPack generateModel(String fullClassName) throws MetamodelException {
-        return generateModel(fullClassName, DEFAULT_DEPTH);
-    }
-
     /**
      * This method generate model which can be used to create form, widget and etc. Key is name of
      * field and value is name of xml file.
      * 
      * @param fullClassName className to generate
-     * @param depth it determine how many child non-primitive element will be inspected.
      * @return model which can be used to create form, tables, etc.
      * @throws MetamodelException if error during generation module occur then this exception is
      *         thrown.
      */
-    public AFMetaModelPack generateModel(String fullClassName, int depth) throws MetamodelException {
+    public AFMetaModelPack generateModel(String fullClassName) throws MetamodelException {
         String template = getLayout(fullClassName, true);
         String mapping = getMapping(fullClassName);
         String resultMapping = generate(fullClassName, template, mapping);
@@ -125,7 +116,7 @@ public class ModelInspector {
         int numberOfRounds = 0;
         Document doc = XMLParseUtils.transformStringToXml(resultMapping);
         // Start inspect inner classes
-        while ((!isDone && (depth > numberOfRounds))) {
+        while ((!isDone && (DEPTH > numberOfRounds))) {
             try {
                 // Find all un-inspected class
                 NodeList entitiesClasses = doc.getElementsByTagName(XMLParseUtils.ENTITYCLASS);
@@ -133,7 +124,6 @@ public class ModelInspector {
                     // if there are no class to inspect then end
                     isDone = true;
                 }
-                // TODO this will end after one iteration, numberOfRounds doesnt work correctly
                 for (int i = 0; i < entitiesClasses.getLength(); i++) {
                     // Get entity to inspect
                     Node node = entitiesClasses.item(i);
@@ -171,39 +161,11 @@ public class ModelInspector {
                     Element fieldNameElement = doc.createElement(XMLParseUtils.FIELDNAME);
                     fieldNameElement.setTextContent(fieldName);
                     newClass.appendChild(fieldNameElement);
-                    // TODO REMOVE IT ON PRODUCTION
-                    try {
-                        DOMSource domSource = new DOMSource(doc);
-                        StringWriter writer = new StringWriter();
-                        StreamResult result = new StreamResult(writer);
-                        TransformerFactory tf = TransformerFactory.newInstance();
-                        Transformer transformer = tf.newTransformer();
-                        transformer.transform(domSource, result);
-                        String document = writer.toString();
-                        System.out.println(document);
-                    } catch (TransformerException ex) {
-                        ex.printStackTrace();
-                        return null;
-                    }
                 }
             } catch (MetamodelException e) {
                 isDone = true;
             }
             numberOfRounds++;
-        }
-        // TOOD REMOVE IT ON PRODUCTION
-        try {
-            DOMSource domSource = new DOMSource(doc);
-            StringWriter writer = new StringWriter();
-            StreamResult result = new StreamResult(writer);
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer transformer = tf.newTransformer();
-            transformer.transform(domSource, result);
-            String document = writer.toString();
-            System.out.println(document);
-        } catch (TransformerException ex) {
-            ex.printStackTrace();
-            return null;
         }
         return generateFullModel(doc);
     }
@@ -229,8 +191,6 @@ public class ModelInspector {
             String widget = inspectAndTranslate(af, instance, context);
             return widget;
         } catch (Exception e) {
-            // TODO remove stacktrace
-            e.printStackTrace();
             throw new MetamodelException(e.getMessage());
         }
     }
@@ -244,10 +204,6 @@ public class ModelInspector {
     private Context init(ServletContext contextServlet, String mapping)
             throws ConfigurationFileNotFoundException, ConfigurationParsingException,
             AnnotationDescriptorNotFoundException {
-//        InputStream configPropertyStream =
-//                contextServlet.getResourceAsStream("/WEB-INF/aspectfaces.properties");
-//        AFWeaver.init(configPropertyStream);
-//        AFWeaver.registerAllAnnotations();
 
         AFWeaver.addConfiguration(new ServerConfiguration(mapping, contextServlet), FileUtils
                 .createTemporaryFile(Constants.ASPECT_FACES_RESOURCE_ROOT_FOLDER + mapping,
@@ -256,6 +212,17 @@ public class ModelInspector {
         Context context = new Context(null);
         context.setUseCover(true);
         context.setCollate(true);
+        if(contextVariable != null){
+            for(String key: contextVariable.keySet()){
+                context.getVariables().put(key, contextVariable.get(key));
+            }
+        }
+        if(roles != null){
+            context.setRoles(roles);
+        }
+        if(profiles != null){
+            context.setProfiles(profiles);
+        }
         return context;
     }
 
@@ -312,5 +279,29 @@ public class ModelInspector {
             return templateInnerClass;
         }
         return DEFAULT_CLASS_LAYOUT;
+    }
+
+    public HashMap<String, Object> getContextVariable() {
+        return contextVariable;
+    }
+
+    public void setContextVariable(HashMap<String, Object> contextVariable) {
+        this.contextVariable = contextVariable;
+    }
+
+    public String[] getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(String[] profiles) {
+        this.profiles = profiles;
+    }
+
+    public String[] getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String[] roles) {
+        this.roles = roles;
     }
 }
