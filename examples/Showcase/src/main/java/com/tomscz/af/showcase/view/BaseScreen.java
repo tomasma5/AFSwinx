@@ -27,6 +27,8 @@ public abstract class BaseScreen extends JFrame {
     private JButton editAbsenceButton;
     private JButton addAbsenceButton;
     private JButton addAbsenceTypeButton;
+    private JButton czech;
+    private JButton english;
 
     private Dialogs dialogs = new Dialogs(this);
     private static final long serialVersionUID = 1L;
@@ -66,16 +68,14 @@ public abstract class BaseScreen extends JFrame {
 
     protected JPanel createLocalizationToolbar() {
         JPanel localiztionToolbar = new JPanel();
-        JButton czech =
+        czech =
                 new JButton(new ImageIcon(this.getClass().getResource("/images/czech.png")));
         czech.setBorder(BorderFactory.createEmptyBorder());
         czech.setContentAreaFilled(false);
-        czech.addActionListener(onCzechButtonExec);
-        JButton english =
+        english =
                 new JButton(new ImageIcon(this.getClass().getResource("/images/english.png")));
         english.setBorder(BorderFactory.createEmptyBorder());
         english.setContentAreaFilled(false);
-        english.addActionListener(onEnglishButtonExec);
         localiztionToolbar.add(czech);
         localiztionToolbar.add(english);
         localiztionToolbar.setAlignmentX(LEFT_ALIGNMENT);
@@ -159,45 +159,21 @@ public abstract class BaseScreen extends JFrame {
             editAbsenceButton.addActionListener(a);
         }
     }
+    
+    public void addEnglishButtonListener(ActionListener a){
+        if(english != null){
+            english.addActionListener(a);
+        }
+    }
+    
+    public void addCzechButtonListener(ActionListener a){
+        if( czech != null){
+            czech.addActionListener(a);
+        }
+    }
 
     public Dialogs getDialogs() {
         return dialogs;
     }
-
-    private ActionListener onEnglishButtonExec = new ActionListener() {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                ApplicationContext.getInstance().changeLocalization(
-                        ShowcaseConstants.ENGLISH_BUNDLE);
-                getContentPane().removeAll();
-                intialize();
-                getContentPane().repaint();
-            } catch (FileNotFoundException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-
-        }
-    };
-
-
-
-    private ActionListener onCzechButtonExec = new ActionListener() {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.CZECH_BUNDLE);
-                getContentPane().removeAll();
-                intialize();
-                getContentPane().repaint();
-            } catch (FileNotFoundException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        }
-    };
 
 }

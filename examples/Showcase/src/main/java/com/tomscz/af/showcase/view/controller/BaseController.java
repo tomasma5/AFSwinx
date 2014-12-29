@@ -2,7 +2,10 @@ package com.tomscz.af.showcase.view.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 
+import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.view.AbsenceInstanceCreateView;
 import com.tomscz.af.showcase.view.AbsenceInstanceEditView;
 import com.tomscz.af.showcase.view.AbsenceTypManagementView;
@@ -32,6 +35,8 @@ public abstract class BaseController {
         view.addAbsenceAddListener(absenceInstanceCreateListener);
         view.addMyAbsencesListener(myAbsenceInstanceListener);
         view.addAbsencesInstanceEditListener(absenceInstanceEditListener);
+        view.addCzechButtonListener(onCzechButtonExec);
+        view.addEnglishButtonListener(onEnglishButtonExec);
     }
 
     public BaseModel getModel() {
@@ -135,6 +140,40 @@ public abstract class BaseController {
             view.setVisible(false);
             view = null;
             absenceInstanceEditView.setVisible(true);
+        }
+    };
+    
+    private ActionListener onEnglishButtonExec = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                ApplicationContext.getInstance().changeLocalization(
+                        ShowcaseConstants.ENGLISH_BUNDLE);
+                view.getContentPane().removeAll();
+                view.intialize();
+                registerListeners();
+                view.getContentPane().repaint();
+            } catch (FileNotFoundException e1) {
+                view.getDialogs().failed("localization.action", "localization.action.failed", "");
+            }
+
+        }
+    };
+
+    private ActionListener onCzechButtonExec = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.CZECH_BUNDLE);
+                view.getContentPane().removeAll();
+                view.intialize();
+                registerListeners();
+                view.getContentPane().repaint();
+            } catch (FileNotFoundException e1) {
+                view.getDialogs().failed("localization.action", "localization.action.failed", "");
+            }
         }
     };
     
