@@ -26,30 +26,31 @@ public class AbsenceInstanceEditController extends BaseController {
         absenceInstanceEditView.addPerformButtonActionListener(onAbsenceInstanceEditExec);
         super.registerListeners();
     }
-    
+
     private ActionListener onChooseAbsenceInstanceExec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-                AFSwinxTable table = (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_TABLE);
-                List<AFDataPack> datas = table.getSelectedData();
-                AFSwinxForm form = (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM);
-                form.fillData(datas);
+            chooseDataInTableAndSetToForm(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_TABLE,
+                    AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM);
         }
     };
-    
+
     private ActionListener onAbsenceInstanceEditExec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                if (AFSwinx.getInstance().getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM)
+                if (AFSwinx.getInstance()
+                        .getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM)
                         .validateData()) {
-                    AFSwinx.getInstance().getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM)
+                    AFSwinx.getInstance()
+                            .getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM)
                             .sendData();
                     view.getContentPane().removeAll();
                     view.intialize();
                     registerListeners();
                     view.getContentPane().repaint();
-                    view.getDialogs().succes("action.succes", "avaiableCountryView.action.addOrUpdate.succes","");
+                    view.getDialogs().succes("action.succes",
+                            "avaiableCountryView.action.addOrUpdate.succes", "");
                 }
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",
@@ -57,5 +58,5 @@ public class AbsenceInstanceEditController extends BaseController {
             }
         }
     };
-    
+
 }

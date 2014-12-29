@@ -44,7 +44,7 @@ public class AbsenceTypeManagementController extends BaseController {
                             .getExistedComponent(AbsenceTypManagementView.ABSENCY_TYPE_FORM)
                             .sendData();
                     rebuildView();
-                    view.getDialogs().succes("action.succes", "absencetype.action.addOrModify","");
+                    view.getDialogs().succes("action.succes", "absencetype.action.addOrModify", "");
                 }
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",
@@ -56,20 +56,8 @@ public class AbsenceTypeManagementController extends BaseController {
     private ActionListener onChooseAbsenceTypeExec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AFSwinxTable table =
-                    (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(
-                            AbsenceTypManagementView.ABSENCE_TYPE_TABLE);
-            try{
-            List<AFDataPack> datas = table.getSelectedData();
-            AFSwinxForm form =
-                    (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(
-                            AbsenceTypManagementView.ABSENCY_TYPE_FORM);
-            form.fillData(datas);
-            }
-            catch(IndexOutOfBoundsException exception){
-                view.getDialogs().failed("afswinx.choose.table.choosed", "afswinx.choose.table.outOfIndex",
-                    exception.getMessage());
-            }
+            chooseDataInTableAndSetToForm(AbsenceTypManagementView.ABSENCE_TYPE_TABLE,
+                    AbsenceTypManagementView.ABSENCY_TYPE_FORM);
         }
     };
 
@@ -101,8 +89,8 @@ public class AbsenceTypeManagementController extends BaseController {
             form.clearData();
         }
     };
-    
-    private void rebuildView(){
+
+    private void rebuildView() {
         view.getContentPane().removeAll();
         view.intialize();
         registerListeners();
@@ -112,7 +100,7 @@ public class AbsenceTypeManagementController extends BaseController {
                         AbsenceTypManagementView.COUNTRY_FORM);
         List<AFDataPack> dataPacks = new ArrayList<AFDataPack>();
         AFDataPack dataPack = new AFDataPack("");
-        AbsenceTypeManagementModel model = (AbsenceTypeManagementModel)getModel();
+        AbsenceTypeManagementModel model = (AbsenceTypeManagementModel) getModel();
         AFData countryData = new AFData("country", String.valueOf(model.getCountryId()));
         dataPack.addData(countryData);
         dataPacks.add(dataPack);

@@ -3,6 +3,7 @@ package com.tomscz.af.showcase.view.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
@@ -17,6 +18,9 @@ import com.tomscz.af.showcase.view.WelcomeScreen;
 import com.tomscz.af.showcase.view.model.AbsenceTypeManagementModel;
 import com.tomscz.af.showcase.view.model.BaseModel;
 import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 public abstract class BaseController {
 
@@ -176,5 +180,22 @@ public abstract class BaseController {
             }
         }
     };
+    
+    protected void chooseDataInTableAndSetToForm(String tableId, String formId){
+        AFSwinxTable table =
+                (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(
+                    tableId);
+        try{
+        List<AFDataPack> datas = table.getSelectedData();
+        AFSwinxForm form =
+                (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(
+                    formId);
+        form.fillData(datas);
+        }
+        catch(IndexOutOfBoundsException exception){
+            view.getDialogs().failed("afswinx.choose.table.choosed", "afswinx.choose.table.outOfIndex",
+                exception.getMessage());
+        }
+    }
     
 }

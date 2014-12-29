@@ -39,7 +39,8 @@ public class AvaiableCountryController extends BaseController {
                     view.intialize();
                     registerListeners();
                     view.getContentPane().repaint();
-                    view.getDialogs().succes("action.succes", "avaiableCountryView.action.addOrUpdate.succes","");
+                    view.getDialogs().succes("action.succes",
+                            "avaiableCountryView.action.addOrUpdate.succes", "");
                 }
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("avaiableCountryVeiw.button.add",
@@ -51,18 +52,18 @@ public class AvaiableCountryController extends BaseController {
     private ActionListener onChooseCountryExec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-                AFSwinxTable table = (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(AvaiableCountryView.COUNTRY_TABLE);
-                List<AFDataPack> datas = table.getSelectedData();
-                AFSwinxForm form = (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(AvaiableCountryView.COUNTRY_FORM);
-                form.fillData(datas);
+            chooseDataInTableAndSetToForm(AvaiableCountryView.COUNTRY_TABLE,
+                    AvaiableCountryView.COUNTRY_FORM);
         }
     };
-    
+
     private ActionListener onResetForm = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-                AFSwinxForm form = (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(AvaiableCountryView.COUNTRY_FORM);
-                form.clearData();
+            AFSwinxForm form =
+                    (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(
+                            AvaiableCountryView.COUNTRY_FORM);
+            form.clearData();
         }
     };
 
