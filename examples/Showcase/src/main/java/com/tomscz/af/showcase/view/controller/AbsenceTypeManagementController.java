@@ -10,7 +10,6 @@ import com.tomscz.af.showcase.view.BaseScreen;
 import com.tomscz.af.showcase.view.model.AbsenceTypeManagementModel;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxForm;
-import com.tomscz.afswinx.component.AFSwinxTable;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
