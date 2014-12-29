@@ -17,7 +17,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 
-public class WelcomeScreen extends BaseScreen {
+public class WelcomeScreen extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public final static String loginFormName = "loginForm";

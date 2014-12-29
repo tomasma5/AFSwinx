@@ -84,6 +84,7 @@ public class AbsenceInstance {
     }
     
     @UiLabel(value="absenceInstance.state")
+    @UiRequired
     @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
     @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public AbsenceInstanceState getStatus() {

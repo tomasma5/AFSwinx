@@ -16,7 +16,7 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
-public class AbsenceInstanceEditView extends BaseScreen {
+public class AbsenceInstanceEditView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String ABSENCE_INSTANCE_EDIT_TABLE = "absenceInstaceEditTable";

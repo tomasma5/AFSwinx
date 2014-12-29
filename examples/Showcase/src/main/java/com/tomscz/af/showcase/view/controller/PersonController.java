@@ -3,14 +3,14 @@ package com.tomscz.af.showcase.view.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.BaseView;
 import com.tomscz.af.showcase.view.PersonView;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 
 public class PersonController extends BaseController {
 
-    public PersonController(BaseScreen screen) {
+    public PersonController(BaseView screen) {
         super(screen);
         registerListeners();
     }

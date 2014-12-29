@@ -111,8 +111,8 @@ public class AbsenceInstanceManagerImpl extends BaseManager<AbsenceInstance>
             AFSecurityContext securityContext) throws BusinessException {
         AbsenceInstance existedAbsenceInstance = findById(absenceInstance.getId());
         if (!securityContext.isUserInRole(UserRoles.ADMIN)
-                && (!absenceInstance.getStatus().equals(AbsenceInstanceState.REQUESTED) || !absenceInstance
-                        .getStatus().equals(AbsenceInstanceState.CANCELLED))) {
+                && (absenceInstance.getStatus().name().equals(AbsenceInstanceState.ACCEPTED.name()) || absenceInstance
+                        .getStatus().name().equals(AbsenceInstanceState.DENIED.name()))) {
             throw new BusinessException(Status.BAD_REQUEST);
         }
         existedAbsenceInstance.setStatus(absenceInstance.getStatus());

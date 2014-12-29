@@ -17,7 +17,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 
-public class PersonView extends BaseScreen {
+public class PersonView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String PERSON_FORM = "personForm";

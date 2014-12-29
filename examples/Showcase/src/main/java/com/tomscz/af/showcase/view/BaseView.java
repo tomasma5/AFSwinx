@@ -1,24 +1,20 @@
 package com.tomscz.af.showcase.view;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
-import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
 
-public abstract class BaseScreen extends JFrame {
+public abstract class BaseView extends JPanel {
 
     private JButton loginButton;
     private JButton avaiableCountryButton;
@@ -27,15 +23,17 @@ public abstract class BaseScreen extends JFrame {
     private JButton editAbsenceButton;
     private JButton addAbsenceButton;
     private JButton addAbsenceTypeButton;
+    private JButton logoutButton;
     private JButton czech;
     private JButton english;
+    private MainFrame mainFrame = MainFrame.getInstance();
 
-    private Dialogs dialogs = new Dialogs(this);
     private static final long serialVersionUID = 1L;
 
     protected abstract JPanel createContent();
 
     public void intialize() {
+        mainFrame.getContentPane().removeAll();
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.add(createHeader());
@@ -51,13 +49,9 @@ public abstract class BaseScreen extends JFrame {
         JScrollPane panel2 =
                 new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.add(panel2);
-        this.setTitle("Showcase for "
-                + Localization.getLocalizationText("login.header.mainText",
-                        ShowcaseConstants.APPLICATION_VERSION));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(840, 640);
-        this.setVisible(true);
+        mainFrame.add(panel2);
+        mainFrame.setVisible(true);
+        mainFrame.getContentPane().repaint();
     }
 
     protected JPanel createHeader() {
@@ -99,6 +93,8 @@ public abstract class BaseScreen extends JFrame {
         addAbsenceButton.setPreferredSize(buttonSize);
         addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
         addAbsenceTypeButton.setPreferredSize(buttonSize);
+        logoutButton =  new JButton(Localization.getLocalizationText("logout.button"));
+        logoutButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
         if (ApplicationContext.getInstance().getSecurityContext() != null
                 && ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
@@ -111,6 +107,7 @@ public abstract class BaseScreen extends JFrame {
             menu.add(editAbsenceButton);
             menu.add(addAbsenceButton);
             menu.add(addAbsenceTypeButton);
+            menu.add(logoutButton);
         }
         else{
             loginButton = new JButton(Localization.getLocalizationText("link.login"));
@@ -160,6 +157,12 @@ public abstract class BaseScreen extends JFrame {
         }
     }
     
+    public void addLogoutButtonMenuListener(ActionListener a){
+        if(logoutButton != null){
+            logoutButton.addActionListener(a);
+        }
+    }
+    
     public void addEnglishButtonListener(ActionListener a){
         if(english != null){
             english.addActionListener(a);
@@ -171,9 +174,17 @@ public abstract class BaseScreen extends JFrame {
             czech.addActionListener(a);
         }
     }
+    
+    public Dialogs getDialogs(){
+        return getMainFrame().getDialogs();
+    }
 
-    public Dialogs getDialogs() {
-        return dialogs;
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
     }
 
 }

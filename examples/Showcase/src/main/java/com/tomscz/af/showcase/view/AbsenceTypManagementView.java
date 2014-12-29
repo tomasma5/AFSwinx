@@ -16,7 +16,7 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
-public class AbsenceTypManagementView extends BaseScreen {
+public class AbsenceTypManagementView extends BaseView {
 
     private static final long serialVersionUID = 1L;
 

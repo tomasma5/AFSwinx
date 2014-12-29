@@ -12,7 +12,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
-public class MyAbsenceInstanceView extends BaseScreen {
+public class MyAbsenceInstanceView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String MY_INSTANCE_TABLE = "myAbsenceInstancesTable";

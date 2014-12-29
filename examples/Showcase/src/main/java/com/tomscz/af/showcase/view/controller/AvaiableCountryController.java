@@ -32,10 +32,10 @@ public class AvaiableCountryController extends BaseController {
                         .validateData()) {
                     AFSwinx.getInstance().getExistedComponent(AvaiableCountryView.COUNTRY_FORM)
                             .sendData();
-                    view.getContentPane().removeAll();
+                    view.getMainFrame().getContentPane().removeAll();
                     view.intialize();
                     registerListeners();
-                    view.getContentPane().repaint();
+                    view.getMainFrame().getContentPane().repaint();
                     view.getDialogs().succes("action.succes",
                             "avaiableCountryView.action.addOrUpdate.succes", "");
                 }

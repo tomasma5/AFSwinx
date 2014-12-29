@@ -17,7 +17,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 
-public class AbsenceInstanceCreateView extends BaseScreen {
+public class AbsenceInstanceCreateView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String ABSENCE_INSTANCE_ADD_FORM = "absenceInstanceAddForm";

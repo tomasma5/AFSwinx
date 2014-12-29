@@ -1,10 +1,10 @@
 package com.tomscz.af.showcase.view.controller;
 
-import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.BaseView;
 
 public class MyAbsenceInstanceController extends BaseController{
 
-    public MyAbsenceInstanceController(BaseScreen screen) {
+    public MyAbsenceInstanceController(BaseView screen) {
         super(screen);
         registerListeners();
     }

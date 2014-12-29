@@ -4,13 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.tomscz.af.showcase.view.AbsenceInstanceEditView;
-import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.BaseView;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 
 public class AbsenceInstanceEditController extends BaseController {
 
-    public AbsenceInstanceEditController(BaseScreen screen) {
+    public AbsenceInstanceEditController(BaseView screen) {
         super(screen);
         registerListeners();
     }
@@ -41,10 +41,10 @@ public class AbsenceInstanceEditController extends BaseController {
                     AFSwinx.getInstance()
                             .getExistedComponent(AbsenceInstanceEditView.ABSENCE_INSTANCE_EDIT_FORM)
                             .sendData();
-                    view.getContentPane().removeAll();
+                    view.getMainFrame().getContentPane().removeAll();
                     view.intialize();
                     registerListeners();
-                    view.getContentPane().repaint();
+                    view.getMainFrame().getContentPane().repaint();
                     view.getDialogs().succes("action.succes",
                             "avaiableCountryView.action.addOrUpdate.succes", "");
                 }

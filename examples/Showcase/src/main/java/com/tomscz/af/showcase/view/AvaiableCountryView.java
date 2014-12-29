@@ -16,7 +16,7 @@ import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
-public class AvaiableCountryView extends BaseScreen {
+public class AvaiableCountryView extends BaseView {
 
     private static final long serialVersionUID = 1L;
 

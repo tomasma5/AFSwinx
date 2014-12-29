@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tomscz.af.showcase.view.AbsenceTypManagementView;
-import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.BaseView;
 import com.tomscz.af.showcase.view.model.AbsenceTypeManagementModel;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -17,7 +17,7 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 public class AbsenceTypeManagementController extends BaseController {
 
-    public AbsenceTypeManagementController(BaseScreen screen) {
+    public AbsenceTypeManagementController(BaseView screen) {
         super(screen);
         registerListeners();
     }
@@ -90,10 +90,10 @@ public class AbsenceTypeManagementController extends BaseController {
     };
 
     private void rebuildView() {
-        view.getContentPane().removeAll();
+        view.getMainFrame().getContentPane().removeAll();
         view.intialize();
         registerListeners();
-        view.getContentPane().repaint();
+        view.getMainFrame().getContentPane().repaint();
         AFSwinxForm form =
                 (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(
                         AbsenceTypManagementView.COUNTRY_FORM);

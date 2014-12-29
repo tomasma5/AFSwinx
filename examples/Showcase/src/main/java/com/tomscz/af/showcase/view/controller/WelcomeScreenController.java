@@ -31,10 +31,10 @@ public class WelcomeScreenController extends BaseController {
             try {
                 if(ApplicationContext.getInstance().getSecurityContext() != null && ApplicationContext.getInstance().getSecurityContext().isUserLogged()){
                     ApplicationContext.getInstance().setSecurityContext(null);
-                    view.getContentPane().removeAll();
+                    view.getMainFrame().getContentPane().removeAll();
                     view.intialize();
                     registerListeners();
-                    view.getContentPane().repaint();
+                    view.getMainFrame().getContentPane().repaint();
                 }
                 else if(AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).validateData()){
                     AFSwinx.getInstance().getExistedComponent(WelcomeScreen.loginFormName).sendData();
@@ -54,10 +54,10 @@ public class WelcomeScreenController extends BaseController {
                     }
                     SecurityContext securityContext = new ShowcaseSecurity(userName, password, true);
                     ApplicationContext.getInstance().setSecurityContext(securityContext);
-                    view.getContentPane().removeAll();
+                    view.getMainFrame().getContentPane().removeAll();
                     view.intialize();
                     registerListeners();
-                    view.getContentPane().repaint();
+                    view.getMainFrame().getContentPane().repaint();
                 }
             } catch (AFSwinxConnectionException e1) {
                 view.getDialogs().failed("login.failed", "login.failed", e1.getMessage());

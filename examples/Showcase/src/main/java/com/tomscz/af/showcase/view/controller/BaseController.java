@@ -11,7 +11,7 @@ import com.tomscz.af.showcase.view.AbsenceInstanceCreateView;
 import com.tomscz.af.showcase.view.AbsenceInstanceEditView;
 import com.tomscz.af.showcase.view.AbsenceTypManagementView;
 import com.tomscz.af.showcase.view.AvaiableCountryView;
-import com.tomscz.af.showcase.view.BaseScreen;
+import com.tomscz.af.showcase.view.BaseView;
 import com.tomscz.af.showcase.view.MyAbsenceInstanceView;
 import com.tomscz.af.showcase.view.PersonView;
 import com.tomscz.af.showcase.view.WelcomeScreen;
@@ -24,10 +24,10 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 public abstract class BaseController {
 
-    protected BaseScreen view;
+    protected BaseView view;
     private BaseModel model;
 
-    public BaseController(BaseScreen screen) {
+    public BaseController(BaseView screen) {
         this.view = screen;
     }
 
@@ -41,6 +41,7 @@ public abstract class BaseController {
         view.addAbsencesInstanceEditListener(absenceInstanceEditListener);
         view.addCzechButtonListener(onCzechButtonExec);
         view.addEnglishButtonListener(onEnglishButtonExec);
+        view.addLogoutButtonMenuListener(logoutButtonListener);
     }
 
     public BaseModel getModel() {
@@ -63,6 +64,18 @@ public abstract class BaseController {
             welcomeScreen.setVisible(true);
         }
     };
+    
+    private ActionListener logoutButtonListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ApplicationContext.getInstance().setSecurityContext(null);
+            WelcomeScreen welcomeScreen = new WelcomeScreen();
+            view = welcomeScreen;
+            WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
+            reloadView(controller);
+        }
+    };
 
     private ActionListener avaiableCountryPublicListener = new ActionListener() {
 
@@ -70,10 +83,9 @@ public abstract class BaseController {
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
             AvaiableCountryView avaiableCountry = new AvaiableCountryView();
+            view = avaiableCountry;
             AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
-            view.setVisible(false);
-            view = null;
-            avaiableCountry.setVisible(true);
+            reloadView(controller);
         }
     };
 
@@ -154,10 +166,10 @@ public abstract class BaseController {
             try {
                 ApplicationContext.getInstance().changeLocalization(
                         ShowcaseConstants.ENGLISH_BUNDLE);
-                view.getContentPane().removeAll();
+                view.getMainFrame().getContentPane().removeAll();
                 view.intialize();
                 registerListeners();
-                view.getContentPane().repaint();
+                view.getMainFrame().getContentPane().repaint();
             } catch (FileNotFoundException e1) {
                 view.getDialogs().failed("localization.action", "localization.action.failed", "");
             }
@@ -171,10 +183,10 @@ public abstract class BaseController {
         public void actionPerformed(ActionEvent e) {
             try {
                 ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.CZECH_BUNDLE);
-                view.getContentPane().removeAll();
+                view.getMainFrame().getContentPane().removeAll();
                 view.intialize();
                 registerListeners();
-                view.getContentPane().repaint();
+                view.getMainFrame().getContentPane().repaint();
             } catch (FileNotFoundException e1) {
                 view.getDialogs().failed("localization.action", "localization.action.failed", "");
             }
@@ -196,6 +208,13 @@ public abstract class BaseController {
             view.getDialogs().failed("afswinx.choose.table.choosed", "afswinx.choose.table.outOfIndex",
                 exception.getMessage());
         }
+    }
+    
+    protected void reloadView(BaseController controller){
+        view.getMainFrame().getContentPane().removeAll();
+        view.intialize();
+        controller.registerListeners();
+        view.getMainFrame().getContentPane().repaint();
     }
     
 }
