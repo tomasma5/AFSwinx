@@ -157,6 +157,15 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent form, String key) throws AFSwinxBuildException {
+        if (localization == null) {
+            localization = AFSwinx.getInstance().getLocalization();
+        }
+        if(skin == null){
+            skin = AFSwinx.getInstance().getApplicationSkin();
+            if(skin == null){
+                skin = new BaseSkin();
+            }
+        }
         form.localization = localization;
         // For each field
         for (AFFieldInfo fieldInfo : classInfo.getFieldInfo()) {
@@ -176,15 +185,6 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                 // Build field
                 WidgetBuilder builder =
                         WidgetBuilderFactory.getInstance().createWidgetBuilder(fieldInfo);
-                if (localization == null) {
-                    localization = AFSwinx.getInstance().getLocalization();
-                }
-                if(skin == null){
-                    skin = AFSwinx.getInstance().getApplicationSkin();
-                    if(skin == null){
-                        skin = new BaseSkin();
-                    }
-                }
                 builder.setLocalization(localization);
                 builder.setSkin(skin);
                 // Use generated key

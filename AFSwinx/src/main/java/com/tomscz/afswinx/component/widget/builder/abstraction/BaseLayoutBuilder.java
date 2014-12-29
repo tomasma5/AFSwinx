@@ -1,11 +1,14 @@
 package com.tomscz.afswinx.component.widget.builder.abstraction;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -112,6 +115,8 @@ public class BaseLayoutBuilder implements LayoutBuilder {
                 actualPanel = new JPanel();
                 BoxLayout layout = new BoxLayout(actualPanel, layoutOrientation);
                 actualPanel.setLayout(layout);
+                actualPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                actualPanel.add(Box.createGlue());
             }
             actualPanel.add(component);
             numberOfComponentInActualPanel++;
@@ -127,11 +132,10 @@ public class BaseLayoutBuilder implements LayoutBuilder {
         // Put components together and add message field if should be added
         JPanel panelWhichHoldPanels = outputPanel;
         GridLayout gridLayout;
-        if(layoutOrientation == BoxLayout.X_AXIS){
-            gridLayout = new GridLayout(panels.size(), 0,0,0);
-        }
-        else{
-            gridLayout = new GridLayout(0, panels.size(),0 ,0);
+        if (layoutOrientation == BoxLayout.X_AXIS) {
+            gridLayout = new GridLayout(panels.size(), 0, 0, 0);
+        } else {
+            gridLayout = new GridLayout(0, panels.size(), 0, 0);
         }
         // if there is message to add, then wrapper should be used around swing panel
         if (message != null) {
@@ -143,19 +147,20 @@ public class BaseLayoutBuilder implements LayoutBuilder {
             panelWhichHoldPanels.add(panel);
         }
         // If wrapper was used then set it to swing panel with message
-        if (message != null) {            
+        if (message != null) {
             outputPanel.setLayout(new GridBagLayout());
             GridBagConstraints c1 = new GridBagConstraints();
-            c1.fill = GridBagConstraints.BOTH;  
+            c1.fill = GridBagConstraints.BOTH;
             c1.gridx = 0;
             c1.gridy = 0;
             outputPanel.add(message, c1);
             GridBagConstraints c = new GridBagConstraints();
             c.fill = GridBagConstraints.BOTH;
             c.weightx = 1.0;
-            c.gridx=0;
-            c.gridy=1;
-            outputPanel.add(panelWhichHoldPanels,c);
+            c.gridx = 0;
+            c.gridy = 1;
+            outputPanel.add(panelWhichHoldPanels, c);
+            outputPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
         }
     }
 
