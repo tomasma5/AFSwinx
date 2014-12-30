@@ -13,7 +13,7 @@ import com.tomscz.afswinx.component.skin.Skin;
 /**
  * This class is facade to using AFSwinx. Use getInstance to get unique instance in your
  * application. It also hold information about localization see
- * {@link AFSwinx#enableLocalization(ResourceBundle)} for more information.
+ * {@link AFSwinx#enableLocalization(ResourceBundle)}  and with skin see {@link AFSwinx#setApplicationSkin(Skin)}}for more information.
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
@@ -107,4 +107,5 @@ public class AFSwinx {
     public void setApplicationSkin(Skin applicationSkin) {
         this.applicationSkin = applicationSkin;
     }
+    
 }

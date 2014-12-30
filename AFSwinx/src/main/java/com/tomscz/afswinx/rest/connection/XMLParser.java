@@ -1,4 +1,4 @@
-package com.tomscz.afswinx.common;
+package com.tomscz.afswinx.rest.connection;
 
 import org.w3c.dom.Document;
 

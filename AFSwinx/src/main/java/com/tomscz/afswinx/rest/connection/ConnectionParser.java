@@ -8,7 +8,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.tomscz.afswinx.common.Utils;
-import com.tomscz.afswinx.common.XMLParser;
 import com.tomscz.afrest.commons.AFRestUtils;
 
 /**
