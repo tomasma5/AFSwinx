@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  30 DEC 2014 02:12
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  30 DEC 2014 12:08
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -1039,15 +1039,15 @@ Overfull \hbox (21.18999pt too wide) in paragraph at lines 371--372
 [][] 
  []
 
-<images/sdDiagram.pdf, id=1305, 713.66624pt x 427.5975pt>
+<images/sdDiagram.pdf, id=1305, 628.3475pt x 427.5975pt>
 File: images/sdDiagram.pdf Graphic file (type pdf)
 
 <use images/sdDiagram.pdf>
 Package pdftex.def Info: images/sdDiagram.pdf used on input line 377.
-(pdftex.def)             Requested size: 713.66449pt x 427.59645pt.
+(pdftex.def)             Requested size: 628.34596pt x 427.59645pt.
 
 
-LaTeX Warning: Float too large for page by 108.73433pt on input line 380.
+LaTeX Warning: Float too large for page by 23.4158pt on input line 380.
 
 <images/abstractBuilder.pdf, id=1306, 571.13374pt x 484.81125pt>
 File: images/abstractBuilder.pdf Graphic file (type pdf)
@@ -1060,20 +1060,24 @@ Overfull \hbox (49.29492pt too wide) in paragraph at lines 383--384
 [][] 
  []
 
-<images/sdResealization.pdf, id=1307, 514.92375pt x 286.06876pt>
+<images/sdResealization.pdf, id=1307, 571.13374pt x 484.81125pt>
 File: images/sdResealization.pdf Graphic file (type pdf)
 
 <use images/sdResealization.pdf>
-Package pdftex.def Info: images/sdResealization.pdf used on input line 389.
-(pdftex.def)             Requested size: 514.92249pt x 286.06805pt.
+Package pdftex.def Info: images/sdResealization.pdf used on input line 390.
+(pdftex.def)             Requested size: 571.13235pt x 484.81006pt.
+
+Overfull \hbox (49.29492pt too wide) in paragraph at lines 390--391
+ [] 
+ []
 
 <images/login.png, id=1308, 451.6875pt x 307.1475pt>
 File: images/login.png Graphic file (type png)
  <use images/login.png>
-Package pdftex.def Info: images/login.png used on input line 395.
+Package pdftex.def Info: images/login.png used on input line 397.
 (pdftex.def)             Requested size: 451.68639pt x 307.14674pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 395--396
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 397--398
 [][] 
  []
 
@@ -1081,10 +1085,10 @@ Overfull \hbox (16.17125pt too wide) in paragraph at lines 395--396
 File: images/AbsenceType.png Graphic file (type png)
 
 <use images/AbsenceType.png>
-Package pdftex.def Info: images/AbsenceType.png used on input line 401.
+Package pdftex.def Info: images/AbsenceType.png used on input line 403.
 (pdftex.def)             Requested size: 451.68639pt x 307.14674pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 401--402
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 403--404
 [][] 
  []
 
@@ -1092,10 +1096,10 @@ Overfull \hbox (16.17125pt too wide) in paragraph at lines 401--402
 File: images/AbsenceManagement.png Graphic file (type png)
 
 <use images/AbsenceManagement.png>
-Package pdftex.def Info: images/AbsenceManagement.png used on input line 407.
+Package pdftex.def Info: images/AbsenceManagement.png used on input line 409.
 (pdftex.def)             Requested size: 451.68639pt x 307.14674pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 407--408
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 409--410
 [][] 
  []
 
@@ -1104,10 +1108,10 @@ File: images/AbsenceManagementAdmin.png Graphic file (type png)
 
 <use images/AbsenceManagementAdmin.png>
 Package pdftex.def Info: images/AbsenceManagementAdmin.png used on input line 4
-13.
+15.
 (pdftex.def)             Requested size: 451.68639pt x 308.65236pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 413--414
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 415--416
 [][] 
  []
 
@@ -1135,13 +1139,13 @@ P\v {r}\'{\i }loha E.
 File: images/cdContent.png Graphic file (type png)
 
 <use images/cdContent.png>
-Package pdftex.def Info: images/cdContent.png used on input line 495.
+Package pdftex.def Info: images/cdContent.png used on input line 497.
 (pdftex.def)             Requested size: 368.87721pt x 188.95546pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 500.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 502.
  [73
 
  <D:/Skola/repo/AFServer/Documents/thesis/images/cdContent.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 500.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 502.
 
 (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.aux
 (D:\Skola\repo\AFServer\Documents\thesis\pages/1_uvod.aux)
@@ -1151,11 +1155,11 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 500.
 (D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/6_zaver.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/7_install.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 500.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 500.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 502.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 502.
 Package rerunfilecheck Info: File `Tomasek-thesis-2014.out' has not changed.
 (rerunfilecheck)             Checksum: C54625E97D13CF26A66952BFC876BFDF;12134.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 500.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 502.
  ) 
 Here is how much of TeX's memory you used:
  12664 strings out of 493921
@@ -1188,7 +1192,7 @@ ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\T
 om\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/
 Latex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Latex/fonts/type1/public/am
 sfonts/cm/cmsy9.pfb>
-Output written on Tomasek-thesis-2014.pdf (91 pages, 1149258 bytes).
+Output written on Tomasek-thesis-2014.pdf (91 pages, 1153735 bytes).
 PDF statistics:
  2496 PDF objects out of 2984 (max. 8388607)
  538 named destinations out of 1000 (max. 500000)
