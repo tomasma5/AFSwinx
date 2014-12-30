@@ -1,5 +1,5 @@
 \chapter{Instalační a uživatelská příručka}
-Framework byl vytvořen jako Maven projekt, jeho přidání do již existující aplikace lze buďto jako knihovnu nebo jako Maven závislost. Způsob jakým lze integrovat projekt a jak ho používat je detailně popsán v uživatelské příručce na přiloženém CD. 
+Framework byl vytvořen jako Maven projekt. Do aplikace ho lze přidat buďto jako knihovnu nebo jako Maven závislost. Způsob, jakým lze integrovat projekt a jak ho používat je detailně popsán v uživatelské příručce na přiloženém CD. 
 \section{Maven závislosti}
 Nejprve je potřeba provést build frameworku. Zdrojové kódy jsou na přiloženém CD. Framework zatím není v žádném z veřejně dostupných repositářích. Poté lze na serveru stranu přidat následující závislosti:
 \begin{lstlisting}[caption={Závislosti na serveru},
@@ -48,13 +48,15 @@ label={code:mavenAFSwinx}, basicstyle=\footnotesize]
 </dependency>
 \end{lstlisting}
 \section{Ukázkový projekt}
-Ukázkový projekt se svojí klientskou a serverovou částí jsou již vytvořeny a přiloženy na CD. Serverovou část lze bez dodatečné konfigurace spusti na serveru GlassFish V3. Ukázkový projekt je možné spustit i na GlassFish V4 nicméně, při deployi aplikace je v konzoli zobrazena chyba, avšak aplikace je plně funkční. Na toto chování byl založen bug, který není prozatím vyřešen. Je potřeba provést následující:
+Ukázkový projekt se svojí klientskou a serverovou částí je již vytvořen a přiložen na CD. Serverovou část lze bez dodatečné konfigurace spustit na serveru GlassFish V3. Ukázkový projekt je možné spustit i na GlassFish V4 nicméně, při deployi aplikace je v konzoli zobrazena chyba, avšak aplikace je plně funkční. Na toto chování byl založen bug, který není prozatím vyřešen. Je potřeba provést následující:
 \begin{enumerate}
-\item Rozbalte aplikační server GlassFish, který je přiložen na CD nebo si stáhněte verzi 3 z http://www.oracle.com/technetwork/middleware/glassfish/downloads/java-archive-downloads-glassfish-419424.html Verzi 4 lze stáhnout z http://dlc.sun.com.edgesuite.net/glassfish/4.1/release/glassfish-4.1.zip
+\item Rozbalte aplikační server GlassFish, který je přiložen na CD nebo si stáhněte verzi 3 z http://www.oracle.com/technetwork/middleware/glassfish/downloads/java-archive-downloads-glassfish-419424.html Verzi 4 lze stáhnout 
+\\z http://dlc.sun.com.edgesuite.net/glassfish/4.1/release/glassfish-4.1.zip
 \item Rozbalte soubor, ve složce bin spoustě utilitu asadmin napsáním asadmin
 \item Vložte následující příkaz: start-domain domain1
 \item Vložte následující příkaz deploy PATHTOFILE/AFServer.war
-\item Otevřete webový prohlížeč na adrese http://localhost:8080/AFServer - zobrazí se text: I am alive. Serverová strana nedisponuje grafickým uživatelským rozhraním. Funkčnost můžete otestovat pomocí rest klienta například na adrese http://localhost:8080/AFServer/rest/country/list - content-type: application/json metoda GET.
+\item Otevřete webový prohlížeč na adrese http://localhost:8080/AFServer - zobrazí se text: I am alive. Serverová strana nedisponuje grafickým uživatelským rozhraním. Funkčnost můžete otestovat pomocí rest klienta například na adrese 
+\\http://localhost:8080/AFServer/rest/country/list - content-type: application/json metoda GET.
 \end{enumerate}
 Nyní je potřeba spustit klientskou část aplikace. Ve složce s Showcase.jar, který je přiložen na CD spusťte java -jar Showcase.jar . Aplikace bude spuštěna.
 

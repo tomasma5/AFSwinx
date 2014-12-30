@@ -28,6 +28,33 @@ label={code:xmlMapping}, basicstyle=\footnotesize]
 
 Mapování tedy určí soubor s komponentou, který bude reprezentovat aktuální proměnnou. Soubor s definicí komponenty je pak dále využit k finální definici proměnné. Ukázka vstupního textového pole je v ukázce zdrojových kódu \ref{code:xmlInputField}. Komponenta je v kořenovém elementu widget. Jelikož se jedná pouze o fragment xml, který je použit ke složení celé definice, jenž je uvedena v příloze v ukázce zdrojových kódů \ref{code:xmlCompleteDefinition}, není zde uvedena deklarace XML \cite{xml}. Ve výsledném XML již však deklarace uvedena je. Popis jednotlivých uzlů je v tabulce \ref{table:xmlComponentAttributes}.
 
+\begin{lstlisting}[caption=Ukázka definice komponenty,
+label={code:xmlInputField}, basicstyle=\footnotesize]
+<widget>
+	<widgetType>textField</widgetType>
+	<fieldName>$field$</fieldName>
+	<label>$label$</label>
+	<validations>
+		<required>$required$</required>
+		<minLength>$minLength$</minLength>
+		<maxLength>$maxLength$</maxLength>
+	</validations>
+	<fieldLayout>
+		<layoutOrientation>$layoutOrientation$</layoutOrientation>
+		<labelPossition>$labelPossition$</labelPossition>
+		<layout>$layout$</layout>
+	</fieldLayout>
+</widget>
+\end{lstlisting}
+Knihovna AspectFaces umožňuje určovat způsob, jakým bude prováděna inspekce. Tento způsob se určuje v šablonách. K optimálnímu využití je nejvýhodnější použít způsob, při kterém je provedena inspekce všech proměnných, které mají definováno mapování. V případě jednoduchých datových typů je vše v pořádku. Nicméně knihovna neobsahovala nativní podporu pro neprimitivních datových typů a v případě, že byla použita inspekce, která by nevyužívala JSF, nebyla by provedena inspekce složitých datových typů. Z tohoto důvodu je důležité, aby se všechny neprimitivní datové typy mapovali na entity.xml, která je znázorněna v části zdrojového kódu \ref{code:xmlEntity}. Framework totiž pro všechny tyto entity provede inspekci znovu, následně části sestaví a tím vznikne kompletní definice. V tomto bodě lze určit mapování a šablony, které se mají při rekurzivní inspekci použít. Framework AspectFaces byl proto doplněn o proměnné, které umí vrátit kanonický název třídy a na základě tohoto názvu lze provést nad touto třídou inspekci. Jak je patrné z výsledné definice, každý uzel má svého rodiče. Na základě rodiče lze jednoznačně určit, kam uzel patří. Tato vlastnost umožňuje provádět inspekci i nad třídami, které mají více proměnných stejného datového typu. Klient totiž potřebuje znát strukturu objektu, aby ho mohl zpětně sestavit a odeslat zpět na server, který objekt přijme. Znalost struktury klient taktéž vyžaduje v případě získávání dat.
+\begin{lstlisting}[caption=Ukázka definice neprimitivního datového typu,
+label={code:xmlEntity}]
+<entityClass>
+	<entityFieldType>$DataTypeFullClassName$</entityFieldType>
+	<fieldName>$fieldName$</fieldName>
+</entityClass>
+\end{lstlisting}
+
 \begin{table}[width=\linewidth]
 \begin{center}
 \caption{Uzly XML, které definují strukturu dat}
@@ -55,52 +82,9 @@ Popis layoutu, který bude na komponentě použit. \\
 \end{center}
 \end{table}
 
-\begin{lstlisting}[caption=Ukázka definice komponenty,
-label={code:xmlInputField}, basicstyle=\footnotesize]
-<widget>
-	<widgetType>textField</widgetType>
-	<fieldName>$field$</fieldName>
-	<label>$label$</label>
-	<validations>
-		<required>$required$</required>
-		<minLength>$minLength$</minLength>
-		<maxLength>$maxLength$</maxLength>
-	</validations>
-	<fieldLayout>
-		<layoutOrientation>$layoutOrientation$</layoutOrientation>
-		<labelPossition>$labelPossition$</labelPossition>
-		<layout>$layout$</layout>
-	</fieldLayout>
-</widget>
-\end{lstlisting}
-Knihovna AspectFaces umožňuje určovat způsob, jakým bude prováděna inspekce. Tento způsob se určuje v šablonách. K optimálnímu využití je nejvýhodnější použít způsob, při kterém je provedena inspekce všech proměnných, které mají definováno mapování. V případě jednoduchých datových typů je vše v pořádku. Nicméně knihovna neobsahovala nativní podporu pro neprimitivních datových typů a v případě, že byla použita inspekce, která by nevyužívala JSF, nebyla by provedena inspekce složitých datových typů. Z tohoto důvodu je důležité, aby se všechny neprimitivní datové typy mapovali na entity.xml, která je znázorněna v části zdrojového kódu \ref{code:xmlEntity}. Framework totiž pro všechny tyto entity provede inspekci znovu, následně části sestaví a tím vznikne kompletní definice. V tomto bodě lze určit mapování a šablony, které se mají při rekurzivní inspekci použít. Framework AspectFaces byl proto doplněn o proměnné, které umí vrátit kanonický název třídy a na základě tohoto názvu lze provést nad touto třídou inspekci. Jak je patrné z výsledné definice, každý uzel má svého rodiče. Na základě rodiče lze jednoznačně určit, kam uzel patří. Tato vlastnost umožňuje provádět inspekci i nad třídami, které mají více proměnných stejného datového typu. Klient totiž potřebuje znát strukturu objektu, aby ho mohl zpětně sestavit a odeslat zpět na server, který objekt přijme. Znalost struktury klient taktéž vyžaduje v případě získávání dat.
-\begin{lstlisting}[caption=Ukázka definice neprimitivního datového typu,
-label={code:xmlEntity}]
-<entityClass>
-	<entityFieldType>$DataTypeFullClassName$</entityFieldType>
-	<fieldName>$fieldName$</fieldName>
-</entityClass>
-\end{lstlisting}
 \subsubsection{Použití}
 Aby byl klient schopný získat definice dat, musí serverová strana poskytovat zdroj těchto definic. V tomto zdroji server využije serverovou část frameworku ke generování dat. Použití je přímočaré a ukázka zdroje je zobrazena v části zdrojového kódu \ref{code:serverDefinition}. Nejprve je vytvořena instance třídy AFrestGenerator, která umožňuje generování dat, jenž jsou následně odeslána klientovi. Generátor nastaví framework AspectFaces automaticky, nicméně očekává, že bude framework AspectFaces použit. Ke správnému použití je potřeba, aby ve WEB-INF byly konfigurační soubory a aby existovali mapovací soubory a definice komponent. V tomto případě využije implicitního nastavení pro mapování i šablony. Bude použito mapování v souboru structure.config.xml a šablona v template/structure.xml. Tyto ukázkové soubory jsou poskytovány spolu s frameworkem.
 
-\begin{lstlisting}[caption={Ukázka zdroje, sloužícího k vygenerování definice třídy Country},
-label={code:serverDefinition}, basicstyle=\footnotesize]
-@GET
-@Path("/definition")
-@Produces({MediaType.APPLICATION_JSON})
-@Consumes({MediaType.APPLICATION_JSON})
-@RolesAllowed({"admin"})
-public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
-	try {
-		AFRest afRest = new AFRestGenerator(request.getSession().getServletContext());
-		AFMetaModelPack data = afRest.generateSkeleton(Country.class.getCanonicalName());
-		return Response.status(Response.Status.OK).entity(data).build();
-	} catch (MetamodelException e) {
-		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-	}
-}
-\end{lstlisting}
 Zdroj poskytuje definice dat. V případě, že klient požaduje data do vygenerované definice, je potřeba poskytnout mu objekt stejného typu, nad kterým byla prováděna definice, nebo objekt se stejnými proměnnými a datovými typy. V tomto případě třídu Country. Klientská strana nerozlišuje datový typ obdrženého objektu, avšak očekává, že objekt bude mít určité proměnné, ke kterým se budou vázat specifické validace. V některých případech je žádoucí, aby se na úrovni business a view nepracovalo s databázovou entitou, ale s jejím mapovacím objektem. V části zdrojových kódů \ref{code:serverData} je příklad získání dat do již vygenerovaného formuláře či tabulky. Zdroj využije EJB \cite{javaEE} managera CountryManager k získání konkrétní instance třídy Country z databáze. Tuto instanci vrátí klientovi. Tento zdroj nemá žádnou vazbu na předchozí zdroj, který generoval definice. Vývojář tedy v případě použití frameworku nemusí měnit stávající implementaci, pokud již nějaká existuje. Stejně tak nemá použití frameworku dopad na klienty, kteří již používají webové API serveru. Zodpovědnost za správnou interpretaci dat je na klientské straně.
 \begin{lstlisting}[caption=Zdroj poskytující konkrétní instanci třídy Country,
 label={code:serverData}, basicstyle=\footnotesize]

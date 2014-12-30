@@ -44,43 +44,43 @@
 \contentsline {subsubsection}{\numberline {4.1.1.1}Generov\IeC {\'a}n\IeC {\'\i } modelu}{24}{subsubsection.4.1.1.1}
 \contentsline {subsubsection}{\numberline {4.1.1.2}Pou\IeC {\v z}it\IeC {\'\i }}{26}{subsubsection.4.1.1.2}
 \contentsline {subsection}{\numberline {4.1.2}Klient}{27}{subsection.4.1.2}
-\contentsline {subsubsection}{\numberline {4.1.2.1}Komponenty}{28}{subsubsection.4.1.2.1}
-\contentsline {section}{\numberline {4.2}P\IeC {\v r}enos modelu server klient a generov\IeC {\'a}n\IeC {\'\i } komponent}{29}{section.4.2}
+\contentsline {subsubsection}{\numberline {4.1.2.1}Komponenty}{27}{subsubsection.4.1.2.1}
+\contentsline {section}{\numberline {4.2}P\IeC {\v r}enos modelu server klient a generov\IeC {\'a}n\IeC {\'\i } komponent}{28}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Generov\IeC {\'a}n\IeC {\'\i } komponent}{29}{subsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.1.1}Vkl\IeC {\'a}d\IeC {\'a}n\IeC {\'\i } dat do komponenty}{30}{subsubsection.4.2.1.1}
-\contentsline {subsubsection}{\numberline {4.2.1.2}Widget builder}{31}{subsubsection.4.2.1.2}
-\contentsline {subsubsection}{\numberline {4.2.1.3}Skin}{33}{subsubsection.4.2.1.3}
+\contentsline {subsubsection}{\numberline {4.2.1.2}Widget builder}{30}{subsubsection.4.2.1.2}
+\contentsline {subsubsection}{\numberline {4.2.1.3}Skin}{32}{subsubsection.4.2.1.3}
 \contentsline {section}{\numberline {4.3}P\IeC {\v r}enos a generov\IeC {\'a}n\IeC {\'\i } dat klient server}{33}{section.4.3}
 \contentsline {section}{\numberline {4.4}Lokalizace}{34}{section.4.4}
 \contentsline {section}{\numberline {4.5}Validace dat a vlastn\IeC {\'\i } valid\IeC {\'a}tory}{34}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Podporovan\IeC {\'e} validace}{35}{subsection.4.5.1}
-\contentsline {subsection}{\numberline {4.5.2}Vyhodnocen\IeC {\'\i } validac\IeC {\'\i }}{35}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.1}Podporovan\IeC {\'e} validace}{34}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Vyhodnocen\IeC {\'\i } validac\IeC {\'\i }}{34}{subsection.4.5.2}
 \contentsline {section}{\numberline {4.6}Layouty}{36}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Layout builder}{37}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.1}Layout builder}{36}{subsection.4.6.1}
 \contentsline {section}{\numberline {4.7}Bezpe\IeC {\v c}nost}{37}{section.4.7}
 \contentsline {subsection}{\numberline {4.7.1}P\IeC {\v r}enos dat}{37}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}Autentizace a autorizace}{38}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.2}Autentizace a autorizace}{37}{subsection.4.7.2}
 \contentsline {section}{\numberline {4.8}Porovn\IeC {\'a}n\IeC {\'\i } p\IeC {\v r}\IeC {\'\i }stup\IeC {\r u}}{38}{section.4.8}
-\contentsline {chapter}{\numberline {5}Testov\IeC {\'a}n\IeC {\'\i }}{41}{chapter.5}
-\contentsline {section}{\numberline {5.1}Unit testy}{41}{section.5.1}
-\contentsline {section}{\numberline {5.2}U\IeC {\v z}ivatelsk\IeC {\'y} test}{42}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}C\IeC {\'\i }lov\IeC {\'a} skupina}{42}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Test setup}{42}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}Test case}{43}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}Vyhodnocen\IeC {\'\i }}{44}{subsection.5.2.4}
-\contentsline {section}{\numberline {5.3}Uk\IeC {\'a}zkov\IeC {\'y} projekt}{45}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Popis projektu}{45}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Spr\IeC {\'a}va zem\IeC {\'\i }}{45}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Spr\IeC {\'a}va typ\IeC {\r u} nep\IeC {\v r}\IeC {\'\i }tomnost\IeC {\'\i }}{46}{subsection.5.3.3}
-\contentsline {subsection}{\numberline {5.3.4}Spr\IeC {\'a}va nep\IeC {\v r}\IeC {\'\i }tomnost\IeC {\'\i }}{47}{subsection.5.3.4}
-\contentsline {subsection}{\numberline {5.3.5}Nasazen\IeC {\'\i }}{47}{subsection.5.3.5}
-\contentsline {chapter}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{49}{chapter.6}
-\contentsline {section}{\numberline {6.1}Budouc\IeC {\'\i } v\IeC {\'y}voj}{49}{section.6.1}
-\contentsline {section}{\numberline {6.2}Zhodnocen\IeC {\'\i } pr\IeC {\'a}ce}{49}{section.6.2}
-\contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{53}{appendix.A}
-\contentsline {chapter}{\numberline {B}Instala\IeC {\v c}n\IeC {\'\i } a u\IeC {\v z}ivatelsk\IeC {\'a} p\IeC {\v r}\IeC {\'\i }ru\IeC {\v c}ka}{55}{appendix.B}
-\contentsline {section}{\numberline {B.1}Maven z\IeC {\'a}vislosti}{55}{section.B.1}
-\contentsline {section}{\numberline {B.2}Uk\IeC {\'a}zkov\IeC {\'y} projekt}{56}{section.B.2}
-\contentsline {chapter}{\numberline {C}UML diagramy a obr\IeC {\'a}zky}{57}{appendix.C}
-\contentsline {chapter}{\numberline {D}Uk\IeC {\'a}zky zdrojov\IeC {\'e}ho k\IeC {\'o}du a XML soubor\IeC {\r u}}{71}{appendix.D}
-\contentsline {chapter}{\numberline {E}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{73}{appendix.E}
+\contentsline {chapter}{\numberline {5}Testov\IeC {\'a}n\IeC {\'\i }}{39}{chapter.5}
+\contentsline {section}{\numberline {5.1}Unit testy}{39}{section.5.1}
+\contentsline {section}{\numberline {5.2}U\IeC {\v z}ivatelsk\IeC {\'y} test}{40}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}C\IeC {\'\i }lov\IeC {\'a} skupina}{40}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Test setup}{40}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Test case}{41}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}Vyhodnocen\IeC {\'\i }}{42}{subsection.5.2.4}
+\contentsline {section}{\numberline {5.3}Uk\IeC {\'a}zkov\IeC {\'y} projekt}{43}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Popis projektu}{43}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Spr\IeC {\'a}va zem\IeC {\'\i }}{43}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Spr\IeC {\'a}va typ\IeC {\r u} nep\IeC {\v r}\IeC {\'\i }tomnost\IeC {\'\i }}{44}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}Spr\IeC {\'a}va nep\IeC {\v r}\IeC {\'\i }tomnost\IeC {\'\i }}{45}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}Nasazen\IeC {\'\i }}{45}{subsection.5.3.5}
+\contentsline {chapter}{\numberline {6}Z\IeC {\'a}v\IeC {\v e}r}{47}{chapter.6}
+\contentsline {section}{\numberline {6.1}Budouc\IeC {\'\i } v\IeC {\'y}voj}{47}{section.6.1}
+\contentsline {section}{\numberline {6.2}Zhodnocen\IeC {\'\i } pr\IeC {\'a}ce}{47}{section.6.2}
+\contentsline {chapter}{\numberline {A}Seznam pou\IeC {\v z}it\IeC {\'y}ch zkratek}{51}{appendix.A}
+\contentsline {chapter}{\numberline {B}Instala\IeC {\v c}n\IeC {\'\i } a u\IeC {\v z}ivatelsk\IeC {\'a} p\IeC {\v r}\IeC {\'\i }ru\IeC {\v c}ka}{53}{appendix.B}
+\contentsline {section}{\numberline {B.1}Maven z\IeC {\'a}vislosti}{53}{section.B.1}
+\contentsline {section}{\numberline {B.2}Uk\IeC {\'a}zkov\IeC {\'y} projekt}{54}{section.B.2}
+\contentsline {chapter}{\numberline {C}UML diagramy a obr\IeC {\'a}zky}{55}{appendix.C}
+\contentsline {chapter}{\numberline {D}Uk\IeC {\'a}zky zdrojov\IeC {\'e}ho k\IeC {\'o}du a XML soubor\IeC {\r u}}{69}{appendix.D}
+\contentsline {chapter}{\numberline {E}Obsah p\IeC {\v r}ilo\IeC {\v z}en\IeC {\'e}ho CD}{71}{appendix.E}

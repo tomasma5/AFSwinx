@@ -486,6 +486,25 @@ V této sekci naleznete ukázky zdrojového kódu, na které bylo v textu odkazo
 \end{lstlisting}
 
 
+\begin{lstlisting}[caption={Ukázka zdroje, sloužícího k vygenerování definice třídy Country},
+label={code:serverDefinition}, basicstyle=\footnotesize]
+@GET
+@Path("/definition")
+@Produces({MediaType.APPLICATION_JSON})
+@Consumes({MediaType.APPLICATION_JSON})
+@RolesAllowed({"admin"})
+public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
+	try {
+		AFRest afRest = new AFRestGenerator(request.getSession().getServletContext());
+		AFMetaModelPack data = afRest.generateSkeleton(Country.class.getCanonicalName());
+		return Response.status(Response.Status.OK).entity(data).build();
+	} catch (MetamodelException e) {
+		return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+	}
+}
+\end{lstlisting}
+
+
 
 %*****************************************************************************
 
