@@ -15,5 +15,6 @@ public class AFValidatorPriority {
     public static final int MIN_AND_MAX_LENGTH_PRIORITY = 70;
     public static final int MIN_AND_MAX_VALUE_PRIORITY = 50;
     public static final int RETYPE_PRIORITY = 10;
+    public static final int CONTAINS_PRIORITY = 30;
 
 }

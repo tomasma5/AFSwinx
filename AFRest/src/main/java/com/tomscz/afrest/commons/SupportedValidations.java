@@ -18,4 +18,5 @@ public enum SupportedValidations {
     public String toString() {
         return name;
     }
+    
 }

@@ -3,6 +3,7 @@ package com.tomscz.afswinx.validation.factory;
 import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.validation.AFValidations;
+import com.tomscz.afswinx.validation.ContainsValidator;
 import com.tomscz.afswinx.validation.MinAndMaxLenghtValidator;
 import com.tomscz.afswinx.validation.MinAndMaxValueValidator;
 import com.tomscz.afswinx.validation.NumberValidator;
@@ -40,14 +41,14 @@ public class AFValidatorFactory {
         if (validation.equals(SupportedValidations.NUMBER)) {
             return new NumberValidator(widgetType);
         }
-        if (validation.equals(SupportedValidations.CONTAINS)) {
-            return null;
-        }
         if (validation.equals(SupportedValidations.MIN)) {
             return new MinAndMaxValueValidator(widgetType, value, true);
         }
         if (validation.equals(SupportedValidations.MAX)) {
             return new MinAndMaxValueValidator(widgetType, value, false);
+        }
+        if(validation.equals(SupportedValidations.CONTAINS)){
+            return new ContainsValidator(value);
         }
         return null;
     }
