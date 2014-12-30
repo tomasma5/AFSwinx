@@ -25,4 +25,5 @@ public enum SupportedComponents {
     public String toString() {
         return name;
     }
+    
 }

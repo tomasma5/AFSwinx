@@ -19,7 +19,7 @@ import com.codingcrayons.aspectfaces.exceptions.ConfigurationParsingException;
 import com.codingcrayons.aspectfaces.metamodel.JavaInspector;
 import com.codingcrayons.aspectfaces.plugins.j2ee.configuration.ServerConfiguration;
 import com.codingcrayons.aspectfaces.util.Strings;
-import com.tomscz.afrest.commons.Constants;
+import com.tomscz.afrest.commons.AFRestConstants;
 import com.tomscz.afrest.commons.FileUtils;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
@@ -203,11 +203,11 @@ public class ModelInspector {
 
     private Context init(ServletContext contextServlet, String mapping)
             throws ConfigurationFileNotFoundException, ConfigurationParsingException,
-            AnnotationDescriptorNotFoundException {
+            AnnotationDescriptorNotFoundException, IOException {
 
         AFWeaver.addConfiguration(new ServerConfiguration(mapping, contextServlet), FileUtils
-                .createTemporaryFile(Constants.ASPECT_FACES_RESOURCE_ROOT_FOLDER + mapping,
-                        Constants.XML_FILE_TYPE, contextServlet), false, true);
+                .createTemporaryFile(AFRestConstants.ASPECT_FACES_RESOURCE_ROOT_FOLDER + mapping,
+                        AFRestConstants.XML_FILE_TYPE, contextServlet), false, true);
 
         Context context = new Context(null);
         context.setUseCover(true);
@@ -304,4 +304,5 @@ public class ModelInspector {
     public void setRoles(String[] roles) {
         this.roles = roles;
     }
+    
 }

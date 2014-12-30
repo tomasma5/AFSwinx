@@ -19,5 +19,7 @@ import com.tomscz.afrest.commons.SupportedWidgets;
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface UIWidgetType {
+    
     public SupportedWidgets widgetType();
+
 }

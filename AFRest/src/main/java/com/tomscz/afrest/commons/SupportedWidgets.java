@@ -27,4 +27,5 @@ public enum SupportedWidgets {
     public String toString() {
         return name;
     }
+    
 }

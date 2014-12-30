@@ -8,6 +8,12 @@ import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.marshal.ModelInspector;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 
+/**
+ * This is concrete definition generator.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public class AFRestGenerator implements AFRest {
 
     private ModelInspector modelInspector;

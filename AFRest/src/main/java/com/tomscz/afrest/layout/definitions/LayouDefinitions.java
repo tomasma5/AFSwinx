@@ -7,6 +7,7 @@ package com.tomscz.afrest.layout.definitions;
  * @since 1.0.0.
  */
 public enum LayouDefinitions {
+    
         TWOCOLUMNSLAYOUT("TwoColumnsLayout"),
         ONECOLUMNLAYOUT("OneColumnLayout");
         

@@ -27,4 +27,5 @@ public enum SupportedProperties {
     public String toString() {
         return name;
     }
+    
 }

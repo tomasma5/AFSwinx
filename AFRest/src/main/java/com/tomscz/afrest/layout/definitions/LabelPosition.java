@@ -7,6 +7,7 @@ package com.tomscz.afrest.layout.definitions;
  * @since 1.0.0.
  */
 public enum LabelPosition {
+    
     BEFORE("before"),
     AFTER("after"),
     NONE("none");
@@ -24,4 +25,5 @@ public enum LabelPosition {
     public String toString(){
        return name;
     }
+    
 }

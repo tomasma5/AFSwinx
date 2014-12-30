@@ -30,8 +30,6 @@ import com.tomscz.afrest.rest.dto.AFValidationRule;
  * {@link SupportedLayoutsProperties}, {@link SupportedProperties} class, which holds supported
  * variables.
  * 
- * This constants should reflect XSD
- * 
  * @author Martin Tomasek (martin@toms-cz.com)
  * 
  * @since 1.0.0.

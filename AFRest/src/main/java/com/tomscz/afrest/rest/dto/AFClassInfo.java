@@ -7,6 +7,14 @@ import java.util.List;
 
 import com.tomscz.afrest.layout.TopLevelLayout;
 
+/**
+ * This class holds information about root and child classes. Each class has more classes and
+ * fields. It also stored name and layout which should be used.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class AFClassInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +62,14 @@ public class AFClassInfo implements Serializable {
         this.layout = layout;
     }
 
+    /**
+     * This method fill be set options to fields. Options are converted to {@link AFOptions}.
+     * 
+     * @param options based on which will be create {@link AFOptions}.
+     * @param fieldId id of field. It should has this notation: person.country.name, which mean that
+     *        on variable person in root class and in their inner variable country and in their
+     *        inner variable name will be set options.
+     */
     public void setOptionsToField(HashMap<String, String> options, String fieldId) {
         ArrayList<AFOptions> afOptions = new ArrayList<AFOptions>();
         for (String key : options.keySet()) {
@@ -62,6 +78,16 @@ public class AFClassInfo implements Serializable {
         setOptionsToField(afOptions, fieldId);
     }
 
+    /**
+     * This method set options to field. This method can find concrete field based on path to this
+     * field.
+     * 
+     * @param options options which will be set to field. These are concrete transformed options.
+     *        See {@link AFOptions}.
+     * @param fieldId id of field. It should has this notation: person.country.name, which mean that
+     *        on variable person in root class and in their inner variable country and in their
+     *        inner variable name will be set options.
+     */
     private void setOptionsToField(List<AFOptions> options, String fieldId) {
         String[] path = fieldId.split("\\.");
         String fieldInfoId = "";
@@ -95,6 +121,15 @@ public class AFClassInfo implements Serializable {
         }
     }
 
+    /**
+     * This method set options to field.
+     * 
+     * @param options options which will be set to field. These are concrete transformed options.
+     *        See {@link AFOptions}.
+     * @param fieldId id of field. It should has this notation: person.country.name, which mean that
+     *        on variable person in root class and in their inner variable country and in their
+     *        inner variable name will be set options.
+     */
     public void setOptionsToFields(List<String> options, String fieldId) {
         ArrayList<AFOptions> afOtions = new ArrayList<AFOptions>();
         for (String option : options) {

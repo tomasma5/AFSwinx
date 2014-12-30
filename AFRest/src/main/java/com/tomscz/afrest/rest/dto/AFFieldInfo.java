@@ -8,6 +8,14 @@ import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.layout.Layout;
 
+/**
+ * This class store all information about concrete field. Including settings and validations. It can
+ * perform any action with component, because it is only component definition.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class AFFieldInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,27 +29,27 @@ public class AFFieldInfo implements Serializable {
     private Layout layout;
     private List<AFValidationRule> rules;
     private List<AFOptions> options;
-    
-    public AFFieldInfo(){
+
+    public AFFieldInfo() {
         this.layout = new Layout();
     }
-    
-    public void addRule(AFValidationRule rule){
-        if(this.rules == null){
+
+    public void addRule(AFValidationRule rule) {
+        if (this.rules == null) {
             this.rules = new ArrayList<AFValidationRule>();
         }
         this.rules.add(rule);
     }
-    
-    public void addOption(AFOptions option){
-        if(this.options== null){
+
+    public void addOption(AFOptions option) {
+        if (this.options == null) {
             this.options = new ArrayList<AFOptions>();
         }
         this.options.add(option);
     }
-    
-    public void addOption(List<AFOptions> option){
-        if(this.options== null){
+
+    public void addOption(List<AFOptions> option) {
+        if (this.options == null) {
             this.options = new ArrayList<AFOptions>();
         }
         this.options.addAll(option);
@@ -118,20 +126,20 @@ public class AFFieldInfo implements Serializable {
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-    
-    public boolean required(){
-        if(rules == null){
+
+    public boolean required() {
+        if (rules == null) {
             return false;
         }
-        for(AFValidationRule  rule:rules){
-            if(rule.getValidationType().equals(SupportedValidations.REQUIRED)){
+        for (AFValidationRule rule : rules) {
+            if (rule.getValidationType().equals(SupportedValidations.REQUIRED)) {
                 String value = rule.getValue();
-                if(value.equals("true")){
+                if (value.equals("true")) {
                     return true;
                 }
             }
         }
         return false;
     }
-    
+
 }

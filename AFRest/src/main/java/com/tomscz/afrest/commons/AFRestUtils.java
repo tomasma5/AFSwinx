@@ -78,7 +78,11 @@ public class AFRestUtils {
         return new HashMap<String, String>();
     }
 
-
+    /**
+     * This method return all enums in class.
+     * @param enumClass from which will be extracted enums.
+     * @return HashMap of value in enum. Key is enum name and concrete value is Enum.toString() result.
+     */
     private static <E extends Enum<E>> HashMap<String, String> getDataFromEnum(Class<E> enumClass) {
         HashMap<String, String> enumValues = new HashMap<String, String>();
         for (E enumField : EnumSet.allOf(enumClass)) {

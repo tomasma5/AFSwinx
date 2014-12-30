@@ -20,7 +20,11 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface UILayout {
+    
     public LayouDefinitions layout() default LayouDefinitions.ONECOLUMNLAYOUT; 
+
     public LabelPosition labelPossition() default LabelPosition.BEFORE;
+    
     public LayoutOrientation layoutOrientation() default LayoutOrientation.AXISY;
+
 }
