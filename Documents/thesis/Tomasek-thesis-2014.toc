@@ -55,7 +55,7 @@
 \contentsline {section}{\numberline {4.5}Validace dat a vlastn\IeC {\'\i } valid\IeC {\'a}tory}{34}{section.4.5}
 \contentsline {subsection}{\numberline {4.5.1}Podporovan\IeC {\'e} validace}{34}{subsection.4.5.1}
 \contentsline {subsection}{\numberline {4.5.2}Vyhodnocen\IeC {\'\i } validac\IeC {\'\i }}{34}{subsection.4.5.2}
-\contentsline {section}{\numberline {4.6}Layouty}{36}{section.4.6}
+\contentsline {section}{\numberline {4.6}Layouty}{35}{section.4.6}
 \contentsline {subsection}{\numberline {4.6.1}Layout builder}{36}{subsection.4.6.1}
 \contentsline {section}{\numberline {4.7}Bezpe\IeC {\v c}nost}{37}{section.4.7}
 \contentsline {subsection}{\numberline {4.7.1}P\IeC {\v r}enos dat}{37}{subsection.4.7.1}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  31 DEC 2014 11:27
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  31 DEC 2014 14:47
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -892,22 +892,17 @@ File: images/AFDataHolder.pdf Graphic file (type pdf)
 <use images/AFDataHolder.pdf>
 Package pdftex.def Info: images/AFDataHolder.pdf used on input line 243.
 (pdftex.def)             Requested size: 287.0718pt x 143.53589pt.
- [33 <D:/Skola/repo/AFServer/Documents/thesis/images/AFDataHolder.pdf>]
-<images/validationModel.pdf, id=1065, 415.5525pt x 100.375pt>
+ [33 <D:/Skola/repo/AFServer/Documents/thesis/images/AFDataHolder.pdf>] [34] [3
+5]
+<images/validationModel.pdf, id=1073, 415.5525pt x 100.375pt>
 File: images/validationModel.pdf Graphic file (type pdf)
 
 <use images/validationModel.pdf>
-Package pdftex.def Info: images/validationModel.pdf used on input line 286.
+Package pdftex.def Info: images/validationModel.pdf used on input line 298.
 (pdftex.def)             Requested size: 415.55148pt x 100.37474pt.
- [34]
-Underfull \vbox (badness 7777) has occurred while \output is active []
-
- [35 <D:/Skola/repo/AFServer/Documents/thesis/images/validationModel.pdf>] [36]
-
-Underfull \vbox (badness 1082) has occurred while \output is active []
-
- [37])
-[38] (D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.tex
+ [36 <D:/Skola/repo/AFServer/Documents/thesis/images/validationModel.pdf>] [37]
+) [38]
+(D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.tex
 Kapitola 5.
 [39
 
@@ -1183,7 +1178,7 @@ ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\T
 om\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/
 Latex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Latex/fonts/type1/public/am
 sfonts/cm/cmsy9.pfb>
-Output written on Tomasek-thesis-2014.pdf (89 pages, 1154091 bytes).
+Output written on Tomasek-thesis-2014.pdf (89 pages, 1154310 bytes).
 PDF statistics:
  2488 PDF objects out of 2984 (max. 8388607)
  536 named destinations out of 1000 (max. 500000)

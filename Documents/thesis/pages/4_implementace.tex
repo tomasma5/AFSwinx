@@ -273,6 +273,9 @@ Validátor porovná aktuální hodnotu s minimální a maximální hodnotou. Pok
 MinAndMaxLength & 70 &
 Validátor porovná počet znaků aktuální hodnoty s minimem a maximem, pokud aktuální hodnota nevyhovuje, je vyhozena výjimka. \\
 \hline
+Contains & 30 &
+Validátor porovná, zdali se v aktuální hodnotě vyskytuje řetězec, který je požadován. Pokud aktuální hodnota nevyhovuje, je vyhozena výjimka. \\
+\hline
 Retype & 10 &
 Validátor zjistí, zdali se hodnota v aktuálním poli shoduje s hodnotou v jiném poli. Pokud hodnoty nevyhovují, je vyhozena výjimka. \\
 \hline
@@ -282,11 +285,6 @@ Validátor zjistí, zdali se hodnota v aktuálním poli shoduje s hodnotou v jin
 
 \subsection{Vyhodnocení validací}
 Validace musí být vyhodnocovány v určitém pořadí. Nejprve je třeba vyhodnotit, má-li být pole vyplněné a až poté vyhodnocovat, jsou-li v poli pouze číselné hodnoty. Validátory jsou proto registrovány do prioritní fronty, kterou panel disponuje. U každého validátoru je nastavena jeho priorita, která určuje pořadí, v jakém budou validace ověřovány. Validaci vyvolává klient, pokud chce znát validitu formuláře, či framework automaticky v případě, že je požadováno odeslání dat na server. Validátory jsou řízeny výjimkami. Pokud validace není splněna, je vyhozena výjimka. V případě výjimky zareaguje framework tak, že ji odchytí a zobrazí její textovou reprezentaci u příslušného políčka, poté pokračuje s vyhodnocováním. Formulář, je tedy vždy celý validován. Klient si může doimplementovat vlastní validátor a následně ho zaregistorvat ke konkrétnímu panelu, který lze získat z vygenerovaného formuláře. Opět má klient dvě možnosti jak validátor vytvořit. Doporučeným způsobem je dědit od třídy AFBaseValidator a překrýt metodu validate. Tyto třídy jsou znázorněny na obrázku \ref{img:validationModel}.
-\begin{figure}[h!]
-\includegraphics{images/validationModel}
-\caption{Abstraktní třídy validátorů, které lze použít k implementaci vlastního validátoru.}
-\label{img:validationModel}
-\end{figure}
 
 \section{Layouty}
 Komponenty v rámci formuláře musí být uspořádany tak, aby byl formulář dobře ovladatelný. Způsob jakým toho lze dosáhnout je specifický pro danou technologii. Nicméně server generuje stále stejné definice bez ohledu na technologii, kterou používá klient. Uspořádání komponent je definováno pomocí osy, ve které jsou prvky zobrazovány počtem sloupců a pozicí popisu komponenty v případě, že jde o konkrétní aktivní prvky formuláře. V případě, že jde o layout formuláře, není popis komponenty uveden. Definice layoutu může nabývat těchto hodnot:
@@ -296,6 +294,12 @@ Komponenty v rámci formuláře musí být uspořádany tak, aby byl formulář 
 \item labelPossiton - pozice popisu komponenty. Nabývá těchto hodnot před, za, není. (Before, After, None)
 \end{enumerate}
 Layout je tedy potřeba na klientovi správně interpretovat a na základě jeho specifikace zobrazit komponenty v definované mřížce. Určení absolutní pozice komponenty ve formuláří není možné. Nicméně lze ovlivňovat pořadí, ve kterém jsou komponenty zobrazovány. Toto pořadí určuje server a klient zobrazuje komponenty v pořadí, v jakém je obdržel. 
+\begin{figure}[h!]
+\includegraphics{images/validationModel}
+\caption{Abstraktní třídy validátorů, které lze použít k implementaci vlastního validátoru.}
+\label{img:validationModel}
+\end{figure}
+
 \subsection{Layout builder}
 Ve Swingu je několik layoutů, které jsou jeho součástí a pak samozřejmě existují knihovny, které poskytují speciálně vytvořené a upravené layouty. Jedním z nejvíc komplexních a flexibilních layoutů je GridBagLayout \cite{gridBagLayout}. Výhodou je, že ne všechny komponenty musí mít stejnou výšku, lze tedy vynutit specifické nastavení a docílit tak požadovaného vzhledu. Nevýhodou je složitost tohoto nastavení. Aby bylo možné dosáhnout požadovaného vzhledu, je potřeba kombinovat Swingové layouty. Framework disponuje svým vlastním implicitním builderem, který vytváří GridBagLayout složený z BoxLayoutu. Tento builder umí vytvářet layouty pro jednotlivé komponenty formuláře, ale i pro celý formulář. Nejprve je builder inicializován, poté jsou definovány komponenty, ze kterých je potřeba layout poskládat a následně je layout vytvořen. Tento objekt je reprezentován panelem, jenž lze zobrazit. V tomto panelu jsou již všechny komponenty vykresleny a uspořádány v požadovaném pořadí. 
 
