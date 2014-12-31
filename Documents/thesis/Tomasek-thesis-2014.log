@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  30 DEC 2014 21:09
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  31 DEC 2014 11:27
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -986,14 +986,14 @@ File: images/useCase.pdf Graphic file (type pdf)
 Package pdftex.def Info: images/useCase.pdf used on input line 342.
 (pdftex.def)             Requested size: 571.13235pt x 399.49152pt.
 
-<images/businessModel.pdf, id=1279, 457.71pt x 570.13pt>
+<images/businessModel.pdf, id=1279, 455.7025pt x 569.12625pt>
 File: images/businessModel.pdf Graphic file (type pdf)
 
 <use images/businessModel.pdf>
 Package pdftex.def Info: images/businessModel.pdf used on input line 349.
-(pdftex.def)             Requested size: 457.7089pt x 570.12862pt.
+(pdftex.def)             Requested size: 455.70137pt x 569.12486pt.
 
-Overfull \hbox (22.19376pt too wide) in paragraph at lines 349--350
+Overfull \hbox (20.18623pt too wide) in paragraph at lines 349--350
 [][] 
  []
 
@@ -1026,15 +1026,19 @@ Overfull \hbox (21.18999pt too wide) in paragraph at lines 371--372
 [][] 
  []
 
-<images/sdDiagram.pdf, id=1283, 628.3475pt x 427.5975pt>
+<images/sdDiagram.pdf, id=1283, 657.45625pt x 442.65375pt>
 File: images/sdDiagram.pdf Graphic file (type pdf)
 
 <use images/sdDiagram.pdf>
 Package pdftex.def Info: images/sdDiagram.pdf used on input line 377.
-(pdftex.def)             Requested size: 628.34596pt x 427.59645pt.
+(pdftex.def)             Requested size: 657.45465pt x 442.65265pt.
+
+Overfull \hbox (7.13751pt too wide) in paragraph at lines 377--378
+[][] 
+ []
 
 
-LaTeX Warning: Float too large for page by 23.4158pt on input line 380.
+LaTeX Warning: Float too large for page by 52.52449pt on input line 380.
 
 <images/abstractBuilder.pdf, id=1284, 571.13374pt x 484.81125pt>
 File: images/abstractBuilder.pdf Graphic file (type pdf)
@@ -1179,9 +1183,9 @@ ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\T
 om\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/
 Latex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Latex/fonts/type1/public/am
 sfonts/cm/cmsy9.pfb>
-Output written on Tomasek-thesis-2014.pdf (89 pages, 1151924 bytes).
+Output written on Tomasek-thesis-2014.pdf (89 pages, 1154091 bytes).
 PDF statistics:
- 2487 PDF objects out of 2487 (max. 8388607)
+ 2488 PDF objects out of 2984 (max. 8388607)
  536 named destinations out of 1000 (max. 500000)
  783 words of extra memory for PDF output out of 10000 (max. 10000000)
 
