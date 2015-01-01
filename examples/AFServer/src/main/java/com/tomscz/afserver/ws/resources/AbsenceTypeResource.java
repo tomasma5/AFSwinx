@@ -116,5 +116,10 @@ public class AbsenceTypeResource extends BaseResource {
         }
     }
 
+    @Override
+    public String getResourceUrl() {
+       return "/AFServer/rest/absencetype/";
+    }
+
 
 }

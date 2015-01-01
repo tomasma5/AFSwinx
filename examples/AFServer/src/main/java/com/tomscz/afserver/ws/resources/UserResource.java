@@ -28,7 +28,7 @@ import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.view.loginForm.LoginFormDefinitions;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
-@Path("/users/")
+@Path("/users")
 public class UserResource extends BaseResource {
 
     public static final String PROFILE = "profile";
@@ -178,6 +178,11 @@ public class UserResource extends BaseResource {
         } catch (BusinessException e) {
             return Response.status(e.getStatus()).build();
         }
+    }
+
+    @Override
+    public String getResourceUrl() {
+        return "/AFServer/rest/users/";
     }
 
 }

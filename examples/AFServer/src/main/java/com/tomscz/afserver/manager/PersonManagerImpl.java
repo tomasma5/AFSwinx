@@ -132,9 +132,7 @@ public class PersonManagerImpl extends BaseManager<Person>
             if(c == null){
                 throw new BusinessException(Status.BAD_REQUEST);
             }
-            if(c.getId() != existedPerson.getCountry().getId()){
-                personToUpdate.setCountry(c);
-            }
+            personToUpdate.setCountry(c);
             createOrupdate(personToUpdate);
             addressManager.createOrupdate(personToUpdate.getMyAddress());
         } else {

@@ -136,4 +136,9 @@ public class CountryResource extends BaseResource {
         }
     }
 
+    @Override
+    public String getResourceUrl() {
+        return "/AFServer/rest/country/";
+    }
+
 }

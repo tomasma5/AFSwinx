@@ -8,7 +8,6 @@
 		<class>com.tomscz.afserver.persistence.entity.Country</class>
 		<class>com.tomscz.afserver.persistence.entity.AbsenceInstance</class>
 		<class>com.tomscz.afserver.persistence.entity.AbsenceType</class>
-		<class>com.tomscz.afserver.persistence.entity.AbsenceTypeEmployee</class>
 		<class>com.tomscz.afserver.persistence.entity.Address</class>
 		<class>com.tomscz.afserver.persistence.entity.Person</class> <!-- transaction-type="JTA" -->
 		<properties>

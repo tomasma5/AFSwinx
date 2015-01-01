@@ -33,7 +33,6 @@ import com.tomscz.afserver.ws.security.AFSecurityContext;
 @Path("/absenceInstance")
 public class AbsenceInstanceResource extends BaseResource {
 
-
     @GET
     @Path("/definitionAdd/{userName}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -101,7 +100,6 @@ public class AbsenceInstanceResource extends BaseResource {
             @PathParam("userName") String userName) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
-            String mainlayout = "templates/oneColumnLayout.xml";
             HashMap<String, String> customMapping = new HashMap<String, String>();
             customMapping.put(AbsenceInstance.class.getCanonicalName(),
                     "absenceInstanceManagement.config.xml");
@@ -193,6 +191,11 @@ public class AbsenceInstanceResource extends BaseResource {
         } catch (BusinessException e) {
             return Response.status(e.getStatus()).build();
         }
+    }
+
+    @Override
+    public String getResourceUrl() {
+        return "/AFServer/rest/absenceInstance/";
     }
 
 }

@@ -6,8 +6,6 @@ import javax.naming.NamingException;
 
 import com.tomscz.afserver.manager.AbsenceInstanceManager;
 import com.tomscz.afserver.manager.AbsenceInstanceManagerImpl;
-import com.tomscz.afserver.manager.AbsenceTypeEmployeeManager;
-import com.tomscz.afserver.manager.AbsenceTypeEmployeeManagerImpl;
 import com.tomscz.afserver.manager.AbsenceTypeManager;
 import com.tomscz.afserver.manager.AbsenceTypeManagerImpl;
 import com.tomscz.afserver.manager.CountryManager;
@@ -57,13 +55,6 @@ public abstract class BaseResource {
         return absenceTypeManager;
     }
     
-    @SuppressWarnings("unchecked")
-    protected AbsenceTypeEmployeeManager<AbsenceType> getAbsenceTypeEmployeeManager()
-            throws NamingException {
-        Context ctx = new InitialContext();
-        AbsenceTypeEmployeeManager<AbsenceType> absenceTypeEmploeyeeManager =
-                (AbsenceTypeEmployeeManager<AbsenceType>) ctx.lookup(Utils
-                        .getJNDIName(AbsenceTypeEmployeeManagerImpl.NAME));
-        return absenceTypeEmploeyeeManager;
-    }
+    public abstract String getResourceUrl();
+    
 }
