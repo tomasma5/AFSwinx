@@ -15,61 +15,22 @@ I was expecting a `,' or a `}'---line 7 of file reference.bib
 I'm skipping whatever remains of this entry
 Warning--to sort, need author or key in javaEE
 Warning--to sort, need author or key in framework
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1402 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1402 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1402 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1402 of file csplainnat.bst
+Warning--to sort, need author or key in richfaces
+Warning--to sort, need author or key in primefaces
+Warning--to sort, need author or key in swixlm
+Warning--to sort, need author or key in metawidget
+Warning--to sort, need author or key in aspectfaces
 Warning--to sort, need author or key in swing
 Warning--to sort, need author or key in metadata
-Warning--to sort, need author or key in aspectFaces
 Warning--to sort, need author or key in glassfish
 Warning--to sort, need author or key in maven
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1402 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1402 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1402 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1402 of file csplainnat.bst
 Warning--to sort, need author or key in gson
 Warning--to sort, need author or key in gridBagLayout
 Warning--to sort, need author, editor, or key in https
 Warning--to sort, need author or key in junit
-Warning--to sort, need author or key in richfaces
-Warning--to sort, need author or key in primefaces
-Warning--empty year in aspectFaces
 Warning--empty author and editor in https
 `address' is a missing field, not a string, for entry UmlArlow
 while executing---line 1484 of file csplainnat.bst
 Warning--empty year in UmlArlow
 Warning--empty year in UmlArlow
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Eric Jendrock , Ian Evans , Ricardo Cervera-Navarro, Kim Haase, William Markito" for entry javaEETutorial
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1484 of file csplainnat.bst
-Too many commas in name 1 of "Tim Bray, Jean Paoli, C. M. Sperberg-McQueen,Eve Maler,François Yergeau" for entry xml
-while executing---line 1484 of file csplainnat.bst
-(There were 22 error messages)
+(There were 2 error messages)

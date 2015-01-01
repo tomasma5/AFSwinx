@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdftex 2012.4.7)  16 MAY 2012 14:10
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdftex 2014.10.31)  1 JAN 2015 20:36
 entering extended mode
-**C:/Skola/Fel_CVUT/BP/k336_thesis/reference.bib
-(C:/Skola/Fel_CVUT/BP/k336_thesis/reference.bib
+**D:/Skola/repo/AFServer/Documents/thesis/reference.bib
+(D:/Skola/repo/AFServer/Documents/thesis/reference.bib
 Missing character: There is no Ã in font cmr10!
 Missing character: There is no ½ in font cmr10!
 Missing character: There is no Ã in font cmr10!
@@ -16,10 +16,6 @@ Missing character: There is no Ã in font cmr10!
 Missing character: There is no ½ in font cmr10!
 Missing character: There is no Ã in font cmr10!
 Missing character: There is no ¡ in font cmr10!
-Missing character: There is no Å in font cmr10!
-Missing character: There is no ™ in font cmr10!
-Missing character: There is no Ã in font cmr10!
-Missing character: There is no ­ in font cmr10!
 
 ! Missing $ inserted.
 <inserted text> 
@@ -28,8 +24,8 @@ Missing character: There is no ­ in font cmr10!
                    \mskip 
 \,->\mskip 
            \thinmuskip 
-l.15  cited = "8.\,
-                   4.\,2012",
+l.13   cited = "10.\,
+                     12.\,2014",
 ? 
 ! Emergency stop.
 <inserted text> 
@@ -38,8 +34,8 @@ l.15  cited = "8.\,
                    \mskip 
 \,->\mskip 
            \thinmuskip 
-l.15  cited = "8.\,
-                   4.\,2012",
+l.13   cited = "10.\,
+                     12.\,2014",
 End of file on the terminal!
 
 !  ==> Fatal error occurred, no output PDF file produced!
