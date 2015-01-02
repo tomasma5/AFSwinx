@@ -1,6 +1,6 @@
 \chapter{Analýza}
 \section{Funkční specifikace}
-Framework \cite{framework} musí uživateli umožňovat vytvářet a dále pracovat s vytvořenými komponentami. Komponenty budou procházet určitým životním cyklem. Kromě samotných komponent musí framework poskytovat i dodatečné funkcionality, které jsou spojeny se získáváním dat, jejich propagací na klienta, zabezpečení, organizací komponent, lokalizací a skinováním komponent.
+Framework, který bude vypracován v rámci této práce, musí uživateli umožňovat vytvářet a dále pracovat s vytvořenými komponentami. Komponenty budou procházet určitým životním cyklem. Kromě samotných komponent musí framework poskytovat i dodatečné funkcionality, které jsou spojeny se získáváním dat, jejich propagací na klienta, zabezpečení, organizací komponent, lokalizací a skinováním komponent.
 \subsection{Funkční požadavky}
 Z dosavadního popisu problému byly vytvořeny následující požadavky na systém.
 \begin{itemize}
@@ -253,16 +253,16 @@ AspectFaces je framework, který umí provádět inspekci nad zadanými objekty 
 \subsection{Ukázkový projekt}
 Ukázkový projekt demonstruje použití frameworku. Skládá se z klientské a serverové části. Klientská část využívá pouze Swing. Serverová část je mnohem sofistikovanější a využívá aktuální technologie. Ukázkový projekt zde znázorňuje použítí frameworku a jeho omezení. Ukázkový projekt je koncipován tak, aby ho bylo možné nasadit bez nutnosti dodatečného nastavení.
 \subsubsection{GlassFish}
-GlassFish \cite{glassfish} je open source aplikační server. Jedná se o certifikovaný server JavaEE, umožňující clustering, monitoring, podporu EJB, REST a JDBC. Architektura jádra je založena na frameworku OSGI, který umožňuje vzdáleně přidávat, startovat či ukončovat komponenty bez nutnosti restartování celého serveru. Důvodem, proč je Glassfish využit na tomto projektu je čistě demonstrativní. Nicméně každý aplikační server má svá specifika, a proto je ukázková aplikace odladěna právě pro GlassFish. Jak již bylo zmíněno, Glassfish distribuje vestavěnou podporou pro REST a umožňuje použití Derby DB v režimu in-memory bez nutnosti speciálního nastavení.
+GlassFish \cite{glassfish} je open source aplikační server. Jedná se o certifikovaný server JavaEE, umožňující monitoring clustering, podporu EJB, REST a JDBC. Důvodem, proč je Glassfish využit na tomto projektu je čistě demonstrativní. Nicméně každý aplikační server má svá specifika, a proto je ukázková aplikace odladěna právě pro GlassFish. Jak již bylo zmíněno, Glassfish distribuje vestavěnou podporou pro REST a umožňuje použití Derby DB v režimu in-memory bez nutnosti speciálního nastavení.
 \subsubsection{RestEasy}
 Jedná se o framework, pomocí kterého lze vytvářet RESTful aplikace. Tento framework může běžet v libovolném servletovém kontejneru. Framework podporuje například JSON, XML serializace objektů, EJB a je splňuje JAX-RS implementaci. Tvorba aplikací s restovým rozhranním je tak díky tomuto frameworku mnohem jednodušší a vývoj je rychlejší. 
 \subsubsection{EJB}
-Enterprise JavaBeans \cite{javaEETutorial} jsou serverově orientované komponenty, které zapouzdřují business logiku a přístup do databáze. Jsou spravovány v rámci serverového kontejneru, který zajišťuje jejich vytvoření i odstranění z paměti. EJB mohou být různých typů.
+Enterprise JavaBeans \cite{javaEETutorial} jsou Java EE komponenty. Jsou spravovány v rámci serverového kontejneru, který zajišťuje jejich vytvoření i odstranění z paměti. Poskytují systémově orientované služby jakou jsou transakce a zabezpečení. Primárně jsou určeny k tomu, aby v nich byla vykonávána business logika včetně přístupu do databáze. Typ EJB je určen anotací. Rozlišujeme následující typy.
 \begin{itemize}
 \item Stateless
 \item Statefull
 \item Singleton
 \end{itemize}
-Jak již bylo zmíněno, o jejich správu se stará serverový kontejner, nemusíme tedy řešit problémy spojené s vytvořením a destrukcí singletonu \cite{gamma}. Mezi hlavní výhody EJB patří transakční zpracování, zajištění systémových služeb a bezpečnostní autorizace. Abychom definovali či~získali přístup k těmto třídám, používáme anotace, které jsou velmi dobře čitelné a~srozumitelné.
+Životní cyklus je ve správě serverového kontejner, nemusíme tedy řešit problémy spojené s vytvořením a destrukcí EJB. Toto je velká výhoda jedná-li se o EJB typu singleton \cite{gamma}. Abychom získali intanci konkrétní EJB lze využít anotací či JNDI.
 \subsection{Derby DB}
 V ukázkovém projektu je potřeba data ukládat do databáze. Při vytváření byl kladen důraz na to, aby noví uživatelé nemuseli v konfiguračních souborech specifikovat nastavení, tudíž by mohli ukázkový projekt ihned nasadit a vyzkoušet. Z tohoto důvodu je využita light databáze Derby. Ukázkový projekt ji využívá v in-memory módu, což znamená, že budou data po~zastavení serveru ztracena. Spolu s Derby DB využívá ukázkový projekt ORM s defaultním nastavením na create. Po startu aplikace jsou v čisté databázi vytvořeny požadované tabulky, které odráží definice objektů, jenž jsou anotované jako entity. Další výhodou je možnost využít anotací k nastavení validací přímo na databázi. Tyto validace pak mohou být využity při inspekci dat a na jejich základě mohou být vytvořeny validace, či konkrétní komponenty.

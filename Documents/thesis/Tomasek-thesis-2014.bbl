@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{25}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -8,10 +8,6 @@
 \bibitem[asp()]{aspectfaces}
 \emph{AspectFaces framework} [online]. [cit.~10.\,12.\,2014].
 \newblock Dostupn{\'{e}} z: \url{http://www.aspectfaces.com/overview}.
-
-\bibitem[fra()]{framework}
-\emph{Framework definition} [online]. [cit.~23.\,12.\,2014].
-\newblock Dostupn{\'{e}} z: \url{http://cs.wikipedia.org/wiki/Framework}.
 
 \bibitem[gla()]{glassfish}
 \emph{GlassFish Server Open Source Edition} [online]. [cit.~20.\,12.\,2014].

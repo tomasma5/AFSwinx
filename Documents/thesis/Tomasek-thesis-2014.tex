@@ -155,9 +155,11 @@ unicode=true,
 \selectlanguage{czech}
 %\selectlanguage{english} 
 
+\resizebox{\textwidth}{\textheight}
+ {\includegraphics{images/zadani.png}}\hspace*{-\textwidth}
+
 % prikaz \typeout vypise vyse uvedena nastaveni v prikazovem okne
 % pro pohodlne ladeni prace
-
 
 \iflanguage{czech}{
 	 \typeout{************************************************}
@@ -330,6 +332,7 @@ Současné aplikace využívají grafické uživatelské rozhraní k interakci s
 \item[HTTPS] Hypertext Transfer Protocol Secure
 \item[WAR] Web Application Archive
 \item[JAR] Java Archive
+\item[UI] User Interface
 \end{description}
 
 %*****************************************************************************
@@ -353,7 +356,7 @@ V této sekci naleznete použité UML diagramy a velké obrázky, na které bylo
 
 \begin{figure}
 \begin{center}
-\includegraphics{images/deploymentDiagram}
+\includegraphics[angle=270]{images/deploymentDiagram}
 \caption{Diagram nasazení}
 \label{img:deploymentFrameworkDiagram}
 \end{center}
