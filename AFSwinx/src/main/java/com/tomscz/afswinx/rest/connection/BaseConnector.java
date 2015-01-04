@@ -28,6 +28,13 @@ import org.apache.http.protocol.HttpContext;
 import com.google.gson.Gson;
 import com.tomscz.afswinx.common.Utils;
 
+/**
+ * This abstract class is responsible for perform requests to server.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public abstract class BaseConnector implements Connector {
 
     protected static final String HTTP_PROTOCOL = "http";
@@ -50,6 +57,15 @@ public abstract class BaseConnector implements Connector {
         return getHost().getHostName() + ":" + getHost().getPort() + parameters;
     }
 
+    /**
+     * This method perform request on server and return response from server. It also set status
+     * code. If during performing request is exception occur then {@link AFSwinxConnectionException}
+     * is thrown.
+     * 
+     * @param httpMethod method which will be used.
+     * @return InputStream of response from server.
+     * @throws ConnectException if during request is exception occur.
+     */
     private InputStream getResponse(HttpRequest httpMethod) throws ConnectException {
         response = null;
         try {
@@ -71,6 +87,14 @@ public abstract class BaseConnector implements Connector {
         }
     }
 
+    /**
+     * This method do request on server.
+     * 
+     * @param clazz returned type.
+     * @param body of request.
+     * @return object of T which will contains response body from server.
+     * @throws ConnectException
+     */
     protected <T> T doRequest(Class<T> clazz, String body) throws ConnectException {
         try {
             HttpRequestBuilder requestBuilder =
@@ -99,7 +123,7 @@ public abstract class BaseConnector implements Connector {
                     Gson gson = new Gson();
                     result = gson.fromJson(data, clazz);
                 } else if (this.accept.equals(HeaderType.XML)) {
-                    // TODO add support for xml
+                    throw new UnsupportedOperationException("Not supported in this version!");
                 }
                 return result;
             } else if (inputStream == null || this.getStatusCode() < 200
@@ -149,6 +173,13 @@ public abstract class BaseConnector implements Connector {
         httpClient = null;
     }
 
+    /**
+     * This class is request builder. It build http or https request which will be used.
+     * 
+     * @author Martin Tomasek (martin@toms-cz.com)
+     * 
+     * @since 1.0.0.
+     */
     public static class HttpRequestBuilder {
 
         protected HttpRequestBase request = null;
@@ -181,8 +212,8 @@ public abstract class BaseConnector implements Connector {
             } else if (httpMethod.equals(HttpMethod.DELETE)) {
                 request = new HttpDelete(endPoint);
             }
-            request.addHeader("Content-Type", contentType.toString()+";charset=UTF-8");
-            request.addHeader("Accept", accept.toString()+";charset=UTF-8");
+            request.addHeader("Content-Type", contentType.toString() + ";charset=UTF-8");
+            request.addHeader("Accept", accept.toString() + ";charset=UTF-8");
             if (headersParam != null) {
                 for (String key : headersParam.keySet()) {
                     String value = headersParam.get(key);

@@ -1,7 +1,15 @@
 package com.tomscz.afswinx.rest.rebuild.holder;
 
+/**
+ * This class hold concrete variable and his data value.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class AFData {
-    
+
+    // Its unique key in component structure
     private String key;
     private String value;
 
@@ -25,5 +33,5 @@ public class AFData {
     public void setValue(String value) {
         this.value = value;
     }
-    
+
 }

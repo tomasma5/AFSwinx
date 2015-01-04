@@ -12,10 +12,16 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder
 import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 
+/**
+ * This is builder which can build drop down menu component.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public class DropDownMenuBuilder extends BaseWidgetBuilder {
 
     public static final int DEFAULT_WIDTH = 20;
-    
+
     public DropDownMenuBuilder() {
         widgetType = SupportedWidgets.DROPDOWNMENU;
     }
@@ -91,9 +97,9 @@ public class DropDownMenuBuilder extends BaseWidgetBuilder {
     public Object getData(AFSwinxPanel panel) {
         if (panel.getDataHolder() != null && !panel.getDataHolder().isEmpty()) {
             AFOptions selectedItem = getSelectedOption(panel);
-            if(selectedItem != null){
+            if (selectedItem != null) {
                 return selectedItem.getKey();
-            }         
+            }
         }
         return null;
     }

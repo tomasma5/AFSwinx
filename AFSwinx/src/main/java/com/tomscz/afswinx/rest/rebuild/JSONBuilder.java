@@ -13,6 +13,15 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
+/**
+ * This is concrete builder which is able to serialize data from server to object which is used to
+ * fill data to component and it is able to serialize data from component on object which can be
+ * accept by server.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class JSONBuilder extends BaseRestBuilder {
 
     private static String baseClass = "dummy";
@@ -46,6 +55,7 @@ public class JSONBuilder extends BaseRestBuilder {
         if (jsonObject == null) {
             return moreDatas;
         }
+        // Recursively parse received data
         JsonElement element = (JsonElement) jsonObject;
         if (element.isJsonArray()) {
             JsonArray array = (JsonArray) jsonObject;
@@ -54,7 +64,7 @@ public class JSONBuilder extends BaseRestBuilder {
                     JsonObject object = (JsonObject) currentElement;
                     Gson gson = new Gson();
                     JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
-                    serializeJseon(jsonObjectToSerialize, "");
+                    serializeJSON(jsonObjectToSerialize, "");
                     moreDatas.add(dataPack);
                     dataPack = new AFDataPack(baseClass);
                 }
@@ -63,22 +73,28 @@ public class JSONBuilder extends BaseRestBuilder {
             JsonObject object = (JsonObject) jsonObject;
             Gson gson = new Gson();
             JsonObject jsonObjectToSerialize = gson.fromJson(object, JsonObject.class);
-            serializeJseon(jsonObjectToSerialize, "");
+            serializeJSON(jsonObjectToSerialize, "");
             moreDatas.add(dataPack);
         }
         return moreDatas;
     }
 
-    private void serializeJseon(JsonObject jsonObject, String fieldKey) {
+    /**
+     * This method serialize JSON and it's inner object.
+     * 
+     * @param jsonObject object to serialize.
+     * @param fieldKey key of current object.
+     */
+    private void serializeJSON(JsonObject jsonObject, String fieldKey) {
         for (Map.Entry<String, JsonElement> element : jsonObject.entrySet()) {
             String key = element.getKey();
             JsonElement currentElement = element.getValue();
             if (!currentElement.isJsonNull()) {
                 if (currentElement.isJsonObject()) {
                     JsonObject object = (JsonObject) currentElement;
-                    serializeJseon(object, Utils.generateKey(fieldKey, key));
+                    serializeJSON(object, Utils.generateKey(fieldKey, key));
                 } else if (currentElement.isJsonArray()) {
-                    //We don't support arrays in this version
+                    // We don't support arrays in this version
                     continue;
                 } else {
                     String value = currentElement.getAsString();

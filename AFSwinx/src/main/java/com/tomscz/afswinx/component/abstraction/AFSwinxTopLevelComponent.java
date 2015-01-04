@@ -35,9 +35,11 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
     private HashMap<String, ComponentDataPacker> panels =
             new HashMap<String, ComponentDataPacker>();
 
+    // Connection which are used to retrieve data
     protected AFSwinxConnection modelConnection;
-    private AFSwinxConnection sendConnection;
+    protected AFSwinxConnection sendConnection;
     protected AFSwinxConnection dataConnection;
+    // Last response from server.
     private HttpResponse lastResponse;
 
     private static final long serialVersionUID = 1L;
@@ -66,7 +68,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
         try {
             AFConnector<?> dataConnector;
             if (getDataConnection().getAcceptedType().equals(HeaderType.XML)) {
-                // TODO finish XML
+                // TODO finish XML, It wont be support in first version
                 throw new UnsupportedOperationException("XML File is not supperted yet");
             } else {
                 dataConnector =
@@ -75,7 +77,6 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
             // Set response for future use
             this.lastResponse = dataConnector.getResponse();
             return dataConnector.doRequest(null);
-
         } catch (ConnectException e) {
             throw new AFSwinxConnectionException(e.getLocalizedMessage());
         }
@@ -89,11 +90,12 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
             return null;
         }
         AFSwinxConnection sendConnection = getSendConnection();
+        // Generate send connection based on which will be retrieve data. The send connection is
+        // used to generate data in this case it will be generated JSON
         if (sendConnection == null) {
-            sendConnection = new AFSwinxConnection("",0,"");
+            sendConnection = new AFSwinxConnection("", 0, "");
         }
-        BaseRestBuilder dataBuilder =
-                RestBuilderFactory.getInstance().getBuilder(sendConnection);
+        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(sendConnection);
         Object data = dataBuilder.reselialize(this.resealize());
         return data;
     }

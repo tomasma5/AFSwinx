@@ -59,6 +59,11 @@ public interface WidgetBuilder {
      */
     public void setSkin(Skin skin);
     
+    /**
+     * This method customize component. Based on definitiona and user skin.
+     * @param componentToSkin component which will be skinned.
+     * @param fieldInfo definition.
+     */
     public void customizeComponent(JComponent componentToSkin, AFFieldInfo fieldInfo);
     
     public SupportedWidgets getWidgetType();

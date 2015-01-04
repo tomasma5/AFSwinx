@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component.widget.builder.abstraction;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

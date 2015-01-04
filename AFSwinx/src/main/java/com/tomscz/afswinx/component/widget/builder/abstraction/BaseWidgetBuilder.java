@@ -37,6 +37,9 @@ import com.tomscz.afswinx.validation.factory.AFValidatorFactory;
  */
 public abstract class BaseWidgetBuilder implements WidgetBuilder {
 
+    private static final int LABEL_WIDHT = 50;
+    private static final int LABEL_HEIGHT = 20;
+
     protected Component coreComponent;
     protected BaseLayoutBuilder layoutBuilder;
     protected JTextArea message;
@@ -44,9 +47,6 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
     protected ResourceBundle localization;
     protected Skin skin;
     protected SupportedWidgets widgetType;
-
-    private static final int LABEL_WIDHT = 50;
-    private static final int LABEL_HEIGHT = 20;
 
     @Override
     public boolean isBuildAvailable(AFFieldInfo fieldWithLabel) {
@@ -119,6 +119,14 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
         return textValidationComponent;
     }
 
+    /**
+     * This method create all validators to widget.
+     * 
+     * @param panel in which will be validators holded and executed.
+     * @param fieldInfo which hold validators and their definition.
+     * @throws AFSwinxBuildException if during creating validators occur exception then this
+     *         exception is thrown.
+     */
     protected void crateValidators(AFSwinxPanel panel, AFFieldInfo fieldInfo)
             throws AFSwinxBuildException {
         if (fieldInfo.getRules() != null) {
@@ -168,6 +176,12 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
         }
     }
 
+    /**
+     * This method make base building of field. It create layout builder, validate if field could be
+     * built. Create validation message box and add them to layout.
+     * 
+     * @param fieldInfo actual field info which is build.
+     */
     protected void buildBase(AFFieldInfo fieldInfo) {
         // First check if build is available
         if (!isBuildAvailable(fieldInfo)) {
@@ -195,6 +209,12 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
         skinComponent(component);
     }
 
+    /**
+     * This method skin component. It determine type of component based on widget type of actual
+     * builder.
+     * 
+     * @param componentToSkin
+     */
     @SuppressWarnings("unchecked")
     private void skinComponent(JComponent componentToSkin) {
         if (skin.getFieldColor() != null) {
@@ -245,22 +265,29 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
                 componentToskin.setPreferredSize(new Dimension(colums, currentSize.height));
             }
         }
-        if(widgetType.equals(SupportedWidgets.DROPDOWNMENU)){
+        if (widgetType.equals(SupportedWidgets.DROPDOWNMENU)) {
             JComboBox<AFOptions> comboBox = (JComboBox<AFOptions>) componentToSkin;
             int height = comboBox.getPreferredSize().height;
             int width = DropDownMenuBuilder.DEFAULT_WIDTH;
             if (skin.getInputWidth() > 0) {
                 width = skin.getInputWidth();
             }
-            comboBox.setPreferredSize(new Dimension(width,height));
+            comboBox.setPreferredSize(new Dimension(width, height));
             comboBox.setMinimumSize(new Dimension(width, height));
             comboBox.setMaximumSize(new Dimension(width, height));
         }
     }
-    
-    protected void addDummyFieldOption(AFFieldInfo fieldInfo){
+
+    /**
+     * This method add dummy field to object. It is used in drop down menu, combo box and etc. If
+     * required is false. Because you have to visualize that user doesn't make any choice.
+     * 
+     * @param fieldInfo actual definition.
+     */
+    protected void addDummyFieldOption(AFFieldInfo fieldInfo) {
         String valueLocalized =
-                LocalizationUtils.getTextValueFromLocalOrExtendBundle("options.unselected", localization);
+                LocalizationUtils.getTextValueFromLocalOrExtendBundle("options.unselected",
+                        localization);
         fieldInfo.addOption(new AFOptions("", valueLocalized));
     }
 

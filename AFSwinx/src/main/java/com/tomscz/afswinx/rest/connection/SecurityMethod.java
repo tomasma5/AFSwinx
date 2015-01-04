@@ -22,4 +22,5 @@ public enum SecurityMethod {
     public String toString() {
         return name;
     }
+    
 }

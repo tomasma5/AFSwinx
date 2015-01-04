@@ -97,7 +97,6 @@ public class OptionBuilder extends BaseWidgetBuilder {
         return null;
     }
 
-
     @Override
     public Object getPlainData(AFSwinxPanel panel) {
         AFComponentDataHolder selectedObject = getSelectedObject(panel);
@@ -121,6 +120,5 @@ public class OptionBuilder extends BaseWidgetBuilder {
         }
         return null;
     }
-
 
 }

@@ -3,6 +3,12 @@ package com.tomscz.afswinx.rest.rebuild.holder;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class hold data for all variables which was received.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public class AFDataPack {
 
     private List<AFData> data;

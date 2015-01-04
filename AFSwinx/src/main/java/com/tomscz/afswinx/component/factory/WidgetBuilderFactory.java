@@ -13,13 +13,19 @@ import com.tomscz.afswinx.component.widget.builder.NumberInputBuilder;
 import com.tomscz.afswinx.component.widget.builder.OptionBuilder;
 import com.tomscz.afswinx.component.widget.builder.TextAreaBuilder;
 
+/**
+ * This class is singleton. Get it by using {@link WidgetBuilderFactory#getInstance()}. It is used
+ * to create concrete builder widget builder based on field type.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class WidgetBuilderFactory {
 
     private static WidgetBuilderFactory instance;
 
-    private WidgetBuilderFactory() {
-
-    }
+    private WidgetBuilderFactory() {}
 
     public static synchronized WidgetBuilderFactory getInstance() {
         if (instance == null) {
@@ -28,6 +34,13 @@ public class WidgetBuilderFactory {
         return instance;
     }
 
+    /**
+     * This method create widget builder based on type which were received from definition.
+     * 
+     * @param fieldInfo definition which hold widget type.
+     * @return WidgetBuilder which is able to build component of type which were received in
+     *         fieldInfo in parameter.
+     */
     public WidgetBuilder createWidgetBuilder(AFFieldInfo fieldInfo) {
         SupportedWidgets widgetType = fieldInfo.getWidgetType();
         WidgetBuilder fieldBuilder;
@@ -38,6 +51,13 @@ public class WidgetBuilderFactory {
         return fieldBuilder;
     }
 
+    /**
+     * This method create widget builder which match to widget in parameter.
+     * 
+     * @param widget which must be shown.
+     * @return Widget builder which is able to build component based on widget received in
+     *         parameter.
+     */
     public WidgetBuilder createWidgetBuilder(SupportedWidgets widget) {
         if (widget == null) {
             return new InputBuilder();
@@ -68,9 +88,10 @@ public class WidgetBuilderFactory {
         if (widget.equals(SupportedWidgets.CALENDAR)) {
             return new DateBuilder();
         }
-        if(widget.equals(SupportedWidgets.PASSWORD)){
+        if (widget.equals(SupportedWidgets.PASSWORD)) {
             return new PasswordBuilder();
         }
+        //Return input builder if no type was specify
         return new InputBuilder();
     }
 

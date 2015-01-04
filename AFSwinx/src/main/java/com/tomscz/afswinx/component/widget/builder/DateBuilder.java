@@ -17,10 +17,15 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseWidgetBuilder
 import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 import com.tomscz.afswinx.swing.component.SwinxAFDatePicker;
 
+/**
+ * This is builder which can build data picker component to pick data.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public class DateBuilder extends BaseWidgetBuilder {
 
-    // TODO
-    // Default date formatter we will parametrize it
+    // Default date formatter it used ISO8601
     final static String ISO8601DATEFORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     public DateBuilder() {
@@ -28,7 +33,8 @@ public class DateBuilder extends BaseWidgetBuilder {
     }
 
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException, AFSwinxBuildException {
+    public AFSwinxPanel buildComponent(AFFieldInfo field) throws IllegalArgumentException,
+            AFSwinxBuildException {
         super.buildBase(field);
         // Add input calendar
         SwinxAFDatePicker swingDatePicker = new SwinxAFDatePicker();

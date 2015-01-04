@@ -15,6 +15,14 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 import com.tomscz.afswinx.validation.exception.ValidationException;
 
+/**
+ * This class represents form. This components hold widget and is able to get model, set data to
+ * model and send it back to server.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class AFSwinxForm extends AFSwinxTopLevelComponent {
 
     private static final long serialVersionUID = 1L;
@@ -43,33 +51,39 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
             if (dataPacker == null) {
                 continue;
             }
-            setDataToField(dataPacker,field,fieldName);
-//            AFSwinxPanel panelToSetData = dataPacker.getComponent();
-//            setDataToField(panelToSetData, field);
-//            // If this component should has been retyped, then set value to their clone
-//            if (panelToSetData.isRetype()) {
-//                dataPacker = getPanels().get(Utils.generateCloneKey(fieldName));
-//                if (dataPacker != null) {
-//                    panelToSetData = dataPacker.getComponent();
-//                    setDataToField(panelToSetData, field);
-//                }
-//            }
+            setDataToField(dataPacker, field, fieldName);
         }
     }
 
-    private void setDataToField(ComponentDataPacker dataPacker, AFData field, String fieldName){
-        AFSwinxPanel panelToSetData = dataPacker.getComponent();
+    /**
+     * This method find panel to which must be set data. And then call method to set it. It alsow is
+     * able to set data to retype field.
+     * 
+     * @param componentDataPacker data packer which hold all information about concrete widget.
+     * @param field which was received from server. This field contains data to set.
+     * @param fieldName actual field key.
+     */
+    private void setDataToField(ComponentDataPacker componentDataPacker, AFData field,
+            String fieldName) {
+        AFSwinxPanel panelToSetData = componentDataPacker.getComponent();
         setDataToField(panelToSetData, field);
         // If this component should has been retyped, then set value to their clone
         if (panelToSetData.isRetype()) {
-            dataPacker = getPanels().get(Utils.generateCloneKey(fieldName));
-            if (dataPacker != null) {
-                panelToSetData = dataPacker.getComponent();
+            componentDataPacker = getPanels().get(Utils.generateCloneKey(fieldName));
+            if (componentDataPacker != null) {
+                panelToSetData = componentDataPacker.getComponent();
                 setDataToField(panelToSetData, field);
             }
         }
     }
-    
+
+    /**
+     * This method fill data to concrete widget. WidgetBuilder is created based on panel and their
+     * widget type.
+     * 
+     * @param panelToSetData to which will be set data.
+     * @param field data which will be set.
+     */
     private void setDataToField(AFSwinxPanel panelToSetData, AFData field) {
         WidgetBuilder builder =
                 WidgetBuilderFactory.getInstance().createWidgetBuilder(
@@ -77,10 +91,10 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         builder.setLocalization(localization);
         builder.setData(panelToSetData, field);
     }
-    
+
     @Override
     public void clearData() {
-        for(String key:getPanels().keySet()){
+        for (String key : getPanels().keySet()) {
             ComponentDataPacker dataPacker = getPanels().get(key);
             setDataToField(dataPacker, new AFData("", ""), key);
         }
@@ -110,13 +124,24 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
         return isValid;
     }
 
-    private void displayValidationText(AFSwinxPanel panel, ValidationException e) {
+    /**
+     * This method display validation text, if validation failed.
+     * 
+     * @param panel in which will be validation text displayed.
+     * @param validationException exception which holds validation message.
+     */
+    private void displayValidationText(AFSwinxPanel panel, ValidationException validationException) {
         if (panel.getMessage() != null) {
             panel.getMessage().setVisible(true);
-            panel.getMessage().setText(e.getValidationTextToDisplay());
+            panel.getMessage().setText(validationException.getValidationTextToDisplay());
         }
     }
 
+    /**
+     * This method hide validation message. It can hide message even if it were not displayed.
+     * 
+     * @param panel in which will be validation message hidden.
+     */
     private void hideValidationText(AFSwinxPanel panel) {
         if (panel.getMessage() != null) {
             panel.getMessage().setVisible(false);
@@ -138,20 +163,24 @@ public class AFSwinxForm extends AFSwinxTopLevelComponent {
                     WidgetBuilderFactory.getInstance().createWidgetBuilder(panel.getWidgetType());
             Object data = fieldBuilder.getData(panel);
             String propertyName = panel.getPanelId();
+            // Based on dot notation determine road. Road is used to add object to its right place
             String[] roadTrace = propertyName.split("\\.");
             if (roadTrace.length > 1) {
                 AFDataHolder startPoint = dataHolder;
                 for (int i = 0; i < roadTrace.length; i++) {
                     String roadPoint = roadTrace[i];
+                    // If road end then add this property as inner propety
                     if (i + 1 == roadTrace.length) {
                         startPoint.addPropertyAndValue(roadPoint, (String) data);
                     } else {
+                        // Otherwise it will be inner class so add if doesn't exist continue.
                         AFDataHolder roadHolder = startPoint.getInnerClassByKey(roadPoint);
                         if (roadHolder == null) {
                             roadHolder = new AFDataHolder();
                             roadHolder.setClassName(roadPoint);
                             startPoint.addInnerClass(roadHolder);
                         }
+                        // Set start point on current possition in tree
                         startPoint = roadHolder;
                     }
                 }

@@ -137,6 +137,7 @@ unicode=true,
 % See comment over \thebibliography command for details.
 
 \usepackage[square, numbers]{natbib}             % sazba pouzite literatury
+\usepackage[final]{pdfpages}
 %\usepackage{url}
 %\DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>}\urlstyle{tt}}  %rm/sf/tt
 %\renewcommand{\emph}[1]{\textsl{#1}}    % melo by byt kurziva nebo sklonene,
@@ -155,9 +156,9 @@ unicode=true,
 \selectlanguage{czech}
 %\selectlanguage{english} 
 
-\resizebox{\textwidth}{\textheight}
- {\includegraphics{images/zadani.png}}\hspace*{-\textwidth}
-
+%\resizebox{\textwidth}{\textheight}
+ %{\includegraphics{images/zadani.png}}\hspace*{-\textwidth}
+\includepdf[page=1]{images/zadani.pdf}
 % prikaz \typeout vypise vyse uvedena nastaveni v prikazovem okne
 % pro pohodlne ladeni prace
 

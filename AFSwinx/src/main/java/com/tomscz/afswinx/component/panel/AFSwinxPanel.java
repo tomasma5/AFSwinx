@@ -27,14 +27,19 @@ import com.tomscz.afswinx.validation.exception.ValidationException;
 public class AFSwinxPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
+    // Components in this panel, which are displayed to user
     private List<JComponent> dataHolder;
+    // Label which is displayed to user
     private JTextArea labelHolder;
+    // Validation message
     private JTextArea message;
     private SupportedWidgets widgetType;
+    // Unique panel id
     private String panelId;
     private boolean retype = false;
-    
-    private PriorityQueue<AFValidations> validators = new PriorityQueue<AFValidations>(10,new ValidatorPriorityComparator());
+
+    private PriorityQueue<AFValidations> validators = new PriorityQueue<AFValidations>(10,
+            new ValidatorPriorityComparator());
 
     // Parent of this component, its usually form, table, etc
     private AFSwinxTopLevelComponent afParent;
@@ -70,6 +75,12 @@ public class AFSwinxPanel extends JPanel {
         addDataHolderComponent(dataHolder);
     }
 
+    /**
+     * This method validate this panel. For each registered validatator is validation make. If
+     * failed, then no other validation are not performed on this field.
+     * 
+     * @throws ValidationException
+     */
     public void validateModel() throws ValidationException {
         // Validate only if components are visible
         if (this.isVisible()) {

@@ -16,16 +16,17 @@ import com.tomscz.afswinx.validation.NumberValidator;
  */
 public class NumberInputBuilder extends InputBuilder {
 
-    public NumberInputBuilder(){
+    public NumberInputBuilder() {
         widgetType = SupportedWidgets.NUMBERFIELD;
     }
-    
+
     @Override
-    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException, AFSwinxBuildException {
+    public AFSwinxPanel buildComponent(AFFieldInfo fieldInfo) throws IllegalArgumentException,
+            AFSwinxBuildException {
         AFSwinxPanel panel = super.buildComponent(fieldInfo);
-        //Add number validator which will provide number validation
+        // Add number validator which will provide number validation
         NumberValidator validator = new NumberValidator(fieldInfo.getWidgetType());
-        //Use localization based on parent localization
+        // Use localization based on parent localization
         validator.setLocalization(localization);
         panel.addValidator(validator);
         return panel;

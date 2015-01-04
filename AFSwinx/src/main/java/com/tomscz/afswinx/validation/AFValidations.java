@@ -31,7 +31,16 @@ public interface AFValidations {
     public void validate(AFSwinx swinxInstance, AFSwinxPanel parentPanel, Object value)
             throws ValidationException;
 
+    /**
+     * This method set localization to actual  validator. It is used to customize error message.
+     * @param localization resource bundle with localization.
+     */
     public void setLocalization(ResourceBundle localization);
     
+    /**
+     * This method return validator priority.
+     * @return priority of validator.
+     */
     public int getPriority();
+
 }

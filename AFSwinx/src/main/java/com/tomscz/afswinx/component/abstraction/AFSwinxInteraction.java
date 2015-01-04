@@ -59,7 +59,10 @@ public interface AFSwinxInteraction {
      * @return
      */
     public Object generateSendData();
-    
+
+    /**
+     * This method clear data in component.
+     */
     public void clearData();
 
 }

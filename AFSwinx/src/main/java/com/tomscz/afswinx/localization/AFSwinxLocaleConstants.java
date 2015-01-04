@@ -26,5 +26,6 @@ public class AFSwinxLocaleConstants {
     public final static String VALIDATION_RETYPE = "validation.retype";
     
     public final static String VALIDATION_CONTAIN = "validation.contain";
-    //Validation section EDN
+    //Validation section END
+    
 }

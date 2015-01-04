@@ -23,11 +23,10 @@ import com.tomscz.afswinx.validation.RetypeValidator;
 
 public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
 
-    protected String componentKeyName;
-
     protected ResourceBundle localization;
     protected Skin skin;
     
+    protected String componentKeyName;
     protected HashMap<String, String> connectionParameters;
     protected AFSwinxConnection modelConnection;
     protected AFSwinxConnection dataConnection;
@@ -148,7 +147,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     }
     
     /**
-     * This method set data to form. It build for each widget his field
+     * This method set data to widget. It build for each widget his field.
      * 
      * @param classInfo which will be inspected
      * @param layoutBuilder layout builder which will be used
@@ -216,8 +215,8 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * This method add component which will be created to panel and layout builder
      * 
      * @param panelToAdd new panel which will be add
-     * @param layoutBuilder builder which holds all panels in this form
-     * @param form current form
+     * @param layoutBuilder builder which holds all panels in this component
+     * @param component current component
      */
     protected abstract void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent component);

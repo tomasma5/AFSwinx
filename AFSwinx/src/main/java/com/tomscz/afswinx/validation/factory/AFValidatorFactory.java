@@ -27,6 +27,16 @@ public class AFValidatorFactory {
         return instance;
     }
 
+    /**
+     * This method create validator which could be used to validate.
+     * 
+     * @param validation validation type.
+     * @param value value of validator - it is used set validation value.
+     * @param widgetType - actual widget type.
+     * @return validator which can be used to validate field.
+     * @throws NumberFormatException If during converting value to number is exception occur then
+     *         this exception is thrown.
+     */
     public AFValidations createValidator(SupportedValidations validation, String value,
             SupportedWidgets widgetType) throws NumberFormatException {
         if (validation.equals(SupportedValidations.MINLENGTH)) {
@@ -47,7 +57,7 @@ public class AFValidatorFactory {
         if (validation.equals(SupportedValidations.MAX)) {
             return new MinAndMaxValueValidator(widgetType, value, false);
         }
-        if(validation.equals(SupportedValidations.CONTAINS)){
+        if (validation.equals(SupportedValidations.CONTAINS)) {
             return new ContainsValidator(value);
         }
         return null;

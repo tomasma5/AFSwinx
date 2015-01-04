@@ -1,5 +1,13 @@
 package com.tomscz.afswinx.rest.connection;
 
+/**
+ * This enum hold all method which can be used in connection XML specify file. Based on method will
+ * be created concrete connection.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public enum HttpMethod {
     GET("get"), PUT("put"), POST("post"), DELETE("delete");
 
@@ -16,4 +24,5 @@ public enum HttpMethod {
     public String toString() {
         return name;
     }
+
 }

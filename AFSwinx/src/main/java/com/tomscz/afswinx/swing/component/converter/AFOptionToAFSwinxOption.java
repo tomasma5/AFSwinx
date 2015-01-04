@@ -6,7 +6,12 @@ import com.tomscz.afrest.rest.dto.AFOptions;
 import com.tomscz.afswinx.localization.LocalizationUtils;
 import com.tomscz.afswinx.swing.component.AFComponentDataHolder;
 
-
+/**
+ * This class can convert {@link AFOptions} to {@link AFComponentDataHolder}.
+ * @author Martin Tomasek (martin@toms-cz.com)
+ *
+ * @since 1.0.0.
+ */
 public class AFOptionToAFSwinxOption implements ModelConverter<AFOptions, AFComponentDataHolder> {
     @Override
     public AFComponentDataHolder convert(AFOptions source, ResourceBundle localization) {

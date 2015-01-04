@@ -8,6 +8,7 @@ package com.tomscz.afswinx.rest.connection;
  * @since 1.0.0.
  */
 public enum HeaderType {
+    // XML is not supported in this version, but it will be supported soon.
     XML("application/xml"), JSON("application/json");
 
     private final String name;
@@ -23,5 +24,5 @@ public enum HeaderType {
     public String toString() {
         return name;
     }
-}
 
+}

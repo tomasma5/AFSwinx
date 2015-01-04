@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  2 JAN 2015 17:26
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2014.11.3)  2 JAN 2015 20:06
 entering extended mode
 **D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
 (D:/Skola/repo/AFServer/Documents/thesis/Tomasek-thesis-2014.tex
@@ -274,7 +274,7 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\listings\listings.sty"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.sty"
 (C:\Latex\tex\latex\graphics\keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks16
@@ -292,18 +292,18 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \lst@lineno=\count95
 \lst@maxwidth=\dimen107
 
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\listings\lstmisc.sty"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
 File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
 \c@lstnumber=\count96
 \lst@skipnumbers=\count97
 \lst@framebox=\box27
 )
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\listings\listings.cfg"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.cfg"
 File: listings.cfg 2014/09/06 1.5e listings configuration
 ))
 Package: listings 2014/09/06 1.5e (Carsten Heinz)
 
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\upquote\upquote.sty"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\upquote\upquote.sty"
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
 tim
 
@@ -461,7 +461,7 @@ Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 338.
 Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 339.
 Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
 ))
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\listings\lstlang1.sty"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
 (C:\Latex\tex\latex\graphics\graphicx.sty
@@ -607,7 +607,7 @@ Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
 \c@Hy@tempcnt=\count102
 
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\url\url.sty"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
@@ -644,12 +644,58 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip43
 )
-("D:\Program Files (x86)\MiKTeX 2.9\tex/latex\natbib\natbib.sty"
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\natbib\natbib.sty"
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip44
 \bibsep=\skip45
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count109
+)
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdfpages\pdfpages.sty"
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+(C:\Latex\tex\latex\base\ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+) (C:\Latex\tex\latex\tools\calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count110
+\calc@Bcount=\count111
+\calc@Adimen=\dimen114
+\calc@Bdimen=\dimen115
+\calc@Askip=\skip46
+\calc@Bskip=\skip47
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count112
+\calc@Cskip=\skip48
+)
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\eso-pic\eso-pic.sty"
+Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
+Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
+
+(C:\Latex\tex\latex\00miktex\color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
+Package xcolor Info: Model `RGB' extended on input line 1353.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+))
+("D:\Program Files (x86)\MiKTeX 2.9\tex\latex\pdfpages\pppdftex.def"
+File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box28
+\AM@toc@title=\toks18
+\c@AM@survey=\count113
+\AM@templatesizebox=\box29
 )
 (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.aux
 (D:\Skola\repo\AFServer\Documents\thesis\pages/1_uvod.aux)
@@ -659,77 +705,107 @@ LaTeX Info: Redefining \cite on input line 694.
 (D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/6_zaver.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/7_install.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 149.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 149.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 150.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 150.
 
 
 (C:\Latex\tex\latex\base\ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 149.
-LaTeX Font Info:    ... okay on input line 149.
-\c@lstlisting=\count110
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 150.
+LaTeX Font Info:    ... okay on input line 150.
+\c@lstlisting=\count114
 
 ("D:\Program Files (x86)\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count111
-\scratchdimen=\dimen114
-\scratchbox=\box28
-\nofMPsegments=\count112
-\nofMParguments=\count113
-\everyMPshowfont=\toks18
-\MPscratchCnt=\count114
-\MPscratchDim=\dimen115
-\MPnumerator=\count115
-\makeMPintoPDFobject=\count116
-\everyMPtoPDFconversion=\toks19
+\scratchcounter=\count115
+\scratchdimen=\dimen116
+\scratchbox=\box30
+\nofMPsegments=\count116
+\nofMParguments=\count117
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count118
+\MPscratchDim=\dimen117
+\MPnumerator=\count119
+\makeMPintoPDFobject=\count120
+\everyMPtoPDFconversion=\toks20
 )
-\AtBeginShipoutBox=\box29
- (C:\Latex\tex\latex\graphics\color.sty
-Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
- (C:\Latex\tex\latex\00miktex\color.cfg
-File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
-)
-Package color Info: Driver file: pdftex.def on input line 130.
-)
-Package hyperref Info: Link coloring ON on input line 149.
+\AtBeginShipoutBox=\box31
+Package hyperref Info: Link coloring ON on input line 150.
  (C:\Latex\tex\latex\hyperref\nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (C:\Latex\tex\generic\oberdiek\gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count117
+\c@section@level=\count121
 )
-LaTeX Info: Redefining \ref on input line 149.
-LaTeX Info: Redefining \pageref on input line 149.
-LaTeX Info: Redefining \nameref on input line 149.
+LaTeX Info: Redefining \ref on input line 150.
+LaTeX Info: Redefining \pageref on input line 150.
+LaTeX Info: Redefining \nameref on input line 150.
 
 (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.out)
 (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.out)
 \@outlinefile=\write3
 
-<images/zadani.png, id=339, 770.88pt x 1172.88188pt>
-File: images/zadani.png Graphic file (type png)
- <use images/zadani.png>
-Package pdftex.def Info: images/zadani.png used on input line 159.
-(pdftex.def)             Requested size: 770.87813pt x 1172.87901pt.
 
+Package pdfpages Warning: Option `page' is unknow to \includepdf.
+(pdfpages)                Did you mean `pages'? (Note the `s'!)
+(pdfpages)                OK, I'll proceed as if it were `pages'.
+
+<images/zadani.pdf, id=339, 597.23125pt x 845.1575pt>
+File: images/zadani.pdf Graphic file (type pdf)
+ <use images/zadani.pdf>
+Package pdftex.def Info: images/zadani.pdf used on input line 161.
+(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
+File: images/zadani.pdf Graphic file (type pdf)
+
+<use images/zadani.pdf>
+Package pdftex.def Info: images/zadani.pdf used on input line 161.
+(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
+
+<images/zadani.pdf, id=342, page=1, 597.23125pt x 845.1575pt>
+File: images/zadani.pdf Graphic file (type pdf)
+
+<use images/zadani.pdf, page 1>
+Package pdftex.def Info: images/zadani.pdf, page1 used on input line 161.
+(pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
+File: images/zadani.pdf Graphic file (type pdf)
+ <use images/zadani.pdf, page 1>
+Package pdftex.def Info: images/zadani.pdf, page1 used on input line 161.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
+File: images/zadani.pdf Graphic file (type pdf)
+
+<use images/zadani.pdf, page 1>
+Package pdftex.def Info: images/zadani.pdf, page1 used on input line 161.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
+File: images/zadani.pdf Graphic file (type pdf)
+ <use images/zadani.pdf, page 1>
+Package pdftex.def Info: images/zadani.pdf, page1 used on input line 161.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
+File: images/zadani.pdf Graphic file (type pdf)
+
+<use images/zadani.pdf, page 1>
+Package pdftex.def Info: images/zadani.pdf, page1 used on input line 161.
+(pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
+ [1
+
+ <D:/Skola/repo/AFServer/Documents/thesis/images/zadani.pdf>]
 ************************************************
 Zvoleny jazyk: cestina
 Typ prace: Diplomov\IeC {\'a} pr\IeC {\'a}ce
@@ -741,16 +817,14 @@ Nazev prace:  Aspektov\IeC {\v e} orientovan\IeC {\'y} v\IeC {\'y}voj u\IeC {\v
  z}ivatelsk\IeC {\'y}ch rozhran\IeC {\'\i } pro~Java~SE~aplikace
 Vedouci prace: Ing. Tom\IeC {\'a}\IeC {\v s} \IeC {\v C}ern\IeC {\'y}, MSc. 
 ***************************************************
-[1{C:/Users/Tom/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
-
- <D:/Skola/repo/AFServer/Documents/thesis/images/zadani.png>] [2
+[2{C:/Users/Tom/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
 
 ]
-<figures/LogoCVUT.pdf, id=352, 93.34875pt x 70.2625pt>
+<figures/LogoCVUT.pdf, id=362, 93.34875pt x 70.2625pt>
 File: figures/LogoCVUT.pdf Graphic file (type pdf)
 
 <use figures/LogoCVUT.pdf>
-Package pdftex.def Info: figures/LogoCVUT.pdf used on input line 209.
+Package pdftex.def Info: figures/LogoCVUT.pdf used on input line 210.
 (pdftex.def)             Requested size: 142.26378pt x 107.08527pt.
  [3 <D:/Skola/repo/AFServer/Documents/thesis/figures/LogoCVUT.pdf>] [4
 
@@ -796,7 +870,7 @@ Kapitola 1.
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.281 \include{pages/1_uvod}
+l.282 \include{pages/1_uvod}
                              [1
 
 
@@ -824,7 +898,7 @@ Underfull \vbox (badness 1688) has occurred while \output is active []
 
 ]
 Kapitola 3.
-[9] [10] <images/domainModel.pdf, id=693, 457.71pt x 286.06876pt>
+[9] [10] <images/domainModel.pdf, id=703, 457.71pt x 286.06876pt>
 File: images/domainModel.pdf Graphic file (type pdf)
 
 <use images/domainModel.pdf>
@@ -841,7 +915,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 84.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 84.
- [14] <images/formLifecCycle.pdf, id=766, 457.71pt x 314.17375pt>
+ [14] <images/formLifecCycle.pdf, id=776, 457.71pt x 314.17375pt>
 File: images/formLifecCycle.pdf Graphic file (type pdf)
 
 <use images/formLifecCycle.pdf>
@@ -853,7 +927,7 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 117--118
  []
 
 [15 <D:/Skola/repo/AFServer/Documents/thesis/images/formLifecCycle.pdf>]
-<images/useCaseSmall.pdf, id=794, 400.49625pt x 200.75pt>
+<images/useCaseSmall.pdf, id=804, 400.49625pt x 200.75pt>
 File: images/useCaseSmall.pdf Graphic file (type pdf)
 
 <use images/useCaseSmall.pdf>
@@ -881,7 +955,7 @@ LaTeX Font Info:    Try loading font information for T1+cmss on input line 51.
  (C:\Latex\tex\latex\base\t1cmss.fd
 File: t1cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 ) [26] [27]
-<images/afSwinx.pdf, id=978, 273.02pt x 200.75pt>
+<images/afSwinx.pdf, id=988, 273.02pt x 200.75pt>
 File: images/afSwinx.pdf Graphic file (type pdf)
  <use images/afSwinx.pdf>
 Package pdftex.def Info: images/afSwinx.pdf used on input line 117.
@@ -890,7 +964,7 @@ Package pdftex.def Info: images/afSwinx.pdf used on input line 117.
 Underfull \vbox (badness 1348) has occurred while \output is active []
 
  [28 <D:/Skola/repo/AFServer/Documents/thesis/images/afSwinx.pdf>]
-<images/connectionPack.pdf, id=997, 457.71pt x 143.53625pt>
+<images/connectionPack.pdf, id=1007, 457.71pt x 143.53625pt>
 File: images/connectionPack.pdf Graphic file (type pdf)
 
 <use images/connectionPack.pdf>
@@ -902,14 +976,14 @@ Overfull \hbox (22.19376pt too wide) in paragraph at lines 142--143
  []
 
 [29 <D:/Skola/repo/AFServer/Documents/thesis/images/connectionPack.pdf>]
-<images/dataPack.pdf, id=1026, 315.1775pt x 86.3225pt>
+<images/dataPack.pdf, id=1036, 315.1775pt x 86.3225pt>
 File: images/dataPack.pdf Graphic file (type pdf)
 
 <use images/dataPack.pdf>
 Package pdftex.def Info: images/dataPack.pdf used on input line 155.
 (pdftex.def)             Requested size: 315.17673pt x 86.32227pt.
  [30] [31 <D:/Skola/repo/AFServer/Documents/thesis/images/dataPack.pdf>] [32]
-<images/AFDataHolder.pdf, id=1083, 287.0725pt x 143.53625pt>
+<images/AFDataHolder.pdf, id=1093, 287.0725pt x 143.53625pt>
 File: images/AFDataHolder.pdf Graphic file (type pdf)
 
 <use images/AFDataHolder.pdf>
@@ -923,7 +997,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Underfull \vbox (badness 2781) has occurred while \output is active []
 
  [35]
-<images/validationModel.pdf, id=1114, 415.5525pt x 100.375pt>
+<images/validationModel.pdf, id=1124, 415.5525pt x 100.375pt>
 File: images/validationModel.pdf Graphic file (type pdf)
 
 <use images/validationModel.pdf>
@@ -950,7 +1024,7 @@ Underfull \hbox (badness 1509) in paragraph at lines 60--60
 Underfull \vbox (badness 1033) has occurred while \output is active []
 
  [44]
-<images/Country.png, id=1196, 451.6875pt x 306.39468pt>
+<images/Country.png, id=1206, 451.6875pt x 306.39468pt>
 File: images/Country.png Graphic file (type png)
 
 <use images/Country.png>
@@ -1023,140 +1097,140 @@ Overfull \hbox (4.12532pt too wide) in paragraph at lines 38--39
 
 ) [56]
 P\v {r}\'{\i }loha C.
-<images/useCase.pdf, id=1329, 571.13374pt x 398.48875pt>
+<images/useCase.pdf, id=1340, 571.13374pt x 398.48875pt>
 File: images/useCase.pdf Graphic file (type pdf)
 
 <use images/useCase.pdf>
-Package pdftex.def Info: images/useCase.pdf used on input line 345.
+Package pdftex.def Info: images/useCase.pdf used on input line 346.
 (pdftex.def)             Requested size: 571.13235pt x 398.48778pt.
 
-<images/businessModel.pdf, id=1330, 455.7025pt x 569.12625pt>
+<images/businessModel.pdf, id=1341, 455.7025pt x 569.12625pt>
 File: images/businessModel.pdf Graphic file (type pdf)
 
 <use images/businessModel.pdf>
-Package pdftex.def Info: images/businessModel.pdf used on input line 352.
+Package pdftex.def Info: images/businessModel.pdf used on input line 353.
 (pdftex.def)             Requested size: 455.70137pt x 569.12486pt.
 
-Overfull \hbox (20.18623pt too wide) in paragraph at lines 352--353
+Overfull \hbox (20.18623pt too wide) in paragraph at lines 353--354
 [][] 
  []
 
-<images/deploymentDiagram.pdf, id=1331, 514.92375pt x 256.96pt>
+<images/deploymentDiagram.pdf, id=1342, 514.92375pt x 256.96pt>
 File: images/deploymentDiagram.pdf Graphic file (type pdf)
 
 <use images/deploymentDiagram.pdf>
-Package pdftex.def Info: images/deploymentDiagram.pdf used on input line 359.
+Package pdftex.def Info: images/deploymentDiagram.pdf used on input line 360.
 (pdftex.def)             Requested size: 514.92249pt x 256.95937pt.
 
-<images/serverSide.pdf, id=1332, 400.49625pt x 456.70625pt>
+<images/serverSide.pdf, id=1343, 400.49625pt x 456.70625pt>
 File: images/serverSide.pdf Graphic file (type pdf)
 
 <use images/serverSide.pdf>
-Package pdftex.def Info: images/serverSide.pdf used on input line 367.
+Package pdftex.def Info: images/serverSide.pdf used on input line 368.
 (pdftex.def)             Requested size: 400.49527pt x 456.70512pt.
 
-<images/metaModelFinal.pdf, id=1333, 600.2425pt x 456.70625pt>
+<images/metaModelFinal.pdf, id=1344, 600.2425pt x 456.70625pt>
 File: images/metaModelFinal.pdf Graphic file (type pdf)
 
 <use images/metaModelFinal.pdf>
-Package pdftex.def Info: images/metaModelFinal.pdf used on input line 374.
+Package pdftex.def Info: images/metaModelFinal.pdf used on input line 375.
 (pdftex.def)             Requested size: 600.24103pt x 456.70512pt.
 
-Overfull \hbox (21.18999pt too wide) in paragraph at lines 374--375
+Overfull \hbox (21.18999pt too wide) in paragraph at lines 375--376
 [][] 
  []
 
-<images/sdDiagram.pdf, id=1334, 657.45625pt x 442.65375pt>
+<images/sdDiagram.pdf, id=1345, 657.45625pt x 442.65375pt>
 File: images/sdDiagram.pdf Graphic file (type pdf)
 
 <use images/sdDiagram.pdf>
-Package pdftex.def Info: images/sdDiagram.pdf used on input line 380.
+Package pdftex.def Info: images/sdDiagram.pdf used on input line 381.
 (pdftex.def)             Requested size: 657.45465pt x 442.65265pt.
 
-Overfull \hbox (7.13751pt too wide) in paragraph at lines 380--381
+Overfull \hbox (7.13751pt too wide) in paragraph at lines 381--382
 [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 52.52449pt on input line 383.
+LaTeX Warning: Float too large for page by 52.52449pt on input line 384.
 
-<images/abstractBuilder.pdf, id=1335, 571.13374pt x 484.81125pt>
+<images/abstractBuilder.pdf, id=1346, 571.13374pt x 484.81125pt>
 File: images/abstractBuilder.pdf Graphic file (type pdf)
 
 <use images/abstractBuilder.pdf>
-Package pdftex.def Info: images/abstractBuilder.pdf used on input line 386.
+Package pdftex.def Info: images/abstractBuilder.pdf used on input line 387.
 (pdftex.def)             Requested size: 571.13235pt x 484.81006pt.
 
-Overfull \hbox (49.29492pt too wide) in paragraph at lines 386--387
+Overfull \hbox (49.29492pt too wide) in paragraph at lines 387--388
 [][] 
  []
 
-<images/sdResealization.pdf, id=1336, 571.13374pt x 484.81125pt>
+<images/sdResealization.pdf, id=1347, 571.13374pt x 484.81125pt>
 File: images/sdResealization.pdf Graphic file (type pdf)
 
 <use images/sdResealization.pdf>
-Package pdftex.def Info: images/sdResealization.pdf used on input line 393.
+Package pdftex.def Info: images/sdResealization.pdf used on input line 394.
 (pdftex.def)             Requested size: 571.13235pt x 484.81006pt.
 
-Overfull \hbox (49.29492pt too wide) in paragraph at lines 393--394
+Overfull \hbox (49.29492pt too wide) in paragraph at lines 394--395
  [] 
  []
 
-<images/clientModel.pdf, id=1337, 600.2425pt x 456.70625pt>
+<images/clientModel.pdf, id=1348, 600.2425pt x 456.70625pt>
 File: images/clientModel.pdf Graphic file (type pdf)
 
 <use images/clientModel.pdf>
-Package pdftex.def Info: images/clientModel.pdf used on input line 401.
+Package pdftex.def Info: images/clientModel.pdf used on input line 402.
 (pdftex.def)             Requested size: 600.24103pt x 456.70512pt.
 
-Overfull \hbox (21.18999pt too wide) in paragraph at lines 401--402
+Overfull \hbox (21.18999pt too wide) in paragraph at lines 402--403
  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 20.91087pt on input line 405.
+LaTeX Warning: Float too large for page by 20.91087pt on input line 406.
 
-<images/login.png, id=1338, 451.6875pt x 307.1475pt>
+<images/login.png, id=1349, 451.6875pt x 307.1475pt>
 File: images/login.png Graphic file (type png)
  <use images/login.png>
-Package pdftex.def Info: images/login.png used on input line 408.
+Package pdftex.def Info: images/login.png used on input line 409.
 (pdftex.def)             Requested size: 451.68639pt x 307.14674pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 408--409
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 409--410
 [][] 
  []
 
-<images/AbsenceType.png, id=1339, 451.6875pt x 307.1475pt>
+<images/AbsenceType.png, id=1350, 451.6875pt x 307.1475pt>
 File: images/AbsenceType.png Graphic file (type png)
 
 <use images/AbsenceType.png>
-Package pdftex.def Info: images/AbsenceType.png used on input line 414.
+Package pdftex.def Info: images/AbsenceType.png used on input line 415.
 (pdftex.def)             Requested size: 451.68639pt x 307.14674pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 414--415
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 415--416
 [][] 
  []
 
-<images/AbsenceManagement.png, id=1340, 451.6875pt x 307.1475pt>
+<images/AbsenceManagement.png, id=1351, 451.6875pt x 307.1475pt>
 File: images/AbsenceManagement.png Graphic file (type png)
 
 <use images/AbsenceManagement.png>
-Package pdftex.def Info: images/AbsenceManagement.png used on input line 420.
+Package pdftex.def Info: images/AbsenceManagement.png used on input line 421.
 (pdftex.def)             Requested size: 451.68639pt x 307.14674pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 420--421
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 421--422
 [][] 
  []
 
-<images/AbsenceManagementAdmin.png, id=1341, 451.6875pt x 308.65312pt>
+<images/AbsenceManagementAdmin.png, id=1352, 451.6875pt x 308.65312pt>
 File: images/AbsenceManagementAdmin.png Graphic file (type png)
 
 <use images/AbsenceManagementAdmin.png>
 Package pdftex.def Info: images/AbsenceManagementAdmin.png used on input line 4
-26.
+27.
 (pdftex.def)             Requested size: 451.68639pt x 308.65236pt.
 
-Overfull \hbox (16.17125pt too wide) in paragraph at lines 426--427
+Overfull \hbox (16.17125pt too wide) in paragraph at lines 427--428
 [][] 
  []
 
@@ -1181,17 +1255,17 @@ P\v {r}\'{\i }loha D.
 
 ] [72]
 P\v {r}\'{\i }loha E.
-<images/cdContent.png, id=1606, 368.87813pt x 188.95593pt>
+<images/cdContent.png, id=1617, 368.87813pt x 188.95593pt>
 File: images/cdContent.png Graphic file (type png)
 
 <use images/cdContent.png>
-Package pdftex.def Info: images/cdContent.png used on input line 527.
+Package pdftex.def Info: images/cdContent.png used on input line 528.
 (pdftex.def)             Requested size: 368.87721pt x 188.95546pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 532.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 533.
  [73
 
  <D:/Skola/repo/AFServer/Documents/thesis/images/cdContent.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 532.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 533.
 
 (D:\Skola\repo\AFServer\Documents\thesis\Tomasek-thesis-2014.aux
 (D:\Skola\repo\AFServer\Documents\thesis\pages/1_uvod.aux)
@@ -1201,20 +1275,20 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 532.
 (D:\Skola\repo\AFServer\Documents\thesis\pages/5_testovani.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/6_zaver.aux)
 (D:\Skola\repo\AFServer\Documents\thesis\pages/7_install.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 532.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 532.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 533.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 533.
 Package rerunfilecheck Info: File `Tomasek-thesis-2014.out' has not changed.
 (rerunfilecheck)             Checksum: 0D45E26D124B83E821CD49651FC507AC;12129.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 532.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 533.
  ) 
 Here is how much of TeX's memory you used:
- 12695 strings out of 493921
- 176169 string characters out of 3144882
- 245607 words of memory out of 3000000
- 15232 multiletter control sequences out of 15000+200000
+ 13780 strings out of 493921
+ 191283 string characters out of 3144882
+ 268541 words of memory out of 3000000
+ 16295 multiletter control sequences out of 15000+200000
  23549 words of font info for 49 fonts, out of 3000000 for 9000
  845 hyphenation exceptions out of 8191
- 30i,11n,40p,2695b,1861s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,18n,42p,2695b,1861s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ec
 si1000.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
 pi600\ectt1095.pk> <C:\Users\Tom\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
@@ -1238,9 +1312,9 @@ ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\T
 om\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1095.pk><C:/
 Latex/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Latex/fonts/type1/public/am
 sfonts/cm/cmsy9.pfb>
-Output written on Tomasek-thesis-2014.pdf (93 pages, 2128757 bytes).
+Output written on Tomasek-thesis-2014.pdf (93 pages, 1641700 bytes).
 PDF statistics:
- 2559 PDF objects out of 2984 (max. 8388607)
+ 2570 PDF objects out of 2984 (max. 8388607)
  543 named destinations out of 1000 (max. 500000)
- 798 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 813 words of extra memory for PDF output out of 10000 (max. 10000000)
 
