@@ -29,9 +29,24 @@ import com.tomscz.afserver.persistence.entity.UserRoles;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
+/**
+ * This is country resource. This resource provide definition and end points with data and method to
+ * work with country.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 @Path("/country")
 public class CountryResource extends BaseResource {
 
+    /**
+     * This method create definition based on is build form and table with countries. Based on user
+     * role is form editable or not.
+     * 
+     * @param request current request
+     * @return Response which contain definition. It is used to build form and table.
+     */
     @GET
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
@@ -39,6 +54,7 @@ public class CountryResource extends BaseResource {
     public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             HashMap<String, Object> readOnlyVariables = new HashMap<String, Object>();
+            // If user was authenticate and is admin then
             if (request.getAttribute(AFServerConstants.SECURITY_CONTEXT) != null) {
                 AFSecurityContext securityContext =
                         (AFSecurityContext) request
@@ -47,6 +63,7 @@ public class CountryResource extends BaseResource {
                     readOnlyVariables.put("readonly", "true");
                 }
             } else {
+                // otherwise all fields will be readonly
                 readOnlyVariables.put("readonly", "true");
             }
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
@@ -64,12 +81,18 @@ public class CountryResource extends BaseResource {
         }
     }
 
+    /**
+     * This method update or create country. Manager will decide what to do.
+     * 
+     * @param country which will be created or updated.
+     * @return Response with status code.
+     */
     @POST
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin"})
-    public Response updateCountry(Country country) {
+    public Response updateOrCreateCountry(Country country) {
         try {
             CountryManager<Country> countryManager = getCountryManager();
             countryManager.createOrupdate(country);

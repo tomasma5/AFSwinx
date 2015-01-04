@@ -44,4 +44,5 @@ public class AddressManagerImpl extends BaseManager<Address> implements AddressM
         List<Address> resultList = typedQuery.getResultList();
         return resultList;
     }
+    
 }

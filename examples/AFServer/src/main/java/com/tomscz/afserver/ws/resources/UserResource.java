@@ -66,7 +66,7 @@ public class UserResource extends BaseResource {
                     genderOptions.put(Gender.FEMALE.name(), Gender.FEMALE.name());
                     data.setOptionsToFields(genderOptions, "gender");
                 } catch (NamingException e) {
-                    // TODO Do nothing.
+                    // Do nothing.
                 }
             }
             return Response.status(Response.Status.OK).entity(data).build();

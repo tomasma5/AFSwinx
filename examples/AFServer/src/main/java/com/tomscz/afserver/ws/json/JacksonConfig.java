@@ -12,7 +12,6 @@ public class JacksonConfig implements ContextResolver<ObjectMapper> {
     public JacksonConfig() {
         objectMapper = new ObjectMapper();
         // I am not sure which format we will use, so far we will use ISO
-        // objectMapper.setDateFormat(new SimpleDateFormat("dd.MM.yyyy"));
         objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 

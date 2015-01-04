@@ -34,6 +34,16 @@ import com.tomscz.afserver.persistence.entity.UserRoles;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.utils.Utils;
 
+/**
+ * This class is security interceptor. Some of logic was transfered from my previous project:
+ * https://
+ * gitlab.fit.cvut.cz/listivit/letadla/blob/master/flightAirlines/src/main/java/cz/cvut/fel/aos
+ * /flightAirlines/security/MySecurityInterceptor.java
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 @Provider
 @ServerInterceptor
 public class SecurityInterceptor implements PreProcessInterceptor {
@@ -67,21 +77,21 @@ public class SecurityInterceptor implements PreProcessInterceptor {
         if (methodToVerify.isAnnotationPresent(DenyAll.class)) {
             return AFServerConstants.ACCESS_FORBIDDEN;
         }
+        // If annotation is permit all then set it to true
         if (methodToVerify.isAnnotationPresent(PermitAll.class)
                 || !methodToVerify.isAnnotationPresent(RolesAllowed.class)) {
             this.isPermitAll = true;
         }
         final MultivaluedMap<String, String> headers = request.getHttpHeaders().getRequestHeaders();
-
+        // Get authorization header
         final List<String> authorization = headers.get(AFServerConstants.AUTHORIZATION_HEADER);
         if (authorization == null || authorization.isEmpty()) {
             return AFServerConstants.ACCESS_DENIED;
         }
-
+        // Get username and password
         final String encodedUserPassword =
                 authorization.get(0)
                         .replaceFirst(AFServerConstants.AUTHENTICATION_SCHEME + " ", "");
-
         String usernameAndPassword;
         try {
             usernameAndPassword = new String(Base64.decode(encodedUserPassword));

@@ -17,9 +17,9 @@ public class CountryManagerImp extends BaseManager<Country>
         implements
             Serializable,
             CountryManager<Country> {
-    
+
     @EJB
-    PersonManager<Person> personManager;
+    private PersonManager<Person> personManager;
 
     public static final String name = "CountryManager";
 
@@ -56,12 +56,15 @@ public class CountryManagerImp extends BaseManager<Country>
 
     @Override
     public void createOrupdate(Country entity) throws BusinessException {
+        // If entity has no id then it is new entity, so generate new id.
         if (entity.getId() == 0) {
             entity.setId(IdGenerator.getNextCountryId());
         } else {
+            // Otherwise it is existed entity, so merge it.
             List<Person> personsInCountry = personManager.findUsersByCountry(entity.getId());
-            for(Person p:personsInCountry){
-                if(p.getMyAddress() != null && !p.getMyAddress().getCountry().isEmpty()){
+            // For each person in this country update it
+            for (Person p : personsInCountry) {
+                if (p.getMyAddress() != null && !p.getMyAddress().getCountry().isEmpty()) {
                     p.getMyAddress().setCountry(entity.getName());
                     personManager.createOrupdate(p);
                 }

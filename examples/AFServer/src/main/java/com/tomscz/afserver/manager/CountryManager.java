@@ -12,4 +12,5 @@ public interface CountryManager<T> extends Manager<T> {
     public List<Country> findAllCountry();
     
     public Country findByName(String name);
+    
 }

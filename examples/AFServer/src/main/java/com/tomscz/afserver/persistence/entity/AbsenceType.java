@@ -26,7 +26,6 @@ public class AbsenceType {
             CascadeType.MERGE, CascadeType.PERSIST})
     private Country country;
     private boolean active;
-
     @UiOrder(value=1)
     @UiRequired
     @UiLabel(value="absenceType.name")
@@ -82,4 +81,5 @@ public class AbsenceType {
     public void setActive(boolean active) {
         this.active = active;
     }
+    
 }

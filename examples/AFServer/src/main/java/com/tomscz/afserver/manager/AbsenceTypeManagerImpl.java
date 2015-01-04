@@ -24,7 +24,7 @@ public class AbsenceTypeManagerImpl extends BaseManager<AbsenceType>
             Serializable {
 
     @EJB
-    CountryManager<Country> countryManager;
+    private CountryManager<Country> countryManager;
 
     private static final long serialVersionUID = 1L;
 

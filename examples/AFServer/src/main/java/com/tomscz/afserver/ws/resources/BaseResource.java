@@ -18,6 +18,14 @@ import com.tomscz.afserver.persistence.entity.Country;
 import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.utils.Utils;
 
+/**
+ * This class provide all managers to its children. It also has abstract method called
+ * getResourceUrl. All children should implement this method.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public abstract class BaseResource {
 
     @SuppressWarnings("unchecked")
@@ -54,7 +62,7 @@ public abstract class BaseResource {
                         .getJNDIName(AbsenceInstanceManagerImpl.NAME));
         return absenceTypeManager;
     }
-    
+
     public abstract String getResourceUrl();
-    
+
 }

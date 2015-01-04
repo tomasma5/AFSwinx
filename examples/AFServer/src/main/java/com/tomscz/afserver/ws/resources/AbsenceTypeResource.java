@@ -120,6 +120,5 @@ public class AbsenceTypeResource extends BaseResource {
     public String getResourceUrl() {
        return "/AFServer/rest/absencetype/";
     }
-
-
+    
 }

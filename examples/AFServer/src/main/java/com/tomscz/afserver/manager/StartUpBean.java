@@ -20,13 +20,20 @@ import com.tomscz.afserver.persistence.entity.Gender;
 import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.persistence.entity.UserRoles;
 
+/**
+ * This is start up bean which is used to initialize database.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 @Singleton
 @Startup
 public class StartUpBean implements Serializable {
 
     @Inject
     EntityManager em;
-    
+
     @EJB
     CountryManager<Country> countryManager;
     /**
@@ -55,36 +62,38 @@ public class StartUpBean implements Serializable {
     private void generateUsers() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            Country czech = null; 
+            Country czech = null;
             try {
                 czech = countryManager.findById(1);
             } catch (BusinessException e) {
-                //Do nothing user wont have set up country 
+                // Do nothing user wont have set up country
             }
             Date date = sdf.parse("21/12/2012");
             Person person =
-                    new Person(IdGenerator.getNextPersonId(), "sa","john","John", "Doe", "jdoe@toms-cz.com",
-                            date, true, 30, Gender.MALE, true);
-            if(czech != null){
+                    new Person(IdGenerator.getNextPersonId(), "sa", "john", "John", "Doe",
+                            "jdoe@toms-cz.com", date, true, 30, Gender.MALE, true);
+            if (czech != null) {
                 person.setCountry(czech);
             }
             person.addRole(UserRoles.USER);
             Address personAddress =
-                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 48601, "Czech republic");
+                    new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 48601,
+                            "Czech republic");
             em.persist(personAddress);
             person.setMyAddress(personAddress);
             em.persist(person);
             date = sdf.parse("1/1/2013");
             Person secondPerson =
-                    new Person(IdGenerator.getNextPersonId(),"sa2","jaina", "Jaina", "Proudmore",
+                    new Person(IdGenerator.getNextPersonId(), "sa2", "jaina", "Jaina", "Proudmore",
                             "jproud@toms-cz.com", date, true, 30, Gender.FEMALE, true);
-            if(czech != null){
+            if (czech != null) {
                 secondPerson.setCountry(czech);
             }
             secondPerson.addRole(UserRoles.USER);
             secondPerson.addRole(UserRoles.ADMIN);
             personAddress =
-                    new Address(IdGenerator.getNextAddressId(), "Nowhere", "Strakonice", 38601, "Czech republic");
+                    new Address(IdGenerator.getNextAddressId(), "Nowhere", "Strakonice", 38601,
+                            "Czech republic");
             em.persist(personAddress);
             secondPerson.setMyAddress(personAddress);
             em.persist(secondPerson);

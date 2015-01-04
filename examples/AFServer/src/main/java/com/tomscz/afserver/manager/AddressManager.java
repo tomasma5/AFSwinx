@@ -9,4 +9,5 @@ import com.tomscz.afserver.persistence.entity.Country;
 public interface AddressManager<T> extends Manager<T>{
 
     public List<Address> findAddressInCountry(Country c) throws BusinessException;
+    
 }

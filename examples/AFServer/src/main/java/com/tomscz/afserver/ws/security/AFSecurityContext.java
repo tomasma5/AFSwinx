@@ -6,15 +6,22 @@ import java.util.List;
 
 import com.tomscz.afserver.persistence.entity.UserRoles;
 
-public class AFSecurityContext implements Serializable{
+/**
+ * This is implementation of security context in AFServer. Its showcase server side.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
+public class AFSecurityContext implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     List<UserRoles> userRoles = new ArrayList<UserRoles>();
-    
+
     String loggedUserName;
-    
-    public AFSecurityContext(String loggedUserName){
+
+    public AFSecurityContext(String loggedUserName) {
         this.loggedUserName = loggedUserName;
     }
 
@@ -25,16 +32,14 @@ public class AFSecurityContext implements Serializable{
     public List<UserRoles> getUserRoles() {
         return userRoles;
     }
-    
-    public boolean isUserInRole(UserRoles roleToVerify){
-        for(UserRoles role : userRoles){
-            if(role.equals(roleToVerify)){
+
+    public boolean isUserInRole(UserRoles roleToVerify) {
+        for (UserRoles role : userRoles) {
+            if (role.equals(roleToVerify)) {
                 return true;
             }
         }
         return false;
     }
 
-  
-    
 }

@@ -2,7 +2,6 @@ package com.tomscz.afserver.persistence.entity;
 
 public enum AbsenceInstanceState {
 
-
     REQUESTED("absenceInstances.requested"), ACCEPTED("absenceInstances.accepted"), CANCELLED(
             "absenceInstances.cancelled"),DENIED("absenceInstances.denied");
 
@@ -19,4 +18,5 @@ public enum AbsenceInstanceState {
     public String toString() {
         return name;
     }
+    
 }

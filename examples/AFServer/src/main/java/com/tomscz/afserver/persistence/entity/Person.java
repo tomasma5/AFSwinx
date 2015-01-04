@@ -31,10 +31,8 @@ public class Person {
 
     @Id
     private int id;
-
     @Enumerated(EnumType.STRING)
     private List<UserRoles> userRole;
-
     private String firstName;
     private String lastName;
     private String login;

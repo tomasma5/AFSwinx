@@ -46,4 +46,5 @@ public class IdGenerator {
     public static synchronized int getNextUserRoleId() {
         return userRoleId++;
     }
+    
 }
