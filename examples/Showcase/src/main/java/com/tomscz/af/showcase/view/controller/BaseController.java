@@ -22,6 +22,14 @@ import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
+/**
+ * This is abstract controller, which hold action in menu and localization bar. It has also some
+ * support method.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public abstract class BaseController {
 
     protected BaseView view;
@@ -31,6 +39,9 @@ public abstract class BaseController {
         this.view = screen;
     }
 
+    /**
+     * This method register all listeners for this controller.
+     */
     protected void registerListeners() {
         view.addLoginButtonListener(loginButtonListener);
         view.addAvaiableCountryListener(avaiableCountryPublicListener);
@@ -44,13 +55,7 @@ public abstract class BaseController {
         view.addLogoutButtonMenuListener(logoutButtonListener);
     }
 
-    public BaseModel getModel() {
-        return model;
-    }
-
-    public void setModel(BaseModel model) {
-        this.model = model;
-    }
+    // This section register listeners from menu and localization
 
     private ActionListener loginButtonListener = new ActionListener() {
 
@@ -64,7 +69,7 @@ public abstract class BaseController {
             welcomeScreen.setVisible(true);
         }
     };
-    
+
     private ActionListener logoutButtonListener = new ActionListener() {
 
         @Override
@@ -132,7 +137,7 @@ public abstract class BaseController {
             absenceInstanceCreateView.setVisible(true);
         }
     };
-    
+
     private ActionListener myAbsenceInstanceListener = new ActionListener() {
 
         @Override
@@ -146,7 +151,7 @@ public abstract class BaseController {
             myAbsenceInstanceView.setVisible(true);
         }
     };
-    
+
     private ActionListener absenceInstanceEditListener = new ActionListener() {
 
         @Override
@@ -160,7 +165,7 @@ public abstract class BaseController {
             absenceInstanceEditView.setVisible(true);
         }
     };
-    
+
     private ActionListener onEnglishButtonExec = new ActionListener() {
 
         @Override
@@ -194,22 +199,36 @@ public abstract class BaseController {
             }
         }
     };
-    
-    protected void chooseDataInTableAndSetToForm(String tableId, String formId){
-        AFSwinxTable table =
-                (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(
-                    tableId);
-        try{
-        List<AFDataPack> datas = table.getSelectedData();
-        AFSwinxForm form =
-                (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(
-                    formId);
-        form.fillData(datas);
-        }
-        catch(IndexOutOfBoundsException exception){
-            view.getDialogs().failed("afswinx.choose.table.choosed", "afswinx.choose.table.outOfIndex",
-                exception.getMessage());
+
+    /**
+     * This method get selected data in table and set it to form.
+     * 
+     * @param tableId id of table.
+     * @param formId id of form.
+     */
+    protected void chooseDataInTableAndSetToForm(String tableId, String formId) {
+        // Find table
+        AFSwinxTable table = (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(tableId);
+        try {
+            // Try obtained data.
+            List<AFDataPack> datas = table.getSelectedData();
+            // Find existed form
+            AFSwinxForm form = (AFSwinxForm) AFSwinx.getInstance().getExistedComponent(formId);
+            // Set data to form
+            form.fillData(datas);
+        } catch (IndexOutOfBoundsException exception) {
+            // If this exception is catch, then no data were selected
+            view.getDialogs().failed("afswinx.choose.table.choosed",
+                    "afswinx.choose.table.outOfIndex", exception.getMessage());
         }
     }
-        
+
+    public BaseModel getModel() {
+        return model;
+    }
+
+    public void setModel(BaseModel model) {
+        this.model = model;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.tomscz.af.showcase.view;
+package com.tomscz.af.showcase.utils;
 
 import java.text.MessageFormat;
 import java.util.MissingResourceException;
@@ -6,6 +6,14 @@ import java.util.ResourceBundle;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 
+/**
+ * This class is responsible for working with resource bundle which contains localization in
+ * Showcase.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class Localization {
 
     public static String getLocalizationText(String key) {
@@ -26,4 +34,5 @@ public class Localization {
     public static ResourceBundle getLocalization() {
         return ApplicationContext.getInstance().getLocalization();
     }
+    
 }

@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.skin.MySkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -36,30 +37,6 @@ public class AbsenceTypManagementView extends BaseView {
     
     public AbsenceTypManagementView() {
         intialize();
-    }
-
-    public void addChooseButtonActionListener(ActionListener a) {
-        if (chooseButton != null) {
-            chooseButton.addActionListener(a);
-        }
-    }
-
-    public void addResetFormActionListener(ActionListener a) {
-        if (formResetButton != null) {
-            formResetButton.addActionListener(a);
-        }
-    }
-
-    public void addPerformButtonActionListener(ActionListener a) {
-        if (performButton != null) {
-            performButton.addActionListener(a);
-        }
-    }
-
-    public void addChooseCountryButtonActionListener(ActionListener a) {
-        if (chooseCountryButton != null) {
-            chooseCountryButton.addActionListener(a);
-        }
     }
 
     @Override
@@ -154,6 +131,30 @@ public class AbsenceTypManagementView extends BaseView {
         mainPanel.add(b1);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         return mainPanel;
+    }
+    
+    public void addChooseButtonActionListener(ActionListener a) {
+        if (chooseButton != null) {
+            chooseButton.addActionListener(a);
+        }
+    }
+
+    public void addResetFormActionListener(ActionListener a) {
+        if (formResetButton != null) {
+            formResetButton.addActionListener(a);
+        }
+    }
+
+    public void addPerformButtonActionListener(ActionListener a) {
+        if (performButton != null) {
+            performButton.addActionListener(a);
+        }
+    }
+
+    public void addChooseCountryButtonActionListener(ActionListener a) {
+        if (chooseCountryButton != null) {
+            chooseCountryButton.addActionListener(a);
+        }
     }
 
     public boolean isDisplayAdditionalsField() {

@@ -2,21 +2,28 @@ package com.tomscz.af.showcase.application;
 
 import java.util.HashMap;
 
-public class ShowcaseSecurity implements SecurityContext{
-
+/**
+ * This is concrete implementation of security.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
+public class ShowcaseSecurity implements SecurityContext {
+    
     private String userName;
     private String password;
     private boolean isValid = false;
-    
-    public ShowcaseSecurity(String userName, String password, boolean isValid){
+
+    public ShowcaseSecurity(String userName, String password, boolean isValid) {
         this.userName = userName;
         this.password = password;
         this.isValid = isValid;
     }
-    
+
     @Override
     public boolean isUserLogged() {
-       return isValid;
+        return isValid;
     }
 
     @Override
@@ -37,6 +44,4 @@ public class ShowcaseSecurity implements SecurityContext{
         return security;
     }
 
-    
-    
 }

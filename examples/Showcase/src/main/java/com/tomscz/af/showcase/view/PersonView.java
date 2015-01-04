@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.skin.LongInputSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -27,12 +28,6 @@ public class PersonView extends BaseView {
 
     public PersonView() {
         intialize();
-    }
-    
-    public void addUpdateButtonListener(ActionListener a) {
-        if (updateButton != null) {
-            this.updateButton.addActionListener(a);
-        }
     }
 
     @Override
@@ -84,6 +79,12 @@ public class PersonView extends BaseView {
                     e.getMessage());
         }
         return mainPanel;
+    }
+    
+    public void addUpdateButtonListener(ActionListener a) {
+        if (updateButton != null) {
+            this.updateButton.addActionListener(a);
+        }
     }
 
 }

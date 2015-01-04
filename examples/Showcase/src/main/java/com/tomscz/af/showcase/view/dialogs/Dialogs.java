@@ -4,7 +4,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.tomscz.af.showcase.view.Localization;
+import com.tomscz.af.showcase.utils.Localization;
 
 /**
  * This is dialog class which can display custom message to user in new dialog windows
@@ -42,8 +42,5 @@ public class Dialogs extends JDialog {
                 Localization.getLocalizationText(message, parameters),
                 Localization.getLocalizationText(message), JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    
-
     
 }

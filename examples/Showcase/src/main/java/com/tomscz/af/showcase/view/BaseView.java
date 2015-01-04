@@ -12,8 +12,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
 
+/**
+ * This class is base view which extends all view. This view hold left menu, localization bar and
+ * has abstract method to fill content. In this method place your content.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public abstract class BaseView extends JPanel {
 
     private JButton loginButton;
@@ -32,6 +41,9 @@ public abstract class BaseView extends JPanel {
 
     protected abstract JPanel createContent();
 
+    /**
+     * This method will build whole new screen.
+     */
     public void intialize() {
         mainFrame.getContentPane().removeAll();
         JPanel mainPanel = new JPanel();
@@ -60,14 +72,16 @@ public abstract class BaseView extends JPanel {
         return headerPanel;
     }
 
+    /**
+     * This method will create localization bar.
+     * @return localization bar which could be added to frame.
+     */
     protected JPanel createLocalizationToolbar() {
         JPanel localiztionToolbar = new JPanel();
-        czech =
-                new JButton(new ImageIcon(this.getClass().getResource("/images/czech.png")));
+        czech = new JButton(new ImageIcon(this.getClass().getResource("/images/czech.png")));
         czech.setBorder(BorderFactory.createEmptyBorder());
         czech.setContentAreaFilled(false);
-        english =
-                new JButton(new ImageIcon(this.getClass().getResource("/images/english.png")));
+        english = new JButton(new ImageIcon(this.getClass().getResource("/images/english.png")));
         english.setBorder(BorderFactory.createEmptyBorder());
         english.setContentAreaFilled(false);
         localiztionToolbar.add(czech);
@@ -76,6 +90,10 @@ public abstract class BaseView extends JPanel {
         return localiztionToolbar;
     }
 
+    /**
+     * This method will create left menu.
+     * @return left menu panel which could be added to frame.
+     */
     protected JPanel createLeftMenu() {
         JPanel menu = new JPanel();
         Dimension buttonSize = new Dimension(200, 30);
@@ -91,9 +109,10 @@ public abstract class BaseView extends JPanel {
         editAbsenceButton.setPreferredSize(buttonSize);
         addAbsenceButton = new JButton(Localization.getLocalizationText("link.createAbsence"));
         addAbsenceButton.setPreferredSize(buttonSize);
-        addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
+        addAbsenceTypeButton =
+                new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
         addAbsenceTypeButton.setPreferredSize(buttonSize);
-        logoutButton =  new JButton(Localization.getLocalizationText("logout.button"));
+        logoutButton = new JButton(Localization.getLocalizationText("logout.button"));
         logoutButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
         if (ApplicationContext.getInstance().getSecurityContext() != null
@@ -108,15 +127,16 @@ public abstract class BaseView extends JPanel {
             menu.add(addAbsenceButton);
             menu.add(addAbsenceTypeButton);
             menu.add(logoutButton);
-        }
-        else{
+        } else {
             loginButton = new JButton(Localization.getLocalizationText("link.login"));
             loginButton.setPreferredSize(buttonSize);
-            menu.add(loginButton); 
+            menu.add(loginButton);
         }
         return menu;
     }
 
+    //These methods add action to current button in menu.
+    
     public void addLoginButtonListener(ActionListener a) {
         loginButton.addActionListener(a);
     }
@@ -126,56 +146,56 @@ public abstract class BaseView extends JPanel {
             avaiableCountryButton.addActionListener(a);
         }
     }
-    
+
     public void addMyProfileListener(ActionListener a) {
         if (myProfileButton != null) {
             myProfileButton.addActionListener(a);
         }
     }
-    
+
     public void addAbsenceTypeListener(ActionListener a) {
         if (addAbsenceTypeButton != null) {
             addAbsenceTypeButton.addActionListener(a);
         }
     }
-    
+
     public void addAbsenceAddListener(ActionListener a) {
         if (addAbsenceButton != null) {
             addAbsenceButton.addActionListener(a);
         }
     }
-    
-    public void addMyAbsencesListener(ActionListener a){
-        if(myAbsencesButton != null){
+
+    public void addMyAbsencesListener(ActionListener a) {
+        if (myAbsencesButton != null) {
             myAbsencesButton.addActionListener(a);
         }
     }
-    
-    public void addAbsencesInstanceEditListener(ActionListener a){
-        if(editAbsenceButton != null){
+
+    public void addAbsencesInstanceEditListener(ActionListener a) {
+        if (editAbsenceButton != null) {
             editAbsenceButton.addActionListener(a);
         }
     }
-    
-    public void addLogoutButtonMenuListener(ActionListener a){
-        if(logoutButton != null){
+
+    public void addLogoutButtonMenuListener(ActionListener a) {
+        if (logoutButton != null) {
             logoutButton.addActionListener(a);
         }
     }
-    
-    public void addEnglishButtonListener(ActionListener a){
-        if(english != null){
+
+    public void addEnglishButtonListener(ActionListener a) {
+        if (english != null) {
             english.addActionListener(a);
         }
     }
-    
-    public void addCzechButtonListener(ActionListener a){
-        if( czech != null){
+
+    public void addCzechButtonListener(ActionListener a) {
+        if (czech != null) {
             czech.addActionListener(a);
         }
     }
-    
-    public Dialogs getDialogs(){
+
+    public Dialogs getDialogs() {
         return getMainFrame().getDialogs();
     }
 

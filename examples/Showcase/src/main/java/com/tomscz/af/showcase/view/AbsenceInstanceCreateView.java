@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.skin.AbsenceInstanceCreateSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -28,13 +29,6 @@ public class AbsenceInstanceCreateView extends BaseView {
 
     public AbsenceInstanceCreateView() {
         intialize();
-    }
-
-
-    public void addCreateButtonActionListener(ActionListener e) {
-        if (createButton != null) {
-            createButton.addActionListener(e);
-        }
     }
 
     @Override
@@ -87,6 +81,12 @@ public class AbsenceInstanceCreateView extends BaseView {
                     e.getMessage());
         }
         return mainPanel;
+    }
+    
+    public void addCreateButtonActionListener(ActionListener e) {
+        if (createButton != null) {
+            createButton.addActionListener(e);
+        }
     }
 
 }

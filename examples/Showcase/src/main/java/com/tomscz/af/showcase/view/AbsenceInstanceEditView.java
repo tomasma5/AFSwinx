@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.skin.AbsenceInstanceEditSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -33,17 +34,6 @@ public class AbsenceInstanceEditView extends BaseView {
         intialize();
     }
     
-    public void addPerformButtonActionListener(ActionListener a){
-        if(performButton != null){
-            performButton.addActionListener(a);
-        }
-    }
-    
-    public void addChooseButtonActionListener(ActionListener a){
-        if(chooseButton != null){
-            chooseButton.addActionListener(a);
-        }
-    }
 
     @Override
     protected JPanel createContent() {
@@ -100,6 +90,18 @@ public class AbsenceInstanceEditView extends BaseView {
         mainPanel.add(b1);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         return mainPanel;
+    }
+    
+    public void addPerformButtonActionListener(ActionListener a){
+        if(performButton != null){
+            performButton.addActionListener(a);
+        }
+    }
+    
+    public void addChooseButtonActionListener(ActionListener a){
+        if(chooseButton != null){
+            chooseButton.addActionListener(a);
+        }
     }
 
 }

@@ -15,9 +15,13 @@ public class Main {
         try {
             ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.ENGLISH_BUNDLE);
         } catch (FileNotFoundException e) {
-            //TODO handle it with
+            // Try czech bundle
+            try {
+                ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.CZECH_BUNDLE);
+            } catch (FileNotFoundException fileNotFoundException) {
+                // Do nothing localization wont be used
+            }
         }
-        MainFrame frame = MainFrame.getInstance();
         WelcomeScreen welcomeScreen = new WelcomeScreen();
         WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
     }

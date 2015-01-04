@@ -10,12 +10,23 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.utils.Localization;
+import com.tomscz.af.showcase.view.controller.AvaiableCountryController;
 import com.tomscz.af.showcase.view.skin.MySkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
+/**
+ * This is view which display country table and country form. Logic is that if you choose some
+ * country from country table then you can edit it in form. If no then you can create the new one.
+ * See {@link AvaiableCountryController} for more information about logic.
+ * 
+ * @author Martin Tomasek (martin@toms-cz.com)
+ * 
+ * @since 1.0.0.
+ */
 public class AvaiableCountryView extends BaseView {
 
     private static final long serialVersionUID = 1L;
@@ -32,31 +43,17 @@ public class AvaiableCountryView extends BaseView {
         intialize();
     }
 
-    public void addAddCountryListener(ActionListener a) {
-        if (addCountryButton != null) {
-            this.addCountryButton.addActionListener(a);
-        }
-    }
-
-    public void addChooseCountryListener(ActionListener a) {
-        if (chooseCountry != null) {
-            this.chooseCountry.addActionListener(a);
-        }
-    }
-
-    public void addResetForm(ActionListener a) {
-        if (resetForm != null) {
-            this.resetForm.addActionListener(a);
-        }
-    }
-    
     @Override
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection.xml");
         try {
+            // Get connection configuration file
+            InputStream connectionResource =
+                    getClass().getClassLoader().getResourceAsStream("connection.xml");
+            // Build selectable table which is build from connection.xml file, has id countryTable
+            // and used connection id tableCountryPublic it also used default localization of
+            // application
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
@@ -66,9 +63,14 @@ public class AvaiableCountryView extends BaseView {
                             .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
+            // Because of security policy, get logged user
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
+            // Re take connection.xml file
             connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            // Build form from connection.xml file with key countryForm, from connection.xml with id
+            // countryAdd, add security constrains to connection and use localization. Also apply
+            // MySkin class as skin.
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
@@ -77,12 +79,11 @@ public class AvaiableCountryView extends BaseView {
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin()).buildComponent();
             centerPanel.add(form);
+            //Add buttons
             addCountryButton =
                     new JButton(Localization.getLocalizationText("avaiableCountryView.buttton.add"));
             addCountryButton.setAlignmentX(CENTER_ALIGNMENT);
-            resetForm =
-                    new JButton(
-                            Localization.getLocalizationText("button.reset"));
+            resetForm = new JButton(Localization.getLocalizationText("button.reset"));
             resetForm.setAlignmentX(CENTER_ALIGNMENT);
             Box buttonBox = Box.createHorizontalBox();
             buttonBox.add(addCountryButton);
@@ -111,6 +112,25 @@ public class AvaiableCountryView extends BaseView {
                     e.getMessage());
         }
         return mainPanel;
+    }
+
+    // Section which provide add action listeners to buttons.
+    public void addAddCountryListener(ActionListener a) {
+        if (addCountryButton != null) {
+            this.addCountryButton.addActionListener(a);
+        }
+    }
+
+    public void addChooseCountryListener(ActionListener a) {
+        if (chooseCountry != null) {
+            this.chooseCountry.addActionListener(a);
+        }
+    }
+
+    public void addResetForm(ActionListener a) {
+        if (resetForm != null) {
+            this.resetForm.addActionListener(a);
+        }
     }
 
 }
