@@ -25,18 +25,19 @@ public class AFField {
         boolean allValidationsFine = true;
         StringBuilder errorMsgs = new StringBuilder();
         errorView.setVisibility(View.INVISIBLE);
-
-        for(ValidationRule rule : validations){
-            if(rule.getValidationType().equals(Constants.REQUIRED) && Boolean.valueOf(rule.getValue())){
-                if(field.getText() == null || field.getText().toString().isEmpty()){
-                    errorMsgs.append("This field is required");
-                    allValidationsFine = false;
+        if(validations != null) {
+            for (ValidationRule rule : validations) {
+                if (rule.getValidationType().equals(Constants.REQUIRED) && Boolean.valueOf(rule.getValue())) {
+                    if (field.getText() == null || field.getText().toString().isEmpty()) {
+                        errorMsgs.append("This field is required");
+                        allValidationsFine = false;
+                    }
                 }
-            }
-            if(rule.getValidationType().equals(Constants.MAXLENGHT)){
-                if(field.getText() != null && field.getText().toString().length() > Integer.parseInt(rule.getValue())){
-                    errorMsgs.append("Maximum chars :" + rule.getValue());
-                    allValidationsFine = false;
+                if (rule.getValidationType().equals(Constants.MAXLENGHT)) {
+                    if (field.getText() != null && field.getText().toString().length() > Integer.parseInt(rule.getValue())) {
+                        errorMsgs.append("Maximum chars :" + rule.getValue());
+                        allValidationsFine = false;
+                    }
                 }
             }
         }

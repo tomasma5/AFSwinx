@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         final String lang = "CZ"; //DUMMY TRANSLATIONS
 
         String url = "http://10.0.2.2:8080/AFServer/rest/users/loginForm";
+       // String url = "http://10.0.2.2:8080/AFServer/rest/country/definition";
         String loginURL = "http://10.0.2.2:8080/AFServer/rest/users/login";
 
         final StringRequest loginRequest = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>(){

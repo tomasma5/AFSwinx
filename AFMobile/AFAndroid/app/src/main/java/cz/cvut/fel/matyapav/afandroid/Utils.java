@@ -42,12 +42,14 @@ public class Utils {
 
     public static String translate(String key, String lang){
         if(lang.equals("EN")){
-            return Constants.en.get(key);
+            String translation = Constants.en.get(key);
+            return translation != null? translation: key;
         }
         if(lang.equals("CZ")){
-            return Constants.cz.get(key);
+            String translation = Constants.cz.get(key);
+            return translation != null? translation: key;
         }
-        //if translation not found return key back
+        //if language not specified return key back
         return key;
     }
 }
