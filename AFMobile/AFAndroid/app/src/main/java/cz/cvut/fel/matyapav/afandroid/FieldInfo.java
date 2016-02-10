@@ -1,7 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

@@ -14,11 +14,12 @@ import cz.cvut.fel.matyapav.afandroid.Utils;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 
 /**
- * Created by Marcelka on 25.12.2015.
+ * Builds input field
+ * Created by Pavel on 25.12.2015.
  */
 public class InputFieldBuilder{
 
-    public static final int DEFAULT_WIDTH = 200; //IN PIXELS
+    public static final int DEFAULT_WIDTH = 350; //IN PIXELS
 
     public AFField buildField(FieldInfo properties, Context context, String lang) {
         AFField field = new AFField();

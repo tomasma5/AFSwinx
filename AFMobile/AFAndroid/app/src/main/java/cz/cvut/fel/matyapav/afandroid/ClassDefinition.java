@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Marcelka on 25.12.2015.
+ * Created by Pavel on 25.12.2015.
  */
 public class ClassDefinition {
 

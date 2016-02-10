@@ -1,7 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -17,15 +16,12 @@ import cz.cvut.fel.matyapav.afandroid.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.JSONDefinitionParser;
 import cz.cvut.fel.matyapav.afandroid.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.LayoutProperties;
-import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**
- * Created by Marcelka on 26.12.2015.
+ * Builds for from class definition
+ * Created by Pavel on 26.12.2015.
  */
 public class FormBuilder {
-
-
 
     public AFForm buildForm(String response, Context context, String lang){
         AFForm form = new AFForm();

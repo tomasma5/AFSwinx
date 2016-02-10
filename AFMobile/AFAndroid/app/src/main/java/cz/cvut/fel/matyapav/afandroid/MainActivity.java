@@ -1,27 +1,19 @@
 package cz.cvut.fel.matyapav.afandroid;
 
-import android.app.ActionBar;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,7 +21,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.InputFieldBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,29 +34,24 @@ public class MainActivity extends AppCompatActivity {
 
         final String lang = "CZ"; //DUMMY TRANSLATIONS
 
-        String url = "http://10.0.2.2:8080/AFServer/rest/users/loginForm";
-       // String url = "http://10.0.2.2:8080/AFServer/rest/country/definition";
+        //String url = "http://10.0.2.2:8080/AFServer/rest/users/loginForm";
+        String url = "http://10.0.2.2:8080/AFServer/rest/country/definition";
         String loginURL = "http://10.0.2.2:8080/AFServer/rest/users/login";
 
+        //Login Request
         final StringRequest loginRequest = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>(){
 
             @Override
             public void onResponse(String response) {
                 LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
-                TextView loggedIn = new TextView(getThisActivity());
-                loggedIn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                loggedIn.setText("OK");
-                mainLayout.addView(loggedIn);
+                Toast.makeText(getApplicationContext(),"Login successful", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 LinearLayout mainLayout = (LinearLayout) findViewById(R.id.mainLayout);
-                TextView loggedIn = new TextView(getThisActivity());
-                loggedIn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                loggedIn.setText("FAILED");
-                mainLayout.addView(loggedIn);
+                Toast.makeText(getApplicationContext(),"Login failed", Toast.LENGTH_SHORT).show();
                 error.printStackTrace();
             }
         }){
@@ -83,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        //-----------------------------------------------------------------------------------------
+        //LoginForm
         final StringRequest stringRequest = new StringRequest
                 (Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -118,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), "Server connection failed", Toast.LENGTH_LONG).show();
                         error.printStackTrace();
                     }
                 }){
@@ -130,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //SET CREATE BUTTON
+        //------------------------------------------------------------------------------------------
+        //SET CREATE FORM BUTTON
         Button btn = (Button) findViewById(R.id.retryBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

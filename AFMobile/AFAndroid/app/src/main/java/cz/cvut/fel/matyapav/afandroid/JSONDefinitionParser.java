@@ -13,8 +13,6 @@ import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
  */
 public class JSONDefinitionParser implements JSONParser {
 
-
-
     @Override
     public ClassDefinition parse(JSONObject toBeParsed){
         ClassDefinition definition = null;
@@ -37,7 +35,7 @@ public class JSONDefinitionParser implements JSONParser {
                 }
             }
             //Inner classes
-            //NOT SUPPORTED YET
+            //TODO NOT SUPPORTED YET
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -103,7 +101,7 @@ public class JSONDefinitionParser implements JSONParser {
     }
 
     private FieldOption createOption(JSONObject optionJson) throws JSONException {
-        //NOT SUPPORTED YET
+        //TODO NOT SUPPORTED YET
         return null;
     }
 }

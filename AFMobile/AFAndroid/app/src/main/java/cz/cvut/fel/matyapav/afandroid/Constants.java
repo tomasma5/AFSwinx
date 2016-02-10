@@ -4,7 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Marcelka on 26.12.2015.
+ * Created by Pavel on 26.12.2015.
+ */
+
+/**
+ * This class defines string constants used in application
  */
 public class Constants {
 
@@ -42,10 +46,17 @@ public class Constants {
     static{
         cz.put("login.userName", "Uživatelské jméno");
         cz.put("login.password","Heslo");
+        cz.put("country.name", "Název");
+        cz.put("country.shortCut", "Zkratka");
+        cz.put("country.isActive", "Aktivní");
     }
     public static final Map<String, String> en = new HashMap<>();
     static{
         en.put("login.userName", "Username");
         en.put("login.password","Password");
+        en.put("country.name", "Name");
+        en.put("country.shortCut", "Shortcut");
+        en.put("country.isActive", "Active");
+
     }
 }

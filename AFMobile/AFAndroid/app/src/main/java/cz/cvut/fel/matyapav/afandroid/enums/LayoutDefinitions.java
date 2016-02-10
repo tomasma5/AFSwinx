@@ -1,9 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
-import cz.cvut.fel.matyapav.afandroid.LayoutProperties;
-
 /**
- * Created by Marcelka on 25.12.2015.
+ * Enum of supported layout definitions for form
+ * Created by Pavel on 25.12.2015.
  */
 public enum LayoutDefinitions {
 

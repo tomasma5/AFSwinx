@@ -7,7 +7,7 @@ import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**
- * Created by Marcelka on 25.12.2015.
+ * Created by Pavel on 25.12.2015.
  */
 public class Utils {
 

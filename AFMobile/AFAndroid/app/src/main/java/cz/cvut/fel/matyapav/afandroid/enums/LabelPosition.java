@@ -1,7 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
 /**
- * Created by Marcelka on 25.12.2015.
+ * Enum for supported positions of label in form
+ * Created by Pavel on 25.12.2015.
  */
 public enum LabelPosition {
 
