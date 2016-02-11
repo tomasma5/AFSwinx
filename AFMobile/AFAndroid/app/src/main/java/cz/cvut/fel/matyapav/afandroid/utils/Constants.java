@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,6 +57,7 @@ public class Constants {
         en.put("country.name", "Name");
         en.put("country.shortCut", "Shortcut");
         en.put("country.isActive", "Active");
-
     }
+
+
 }

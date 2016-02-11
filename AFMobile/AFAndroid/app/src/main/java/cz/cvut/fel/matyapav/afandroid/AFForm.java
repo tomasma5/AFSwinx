@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid;
 
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +11,17 @@ import java.util.List;
  */
 public class AFForm {
 
-    private View formView;
+    private View view;
+    private Button submitBtn;
+    private String name;
     private List<AFField> fields;
 
     public AFForm() {
     }
 
-    public AFForm(View formView) {
-        this.formView = formView;
+    public AFForm(View formView, String name) {
+        this.view = formView;
+        this.name = name;
     }
 
     public void addField(AFField field){
@@ -37,12 +41,12 @@ public class AFForm {
         return allValidationsFine;
     }
 
-    public View getFormView() {
-        return formView;
+    public View getView() {
+        return view;
     }
 
-    public void setFormView(View formView) {
-        this.formView = formView;
+    public void setView(View view) {
+        this.view = view;
     }
 
     public List<AFField> getFields() {
@@ -51,5 +55,21 @@ public class AFForm {
 
     public void setFields(List<AFField> fields) {
         this.fields = fields;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Button getSubmitBtn() {
+        return submitBtn;
+    }
+
+    public void setSubmitBtn(Button submitBtn) {
+        this.submitBtn = submitBtn;
     }
 }

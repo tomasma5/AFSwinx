@@ -1,10 +1,9 @@
-package cz.cvut.fel.matyapav.afandroid;
-
-import java.util.Map;
+package cz.cvut.fel.matyapav.afandroid.utils;
 
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
  * Created by Pavel on 25.12.2015.

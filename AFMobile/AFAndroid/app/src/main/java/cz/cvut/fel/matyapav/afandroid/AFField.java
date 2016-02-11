@@ -8,6 +8,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
  * This class defines GUI of the field + operations with it like validation

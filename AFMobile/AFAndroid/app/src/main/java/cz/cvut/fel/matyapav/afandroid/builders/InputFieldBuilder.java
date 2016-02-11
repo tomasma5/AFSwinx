@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import cz.cvut.fel.matyapav.afandroid.AFField;
-import cz.cvut.fel.matyapav.afandroid.Constants;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.Utils;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 
 /**

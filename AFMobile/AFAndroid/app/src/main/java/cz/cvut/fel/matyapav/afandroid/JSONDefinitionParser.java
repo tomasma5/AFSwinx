@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 17.12.2015.
