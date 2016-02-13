@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.components;
 
 import android.view.View;
 import android.widget.Button;
@@ -6,22 +6,22 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
+
 /**
  * Created by Pavel on 26.12.2015.
  */
-public class AFForm {
+public class AFForm extends AFComponent {
 
-    private View view;
     private Button submitBtn;
-    private String name;
     private List<AFField> fields;
 
     public AFForm() {
     }
 
-    public AFForm(View formView, String name) {
-        this.view = formView;
-        this.name = name;
+    public AFForm(String name, View view) {
+        super(name, view);
     }
 
     public void addField(AFField field){
@@ -41,12 +41,9 @@ public class AFForm {
         return allValidationsFine;
     }
 
-    public View getView() {
-        return view;
-    }
-
-    public void setView(View view) {
-        this.view = view;
+    @Override
+    SupportedComponents getComponentType() {
+        return SupportedComponents.FORM;
     }
 
     public List<AFField> getFields() {
@@ -55,14 +52,6 @@ public class AFForm {
 
     public void setFields(List<AFField> fields) {
         this.fields = fields;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Button getSubmitBtn() {

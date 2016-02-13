@@ -1,9 +1,14 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.parsers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
+import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
+import cz.cvut.fel.matyapav.afandroid.components.parts.FieldOption;
+import cz.cvut.fel.matyapav.afandroid.components.parts.LayoutProperties;
+import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;

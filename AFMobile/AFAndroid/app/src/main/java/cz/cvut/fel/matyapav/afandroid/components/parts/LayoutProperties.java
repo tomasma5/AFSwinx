@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.components.parts;
 
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;

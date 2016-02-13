@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class Constants {
 
-    //PARSING DEFINITION CONSTANTS
+    //JSON PARSING DEFINITION CONSTANTS
     public static final String CLASS_INFO = "classInfo";
     public static final String CLASS_NAME = "name";
     public static final String LAYOUT = "layout";

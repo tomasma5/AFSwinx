@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AFAndroid</string>
+    <string name="country.isActive">Aktivní</string>
+    <string name="country.name">Název</string>
+    <string name="country.shortCut">Zkratka</string>
+    <string name="login.password">Heslo</string>
+    <string name="login.success">Příhlášení proběhlo úspěšně.</string>
+    <string name="login.userName">Uživatelské jméno</string>
+    <string name="login.failed">Příhlášení selhalo.</string>
+    <string name="login.buttonText">Přihlásit se</string>
+    <string name="title_activity_settings">Nastavení</string>
+    <string name="lang.cz">Čeština</string>
+    <string name="lang.en">Angličtina</string>
+    <string name="form.building.msg">Stavím formulář...</string>
+    <string name="form.building.failed.title">Stavění formuláře selhalo...</string>
+    <string name="form.building.failed.msg">Něco se nepovedlo. Zkuste zkontrolovat internetové připojení a restartovat aplikaci.</string>
+    <string name="field.required">Toto pole je povinné.</string>
+    <string name="field.maxchars" translatable="false">Max. počet znaků je</string>
+    <string name="lang.title">Vyberte jazyk</string>
+</resources>

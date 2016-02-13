@@ -1,12 +1,13 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,21 +16,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Queue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
-import cz.cvut.fel.matyapav.afandroid.AFField;
-import cz.cvut.fel.matyapav.afandroid.AFForm;
-import cz.cvut.fel.matyapav.afandroid.ClassDefinition;
-import cz.cvut.fel.matyapav.afandroid.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.JSONDefinitionParser;
-import cz.cvut.fel.matyapav.afandroid.JSONParser;
-import cz.cvut.fel.matyapav.afandroid.LayoutProperties;
-import cz.cvut.fel.matyapav.afandroid.utils.UIMap;
+import cz.cvut.fel.matyapav.afandroid.AFAndroid;
+import cz.cvut.fel.matyapav.afandroid.Localization;
+import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
+import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
+import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
+import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
+import cz.cvut.fel.matyapav.afandroid.components.parts.LayoutProperties;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Builds for from class definition
@@ -37,18 +41,30 @@ import cz.cvut.fel.matyapav.afandroid.utils.UIMap;
  */
 public class FormBuilder {
 
-    private Context context;
+    private Activity activity;
 
-    public FormBuilder(Context context) {
-        this.context = context;
+    public FormBuilder(Activity activity) {
+        this.activity = activity;
     }
 
-    public void createAndInsertForm(final String url, final String lang, Button btn, ViewGroup parentLayout){
-        CreateFormTask task = new CreateFormTask(btn, parentLayout, getContext());
-        task.execute(url, lang);
+    public AFForm createForm(final String url){
+        CreateFormTask task = new CreateFormTask(activity);
+        try {
+            String response = task.execute(url).get(); //make it synchronous to return form
+            if(response != null) {
+                AFForm form = buildForm(response);
+                AFAndroid.getInstance().addCreatedComponent(form.getName(), form);
+                return form;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public AFForm buildForm(String response, String lang){
+    public AFForm buildForm(String response){
         AFForm form = new AFForm();
         LinearLayout formView = null;
         try {
@@ -57,28 +73,30 @@ public class FormBuilder {
             ClassDefinition classDef = parser.parse(jsonObj);
             if(classDef != null) {
                 form.setName(classDef.getClassName());
-                formView = (LinearLayout) buildLayout(classDef.getLayout(), context);
+                formView = (LinearLayout) buildLayout(classDef.getLayout(), activity);
                 InputFieldBuilder builder = new InputFieldBuilder();
                 for (FieldInfo field : classDef.getFields()) {
-                    AFField affield = builder.buildField(field, context, lang);
+                    AFField affield = builder.buildField(field, activity);
                     form.addField(affield);
                     formView.addView(affield.getView());
+                    formView.addView(makeSeparator(activity));
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            formView = (LinearLayout) buildError("Cannot build form "+e.getMessage(), context);
+            formView = (LinearLayout) buildError("Cannot build form "+e.getMessage());
         }
         form.setView(formView);
         return form;
     }
 
-    private View buildError(String errorMsg, Context context) {
-        LinearLayout err = new LinearLayout(context);
+    private View buildError(String errorMsg) {
+        LinearLayout err = new LinearLayout(activity);
         err.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        TextView msg = new TextView(context);
+        TextView msg = new TextView(activity);
         msg.setText(errorMsg);
         err.addView(msg);
+
         return err;
     }
 
@@ -94,102 +112,98 @@ public class FormBuilder {
         //TODO onecolumn twocolumn properties
         //TODO axisX axisY properties
         form.setOrientation(LinearLayout.VERTICAL);
-        form.setGravity(View.TEXT_ALIGNMENT_CENTER);
+        form.setGravity(Gravity.CENTER);
         form.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         return form;
 
     }
 
-    public Button buildSubmitButton(Context context, String text){
-        Button btn = new Button(context);
+    public Button buildSubmitButton(String text, AFForm form){
+        Button btn = new Button(activity);
         btn.setText(text);
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        form.setSubmitBtn(btn);
         return btn;
     }
 
-    public Context getContext() {
-        return context;
+    private View makeSeparator(Activity activity){
+        View v = new View(activity);
+        v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2));
+        v.setBackgroundColor(Color.rgb(51, 51, 51));
+        return v;
     }
 
     /*ASYNC TASK FOR CREATING FORM*/
-    private class CreateFormTask extends AsyncTask<String,Integer,AFForm>{
+    private class CreateFormTask extends AsyncTask<String,Integer,String>{
 
-        ViewGroup parentLayout;
         ProgressDialog progressDialog;
         AlertDialog.Builder dlgAlert;
-        Button btn;
+        Activity activity;
 
-        public CreateFormTask(Button btn, ViewGroup parentLayout, Context context) {
-            this.parentLayout = parentLayout;
-            this.btn = btn;
-            //progress dialog
-            progressDialog = new ProgressDialog(context);
+
+        public CreateFormTask(Activity activity) {
+            this.activity = activity;
+            progressDialog = new ProgressDialog(activity);
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage("Building form...");
+            progressDialog.setMessage(Localization.translate("form.building.msg", activity));
             //error dialog
-            dlgAlert  = new AlertDialog.Builder(context);
-            dlgAlert.setTitle("Building failed...");
-            dlgAlert.setMessage("Something went wrong during building form.");
+            dlgAlert  = new AlertDialog.Builder(activity);
+            dlgAlert.setTitle(Localization.translate("form.building.failed.title", activity));
+            dlgAlert.setMessage(Localization.translate("form.building.failed.msg", activity));
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog.show();
-        }
+            this.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.show();
+                }
+            });
+
+    }
 
         @Override
-        protected AFForm doInBackground(String... params) {
-            AFForm form = null;
-            String lang = params[1];
-            InputStream inputStream = null;
-            String response = "";
-            URL url = null;
+        protected String doInBackground(String... params) {
+            InputStream inputStream;
+            String response = null;
+            URL url;
             HttpURLConnection urlConnection = null;
             try {
                 url = new URL(params[0]);
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
-                urlConnection.setRequestProperty("CONTENT-TYPE","application/json");
+                urlConnection.setRequestProperty("CONTENT-TYPE", "application/json");
+                //urlConnection.setReadTimeout(5000);
                 inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 if (inputStream != null){
-                    response = convertInputStreamToString(inputStream);
-                    System.err.println("Response: "+response);
-                    form = buildForm(response, lang);
-                    form.setSubmitBtn(btn);
-                    UIMap.createdForms.put(form.getName(), form);
+                    response = Utils.convertInputStreamToString(inputStream);
                 }
             } catch (Exception e) {
-                Log.d("InputStream", e.getLocalizedMessage());
+                System.err.println("InputStream " + e.getLocalizedMessage());
+                e.printStackTrace();
             } finally {
                 urlConnection.disconnect();
             }
-            return form;
+            return response;
         }
 
         @Override
-        protected void onPostExecute(AFForm form){
-            super.onPostExecute(form);
-            progressDialog.hide();
-            if(form != null) {
-                parentLayout.addView(form.getView());
-                if(form.getSubmitBtn() != null) {
-                    parentLayout.addView(form.getSubmitBtn());
+        protected void onPostExecute(final String response){
+            super.onPostExecute(response);
+            this.activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                    if(response == null){
+                        dlgAlert.show();
+                    }
                 }
-            }else{
-                dlgAlert.show();
-            }
-        }
+            });
 
-        private String convertInputStreamToString(InputStream inputStream) throws IOException {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            String result = "";
-            while((line = bufferedReader.readLine()) != null)
-                result += line;
-            inputStream.close();
-            return result;
         }
     }
+
 
 }

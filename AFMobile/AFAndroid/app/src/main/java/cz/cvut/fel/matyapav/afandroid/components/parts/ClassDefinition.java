@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.components.parts;
 
 import java.util.ArrayList;
 import java.util.List;

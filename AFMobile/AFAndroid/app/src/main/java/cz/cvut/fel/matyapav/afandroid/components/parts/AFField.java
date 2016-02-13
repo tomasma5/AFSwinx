@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.components.parts;
 
 import android.view.View;
 import android.widget.EditText;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.Localization;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
@@ -30,13 +31,13 @@ public class AFField {
             for (ValidationRule rule : validations) {
                 if (rule.getValidationType().equals(Constants.REQUIRED) && Boolean.valueOf(rule.getValue())) {
                     if (field.getText() == null || field.getText().toString().isEmpty()) {
-                        errorMsgs.append("This field is required");
+                        errorMsgs.append(Localization.translate("field.required", field.getContext()));
                         allValidationsFine = false;
                     }
                 }
                 if (rule.getValidationType().equals(Constants.MAXLENGHT)) {
                     if (field.getText() != null && field.getText().toString().length() > Integer.parseInt(rule.getValue())) {
-                        errorMsgs.append("Maximum chars :" + rule.getValue());
+                        errorMsgs.append(Localization.translate("field.maxchars", field.getContext()) + rule.getValue());
                         allValidationsFine = false;
                     }
                 }
@@ -110,7 +111,6 @@ public class AFField {
         }
 
         fieldWithLabel.addView(field);
-        fieldWithLabel.addView(errorView);
 
         //LABEL AFTER
         if(label != null && !labelPosition.equals(LabelPosition.NONE.getPosition())) {
@@ -118,8 +118,13 @@ public class AFField {
                 fieldWithLabel.addView(label);
             }
         }
-
-        return fieldWithLabel;
+        //add errorview under fields
+        LinearLayout fullLayoutWithErrors = new LinearLayout(label.getContext());
+        fullLayoutWithErrors.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        fullLayoutWithErrors.setOrientation(LinearLayout.VERTICAL);
+        fullLayoutWithErrors.addView(fieldWithLabel);
+        fullLayoutWithErrors.addView(getErrorView());
+        return fullLayoutWithErrors;
 
     }
 
