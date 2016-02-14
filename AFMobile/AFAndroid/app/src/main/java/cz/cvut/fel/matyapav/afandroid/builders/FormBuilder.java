@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.view.Gravity;
@@ -15,17 +16,14 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Queue;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
-import cz.cvut.fel.matyapav.afandroid.Localization;
+import cz.cvut.fel.matyapav.afandroid.builders.tasks.GetFormDefinitionTask;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
@@ -48,9 +46,9 @@ public class FormBuilder {
     }
 
     public AFForm createForm(final String url){
-        CreateFormTask task = new CreateFormTask(activity);
+        GetFormDefinitionTask task = new GetFormDefinitionTask(activity);
         try {
-            String response = task.execute(url).get(); //make it synchronous to return form
+            String response = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url).get(); //make it synchronous to return form
             if(response != null) {
                 AFForm form = buildForm(response);
                 AFAndroid.getInstance().addCreatedComponent(form.getName(), form);
@@ -133,77 +131,7 @@ public class FormBuilder {
         return v;
     }
 
-    /*ASYNC TASK FOR CREATING FORM*/
-    private class CreateFormTask extends AsyncTask<String,Integer,String>{
 
-        ProgressDialog progressDialog;
-        AlertDialog.Builder dlgAlert;
-        Activity activity;
-
-
-        public CreateFormTask(Activity activity) {
-            this.activity = activity;
-            progressDialog = new ProgressDialog(activity);
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage(Localization.translate("form.building.msg", activity));
-            //error dialog
-            dlgAlert  = new AlertDialog.Builder(activity);
-            dlgAlert.setTitle(Localization.translate("form.building.failed.title", activity));
-            dlgAlert.setMessage(Localization.translate("form.building.failed.msg", activity));
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            this.activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.show();
-                }
-            });
-
-    }
-
-        @Override
-        protected String doInBackground(String... params) {
-            InputStream inputStream;
-            String response = null;
-            URL url;
-            HttpURLConnection urlConnection = null;
-            try {
-                url = new URL(params[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setRequestProperty("CONTENT-TYPE", "application/json");
-                //urlConnection.setReadTimeout(5000);
-                inputStream = new BufferedInputStream(urlConnection.getInputStream());
-                if (inputStream != null){
-                    response = Utils.convertInputStreamToString(inputStream);
-                }
-            } catch (Exception e) {
-                System.err.println("InputStream " + e.getLocalizedMessage());
-                e.printStackTrace();
-            } finally {
-                urlConnection.disconnect();
-            }
-            return response;
-        }
-
-        @Override
-        protected void onPostExecute(final String response){
-            super.onPostExecute(response);
-            this.activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressDialog.dismiss();
-                    if(response == null){
-                        dlgAlert.show();
-                    }
-                }
-            });
-
-        }
-    }
 
 
 }

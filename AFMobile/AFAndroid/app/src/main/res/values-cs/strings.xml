@@ -18,4 +18,5 @@
     <string name="field.required">Toto pole je povinné.</string>
     <string name="field.maxchars" translatable="false">Max. počet znaků je</string>
     <string name="lang.title">Vyberte jazyk</string>
+    <string name="exit.application">Ukončit aplikaci</string>
 </resources>

@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.utils;
 
 import android.content.Context;
 import android.content.Intent;

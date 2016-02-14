@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cz.cvut.fel.matyapav.afandroid.Localization;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 

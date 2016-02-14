@@ -1,23 +1,14 @@
 package cz.cvut.fel.matyapav.afandroid;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,12 +23,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 
 public class MainActivity extends AppCompatActivity {
@@ -157,12 +148,13 @@ public class MainActivity extends AppCompatActivity {
         return this;
     }
 
-    public void refreshActivity(){
-        Intent i = new Intent(getThisActivity(),getThisActivity().getClass());
-
+    private void refreshActivity(){
         finish();
+        Intent i = new Intent(getThisActivity(),getThisActivity().getClass());
+        //no animation
         overridePendingTransition(0, 0);
         getThisActivity().startActivity(i);
-        overridePendingTransition( 0, 0);
+        overridePendingTransition(0, 0);
+
     }
 }

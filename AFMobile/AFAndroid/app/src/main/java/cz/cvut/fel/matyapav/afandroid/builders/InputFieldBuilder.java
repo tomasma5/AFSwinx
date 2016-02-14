@@ -1,7 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -10,11 +9,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cz.cvut.fel.matyapav.afandroid.Localization;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 
 /**
