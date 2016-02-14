@@ -120,7 +120,6 @@ public class FormBuilder {
         Button btn = new Button(activity);
         btn.setText(text);
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        form.setSubmitBtn(btn);
         return btn;
     }
 

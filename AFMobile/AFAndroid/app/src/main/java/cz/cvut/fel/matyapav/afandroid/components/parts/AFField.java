@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.components.validators.MaxCharsValidator;
+import cz.cvut.fel.matyapav.afandroid.components.validators.RequiredValidator;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
@@ -19,7 +21,7 @@ public class AFField {
     private String id;
     private TextView label;
     private String labelPosition = LabelPosition.BEFORE.getPosition(); //DEFAULT
-    private EditText field;
+    private View field;
     private TextView errorView;
     private List<ValidationRule> validations;
 
@@ -30,16 +32,10 @@ public class AFField {
         if(validations != null) {
             for (ValidationRule rule : validations) {
                 if (rule.getValidationType().equals(Constants.REQUIRED) && Boolean.valueOf(rule.getValue())) {
-                    if (field.getText() == null || field.getText().toString().isEmpty()) {
-                        errorMsgs.append(Localization.translate("field.required", field.getContext()));
-                        allValidationsFine = false;
-                    }
+                    allValidationsFine = new RequiredValidator().validate(field, errorMsgs, rule);
                 }
                 if (rule.getValidationType().equals(Constants.MAXLENGHT)) {
-                    if (field.getText() != null && field.getText().toString().length() > Integer.parseInt(rule.getValue())) {
-                        errorMsgs.append(Localization.translate("field.maxchars", field.getContext()) + rule.getValue());
-                        allValidationsFine = false;
-                    }
+                    allValidationsFine = new MaxCharsValidator().validate(field, errorMsgs, rule);
                 }
             }
         }
@@ -58,11 +54,11 @@ public class AFField {
         this.label = label;
     }
 
-    public EditText getField() {
+    public View getField() {
         return field;
     }
 
-    public void setField(EditText field) {
+    public void setField(View field) {
         this.field = field;
     }
 
@@ -109,9 +105,9 @@ public class AFField {
                 fieldWithLabel.addView(label);
             }
         }
-
-        fieldWithLabel.addView(field);
-
+        if(field != null) {
+            fieldWithLabel.addView(field);
+        }
         //LABEL AFTER
         if(label != null && !labelPosition.equals(LabelPosition.NONE.getPosition())) {
             if (labelPosition.equals(LabelPosition.AFTER.getPosition())) {

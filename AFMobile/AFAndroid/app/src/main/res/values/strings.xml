@@ -18,4 +18,7 @@
     <string name="field.maxchars">Max. of chars is</string>
     <string name="lang.title">Select language</string>
     <string name="exit.application">Exit application</string>
+    <string name="person.firstName">Name</string>
+    <string name="person.lastName">Surname</string>
+    <string name="person.age">Age</string>
 </resources>

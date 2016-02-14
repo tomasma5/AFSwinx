@@ -14,7 +14,6 @@ import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
  */
 public class AFForm extends AFComponent {
 
-    private Button submitBtn;
     private List<AFField> fields;
 
     public AFForm() {
@@ -54,11 +53,4 @@ public class AFForm extends AFComponent {
         this.fields = fields;
     }
 
-    public Button getSubmitBtn() {
-        return submitBtn;
-    }
-
-    public void setSubmitBtn(Button submitBtn) {
-        this.submitBtn = submitBtn;
-    }
 }

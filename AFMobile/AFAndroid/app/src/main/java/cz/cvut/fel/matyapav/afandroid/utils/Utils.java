@@ -44,19 +44,6 @@ public class Utils {
         return null;
     }
 
-    public static String translate(String key, String lang){
-        if(lang.equals("EN")){
-            String translation = Constants.en.get(key);
-            return translation != null? translation: key;
-        }
-        if(lang.equals("CZ")){
-            String translation = Constants.cz.get(key);
-            return translation != null? translation: key;
-        }
-        //if language not specified return key back
-        return key;
-    }
-
     public static String convertInputStreamToString(InputStream inputStream) throws IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));

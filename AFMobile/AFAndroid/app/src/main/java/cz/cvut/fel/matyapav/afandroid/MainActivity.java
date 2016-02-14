@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     JSONObject loginInfo;
 
@@ -80,8 +81,9 @@ public class MainActivity extends AppCompatActivity {
         final RequestQueue queue = Volley.newRequestQueue(this);
         //String host = "10.0.2.2:8080";
         String host = "192.168.1.39:8080";
-        final String url = "http://"+host+"/AFServer/rest/users/loginForm";
+        //final String url = "http://"+host+"/AFServer/rest/users/loginForm";
         //  final String url = "http://10.0.2.2:8080/AFServer/rest/country/definition";
+        final String url = "http://"+host+"/AFServer/rest/users/profile";
         String loginURL = "http://"+host+"/AFServer/rest/users/login";
 
         final StringRequest loginRequest = new StringRequest(Request.Method.POST, loginURL, new Response.Listener<String>(){
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             loginInfo = new JSONObject();
                             for (AFField field : form.getFields()) {
-                                loginInfo.put(field.getId(), field.getField().getText());
+                                loginInfo.put(field.getId(), ((EditText) field.getField()).getText());
                             }
                             queue.add(loginRequest);
                             System.err.println(loginInfo.toString());
