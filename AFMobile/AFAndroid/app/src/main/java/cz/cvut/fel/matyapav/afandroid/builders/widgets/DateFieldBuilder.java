@@ -1,9 +1,8 @@
-package cz.cvut.fel.matyapav.afandroid.builders;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +18,16 @@ import java.util.Locale;
 public class DateFieldBuilder implements BasicBuilder{
 
 
+    private String dateFormat;
+
+    public DateFieldBuilder(){
+        this.dateFormat = "dd-MM-yyyy"; //Default date format
+    }
+
+    public DateFieldBuilder(String dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
     @Override
     public View buildFieldView(final Activity activity) {
         LinearLayout dateLayout = new LinearLayout(activity);
@@ -33,7 +42,7 @@ public class DateFieldBuilder implements BasicBuilder{
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                final SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
                 Calendar newCalendar = Calendar.getInstance();
                 DatePickerDialog fromDatePickerDialog = new DatePickerDialog(activity, new DatePickerDialog.OnDateSetListener() {
                     @Override

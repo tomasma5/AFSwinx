@@ -1,5 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.parsers;
 
+import android.net.wifi.p2p.WifiP2pManager;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,28 +23,33 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 public class JSONDefinitionParser implements JSONParser {
 
     @Override
-    public ClassDefinition parse(JSONObject toBeParsed){
+    public ClassDefinition parse(JSONObject classInfo){
         ClassDefinition definition = null;
 
         try {
             //Parse class name and create data pack with this class name
-            JSONObject classInfo = toBeParsed.getJSONObject(Constants.CLASS_INFO);
+            System.err.println("PARSING CLASS "+ classInfo.getString(Constants.CLASS_NAME));
             definition = new ClassDefinition(classInfo.getString(Constants.CLASS_NAME));
 
             //Parse layout
-            JSONObject layout = classInfo.getJSONObject(Constants.LAYOUT);
+            JSONObject layout = classInfo.getJSONObject(Constants.LAYOUT); //TODO consider changing to optJSONarray
             definition.setLayout(createLayoutProperties(layout));
 
             //Parse fields
-            JSONArray fields = classInfo.getJSONArray(Constants.FIELD_INFO);
+            JSONArray fields = classInfo.getJSONArray(Constants.FIELD_INFO); //TODO consider changing to optJSONarray
             if(fields != null){
                 for (int i = 0; i < fields.length(); i++) {
                     JSONObject field = fields.getJSONObject(i);
                     definition.addField(parseFieldInfo(field));
                 }
             }
-            //Inner classes
-            //TODO NOT SUPPORTED YET
+            JSONArray innerClasses = classInfo.optJSONArray(Constants.INNER_CLASSES);
+            if(innerClasses != null){
+                for (int i = 0; i < innerClasses.length(); i++) {
+                    JSONObject innerClass = innerClasses.getJSONObject(i);
+                    definition.addInnerClass(parse(innerClass)); //recursion;
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -51,6 +58,7 @@ public class JSONDefinitionParser implements JSONParser {
     }
 
     private FieldInfo parseFieldInfo(JSONObject field) throws JSONException {
+        System.err.println("PARSING FIELD "+field.getString(Constants.ID));
         FieldInfo fieldInfo = new FieldInfo();
         fieldInfo.setWidgetType(field.getString(Constants.WIDGET_TYPE));
         fieldInfo.setId(field.getString(Constants.ID));
@@ -80,22 +88,28 @@ public class JSONDefinitionParser implements JSONParser {
 
     private LayoutProperties createLayoutProperties(JSONObject layoutJson) throws JSONException {
         LayoutProperties layoutProp = new LayoutProperties();
-        String layDefName = layoutJson.optString(Constants.LAYOUT_DEF);
-        LayoutDefinitions layDef = Utils.chooseLayoutDefByName(layDefName);
-        if(layDef != null){
-            layoutProp.setLayoutDefinition(layDef);
-        }
+        try {
+            String layDefName = layoutJson.optString(Constants.LAYOUT_DEF);
+            LayoutDefinitions layDef = LayoutDefinitions.valueOf(layDefName);
+            if(layDef != null){
+                layoutProp.setLayoutDefinition(layDef);
+            }
 
-        String orientation = layoutJson.optString(Constants.LAYOUT_ORIENT);
-        LayoutOrientation layOrient = Utils.chooseLayoutOrientByName(orientation);
-        if(layOrient != null){
-            layoutProp.setLayoutOrientation(layOrient);
-        }
+            String orientation = layoutJson.optString(Constants.LAYOUT_ORIENT);
+            LayoutOrientation layOrient = LayoutOrientation.valueOf(orientation);
+            if(layOrient != null){
+                layoutProp.setLayoutOrientation(layOrient);
+            }
 
-        String position  = layoutJson.optString(Constants.LABEL_POS);
-        LabelPosition labelPos = Utils.chooseLayoutPositionByName(position);
-        if(labelPos != null){
-            layoutProp.setLabelPossition(labelPos);
+            String position  = layoutJson.optString(Constants.LABEL_POS);
+
+            LabelPosition labelPos = LabelPosition.valueOf(position);
+            if (labelPos != null) {
+                layoutProp.setLabelPossition(labelPos);
+            }
+        }catch(IllegalArgumentException e){
+            System.err.println(e.getLocalizedMessage());
+            //e.printStackTrace();
         }
         return layoutProp;
     }
@@ -108,7 +122,9 @@ public class JSONDefinitionParser implements JSONParser {
     }
 
     private FieldOption createOption(JSONObject optionJson) throws JSONException {
-        //TODO NOT SUPPORTED YET
-        return null;
+        FieldOption option = new FieldOption();
+        option.setKey(optionJson.getString(Constants.KEY));
+        option.setValue(optionJson.getString(Constants.VALUE));
+        return option;
     }
 }

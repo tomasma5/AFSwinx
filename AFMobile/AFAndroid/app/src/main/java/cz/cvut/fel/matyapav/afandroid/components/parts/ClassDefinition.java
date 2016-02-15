@@ -11,6 +11,7 @@ public class ClassDefinition {
     private String className;
     private LayoutProperties layout;
     private List<FieldInfo> fields;
+    private List<ClassDefinition> innerClasses;
 
     public ClassDefinition(String className) {
         this.className = className;
@@ -45,5 +46,16 @@ public class ClassDefinition {
             fields = new ArrayList<FieldInfo>();
         }
         fields.add(field);
+    }
+
+    public void addInnerClass(ClassDefinition innerClass){
+        if(innerClasses == null){
+            innerClasses = new ArrayList<ClassDefinition>();
+        }
+        innerClasses.add(innerClass);
+    }
+
+    public List<ClassDefinition> getInnerClasses() {
+        return innerClasses;
     }
 }

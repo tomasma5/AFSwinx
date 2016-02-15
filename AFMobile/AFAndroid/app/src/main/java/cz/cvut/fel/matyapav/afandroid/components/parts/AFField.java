@@ -1,42 +1,55 @@
 package cz.cvut.fel.matyapav.afandroid.components.parts;
 
+import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.MaxCharsValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.RequiredValidator;
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * This class defines GUI of the field + operations with it like validation
  */
 public class AFField {
 
+    private SupportedWidgets widgetType;
     private String id;
     private TextView label;
     private String labelPosition = LabelPosition.BEFORE.getPosition(); //DEFAULT
-    private View field;
+    private View fieldView;
     private TextView errorView;
     private List<ValidationRule> validations;
+
+    public AFField(SupportedWidgets widgetType) {
+        this.widgetType = widgetType;
+    }
 
     public boolean validate() {
         boolean allValidationsFine = true;
         StringBuilder errorMsgs = new StringBuilder();
-        errorView.setVisibility(View.INVISIBLE);
+        errorView.setVisibility(View.GONE);
         if(validations != null) {
             for (ValidationRule rule : validations) {
-                if (rule.getValidationType().equals(Constants.REQUIRED) && Boolean.valueOf(rule.getValue())) {
-                    allValidationsFine = new RequiredValidator().validate(field, errorMsgs, rule);
+                AFValidator validator = Utils.getFieldValidator(rule);
+                System.err.println("VALIDATION RULE "+rule.toString());
+                System.err.println("VALIDATOR "+validator.toString());
+                boolean validationResult = validator.validate(this,errorMsgs,rule);
+                if(allValidationsFine){ //if once false stays false
+                    allValidationsFine = validationResult;
                 }
-                if (rule.getValidationType().equals(Constants.MAXLENGHT)) {
-                    allValidationsFine = new MaxCharsValidator().validate(field, errorMsgs, rule);
-                }
+                System.err.println("RESULT "+allValidationsFine);
             }
         }
         if(!allValidationsFine){
@@ -54,12 +67,12 @@ public class AFField {
         this.label = label;
     }
 
-    public View getField() {
-        return field;
+    public View getFieldView() {
+        return fieldView;
     }
 
-    public void setField(View field) {
-        this.field = field;
+    public void setFieldView(View fieldView) {
+        this.fieldView = fieldView;
     }
 
     public String getId() {
@@ -95,34 +108,46 @@ public class AFField {
     }
 
     public View getView(){
-        LinearLayout fieldWithLabel = new LinearLayout(label.getContext());
-        fieldWithLabel.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        TableRow fullLayoutWithErrors = new TableRow(label.getContext());
+        //add errorview on the before fields
+        fieldView.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
+
+        LinearLayout labelPlusError = new LinearLayout(label.getContext());
+        labelPlusError.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.4f));
+        labelPlusError.setOrientation(LinearLayout.VERTICAL);
+        labelPlusError.addView(errorView);
+        labelPlusError.addView(label);
 
         //LABEL BEFORE
-
         if(label != null && !labelPosition.equals(LabelPosition.NONE.getPosition())) {
             if (labelPosition.equals(LabelPosition.BEFORE.getPosition())) {
-                fieldWithLabel.addView(label);
+                fullLayoutWithErrors.addView(labelPlusError);
             }
         }
-        if(field != null) {
-            fieldWithLabel.addView(field);
+        if(fieldView != null) {
+            fullLayoutWithErrors.addView(fieldView);
         }
         //LABEL AFTER
         if(label != null && !labelPosition.equals(LabelPosition.NONE.getPosition())) {
             if (labelPosition.equals(LabelPosition.AFTER.getPosition())) {
-                fieldWithLabel.addView(label);
+                fullLayoutWithErrors.addView(labelPlusError);
             }
         }
-        //add errorview under fields
-        LinearLayout fullLayoutWithErrors = new LinearLayout(label.getContext());
-        fullLayoutWithErrors.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        fullLayoutWithErrors.setOrientation(LinearLayout.VERTICAL);
-        fullLayoutWithErrors.addView(fieldWithLabel);
-        fullLayoutWithErrors.addView(getErrorView());
         return fullLayoutWithErrors;
-
     }
 
+    public SupportedWidgets getWidgetType() {
+        return widgetType;
+    }
 
+    @Override
+    public String toString() {
+        return "AFField{" +
+                id + '\'' +
+                ", label=" + label +
+                ", labelPosition='" + labelPosition + '\'' +
+                ", fieldView=" + fieldView +
+                ", validations=" + validations +
+                '}';
+    }
 }

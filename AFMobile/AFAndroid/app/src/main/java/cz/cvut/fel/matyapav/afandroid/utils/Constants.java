@@ -28,20 +28,10 @@ public class Constants {
     public static final String LABEL_POS = "labelPosstion";
     public static final String RULES = "rules";
     public static final String VALIDATION_TYPE = "validationType";
+    public static final String KEY = "key";
     public static final String VALUE = "value";
     public static final String OPTIONS = "options";
     public static final String INNER_CLASSES = "innerClasses";
-
-    //WIDGET TYPE CONSTANTS
-    public static final String TEXTFIELD = "TEXTFIELD";
-    public static final String PASSWORD = "PASSWORD";
-    public static final String NUMBERFIELD = "NUMBERFIELD";
-    public static final String CALENDAR = "CALENDAR";
-
-    //VALIDATIONS
-    public static final String REQUIRED = "REQUIRED";
-    public static final String MAXLENGHT = "MAXLENGTH";
-
 
 
 }

@@ -14,11 +14,15 @@
     <string name="form.building.msg">Building form...</string>
     <string name="form.building.failed.title">Form building failed...</string>
     <string name="form.building.failed.msg">Something went wrong. Try check your internet connection and rerun app.</string>
-    <string name="field.required">This field is required.</string>
-    <string name="field.maxchars">Max. of chars is</string>
+    <string name="validation.required">This field is required.</string>
+    <string name="validation.maxchars">Maximum of chars is</string>
     <string name="lang.title">Select language</string>
     <string name="exit.application">Exit application</string>
     <string name="person.firstName">Name</string>
     <string name="person.lastName">Surname</string>
     <string name="person.age">Age</string>
+    <string name="option.yes">Yes</string>
+    <string name="option.no">No</string>
+    <string name="validation.minval">Minimum value is</string>
+    <string name="validation.maxval">Maximum value is</string>
 </resources>

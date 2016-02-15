@@ -21,8 +21,8 @@ public class Localization {
             int id = context.getResources().getIdentifier(resource, "string", "cz.cvut.fel.matyapav.afandroid");
             return context.getResources().getString(id);
         }catch (Exception e){
-            //resource not found
-            e.printStackTrace();
+            System.err.println("Localization text "+resource+" not found");
+           // e.printStackTrace();
             return resource;
         }
     }

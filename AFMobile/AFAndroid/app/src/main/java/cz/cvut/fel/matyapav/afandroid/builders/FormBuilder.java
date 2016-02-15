@@ -1,37 +1,37 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
+import android.net.LinkAddress;
 import android.os.AsyncTask;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.builders.tasks.GetFormDefinitionTask;
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.components.parts.LayoutProperties;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
  * Builds for from class definition
@@ -64,28 +64,44 @@ public class FormBuilder {
 
     public AFForm buildForm(String response){
         AFForm form = new AFForm();
-        LinearLayout formView = null;
+        LinearLayout formView = new LinearLayout(activity);
         try {
             JSONParser parser = new JSONDefinitionParser();
-            JSONObject jsonObj = new JSONObject(response);
+            JSONObject jsonObj = new JSONObject(response).getJSONObject(Constants.CLASS_INFO);
             ClassDefinition classDef = parser.parse(jsonObj);
-            if(classDef != null) {
-                form.setName(classDef.getClassName());
-                formView = (LinearLayout) buildLayout(classDef.getLayout(), activity);
-                InputFieldBuilder builder = new InputFieldBuilder();
-                for (FieldInfo field : classDef.getFields()) {
-                    AFField affield = builder.buildField(field, activity);
-                    form.addField(affield);
-                    formView.addView(affield.getView());
-                    formView.addView(makeSeparator(activity));
-                }
-            }
+            formView.addView(buildFields(classDef, form, new LinearLayout(activity), 0, false));
         } catch (JSONException e) {
             e.printStackTrace();
             formView = (LinearLayout) buildError("Cannot build form "+e.getMessage());
         }
         form.setView(formView);
         return form;
+    }
+
+    private View buildFields(ClassDefinition classDef, AFForm form,  LinearLayout formView, int numberOfInnerClasses, boolean parsingInnerClass ){
+        if(parsingInnerClass){
+            numberOfInnerClasses = 0;
+        }
+        TableLayout fieldsView = null;
+        if(classDef != null) {
+            form.setName(classDef.getClassName());
+            fieldsView = (TableLayout) buildLayout(classDef, activity);
+            InputFieldBuilder builder = new InputFieldBuilder();
+            for (FieldInfo field : classDef.getFields()) {
+                if(field.isInnerClass()){
+                    fieldsView.addView(buildFields(classDef.getInnerClasses().get(numberOfInnerClasses), form, formView, numberOfInnerClasses++, true));
+                }else {
+                    AFField affield = builder.buildField(field, activity);
+                    if (affield != null) {
+                        form.addField(affield);
+                        System.err.println(affield.toString());
+                        fieldsView.addView(affield.getView());
+                    }
+                }
+            }
+        }
+        System.err.println("NUMBER OF ELEMENTS IN FORM "+form.getFields().size());
+        return fieldsView;
     }
 
     private View buildError(String errorMsg) {
@@ -98,20 +114,13 @@ public class FormBuilder {
         return err;
     }
 
-    private View buildLayout(LayoutProperties properties, Context context){
-        LinearLayout form = new LinearLayout(context);
-        /*
-        if(properties.getLayoutOrientation().getName().equals(LayoutOrientation.AXISY.getName())) {
-            form.setOrientation(LinearLayout.VERTICAL);
-        }else if(properties.getLayoutOrientation().getName().equals(LayoutOrientation.AXISX.getName())){
-            form.setOrientation(LinearLayout.HORIZONTAL);
-        }
-        */
+    private View buildLayout(ClassDefinition classDefinition, Context context){
+        TableLayout form = new TableLayout(context);
+        form.setLayoutParams(new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
         //TODO onecolumn twocolumn properties
         //TODO axisX axisY properties
-        form.setOrientation(LinearLayout.VERTICAL);
-        form.setGravity(Gravity.CENTER);
-        form.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
         return form;
 
     }
@@ -122,15 +131,6 @@ public class FormBuilder {
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         return btn;
     }
-
-    private View makeSeparator(Activity activity){
-        View v = new View(activity);
-        v.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2));
-        v.setBackgroundColor(Color.rgb(51, 51, 51));
-        return v;
-    }
-
-
 
 
 }

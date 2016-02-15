@@ -1,7 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid;
 
 import android.app.Activity;
-import android.content.Context;
 
 import java.util.HashMap;
 

@@ -15,11 +15,15 @@
     <string name="form.building.msg">Stavím formulář...</string>
     <string name="form.building.failed.title">Stavění formuláře selhalo...</string>
     <string name="form.building.failed.msg">Něco se nepovedlo. Zkuste zkontrolovat internetové připojení a restartovat aplikaci.</string>
-    <string name="field.required">Toto pole je povinné.</string>
-    <string name="field.maxchars" translatable="false">Max. počet znaků je</string>
+    <string name="validation.required">Toto pole je povinné.</string>
+    <string name="validation.maxchars" translatable="false">Maximální počet znaků je</string>
     <string name="lang.title">Vyberte jazyk</string>
     <string name="exit.application">Ukončit aplikaci</string>
     <string name="person.firstName">Jméno</string>
     <string name="person.lastName">Příjmení</string>
     <string name="person.age">Věk</string>
+    <string name="option.no">Ne</string>
+    <string name="option.yes">Ano</string>
+    <string name="validation.minval">Minimální hodnota je </string>
+    <string name="validation.maxval">Maximální hodnota je</string>
 </resources>

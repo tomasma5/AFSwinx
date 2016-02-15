@@ -11,7 +11,7 @@ public class FieldInfo {
     private String widgetType;
     private String id;
     private String label;
-    private boolean isClass;
+    private boolean isInnerClass;
     private boolean readOnly;
     private boolean visible;
     private LayoutProperties layout;
@@ -45,12 +45,12 @@ public class FieldInfo {
         this.label = label;
     }
 
-    public boolean isClass() {
-        return isClass;
+    public boolean isInnerClass() {
+        return isInnerClass;
     }
 
     public void setIsClass(boolean isClass) {
-        this.isClass = isClass;
+        this.isInnerClass = isClass;
     }
 
     public boolean isReadOnly() {
@@ -105,7 +105,7 @@ public class FieldInfo {
                 "widgetType='" + widgetType + '\'' +
                 ", id='" + id + '\'' +
                 ", label='" + label + '\'' +
-                ", isClass=" + isClass +
+                ", isInnerClass=" + isInnerClass +
                 ", readOnly=" + readOnly +
                 ", visible=" + visible +
                 ", layout=" + layout +

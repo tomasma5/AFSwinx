@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity  {
                         try {
                             loginInfo = new JSONObject();
                             for (AFField field : form.getFields()) {
-                                loginInfo.put(field.getId(), ((EditText) field.getField()).getText());
+                                loginInfo.put(field.getId(), ((EditText) field.getFieldView()).getText());
                             }
                             queue.add(loginRequest);
                             System.err.println(loginInfo.toString());
