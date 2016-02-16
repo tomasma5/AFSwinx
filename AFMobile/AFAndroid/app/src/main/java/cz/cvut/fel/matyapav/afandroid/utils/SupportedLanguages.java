@@ -1,9 +1,11 @@
 package cz.cvut.fel.matyapav.afandroid.utils;
 
+import java.io.Serializable;
+
 /**
  * Created by Pavel on 13.02.2016.
  */
-public enum SupportedLanguages {
+public enum SupportedLanguages implements Serializable {
 
     CZ("cs", "CZ"),
     EN("en", "EN");

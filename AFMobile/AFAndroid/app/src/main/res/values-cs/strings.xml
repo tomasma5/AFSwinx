@@ -35,4 +35,6 @@
     <string name="action_settings">Nastavení</string>
     <string name="navigation_drawer_close">Zavřít navigaci</string>
     <string name="navigation_drawer_open">Otevřít navigaci</string>
+    <string name="button.perform">Proveď</string>
+    <string name="button.update">Aktualizuj</string>
 </resources>

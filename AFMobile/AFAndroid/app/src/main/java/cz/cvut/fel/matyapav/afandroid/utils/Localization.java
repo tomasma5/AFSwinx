@@ -16,6 +16,8 @@ import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
  */
 public class Localization {
 
+    private static SupportedLanguages currentLanguage;
+
     public static String translate(String resource, Context context){
         try {
             int id = context.getResources().getIdentifier(resource, "string", "cz.cvut.fel.matyapav.afandroid");
@@ -34,6 +36,11 @@ public class Localization {
         android.content.res.Configuration conf = res.getConfiguration();
         conf.locale = new Locale(lang.getLang().toLowerCase());
         res.updateConfiguration(conf, dm);
+        currentLanguage = lang;
+    }
+
+    public static SupportedLanguages getCurrentLanguage(){
+        return currentLanguage;
     }
 
 
