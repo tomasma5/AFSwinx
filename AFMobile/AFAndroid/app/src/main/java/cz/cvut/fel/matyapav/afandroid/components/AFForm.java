@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
@@ -19,8 +21,8 @@ public class AFForm extends AFComponent {
     public AFForm() {
     }
 
-    public AFForm(String name, View view) {
-        super(name, view);
+    public AFForm(String name, View view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
+        super(name, view, layoutDefinitions, layoutOrientation);
     }
 
     public void addField(AFField field){
@@ -51,6 +53,16 @@ public class AFForm extends AFComponent {
 
     public void setFields(List<AFField> fields) {
         this.fields = fields;
+    }
+
+    public AFField getFieldById(String id){
+        for (AFField field: getFields()) {
+            if(field.getId().equals(id)){
+                return field;
+            }
+        }
+        //not found
+        return null;
     }
 
 }

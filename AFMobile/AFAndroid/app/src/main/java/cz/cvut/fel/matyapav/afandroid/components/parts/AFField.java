@@ -14,6 +14,8 @@ import java.util.List;
 import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.MaxCharsValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.RequiredValidator;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
@@ -27,10 +29,14 @@ public class AFField {
     private SupportedWidgets widgetType;
     private String id;
     private TextView label;
-    private String labelPosition = LabelPosition.BEFORE.getPosition(); //DEFAULT
+    private LabelPosition labelPosition = LabelPosition.BEFORE; //DEFAULT
+    private LayoutDefinitions layoutDefinitions = LayoutDefinitions.ONECOLUMNLAYOUT; //DEFAULT
+    private LayoutOrientation layoutOrientation = LayoutOrientation.AXISX; //DEFAULT
     private View fieldView;
     private TextView errorView;
+    private View completeView;
     private List<ValidationRule> validations;
+
 
     public AFField(SupportedWidgets widgetType) {
         this.widgetType = widgetType;
@@ -91,11 +97,11 @@ public class AFField {
         this.validations = validations;
     }
 
-    public void setLabelPosition(String labelPosition) {
+    public void setLabelPosition(LabelPosition labelPosition) {
         this.labelPosition = labelPosition;
     }
 
-    public String getLabelPosition() {
+    public LabelPosition getLabelPosition() {
         return labelPosition;
     }
 
@@ -107,45 +113,49 @@ public class AFField {
         this.errorView = errorView;
     }
 
+    public void setView(View view){
+        this.completeView = view;
+    }
+
     public View getView(){
-        TableRow fullLayoutWithErrors = new TableRow(label.getContext());
-        //add errorview on the before fields
-        fieldView.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.6f));
+       return this.completeView;
+    }
 
-        LinearLayout labelPlusError = new LinearLayout(label.getContext());
-        labelPlusError.setLayoutParams(new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.4f));
-        labelPlusError.setOrientation(LinearLayout.VERTICAL);
-        labelPlusError.addView(errorView);
-        labelPlusError.addView(label);
+    public LayoutDefinitions getLayoutDefinitions() {
+        return layoutDefinitions;
+    }
 
-        //LABEL BEFORE
-        if(label != null && !labelPosition.equals(LabelPosition.NONE.getPosition())) {
-            if (labelPosition.equals(LabelPosition.BEFORE.getPosition())) {
-                fullLayoutWithErrors.addView(labelPlusError);
-            }
-        }
-        if(fieldView != null) {
-            fullLayoutWithErrors.addView(fieldView);
-        }
-        //LABEL AFTER
-        if(label != null && !labelPosition.equals(LabelPosition.NONE.getPosition())) {
-            if (labelPosition.equals(LabelPosition.AFTER.getPosition())) {
-                fullLayoutWithErrors.addView(labelPlusError);
-            }
-        }
-        return fullLayoutWithErrors;
+    public void setLayoutDefinitions(LayoutDefinitions layoutDefinitions) {
+        this.layoutDefinitions = layoutDefinitions;
+    }
+
+    public LayoutOrientation getLayoutOrientation() {
+        return layoutOrientation;
+    }
+
+    public void setLayoutOrientation(LayoutOrientation layoutOrientation) {
+        this.layoutOrientation = layoutOrientation;
+    }
+
+    public void setWidgetType(SupportedWidgets widgetType) {
+        this.widgetType = widgetType;
     }
 
     public SupportedWidgets getWidgetType() {
         return widgetType;
     }
 
+
     @Override
     public String toString() {
         return "AFField{" +
-                id + '\'' +
+                "errorView=" + errorView +
+                ", widgetType=" + widgetType +
+                ", id='" + id + '\'' +
                 ", label=" + label +
-                ", labelPosition='" + labelPosition + '\'' +
+                ", labelPosition=" + labelPosition +
+                ", layoutDefinitions=" + layoutDefinitions +
+                ", layoutOrientation=" + layoutOrientation +
                 ", fieldView=" + fieldView +
                 ", validations=" + validations +
                 '}';

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">AFAndroid</string>
     <string name="country.isActive">Aktivní</string>
-    <string name="country.name">Název</string>
+    <string name="country.name">Země</string>
     <string name="country.shortCut">Zkratka</string>
     <string name="login.password">Heslo</string>
     <string name="login.success">Příhlášení proběhlo úspěšně.</string>
@@ -10,8 +10,6 @@
     <string name="login.failed">Příhlášení selhalo.</string>
     <string name="login.buttonText">Přihlásit se</string>
     <string name="title_activity_settings">Nastavení</string>
-    <string name="lang.cz">Čeština</string>
-    <string name="lang.en">Angličtina</string>
     <string name="form.building.msg">Stavím formulář...</string>
     <string name="form.building.failed.title">Stavění formuláře selhalo...</string>
     <string name="form.building.failed.msg">Něco se nepovedlo. Zkuste zkontrolovat internetové připojení a restartovat aplikaci.</string>
@@ -26,4 +24,15 @@
     <string name="option.yes">Ano</string>
     <string name="validation.minval">Minimální hodnota je </string>
     <string name="validation.maxval">Maximální hodnota je</string>
+    <string name="absenceInstance.startDate">Začátek</string>
+    <string name="absenceInstance.endDate">Konec</string>
+    <string name="absenceType.name">Název</string>
+    <string name="absenceInstance.state">Stav</string>
+    <string name="absenceInstances.cancelled">Zrušena</string>
+    <string name="absenceInstances.accepted">Přijata</string>
+    <string name="absenceInstances.denied">Zamítnuta</string>
+    <string name="absenceInstances.requested">Zažádána</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="navigation_drawer_close">Zavřít navigaci</string>
+    <string name="navigation_drawer_open">Otevřít navigaci</string>
 </resources>

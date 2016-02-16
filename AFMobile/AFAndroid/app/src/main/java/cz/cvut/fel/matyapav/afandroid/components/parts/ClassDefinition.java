@@ -10,7 +10,7 @@ public class ClassDefinition {
 
     private String className;
     private LayoutProperties layout;
-    private List<FieldInfo> fields;
+    private List<FieldInfo> fieldInfos;
     private List<ClassDefinition> innerClasses;
 
     public ClassDefinition(String className) {
@@ -33,19 +33,19 @@ public class ClassDefinition {
         this.layout = layout;
     }
 
-    public List<FieldInfo> getFields() {
-        return fields;
+    public List<FieldInfo> getFieldInfos() {
+        return fieldInfos;
     }
 
-    public void setFields(List<FieldInfo> fields) {
-        this.fields = fields;
+    public void setFieldInfos(List<FieldInfo> fieldInfos) {
+        this.fieldInfos = fieldInfos;
     }
 
-    public void addField(FieldInfo field){
-        if(fields == null){
-            fields = new ArrayList<FieldInfo>();
+    public void addFieldInfo(FieldInfo field){
+        if(fieldInfos == null){
+            fieldInfos = new ArrayList<FieldInfo>();
         }
-        fields.add(field);
+        fieldInfos.add(field);
     }
 
     public void addInnerClass(ClassDefinition innerClass){

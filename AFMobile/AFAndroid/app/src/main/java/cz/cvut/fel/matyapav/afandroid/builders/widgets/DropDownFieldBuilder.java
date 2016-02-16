@@ -10,6 +10,7 @@ import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldOption;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 15.02.2016.
@@ -27,16 +28,16 @@ public class DropDownFieldBuilder implements BasicBuilder {
         Spinner spinner = new Spinner(activity);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
-                android.support.design.R.layout.support_simple_spinner_dropdown_item, convertOptionsIntoList());
+                android.support.design.R.layout.support_simple_spinner_dropdown_item, convertOptionsIntoList(activity));
         spinner.setAdapter(dataAdapter);
         return spinner;
     }
 
-    private List<String> convertOptionsIntoList(){
+    private List<String> convertOptionsIntoList(Activity activity){
         List<String> list = new ArrayList<>();
         int i = 0;
         for (FieldOption option:properties.getOptions()) {
-            list.add(option.getValue());
+            list.add(Localization.translate(option.getValue(),activity));
         }
         return list;
     }

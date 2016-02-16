@@ -1,7 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.parsers;
 
-import android.net.wifi.p2p.WifiP2pManager;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +13,6 @@ import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 17.12.2015.
@@ -40,7 +37,7 @@ public class JSONDefinitionParser implements JSONParser {
             if(fields != null){
                 for (int i = 0; i < fields.length(); i++) {
                     JSONObject field = fields.getJSONObject(i);
-                    definition.addField(parseFieldInfo(field));
+                    definition.addFieldInfo(parseFieldInfo(field));
                 }
             }
             JSONArray innerClasses = classInfo.optJSONArray(Constants.INNER_CLASSES);

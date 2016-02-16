@@ -3,14 +3,14 @@
     <string name="login.userName">Username</string>
     <string name="login.password">Password</string>
     <string name="login.success">Login successful</string>
-    <string name="country.name">Name</string>
+    <string name="country.name">Country</string>
     <string name="country.shortCut">Shortcut</string>
     <string name="country.isActive">Active</string>
     <string name="login.failed">Login failed</string>
     <string name="login.buttonText">Login</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="lang.cz">Czech</string>
-    <string name="lang.en">English</string>
+    <string name="lang.cz" translatable="false">Čeština</string>
+    <string name="lang.en" translatable="false">English</string>
     <string name="form.building.msg">Building form...</string>
     <string name="form.building.failed.title">Form building failed...</string>
     <string name="form.building.failed.msg">Something went wrong. Try check your internet connection and rerun app.</string>
@@ -25,4 +25,16 @@
     <string name="option.no">No</string>
     <string name="validation.minval">Minimum value is</string>
     <string name="validation.maxval">Maximum value is</string>
+    <string name="absenceInstance.startDate">Start</string>
+    <string name="absenceInstance.endDate">End</string>
+    <string name="absenceType.name">Name</string>
+    <string name="absenceInstance.state">State</string>
+    <string name="absenceInstances.cancelled">Cancelled</string>
+    <string name="absenceInstances.denied">Denied</string>
+    <string name="absenceInstances.accepted">Accepted</string>
+    <string name="absenceInstances.requested">Requested</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

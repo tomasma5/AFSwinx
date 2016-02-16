@@ -2,17 +2,12 @@ package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.net.LinkAddress;
 import android.os.AsyncTask;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -30,7 +25,6 @@ import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
-import cz.cvut.fel.matyapav.afandroid.components.parts.LayoutProperties;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
@@ -69,7 +63,8 @@ public class FormBuilder {
             JSONParser parser = new JSONDefinitionParser();
             JSONObject jsonObj = new JSONObject(response).getJSONObject(Constants.CLASS_INFO);
             ClassDefinition classDef = parser.parse(jsonObj);
-            formView.addView(buildFields(classDef, form, new LinearLayout(activity), 0, false));
+            prepareForm(classDef, form, 0, false);
+            formView.addView(buildFormView(form));
         } catch (JSONException e) {
             e.printStackTrace();
             formView = (LinearLayout) buildError("Cannot build form "+e.getMessage());
@@ -78,30 +73,83 @@ public class FormBuilder {
         return form;
     }
 
-    private View buildFields(ClassDefinition classDef, AFForm form,  LinearLayout formView, int numberOfInnerClasses, boolean parsingInnerClass ){
+    private View buildFormView(AFForm form) {
+        //TODO zobecnit
+        LinearLayout formView = new LinearLayout(activity);
+        formView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
+            formView.setOrientation(LinearLayout.VERTICAL);
+        }else { //AXIS Y
+            formView.setOrientation(LinearLayout.HORIZONTAL);
+        }
+
+        //ONE COLUMN LAYOUT
+        if(form.getLayoutDefinitions().equals(LayoutDefinitions.ONECOLUMNLAYOUT)){
+            for (AFField field : form.getFields()) {
+                formView.addView(field.getView());
+            }
+        //TWO COLUMNS LAYOUT
+        }else if(form.getLayoutDefinitions().equals(LayoutDefinitions.TWOCOLUMNSLAYOUT)){
+            int coupleOrientation;
+            if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
+                coupleOrientation = LinearLayout.HORIZONTAL;
+            }else{ //AXIS Y
+                coupleOrientation = LinearLayout.VERTICAL;
+            }
+
+            int i = 0;
+            LinearLayout couple = null;
+            for (AFField field : form.getFields()) {
+                if (i % 2 == 0) {
+                    if (couple != null) {
+                        //add couple
+                        formView.addView(couple);
+                    }
+                    couple = new LinearLayout(activity);
+                    couple.setOrientation(coupleOrientation);
+                    couple.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                }
+
+                View fieldView = field.getView();
+                if(form.getFields().size() % 2 != 0 && i == form.getFields().size()-1){
+                    //if number of elements are odd last element will occupy space alone
+                    fieldView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    formView.addView(fieldView);
+                }else{
+                    fieldView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.5f)); //occupies half space
+                    couple.addView(fieldView);
+                }
+                i++;
+            }
+        }
+
+        return formView;
+    }
+
+    private void prepareForm(ClassDefinition classDef, AFForm form, int numberOfInnerClasses, boolean parsingInnerClass){
         if(parsingInnerClass){
             numberOfInnerClasses = 0;
         }
-        TableLayout fieldsView = null;
         if(classDef != null) {
-            form.setName(classDef.getClassName());
-            fieldsView = (TableLayout) buildLayout(classDef, activity);
+            if(!parsingInnerClass) { //set following properties only once at the beginning
+                form.setName(classDef.getClassName());
+                form.setLayoutDefinitions(classDef.getLayout().getLayoutDefinition());
+                form.setLayoutOrientation(classDef.getLayout().getLayoutOrientation());
+            }
+            //fieldsView = (TableLayout) buildLayout(classDef, activity);
             InputFieldBuilder builder = new InputFieldBuilder();
-            for (FieldInfo field : classDef.getFields()) {
+            for (FieldInfo field : classDef.getFieldInfos()) {
                 if(field.isInnerClass()){
-                    fieldsView.addView(buildFields(classDef.getInnerClasses().get(numberOfInnerClasses), form, formView, numberOfInnerClasses++, true));
+                   prepareForm(classDef.getInnerClasses().get(numberOfInnerClasses), form, numberOfInnerClasses++, true);
                 }else {
-                    AFField affield = builder.buildField(field, activity);
+                    AFField affield = builder.prepareField(field, activity);
                     if (affield != null) {
                         form.addField(affield);
-                        System.err.println(affield.toString());
-                        fieldsView.addView(affield.getView());
                     }
                 }
             }
         }
         System.err.println("NUMBER OF ELEMENTS IN FORM "+form.getFields().size());
-        return fieldsView;
     }
 
     private View buildError(String errorMsg) {

@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.components.validators;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -20,7 +21,7 @@ public class RequiredValidator implements AFValidator {
     @Override
     public boolean validate(AFField field, StringBuilder errorMsgs, ValidationRule rule) {
         boolean validationIsFine = true;
-        if(Utils.isFieldWritable(field.getWidgetType().getWidgetName())){
+        if(Utils.isFieldWritable(field.getWidgetType().getWidgetName()) || field.getWidgetType() == SupportedWidgets.CALENDAR){
             EditText textfield = (EditText) field.getFieldView();
             if (textfield.getText() == null || textfield.getText().toString().isEmpty()) {
                 validationIsFine = false;
@@ -29,13 +30,6 @@ public class RequiredValidator implements AFValidator {
         if(field.getWidgetType() == SupportedWidgets.OPTION){
             RadioGroup radioGroup = (RadioGroup) field.getFieldView();
             if(radioGroup.getCheckedRadioButtonId() == -1){
-                validationIsFine = false;
-            }
-        }
-        if(field.getWidgetType() == SupportedWidgets.CALENDAR){
-            LinearLayout dateLayout = (LinearLayout) field.getFieldView();
-            EditText dateText = (EditText) dateLayout.getChildAt(0);
-            if (dateText.getText() == null || dateText.getText().toString().isEmpty()) {
                 validationIsFine = false;
             }
         }

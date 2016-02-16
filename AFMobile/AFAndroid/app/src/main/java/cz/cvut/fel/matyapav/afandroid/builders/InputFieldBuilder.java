@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.BasicBuilder;
+import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
@@ -22,7 +23,7 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class InputFieldBuilder{
 
-    public AFField buildField(FieldInfo properties, Activity activity) {
+    public AFField prepareField(FieldInfo properties, Activity activity) {
         //check if widget type is supported
         SupportedWidgets widgetType;
         try {
@@ -41,22 +42,18 @@ public class InputFieldBuilder{
         field.setId(properties.getId());
 
         //LABEL
+        TextView label = new TextView(activity);
         if (properties.getLabel() != null && !properties.getLabel().isEmpty()) {
             String labelText = Localization.translate(properties.getLabel(), activity);
             //set label position
             LabelPosition pos = properties.getLayout().getLabelPosition();
             if (pos != null) {
-                String labelPosition = properties.getLayout().getLabelPosition().getPosition();
-                field.setLabelPosition(labelPosition);
+                field.setLabelPosition(pos);
             }
-            TextView label = new TextView(activity);
+
             label.setText(labelText);
-            label.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            label.setSingleLine(false);
-            label.setLines(2); //TODO always 2 lines which we dont want to have - but solves problem with visibility when label text is long enough to break into two lines
+            label.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             field.setLabel(label);
-
-
         }
         //ERROR TEXT
         TextView errorView = new TextView(activity);
@@ -66,10 +63,10 @@ public class InputFieldBuilder{
 
         //LAYOUT PROPERTIES OF FIELD
         if (properties.getLayout().getLayoutDefinition() != null) {
-            //set layout definition
+            field.setLayoutDefinitions(properties.getLayout().getLayoutDefinition() );
         }
         if (properties.getLayout().getLayoutOrientation() != null) {
-            //set layout orientation
+            field.setLayoutOrientation(properties.getLayout().getLayoutOrientation());
         }
 
         View inputField = null;
@@ -86,7 +83,50 @@ public class InputFieldBuilder{
             field.setValidations(properties.getRules());
             field.setFieldView(inputField);
         }
+        field.setView(buildFieldView(field));
         return field;
+    }
+
+    private View buildFieldView(AFField field){
+        //TODO zeptat se Martina jestli mohou mít fieldy i twocolumnlayout
+        LinearLayout fullLayout = new LinearLayout(field.getLabel().getContext());
+        fullLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        //set orientation of label and field itself
+        if(field.getLayoutOrientation().equals(LayoutOrientation.AXISY)){
+            fullLayout.setOrientation(LinearLayout.HORIZONTAL);
+            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0.35f)); //TODO let user define weight
+            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0.65f));
+        }else if(field.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
+            fullLayout.setOrientation(LinearLayout.VERTICAL);
+            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        }
+
+        //LABEL BEFORE
+        if(field.getLabel() != null && !field.getLabelPosition().equals(LabelPosition.NONE)) {
+            if (field.getLabelPosition().equals(LabelPosition.BEFORE)) {
+                fullLayout.addView(field.getLabel());
+            }
+        }
+        if(field.getFieldView() != null) {
+            fullLayout.addView(field.getFieldView());
+        }
+        //LABEL AFTER
+        if(field.getLabel() != null && !field.getLabelPosition().equals(LabelPosition.NONE)) {
+            if (field.getLabelPosition().equals(LabelPosition.AFTER)) {
+                fullLayout.addView(field.getLabel());
+            }
+        }
+
+        //add errorview on the top of field
+        LinearLayout fullLayoutWithErrors = new LinearLayout(field.getLabel().getContext());
+        fullLayoutWithErrors.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        fullLayoutWithErrors.setPadding(0, 0, 10, 10);
+        fullLayoutWithErrors.setOrientation(LinearLayout.VERTICAL);
+        fullLayoutWithErrors.addView(field.getErrorView());
+        fullLayoutWithErrors.addView(fullLayout);
+        return fullLayoutWithErrors;
     }
 
 }
