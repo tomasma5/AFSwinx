@@ -1,6 +1,5 @@
-package cz.cvut.fel.matyapav.afandroid;
+package cz.cvut.fel.matyapav.afandroid.showcase;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,13 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import org.json.JSONObject;
+
+import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    JSONObject loginInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null) {
+            Menu menu = navigationView.getMenu();
+            menu.setGroupVisible(R.id.beforeLoginGroup, true);
+            menu.setGroupVisible(R.id.afterLoginGroup, false);
             //set default login fragment
             FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
             tx.replace(R.id.mainLayout, new LoginFragment());
@@ -96,8 +98,14 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = ProfileFragment.class;
         } else if (id == R.id.absenceManagement) {
             fragmentClass = AbsenceManagementFragment.class;
-        } else if (id == R.id.settings) {
-            fragmentClass = SettingsFragment.class;
+        } else if (id == R.id.welcome) {
+            fragmentClass = WelcomeFragment.class;
+        } else if(id == R.id.logout) {
+            ShowCaseUtils.clearUserInPreferences(getThisActivity());
+            Menu menu = ((NavigationView) findViewById(R.id.nav_view)).getMenu();
+            menu.setGroupVisible(R.id.beforeLoginGroup, true);
+            menu.setGroupVisible(R.id.afterLoginGroup, false);
+            fragmentClass = LoginFragment.class;
         }
 
         try {

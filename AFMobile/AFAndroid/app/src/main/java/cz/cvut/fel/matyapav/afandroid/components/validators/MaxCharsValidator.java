@@ -15,7 +15,7 @@ public class MaxCharsValidator implements AFValidator {
     @Override
     public boolean validate(AFField field, StringBuilder errorMsgs, ValidationRule rule) {
         boolean validationIsFine = true;
-        if(Utils.isFieldWritable(field.getWidgetType().getWidgetName())){
+        if(Utils.isFieldWritable(field.getFieldInfo().getWidgetType())){
             EditText textfield = (EditText) field.getFieldView();
             if (textfield.getText() != null && textfield.getText().toString().length() > Integer.parseInt(rule.getValue())) {
                 validationIsFine = false;

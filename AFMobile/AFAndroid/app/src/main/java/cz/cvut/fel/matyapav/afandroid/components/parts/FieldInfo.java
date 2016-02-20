@@ -3,12 +3,14 @@ package cz.cvut.fel.matyapav.afandroid.components.parts;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
+
 /**
  * This class defines properties about field parsed from JSON file
  */
 public class FieldInfo {
 
-    private String widgetType;
+    private SupportedWidgets widgetType;
     private String id;
     private String label;
     private boolean isInnerClass;
@@ -21,11 +23,11 @@ public class FieldInfo {
     public FieldInfo() {
     }
 
-    public String getWidgetType() {
+    public SupportedWidgets getWidgetType() {
         return widgetType;
     }
 
-    public void setWidgetType(String widgetType) {
+    public void setWidgetType(SupportedWidgets widgetType) {
         this.widgetType = widgetType;
     }
 

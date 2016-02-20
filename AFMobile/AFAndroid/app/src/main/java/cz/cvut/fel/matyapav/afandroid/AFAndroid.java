@@ -34,8 +34,8 @@ public class AFAndroid {
         createdComponents.put(name,component);
     }
 
-    public FormBuilder getFormBuilder(Activity context){
-        return new FormBuilder(context);
+    public FormBuilder getFormBuilder(){
+        return new FormBuilder();
     }
 
 

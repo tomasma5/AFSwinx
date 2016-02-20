@@ -2,20 +2,19 @@ package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.BasicBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Builds input field
@@ -23,23 +22,20 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class InputFieldBuilder{
 
-    public AFField prepareField(FieldInfo properties, Activity activity) {
+    public AFField prepareField(FieldInfo properties, StringBuilder road, Activity activity) {
         //check if widget type is supported
         SupportedWidgets widgetType;
         try {
-            widgetType = SupportedWidgets.valueOf(properties.getWidgetType());
+            widgetType =properties.getWidgetType();
         }catch (IllegalArgumentException e){
             System.err.println(e.getLocalizedMessage());
             //e.printStackTrace();
             return null; //if not return null
         }
-        //if field should not be visible
-        if(!properties.isVisible()){
-            return null;
-        }
 
-        AFField field = new AFField(widgetType);
-        field.setId(properties.getId());
+
+        AFField field = new AFField(properties);
+        field.setId(road.toString()+properties.getId());
 
         //LABEL
         TextView label = new TextView(activity);
@@ -70,7 +66,7 @@ public class InputFieldBuilder{
         }
 
         View inputField = null;
-        BasicBuilder fieldBuilder = Utils.getFieldBuilder(properties);
+        BasicBuilder fieldBuilder = FieldBuilderFactory.getInstance().getFieldBuilder(properties);
         if(fieldBuilder != null && (inputField = fieldBuilder.buildFieldView(activity))!= null){
             //USER INTERACTION PROPERTIES OF FIELD SUCH AS VISIBILITY ETC.
             if (properties.isReadOnly()) {
@@ -79,11 +75,17 @@ public class InputFieldBuilder{
             if (!properties.isVisible()) {
                 inputField.setVisibility(View.INVISIBLE);
             }
+            //if field should not be visible
+
 
             field.setValidations(properties.getRules());
             field.setFieldView(inputField);
         }
-        field.setView(buildFieldView(field));
+        View fieldView = buildFieldView(field);
+        if(!properties.isVisible()){
+            fieldView.setVisibility(View.GONE);
+        }
+        field.setCompleteView(fieldView);
         return field;
     }
 

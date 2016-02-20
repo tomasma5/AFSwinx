@@ -21,13 +21,13 @@ public class RequiredValidator implements AFValidator {
     @Override
     public boolean validate(AFField field, StringBuilder errorMsgs, ValidationRule rule) {
         boolean validationIsFine = true;
-        if(Utils.isFieldWritable(field.getWidgetType().getWidgetName()) || field.getWidgetType() == SupportedWidgets.CALENDAR){
+        if(Utils.isFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().equals(SupportedWidgets.CALENDAR)){
             EditText textfield = (EditText) field.getFieldView();
             if (textfield.getText() == null || textfield.getText().toString().isEmpty()) {
                 validationIsFine = false;
             }
         }
-        if(field.getWidgetType() == SupportedWidgets.OPTION){
+        if(field.getFieldInfo().getWidgetType().equals(SupportedWidgets.OPTION)){
             RadioGroup radioGroup = (RadioGroup) field.getFieldView();
             if(radioGroup.getCheckedRadioButtonId() == -1){
                 validationIsFine = false;

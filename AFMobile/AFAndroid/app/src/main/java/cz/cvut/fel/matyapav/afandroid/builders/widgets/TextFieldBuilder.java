@@ -6,6 +6,7 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.EditText;
 
+import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 
@@ -27,16 +28,26 @@ public class TextFieldBuilder implements BasicBuilder {
         return text;
     }
 
-    private void addInputType(EditText field, String widgetType){
+    @Override
+    public void setData(AFField field, Object value) {
+        ((EditText) field.getFieldView()).setText(value.toString());
+    }
+
+    @Override
+    public Object getData(AFField field) {
+        return ((EditText)field.getFieldView()).getText().toString();
+    }
+
+    private void addInputType(EditText field, SupportedWidgets widgetType){
         //textfield or password
-        if (widgetType.equals(SupportedWidgets.TEXTFIELD.getWidgetName())) {
+        if (widgetType.equals(SupportedWidgets.TEXTFIELD)) {
             field.setInputType(InputType.TYPE_CLASS_TEXT);
-        } else if (widgetType.equals(SupportedWidgets.PASSWORD.getWidgetName())) {
+        } else if (widgetType.equals(SupportedWidgets.PASSWORD)) {
             field.setTransformationMethod(PasswordTransformationMethod.getInstance());
             field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        } else if (widgetType.equals(SupportedWidgets.NUMBERFIELD.getWidgetName())) {
+        } else if (widgetType.equals(SupportedWidgets.NUMBERFIELD)) {
             field.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-        } else if (widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD.getWidgetName())){
+        } else if (widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD)){
             field.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
         //TODO another input types

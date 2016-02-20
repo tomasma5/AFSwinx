@@ -9,6 +9,7 @@ import android.widget.RadioGroup;
 
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldOption;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
@@ -44,12 +45,41 @@ public class OptionFieldBuilder implements BasicBuilder {
             numberOfOptions = 2;
             RadioButton[] options = new RadioButton[numberOfOptions];
             options[0] = new RadioButton(activity);
-            options[0].setText(Localization.translate("option.yes",activity));
+            options[0].setText("true");
             options[1] = new RadioButton(activity);
-            options[1].setText(Localization.translate("option.no", activity));
+            options[1].setText("false");
             radioGroup.addView(options[0]);
             radioGroup.addView(options[1]);
         }
         return radioGroup;
+    }
+
+    //TODO REWRITE
+    @Override
+    public void setData(AFField field, Object value) {
+        RadioGroup group = (RadioGroup) field.getFieldView();
+        for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
+            RadioButton btn = (RadioButton) group.getChildAt(i);
+            if(btn.getText().equals(value)
+                    || (Boolean.valueOf(value.toString()) == true && i==0)
+                    || (Boolean.valueOf(value.toString()) == false && i==1)){
+                btn.setChecked(true);
+                break;
+            }
+        };
+    }
+
+    @Override
+    public Object getData(AFField field) {
+        RadioGroup group = (RadioGroup) field.getFieldView();
+        group.getCheckedRadioButtonId();
+        for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
+            RadioButton btn = (RadioButton) group.getChildAt(i);
+            if(btn.isChecked()){
+
+                return btn.getText().toString();
+            }
+        }
+        return null; //nothing is checked
     }
 }

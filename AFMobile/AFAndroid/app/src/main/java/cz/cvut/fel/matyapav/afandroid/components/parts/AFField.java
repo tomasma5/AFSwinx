@@ -26,7 +26,7 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class AFField {
 
-    private SupportedWidgets widgetType;
+    private FieldInfo fieldInfo;
     private String id;
     private TextView label;
     private LabelPosition labelPosition = LabelPosition.BEFORE; //DEFAULT
@@ -38,8 +38,8 @@ public class AFField {
     private List<ValidationRule> validations;
 
 
-    public AFField(SupportedWidgets widgetType) {
-        this.widgetType = widgetType;
+    public AFField(FieldInfo fieldInfo) {
+        this.fieldInfo = fieldInfo;
     }
 
     public boolean validate() {
@@ -113,12 +113,12 @@ public class AFField {
         this.errorView = errorView;
     }
 
-    public void setView(View view){
+    public void setCompleteView(View view){
         this.completeView = view;
     }
 
-    public View getView(){
-       return this.completeView;
+    public View getCompleteView() {
+        return completeView;
     }
 
     public LayoutDefinitions getLayoutDefinitions() {
@@ -137,26 +137,24 @@ public class AFField {
         this.layoutOrientation = layoutOrientation;
     }
 
-    public void setWidgetType(SupportedWidgets widgetType) {
-        this.widgetType = widgetType;
-    }
 
-    public SupportedWidgets getWidgetType() {
-        return widgetType;
-    }
 
+    public FieldInfo getFieldInfo() {
+        return fieldInfo;
+    }
 
     @Override
     public String toString() {
         return "AFField{" +
-                "errorView=" + errorView +
-                ", widgetType=" + widgetType +
+                "completeView=" + completeView +
+                ", fieldInfo=" + fieldInfo +
                 ", id='" + id + '\'' +
                 ", label=" + label +
                 ", labelPosition=" + labelPosition +
                 ", layoutDefinitions=" + layoutDefinitions +
                 ", layoutOrientation=" + layoutOrientation +
                 ", fieldView=" + fieldView +
+                ", errorView=" + errorView +
                 ", validations=" + validations +
                 '}';
     }

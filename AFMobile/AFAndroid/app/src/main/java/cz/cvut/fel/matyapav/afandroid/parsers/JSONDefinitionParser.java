@@ -12,7 +12,9 @@ import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
+import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 17.12.2015.
@@ -55,9 +57,9 @@ public class JSONDefinitionParser implements JSONParser {
     }
 
     private FieldInfo parseFieldInfo(JSONObject field) throws JSONException {
-        System.err.println("PARSING FIELD "+field.getString(Constants.ID));
+        System.err.println("PARSING FIELD " + field.getString(Constants.ID));
         FieldInfo fieldInfo = new FieldInfo();
-        fieldInfo.setWidgetType(field.getString(Constants.WIDGET_TYPE));
+        fieldInfo.setWidgetType((SupportedWidgets) Utils.getEnumFromString(SupportedWidgets.class, field.getString(Constants.WIDGET_TYPE), true));
         fieldInfo.setId(field.getString(Constants.ID));
         fieldInfo.setLabel(field.getString(Constants.LABEL));
         fieldInfo.setIsClass(Boolean.valueOf(field.getString(Constants.CLASS_TYPE)));

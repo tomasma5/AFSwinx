@@ -10,9 +10,6 @@
     <string name="login.failed">Příhlášení selhalo.</string>
     <string name="login.buttonText">Přihlásit se</string>
     <string name="title_activity_settings">Nastavení</string>
-    <string name="form.building.msg">Stavím formulář...</string>
-    <string name="form.building.failed.title">Stavění formuláře selhalo...</string>
-    <string name="form.building.failed.msg">Něco se nepovedlo. Zkuste zkontrolovat internetové připojení a restartovat aplikaci.</string>
     <string name="validation.required">Toto pole je povinné.</string>
     <string name="validation.maxchars" translatable="false">Maximální počet znaků je</string>
     <string name="lang.title">Vyberte jazyk</string>
@@ -37,4 +34,5 @@
     <string name="navigation_drawer_open">Otevřít navigaci</string>
     <string name="button.perform">Proveď</string>
     <string name="button.update">Aktualizuj</string>
+    <string name="please.wait">Prosím počkejte...</string>
 </resources>

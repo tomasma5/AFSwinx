@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/beforeLoginGroup">
         <item
             android:id="@+id/loginForm"
             android:icon="@android:drawable/ic_secure"
             android:title="Login" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/afterLoginGroup">
+        <item
+            android:id="@+id/welcome"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Home"
+            />
         <item
             android:id="@+id/userProfile"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Profile" />
+            android:title="Profile"
+            />
         <item
             android:id="@+id/absenceManagement"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Absence Management form" />
+            android:title="Absence Management form"
+            />
+
         <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/action_settings" />
+            android:id="@+id/logout"
+            android:icon="@android:drawable/ic_secure"
+            android:title="Logout"
+            />
     </group>
 
 </menu>
