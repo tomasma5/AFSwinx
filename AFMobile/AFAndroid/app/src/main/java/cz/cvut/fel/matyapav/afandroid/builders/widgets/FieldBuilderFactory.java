@@ -1,5 +1,11 @@
 package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.BasicBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.CheckboxFieldBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.DateFieldBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.DropDownFieldBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.OptionFieldBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.TextFieldBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;

@@ -128,7 +128,7 @@
 			</header-param>
 		</metaModel>
 		<data>
-			<endPoint>localhost</endPoint>
+			<endPoint>10.0.2.2</endPoint>
 			<endPointParameters>/AFServer/rest/absencetype/country/#{id}</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>

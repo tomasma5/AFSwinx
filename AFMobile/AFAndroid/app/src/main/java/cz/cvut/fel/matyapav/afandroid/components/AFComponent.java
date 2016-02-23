@@ -3,9 +3,13 @@ package cz.cvut.fel.matyapav.afandroid.components;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
+import android.view.ViewGroup;
 
 import java.net.ConnectException;
+import java.util.ArrayList;
+import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
@@ -23,9 +27,10 @@ public abstract class AFComponent {
 
     private Activity activity;
     private String name;
-    private View view;
+    private ViewGroup view;
     private LayoutDefinitions layoutDefinitions;
     private LayoutOrientation layoutOrientation;
+    private List<AFField> fields;
 
     private AFSwinxConnection modelConnection;
     private AFSwinxConnection dataConnection;
@@ -38,7 +43,7 @@ public abstract class AFComponent {
         this.sendConnection = sendConnection;
     }
 
-    public AFComponent(String name, View view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
+    public AFComponent(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
         this.name = name;
         this.view = view;
         this.layoutDefinitions = layoutDefinitions;
@@ -53,11 +58,11 @@ public abstract class AFComponent {
         this.name = name;
     }
 
-    public View getView() {
+    public ViewGroup getView() {
         return view;
     }
 
-    public void setView(View view) {
+    public void setView(ViewGroup view) {
         this.view = view;
     }
 
@@ -95,41 +100,34 @@ public abstract class AFComponent {
         return sendConnection;
     }
 
-    /*TROCHU POUPRAVENA MARTINOVA METODA*/
-    public void sendData() throws Exception{
-        if (getSendConnection() == null) {
-            throw new IllegalStateException(
-                    "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
-        }
-        Object data = generateSendData();
-        if (data == null) {
-            return;
-        }
-        System.err.println("SEND CONNECTION "+Utils.getConnectionEndPoint(getSendConnection()));
-        RequestTask sendTask = new RequestTask(activity,getSendConnection().getHttpMethod(), getSendConnection().getContentType(),
-                getSendConnection().getSecurity(), data, Utils.getConnectionEndPoint(getSendConnection()));
-        Object response = sendTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
-        if(response instanceof Exception){
-            throw (Exception) response;
-        }
+    public void setDataConnection(AFSwinxConnection dataConnection) {
+        this.dataConnection = dataConnection;
     }
 
+    public void setModelConnection(AFSwinxConnection modelConnection) {
+        this.modelConnection = modelConnection;
+    }
 
-    /*MARTINOVA METODA*/
-    public Object generateSendData() {
-        // before building data and sending, validate actual data
-        boolean isValid = validateData();
-        if (!isValid) {
-            return null;
+    public void setSendConnection(AFSwinxConnection sendConnection) {
+        this.sendConnection = sendConnection;
+    }
+
+    public void addField(AFField field){
+        if(fields == null){
+            fields = new ArrayList<AFField>();
         }
-        AFSwinxConnection sendConnection = getSendConnection();
-        // Generate send connection based on which will be retrieve data. The send connection is
-        // used to generate data in this case it will be generated JSON
-        if (sendConnection == null) {
-            sendConnection = new AFSwinxConnection("", 0, "");
-        }
-        BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(sendConnection);
-        Object data = dataBuilder.reselialize(reserialize());
-        return data;
+        fields.add(field);
+    }
+
+    public List<AFField> getFields() {
+        return fields;
+    }
+
+    public void setFields(List<AFField> fields) {
+        this.fields = fields;
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 }

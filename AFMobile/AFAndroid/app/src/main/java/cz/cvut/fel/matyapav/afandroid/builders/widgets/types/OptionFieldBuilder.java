@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,12 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import java.util.List;
-
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.components.parts.FieldOption;
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 15.02.2016.
@@ -57,7 +53,12 @@ public class OptionFieldBuilder implements BasicBuilder {
     //TODO REWRITE
     @Override
     public void setData(AFField field, Object value) {
+
         RadioGroup group = (RadioGroup) field.getFieldView();
+        if(value == null){
+            group.clearCheck();
+            return;
+        }
         for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
             RadioButton btn = (RadioButton) group.getChildAt(i);
             if(btn.getText().equals(value)

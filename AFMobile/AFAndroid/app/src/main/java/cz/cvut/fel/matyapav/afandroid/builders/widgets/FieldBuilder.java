@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.BasicBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.BasicBuilder;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
@@ -20,19 +19,9 @@ import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
  * Builds input field
  * Created by Pavel on 25.12.2015.
  */
-public class InputFieldBuilder{
+public class FieldBuilder {
 
     public AFField prepareField(FieldInfo properties, StringBuilder road, Activity activity) {
-        //check if widget type is supported
-        SupportedWidgets widgetType;
-        try {
-            widgetType =properties.getWidgetType();
-        }catch (IllegalArgumentException e){
-            System.err.println(e.getLocalizedMessage());
-            //e.printStackTrace();
-            return null; //if not return null
-        }
-
 
         AFField field = new AFField(properties);
         field.setId(road.toString()+properties.getId());
@@ -76,8 +65,6 @@ public class InputFieldBuilder{
                 inputField.setVisibility(View.INVISIBLE);
             }
             //if field should not be visible
-
-
             field.setValidations(properties.getRules());
             field.setFieldView(inputField);
         }

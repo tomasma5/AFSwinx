@@ -2,8 +2,13 @@ package cz.cvut.fel.matyapav.afandroid.showcase;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 
 import java.util.HashMap;
+
+import cz.cvut.fel.matyapav.afandroid.R;
 
 /**
  * Created by Pavel on 20.02.2016.
@@ -40,5 +45,11 @@ public class ShowCaseUtils {
             return result;
         }
         return null;
+    }
+
+    public static void refreshCurrentFragment(FragmentActivity activity){
+        FragmentManager fragmentManager = activity.getSupportFragmentManager();
+        Fragment current = fragmentManager.findFragmentById(R.id.mainLayout);
+        fragmentManager.beginTransaction().detach(current).attach(current).commit();
     }
 }

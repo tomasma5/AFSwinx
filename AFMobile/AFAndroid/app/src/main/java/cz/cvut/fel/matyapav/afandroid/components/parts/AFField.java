@@ -36,7 +36,7 @@ public class AFField {
     private TextView errorView;
     private View completeView;
     private List<ValidationRule> validations;
-
+    private Object actualData;
 
     public AFField(FieldInfo fieldInfo) {
         this.fieldInfo = fieldInfo;
@@ -137,8 +137,6 @@ public class AFField {
         this.layoutOrientation = layoutOrientation;
     }
 
-
-
     public FieldInfo getFieldInfo() {
         return fieldInfo;
     }
@@ -157,5 +155,13 @@ public class AFField {
                 ", errorView=" + errorView +
                 ", validations=" + validations +
                 '}';
+    }
+
+    public void setActualData(Object actualData) {
+        this.actualData = actualData;
+    }
+
+    public Object getActualData() {
+        return actualData;
     }
 }

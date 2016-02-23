@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,21 +32,26 @@ public class ProfileFragment extends Fragment {
         InputStream connectionResource = getResources().openRawResource(R.raw.connection);
 
         View root = inflater.inflate(R.layout.profile_fragment_layout, container, false);
+
         LinearLayout layout = (LinearLayout) root.findViewById(R.id.profileLayout);
-        HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity()); //TODO can be null
+        HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
+
         FormBuilder builder = AFAndroid.getInstance().getFormBuilder()
                 .initBuilder(getActivity(), "profileForm", connectionResource, "personProfile", securityConstrains);
         final AFForm form;
         try {
             form = builder.createComponent();
             if(form != null) {
-                Button button = builder.buildSubmitButton(Localization.translate("button.update", getActivity()), form);
-                button.setOnClickListener(new View.OnClickListener() {
+                //Dynamicky vytvarene buttony
+                Button btn = new Button(getActivity());
+                btn.setText(Localization.translate("button.update", getActivity()));
+                btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(form.validateData()) {
+                        if (form.validateData()) {
                             try {
                                 form.sendData();
+                                ShowCaseUtils.refreshCurrentFragment(getActivity());
                                 Toast.makeText(getActivity(), "Update successful", Toast.LENGTH_SHORT).show();
                             } catch (Exception e) {
                                 //update failed
@@ -57,13 +63,30 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
+                Button reset = new Button(getActivity());
+                reset.setText("RESET");
+                reset.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        form.resetData();
+                    }
+                });
                 layout.addView(form.getView());
-                layout.addView(button);
+                LinearLayout btns = new LinearLayout(getActivity());
+                btns.setOrientation(LinearLayout.HORIZONTAL);
+                btns.setGravity(Gravity.CENTER);
+                btns.addView(btn);
+                btns.addView(reset);
+                layout.addView(btns);
             }
         } catch (Exception e) {
             System.err.println("BUILDING FAILED");
             e.printStackTrace();
         }
         return root;
+    }
+
+    public Fragment getThisFragment(){
+        return this;
     }
 }

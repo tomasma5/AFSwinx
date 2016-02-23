@@ -5,6 +5,7 @@ import android.app.Activity;
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
 
 /**
@@ -39,4 +40,7 @@ public class AFAndroid {
     }
 
 
+    public TableBuilder getTableBuilder() {
+        return new TableBuilder();
+    }
 }

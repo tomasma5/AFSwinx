@@ -82,7 +82,7 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
             urlConnection.setReadTimeout(10000);
             urlConnection.setConnectTimeout(15000);
             urlConnection.setRequestMethod(httpMethod.toString().toUpperCase());
-            urlConnection.setRequestProperty("CONTENT-TYPE", headerType.toString());
+            urlConnection.setRequestProperty("CONTENT-TYPE", headerType.toString()); //TODO there can be also another parameters .. not only content-type
             urlConnection.setDoInput(true);
 
             if (security != null) {

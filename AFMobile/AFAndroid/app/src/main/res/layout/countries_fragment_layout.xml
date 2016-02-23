@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/countriesLayout"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/countriesTable"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/countriesForm"
+        android:paddingTop="50dp"
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/countriesButtons"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/countriesBtnAdd"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent2"
+            android:text="@string/button.perform"/>
+        <Button
+            android:id="@+id/countriesBtnReset"
+            android:layout_width="150dp"
+            android:background="@color/colorAccent"
+            android:layout_height="wrap_content"
+            android:text="Reset"/>
+    </LinearLayout>
+</LinearLayout>

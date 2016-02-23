@@ -1,7 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.utils;
 
-import android.widget.EditText;
-
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -16,14 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.BasicBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.CheckboxFieldBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.DateFieldBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.DropDownFieldBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.OptionFieldBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.TextFieldBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
 import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.MaxCharsValidator;

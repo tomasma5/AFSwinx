@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.view.View;
@@ -26,17 +26,24 @@ public class DropDownFieldBuilder implements BasicBuilder {
 
     @Override
     public View buildFieldView(Activity activity) {
+        //TODO nejaka chyba kdyz je tabulka prazdna
         Spinner spinner = new Spinner(activity);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
-                android.support.design.R.layout.support_simple_spinner_dropdown_item, convertOptionsIntoList(activity));
-        spinner.setAdapter(dataAdapter);
+        if(convertOptionsIntoList(activity) != null) {
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(activity,
+                    android.support.design.R.layout.support_simple_spinner_dropdown_item, convertOptionsIntoList(activity));
+            spinner.setAdapter(dataAdapter);
+        }
         return spinner;
     }
 
     @Override
     public void setData(AFField field, Object value) {
         Spinner spinner = (Spinner) field.getFieldView();
+        if(value == null){ //TODO asi se muze stat ze spinner nebude mit ani jednu polozku
+            spinner.setSelection(0);
+            return;
+        }
+
         for (int i = 0; i < spinner.getCount(); i++) {
             if(spinner.getItemAtPosition(i).toString().equals(value)){
                 spinner.setSelection(i);
@@ -54,9 +61,12 @@ public class DropDownFieldBuilder implements BasicBuilder {
     private List<String> convertOptionsIntoList(Activity activity){
         List<String> list = new ArrayList<>();
         int i = 0;
-        for (FieldOption option:properties.getOptions()) {
-            list.add(Localization.translate(option.getValue(),activity));
+        if(properties.getOptions() != null){
+            for (FieldOption option : properties.getOptions()) {
+                list.add(Localization.translate(option.getValue(), activity));
+            }
+            return list;
         }
-        return list;
+        return null;
     }
 }

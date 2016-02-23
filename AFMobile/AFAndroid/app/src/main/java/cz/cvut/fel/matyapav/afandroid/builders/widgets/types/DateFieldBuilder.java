@@ -1,16 +1,12 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,9 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 14.02.2016.

@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -24,8 +25,10 @@ import java.io.InputStream;
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.AFTable;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
@@ -50,7 +53,8 @@ public class LoginFragment extends Fragment {
                     initBuilder(getActivity(), "loginForm", connectionResource, "loginForm");
             form = builder.createComponent();
             if(form != null) {
-                Button button = builder.buildSubmitButton(Localization.translate("login.buttonText", getActivity()), form);
+                Button button = new Button(getActivity());
+                button.setText(Localization.translate("login.buttonText", getActivity()));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -77,6 +81,8 @@ public class LoginFragment extends Fragment {
             System.err.println("FORM BUILDING FAILED");
             e.printStackTrace();
         }
+
+
 
         return root;
     }

@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.view.View;

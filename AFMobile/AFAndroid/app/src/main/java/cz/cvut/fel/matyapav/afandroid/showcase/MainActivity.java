@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
             tx.replace(R.id.mainLayout, new LoginFragment());
             tx.commit();
         }else{
-           refreshCurrentFragment();
+           ShowCaseUtils.refreshCurrentFragment(getThisActivity());
         }
     }
 
@@ -74,11 +74,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if(id == R.id.langCZ){
             Localization.changeLanguage(SupportedLanguages.CZ, getThisActivity());
-            refreshCurrentFragment();
+            ShowCaseUtils.refreshCurrentFragment(getThisActivity());
             }
         else if(id == R.id.langEN) {
             Localization.changeLanguage(SupportedLanguages.EN, getThisActivity());
-            refreshCurrentFragment();
+            ShowCaseUtils.refreshCurrentFragment(getThisActivity());
         }
 
         return super.onOptionsItemSelected(item);
@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity
         Class fragmentClass = null;
         if (id == R.id.loginForm) {
             fragmentClass = LoginFragment.class;
+        }else if(id == R.id.supportedCountries){
+            fragmentClass = CountriesFragment.class;
         } else if (id == R.id.userProfile) {
             fragmentClass = ProfileFragment.class;
         } else if (id == R.id.absenceManagement) {
@@ -126,11 +128,7 @@ public class MainActivity extends AppCompatActivity
         return this;
     }
 
-    private void refreshCurrentFragment(){
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment current = fragmentManager.findFragmentById(R.id.mainLayout);
-        fragmentManager.beginTransaction().detach(current).attach(current).commit();
-    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.view.View;
@@ -7,7 +7,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 
 /**
  * Created by Pavel on 15.02.2016.

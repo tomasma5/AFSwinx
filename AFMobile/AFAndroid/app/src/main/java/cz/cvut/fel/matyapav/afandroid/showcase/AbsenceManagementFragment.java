@@ -28,15 +28,18 @@ public class AbsenceManagementFragment extends Fragment {
         View root = inflater.inflate(R.layout.absence_management_fragment, container, false);
         LinearLayout layout = (LinearLayout) root.findViewById(R.id.absenceManagementLayout);
 
+        //get connection.xml as stream
         InputStream connectionResource = getResources().openRawResource(R.raw.connection);
 
+        //init builder
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
         FormBuilder builder = AFAndroid.getInstance().getFormBuilder()
                 .initBuilder(getActivity(), "absenceInstaceEditFormConnection", connectionResource,
                         "absenceInstaceEditFormConnection", securityConstrains);
         try {
             final AFForm form = builder.createComponent();
-            Button button = builder.buildSubmitButton("Perform", form);
+            Button button = new Button(getActivity());
+            button.setText(Localization.translate("button.perform", getActivity()));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -57,8 +60,6 @@ public class AbsenceManagementFragment extends Fragment {
             //TODO exception
             e.printStackTrace();
         }
-
-
         return root;
     }
 

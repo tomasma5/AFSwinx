@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.text.InputType;
@@ -30,7 +30,11 @@ public class TextFieldBuilder implements BasicBuilder {
 
     @Override
     public void setData(AFField field, Object value) {
-        ((EditText) field.getFieldView()).setText(value.toString());
+        if(value != null) {
+            ((EditText) field.getFieldView()).setText(value.toString());
+        }else{
+            ((EditText) field.getFieldView()).setText("");
+        }
     }
 
     @Override
