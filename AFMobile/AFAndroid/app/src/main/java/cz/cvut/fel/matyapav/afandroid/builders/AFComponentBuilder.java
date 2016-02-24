@@ -18,6 +18,7 @@ import java.util.HashMap;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.AFList;
 import cz.cvut.fel.matyapav.afandroid.components.AFTable;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
@@ -123,11 +124,11 @@ public abstract class AFComponentBuilder<T> {
         }else if(type.equals(SupportedComponents.TABLE)){
             component = new AFTable(getActivity(), connectionPack, skin);
         }else{
-            //component not supported
+            component = new AFList(getActivity(), connectionPack, skin);
         }
 
         LinearLayout componentView = new LinearLayout(getActivity());
-        componentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        componentView.setLayoutParams(getSkin().getTopLayoutParams());
         try {
             JSONParser parser = new JSONDefinitionParser();
             JSONObject jsonObj = new JSONObject(modelResponse).getJSONObject(Constants.CLASS_INFO);
@@ -204,5 +205,14 @@ public abstract class AFComponentBuilder<T> {
 
     public Skin getSkin() {
         return skin;
+    }
+
+    public boolean shouldBeInvisible(String column, AFComponent component) {
+        for(AFField field: component.getFields()){
+            if(field.getId().equals(column)){
+                return !field.getFieldInfo().isVisible();
+            }
+        }
+        return true;
     }
 }

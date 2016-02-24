@@ -38,7 +38,8 @@ public class CountriesFragment extends Fragment {
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
 
         TableBuilder tableBuilder = AFAndroid.getInstance().getTableBuilder()
-                .initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection), "tableCountryPublic", securityConstrains);
+                .initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection),
+                        "tableCountryPublic", securityConstrains);
         FormBuilder formBuilder = AFAndroid.getInstance().getFormBuilder()
                 .initBuilder(getActivity(), "countryForm", getResources().openRawResource(R.raw.connection), "countryAdd", securityConstrains)
                 .setSkin(new CountrySkin(getContext()));

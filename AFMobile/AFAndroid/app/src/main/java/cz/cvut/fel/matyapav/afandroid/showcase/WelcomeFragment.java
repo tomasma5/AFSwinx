@@ -16,8 +16,11 @@ import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
+import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
+import cz.cvut.fel.matyapav.afandroid.components.AFList;
 import cz.cvut.fel.matyapav.afandroid.components.AFTable;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryListSkin;
 
 /**
  * Created by Pavel on 16.02.2016.
@@ -31,6 +34,20 @@ public class WelcomeFragment extends Fragment{
         LinearLayout welcomeLayout = (LinearLayout) root.findViewById(R.id.welcomeLayout);
         TextView welcomeUserText = (TextView) welcomeLayout.findViewById(R.id.welcomeUserText);
         welcomeUserText.setText("Welcome user: " + ShowCaseUtils.getUserCredentials(getActivity()).get("username"));
+
+        //initialize builders
+        HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
+
+        ListBuilder listBuilder = AFAndroid.getInstance().getListBuilder().
+                initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection),
+                        "tableCountryPublic", securityConstrains).setSkin(new CountryListSkin(getContext()));
+
+        try {
+            AFList list = listBuilder.createComponent();
+            welcomeLayout.addView(list.getView());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return root;
     }
 }

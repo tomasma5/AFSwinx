@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
 
 /**
  * Created by Pavel on 24.02.2016.

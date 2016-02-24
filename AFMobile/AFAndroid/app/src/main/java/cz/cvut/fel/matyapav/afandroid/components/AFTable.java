@@ -93,46 +93,6 @@ public class AFTable extends AFComponent{
         return getRows().get(row).getChildAt(col);
     }
 
-    //graphic setters
-
-    public void setHeaderCellBackgroundColor(int col, int color){
-        View cell = getHeaderRow().getChildAt(col);
-        if(cell != null){
-            cell.setBackgroundColor(color);
-        }
-    }
-
-    public void setHeaderCellTextColor(int col, int color){
-        TextView cell = (TextView) getHeaderRow().getChildAt(col);
-        if(cell != null){
-            cell.setBackgroundColor(color);
-        }
-    }
-
-    public void setCellBackgroundColor(int row, int col, int color){
-        View cell = getCellAt(row, col);
-        if(cell != null){
-            cell.setBackgroundColor(color);
-        }
-    }
-
-    public void setCellTextColor(int row, int col, int color){
-        TextView cell = (TextView) getCellAt(row, col);
-        if(cell != null){
-            cell.setTextColor(color);
-        }
-    }
-
-    public void setWidth(int width){
-        ViewGroup.LayoutParams headerParams = getHeaderLayout().getLayoutParams();
-        headerParams.width = width;
-        getHeaderLayout().setLayoutParams(headerParams);
-
-        ViewGroup.LayoutParams contentWrapperParams = getContentLayoutWrapper().getLayoutParams();
-        contentWrapperParams.width = width;
-        getContentLayoutWrapper().setLayoutParams(contentWrapperParams);
-    }
-
     public void setContentLayoutWrapper(ScrollView contentLayoutWrapper) {
         this.contentLayoutWrapper = contentLayoutWrapper;
     }

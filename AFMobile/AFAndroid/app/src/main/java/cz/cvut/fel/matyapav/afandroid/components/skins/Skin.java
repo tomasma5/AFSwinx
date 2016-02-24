@@ -1,30 +1,33 @@
 package cz.cvut.fel.matyapav.afandroid.components.skins;
 
 import android.graphics.Typeface;
+import android.view.ViewGroup;
 
 /**
  * Created by Pavel on 24.02.2016.
  */
 public interface Skin {
 
+    ViewGroup.LayoutParams getTopLayoutParams();
+
     //forms
-    public int getLabelColor();
+    int getLabelColor();
 
-    public int getFieldColor();
+    int getFieldColor();
 
-    public int getValidationColor();
+    int getValidationColor();
 
-    public int getInputWidth();
+    int getInputWidth();
 
-    public Typeface getValidationFont();
+    Typeface getValidationFont();
 
-    public Typeface getFieldFont();
+    Typeface getFieldFont();
 
-    public Typeface getLabelFont();
+    Typeface getLabelFont();
 
-    public int getLabelWidth();
+    int getLabelWidth();
 
-    public int getLabelHeight();
+    int getLabelHeight();
 
     //tables
     int getTableHeight();
@@ -46,4 +49,8 @@ public interface Skin {
     int getContentGravity();
 
     int getBorderWidth();
+
+    //lists
+    int getListWidth();
+    int getListHeight();
 }

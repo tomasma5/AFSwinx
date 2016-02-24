@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 
 /**
  * Created by Pavel on 24.02.2016.
@@ -24,6 +25,11 @@ public class DefaultSkin implements Skin {
     public int convertDpToPixels(int dps, Context context){
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
+    }
+
+    @Override
+    public ViewGroup.LayoutParams getTopLayoutParams() {
+        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override
@@ -146,5 +152,15 @@ public class DefaultSkin implements Skin {
     @Override
     public int getBorderWidth() {
         return convertDpToPixels(1, getContext());
+    }
+
+    @Override
+    public int getListWidth() {
+        return AbsListView.LayoutParams.MATCH_PARENT;
+    }
+
+    @Override
+    public int getListHeight() {
+        return convertDpToPixels(200, getContext());
     }
 }

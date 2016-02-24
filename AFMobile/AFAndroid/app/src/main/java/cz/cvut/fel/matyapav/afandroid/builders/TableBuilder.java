@@ -206,13 +206,6 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
         cell.setBackground(rect);
     }
 
-    private boolean shouldBeInvisible(String column, AFComponent component) {
-        for(AFField field: component.getFields()){
-            if(field.getId().equals(column)){
-                return !field.getFieldInfo().isVisible();
-            }
-        }
-        return true;
-    }
+
 
 }

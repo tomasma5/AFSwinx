@@ -6,7 +6,8 @@ package cz.cvut.fel.matyapav.afandroid.enums;
 public enum SupportedComponents {
 
     FORM("Form"),
-    TABLE("Table");
+    TABLE("Table"),
+    LIST("List");
 
     SupportedComponents(String type) {
         this.type = type;
