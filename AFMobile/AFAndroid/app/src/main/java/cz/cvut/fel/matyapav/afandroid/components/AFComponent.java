@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
+import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
 import cz.cvut.fel.matyapav.afandroid.rest.BaseRestBuilder;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.rest.RestBuilderFactory;
@@ -32,15 +34,14 @@ public abstract class AFComponent {
     private LayoutOrientation layoutOrientation;
     private List<AFField> fields;
 
-    private AFSwinxConnection modelConnection;
-    private AFSwinxConnection dataConnection;
-    private AFSwinxConnection sendConnection;
+    private AFSwinxConnectionPack connectionPack;
 
-    public AFComponent(Activity activity, AFSwinxConnection modelConnection, AFSwinxConnection dataConnection, AFSwinxConnection sendConnection) {
+    private Skin skin;
+
+    public AFComponent(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
         this.activity = activity;
-        this.modelConnection = modelConnection;
-        this.dataConnection = dataConnection;
-        this.sendConnection = sendConnection;
+        this.connectionPack = connectionPack;
+        this.skin = skin;
     }
 
     public AFComponent(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
@@ -89,27 +90,15 @@ public abstract class AFComponent {
     abstract AFDataHolder reserialize();
 
     public AFSwinxConnection getDataConnection() {
-        return dataConnection;
+        return connectionPack.getDataConnection();
     }
 
     public AFSwinxConnection getModelConnection() {
-        return modelConnection;
+        return connectionPack.getMetamodelConnection();
     }
 
     public AFSwinxConnection getSendConnection() {
-        return sendConnection;
-    }
-
-    public void setDataConnection(AFSwinxConnection dataConnection) {
-        this.dataConnection = dataConnection;
-    }
-
-    public void setModelConnection(AFSwinxConnection modelConnection) {
-        this.modelConnection = modelConnection;
-    }
-
-    public void setSendConnection(AFSwinxConnection sendConnection) {
-        this.sendConnection = sendConnection;
+        return connectionPack.getSendConnection();
     }
 
     public void addField(AFField field){
@@ -129,5 +118,9 @@ public abstract class AFComponent {
 
     public Activity getActivity() {
         return activity;
+    }
+
+    public Skin getSkin() {
+        return skin;
     }
 }

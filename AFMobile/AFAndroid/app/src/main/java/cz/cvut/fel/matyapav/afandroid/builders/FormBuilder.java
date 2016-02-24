@@ -1,11 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,16 +13,10 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
-import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
-import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
-import cz.cvut.fel.matyapav.afandroid.utils.Constants;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Builds for from class definition
@@ -66,7 +57,6 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
                     AFField field = ((AFForm) form).getFieldById(road + key);
                     //System.err.println("FIELD" + field);
                     if (field != null) {
-
                         setFieldValue(field, jsonObject.get(key));
                     }
                 }
@@ -80,14 +70,14 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
 
     private void setFieldValue(AFField field, Object val){
         field.setActualData(val);
-        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo()).setData(field, val);
+        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
     }
 
     @Override
     protected View buildComponentView(AFComponent form) {
         //TODO zobecnit
         LinearLayout formView = new LinearLayout(getActivity());
-        formView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        formView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
             formView.setOrientation(LinearLayout.VERTICAL);
         }else { //AXIS Y
@@ -136,6 +126,4 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
 
         return formView;
     }
-
-
 }

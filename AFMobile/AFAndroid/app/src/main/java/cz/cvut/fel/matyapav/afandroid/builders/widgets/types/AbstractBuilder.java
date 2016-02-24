@@ -7,17 +7,13 @@ import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 
 /**
- * Created by Pavel on 24.02.2016.
+ * Created by Pavel on 14.02.2016.
  */
-abstract class BasicBuilder implements AbstractBuilder{
+public interface AbstractBuilder {
 
-    private Skin skin;
+    public View buildFieldView(Activity activity);
 
-    public BasicBuilder(Skin skin) {
-        this.skin = skin;
-    }
+    public void setData(AFField field, Object value);
 
-    public Skin getSkin() {
-        return skin;
-    }
+    public Object getData(AFField field);
 }

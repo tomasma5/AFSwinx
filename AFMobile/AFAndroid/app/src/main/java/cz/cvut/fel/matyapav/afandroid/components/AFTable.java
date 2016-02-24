@@ -11,10 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
+import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
 import cz.cvut.fel.matyapav.afandroid.rest.holder.AFDataHolder;
 
 /**
@@ -29,8 +31,8 @@ public class AFTable extends AFComponent{
     private int numberOfColumns;
     private ScrollView contentLayoutWrapper;
 
-    public AFTable(Activity activity, AFSwinxConnection modelConnection, AFSwinxConnection dataConnection, AFSwinxConnection sendConnection) {
-        super(activity, modelConnection, dataConnection, sendConnection);
+    public AFTable(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
+        super(activity, connectionPack, skin);
     }
 
     public AFTable(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {

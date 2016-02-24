@@ -1,11 +1,12 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -21,6 +22,8 @@ import cz.cvut.fel.matyapav.afandroid.components.AFTable;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
+import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.parsers.ConnectionParser;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
@@ -38,20 +41,21 @@ public abstract class AFComponentBuilder<T> {
 
     private Activity activity;
 
-    private AFSwinxConnection modelConnection;
-    private AFSwinxConnection dataConnection;
-    private AFSwinxConnection sendConnection;
+    private AFSwinxConnectionPack connectionPack;
 
     private String connectionKey;
     private String componentKeyName;
     private InputStream connectionResource;
     private HashMap<String, String> connectionParameters;
 
+    private Skin skin;
+
     public T initBuilder(Activity activity, String componentKeyName, InputStream connectionResource, String connectionKey){
         this.activity = activity;
         this.componentKeyName = componentKeyName;
         this.connectionResource = connectionResource;
         this.connectionKey = connectionKey;
+        this.skin = new DefaultSkin(activity);
         return (T) this;
     }
 
@@ -62,19 +66,18 @@ public abstract class AFComponentBuilder<T> {
         this.connectionResource = connectionResource;
         this.connectionKey = connectionKey;
         this.connectionParameters = connectionParameters;
+        this.skin = new DefaultSkin(activity);
         return (T) this;
     }
 
     public void initializeConnections() throws Exception {
-        if (modelConnection == null && connectionKey != null && connectionResource != null) {
+        if (connectionPack == null && connectionKey != null && connectionResource != null) {
             ConnectionParser connectionParser =
                     new ConnectionParser(connectionKey, connectionParameters);
             AFSwinxConnectionPack connections =
                     connectionParser.parseDocument(Utils
                             .buildDocumentFromFile(connectionResource));
-            modelConnection = connections.getMetamodelConnection();
-            dataConnection = connections.getDataConnection();
-            sendConnection = connections.getSendConnection();
+            connectionPack = connections;
         } else {
             // Model connection is important if it could be found then throw exception
             throw new Exception(
@@ -102,7 +105,7 @@ public abstract class AFComponentBuilder<T> {
                     prepareComponent(classDef.getInnerClasses().get(numberOfInnerClasses), component, numberOfInnerClasses++, true, road);
                     road = new StringBuilder(roadBackup);
                 }else {
-                    AFField affield = builder.prepareField(field, road, getActivity());
+                    AFField affield = builder.prepareField(field, road, getActivity(), skin);
                     if (affield != null) {
                         component.addField(affield);
                     }
@@ -113,18 +116,18 @@ public abstract class AFComponentBuilder<T> {
     }
 
     protected AFComponent buildComponent(String modelResponse, SupportedComponents type){
-        // popremyslet co s timto
+        //TODO popremyslet co s timto
         AFComponent component = null;
         if(type.equals(SupportedComponents.FORM)) {
-            component = new AFForm(getActivity(), modelConnection, dataConnection, sendConnection);
+            component = new AFForm(getActivity(), connectionPack, skin);
         }else if(type.equals(SupportedComponents.TABLE)){
-            component = new AFTable(getActivity(), modelConnection, dataConnection, sendConnection);
+            component = new AFTable(getActivity(), connectionPack, skin);
         }else{
             //component not supported
         }
 
         LinearLayout componentView = new LinearLayout(getActivity());
-        componentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        componentView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         try {
             JSONParser parser = new JSONDefinitionParser();
             JSONObject jsonObj = new JSONObject(modelResponse).getJSONObject(Constants.CLASS_INFO);
@@ -135,14 +138,14 @@ public abstract class AFComponentBuilder<T> {
             componentView.addView(view);
         } catch (JSONException e) {
             e.printStackTrace();
-            componentView = (LinearLayout) buildError("Cannot build form "+e.getMessage());
+            componentView = (LinearLayout) buildError("Cannot parse JSon data "+e.getMessage());
         }
         component.setView(componentView);
         return component;
     }
 
-
     protected String getModelResponse() throws Exception{
+        AFSwinxConnection modelConnection = connectionPack.getMetamodelConnection();
         if(modelConnection != null) {
             RequestTask task = new RequestTask(getActivity(), modelConnection.getHttpMethod(), modelConnection.getContentType(),
                     modelConnection.getSecurity(), null, Utils.getConnectionEndPoint(modelConnection));
@@ -158,6 +161,7 @@ public abstract class AFComponentBuilder<T> {
     }
 
     protected String getDataResponse() throws Exception{
+        AFSwinxConnection dataConnection = connectionPack.getDataConnection();
         if(dataConnection != null) {
             RequestTask getData = new RequestTask(getActivity(), dataConnection.getHttpMethod(), dataConnection.getContentType(),
                     dataConnection.getSecurity(), null, Utils.getConnectionEndPoint(dataConnection));
@@ -169,7 +173,6 @@ public abstract class AFComponentBuilder<T> {
         }
         return null;
     }
-
 
     private View buildError(String errorMsg) {
         LinearLayout err = new LinearLayout(getActivity());
@@ -192,5 +195,14 @@ public abstract class AFComponentBuilder<T> {
 
     public String getComponentKeyName() {
         return componentKeyName;
+    }
+
+    public T setSkin(Skin skin){
+        this.skin = skin;
+        return (T) this;
+    }
+
+    public Skin getSkin() {
+        return skin;
     }
 }

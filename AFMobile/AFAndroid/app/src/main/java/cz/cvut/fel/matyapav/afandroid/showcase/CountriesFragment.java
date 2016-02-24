@@ -19,6 +19,7 @@ import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.AFTable;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountrySkin;
 
 /**
  * Created by Pavel on 23.02.2016.
@@ -39,7 +40,8 @@ public class CountriesFragment extends Fragment {
         TableBuilder tableBuilder = AFAndroid.getInstance().getTableBuilder()
                 .initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection), "tableCountryPublic", securityConstrains);
         FormBuilder formBuilder = AFAndroid.getInstance().getFormBuilder()
-                .initBuilder(getActivity(), "countryForm", getResources().openRawResource(R.raw.connection), "countryAdd", securityConstrains);
+                .initBuilder(getActivity(), "countryForm", getResources().openRawResource(R.raw.connection), "countryAdd", securityConstrains)
+                .setSkin(new CountrySkin(getContext()));
 
         //create and insert table
         try {

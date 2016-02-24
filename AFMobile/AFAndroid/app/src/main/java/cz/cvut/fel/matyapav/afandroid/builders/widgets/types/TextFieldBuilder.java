@@ -8,22 +8,26 @@ import android.widget.EditText;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 
 /**
  * Created by Pavel on 14.02.2016.
  */
-public class TextFieldBuilder implements BasicBuilder {
+public class TextFieldBuilder extends BasicBuilder {
 
     private FieldInfo properties;
 
-    public TextFieldBuilder(FieldInfo properties) {
+    public TextFieldBuilder(Skin skin, FieldInfo properties) {
+        super(skin);
         this.properties = properties;
     }
 
     @Override
     public View buildFieldView(Activity activity) {
         EditText text = new EditText(activity);
+        text.setTextColor(getSkin().getFieldColor());
+        text.setTypeface(getSkin().getFieldFont());
         addInputType(text, properties.getWidgetType());
         return text;
     }

@@ -16,6 +16,7 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.AbsenceManagementSkin;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
@@ -35,7 +36,7 @@ public class AbsenceManagementFragment extends Fragment {
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
         FormBuilder builder = AFAndroid.getInstance().getFormBuilder()
                 .initBuilder(getActivity(), "absenceInstaceEditFormConnection", connectionResource,
-                        "absenceInstaceEditFormConnection", securityConstrains);
+                        "absenceInstaceEditFormConnection", securityConstrains).setSkin(new AbsenceManagementSkin(getContext()));
         try {
             final AFForm form = builder.createComponent();
             Button button = new Button(getActivity());

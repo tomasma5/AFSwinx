@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/countriesTable"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </LinearLayout>
 
@@ -17,7 +17,7 @@
         android:id="@+id/countriesForm"
         android:paddingTop="50dp"
         android:orientation="vertical"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </LinearLayout>
 

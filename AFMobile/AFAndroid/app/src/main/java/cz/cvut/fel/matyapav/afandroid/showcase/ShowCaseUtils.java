@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.showcase;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -51,5 +52,11 @@ public class ShowCaseUtils {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         Fragment current = fragmentManager.findFragmentById(R.id.mainLayout);
         fragmentManager.beginTransaction().detach(current).attach(current).commit();
+    }
+
+    //TODO nevim jestli nechat tu nebo u skinu
+    public static int convertDpToPixels(int dps, Context context){
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dps * scale + 0.5f);
     }
 }

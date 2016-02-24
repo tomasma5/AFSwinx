@@ -1,13 +1,10 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -34,22 +31,6 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  * Created by Pavel on 20.02.2016.
  */
 public class TableBuilder extends AFComponentBuilder<TableBuilder> {
-    //table properties
-    private static int DEFAULT_TABLE_HEIGHT = 650;
-    private static int DEFAULT_HEADER_ROW_HEIGHT = 100; //with padding
-    private static int DEFAULT_CONTENT_ROW_HEIGHT = 150;
-    private static int DEFAULT_TABLE_WIDTH = 1200;
-
-    //colors
-    private static int DEFAULT_HEADER_COLOR = Color.GRAY;
-    private static int DEFAULT_CONTENT_COLOR = Color.LTGRAY;
-
-    //cell properties
-    private static final int DEFAULT_PADDING = 20;
-    private static int DEFAULT_HEADER_CELL_GRAVITY = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
-    private static int DEFAULT_CONTENT_CELL_GRAVITY = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
-    private static final int DEFAULT_BORDER_WIDTH = 3 ;
-
 
 
     @Override
@@ -95,10 +76,14 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
                     }
                     //build cell
                     TextView cell = new TextView(getActivity());
-                    setCellParams(cell, DEFAULT_CONTENT_CELL_GRAVITY, DEFAULT_PADDING, DEFAULT_BORDER_WIDTH);
-                    String value = Localization.translate(((JSONObject) jsonArray.get(i)).get(column).toString(), getActivity());
-                    cell.setText(value);
-                    row.addView(cell, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, DEFAULT_CONTENT_ROW_HEIGHT));
+                    setCellParams(cell, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
+                            getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(),
+                            getSkin().getCellPaddingBottom(), getSkin().getBorderWidth(), getSkin().getBorderColor());
+                    cell.setTextColor(getSkin().getContentTextColor());
+                    String value = Localization.translate(((JSONObject) jsonArray.get(i)).
+                            get(column).toString(), getActivity());
+                    cell.setText(value);     //set text
+                    row.addView(cell, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getContentRowHeight()));
 
                     //add value in column to row list
                     rowList.add(value);
@@ -119,7 +104,9 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
             TableRow fakeHeaderRow = new TableRow(getActivity());
             for (String column: longestRowList) {
                 TextView columnView = new TextView(getActivity());
-                setCellParams(columnView, DEFAULT_HEADER_CELL_GRAVITY, DEFAULT_PADDING, DEFAULT_BORDER_WIDTH);
+                setCellParams(columnView, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
+                        getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
+                        getSkin().getBorderWidth(), getSkin().getBorderColor());
                 columnView.setText(column);
                 fakeHeaderRow.addView(columnView, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
             }
@@ -134,34 +121,31 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
 
     @Override
     protected View buildComponentView(AFComponent component) {
-        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
-        horizontalScrollView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DEFAULT_TABLE_HEIGHT));
-        horizontalScrollView.setScrollbarFadingEnabled(false);
         //setup wrapper for table
         LinearLayout tableWrapper = new LinearLayout(getActivity());
         tableWrapper.setOrientation(LinearLayout.VERTICAL);
-        tableWrapper.setLayoutParams(new ViewGroup.LayoutParams(DEFAULT_TABLE_WIDTH, LinearLayout.LayoutParams.WRAP_CONTENT));
+        tableWrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getSkin().getTableHeight()));
 
         //setup table layout for header row
         TableLayout headerTableLayout = new TableLayout(getActivity());
-        headerTableLayout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, DEFAULT_HEADER_ROW_HEIGHT));
+        headerTableLayout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
         headerTableLayout.setStretchAllColumns(true);
         headerTableLayout.setShrinkAllColumns(true);
 
         //setup vertical scroll view for table content
         ScrollView scrollView = new ScrollView(getActivity());
-        scrollView.setLayoutParams(new ViewGroup.LayoutParams(DEFAULT_TABLE_WIDTH, DEFAULT_TABLE_HEIGHT-DEFAULT_HEADER_ROW_HEIGHT));
+        scrollView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getSkin().getTableHeight()-getSkin().getHeaderRowHeight()));
         scrollView.setScrollbarFadingEnabled(false);
 
         //setup table layout for table content
         TableLayout contentTableLayout = new TableLayout(getActivity());
-        contentTableLayout.setBackgroundColor(DEFAULT_CONTENT_COLOR);
+        contentTableLayout.setBackgroundColor(getSkin().getContentBackgroundColor());
         contentTableLayout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
         contentTableLayout.setStretchAllColumns(true);
         contentTableLayout.setShrinkAllColumns(true);
 
         TableRow headerRow = new TableRow(getActivity());
-        headerRow.setBackgroundColor(DEFAULT_HEADER_COLOR);
+        headerRow.setBackgroundColor(getSkin().getHeaderRowBackgroundColor());
 
         TableRow fakeContentRow = new TableRow(getActivity());
 
@@ -174,14 +158,19 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
             numberOfColumns++;
 
             TextView columnHeaderText = new TextView(getActivity());
-            setCellParams(columnHeaderText, DEFAULT_HEADER_CELL_GRAVITY, DEFAULT_PADDING, DEFAULT_BORDER_WIDTH);
+            setCellParams(columnHeaderText, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
+                    getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
+                    getSkin().getBorderWidth(), getSkin().getBorderColor());
+            columnHeaderText.setTextColor(getSkin().getHeaderRowTextColor());
             columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
-            headerRow.addView(columnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, DEFAULT_HEADER_ROW_HEIGHT));
+            headerRow.addView(columnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
             ((AFTable) component).setHeaderRow(headerRow);
 
             //create fake header row which will be added to content table to align items according to header row
             TextView fakeColumnHeaderText = new TextView(getActivity());
-            setCellParams(fakeColumnHeaderText, DEFAULT_CONTENT_CELL_GRAVITY, DEFAULT_PADDING, DEFAULT_BORDER_WIDTH);
+            setCellParams(fakeColumnHeaderText, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
+                    getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
+                    getSkin().getBorderWidth(), getSkin().getBorderColor());
             fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
             fakeContentRow.addView(fakeColumnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
         }
@@ -202,24 +191,20 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
         tableWrapper.addView(headerTableLayout);
         tableWrapper.addView(scrollView);
 
-        horizontalScrollView.addView(tableWrapper);
-        return horizontalScrollView;
+        return tableWrapper;
     }
-    private void setCellParams(TextView cell, int gravity, int paddingLeft, int paddingRight, int paddingTop, int paddingBottom, int borderWidth){
+    private void setCellParams(TextView cell, int gravity, int paddingLeft, int paddingRight,
+                               int paddingTop, int paddingBottom, int borderWidth, int borderColor){
         //create border
         ShapeDrawable rect = new ShapeDrawable(new RectShape());
         rect.getPaint().setStyle(Paint.Style.STROKE);
+        rect.getPaint().setColor(borderColor);
         rect.getPaint().setStrokeWidth(borderWidth);
 
         cell.setGravity(gravity);
         cell.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         cell.setBackground(rect);
     }
-
-    private void setCellParams(TextView cell, int gravity, int padding, int borderWidth){
-       setCellParams(cell, gravity, padding, padding, padding, padding, borderWidth);
-    }
-
 
     private boolean shouldBeInvisible(String column, AFComponent component) {
         for(AFField field: component.getFields()){

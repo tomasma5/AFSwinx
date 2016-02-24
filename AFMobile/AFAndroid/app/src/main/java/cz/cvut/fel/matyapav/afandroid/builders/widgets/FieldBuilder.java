@@ -1,15 +1,14 @@
 package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.BasicBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
-import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
@@ -21,8 +20,7 @@ import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
  */
 public class FieldBuilder {
 
-    public AFField prepareField(FieldInfo properties, StringBuilder road, Activity activity) {
-
+    public AFField prepareField(FieldInfo properties, StringBuilder road, Activity activity, Skin skin) {
         AFField field = new AFField(properties);
         field.setId(road.toString()+properties.getId());
 
@@ -35,15 +33,16 @@ public class FieldBuilder {
             if (pos != null) {
                 field.setLabelPosition(pos);
             }
-
+            label.setTextColor(skin.getLabelColor());
+            label.setTypeface(skin.getLabelFont());
             label.setText(labelText);
-            label.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             field.setLabel(label);
         }
         //ERROR TEXT
         TextView errorView = new TextView(activity);
         errorView.setVisibility(View.GONE);
-        errorView.setTextColor(Color.RED);
+        errorView.setTextColor(skin.getValidationColor());
+        errorView.setTypeface(skin.getValidationFont());
         field.setErrorView(errorView);
 
         //LAYOUT PROPERTIES OF FIELD
@@ -55,7 +54,7 @@ public class FieldBuilder {
         }
 
         View inputField = null;
-        BasicBuilder fieldBuilder = FieldBuilderFactory.getInstance().getFieldBuilder(properties);
+        AbstractBuilder fieldBuilder = FieldBuilderFactory.getInstance().getFieldBuilder(properties, skin);
         if(fieldBuilder != null && (inputField = fieldBuilder.buildFieldView(activity))!= null){
             //USER INTERACTION PROPERTIES OF FIELD SUCH AS VISIBILITY ETC.
             if (properties.isReadOnly()) {
@@ -68,7 +67,7 @@ public class FieldBuilder {
             field.setValidations(properties.getRules());
             field.setFieldView(inputField);
         }
-        View fieldView = buildFieldView(field);
+        View fieldView = buildFieldView(field, skin);
         if(!properties.isVisible()){
             fieldView.setVisibility(View.GONE);
         }
@@ -76,20 +75,19 @@ public class FieldBuilder {
         return field;
     }
 
-    private View buildFieldView(AFField field){
-        //TODO zeptat se Martina jestli mohou mít fieldy i twocolumnlayout
+    private View buildFieldView(AFField field, Skin skin){
         LinearLayout fullLayout = new LinearLayout(field.getLabel().getContext());
-        fullLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        fullLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //set orientation of label and field itself
         if(field.getLayoutOrientation().equals(LayoutOrientation.AXISY)){
             fullLayout.setOrientation(LinearLayout.HORIZONTAL);
-            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0.35f)); //TODO let user define weight
-            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0.65f));
+            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight())); //TODO let user define weight
+            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
         }else if(field.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
             fullLayout.setOrientation(LinearLayout.VERTICAL);
-            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight()));
+            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
         //LABEL BEFORE

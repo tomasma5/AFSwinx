@@ -15,20 +15,23 @@ import java.util.Date;
 import java.util.Locale;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 
 /**
  * Created by Pavel on 14.02.2016.
  */
-public class DateFieldBuilder implements BasicBuilder{
+public class DateFieldBuilder extends BasicBuilder {
 
 
     private String dateFormat;
 
-    public DateFieldBuilder(){
+    public DateFieldBuilder(Skin skin){
+        super(skin);
         this.dateFormat = "dd.MM.yyyy"; //Default date format
     }
 
-    public DateFieldBuilder(String dateFormat) {
+    public DateFieldBuilder(Skin skin, String dateFormat) {
+        super(skin);
         this.dateFormat = dateFormat;
     }
 
@@ -39,6 +42,8 @@ public class DateFieldBuilder implements BasicBuilder{
         dateLayout.setOrientation(LinearLayout.HORIZONTAL);
         final EditText dateText = new EditText(activity);
         dateText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        dateText.setTextColor(getSkin().getFieldColor());
+        dateText.setTypeface(getSkin().getFieldFont());
         dateText.setHint(dateFormat);
         dateText.setFocusable(false);
         dateText.setClickable(true);

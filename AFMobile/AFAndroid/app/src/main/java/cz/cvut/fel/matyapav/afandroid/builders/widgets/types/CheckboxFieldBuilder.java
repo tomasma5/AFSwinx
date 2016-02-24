@@ -7,15 +7,21 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 
 /**
  * Created by Pavel on 15.02.2016.
  */
-public class CheckboxFieldBuilder implements BasicBuilder{
+public class CheckboxFieldBuilder extends BasicBuilder {
+
+    public CheckboxFieldBuilder(Skin skin) {
+        super(skin);
+    }
 
     @Override
     public View buildFieldView(Activity activity) {
         CheckBox checkBox = new CheckBox(activity);
+        checkBox.setTextColor(getSkin().getFieldColor());
         checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return checkBox;
     }

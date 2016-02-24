@@ -9,15 +9,17 @@ import android.widget.RadioGroup;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 
 /**
  * Created by Pavel on 15.02.2016.
  */
-public class OptionFieldBuilder implements BasicBuilder {
+public class OptionFieldBuilder extends BasicBuilder {
 
     private FieldInfo properties;
 
-    public OptionFieldBuilder(FieldInfo properties) {
+    public OptionFieldBuilder(Skin skin,FieldInfo properties) {
+        super(skin);
         this.properties = properties;
     }
 
@@ -32,6 +34,8 @@ public class OptionFieldBuilder implements BasicBuilder {
             RadioButton[] options = new RadioButton[numberOfOptions];
             for (int i = 0; i < numberOfOptions; i++) {
                 options[i] = new RadioButton(activity);
+                options[i].setTextColor(getSkin().getFieldColor());
+                options[i].setTypeface(getSkin().getFieldFont());
                 options[i].setText(properties.getOptions().get(i).getValue());
                 options[i].setId(i + 100);
                 radioGroup.addView(options[i]);
@@ -41,8 +45,12 @@ public class OptionFieldBuilder implements BasicBuilder {
             numberOfOptions = 2;
             RadioButton[] options = new RadioButton[numberOfOptions];
             options[0] = new RadioButton(activity);
+            options[0].setTextColor(getSkin().getFieldColor());
+            options[0].setTypeface(getSkin().getFieldFont());
             options[0].setText("true");
             options[1] = new RadioButton(activity);
+            options[1].setTextColor(getSkin().getFieldColor());
+            options[1].setTypeface(getSkin().getFieldFont());
             options[1].setText("false");
             radioGroup.addView(options[0]);
             radioGroup.addView(options[1]);

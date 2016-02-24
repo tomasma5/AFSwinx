@@ -6,30 +6,23 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.InputStream;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.components.AFTable;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.LoginSkin;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
@@ -50,10 +43,13 @@ public class LoginFragment extends Fragment {
         try {
             //init builder
             FormBuilder builder = AFAndroid.getInstance().getFormBuilder().
-                    initBuilder(getActivity(), "loginForm", connectionResource, "loginForm");
+                    initBuilder(getActivity(), "loginForm", connectionResource, "loginForm").
+                    setSkin(new LoginSkin(getContext()));
             form = builder.createComponent();
             if(form != null) {
                 Button button = new Button(getActivity());
+                button.setLayoutParams(new ViewGroup.LayoutParams(
+                        ShowCaseUtils.convertDpToPixels(200, getContext()), ViewGroup.LayoutParams.WRAP_CONTENT));
                 button.setText(Localization.translate("login.buttonText", getActivity()));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -92,8 +88,8 @@ public class LoginFragment extends Fragment {
         AFField passwordField = form.getFieldById("password");
         if(usernameField != null && passwordField != null){
             //save user to shared preferences
-            String username = (String) FieldBuilderFactory.getInstance().getFieldBuilder(usernameField.getFieldInfo()).getData(usernameField);
-            String password = (String) FieldBuilderFactory.getInstance().getFieldBuilder(passwordField.getFieldInfo()).getData(passwordField);
+            String username = (String) form.getDataFromFieldWithId("username");
+            String password = (String) form.getDataFromFieldWithId("password");
             ShowCaseUtils.setUserInPreferences(getActivity(), username, password);
             //set visibility in menu
             Menu menu = ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu();

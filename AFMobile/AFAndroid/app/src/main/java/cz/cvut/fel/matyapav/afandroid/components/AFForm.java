@@ -2,20 +2,18 @@ package cz.cvut.fel.matyapav.afandroid.components;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.BasicBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
+import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
 import cz.cvut.fel.matyapav.afandroid.rest.BaseRestBuilder;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.rest.RestBuilderFactory;
@@ -27,8 +25,8 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class AFForm extends AFComponent {
 
-    public AFForm(Activity activity, AFSwinxConnection modelConnection, AFSwinxConnection dataConnection, AFSwinxConnection sendConnection) {
-        super(activity, modelConnection, dataConnection, sendConnection);
+    public AFForm(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
+        super(activity, connectionPack, skin);
     }
 
     public AFForm(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
@@ -40,8 +38,8 @@ public class AFForm extends AFComponent {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
 
-            BasicBuilder fieldBuilder =
-                    FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo());
+            AbstractBuilder fieldBuilder =
+                    FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
             Object data = fieldBuilder.getData(field);
             String propertyName = field.getId();
             // Based on dot notation determine road. Road is used to add object to its right place
@@ -136,8 +134,16 @@ public class AFForm extends AFComponent {
 
     public void resetData() {
         for (AFField field: getFields()) {
-            BasicBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo());
+            AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
             builder.setData(field, field.getActualData());
         }
+    }
+
+    public Object getDataFromFieldWithId(String id){
+        AFField field = getFieldById(id);
+        if(field != null){
+            return FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).getData(field);
+        }
+        return null;
     }
 }
