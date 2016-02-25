@@ -37,17 +37,6 @@ public class WelcomeFragment extends Fragment{
 
         //initialize builders
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
-
-        ListBuilder listBuilder = AFAndroid.getInstance().getListBuilder().
-                initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection),
-                        "tableCountryPublic", securityConstrains).setSkin(new CountryListSkin(getContext()));
-
-        try {
-            AFList list = listBuilder.createComponent();
-            welcomeLayout.addView(list.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return root;
     }
 }

@@ -1,5 +1,10 @@
 package cz.cvut.fel.matyapav.afandroid.utils;
 
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.widget.TextView;
+
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -14,6 +19,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
 import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
@@ -214,5 +220,27 @@ public class Utils {
 
     public static String getConnectionEndPoint(AFSwinxConnection connection){
         return connection.getProtocol()+"://"+connection.getAddress()+":"+connection.getPort()+connection.getParameters();
+    }
+
+    public static boolean shouldBeInvisible(String column, AFComponent component) {
+        for(AFField field: component.getFields()){
+            if(field.getId().equals(column)){
+                return !field.getFieldInfo().isVisible();
+            }
+        }
+        return true;
+    }
+
+    public static void setCellParams(TextView cell, int gravity, int paddingLeft, int paddingRight,
+                               int paddingTop, int paddingBottom, int borderWidth, int borderColor){
+        //create border
+        ShapeDrawable rect = new ShapeDrawable(new RectShape());
+        rect.getPaint().setStyle(Paint.Style.STROKE);
+        rect.getPaint().setColor(borderColor);
+        rect.getPaint().setStrokeWidth(borderWidth);
+
+        cell.setGravity(gravity);
+        cell.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        cell.setBackground(rect);
     }
 }

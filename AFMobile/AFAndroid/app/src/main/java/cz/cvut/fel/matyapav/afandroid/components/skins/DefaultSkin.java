@@ -27,11 +27,13 @@ public class DefaultSkin implements Skin {
         return (int) (dps * scale + 0.5f);
     }
 
+    /*******************COMMON*******************/
     @Override
     public ViewGroup.LayoutParams getTopLayoutParams() {
         return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    /*******************FORM*******************/
     @Override
     public int getLabelColor() {
         return Color.BLACK;
@@ -78,7 +80,7 @@ public class DefaultSkin implements Skin {
     }
 
 
-    //table
+    /*******************TABLE*******************/
     @Override
     public int getTableHeight() {
         return convertDpToPixels(200, getContext());

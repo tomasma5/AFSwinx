@@ -83,6 +83,13 @@ public abstract class AFComponent {
         this.layoutOrientation = layoutOrientation;
     }
 
+    //this one should be used by users
+    public void insertData(Object dataObject){
+        insertData(dataObject.toString(), new StringBuilder());
+    }
+
+    abstract void insertData(String dataResponse, StringBuilder road);
+
     abstract SupportedComponents getComponentType();
 
     abstract boolean validateData();
@@ -122,5 +129,25 @@ public abstract class AFComponent {
 
     public Skin getSkin() {
         return skin;
+    }
+
+    public AFField getFieldById(String id){
+        for (AFField field: getFields()) {
+            if(field.getId().equals(id)){
+                return field;
+            }
+        }
+        //not found
+        return null;
+    }
+
+    public int getVisibleFieldsCount(){
+        int res = 0;
+        for (AFField field: getFields()) {
+            if(field.getFieldInfo().isVisible()){
+                res++;
+            }
+        }
+        return res;
     }
 }

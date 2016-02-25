@@ -49,6 +49,7 @@ public class DateFieldBuilder extends BasicBuilder {
         dateText.setClickable(true);
 
         //TODO umoznit clear
+        //TODO kdyz nastavim ve swingu datum tak se zobrazuje datum o jeden den nizsi
         dateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

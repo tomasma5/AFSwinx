@@ -1,5 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -33,44 +35,10 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
         //fill it with data (if there are some)
         String data = getDataResponse();
         if(data != null) {
-            insertData(data, form, new StringBuilder());
+            form.insertData(data);
         }
         AFAndroid.getInstance().addCreatedComponent(getComponentKeyName(), form);
         return form;
-    }
-
-    @Override
-    protected void insertData(String dataResponse, AFComponent form, StringBuilder road){
-        try {
-            JSONObject jsonObject = new JSONObject(dataResponse);
-            Iterator<String> keys = jsonObject.keys();
-            while(keys.hasNext()){
-                String key = keys.next();
-                if(jsonObject.get(key) instanceof JSONObject){
-                    String roadBackup = road.toString();
-                    road.append(key);
-                    road.append(".");
-                    insertData(jsonObject.get(key).toString(), form, road); //parse class types
-                    road = new StringBuilder(roadBackup.toString());
-                }else {
-                    //System.err.println("ROAD+KEY" + (road + key));
-                    AFField field = ((AFForm) form).getFieldById(road + key);
-                    //System.err.println("FIELD" + field);
-                    if (field != null) {
-                        setFieldValue(field, jsonObject.get(key));
-                    }
-                }
-
-            }
-        } catch (JSONException e) {
-            System.err.println("CANNOT PARSE DATA");
-            e.printStackTrace();
-        }
-    }
-
-    private void setFieldValue(AFField field, Object val){
-        field.setActualData(val);
-        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
     }
 
     @Override
@@ -101,6 +69,9 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
             int i = 0;
             LinearLayout couple = null;
             for (AFField field : form.getFields()) {
+                if(!field.getFieldInfo().isVisible()){
+                    continue;
+                }
                 if (i % 2 == 0) {
                     if (couple != null) {
                         //add couple
@@ -112,18 +83,18 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
                 }
 
                 View fieldView = field.getCompleteView();
-                if(form.getFields().size() % 2 != 0 && i == form.getFields().size()-1){
-                    //if number of elements are odd last element will occupy space alone
-                    fieldView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                if (form.getVisibleFieldsCount() % 2 != 0 && i == form.getVisibleFieldsCount() - 1) {
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    fieldView.setLayoutParams(params);
                     formView.addView(fieldView);
-                }else{
-                    fieldView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT,0.5f)); //occupies half space
+                } else {
+                    System.err.println("ADDING TO COUPLE "+field.getId());
+                    fieldView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.5f)); //occupies half space
                     couple.addView(fieldView);
                 }
                 i++;
             }
         }
-
         return formView;
     }
 }

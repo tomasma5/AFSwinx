@@ -4,6 +4,11 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.ViewGroup;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Iterator;
+
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
@@ -34,10 +39,43 @@ public class AFForm extends AFComponent {
     }
 
     @Override
+    void insertData(String dataResponse, StringBuilder road){
+        try {
+            JSONObject jsonObject = new JSONObject(dataResponse);
+            Iterator<String> keys = jsonObject.keys();
+            while(keys.hasNext()){
+                String key = keys.next();
+                if(jsonObject.get(key) instanceof JSONObject){
+                    String roadBackup = road.toString();
+                    road.append(key);
+                    road.append(".");
+                    insertData(jsonObject.get(key).toString(), road); //parse class types
+                    road = new StringBuilder(roadBackup.toString());
+                }else {
+                    //System.err.println("ROAD+KEY" + (road + key));
+                    AFField field = getFieldById(road + key);
+                    //System.err.println("FIELD" + field);
+                    if (field != null) {
+                        setFieldValue(field, jsonObject.get(key));
+                    }
+                }
+
+            }
+        } catch (JSONException e) {
+            System.err.println("CANNOT PARSE DATA");
+            e.printStackTrace();
+        }
+    }
+
+    private void setFieldValue(AFField field, Object val){
+        field.setActualData(val);
+        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
+    }
+
+    @Override
     protected AFDataHolder reserialize() {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
-
             AbstractBuilder fieldBuilder =
                     FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
             Object data = fieldBuilder.getData(field);
@@ -73,16 +111,6 @@ public class AFForm extends AFComponent {
     @Override
     SupportedComponents getComponentType() {
         return SupportedComponents.FORM;
-    }
-
-    public AFField getFieldById(String id){
-        for (AFField field: getFields()) {
-            if(field.getId().equals(id)){
-                return field;
-            }
-        }
-        //not found
-        return null;
     }
 
     public boolean validateData(){
@@ -138,6 +166,12 @@ public class AFForm extends AFComponent {
             builder.setData(field, field.getActualData());
         }
     }
+    public void clearData() {
+        for (AFField field: getFields()) {
+            field.setActualData(null);
+        }
+        resetData();
+    }
 
     public Object getDataFromFieldWithId(String id){
         AFField field = getFieldById(id);
@@ -146,4 +180,6 @@ public class AFForm extends AFComponent {
         }
         return null;
     }
+
+
 }

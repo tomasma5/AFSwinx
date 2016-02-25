@@ -186,7 +186,7 @@ public abstract class AFComponentBuilder<T> {
 
     public abstract AFComponent createComponent() throws Exception;
 
-    protected abstract void insertData(String dataResponse, AFComponent component, StringBuilder road);
+
 
     protected abstract View buildComponentView(AFComponent component);
 
@@ -207,12 +207,5 @@ public abstract class AFComponentBuilder<T> {
         return skin;
     }
 
-    public boolean shouldBeInvisible(String column, AFComponent component) {
-        for(AFField field: component.getFields()){
-            if(field.getId().equals(column)){
-                return !field.getFieldInfo().isVisible();
-            }
-        }
-        return true;
-    }
+
 }

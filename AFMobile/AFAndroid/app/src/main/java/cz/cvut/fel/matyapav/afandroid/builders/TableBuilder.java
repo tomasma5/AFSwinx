@@ -25,6 +25,7 @@ import cz.cvut.fel.matyapav.afandroid.components.AFTable;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 
 /**
@@ -42,82 +43,12 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
         //fill it with data (if there are some)
         String data = getDataResponse();
         if(data != null) {
-            insertData(data, table);
+            table.insertData(data);
         }
         AFAndroid.getInstance().addCreatedComponent(getComponentKeyName(), table);
         return table;
     }
 
-    private void insertData(String dataResponse, AFComponent table){
-        insertData(dataResponse, table, null); //road is not needed in this case
-    }
-
-    @Override
-    protected void insertData(String dataResponse, AFComponent table, StringBuilder road) {
-        List<String> longestRowList = new ArrayList<>();
-        int longestRowLength = 0;
-        try {
-            JSONArray jsonArray = new JSONArray(dataResponse);
-            for(int i=0; i<jsonArray.length(); i++){
-                TableRow row = new TableRow(getActivity());
-                row.setClickable(true);
-                row.setFocusable(true);
-
-                //list of strings within one row - used to determine longest row
-                List<String> rowList = new ArrayList<>();
-                int rowLength = 0;
-
-                //iterate over columns
-                Iterator<String> recordKeys = ((JSONObject) jsonArray.get(i)).keys();
-                while(recordKeys.hasNext()) {
-                    String column = recordKeys.next();
-                    if(shouldBeInvisible(column, table)){
-                        continue; //do not bother with invisible columns
-                    }
-                    //build cell
-                    TextView cell = new TextView(getActivity());
-                    setCellParams(cell, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
-                            getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(),
-                            getSkin().getCellPaddingBottom(), getSkin().getBorderWidth(), getSkin().getBorderColor());
-                    cell.setTextColor(getSkin().getContentTextColor());
-                    String value = Localization.translate(((JSONObject) jsonArray.get(i)).
-                            get(column).toString(), getActivity());
-                    cell.setText(value);     //set text
-                    row.addView(cell, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getContentRowHeight()));
-
-                    //add value in column to row list
-                    rowList.add(value);
-                    //increase length of row
-                    rowLength += value.length();
-                }
-                ((AFTable) table).getContentLayout().addView(row, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)); //add row to table
-                ((AFTable) table).addRow(row);
-                //set longest row
-                if(rowLength > longestRowLength){
-                    longestRowList = rowList;
-                    longestRowLength = rowLength;
-                }
-
-            }
-
-            //add longest row to header as fake row with 0 height to have all columns properly sized
-            TableRow fakeHeaderRow = new TableRow(getActivity());
-            for (String column: longestRowList) {
-                TextView columnView = new TextView(getActivity());
-                setCellParams(columnView, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
-                        getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
-                        getSkin().getBorderWidth(), getSkin().getBorderColor());
-                columnView.setText(column);
-                fakeHeaderRow.addView(columnView, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
-            }
-            ((AFTable) table).getHeaderLayout().addView(fakeHeaderRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-
-        } catch (JSONException e) {
-            //TODO better exception handling
-            System.err.println("CANNOT PARSE DATA");
-            e.printStackTrace();
-        }
-    }
 
     @Override
     protected View buildComponentView(AFComponent component) {
@@ -158,7 +89,7 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
             numberOfColumns++;
 
             TextView columnHeaderText = new TextView(getActivity());
-            setCellParams(columnHeaderText, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
+            Utils.setCellParams(columnHeaderText, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             columnHeaderText.setTextColor(getSkin().getHeaderRowTextColor());
@@ -168,7 +99,7 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
 
             //create fake header row which will be added to content table to align items according to header row
             TextView fakeColumnHeaderText = new TextView(getActivity());
-            setCellParams(fakeColumnHeaderText, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
+            Utils.setCellParams(fakeColumnHeaderText, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
@@ -193,18 +124,7 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
 
         return tableWrapper;
     }
-    private void setCellParams(TextView cell, int gravity, int paddingLeft, int paddingRight,
-                               int paddingTop, int paddingBottom, int borderWidth, int borderColor){
-        //create border
-        ShapeDrawable rect = new ShapeDrawable(new RectShape());
-        rect.getPaint().setStyle(Paint.Style.STROKE);
-        rect.getPaint().setColor(borderColor);
-        rect.getPaint().setStrokeWidth(borderWidth);
 
-        cell.setGravity(gravity);
-        cell.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
-        cell.setBackground(rect);
-    }
 
 
 

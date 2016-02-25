@@ -21,8 +21,17 @@ import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 public class FieldBuilder {
 
     public AFField prepareField(FieldInfo properties, StringBuilder road, Activity activity, Skin skin) {
+
+
         AFField field = new AFField(properties);
         field.setId(road.toString()+properties.getId());
+        //LAYOUT PROPERTIES OF FIELD
+        if (properties.getLayout().getLayoutDefinition() != null) {
+            field.setLayoutDefinitions(properties.getLayout().getLayoutDefinition() );
+        }
+        if (properties.getLayout().getLayoutOrientation() != null) {
+            field.setLayoutOrientation(properties.getLayout().getLayoutOrientation());
+        }
 
         //LABEL
         TextView label = new TextView(activity);
@@ -38,6 +47,7 @@ public class FieldBuilder {
             label.setText(labelText);
             field.setLabel(label);
         }
+
         //ERROR TEXT
         TextView errorView = new TextView(activity);
         errorView.setVisibility(View.GONE);
@@ -45,44 +55,36 @@ public class FieldBuilder {
         errorView.setTypeface(skin.getValidationFont());
         field.setErrorView(errorView);
 
-        //LAYOUT PROPERTIES OF FIELD
-        if (properties.getLayout().getLayoutDefinition() != null) {
-            field.setLayoutDefinitions(properties.getLayout().getLayoutDefinition() );
-        }
-        if (properties.getLayout().getLayoutOrientation() != null) {
-            field.setLayoutOrientation(properties.getLayout().getLayoutOrientation());
-        }
+        //VALIDATIONS
+        field.setValidations(properties.getRules());
 
+        //Input view
         View inputField = null;
         AbstractBuilder fieldBuilder = FieldBuilderFactory.getInstance().getFieldBuilder(properties, skin);
         if(fieldBuilder != null && (inputField = fieldBuilder.buildFieldView(activity))!= null){
-            //USER INTERACTION PROPERTIES OF FIELD SUCH AS VISIBILITY ETC.
-            if (properties.isReadOnly()) {
-                inputField.setEnabled(false);
-            }
-            if (!properties.isVisible()) {
-                inputField.setVisibility(View.INVISIBLE);
-            }
-            //if field should not be visible
-            field.setValidations(properties.getRules());
+            inputField.setEnabled(!properties.isReadOnly());
             field.setFieldView(inputField);
         }
-        View fieldView = buildFieldView(field, skin);
+
+        //put it all together
+        //when field is not visible don't even add it to form;
+
+        View completeView = buildCompleteView(field, skin);
         if(!properties.isVisible()){
-            fieldView.setVisibility(View.GONE);
+           completeView.setVisibility(View.GONE);
         }
-        field.setCompleteView(fieldView);
+        field.setCompleteView(completeView);
         return field;
     }
 
-    private View buildFieldView(AFField field, Skin skin){
+    private View buildCompleteView(AFField field, Skin skin){
         LinearLayout fullLayout = new LinearLayout(field.getLabel().getContext());
         fullLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //set orientation of label and field itself
         if(field.getLayoutOrientation().equals(LayoutOrientation.AXISY)){
             fullLayout.setOrientation(LinearLayout.HORIZONTAL);
-            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight())); //TODO let user define weight
+            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight()));
             field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
         }else if(field.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
             fullLayout.setOrientation(LinearLayout.VERTICAL);

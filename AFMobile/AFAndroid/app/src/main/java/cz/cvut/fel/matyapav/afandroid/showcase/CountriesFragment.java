@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,9 +17,12 @@ import java.util.HashMap;
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.AFList;
 import cz.cvut.fel.matyapav.afandroid.components.AFTable;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryListSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountrySkin;
 
 /**
@@ -37,39 +41,20 @@ public class CountriesFragment extends Fragment {
         //initialize builders
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
 
-        TableBuilder tableBuilder = AFAndroid.getInstance().getTableBuilder()
-                .initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection),
-                        "tableCountryPublic", securityConstrains);
+        ListBuilder listBuilder = AFAndroid.getInstance().getListBuilder().
+                initBuilder(getActivity(), "countryTable", getResources().openRawResource(R.raw.connection),
+                        "tableCountryPublic", securityConstrains).setSkin(new CountryListSkin(getContext()));
         FormBuilder formBuilder = AFAndroid.getInstance().getFormBuilder()
                 .initBuilder(getActivity(), "countryForm", getResources().openRawResource(R.raw.connection), "countryAdd", securityConstrains)
                 .setSkin(new CountrySkin(getContext()));
 
-        //create and insert table
+        //create and insert list
+
         try {
-            final AFTable table = tableBuilder.createComponent();
-            if(table != null ) { //TODO <-- can be null?
-                countriesTableLayout.addView(table.getView());
+            final AFList list = listBuilder.createComponent();
+            countriesTableLayout.addView(list.getView());
 
-
-                for (int i = 0; i < table.getRows().size(); i++) {
-                    final int finalI = i;
-                    table.getRows().get(i).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            StringBuilder rowInfo = new StringBuilder();
-                            rowInfo.append("Row "+finalI+" :");
-                            for(int j=0; j < table.getNumberOfColumns(); j++){
-                                TextView cell = (TextView) table.getCellAt(finalI, j);
-                                rowInfo.append(j +"="+cell.getText()+" ");
-                            }
-                            Toast.makeText(getActivity(), rowInfo, Toast.LENGTH_LONG).show();
-                        }
-                    });
-
-                }
-            }
         } catch (Exception e) {
-            //table building failed //TODO show for instance alert diag
             e.printStackTrace();
         }
 
@@ -102,10 +87,30 @@ public class CountriesFragment extends Fragment {
                     }
                 });
                 countriesFormLayout.addView(form.getView());
+                Button clear = (Button) root.findViewById(R.id.countriesBtnClear);
+                clear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        form.clearData();
+                    }
+                });
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        final AFList countryList = (AFList) AFAndroid.getInstance().getCreatedComponents().get("countryTable");
+        final AFForm countryForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get("countryForm");
+
+        countryList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                countryForm.insertData(countryList.getData(position));
+            }
+        });
+
+
         return root;
     }
+
 }
