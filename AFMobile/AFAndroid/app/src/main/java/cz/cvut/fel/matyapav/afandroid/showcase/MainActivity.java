@@ -12,9 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import org.json.JSONObject;
 
 import cz.cvut.fel.matyapav.afandroid.R;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.AbsenceManagementFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.CountriesFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.LoginFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.MyAbsencesFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.ProfileFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.WelcomeFragment;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 
@@ -43,8 +48,9 @@ public class MainActivity extends AppCompatActivity
             menu.setGroupVisible(R.id.beforeLoginGroup, true);
             menu.setGroupVisible(R.id.afterLoginGroup, false);
             //set default login fragment
+            LoginFragment loginFragment = new LoginFragment();
             FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-            tx.replace(R.id.mainLayout, new LoginFragment());
+            tx.replace(R.id.mainLayout, loginFragment);
             tx.commit();
         }else{
            ShowCaseUtils.refreshCurrentFragment(getThisActivity());
@@ -98,6 +104,8 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = CountriesFragment.class;
         } else if (id == R.id.userProfile) {
             fragmentClass = ProfileFragment.class;
+        }else if( id == R.id.myAbsences) {
+            fragmentClass = MyAbsencesFragment.class;
         } else if (id == R.id.absenceManagement) {
             fragmentClass = AbsenceManagementFragment.class;
         } else if (id == R.id.welcome) {

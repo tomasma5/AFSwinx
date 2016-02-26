@@ -30,6 +30,7 @@ public class CheckboxFieldBuilder extends BasicBuilder {
     public void setData(AFField field, Object value) {
         CheckBox box = (CheckBox) field.getFieldView();
         box.setChecked(Boolean.valueOf(value.toString()));
+        field.setActualData(value.toString());
     }
 
     @Override

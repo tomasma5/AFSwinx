@@ -16,6 +16,7 @@ import java.util.Locale;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 14.02.2016.
@@ -24,15 +25,11 @@ public class DateFieldBuilder extends BasicBuilder {
 
 
     private String dateFormat;
+    private String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
 
     public DateFieldBuilder(Skin skin){
         super(skin);
         this.dateFormat = "dd.MM.yyyy"; //Default date format
-    }
-
-    public DateFieldBuilder(Skin skin, String dateFormat) {
-        super(skin);
-        this.dateFormat = dateFormat;
     }
 
     @Override
@@ -73,30 +70,37 @@ public class DateFieldBuilder extends BasicBuilder {
     @Override
     public void setData(AFField field, Object value) {
         EditText dateText = (EditText) field.getFieldView();
-        SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         SimpleDateFormat outputFormatter = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            Date date = inputFormatter.parse(String.valueOf(value));
+        Date date = parseDate(String.valueOf(value));
+        if(date != null) {
             dateText.setText(outputFormatter.format(date));
-
-        } catch (ParseException e) {
-            System.err.println("DATE PARSING FAILED");
-            e.printStackTrace();
+            field.setActualData(outputFormatter.format(date));
+        }else{
+            //parsing totally failed maybe exception
         }
     }
 
     @Override
     public Object getData(AFField field) {
         EditText dateText = (EditText) field.getFieldView();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat serverFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        try {
-
-            Date date = formatter.parse(dateText.getText().toString());
+        Date date = parseDate(dateText.getText().toString());
+        if(date != null) {
             return serverFormatter.format(date);
-        } catch (ParseException e) {
-            System.err.println("DATE PARSING FAILED");
-            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Date parseDate(String date){
+        if(date != null){
+            for (String format: formats) {
+                SimpleDateFormat formatter = new SimpleDateFormat(format);
+                try{
+                    return formatter.parse(date);
+                } catch (ParseException e) {
+                    System.err.println("Cannot parse date "+date+" using format "+ format);
+                }
+            }
         }
         return null;
     }

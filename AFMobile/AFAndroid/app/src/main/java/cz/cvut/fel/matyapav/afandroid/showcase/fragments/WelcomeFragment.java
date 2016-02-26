@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.showcase;
+package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +21,7 @@ import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFList;
 import cz.cvut.fel.matyapav.afandroid.components.AFTable;
+import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryListSkin;
 
 /**
@@ -35,18 +36,6 @@ public class WelcomeFragment extends Fragment{
         LinearLayout welcomeLayout = (LinearLayout) root.findViewById(R.id.welcomeLayout);
         TextView welcomeUserText = (TextView) welcomeLayout.findViewById(R.id.welcomeUserText);
         welcomeUserText.setText("Welcome user: " + ShowCaseUtils.getUserCredentials(getActivity()).get("username"));
-
-        //initialize builders
-        HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
-
-        try {
-            AFList list = AFAndroid.getInstance().getListBuilder()
-                    .initBuilder(getActivity(), "my-absences", getResources().openRawResource(R.raw.connection), "myAbsenceInstancesTableConnection",
-                            securityConstrains).setSkin(new CountryListSkin(getContext())).createComponent();
-            welcomeLayout.addView(list.getView());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return root;
     }
 }

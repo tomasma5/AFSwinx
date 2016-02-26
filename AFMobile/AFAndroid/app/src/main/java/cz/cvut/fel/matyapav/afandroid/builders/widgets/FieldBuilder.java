@@ -22,7 +22,6 @@ public class FieldBuilder {
 
     public AFField prepareField(FieldInfo properties, StringBuilder road, Activity activity, Skin skin) {
 
-
         AFField field = new AFField(properties);
         field.setId(road.toString()+properties.getId());
         //LAYOUT PROPERTIES OF FIELD

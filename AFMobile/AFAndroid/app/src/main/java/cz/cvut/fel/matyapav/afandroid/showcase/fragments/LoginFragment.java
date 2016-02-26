@@ -1,6 +1,7 @@
-package cz.cvut.fel.matyapav.afandroid.showcase;
+package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -22,6 +23,7 @@ import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.LoginSkin;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
@@ -30,7 +32,28 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  */
 public class LoginFragment extends Fragment {
 
-    JSONObject loginInfo;
+    public static final String LOGIN_FORM = "loginForm";
+    public static final String LOGIN_FORM_CONNECTION_KEY = "loginForm";
+
+    private View.OnClickListener onLoginButtonClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(LoginFragment.LOGIN_FORM);
+            if (form.validateData()) {
+                try {
+                    form.sendData();
+                    doLogin(form);
+                } catch (Exception e) {
+                    //login failed
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle("Login failed");
+                    alertDialog.setMessage("Reason " + e.getMessage());
+                    alertDialog.show();
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -38,39 +61,20 @@ public class LoginFragment extends Fragment {
         InputStream connectionResource = getResources().openRawResource(R.raw.connection);
         final View root = inflater.inflate(R.layout.login_fragment_layout, container, false);
 
-        LinearLayout layout = (LinearLayout) root.findViewById(R.id.loginLayout);
-        final AFForm form;
+        final LinearLayout layout = (LinearLayout) root.findViewById(R.id.loginLayout);
         try {
             //init builder
-            FormBuilder builder = AFAndroid.getInstance().getFormBuilder().
-                    initBuilder(getActivity(), "loginForm", connectionResource, "loginForm").
-                    setSkin(new LoginSkin(getContext()));
-            form = builder.createComponent();
+            final AFForm form = AFAndroid.getInstance().getFormBuilder().
+                    initBuilder(getActivity(), LOGIN_FORM, connectionResource, LOGIN_FORM_CONNECTION_KEY).
+                    setSkin(new LoginSkin(getContext())).createComponent();
             if(form != null) {
-                Button button = new Button(getActivity());
-                button.setLayoutParams(new ViewGroup.LayoutParams(
+                Button loginButton = new Button(getActivity());
+                loginButton.setLayoutParams(new ViewGroup.LayoutParams(
                         ShowCaseUtils.convertDpToPixels(200, getContext()), ViewGroup.LayoutParams.WRAP_CONTENT));
-                button.setText(Localization.translate("login.buttonText", getActivity()));
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(form.validateData()) {
-                            try {
-                                form.sendData();
-                                doLogin(form);
-                            } catch (Exception e) {
-                                //login failed
-                                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                                alertDialog.setTitle("Login failed");
-                                alertDialog.setMessage("Reason " + e.getMessage());
-                                alertDialog.show();
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
+                loginButton.setText(Localization.translate("login.buttonText", getActivity()));
+                loginButton.setOnClickListener(onLoginButtonClick);
                 layout.addView(form.getView());
-                layout.addView(button);
+                layout.addView(loginButton);
             }
         } catch (Exception e) {
             //handle errors building failed
@@ -83,10 +87,10 @@ public class LoginFragment extends Fragment {
         return root;
     }
 
-    private void doLogin(AFForm form){
+    private void doLogin(AFForm form) {
         AFField usernameField = form.getFieldById("username");
         AFField passwordField = form.getFieldById("password");
-        if(usernameField != null && passwordField != null){
+        if (usernameField != null && passwordField != null) {
             //save user to shared preferences
             String username = (String) form.getDataFromFieldWithId("username");
             String password = (String) form.getDataFromFieldWithId("password");
@@ -103,4 +107,6 @@ public class LoginFragment extends Fragment {
         }
         //success
     }
+
+
 }

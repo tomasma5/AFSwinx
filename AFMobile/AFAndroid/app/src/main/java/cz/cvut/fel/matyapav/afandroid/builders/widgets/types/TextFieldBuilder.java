@@ -36,8 +36,10 @@ public class TextFieldBuilder extends BasicBuilder {
     public void setData(AFField field, Object value) {
         if(value != null) {
             ((EditText) field.getFieldView()).setText(value.toString());
+            field.setActualData(value.toString());
         }else{
             ((EditText) field.getFieldView()).setText("");
+            field.setActualData("");
         }
     }
 

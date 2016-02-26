@@ -45,24 +45,42 @@ public class DropDownFieldBuilder extends BasicBuilder {
 
     @Override
     public void setData(AFField field, Object value) {
+        System.out.println("NASTAVUJI DATA "+ value.toString());
+        if(field.getFieldInfo().getOptions() != null) {
+            for (FieldOption option : field.getFieldInfo().getOptions()) {
+                if(option.getKey().equals(value)){
+                    value = Localization.translate(option.getValue(),field.getFieldView().getContext());
+                    break;
+                }
+            }
+        }
         Spinner spinner = (Spinner) field.getFieldView();
         if(value == null){ //TODO asi se muze stat ze spinner nebude mit ani jednu polozku
             spinner.setSelection(0);
+            field.setActualData(spinner.getSelectedItem().toString());
             return;
         }
-
         for (int i = 0; i < spinner.getCount(); i++) {
             if(spinner.getItemAtPosition(i).toString().equals(value)){
                 spinner.setSelection(i);
-                break;
+                field.setActualData(spinner.getSelectedItem().toString());
+                return;
             }
         }
+        field.setActualData(value.toString());
     }
 
     @Override
     public Object getData(AFField field) {
         Spinner spinner = (Spinner) field.getFieldView();
-        return spinner.getSelectedItem();
+        if(field.getFieldInfo().getOptions() != null) {
+            for (FieldOption option : field.getFieldInfo().getOptions()) {
+                if(Localization.translate(option.getValue(), field.getFieldView().getContext()).equals(spinner.getSelectedItem().toString())){
+                    return option.getKey();
+                }
+            }
+        }
+       return spinner.getSelectedItem().toString();
     }
 
     private List<String> convertOptionsIntoList(Activity activity){

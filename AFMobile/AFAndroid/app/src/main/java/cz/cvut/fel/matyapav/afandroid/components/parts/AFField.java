@@ -36,7 +36,7 @@ public class AFField {
     private TextView errorView;
     private View completeView;
     private List<ValidationRule> validations;
-    private Object actualData;
+    private String actualData;
 
     public AFField(FieldInfo fieldInfo) {
         this.fieldInfo = fieldInfo;
@@ -157,11 +157,11 @@ public class AFField {
                 '}';
     }
 
-    public void setActualData(Object actualData) {
+    public void setActualData(String actualData) {
         this.actualData = actualData;
     }
 
-    public Object getActualData() {
+    public String getActualData() {
         return actualData;
     }
 }

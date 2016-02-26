@@ -17,7 +17,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.CustomListAdapter;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
@@ -51,9 +53,6 @@ public class AFList extends AFComponent {
 
     @Override
     void insertData(String dataResponse, StringBuilder road) {
-        if(road.toString().isEmpty()){
-
-        }
         try {
             JSONArray jsonArray = new JSONArray(dataResponse);
             for(int i=0; i<jsonArray.length(); i++){
@@ -80,24 +79,13 @@ public class AFList extends AFComponent {
                 insertObject(jsonObject.getJSONObject(key), road, row); //parse class types
                 road = new StringBuilder(roadBackup.toString());
             }else {
-                System.err.println("ROAD+KEY" + (road + key));
                 AFField field = getFieldById(road + key);
-                System.err.println("FIELD" + field);
                 if (field != null) {
                     String data = jsonObject.get(key).toString();
-                    if(field.getFieldInfo().getWidgetType().equals(SupportedWidgets.CALENDAR)){
-                        SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-                        SimpleDateFormat outputFormatter = new SimpleDateFormat("dd.MM.yyyy");
-                        Date date = null;
-                        try {
-                            date = inputFormatter.parse(String.valueOf(jsonObject.get(key).toString()));
-                        } catch (ParseException e) {
-                            System.err.println("CANNOT PARSE DATE");
-                            e.printStackTrace();
-                        }
-                        data = outputFormatter.format(date);
-                    }
-                    row.put(field.getFieldInfo().getId(), data);
+                    AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+                    builder.setData(field, data);
+                    System.err.println(road+key+" = " + field.getActualData());
+                    row.put(road+key, field.getActualData());
                 }
             }
         }
@@ -143,6 +131,7 @@ public class AFList extends AFComponent {
 
         BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(sendConnection);
         Object data = dataBuilder.reselialize(createFormDataFromList(position));
+        System.err.println("DATA " + data);
         return data;
     }
 
@@ -150,6 +139,7 @@ public class AFList extends AFComponent {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
             String propertyName = field.getId();
+            System.err.println("ROWS "+ rows);
             Object data = rows.get(position).get(propertyName);
             // Based on dot notation determine road. Road is used to add object to its right place
             String[] roadTrace = propertyName.split("\\.");

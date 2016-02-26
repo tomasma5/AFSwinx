@@ -26,9 +26,14 @@
             android:title="Profile"
             />
         <item
+            android:id="@+id/myAbsences"
+            android:icon="@android:drawable/ic_dialog_alert"
+            android:title="My Absences"
+            />
+        <item
             android:id="@+id/absenceManagement"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Absence Management form"
+            android:title="Absence Management"
             />
 
         <item

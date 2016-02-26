@@ -65,6 +65,7 @@ public class OptionFieldBuilder extends BasicBuilder {
         RadioGroup group = (RadioGroup) field.getFieldView();
         if(value == null){
             group.clearCheck();
+            field.setActualData(value.toString());
             return;
         }
         for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
@@ -73,9 +74,11 @@ public class OptionFieldBuilder extends BasicBuilder {
                     || (Boolean.valueOf(value.toString()) == true && i==0)
                     || (Boolean.valueOf(value.toString()) == false && i==1)){
                 btn.setChecked(true);
+                field.setActualData(value.toString());
                 break;
             }
         };
+
     }
 
     @Override

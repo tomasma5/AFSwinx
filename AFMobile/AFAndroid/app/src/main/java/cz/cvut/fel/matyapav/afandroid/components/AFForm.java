@@ -68,7 +68,6 @@ public class AFForm extends AFComponent {
     }
 
     private void setFieldValue(AFField field, Object val){
-        field.setActualData(val);
         FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
     }
 

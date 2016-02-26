@@ -93,16 +93,16 @@ public class CustomListAdapter extends BaseAdapter {
                     continue;
                 }
                 if (i == 0) {
-                    String label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ":" : "";
-                    textName.setText(label + list.getRows().get(position).get(field.getFieldInfo().getId()));
+                    String label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    textName.setText(label + list.getRows().get(position).get(field.getId()));
                     layout.addView(textName);
                 } else {
-                    String label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ":" : "";
+                    String label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
                     TextView text = new TextView(context);
                     text.setTextSize(skin.getListItemsTextSize());
                     text.setTextColor(skin.getListItemTextColor());
                     text.setTypeface(skin.getListItemTextFont());
-                    text.setText(label + list.getRows().get(position).get(field.getFieldInfo().getId()));
+                    text.setText(label + list.getRows().get(position).get(field.getId()));
                     text.setPadding(skin.getListItemTextPaddingLeft(), skin.getListItemTextPaddingTop(),
                             skin.getListItemTextPaddingRight(), skin.getListItemTextPaddingBottom());
                     if (list.getLayoutDefinitions().equals(LayoutDefinitions.ONECOLUMNLAYOUT)) {
