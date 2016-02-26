@@ -51,6 +51,7 @@ public class AFTable extends AFComponent{
 
     @Override
     protected void insertData(String dataResponse, StringBuilder road) {
+        //TODO potrebuje mirne predelat obdobne jako u listu
         List<String> longestRowList = new ArrayList<>();
         int longestRowLength = 0;
         try {

@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.skins;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.ViewGroup;
 
 import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
@@ -18,6 +19,11 @@ public class CountryListSkin extends DefaultSkin {
     @Override
     public ViewGroup.LayoutParams getTopLayoutParams() {
         return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
+    public int getListBackgroundColor() {
+        return Color.WHITE;
     }
 }
 

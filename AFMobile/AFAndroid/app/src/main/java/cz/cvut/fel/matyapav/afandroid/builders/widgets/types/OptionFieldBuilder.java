@@ -85,7 +85,6 @@ public class OptionFieldBuilder extends BasicBuilder {
         for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
             RadioButton btn = (RadioButton) group.getChildAt(i);
             if(btn.isChecked()){
-
                 return btn.getText().toString();
             }
         }

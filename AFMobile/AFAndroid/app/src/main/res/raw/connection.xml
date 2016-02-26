@@ -2,20 +2,20 @@
 <connectionRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<connection id="loginForm">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/users/loginForm</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
 			</header-param>
 		</metaModel>
 		<send>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/users/login</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -24,28 +24,28 @@
 	</connection>
 	<connection id="tableCountryPublic">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/country/definition</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
 			</header-param>
 		</metaModel>
 		<data>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/country/list</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 		</data>
 	</connection>
 	<connection id="countryAdd">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/country/definition</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -57,11 +57,11 @@
 			</security-params>
 		</metaModel>
 		<send>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/country</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -71,20 +71,20 @@
 	</connection>
 	<connection id="personProfile">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/users/profile</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
 			</header-param>
 		</metaModel>
 		<data>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/users/user/#{username}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -92,11 +92,11 @@
 			</security-params>
 		</data>
 		<send>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/users/update</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -106,10 +106,10 @@
 	</connection>
 	<connection id="absenceCountryConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absencetype/definition/supportedCountries</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -118,39 +118,39 @@
 	</connection>
 	<connection id="absenceTypeTableConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absencetype/definition/</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
 			</header-param>
 		</metaModel>
 		<data>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absencetype/country/#{id}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 		</data>
 	</connection>
 	<connection id="tableAbsenceTypeFormConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absencetype/definition/</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
 			</header-param>
 		</metaModel>
 		<send>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absencetype/country/#{id}</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -160,10 +160,10 @@
 	</connection>
 	<connection id="absenceInstanceAddConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/definitionAdd/#{user}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -175,11 +175,11 @@
 			</security-params>
 		</metaModel>
 		<send>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/add/#{user}</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -189,10 +189,10 @@
 	</connection>
 	<connection id="myAbsenceInstancesTableConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/definition/#{username}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -204,10 +204,10 @@
 			</security-params>
 		</metaModel>
 		<data>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/user/#{username}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -217,10 +217,10 @@
 	</connection>
 	<connection id="absenceInstaceEditTableConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/definitionManaged/#{username}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -232,10 +232,10 @@
 			</security-params>
 		</metaModel>
 		<data>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/editable/#{username}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>
@@ -245,10 +245,10 @@
 	</connection>
 	<connection id="absenceInstaceEditFormConnection">
 		<metaModel>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/definitionManaged/#{username}</endPointParameters>
 			<protocol>http</protocol>
-			<port>8080</port>
+			<port></port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -260,11 +260,11 @@
 			</security-params>
 		</metaModel>
 		<send>
-			<endPoint>10.0.2.2</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/absenceInstance/add/#{username}</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
-			<port>8080</port>
+			<port></port>
 			<security-params>
 				<security-method>basic</security-method>
 				<userName>#{username}</userName>

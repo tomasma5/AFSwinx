@@ -35,4 +35,7 @@
     <string name="button.perform">Proveď</string>
     <string name="button.update">Aktualizuj</string>
     <string name="please.wait">Prosím počkejte...</string>
+    <string name="absenceType.maxDaysPerYear">Roční kvóta</string>
+    <string name="absenceType.active">Aktivní</string>
+    <string name="absenceInstance.duration">Doba trvání</string>
 </resources>

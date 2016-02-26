@@ -53,4 +53,30 @@ public interface Skin {
     //lists
     int getListWidth();
     int getListHeight();
+    int getListBackgroundColor();
+    int getListItemBackgroundColor();
+    int getListItemNameColor();
+    int getListItemTextColor();
+    Typeface getListItemNameFont();
+    Typeface getListItemTextFont();
+    int getListItemNameSize();
+    int getListItemsTextSize();
+    boolean isListItemNameLabelVisible();
+    boolean isListItemTextLabelsVisible();
+    boolean isListScrollBarAlwaysVisible();
+
+    int getListItemTextPaddingLeft();
+    int getListItemTextPaddingRight();
+    int getListItemTextPaddingTop();
+    int getListItemTextPaddingBottom();
+
+    int getListItemNamePaddingLeft();
+
+    int getListItemNamePaddingRight();
+
+    int getListItemNamePaddingTop();
+
+    int getListItemNamePaddingBottom();
+
+    int getListContentWidth();
 }

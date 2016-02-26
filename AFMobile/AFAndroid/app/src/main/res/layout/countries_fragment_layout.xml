@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:id="@+id/countriesForm"
-        android:paddingTop="50dp"
+        android:paddingTop="25dp"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">

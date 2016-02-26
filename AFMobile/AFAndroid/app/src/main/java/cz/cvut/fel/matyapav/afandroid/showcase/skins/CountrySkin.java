@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.skins;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
 
@@ -20,8 +21,8 @@ public class CountrySkin extends DefaultSkin {
 
     @Override
     public int getInputWidth() {
-        return convertDpToPixels(120, getContext());
+        return convertDpToPixels(200, getContext());
     }
 
-    
+
 }

@@ -35,4 +35,7 @@
     <string name="button.perform">Perform</string>
     <string name="button.update">Update</string>
     <string name="please.wait">Please  wait...</string>
+    <string name="absenceType.maxDaysPerYear">Year quote</string>
+    <string name="absenceType.active">Active</string>
+    <string name="absenceInstance.duration">Duration</string>
 </resources>

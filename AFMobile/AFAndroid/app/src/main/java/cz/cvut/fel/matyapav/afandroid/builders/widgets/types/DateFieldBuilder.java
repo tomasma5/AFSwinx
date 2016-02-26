@@ -91,6 +91,7 @@ public class DateFieldBuilder extends BasicBuilder {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         SimpleDateFormat serverFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
         try {
+
             Date date = formatter.parse(dateText.getText().toString());
             return serverFormatter.format(date);
         } catch (ParseException e) {

@@ -125,7 +125,10 @@ public class ConnectionParser implements XMLParser {
                         } else if (nodeName.equals(PROTOCOL)) {
                             connection.setProtocol(evaluateEL(nodeValue));
                         } else if (nodeName.equals(PORT)) {
-                            connection.setPort(Utils.convertStringToInteger(evaluateEL(nodeValue)));
+                            String port = evaluateEL(nodeValue);
+                            if(!port.isEmpty()) {
+                                connection.setPort(Utils.convertStringToInteger(evaluateEL(nodeValue)));
+                            }
                         } else if (nodeName.equals(HEADER_PARAM)) {
                             parseHeaderParam(connection, property.getChildNodes());
                         } else if (nodeName.equals(HTTP_METHOD)) {

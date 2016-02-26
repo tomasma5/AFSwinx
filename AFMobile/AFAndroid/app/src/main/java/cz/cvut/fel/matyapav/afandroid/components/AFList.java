@@ -8,18 +8,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.CustomListAdapter;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
+import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
 import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
 import cz.cvut.fel.matyapav.afandroid.rest.BaseRestBuilder;
@@ -46,35 +51,55 @@ public class AFList extends AFComponent {
 
     @Override
     void insertData(String dataResponse, StringBuilder road) {
+        if(road.toString().isEmpty()){
+
+        }
         try {
             JSONArray jsonArray = new JSONArray(dataResponse);
             for(int i=0; i<jsonArray.length(); i++){
                 Map<String, String> row = new HashMap<>();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Iterator<String> keys = jsonObject.keys();
-                while(keys.hasNext()){
-                    String key = keys.next();
-                    if(jsonObject.get(key) instanceof JSONObject){
-                        String roadBackup = road.toString();
-                        road.append(key);
-                        road.append(".");
-                        insertData(jsonObject.get(key).toString(), road); //parse class types
-                        road = new StringBuilder(roadBackup.toString());
-                    }else {
-                        System.err.println("ROAD+KEY" + (road + key));
-                        AFField field = getFieldById(road + key);
-                        System.err.println("FIELD" + field);
-                        if (field != null) {
-                            row.put(field.getFieldInfo().getId(), jsonObject.get(key).toString());
-                        }
-                    }
-                }
+                insertObject(jsonObject, road, row);
                 addRow(row);
             }
-            getListView().setAdapter(new CustomListAdapter(getActivity(), getSkin(), rows, getFields()));
+            getListView().setAdapter(new CustomListAdapter(getActivity(), getSkin(), this));
         } catch (JSONException e) {
             System.err.println("CANNOT PARSE DATA");
             e.printStackTrace();
+        }
+    }
+
+    private void insertObject (JSONObject jsonObject, StringBuilder road, Map<String, String> row) throws JSONException {
+        Iterator<String> keys = jsonObject.keys();
+        while(keys.hasNext()){
+            String key = keys.next();
+            if(jsonObject.get(key) instanceof JSONObject){
+                String roadBackup = road.toString();
+                road.append(key);
+                road.append(".");
+                insertObject(jsonObject.getJSONObject(key), road, row); //parse class types
+                road = new StringBuilder(roadBackup.toString());
+            }else {
+                System.err.println("ROAD+KEY" + (road + key));
+                AFField field = getFieldById(road + key);
+                System.err.println("FIELD" + field);
+                if (field != null) {
+                    String data = jsonObject.get(key).toString();
+                    if(field.getFieldInfo().getWidgetType().equals(SupportedWidgets.CALENDAR)){
+                        SimpleDateFormat inputFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                        SimpleDateFormat outputFormatter = new SimpleDateFormat("dd.MM.yyyy");
+                        Date date = null;
+                        try {
+                            date = inputFormatter.parse(String.valueOf(jsonObject.get(key).toString()));
+                        } catch (ParseException e) {
+                            System.err.println("CANNOT PARSE DATE");
+                            e.printStackTrace();
+                        }
+                        data = outputFormatter.format(date);
+                    }
+                    row.put(field.getFieldInfo().getId(), data);
+                }
+            }
         }
     }
 
@@ -152,5 +177,9 @@ public class AFList extends AFComponent {
             }
         }
         return dataHolder;
+    }
+
+    public List<Map<String, String>> getRows() {
+        return rows;
     }
 }

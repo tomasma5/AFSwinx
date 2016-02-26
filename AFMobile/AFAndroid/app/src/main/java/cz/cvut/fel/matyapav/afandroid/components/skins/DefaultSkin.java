@@ -156,6 +156,7 @@ public class DefaultSkin implements Skin {
         return convertDpToPixels(1, getContext());
     }
 
+    /********************************lists****************************/
     @Override
     public int getListWidth() {
         return AbsListView.LayoutParams.MATCH_PARENT;
@@ -163,6 +164,106 @@ public class DefaultSkin implements Skin {
 
     @Override
     public int getListHeight() {
+        return convertDpToPixels(200, getContext());
+    }
+
+    @Override
+    public int getListBackgroundColor() {
+        return Color.TRANSPARENT;
+    }
+
+    @Override
+    public int getListItemBackgroundColor() {
+        return Color.TRANSPARENT;
+    }
+
+    @Override
+    public int getListItemNameColor() {
+        return Color.BLACK;
+    }
+
+    @Override
+    public int getListItemTextColor() {
+        return Color.GRAY;
+    }
+
+    @Override
+    public Typeface getListItemNameFont() {
+        return Typeface.DEFAULT_BOLD;
+    }
+
+    @Override
+    public Typeface getListItemTextFont() {
+        return Typeface.DEFAULT;
+    }
+
+    @Override
+    public int getListItemNameSize() {
+        return 16;
+    }
+
+    @Override
+    public int getListItemsTextSize() {
+        return 10;
+    }
+
+    @Override
+    public boolean isListItemNameLabelVisible() {
+        return false;
+    }
+
+    @Override
+    public boolean isListItemTextLabelsVisible() {
+        return true;
+    }
+
+    @Override
+    public boolean isListScrollBarAlwaysVisible() {
+        return true;
+    }
+
+    @Override
+    public int getListItemTextPaddingLeft() {
+        return convertDpToPixels(10,getContext());
+    }
+
+    @Override
+    public int getListItemTextPaddingRight() {
+        return convertDpToPixels(5,getContext());
+    }
+
+    @Override
+    public int getListItemTextPaddingTop() {
+        return 0;
+    }
+
+    @Override
+    public int getListItemTextPaddingBottom() {
+        return 0;
+    }
+
+    @Override
+    public int getListItemNamePaddingLeft() {
+        return convertDpToPixels(10,getContext());
+    }
+
+    @Override
+    public int getListItemNamePaddingRight() {
+        return convertDpToPixels(5,getContext());
+    }
+
+    @Override
+    public int getListItemNamePaddingTop() {
+        return 0;
+    }
+
+    @Override
+    public int getListItemNamePaddingBottom() {
+        return 0;
+    }
+
+    @Override
+    public int getListContentWidth() {
         return convertDpToPixels(200, getContext());
     }
 }

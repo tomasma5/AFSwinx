@@ -219,7 +219,22 @@ public class Utils {
     }
 
     public static String getConnectionEndPoint(AFSwinxConnection connection){
-        return connection.getProtocol()+"://"+connection.getAddress()+":"+connection.getPort()+connection.getParameters();
+        StringBuilder endPointBuilder = new StringBuilder();
+        if(connection.getProtocol() != null && !connection.getProtocol().isEmpty()){
+            endPointBuilder.append(connection.getProtocol());
+            endPointBuilder.append("://");
+        }
+        if(connection.getAddress() != null && !connection.getAddress().isEmpty()){
+            endPointBuilder.append(connection.getAddress());
+        }
+        if(connection.getPort() != 0){
+            endPointBuilder.append(":");
+            endPointBuilder.append(connection.getPort());
+        }
+        if(connection.getParameters() != null && !connection.getParameters().isEmpty()){
+            endPointBuilder.append(connection.getParameters());
+        }
+        return endPointBuilder.toString();
     }
 
     public static boolean shouldBeInvisible(String column, AFComponent component) {

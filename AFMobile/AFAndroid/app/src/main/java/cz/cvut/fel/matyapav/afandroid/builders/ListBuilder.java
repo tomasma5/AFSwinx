@@ -33,6 +33,8 @@ public class ListBuilder extends AFComponentBuilder<ListBuilder> {
         ListView listView = new ListView(getActivity());
         listView.setLayoutParams(new AbsListView.LayoutParams(getSkin().getListWidth(), getSkin().getListHeight()));
         listView.setAdapter(null);
+        listView.setScrollbarFadingEnabled(!getSkin().isListScrollBarAlwaysVisible());
+        listView.setBackgroundColor(getSkin().getListBackgroundColor());
         ((AFList)component).setListView(listView);
         return listView;
     }

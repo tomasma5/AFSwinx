@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
@@ -37,6 +38,15 @@ public class WelcomeFragment extends Fragment{
 
         //initialize builders
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
+
+        try {
+            AFList list = AFAndroid.getInstance().getListBuilder()
+                    .initBuilder(getActivity(), "my-absences", getResources().openRawResource(R.raw.connection), "myAbsenceInstancesTableConnection",
+                            securityConstrains).setSkin(new CountryListSkin(getContext())).createComponent();
+            welcomeLayout.addView(list.getView());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return root;
     }
 }
