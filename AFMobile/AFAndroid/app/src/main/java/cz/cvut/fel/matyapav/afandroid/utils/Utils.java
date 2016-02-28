@@ -190,27 +190,6 @@ public class Utils {
         return sb.toString();
     }
 
-
-    public static AFValidator getFieldValidator(ValidationRule rule){
-        if (rule.getValidationType().equals(SupportedValidations.REQUIRED.getValidationType()) && Boolean.valueOf(rule.getValue())) {
-            return new RequiredValidator();
-        }
-        if (rule.getValidationType().equals(SupportedValidations.MAXLENGTH.getValidationType())) {
-            return new MaxCharsValidator();
-        }
-        if (rule.getValidationType().equals(SupportedValidations.MAX.getValidationType())){
-            return new MaxValueValidator();
-        }
-        if (rule.getValidationType().equals(SupportedValidations.MIN.getValidationType())){
-            return new MinValueValidator();
-        }
-
-        System.err.println("VALIDATOR FOR "+rule.getValidationType()+" NOT FOUND");
-        return null;
-    }
-
-
-
     public static boolean isFieldWritable(SupportedWidgets widgetType){
         return widgetType.equals(SupportedWidgets.TEXTFIELD) || widgetType.equals(SupportedWidgets.NUMBERFIELD)
                 || widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD) || widgetType.equals(SupportedWidgets.PASSWORD);

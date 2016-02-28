@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.showcase;
+package cz.cvut.fel.matyapav.afandroid.showcase.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,6 +46,12 @@ public class ShowCaseUtils {
             return result;
         }
         return null;
+    }
+
+    public static String getUserLogin(Activity activity){
+        SharedPreferences mySharedPreferences = activity.getSharedPreferences(PREFS_NAME, PRIVATE_MODE);
+        String username = mySharedPreferences.getString("username", null);
+        return username;
     }
 
     public static void refreshCurrentFragment(FragmentActivity activity){

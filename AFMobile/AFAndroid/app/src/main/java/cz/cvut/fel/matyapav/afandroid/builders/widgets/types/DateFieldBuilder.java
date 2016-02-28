@@ -2,6 +2,8 @@ package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -15,6 +17,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
@@ -23,13 +26,14 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class DateFieldBuilder extends BasicBuilder {
 
-
+    private FieldInfo properties;
     private String dateFormat;
     private String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
 
-    public DateFieldBuilder(Skin skin){
+    public DateFieldBuilder(Skin skin, FieldInfo properties){
         super(skin);
         this.dateFormat = "dd.MM.yyyy"; //Default date format
+        this.properties = properties;
     }
 
     @Override
@@ -63,7 +67,11 @@ public class DateFieldBuilder extends BasicBuilder {
                 fromDatePickerDialog.show();
             }
         });
-        //dateLayout.addView(dateText);
+
+        if(properties.isReadOnly()){
+            dateText.setInputType(InputType.TYPE_NULL);
+            dateText.setTextColor(Color.LTGRAY);
+        }
         return dateText;
     }
 

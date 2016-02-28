@@ -18,7 +18,7 @@ public class FieldBuilderFactory {
 
     private static FieldBuilderFactory instance = null;
 
-    public static FieldBuilderFactory getInstance() {
+    public static synchronized FieldBuilderFactory getInstance() {
         if(instance == null){
             instance = new FieldBuilderFactory();
         }
@@ -31,7 +31,7 @@ public class FieldBuilderFactory {
             return new TextFieldBuilder(skin, properties);
         }
         if(properties.getWidgetType().equals(SupportedWidgets.CALENDAR)) {
-            return new DateFieldBuilder(skin);
+            return new DateFieldBuilder(skin, properties);
         }
         if(properties.getWidgetType().equals(SupportedWidgets.OPTION)){
             return new OptionFieldBuilder(skin, properties);
@@ -40,7 +40,7 @@ public class FieldBuilderFactory {
             return new DropDownFieldBuilder(skin, properties);
         }
         if(properties.getWidgetType().equals(SupportedWidgets.CHECKBOX)){
-            return new CheckboxFieldBuilder(skin);
+            return new CheckboxFieldBuilder(skin, properties);
         }
         System.err.println("BUILDER FOR "+properties.getWidgetType()+" NOT FOUND");
         return null;

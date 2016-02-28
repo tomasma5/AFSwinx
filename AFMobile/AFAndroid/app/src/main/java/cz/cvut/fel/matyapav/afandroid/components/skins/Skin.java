@@ -8,7 +8,13 @@ import android.view.ViewGroup;
  */
 public interface Skin {
 
+    //common
     ViewGroup.LayoutParams getTopLayoutParams();
+
+    int getComponentMarginLeft();
+    int getComponentMarginRight();
+    int getComponentMarginTop();
+    int getComponentMarginBottom();
 
     //forms
     int getLabelColor();
@@ -53,7 +59,6 @@ public interface Skin {
     //lists
     int getListWidth();
     int getListHeight();
-    int getListBackgroundColor();
     int getListItemBackgroundColor();
     int getListItemNameColor();
     int getListItemTextColor();
@@ -79,4 +84,7 @@ public interface Skin {
     int getListItemNamePaddingBottom();
 
     int getListContentWidth();
+
+    int getListBorderColor();
+    float getListBorderWidth();
 }

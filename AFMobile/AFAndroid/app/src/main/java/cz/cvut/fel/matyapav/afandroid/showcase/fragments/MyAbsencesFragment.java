@@ -13,16 +13,16 @@ import java.util.HashMap;
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.components.AFList;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.MyAbsencesListSkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 
 /**
  * Created by Pavel on 26.02.2016.
  */
 public class MyAbsencesFragment extends Fragment{
 
-    public static final String MY_ABSENCES_LIST = "myAbsencesList";
-    public static final String MY_ABSENCES_CONNECTION_KEY = "myAbsenceInstancesTableConnection";
+
 
     @Nullable
     @Override
@@ -34,9 +34,10 @@ public class MyAbsencesFragment extends Fragment{
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
 
         try {
-            AFList list = AFAndroid.getInstance().getListBuilder()
-                    .initBuilder(getActivity(), MY_ABSENCES_LIST , getResources().openRawResource(R.raw.connection), MY_ABSENCES_CONNECTION_KEY,
-                            securityConstrains).setSkin(new MyAbsencesListSkin(getContext())).createComponent();
+            AFList list = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
+                    ShowcaseConstants.MY_ABSENCES_LIST , getResources().openRawResource(R.raw.connection),
+                    ShowcaseConstants.MY_ABSENCES_CONNECTION_KEY, securityConstrains)
+                    .setSkin(new MyAbsencesListSkin(getContext())).createComponent();
             myAbsencesLayout.addView(list.getView());
         } catch (Exception e) {
             e.printStackTrace();

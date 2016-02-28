@@ -1,5 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.parsers;
 
+import android.view.ViewGroup;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,11 +33,11 @@ public class JSONDefinitionParser implements JSONParser {
             definition = new ClassDefinition(classInfo.getString(Constants.CLASS_NAME));
 
             //Parse layout
-            JSONObject layout = classInfo.getJSONObject(Constants.LAYOUT); //TODO consider changing to optJSONarray
+            JSONObject layout = classInfo.optJSONObject(Constants.LAYOUT);
             definition.setLayout(createLayoutProperties(layout));
 
             //Parse fields
-            JSONArray fields = classInfo.getJSONArray(Constants.FIELD_INFO); //TODO consider changing to optJSONarray
+            JSONArray fields = classInfo.optJSONArray(Constants.FIELD_INFO);
             if(fields != null){
                 for (int i = 0; i < fields.length(); i++) {
                     JSONObject field = fields.getJSONObject(i);
@@ -61,7 +63,8 @@ public class JSONDefinitionParser implements JSONParser {
         FieldInfo fieldInfo = new FieldInfo();
         fieldInfo.setWidgetType((SupportedWidgets) Utils.getEnumFromString(SupportedWidgets.class, field.getString(Constants.WIDGET_TYPE), true));
         fieldInfo.setId(field.getString(Constants.ID));
-        fieldInfo.setLabel(field.getString(Constants.LABEL));
+
+        fieldInfo.setLabel(field.get(Constants.LABEL).equals(null) ? null : field.get(Constants.LABEL).toString());
         fieldInfo.setIsClass(Boolean.valueOf(field.getString(Constants.CLASS_TYPE)));
         fieldInfo.setVisible(Boolean.valueOf(field.getString(Constants.VISIBLE)));
         fieldInfo.setReadOnly(Boolean.valueOf(field.getString(Constants.READ_ONLY)));
@@ -87,6 +90,13 @@ public class JSONDefinitionParser implements JSONParser {
 
     private LayoutProperties createLayoutProperties(JSONObject layoutJson) throws JSONException {
         LayoutProperties layoutProp = new LayoutProperties();
+        if(layoutJson == null){
+            layoutProp.setLayoutDefinition(LayoutDefinitions.ONECOLUMNLAYOUT);
+            layoutProp.setLayoutOrientation(LayoutOrientation.AXISX);
+            layoutProp.setLabelPossition(LabelPosition.BEFORE);
+            return layoutProp; //with default values
+        }
+
         try {
             String layDefName = layoutJson.optString(Constants.LAYOUT_DEF);
             LayoutDefinitions layDef = LayoutDefinitions.valueOf(layDefName);

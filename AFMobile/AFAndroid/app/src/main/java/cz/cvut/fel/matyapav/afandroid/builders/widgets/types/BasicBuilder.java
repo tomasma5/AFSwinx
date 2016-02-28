@@ -9,7 +9,7 @@ import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 /**
  * Created by Pavel on 24.02.2016.
  */
-abstract class BasicBuilder implements AbstractBuilder{
+abstract class BasicBuilder implements AbstractBuilder {
 
     private Skin skin;
 

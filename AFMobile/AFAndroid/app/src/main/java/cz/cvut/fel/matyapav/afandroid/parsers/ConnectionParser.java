@@ -32,6 +32,7 @@ public class ConnectionParser implements XMLParser {
     private static final String METAMODEL_CONNECTION = "metaModel";
     private static final String DATA_CONNECTION = "data";
     private static final String SEND_CONNECTION = "send";
+    private static final String REMOVE_CONNECTION = "remove";
     
     // Tags which will specify security
     private static final String SECURITY_METHOD = "security-method";
@@ -154,6 +155,10 @@ public class ConnectionParser implements XMLParser {
                             connection.setHttpMethod(HttpMethod.POST);
                         }
                         connectionPack.setSendConnection(connection);
+                    } else if (connectionName.equals(REMOVE_CONNECTION)){
+                        if (connection.getHttpMethod() == null){
+                            connection.setHttpMethod(HttpMethod.DELETE);
+                        }
                     }
                 }
             }

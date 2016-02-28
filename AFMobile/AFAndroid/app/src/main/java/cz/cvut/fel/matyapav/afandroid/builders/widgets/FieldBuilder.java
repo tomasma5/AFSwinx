@@ -1,8 +1,10 @@
 package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -61,13 +63,11 @@ public class FieldBuilder {
         View inputField = null;
         AbstractBuilder fieldBuilder = FieldBuilderFactory.getInstance().getFieldBuilder(properties, skin);
         if(fieldBuilder != null && (inputField = fieldBuilder.buildFieldView(activity))!= null){
-            inputField.setEnabled(!properties.isReadOnly());
             field.setFieldView(inputField);
         }
 
         //put it all together
         //when field is not visible don't even add it to form;
-
         View completeView = buildCompleteView(field, skin);
         if(!properties.isVisible()){
            completeView.setVisibility(View.GONE);
@@ -77,19 +77,20 @@ public class FieldBuilder {
     }
 
     private View buildCompleteView(AFField field, Skin skin){
-        LinearLayout fullLayout = new LinearLayout(field.getLabel().getContext());
+        LinearLayout fullLayout = new LinearLayout(field.getFieldView().getContext());
         fullLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //set orientation of label and field itself
         if(field.getLayoutOrientation().equals(LayoutOrientation.AXISY)){
             fullLayout.setOrientation(LinearLayout.HORIZONTAL);
-            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight()));
-            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
         }else if(field.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
             fullLayout.setOrientation(LinearLayout.VERTICAL);
-            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight()));
-            field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
         }
+        //set label and field view layout params
+        if(field.getLabel() != null) {
+            field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight()));
+        }
+        field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //LABEL BEFORE
         if(field.getLabel() != null && !field.getLabelPosition().equals(LabelPosition.NONE)) {
@@ -108,7 +109,7 @@ public class FieldBuilder {
         }
 
         //add errorview on the top of field
-        LinearLayout fullLayoutWithErrors = new LinearLayout(field.getLabel().getContext());
+        LinearLayout fullLayoutWithErrors = new LinearLayout(field.getFieldView().getContext());
         fullLayoutWithErrors.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         fullLayoutWithErrors.setPadding(0, 0, 10, 10);
         fullLayoutWithErrors.setOrientation(LinearLayout.VERTICAL);

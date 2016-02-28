@@ -93,8 +93,10 @@ public abstract class AFComponentBuilder<T> {
         if(classDef != null) {
             if(!parsingInnerClass) { //set following properties only once at the beginning
                 component.setName(classDef.getClassName());
-                component.setLayoutDefinitions(classDef.getLayout().getLayoutDefinition());
-                component.setLayoutOrientation(classDef.getLayout().getLayoutOrientation());
+                if(classDef.getLayout() != null) {
+                    component.setLayoutDefinitions(classDef.getLayout().getLayoutDefinition());
+                    component.setLayoutOrientation(classDef.getLayout().getLayoutOrientation());
+                }
             }
             //fieldsView = (TableLayout) buildLayout(classDef, activity);
             FieldBuilder builder = new FieldBuilder();

@@ -14,6 +14,7 @@ import java.util.List;
 import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.MaxCharsValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.RequiredValidator;
+import cz.cvut.fel.matyapav.afandroid.components.validators.ValidatorFactory;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
@@ -48,7 +49,7 @@ public class AFField {
         errorView.setVisibility(View.GONE);
         if(validations != null) {
             for (ValidationRule rule : validations) {
-                AFValidator validator = Utils.getFieldValidator(rule);
+                AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);
                 System.err.println("VALIDATION RULE "+rule.toString());
                 System.err.println("VALIDATOR "+validator.toString());
                 boolean validationResult = validator.validate(this,errorMsgs,rule);

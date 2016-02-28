@@ -1,23 +1,14 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Iterator;
-
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**
@@ -45,7 +36,10 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
     protected View buildComponentView(AFComponent form) {
         //TODO zobecnit
         LinearLayout formView = new LinearLayout(getActivity());
-        formView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.setMargins(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
+                getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
+        formView.setLayoutParams(params);
         //set form layout orientation
         if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
             formView.setOrientation(LinearLayout.VERTICAL);

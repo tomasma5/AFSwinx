@@ -1,8 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.graphics.Paint;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -10,14 +7,6 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
@@ -54,9 +43,11 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
     protected View buildComponentView(AFComponent component) {
         //setup wrapper for table
         LinearLayout tableWrapper = new LinearLayout(getActivity());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getSkin().getTableHeight());
+        params.setMargins(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
+                getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
+        tableWrapper.setLayoutParams(params);
         tableWrapper.setOrientation(LinearLayout.VERTICAL);
-        tableWrapper.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getSkin().getTableHeight()));
-
         //setup table layout for header row
         TableLayout headerTableLayout = new TableLayout(getActivity());
         headerTableLayout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
@@ -93,7 +84,9 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             columnHeaderText.setTextColor(getSkin().getHeaderRowTextColor());
-            columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
+            if(field.getFieldInfo().getLabel() != null) {
+                columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
+            }
             headerRow.addView(columnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
             ((AFTable) component).setHeaderRow(headerRow);
 
@@ -102,7 +95,9 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
             Utils.setCellParams(fakeColumnHeaderText, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
-            fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
+            if(field.getFieldInfo().getLabel() != null) {
+                fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
+            }
             fakeContentRow.addView(fakeColumnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
         }
         //set numberOfColumns

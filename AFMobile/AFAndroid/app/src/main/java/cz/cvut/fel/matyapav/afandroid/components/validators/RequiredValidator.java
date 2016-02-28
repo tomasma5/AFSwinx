@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
@@ -30,6 +31,12 @@ public class RequiredValidator implements AFValidator {
         if(field.getFieldInfo().getWidgetType().equals(SupportedWidgets.OPTION)){
             RadioGroup radioGroup = (RadioGroup) field.getFieldView();
             if(radioGroup.getCheckedRadioButtonId() == -1){
+                validationIsFine = false;
+            }
+        }
+        if(field.getFieldInfo().getWidgetType().equals(SupportedWidgets.DROPDOWNMENU)){
+            Spinner spinner = (Spinner) field.getFieldView();
+            if(spinner.getSelectedItem() == null){
                 validationIsFine = false;
             }
         }

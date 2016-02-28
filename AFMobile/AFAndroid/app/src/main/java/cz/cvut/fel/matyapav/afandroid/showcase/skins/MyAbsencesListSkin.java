@@ -4,13 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 
 import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
 
 /**
  * Created by Pavel on 24.02.2016.
  */
-public class MyAbsencesListSkin extends DefaultSkin {
+public class MyAbsencesListSkin extends ListSkin {
 
 
     public MyAbsencesListSkin(Context context) {
@@ -18,23 +19,13 @@ public class MyAbsencesListSkin extends DefaultSkin {
     }
 
     @Override
-    public ViewGroup.LayoutParams getTopLayoutParams() {
-        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    }
-
-    @Override
-    public boolean isListItemNameLabelVisible() {
-        return true;
-    }
-
-    @Override
     public int getListHeight() {
-        return AbsListView.LayoutParams.MATCH_PARENT;
+        return AbsListView.LayoutParams.WRAP_CONTENT;
     }
 
     @Override
-    public int getListContentWidth() {
-        return ViewGroup.LayoutParams.MATCH_PARENT;
+    public int getComponentMarginTop() {
+        return convertDpToPixels(20, getContext());
     }
 }
 

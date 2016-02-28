@@ -55,6 +55,9 @@ public class OptionFieldBuilder extends BasicBuilder {
             radioGroup.addView(options[0]);
             radioGroup.addView(options[1]);
         }
+        if(properties.isReadOnly()){
+            radioGroup.setEnabled(false);
+        }
         return radioGroup;
     }
 

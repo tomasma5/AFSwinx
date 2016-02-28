@@ -12,17 +12,19 @@ public class AFSwinxConnectionPack {
     private AFSwinxConnection metamodelConnection;
     private AFSwinxConnection dataConnection;
     private AFSwinxConnection sendConnection;
+    private AFSwinxConnection removeConnection;
 
     public AFSwinxConnectionPack() {
 
     }
 
     public AFSwinxConnectionPack(AFSwinxConnection metamodelConnection,
-            AFSwinxConnection dataConnection, AFSwinxConnection sendConnection) {
+            AFSwinxConnection dataConnection, AFSwinxConnection sendConnection, AFSwinxConnection removeConnection) {
         super();
         this.metamodelConnection = metamodelConnection;
         this.dataConnection = dataConnection;
         this.sendConnection = sendConnection;
+        this.removeConnection = removeConnection;
     }
 
     public AFSwinxConnection getDataConnection() {
@@ -49,4 +51,11 @@ public class AFSwinxConnectionPack {
         this.sendConnection = sendConnection;
     }
 
+    public AFSwinxConnection getRemoveConnection() {
+        return removeConnection;
+    }
+
+    public void setRemoveConnection(AFSwinxConnection removeConnection) {
+        this.removeConnection = removeConnection;
+    }
 }

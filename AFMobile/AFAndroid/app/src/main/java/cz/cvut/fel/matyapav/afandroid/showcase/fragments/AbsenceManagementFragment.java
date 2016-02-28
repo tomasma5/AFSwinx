@@ -17,9 +17,10 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.AFList;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.AbsenceManagementFormSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.AbsenceManagementListSkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
@@ -27,15 +28,11 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  */
 public class AbsenceManagementFragment extends Fragment {
 
-    public static final String ABSENCE_INSTANCE_EDIT_FORM = "absenceInstanceEditForm";
-    public static final String ABSENCE_INSTANCE_EDIT_FORM_CONNECTION_KEY = "absenceInstaceEditFormConnection";
-    public static final String ABSENCE_INSTANCE_EDIT_LIST = "absenceInstaceEditTable";
-    public static final String ABSENCE_INSTANCE_EDIT_LIST_CONNECTION_KEY = "absenceInstaceEditTableConnection";
-
     private View.OnClickListener onPerformButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ABSENCE_INSTANCE_EDIT_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents()
+                    .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM);
             if(form != null && form.validateData()){
                 try {
                     form.sendData();
@@ -62,7 +59,8 @@ public class AbsenceManagementFragment extends Fragment {
 
         try {
             AFList list = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                    ABSENCE_INSTANCE_EDIT_LIST, connectionResource, ABSENCE_INSTANCE_EDIT_LIST_CONNECTION_KEY,
+                    ShowcaseConstants.ABSENCE_INSTANCE_EDIT_LIST, connectionResource,
+                    ShowcaseConstants.ABSENCE_INSTANCE_EDIT_LIST_CONNECTION_KEY,
                     securityConstrains).setSkin(new AbsenceManagementListSkin(getContext())).createComponent();
             layout.addView(list.getView());
         } catch (Exception e) {
@@ -73,7 +71,8 @@ public class AbsenceManagementFragment extends Fragment {
         connectionResource = getResources().openRawResource(R.raw.connection); //must be called again
         try {
             AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ABSENCE_INSTANCE_EDIT_FORM, connectionResource, ABSENCE_INSTANCE_EDIT_FORM_CONNECTION_KEY,
+                    ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM, connectionResource,
+                    ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM_CONNECTION_KEY,
                     securityConstrains).setSkin(new AbsenceManagementFormSkin(getContext())).createComponent();
 
             Button button = new Button(getActivity());
@@ -87,8 +86,10 @@ public class AbsenceManagementFragment extends Fragment {
         }
 
         //connect list and form
-        final AFList absenceList = (AFList) AFAndroid.getInstance().getCreatedComponents().get(ABSENCE_INSTANCE_EDIT_LIST);
-        final AFForm absenceForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ABSENCE_INSTANCE_EDIT_FORM);
+        final AFList absenceList = (AFList) AFAndroid.getInstance().getCreatedComponents()
+                .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_LIST);
+        final AFForm absenceForm = (AFForm) AFAndroid.getInstance().getCreatedComponents()
+                .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM);
 
         absenceList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,6 +97,8 @@ public class AbsenceManagementFragment extends Fragment {
                 absenceForm.insertData(absenceList.getData(position));
             }
         });
+
+
         return root;
     }
 

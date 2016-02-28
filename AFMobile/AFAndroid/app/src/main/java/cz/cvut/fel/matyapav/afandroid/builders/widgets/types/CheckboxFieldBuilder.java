@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
+import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 
 /**
@@ -14,8 +15,11 @@ import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
  */
 public class CheckboxFieldBuilder extends BasicBuilder {
 
-    public CheckboxFieldBuilder(Skin skin) {
+    private FieldInfo properties;
+
+    public CheckboxFieldBuilder(Skin skin, FieldInfo properties) {
         super(skin);
+        this.properties = properties;
     }
 
     @Override
@@ -23,6 +27,9 @@ public class CheckboxFieldBuilder extends BasicBuilder {
         CheckBox checkBox = new CheckBox(activity);
         checkBox.setTextColor(getSkin().getFieldColor());
         checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        if(properties.isReadOnly()){
+            checkBox.setEnabled(false);
+        }
         return checkBox;
     }
 

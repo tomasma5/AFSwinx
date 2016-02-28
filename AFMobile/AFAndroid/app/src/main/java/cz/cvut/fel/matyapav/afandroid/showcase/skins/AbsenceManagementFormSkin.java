@@ -28,5 +28,4 @@ public class AbsenceManagementFormSkin extends DefaultSkin {
         return convertDpToPixels(60, getContext());
     }
 
-
 }

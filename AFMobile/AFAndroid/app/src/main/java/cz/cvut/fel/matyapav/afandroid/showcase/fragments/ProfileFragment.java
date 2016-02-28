@@ -18,7 +18,8 @@ import java.util.HashMap;
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
@@ -26,13 +27,12 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  */
 public class ProfileFragment extends Fragment {
 
-    public static final String PROFILE_FORM = "profileForm";
-    public static final String PROFILE_FORM_CONNECTION_KEY = "personProfile";
+
 
     private View.OnClickListener onPersonUpdateBtnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(PROFILE_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.PROFILE_FORM);
             if (form != null && form.validateData()) {
                 try {
                     form.sendData();
@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(PROFILE_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.PROFILE_FORM);
             if(form != null){
                 form.resetData();
             }
@@ -71,8 +71,8 @@ public class ProfileFragment extends Fragment {
 
         try {
             AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                PROFILE_FORM, getResources().openRawResource(R.raw.connection),
-                PROFILE_FORM_CONNECTION_KEY, securityConstrains).createComponent();
+                    ShowcaseConstants.PROFILE_FORM, getResources().openRawResource(R.raw.connection),
+                    ShowcaseConstants.PROFILE_FORM_CONNECTION_KEY, securityConstrains).createComponent();
             layout.addView(form.getView());
 
             Button btn = new Button(getActivity());
@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
             btn.setOnClickListener(onPersonUpdateBtnClick);
 
             Button reset = new Button(getActivity());
-            reset.setText("RESET");
+            reset.setText("RESET"); //// TODO translate
             reset.setOnClickListener(onResetBtnClick);
 
             LinearLayout btns = new LinearLayout(getActivity());

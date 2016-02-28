@@ -33,6 +33,26 @@ public class DefaultSkin implements Skin {
         return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    @Override
+    public int getComponentMarginBottom() {
+        return 0;
+    }
+
+    @Override
+    public int getComponentMarginLeft() {
+        return 0;
+    }
+
+    @Override
+    public int getComponentMarginRight() {
+        return 0;
+    }
+
+    @Override
+    public int getComponentMarginTop() {
+        return 0;
+    }
+
     /*******************FORM*******************/
     @Override
     public int getLabelColor() {
@@ -168,11 +188,6 @@ public class DefaultSkin implements Skin {
     }
 
     @Override
-    public int getListBackgroundColor() {
-        return Color.TRANSPARENT;
-    }
-
-    @Override
     public int getListItemBackgroundColor() {
         return Color.TRANSPARENT;
     }
@@ -209,7 +224,7 @@ public class DefaultSkin implements Skin {
 
     @Override
     public boolean isListItemNameLabelVisible() {
-        return false;
+        return true;
     }
 
     @Override
@@ -249,12 +264,12 @@ public class DefaultSkin implements Skin {
 
     @Override
     public int getListItemNamePaddingRight() {
-        return convertDpToPixels(5,getContext());
+        return 0;
     }
 
     @Override
     public int getListItemNamePaddingTop() {
-        return 0;
+        return convertDpToPixels(5,getContext());
     }
 
     @Override
@@ -264,6 +279,16 @@ public class DefaultSkin implements Skin {
 
     @Override
     public int getListContentWidth() {
-        return convertDpToPixels(200, getContext());
+        return AbsListView.LayoutParams.MATCH_PARENT;
+    }
+
+    @Override
+    public int getListBorderColor() {
+        return Color.LTGRAY;
+    }
+
+    @Override
+    public float getListBorderWidth() {
+        return 10;
     }
 }

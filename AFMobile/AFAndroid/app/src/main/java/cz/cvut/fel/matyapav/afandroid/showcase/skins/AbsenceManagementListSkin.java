@@ -10,25 +10,16 @@ import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
 /**
  * Created by Pavel on 26.02.2016.
  */
-public class AbsenceManagementListSkin extends DefaultSkin{
+public class AbsenceManagementListSkin extends ListSkin{
 
     public AbsenceManagementListSkin(Context context) {
         super(context);
     }
 
-    @Override
-    public ViewGroup.LayoutParams getTopLayoutParams() {
-        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-    }
 
     @Override
     public boolean isListItemNameLabelVisible() {
-        return true;
-    }
-
-    @Override
-    public int getListContentWidth() {
-        return ViewGroup.LayoutParams.MATCH_PARENT;
+        return false;
     }
 
     @Override
@@ -39,5 +30,10 @@ public class AbsenceManagementListSkin extends DefaultSkin{
     @Override
     public int getListItemNameColor() {
         return ContextCompat.getColor(getContext(), R.color.colorAccent2);
+    }
+
+    @Override
+    public int getComponentMarginBottom() {
+        return convertDpToPixels(30, getContext());
     }
 }

@@ -1,7 +1,11 @@
 package cz.cvut.fel.matyapav.afandroid.components.parts;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +61,6 @@ public class CustomListAdapter extends BaseAdapter {
         public CustomAdapterView(Context context, AFList list, int position) {
             super(context);
             setOrientation(LinearLayout.HORIZONTAL);
-            setPadding(0, 6, 0, 6);
 
             //vertical layer for text
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(skin.getListContentWidth(), LayoutParams.WRAP_CONTENT);
@@ -69,7 +72,6 @@ public class CustomListAdapter extends BaseAdapter {
             }
             layout.setGravity(Gravity.BOTTOM);
             layout.setBackgroundColor(skin.getListItemBackgroundColor());
-
 
             TextView textName = new TextView(context);
             textName.setTextSize(skin.getListItemNameSize());
@@ -92,12 +94,17 @@ public class CustomListAdapter extends BaseAdapter {
                 if (!field.getFieldInfo().isVisible()) {
                     continue;
                 }
+                String label = "";
                 if (i == 0) {
-                    String label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    if(field.getFieldInfo().getLabel() != null) {
+                        label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    }
                     textName.setText(label + list.getRows().get(position).get(field.getId()));
                     layout.addView(textName);
                 } else {
-                    String label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    if(field.getFieldInfo().getLabel() != null) {
+                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    }
                     TextView text = new TextView(context);
                     text.setTextSize(skin.getListItemsTextSize());
                     text.setTextColor(skin.getListItemTextColor());
@@ -114,7 +121,7 @@ public class CustomListAdapter extends BaseAdapter {
                         }
                         setOfFields = new LinearLayout(getContext());
                         setOfFields.setOrientation(setOfFieldsOrientation);
-                        setOfFields.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        setOfFields.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     }
 
                     if (setOfFieldsOrientation == LinearLayout.HORIZONTAL) {

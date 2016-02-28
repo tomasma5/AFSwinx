@@ -72,7 +72,7 @@ public class AFForm extends AFComponent {
     }
 
     @Override
-    protected AFDataHolder reserialize() {
+    public AFDataHolder reserialize() {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
             AbstractBuilder fieldBuilder =
@@ -178,6 +178,11 @@ public class AFForm extends AFComponent {
             return FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).getData(field);
         }
         return null;
+    }
+
+    public void setDataToFieldWithId(String id, Object data){
+        AFField field = getFieldById(id);
+        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, data);
     }
 
 

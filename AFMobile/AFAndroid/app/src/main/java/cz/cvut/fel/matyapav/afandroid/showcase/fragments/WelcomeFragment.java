@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,21 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.HashMap;
-import java.util.List;
-
-import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
-import cz.cvut.fel.matyapav.afandroid.components.AFTable;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
-import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryListSkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 
 /**
  * Created by Pavel on 16.02.2016.

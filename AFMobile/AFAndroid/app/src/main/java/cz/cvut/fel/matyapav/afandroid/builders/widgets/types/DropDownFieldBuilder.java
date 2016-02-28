@@ -40,12 +40,15 @@ public class DropDownFieldBuilder extends BasicBuilder {
                     convertOptionsIntoList(activity), getSkin());
             spinner.setAdapter(dataAdapter);
         }
+        if(properties.isReadOnly()){
+            spinner.setEnabled(false);
+        }
         return spinner;
     }
 
     @Override
     public void setData(AFField field, Object value) {
-        System.out.println("NASTAVUJI DATA "+ value.toString());
+
         if(field.getFieldInfo().getOptions() != null) {
             for (FieldOption option : field.getFieldInfo().getOptions()) {
                 if(option.getKey().equals(value)){

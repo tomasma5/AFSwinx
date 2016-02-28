@@ -1,12 +1,18 @@
 package cz.cvut.fel.matyapav.afandroid.components;
 
 import android.app.Activity;
+import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +51,7 @@ public class AFList extends AFComponent {
 
     public AFList(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
         super(activity, connectionPack, skin);
+        rows = new ArrayList<>();
     }
 
     public AFList(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
@@ -60,8 +67,11 @@ public class AFList extends AFComponent {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 insertObject(jsonObject, road, row);
                 addRow(row);
+                road = new StringBuilder();
             }
-            getListView().setAdapter(new CustomListAdapter(getActivity(), getSkin(), this));
+            //set list adapter
+            ListAdapter listAdapter = new CustomListAdapter(getActivity(), getSkin(), this);
+            getListView().setAdapter(listAdapter);
         } catch (JSONException e) {
             System.err.println("CANNOT PARSE DATA");
             e.printStackTrace();
@@ -84,8 +94,8 @@ public class AFList extends AFComponent {
                     String data = jsonObject.get(key).toString();
                     AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
                     builder.setData(field, data);
-                    System.err.println(road+key+" = " + field.getActualData());
-                    row.put(road+key, field.getActualData());
+                    System.err.println(road + key + " = " + field.getActualData());
+                    row.put(road + key, field.getActualData());
                 }
             }
         }
@@ -111,9 +121,6 @@ public class AFList extends AFComponent {
     }
 
     public void addRow(Map<String, String> values){
-        if(rows == null){
-            rows = new ArrayList<>();
-        }
         rows.add(values);
     }
 

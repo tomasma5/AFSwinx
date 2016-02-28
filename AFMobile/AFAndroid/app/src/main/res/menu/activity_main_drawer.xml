@@ -17,23 +17,33 @@
             />
         <item
             android:id="@+id/supportedCountries"
-            android:icon="@android:drawable/ic_dialog_map"
+            android:icon="@drawable/ic_menu_send"
             android:title="Supported countries"
             />
         <item
             android:id="@+id/userProfile"
-            android:icon="@android:drawable/ic_dialog_dialer"
+            android:icon="@drawable/ic_menu_send"
             android:title="Profile"
             />
         <item
             android:id="@+id/myAbsences"
-            android:icon="@android:drawable/ic_dialog_alert"
+            android:icon="@drawable/ic_menu_send"
             android:title="My Absences"
             />
         <item
             android:id="@+id/absenceManagement"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_send"
             android:title="Absence Management"
+            />
+        <item
+            android:id="@+id/createAbsence"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Create absence"
+            />
+        <item
+            android:id="@+id/absenceTypeManagement"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Absence type management"
             />
 
         <item

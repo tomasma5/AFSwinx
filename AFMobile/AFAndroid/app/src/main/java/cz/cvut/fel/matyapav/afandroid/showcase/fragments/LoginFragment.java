@@ -1,7 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -14,17 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import org.json.JSONObject;
-
 import java.io.InputStream;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.LoginSkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
@@ -32,13 +29,11 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  */
 public class LoginFragment extends Fragment {
 
-    public static final String LOGIN_FORM = "loginForm";
-    public static final String LOGIN_FORM_CONNECTION_KEY = "loginForm";
 
     private View.OnClickListener onLoginButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(LoginFragment.LOGIN_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.LOGIN_FORM);
             if (form.validateData()) {
                 try {
                     form.sendData();
@@ -58,14 +53,14 @@ public class LoginFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        InputStream connectionResource = getResources().openRawResource(R.raw.connection);
         final View root = inflater.inflate(R.layout.login_fragment_layout, container, false);
 
         final LinearLayout layout = (LinearLayout) root.findViewById(R.id.loginLayout);
         try {
             //init builder
-            final AFForm form = AFAndroid.getInstance().getFormBuilder().
-                    initBuilder(getActivity(), LOGIN_FORM, connectionResource, LOGIN_FORM_CONNECTION_KEY).
+            final AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
+                    ShowcaseConstants.LOGIN_FORM, getResources().openRawResource(R.raw.connection),
+                    ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).
                     setSkin(new LoginSkin(getContext())).createComponent();
             if(form != null) {
                 Button loginButton = new Button(getActivity());

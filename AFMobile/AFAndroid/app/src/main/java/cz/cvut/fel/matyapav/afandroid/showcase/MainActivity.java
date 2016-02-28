@@ -12,14 +12,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
+import cz.cvut.fel.matyapav.afandroid.components.AFList;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.AbsenceManagementFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.AbsenceTypeManagementFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.CountriesFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.fragments.CreateAbsenceFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.LoginFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.MyAbsencesFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.ProfileFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.WelcomeFragment;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 
@@ -110,6 +117,10 @@ public class MainActivity extends AppCompatActivity
             fragmentClass = AbsenceManagementFragment.class;
         } else if (id == R.id.welcome) {
             fragmentClass = WelcomeFragment.class;
+        }else if (id == R.id.createAbsence) {
+            fragmentClass = CreateAbsenceFragment.class;
+        }else if (id == R.id.absenceTypeManagement){
+            fragmentClass = AbsenceTypeManagementFragment.class;
         } else if(id == R.id.logout) {
             ShowCaseUtils.clearUserInPreferences(getThisActivity());
             Menu menu = ((NavigationView) findViewById(R.id.nav_view)).getMenu();
@@ -144,8 +155,6 @@ public class MainActivity extends AppCompatActivity
             Localization.changeLanguage(Localization.getCurrentLanguage(), getThisActivity());
         }
         super.onSaveInstanceState(outState);
-
-
     }
 
 }

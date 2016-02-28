@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -18,28 +17,22 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.AFList;
-import cz.cvut.fel.matyapav.afandroid.components.AFTable;
-import cz.cvut.fel.matyapav.afandroid.showcase.ShowCaseUtils;
-import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryListSkin;
-import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountrySkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryFormSkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.showcase.skins.ListSkin;
+import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 
 /**
  * Created by Pavel on 23.02.2016.
  */
 public class CountriesFragment extends Fragment {
 
-    public static final String COUNTRY_LIST = "countryList";
-    public static final String COUNTRY_LIST_CONNECTION_KEY = "tableCountryPublic";
-    public static final String COUNTRY_FORM = "countryForm";
-    public static final String COUNTRY_FORM_CONNECTION_KEY = "countryAdd";
-
     private View.OnClickListener onCountryPerformListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(COUNTRY_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
             if (form != null && form.validateData()) {
                 try {
                     form.sendData();
@@ -56,7 +49,7 @@ public class CountriesFragment extends Fragment {
     private View.OnClickListener onCountryResetListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(COUNTRY_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
             if(form != null) {
                 form.resetData();
             }
@@ -66,7 +59,7 @@ public class CountriesFragment extends Fragment {
     private View.OnClickListener onCountryClearListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(COUNTRY_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
             if(form != null) {
                 form.clearData();
             }
@@ -85,12 +78,12 @@ public class CountriesFragment extends Fragment {
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
 
         ListBuilder listBuilder = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                COUNTRY_LIST, getResources().openRawResource(R.raw.connection),
-                COUNTRY_LIST_CONNECTION_KEY, securityConstrains).setSkin(new CountryListSkin(getContext()));
+                ShowcaseConstants.COUNTRY_LIST, getResources().openRawResource(R.raw.connection),
+                ShowcaseConstants.COUNTRY_LIST_CONNECTION_KEY, securityConstrains).setSkin(new ListSkin(getContext()));
 
         FormBuilder formBuilder = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                COUNTRY_FORM, getResources().openRawResource(R.raw.connection),
-                COUNTRY_FORM_CONNECTION_KEY, securityConstrains).setSkin(new CountrySkin(getContext()));
+                ShowcaseConstants.COUNTRY_FORM, getResources().openRawResource(R.raw.connection),
+                ShowcaseConstants.COUNTRY_FORM_CONNECTION_KEY, securityConstrains).setSkin(new CountryFormSkin(getContext()));
 
         //create and insert list
         try {
@@ -117,17 +110,15 @@ public class CountriesFragment extends Fragment {
         }
 
         //connect list and form
-        final AFList countryList = (AFList) AFAndroid.getInstance().getCreatedComponents().get(COUNTRY_LIST);
-        final AFForm countryForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(COUNTRY_FORM);
+        final AFList countryList = (AFList) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_LIST);
+        final AFForm countryForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
 
         countryList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 countryForm.insertData(countryList.getData(position));
             }
         });
-
 
         return root;
     }
