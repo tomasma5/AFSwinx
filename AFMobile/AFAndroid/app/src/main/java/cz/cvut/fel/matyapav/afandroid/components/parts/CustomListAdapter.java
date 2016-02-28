@@ -79,15 +79,15 @@ public class CustomListAdapter extends BaseAdapter {
                     skin.getListItemNamePaddingRight(), skin.getListItemNamePaddingBottom());
 
             //if it will be twocolumns layout prepare orientation
-            int coupleOrientation;
+            int setOfFieldsOrientation;
             if (list.getLayoutOrientation().equals(LayoutOrientation.AXISX)) { //AXIS X
-                coupleOrientation = LinearLayout.HORIZONTAL;
+                setOfFieldsOrientation = LinearLayout.HORIZONTAL;
             } else { //AXIS Y
-                coupleOrientation = LinearLayout.VERTICAL;
+                setOfFieldsOrientation = LinearLayout.VERTICAL;
             }
 
             int i = 0;
-            LinearLayout couple = null;
+            LinearLayout setOfFields = null;
             for (AFField field : list.getFields()) {
                 if (!field.getFieldInfo().isVisible()) {
                     continue;
@@ -105,26 +105,27 @@ public class CustomListAdapter extends BaseAdapter {
                     text.setText(label + list.getRows().get(position).get(field.getId()));
                     text.setPadding(skin.getListItemTextPaddingLeft(), skin.getListItemTextPaddingTop(),
                             skin.getListItemTextPaddingRight(), skin.getListItemTextPaddingBottom());
-                    if (list.getLayoutDefinitions().equals(LayoutDefinitions.ONECOLUMNLAYOUT)) {
-                        layout.addView(text);
-                    } else { //TWOCOLUMNSLAYOUT //TODO nevim jestli to je ok pro vsechny pripady
-                        if ((i-1) % 2 == 0) {
-                            if (couple != null) {
-                                layout.addView(couple); //add couple
-                            }
-                            couple = new LinearLayout(getContext());
-                            couple.setOrientation(coupleOrientation);
-                            couple.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    int numberOfColumns = list.getLayoutDefinitions().getNumberOfColumns();
+
+                    if ((i - 1) % numberOfColumns == 0) {
+                        if (setOfFields != null) {
+                            layout.addView(setOfFields);
                         }
-                        if(coupleOrientation == HORIZONTAL) {
-                            text.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.5f)); //occupies half space
-                        }else{
-                            text.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        }
-                        couple.addView(text);
-                        if(i == list.getVisibleFieldsCount() - 1){
-                            layout.addView(couple);
-                        }
+                        setOfFields = new LinearLayout(getContext());
+                        setOfFields.setOrientation(setOfFieldsOrientation);
+                        setOfFields.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    }
+
+                    if (setOfFieldsOrientation == LinearLayout.HORIZONTAL) {
+                        text.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f / numberOfColumns));
+                    } else {
+                        text.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    }
+                    setOfFields.addView(text);
+
+                    if(i == list.getVisibleFieldsCount() - 1){
+                        layout.addView(setOfFields);
                     }
                 }
                 i++;

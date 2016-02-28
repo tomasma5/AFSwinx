@@ -6,19 +6,22 @@ package cz.cvut.fel.matyapav.afandroid.enums;
  */
 public enum LayoutDefinitions {
 
-    TWOCOLUMNSLAYOUT("TWOCOLUMNSLAYOUT"),
-    ONECOLUMNLAYOUT("ONECOLUMNLAYOUT");
+    TWOCOLUMNSLAYOUT("TWOCOLUMNSLAYOUT", 2),
+    ONECOLUMNLAYOUT("ONECOLUMNLAYOUT", 1);
 
     private String layoutName;
+    private int numberOfColumns;
 
-    LayoutDefinitions(String layoutName) {
+    LayoutDefinitions(String layoutName, int numberOfColumns) {
         this.layoutName = layoutName;
+        this.numberOfColumns = numberOfColumns;
     }
 
     public String getLayoutName() {
         return layoutName;
     }
 
-
-
+    public int getNumberOfColumns() {
+        return numberOfColumns;
+    }
 }

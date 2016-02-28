@@ -46,55 +46,50 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
         //TODO zobecnit
         LinearLayout formView = new LinearLayout(getActivity());
         formView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        //set form layout orientation
         if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
             formView.setOrientation(LinearLayout.VERTICAL);
         }else { //AXIS Y
             formView.setOrientation(LinearLayout.HORIZONTAL);
         }
 
-        //ONE COLUMN LAYOUT
-        if(form.getLayoutDefinitions().equals(LayoutDefinitions.ONECOLUMNLAYOUT)){
-            for (AFField field : form.getFields()) {
-                formView.addView(field.getCompleteView());
-            }
-        //TWO COLUMNS LAYOUT
-        }else if(form.getLayoutDefinitions().equals(LayoutDefinitions.TWOCOLUMNSLAYOUT)){
-            int coupleOrientation;
-            if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
-                coupleOrientation = LinearLayout.HORIZONTAL;
-            }else{ //AXIS Y
-                coupleOrientation = LinearLayout.VERTICAL;
-            }
-
-            int i = 0;
-            LinearLayout couple = null;
-            for (AFField field : form.getFields()) {
-                if(!field.getFieldInfo().isVisible()){
-                    continue;
-                }
-                if (i % 2 == 0) {
-                    if (couple != null) {
-                        //add couple
-                        formView.addView(couple);
-                    }
-                    couple = new LinearLayout(getActivity());
-                    couple.setOrientation(coupleOrientation);
-                    couple.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                }
-
-                View fieldView = field.getCompleteView();
-                if (form.getVisibleFieldsCount() % 2 != 0 && i == form.getVisibleFieldsCount() - 1) {
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    fieldView.setLayoutParams(params);
-                    formView.addView(fieldView);
-                } else {
-                    System.err.println("ADDING TO COUPLE "+field.getId());
-                    fieldView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.5f)); //occupies half space
-                    couple.addView(fieldView);
-                }
-                i++;
-            }
+        //set fields layout orientation
+        int setOfFieldsOrientation;
+        if(form.getLayoutOrientation().equals(LayoutOrientation.AXISX)){ //AXIS X
+            setOfFieldsOrientation = LinearLayout.HORIZONTAL;
+        }else{ //AXIS Y
+            setOfFieldsOrientation = LinearLayout.VERTICAL;
         }
+
+        //determine layout
+        int numberOfColumns = form.getLayoutDefinitions().getNumberOfColumns();
+
+        int i = 0;
+        LinearLayout setOfFields = null;;
+        for (AFField field : form.getFields()) {
+            if(!field.getFieldInfo().isVisible()){
+                continue;
+            }
+            if (i % numberOfColumns == 0) {
+                if(setOfFields != null) {
+                    formView.addView(setOfFields);
+                }
+                setOfFields = new LinearLayout(getActivity());
+                setOfFields.setOrientation(setOfFieldsOrientation);
+                setOfFields.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+
+            View fieldView = field.getCompleteView();
+            fieldView.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f / numberOfColumns));
+            setOfFields.addView(fieldView);
+
+            if(i == form.getVisibleFieldsCount() - 1){
+                formView.addView(setOfFields);
+            }
+
+            i++;
+        }
+
         return formView;
     }
 }
