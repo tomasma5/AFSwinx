@@ -1,13 +1,13 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
+import com.tomscz.afswinx.rest.connection.ConnectionParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,21 +16,16 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilder;
-import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
-import cz.cvut.fel.matyapav.afandroid.components.AFTable;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
+import cz.cvut.fel.matyapav.afandroid.components.AFComponentFactory;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.parsers.ConnectionParser;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
-import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
+import cz.cvut.fel.matyapav.afandroid.parsers.abstraction.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
@@ -41,15 +36,14 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 public abstract class AFComponentBuilder<T> {
 
     private Activity activity;
-
     private AFSwinxConnectionPack connectionPack;
+    private Skin skin;
 
     private String connectionKey;
     private String componentKeyName;
     private InputStream connectionResource;
     private HashMap<String, String> connectionParameters;
 
-    private Skin skin;
 
     public T initBuilder(Activity activity, String componentKeyName, InputStream connectionResource, String connectionKey){
         this.activity = activity;
@@ -76,7 +70,7 @@ public abstract class AFComponentBuilder<T> {
             ConnectionParser connectionParser =
                     new ConnectionParser(connectionKey, connectionParameters);
             AFSwinxConnectionPack connections =
-                    connectionParser.parseDocument(Utils
+                    connectionParser.parseDocument(com.tomscz.afswinx.common.Utils
                             .buildDocumentFromFile(connectionResource));
             connectionPack = connections;
         } else {
@@ -118,31 +112,21 @@ public abstract class AFComponentBuilder<T> {
         System.err.println("NUMBER OF ELEMENTS IN COMPONENT " + component.getFields().size());
     }
 
-    protected AFComponent buildComponent(String modelResponse, SupportedComponents type){
+    protected AFComponent buildComponent(String modelResponse, SupportedComponents type) throws JSONException {
         //TODO popremyslet co s timto
-        AFComponent component = null;
-        if(type.equals(SupportedComponents.FORM)) {
-            component = new AFForm(getActivity(), connectionPack, skin);
-        }else if(type.equals(SupportedComponents.TABLE)){
-            component = new AFTable(getActivity(), connectionPack, skin);
-        }else{
-            component = new AFList(getActivity(), connectionPack, skin);
-        }
+        AFComponent component = AFComponentFactory.getInstance().getComponentByType(type);
+        component.setActivity(getActivity());
+        component.setConnectionPack(connectionPack);
+        component.setSkin(skin);
 
         LinearLayout componentView = new LinearLayout(getActivity());
         componentView.setLayoutParams(getSkin().getTopLayoutParams());
-        try {
-            JSONParser parser = new JSONDefinitionParser();
-            JSONObject jsonObj = new JSONObject(modelResponse).getJSONObject(Constants.CLASS_INFO);
-            ClassDefinition classDef = parser.parse(jsonObj);
-            prepareComponent(classDef, component, 0, false, new StringBuilder());
-            View view = buildComponentView(component);
-            System.err.println("VIEWWWWW" + view);
-            componentView.addView(view);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            componentView = (LinearLayout) buildError("Cannot parse JSon data "+e.getMessage());
-        }
+        JSONParser parser = new JSONDefinitionParser();
+        JSONObject jsonObj = new JSONObject(modelResponse).getJSONObject(Constants.CLASS_INFO);
+        ClassDefinition classDef = parser.parse(jsonObj);
+        prepareComponent(classDef, component, 0, false, new StringBuilder());
+        View view = buildComponentView(component);
+        componentView.addView(view);
         component.setView(componentView);
         return component;
     }
@@ -177,18 +161,7 @@ public abstract class AFComponentBuilder<T> {
         return null;
     }
 
-    private View buildError(String errorMsg) {
-        LinearLayout err = new LinearLayout(getActivity());
-        err.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        TextView msg = new TextView(getActivity());
-        msg.setText(errorMsg);
-        err.addView(msg);
-        return err;
-    }
-
     public abstract AFComponent createComponent() throws Exception;
-
-
 
     protected abstract View buildComponentView(AFComponent component);
 

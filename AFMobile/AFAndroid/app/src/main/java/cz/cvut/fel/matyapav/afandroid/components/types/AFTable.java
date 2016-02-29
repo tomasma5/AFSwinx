@@ -1,15 +1,17 @@
-package cz.cvut.fel.matyapav.afandroid.components;
+package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.app.Activity;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,19 +22,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
-import cz.cvut.fel.matyapav.afandroid.rest.holder.AFDataHolder;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 20.02.2016.
  */
-public class AFTable extends AFComponent{
+public class AFTable extends AFComponent {
 
     private TableLayout contentLayout;
     private TableLayout headerLayout;
@@ -41,16 +38,15 @@ public class AFTable extends AFComponent{
     private int numberOfColumns;
     private ScrollView contentLayoutWrapper;
 
+    public AFTable() {
+    }
+
     public AFTable(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
         super(activity, connectionPack, skin);
     }
 
-    public AFTable(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
-        super(name, view, layoutDefinitions, layoutOrientation);
-    }
-
     @Override
-    protected void insertData(String dataResponse, StringBuilder road) {
+    public void insertData(String dataResponse, StringBuilder road) {
         //TODO potrebuje mirne predelat obdobne jako u listu
         List<String> longestRowList = new ArrayList<>();
         int longestRowLength = 0;
@@ -95,7 +91,6 @@ public class AFTable extends AFComponent{
                     longestRowList = rowList;
                     longestRowLength = rowLength;
                 }
-
             }
 
             //add longest row to header as fake row with 0 height to have all columns properly sized
@@ -118,17 +113,17 @@ public class AFTable extends AFComponent{
     }
 
     @Override
-    SupportedComponents getComponentType() {
+    public SupportedComponents getComponentType() {
         return SupportedComponents.TABLE;
     }
 
     @Override
-    boolean validateData() {
+    public boolean validateData() {
         throw new UnsupportedOperationException("Table is read only");
     }
 
     @Override
-    AFDataHolder reserialize() {
+    public AFDataHolder reserialize() {
         throw new UnsupportedOperationException("Table is read only");
     }
 

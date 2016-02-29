@@ -12,11 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.AbsenceManagementFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.AbsenceTypeManagementFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.CountriesFragment;
@@ -26,7 +23,6 @@ import cz.cvut.fel.matyapav.afandroid.showcase.fragments.MyAbsencesFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.ProfileFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.fragments.WelcomeFragment;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
-import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 

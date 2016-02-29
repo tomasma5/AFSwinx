@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
@@ -37,12 +37,14 @@ public class ProfileFragment extends Fragment {
                 try {
                     form.sendData();
                     ShowCaseUtils.refreshCurrentFragment(getActivity());
-                    Toast.makeText(getActivity(), "Update successful", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), Localization.translate("person.updateSuccess", getActivity()),
+                            Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     //update failed
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle("Update failed");
-                    alertDialog.setMessage("Reason " + e.getMessage());
+                    alertDialog.setTitle(Localization.translate("person.updateFailed", getActivity()));
+                    alertDialog.setMessage(Localization.translate("error.reason", getActivity()) + e.getMessage());
+                    alertDialog.show();
                     e.printStackTrace();
                 }
             }
@@ -74,25 +76,27 @@ public class ProfileFragment extends Fragment {
                     ShowcaseConstants.PROFILE_FORM, getResources().openRawResource(R.raw.connection),
                     ShowcaseConstants.PROFILE_FORM_CONNECTION_KEY, securityConstrains).createComponent();
             layout.addView(form.getView());
-
-            Button btn = new Button(getActivity());
-            btn.setText(Localization.translate("button.update", getActivity()));
-            btn.setOnClickListener(onPersonUpdateBtnClick);
-
-            Button reset = new Button(getActivity());
-            reset.setText("RESET"); //// TODO translate
-            reset.setOnClickListener(onResetBtnClick);
-
-            LinearLayout btns = new LinearLayout(getActivity());
-            btns.setOrientation(LinearLayout.HORIZONTAL);
-            btns.setGravity(Gravity.CENTER);
-            btns.addView(btn);
-            btns.addView(reset);
-            layout.addView(btns);
         } catch (Exception e) {
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             System.err.println("BUILDING FAILED");
             e.printStackTrace();
         }
+
+        Button btn = new Button(getActivity());
+        btn.setText(Localization.translate("button.update", getActivity()));
+        btn.setOnClickListener(onPersonUpdateBtnClick);
+
+        Button reset = new Button(getActivity());
+        reset.setText(Localization.translate("button.reset", getActivity())); //// TODO translate
+        reset.setOnClickListener(onResetBtnClick);
+
+        LinearLayout btns = new LinearLayout(getActivity());
+        btns.setOrientation(LinearLayout.HORIZONTAL);
+        btns.setGravity(Gravity.CENTER);
+        btns.addView(btn);
+        btns.addView(reset);
+        layout.addView(btns);
+
         return root;
     }
 

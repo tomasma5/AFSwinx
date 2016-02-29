@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 15.02.2016.
@@ -47,11 +48,11 @@ public class OptionFieldBuilder extends BasicBuilder {
             options[0] = new RadioButton(activity);
             options[0].setTextColor(getSkin().getFieldColor());
             options[0].setTypeface(getSkin().getFieldFont());
-            options[0].setText("true");
+            options[0].setText(Localization.translate("option.yes", activity));
             options[1] = new RadioButton(activity);
             options[1].setTextColor(getSkin().getFieldColor());
             options[1].setTypeface(getSkin().getFieldFont());
-            options[1].setText("false");
+            options[1].setText(Localization.translate("option.no", activity));
             radioGroup.addView(options[0]);
             radioGroup.addView(options[1]);
         }
@@ -71,7 +72,7 @@ public class OptionFieldBuilder extends BasicBuilder {
             field.setActualData(value.toString());
             return;
         }
-        for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
+        for (int i = 0; i < group.getChildCount(); i++) {
             RadioButton btn = (RadioButton) group.getChildAt(i);
             if(btn.getText().equals(value)
                     || (Boolean.valueOf(value.toString()) == true && i==0)
@@ -91,7 +92,13 @@ public class OptionFieldBuilder extends BasicBuilder {
         for (int i = 0; i < group.getChildCount(); i++) { //TODO toto se mi nelibi
             RadioButton btn = (RadioButton) group.getChildAt(i);
             if(btn.isChecked()){
-                return btn.getText().toString();
+                if(btn.getText().toString().equals(Localization.translate("option.yes", field.getFieldView().getContext()))){
+                    return true;
+                }else if(btn.getText().toString().equals(Localization.translate("option.no", field.getFieldView().getContext()))){
+                    return false;
+                }else {
+                    return btn.getText().toString();
+                }
             }
         }
         return null; //nothing is checked

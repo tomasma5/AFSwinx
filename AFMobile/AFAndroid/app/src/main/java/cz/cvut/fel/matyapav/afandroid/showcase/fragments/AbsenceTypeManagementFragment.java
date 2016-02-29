@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,14 +17,12 @@ import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.AbsenceManagementListSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryFormSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
-import cz.cvut.fel.matyapav.afandroid.showcase.skins.ListSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
-import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
@@ -52,10 +51,14 @@ public class AbsenceTypeManagementFragment extends Fragment {
             if(form != null && form.validateData()) {
                 try {
                     form.sendData();
-                    Toast.makeText(getActivity(), "Add or update successful", Toast.LENGTH_SHORT).show(); //TODO translate
+                    Toast.makeText(getActivity(), Localization.translate("success.addOrUpdate", getActivity()),
+                            Toast.LENGTH_SHORT).show();
                     ShowCaseUtils.refreshCurrentFragment(getActivity());
                 } catch (Exception e) {
-                    //TODO sending failed
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle(Localization.translate("error.addOrUpdate", getActivity()));
+                    alertDialog.setMessage(Localization.translate("error.reason", getActivity()) + e.getMessage());
+                    alertDialog.show();
                     e.printStackTrace();
                 }
             }
@@ -103,12 +106,12 @@ public class AbsenceTypeManagementFragment extends Fragment {
                 chooseCountryForm.setDataToFieldWithId(ShowcaseConstants.COUNTRY_KEY, getSelectedCountryName());
             }
         } catch (Exception e) {
-            //TODO form building failed
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
         //create button
         Button chooseCountryButton = new Button(getActivity());
-        chooseCountryButton.setText("Choose"); //TODO translate
+        chooseCountryButton.setText(Localization.translate("button.choose", getActivity()));
         chooseCountryButton.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         chooseCountryButton.setOnClickListener(onCountryChooseListener);
         formWithBtn.addView(chooseCountryButton);
@@ -125,7 +128,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
                         .setSkin(new AbsenceManagementListSkin(getContext())).createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeList.getView());
             } catch (Exception e) {
-                //TODO list building failed
+                ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
                 e.printStackTrace();
             }
 
@@ -138,7 +141,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
                         .setSkin(new CountryFormSkin(getContext())).createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeForm.getView());
             } catch (Exception e) {
-                //TODO form building failed
+                ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
                 e.printStackTrace();
             }
 
@@ -148,11 +151,11 @@ public class AbsenceTypeManagementFragment extends Fragment {
             perform.setOnClickListener(onPerformBtnClick);
 
             Button reset = new Button(getActivity());
-            reset.setText("RESET"); //TODO translate
+            reset.setText(Localization.translate("button.reset", getActivity()));
             reset.setOnClickListener(onResetBtnClick);
 
             Button clear = new Button(getActivity());
-            clear.setText("Clear"); //TODO translate
+            clear.setText(Localization.translate("button.clear", getActivity()));
             clear.setOnClickListener(onClearBtnClick);
 
             LinearLayout btns = new LinearLayout(getActivity());
@@ -166,13 +169,14 @@ public class AbsenceTypeManagementFragment extends Fragment {
             //connect list and form
             final AFList absenceTypeList = (AFList) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_LIST);
             final AFForm absenceTypeForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-
-            absenceTypeList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    absenceTypeForm.insertData(absenceTypeList.getData(position));
-                }
-            });
+            if(absenceTypeList != null && absenceTypeForm != null) {
+                absenceTypeList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        absenceTypeForm.insertData(absenceTypeList.getDataFromItemOnPosition(position));
+                    }
+                });
+            }
 
         }
 

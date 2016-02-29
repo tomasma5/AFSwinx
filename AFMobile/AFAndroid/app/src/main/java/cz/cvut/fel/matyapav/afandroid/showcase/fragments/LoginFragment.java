@@ -13,11 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import java.io.InputStream;
-
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.LoginSkin;
@@ -28,7 +26,6 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  * Created by Pavel on 16.02.2016.
  */
 public class LoginFragment extends Fragment {
-
 
     private View.OnClickListener onLoginButtonClick = new View.OnClickListener() {
         @Override
@@ -41,8 +38,8 @@ public class LoginFragment extends Fragment {
                 } catch (Exception e) {
                     //login failed
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle("Login failed");
-                    alertDialog.setMessage("Reason " + e.getMessage());
+                    alertDialog.setTitle(Localization.translate("login.failed", getActivity()));
+                    alertDialog.setMessage(Localization.translate("error.reason", getActivity()) + e.getMessage());
                     alertDialog.show();
                     e.printStackTrace();
                 }
@@ -58,26 +55,23 @@ public class LoginFragment extends Fragment {
         final LinearLayout layout = (LinearLayout) root.findViewById(R.id.loginLayout);
         try {
             //init builder
-            final AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
+            AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
                     ShowcaseConstants.LOGIN_FORM, getResources().openRawResource(R.raw.connection),
                     ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).
                     setSkin(new LoginSkin(getContext())).createComponent();
-            if(form != null) {
-                Button loginButton = new Button(getActivity());
-                loginButton.setLayoutParams(new ViewGroup.LayoutParams(
-                        ShowCaseUtils.convertDpToPixels(200, getContext()), ViewGroup.LayoutParams.WRAP_CONTENT));
-                loginButton.setText(Localization.translate("login.buttonText", getActivity()));
-                loginButton.setOnClickListener(onLoginButtonClick);
-                layout.addView(form.getView());
-                layout.addView(loginButton);
-            }
+            layout.addView(form.getView());
         } catch (Exception e) {
-            //handle errors building failed
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             System.err.println("FORM BUILDING FAILED");
             e.printStackTrace();
         }
 
-
+        Button loginButton = new Button(getActivity());
+        loginButton.setLayoutParams(new ViewGroup.LayoutParams(
+                ShowCaseUtils.convertDpToPixels(200, getContext()), ViewGroup.LayoutParams.WRAP_CONTENT));
+        loginButton.setText(Localization.translate("login.buttonText", getActivity()));
+        loginButton.setOnClickListener(onLoginButtonClick);
+        layout.addView(loginButton);
 
         return root;
     }

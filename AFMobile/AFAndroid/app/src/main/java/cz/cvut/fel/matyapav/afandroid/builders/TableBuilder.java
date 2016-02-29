@@ -9,8 +9,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
-import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
-import cz.cvut.fel.matyapav.afandroid.components.AFTable;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFTable;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;

@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,14 +10,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.AbsenceManagementFormSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.AbsenceManagementListSkin;
@@ -37,9 +39,13 @@ public class AbsenceManagementFragment extends Fragment {
                 try {
                     form.sendData();
                     ShowCaseUtils.refreshCurrentFragment(getActivity());
-                    //povedlo se neco udelej
+                    Toast.makeText(getActivity(), Localization.translate("success.addOrUpdate", getActivity()),
+                            Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    // TODO: nepodarilo seodeslat formular
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle(Localization.translate("error.addOrUpdate", getActivity()));
+                    alertDialog.setMessage(Localization.translate("error.reason", getActivity()) + e.getMessage());
+                    alertDialog.show();
                     e.printStackTrace();
                 }
             }
@@ -64,7 +70,7 @@ public class AbsenceManagementFragment extends Fragment {
                     securityConstrains).setSkin(new AbsenceManagementListSkin(getContext())).createComponent();
             layout.addView(list.getView());
         } catch (Exception e) {
-            //todo building failed
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
 
@@ -81,7 +87,7 @@ public class AbsenceManagementFragment extends Fragment {
             layout.addView(form.getView());
             layout.addView(button);
         } catch (Exception e) {
-            //TODO exception
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
 
@@ -94,7 +100,7 @@ public class AbsenceManagementFragment extends Fragment {
         absenceList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                absenceForm.insertData(absenceList.getData(position));
+                absenceForm.insertData(absenceList.getDataFromItemOnPosition(position));
             }
         });
 

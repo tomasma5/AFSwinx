@@ -1,45 +1,31 @@
-package cz.cvut.fel.matyapav.afandroid.components;
+package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.app.Activity;
-import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
+import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
+import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.CustomListAdapter;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
-import cz.cvut.fel.matyapav.afandroid.rest.BaseRestBuilder;
-import cz.cvut.fel.matyapav.afandroid.rest.RestBuilderFactory;
-import cz.cvut.fel.matyapav.afandroid.rest.holder.AFDataHolder;
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 24.02.2016.
@@ -49,17 +35,17 @@ public class AFList extends AFComponent {
     private ListView listView;
     private List<Map<String, String>> rows;
 
+    public AFList() {
+        rows = new ArrayList<>();
+    }
+
     public AFList(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
         super(activity, connectionPack, skin);
         rows = new ArrayList<>();
     }
 
-    public AFList(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
-        super(name, view, layoutDefinitions, layoutOrientation);
-    }
-
     @Override
-    void insertData(String dataResponse, StringBuilder road) {
+    public void insertData(String dataResponse, StringBuilder road) {
         try {
             JSONArray jsonArray = new JSONArray(dataResponse);
             for(int i=0; i<jsonArray.length(); i++){
@@ -94,7 +80,6 @@ public class AFList extends AFComponent {
                     String data = jsonObject.get(key).toString();
                     AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
                     builder.setData(field, data);
-                    System.err.println(road + key + " = " + field.getActualData());
                     row.put(road + key, field.getActualData());
                 }
             }
@@ -102,18 +87,22 @@ public class AFList extends AFComponent {
     }
 
     @Override
-    SupportedComponents getComponentType() {
+    public SupportedComponents getComponentType() {
         return SupportedComponents.LIST;
     }
 
     @Override
-    boolean validateData() {
+    public boolean validateData() {
         throw new UnsupportedOperationException("List is read only");
     }
 
     @Override
-    AFDataHolder reserialize() {
+    public AFDataHolder reserialize() {
         throw new UnsupportedOperationException("List is read only");
+    }
+
+    public ListView getListView() {
+        return listView;
     }
 
     public void setListView(ListView listView) {
@@ -124,11 +113,7 @@ public class AFList extends AFComponent {
         rows.add(values);
     }
 
-    public ListView getListView() {
-        return listView;
-    }
-
-    public Object getData(int position){
+    public Object getDataFromItemOnPosition(int position){
         AFSwinxConnection sendConnection = getSendConnection();
         // Generate send connection based on which will be retrieve data. The send connection is
         // used to generate data in this case it will be generated JSON
@@ -146,7 +131,6 @@ public class AFList extends AFComponent {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
             String propertyName = field.getId();
-            System.err.println("ROWS "+ rows);
             Object data = rows.get(position).get(propertyName);
             // Based on dot notation determine road. Road is used to add object to its right place
             String[] roadTrace = propertyName.split("\\.");

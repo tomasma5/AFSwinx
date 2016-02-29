@@ -5,10 +5,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
-import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**

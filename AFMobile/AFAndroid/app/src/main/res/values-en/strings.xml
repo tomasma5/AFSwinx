@@ -38,4 +38,26 @@
     <string name="absenceType.maxDaysPerYear">Year quote</string>
     <string name="absenceType.active">Active</string>
     <string name="absenceInstance.duration">Duration</string>
+    <string name="error.building.failed">Building failed.</string>
+    <string name="error.reason">Reason</string>
+    <string name="button.clear">Clear</string>
+    <string name="button.reset">Reset</string>
+    <string name="button.choose">Choose</string>
+    <string name="success.addOrUpdate">Add or update was successful.</string>
+    <string name="error.addOrUpdate">Add or update failed!</string>
+    <string name="absence.create">Absence created.</string>
+    <string name="absence.createFailed">Absence creating failed.</string>
+    <string name="button.create">Create</string>
+    <string name="person.updateFailed">Update failed.</string>
+    <string name="person.updateSuccess">Update was successful.</string>
+    <string name="welcome.msg">Welcome user</string>
+    <string name="absenceManagement">Absence management</string>
+    <string name="absenceTypeManagement">Absence type management</string>
+    <string name="createAbsence">Create absence</string>
+    <string name="profile">Profile</string>
+    <string name="supportedCountries">Supported countries</string>
+    <string name="myAbsences">My absences</string>
+    <string name="logout">Logout</string>
+    <string name="login">Login</string>
+    <string name="home">Home</string>
 </resources>

@@ -1,9 +1,12 @@
-package cz.cvut.fel.matyapav.afandroid.components;
+package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -14,18 +17,12 @@ import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
-import cz.cvut.fel.matyapav.afandroid.rest.BaseRestBuilder;
-import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
-import cz.cvut.fel.matyapav.afandroid.rest.RestBuilderFactory;
-import cz.cvut.fel.matyapav.afandroid.rest.holder.AFDataHolder;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 13.02.2016.
  */
-public abstract class AFComponent {
+public abstract class AFComponent implements AbstractComponent{
 
     private Activity activity;
     private String name;
@@ -38,17 +35,13 @@ public abstract class AFComponent {
 
     private Skin skin;
 
+    public AFComponent(){
+    }
+
     public AFComponent(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
         this.activity = activity;
         this.connectionPack = connectionPack;
         this.skin = skin;
-    }
-
-    public AFComponent(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
-        this.name = name;
-        this.view = view;
-        this.layoutDefinitions = layoutDefinitions;
-        this.layoutOrientation = layoutOrientation;
     }
 
     public String getName() {
@@ -88,13 +81,6 @@ public abstract class AFComponent {
         insertData(dataObject.toString(), new StringBuilder());
     }
 
-    abstract void insertData(String dataResponse, StringBuilder road);
-
-    abstract SupportedComponents getComponentType();
-
-    abstract boolean validateData();
-
-    abstract AFDataHolder reserialize();
 
     public AFSwinxConnection getDataConnection() {
         return connectionPack.getDataConnection();
@@ -149,5 +135,17 @@ public abstract class AFComponent {
             }
         }
         return res;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public void setConnectionPack(AFSwinxConnectionPack connectionPack) {
+        this.connectionPack = connectionPack;
+    }
+
+    public void setSkin(Skin skin) {
+        this.skin = skin;
     }
 }

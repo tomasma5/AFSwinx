@@ -1,29 +1,20 @@
 package cz.cvut.fel.matyapav.afandroid.rest;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Base64;
 
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.tomscz.afswinx.rest.connection.ConnectionSecurity;
+import com.tomscz.afswinx.rest.connection.HeaderType;
+import com.tomscz.afswinx.rest.connection.HttpMethod;
+import com.tomscz.afswinx.rest.connection.SecurityMethod;
+
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 

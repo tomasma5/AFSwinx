@@ -31,7 +31,6 @@ public class DropDownFieldBuilder extends BasicBuilder {
 
     @Override
     public View buildFieldView(Activity activity) {
-        //TODO nejaka chyba kdyz je tabulka prazdna
         Spinner spinner = new Spinner(activity);
         TextView spinnerItem = new TextView(activity);
         if(convertOptionsIntoList(activity) != null) {
@@ -48,7 +47,11 @@ public class DropDownFieldBuilder extends BasicBuilder {
 
     @Override
     public void setData(AFField field, Object value) {
-
+        if(value.toString().equals("true")){
+            value = Localization.translate("option.yes", field.getFieldView().getContext());
+        }else if(value.toString().equals("false")){
+            value = Localization.translate("option.no", field.getFieldView().getContext());
+        }
         if(field.getFieldInfo().getOptions() != null) {
             for (FieldOption option : field.getFieldInfo().getOptions()) {
                 if(option.getKey().equals(value)){
@@ -58,7 +61,7 @@ public class DropDownFieldBuilder extends BasicBuilder {
             }
         }
         Spinner spinner = (Spinner) field.getFieldView();
-        if(value == null){ //TODO asi se muze stat ze spinner nebude mit ani jednu polozku
+        if(value == null){
             spinner.setSelection(0);
             field.setActualData(spinner.getSelectedItem().toString());
             return;
@@ -83,7 +86,13 @@ public class DropDownFieldBuilder extends BasicBuilder {
                 }
             }
         }
-       return spinner.getSelectedItem().toString();
+        if(spinner.getSelectedItem().toString().equals(Localization.translate("option.yes", field.getFieldView().getContext()))){
+            return true;
+        }else if(spinner.getSelectedItem().toString().equals(Localization.translate("option.no", field.getFieldView().getContext()))){
+            return false;
+        }else {
+            return spinner.getSelectedItem().toString();
+        }
     }
 
     private List<String> convertOptionsIntoList(Activity activity){
@@ -91,7 +100,13 @@ public class DropDownFieldBuilder extends BasicBuilder {
         int i = 0;
         if(properties.getOptions() != null){
             for (FieldOption option : properties.getOptions()) {
-                list.add(Localization.translate(option.getValue(), activity));
+                if(option.getValue().toString().equals("true")){
+                    list.add(Localization.translate("option.yes", activity));
+                }else if(option.getValue().toString().equals("false")){
+                    list.add(Localization.translate("option.no", activity));
+                }else {
+                    list.add(Localization.translate(option.getValue(), activity));
+                }
             }
             return list;
         }

@@ -5,7 +5,7 @@
         <item
             android:id="@+id/loginForm"
             android:icon="@android:drawable/ic_secure"
-            android:title="Login" />
+            android:title="@string/login" />
     </group>
 
     <group android:checkableBehavior="single"
@@ -13,43 +13,43 @@
         <item
             android:id="@+id/welcome"
             android:icon="@drawable/ic_menu_send"
-            android:title="Home"
+            android:title="@string/home"
             />
         <item
             android:id="@+id/supportedCountries"
             android:icon="@drawable/ic_menu_send"
-            android:title="Supported countries"
+            android:title="@string/supportedCountries"
             />
         <item
             android:id="@+id/userProfile"
             android:icon="@drawable/ic_menu_send"
-            android:title="Profile"
+            android:title="@string/profile"
             />
         <item
             android:id="@+id/myAbsences"
             android:icon="@drawable/ic_menu_send"
-            android:title="My Absences"
+            android:title="@string/myAbsences"
             />
         <item
             android:id="@+id/absenceManagement"
             android:icon="@drawable/ic_menu_send"
-            android:title="Absence Management"
+            android:title="@string/absenceManagement"
             />
         <item
             android:id="@+id/createAbsence"
             android:icon="@drawable/ic_menu_send"
-            android:title="Create absence"
+            android:title="@string/createAbsence"
             />
         <item
             android:id="@+id/absenceTypeManagement"
             android:icon="@drawable/ic_menu_send"
-            android:title="Absence type management"
+            android:title="@string/absenceTypeManagement"
             />
 
         <item
             android:id="@+id/logout"
             android:icon="@android:drawable/ic_secure"
-            android:title="Logout"
+            android:title="@string/logout"
             />
     </group>
 

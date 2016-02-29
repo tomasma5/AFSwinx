@@ -43,13 +43,13 @@
         android:layout_width="100dp"
         android:background="@color/colorAccent"
         android:layout_height="wrap_content"
-        android:text="Reset"/>
+        android:text="@string/button.reset"/>
         <Button
             android:id="@+id/countriesBtnClear"
             android:layout_width="100dp"
             android:background="@color/clear"
             android:layout_height="wrap_content"
-            android:text="Clear"/>
+            android:text="@string/button.clear"/>
     </LinearLayout>
 </LinearLayout>
 </cz.cvut.fel.matyapav.afandroid.VerticalScrollView>

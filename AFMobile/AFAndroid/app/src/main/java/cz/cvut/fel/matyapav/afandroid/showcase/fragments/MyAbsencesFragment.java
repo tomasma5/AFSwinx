@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.MyAbsencesListSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
@@ -21,8 +21,6 @@ import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
  * Created by Pavel on 26.02.2016.
  */
 public class MyAbsencesFragment extends Fragment{
-
-
 
     @Nullable
     @Override

@@ -38,4 +38,26 @@
     <string name="absenceType.maxDaysPerYear">Roční kvóta</string>
     <string name="absenceType.active">Aktivní</string>
     <string name="absenceInstance.duration">Doba trvání</string>
+    <string name="error.building.failed">Stavění komponenty selhalo.</string>
+    <string name="error.reason">Důvod</string>
+    <string name="button.clear">Vyčistit</string>
+    <string name="button.reset">Resetovat</string>
+    <string name="button.choose">Vybrat</string>
+    <string name="success.addOrUpdate">Přidání nebo upravení proběhlo úspěšně.</string>
+    <string name="error.addOrUpdate">Přidání nebo upravení selhalo!</string>
+    <string name="absence.create">Absence byla vytvořena.</string>
+    <string name="absence.createFailed">Tvoření absence selhalo.</string>
+    <string name="button.create">Vytvoř</string>
+    <string name="person.updateFailed">Aktualizace selhala.</string>
+    <string name="person.updateSuccess">Aktualizace proběhla úspěšně.</string>
+    <string name="welcome.msg">Vítejte uživateli</string>
+    <string name="absenceManagement">Správa absencí</string>
+    <string name="absenceTypeManagement">Správa absenčních typů</string>
+    <string name="createAbsence">Vytvořit absenci</string>
+    <string name="profile">Profil</string>
+    <string name="supportedCountries">Podporované země</string>
+    <string name="myAbsences">Moje absence</string>
+    <string name="logout">Odhlásit se</string>
+    <string name="login">Přihlášení</string>
+    <string name="home">Domů</string>
 </resources>

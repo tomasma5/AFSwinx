@@ -43,6 +43,7 @@ public class TextFieldBuilder extends BasicBuilder {
         if(value != null) {
             ((EditText) field.getFieldView()).setText(value.toString());
             field.setActualData(value.toString());
+
             //TODO zvazit tuhle feature .. non editable texty nejdou posunout v pripade, ze je user nevidi cele.
             if(field.getFieldInfo().isReadOnly()) {
                 field.getFieldView().setOnLongClickListener(new View.OnLongClickListener() {
@@ -77,6 +78,5 @@ public class TextFieldBuilder extends BasicBuilder {
         } else if (widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD)){
             field.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
-        //TODO another input types
     }
 }

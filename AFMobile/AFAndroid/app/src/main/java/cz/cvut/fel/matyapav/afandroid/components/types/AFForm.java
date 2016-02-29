@@ -1,28 +1,25 @@
-package cz.cvut.fel.matyapav.afandroid.components;
+package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.view.ViewGroup;
+
+import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
+import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
+import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
+import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
 
-import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnection;
-import cz.cvut.fel.matyapav.afandroid.rest.AFSwinxConnectionPack;
-import cz.cvut.fel.matyapav.afandroid.rest.BaseRestBuilder;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
-import cz.cvut.fel.matyapav.afandroid.rest.RestBuilderFactory;
-import cz.cvut.fel.matyapav.afandroid.rest.holder.AFDataHolder;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
@@ -30,16 +27,15 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class AFForm extends AFComponent {
 
+    public AFForm() {
+    }
+
     public AFForm(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
         super(activity, connectionPack, skin);
     }
 
-    public AFForm(String name, ViewGroup view, LayoutDefinitions layoutDefinitions, LayoutOrientation layoutOrientation) {
-        super(name, view, layoutDefinitions, layoutOrientation);
-    }
-
     @Override
-    void insertData(String dataResponse, StringBuilder road){
+    public void insertData(String dataResponse, StringBuilder road){
         try {
             JSONObject jsonObject = new JSONObject(dataResponse);
             Iterator<String> keys = jsonObject.keys();
@@ -101,14 +97,14 @@ public class AFForm extends AFComponent {
                     }
                 }
             } else {
-                dataHolder.addPropertyAndValue(propertyName, (String) data);
+                dataHolder.addPropertyAndValue(propertyName, data.toString());
             }
         }
         return dataHolder;
     }
 
     @Override
-    SupportedComponents getComponentType() {
+    public SupportedComponents getComponentType() {
         return SupportedComponents.FORM;
     }
 

@@ -27,4 +27,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.google.code.gson:gson:1.7.2'
+    compile files('D:/Projects/AFSwinx/AFRest/target/AFRest-0.0.1-SNAPSHOT.jar')
+    compile files('D:/Projects/AFSwinx/AFSwinx/target/AFSwinx.jar')
 }

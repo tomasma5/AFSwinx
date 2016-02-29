@@ -50,13 +50,13 @@ public class AFField {
         if(validations != null) {
             for (ValidationRule rule : validations) {
                 AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);
-                System.err.println("VALIDATION RULE "+rule.toString());
-                System.err.println("VALIDATOR "+validator.toString());
+                System.out.println("VALIDATION RULE "+rule.toString());
+                System.out.println("VALIDATOR "+validator.toString());
                 boolean validationResult = validator.validate(this,errorMsgs,rule);
                 if(allValidationsFine){ //if once false stays false
                     allValidationsFine = validationResult;
                 }
-                System.err.println("RESULT "+allValidationsFine);
+                System.out.println("RESULT "+allValidationsFine);
             }
         }
         if(!allValidationsFine){

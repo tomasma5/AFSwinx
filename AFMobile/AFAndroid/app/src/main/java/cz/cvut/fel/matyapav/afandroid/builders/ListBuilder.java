@@ -1,18 +1,14 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
-import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**

@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.parsers;
+package cz.cvut.fel.matyapav.afandroid.parsers.abstraction;
 
 import org.json.JSONObject;
 

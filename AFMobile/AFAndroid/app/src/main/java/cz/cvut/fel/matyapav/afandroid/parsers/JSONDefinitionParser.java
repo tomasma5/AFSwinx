@@ -1,10 +1,12 @@
 package cz.cvut.fel.matyapav.afandroid.parsers;
 
-import android.view.ViewGroup;
+import com.tomscz.afrest.commons.AFRestUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.ProtocolException;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
@@ -15,8 +17,8 @@ import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
+import cz.cvut.fel.matyapav.afandroid.parsers.abstraction.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 17.12.2015.
@@ -59,9 +61,13 @@ public class JSONDefinitionParser implements JSONParser {
     }
 
     private FieldInfo parseFieldInfo(JSONObject field) throws JSONException {
-        System.err.println("PARSING FIELD " + field.getString(Constants.ID));
+        System.out.println("PARSING FIELD " + field.getString(Constants.ID));
         FieldInfo fieldInfo = new FieldInfo();
-        fieldInfo.setWidgetType((SupportedWidgets) Utils.getEnumFromString(SupportedWidgets.class, field.getString(Constants.WIDGET_TYPE), true));
+        try {
+            fieldInfo.setWidgetType(SupportedWidgets.valueOf(field.getString(Constants.WIDGET_TYPE)));
+        }catch (IllegalArgumentException e){
+            System.err.println(e.getLocalizedMessage());
+        }
         fieldInfo.setId(field.getString(Constants.ID));
 
         fieldInfo.setLabel(field.get(Constants.LABEL).equals(null) ? null : field.get(Constants.LABEL).toString());

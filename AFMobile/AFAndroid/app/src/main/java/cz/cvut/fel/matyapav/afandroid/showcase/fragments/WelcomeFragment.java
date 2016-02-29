@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 16.02.2016.
@@ -23,7 +24,7 @@ public class WelcomeFragment extends Fragment{
         View root = inflater.inflate(R.layout.welcome_fragment_layout, container, false);
         LinearLayout welcomeLayout = (LinearLayout) root.findViewById(R.id.welcomeLayout);
         TextView welcomeUserText = (TextView) welcomeLayout.findViewById(R.id.welcomeUserText);
-        welcomeUserText.setText("Welcome user: " + ShowCaseUtils.getUserCredentials(getActivity()).get("username"));
+        welcomeUserText.setText(Localization.translate("welcome.msg", getActivity())+": " + ShowCaseUtils.getUserCredentials(getActivity()).get("username"));
         return root;
     }
 }

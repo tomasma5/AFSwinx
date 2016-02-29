@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.R;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 20.02.2016.
@@ -60,9 +62,16 @@ public class ShowCaseUtils {
         fragmentManager.beginTransaction().detach(current).attach(current).commit();
     }
 
-    //TODO nevim jestli nechat tu nebo u skinu
     public static int convertDpToPixels(int dps, Context context){
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dps * scale + 0.5f);
     }
+
+    public static void showBuildingFailedDialog(Activity activity, Exception e){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        alertDialog.setTitle(Localization.translate("error.building.failed", activity));
+        alertDialog.setMessage(Localization.translate("error.reason", activity)+" :" + e.getMessage());
+        alertDialog.show();
+    }
+
 }

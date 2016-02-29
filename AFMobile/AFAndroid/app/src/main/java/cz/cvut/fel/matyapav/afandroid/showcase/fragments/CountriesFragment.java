@@ -17,8 +17,8 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
-import cz.cvut.fel.matyapav.afandroid.components.AFList;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.CountryFormSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.ListSkin;
@@ -90,7 +90,7 @@ public class CountriesFragment extends Fragment {
             final AFList list = listBuilder.createComponent();
             countriesTableLayout.addView(list.getView());
         } catch (Exception e) {
-            //TODO list build failed
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
 
@@ -105,7 +105,7 @@ public class CountriesFragment extends Fragment {
             Button clear = (Button) root.findViewById(R.id.countriesBtnClear);
             clear.setOnClickListener(onCountryClearListener);
         } catch (Exception e) {
-            //TODO form build failed
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
 
@@ -116,7 +116,7 @@ public class CountriesFragment extends Fragment {
         countryList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                countryForm.insertData(countryList.getData(position));
+                countryForm.insertData(countryList.getDataFromItemOnPosition(position));
             }
         });
 

@@ -1,13 +1,11 @@
 package cz.cvut.fel.matyapav.afandroid;
 
-import android.app.Activity;
-
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
-import cz.cvut.fel.matyapav.afandroid.components.AFComponent;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 
 /**
  * Created by Pavel on 13.02.2016.

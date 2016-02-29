@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.fragments;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,10 +15,11 @@ import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.afandroid.showcase.skins.CreateAbsenceFormSkin;
 import cz.cvut.fel.matyapav.afandroid.showcase.utils.ShowcaseConstants;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 28.02.2016.
@@ -32,9 +34,13 @@ public class CreateAbsenceFragment extends Fragment {
             if(createAbsenceForm != null && createAbsenceForm.validateData()){
                 try {
                     createAbsenceForm.sendData();
-                    Toast.makeText(getActivity(), "Absence created.", Toast.LENGTH_SHORT).show(); //TODO translate
+                    Toast.makeText(getActivity(), Localization.translate("absence.create", getActivity()),
+                            Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    // creating failed //TODO dialog
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setTitle(Localization.translate("absence.createFailed", getActivity()));
+                    alertDialog.setMessage(Localization.translate("error.reason", getActivity()) + e.getMessage());
+                    alertDialog.show();
                     e.printStackTrace();
                 }
 
@@ -56,13 +62,13 @@ public class CreateAbsenceFragment extends Fragment {
                     securityConstrains).setSkin(new CreateAbsenceFormSkin(getContext())).createComponent();
             createAbsenceLayout.addView(createAbsenceForm.getView());
         } catch (Exception e) {
-            //TODO form building failed
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
 
         Button button = new Button(getActivity());
         button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        button.setText("Creating"); //TODO translate
+        button.setText(Localization.translate("button.create", getActivity()));
         button.setOnClickListener(onCreateAbsenceClick);
         createAbsenceLayout.addView(button);
         return root;
