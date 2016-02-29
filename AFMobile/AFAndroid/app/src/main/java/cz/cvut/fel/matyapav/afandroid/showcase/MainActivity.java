@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.showcase;
 
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -83,13 +84,12 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if(id == R.id.langCZ){
             Localization.changeLanguage(SupportedLanguages.CZ, getThisActivity());
-            ShowCaseUtils.refreshCurrentFragment(getThisActivity());
+            getThisActivity().recreate();
             }
         else if(id == R.id.langEN) {
             Localization.changeLanguage(SupportedLanguages.EN, getThisActivity());
-            ShowCaseUtils.refreshCurrentFragment(getThisActivity());
+            getThisActivity().recreate();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
