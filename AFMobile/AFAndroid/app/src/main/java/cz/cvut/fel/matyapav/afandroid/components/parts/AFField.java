@@ -1,26 +1,14 @@
 package cz.cvut.fel.matyapav.afandroid.components.parts;
 
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-
 import java.util.List;
-
 import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
-import cz.cvut.fel.matyapav.afandroid.components.validators.MaxCharsValidator;
-import cz.cvut.fel.matyapav.afandroid.components.validators.RequiredValidator;
 import cz.cvut.fel.matyapav.afandroid.components.validators.ValidatorFactory;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
-import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
-import cz.cvut.fel.matyapav.afandroid.utils.Constants;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
+
 
 /**
  * This class defines GUI of the field + operations with it like validation
@@ -30,14 +18,11 @@ public class AFField {
     private FieldInfo fieldInfo;
     private String id;
     private TextView label;
-    private LabelPosition labelPosition = LabelPosition.BEFORE; //DEFAULT
-    private LayoutDefinitions layoutDefinitions = LayoutDefinitions.ONECOLUMNLAYOUT; //DEFAULT
-    private LayoutOrientation layoutOrientation = LayoutOrientation.AXISX; //DEFAULT
+
     private View fieldView;
     private TextView errorView;
     private View completeView;
-    private List<ValidationRule> validations;
-    private String actualData;
+    private Object actualData;
 
     public AFField(FieldInfo fieldInfo) {
         this.fieldInfo = fieldInfo;
@@ -47,8 +32,8 @@ public class AFField {
         boolean allValidationsFine = true;
         StringBuilder errorMsgs = new StringBuilder();
         errorView.setVisibility(View.GONE);
-        if(validations != null) {
-            for (ValidationRule rule : validations) {
+        if(fieldInfo.getRules() != null) {
+            for (ValidationRule rule : fieldInfo.getRules()) {
                 AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);
                 System.out.println("VALIDATION RULE "+rule.toString());
                 System.out.println("VALIDATOR "+validator.toString());
@@ -90,21 +75,7 @@ public class AFField {
         this.id = id;
     }
 
-    public List<ValidationRule> getValidations() {
-        return validations;
-    }
 
-    public void setValidations(List<ValidationRule> validations) {
-        this.validations = validations;
-    }
-
-    public void setLabelPosition(LabelPosition labelPosition) {
-        this.labelPosition = labelPosition;
-    }
-
-    public LabelPosition getLabelPosition() {
-        return labelPosition;
-    }
 
     public TextView getErrorView() {
         return errorView;
@@ -122,22 +93,6 @@ public class AFField {
         return completeView;
     }
 
-    public LayoutDefinitions getLayoutDefinitions() {
-        return layoutDefinitions;
-    }
-
-    public void setLayoutDefinitions(LayoutDefinitions layoutDefinitions) {
-        this.layoutDefinitions = layoutDefinitions;
-    }
-
-    public LayoutOrientation getLayoutOrientation() {
-        return layoutOrientation;
-    }
-
-    public void setLayoutOrientation(LayoutOrientation layoutOrientation) {
-        this.layoutOrientation = layoutOrientation;
-    }
-
     public FieldInfo getFieldInfo() {
         return fieldInfo;
     }
@@ -149,20 +104,16 @@ public class AFField {
                 ", fieldInfo=" + fieldInfo +
                 ", id='" + id + '\'' +
                 ", label=" + label +
-                ", labelPosition=" + labelPosition +
-                ", layoutDefinitions=" + layoutDefinitions +
-                ", layoutOrientation=" + layoutOrientation +
                 ", fieldView=" + fieldView +
                 ", errorView=" + errorView +
-                ", validations=" + validations +
                 '}';
     }
 
-    public void setActualData(String actualData) {
+    public void setActualData(Object actualData) {
         this.actualData = actualData;
     }
 
-    public String getActualData() {
+    public Object getActualData() {
         return actualData;
     }
 }

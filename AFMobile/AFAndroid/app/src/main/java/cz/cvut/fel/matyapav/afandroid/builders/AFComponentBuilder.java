@@ -38,7 +38,6 @@ public abstract class AFComponentBuilder<T> {
     private Activity activity;
     private AFSwinxConnectionPack connectionPack;
     private Skin skin;
-
     private String connectionKey;
     private String componentKeyName;
     private InputStream connectionResource;

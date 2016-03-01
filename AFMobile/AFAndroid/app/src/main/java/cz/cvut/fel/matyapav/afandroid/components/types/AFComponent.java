@@ -30,9 +30,7 @@ public abstract class AFComponent implements AbstractComponent{
     private LayoutDefinitions layoutDefinitions;
     private LayoutOrientation layoutOrientation;
     private List<AFField> fields;
-
     private AFSwinxConnectionPack connectionPack;
-
     private Skin skin;
 
     public AFComponent(){
@@ -44,54 +42,9 @@ public abstract class AFComponent implements AbstractComponent{
         this.skin = skin;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ViewGroup getView() {
-        return view;
-    }
-
-    public void setView(ViewGroup view) {
-        this.view = view;
-    }
-
-    public LayoutDefinitions getLayoutDefinitions() {
-        return layoutDefinitions;
-    }
-
-    public void setLayoutDefinitions(LayoutDefinitions layoutDefinitions) {
-        this.layoutDefinitions = layoutDefinitions;
-    }
-
-    public LayoutOrientation getLayoutOrientation() {
-        return layoutOrientation;
-    }
-
-    public void setLayoutOrientation(LayoutOrientation layoutOrientation) {
-        this.layoutOrientation = layoutOrientation;
-    }
-
     //this one should be used by users
     public void insertData(Object dataObject){
         insertData(dataObject.toString(), new StringBuilder());
-    }
-
-
-    public AFSwinxConnection getDataConnection() {
-        return connectionPack.getDataConnection();
-    }
-
-    public AFSwinxConnection getModelConnection() {
-        return connectionPack.getMetamodelConnection();
-    }
-
-    public AFSwinxConnection getSendConnection() {
-        return connectionPack.getSendConnection();
     }
 
     public void addField(AFField field){
@@ -99,22 +52,6 @@ public abstract class AFComponent implements AbstractComponent{
             fields = new ArrayList<AFField>();
         }
         fields.add(field);
-    }
-
-    public List<AFField> getFields() {
-        return fields;
-    }
-
-    public void setFields(List<AFField> fields) {
-        this.fields = fields;
-    }
-
-    public Activity getActivity() {
-        return activity;
-    }
-
-    public Skin getSkin() {
-        return skin;
     }
 
     public AFField getFieldById(String id){
@@ -137,6 +74,44 @@ public abstract class AFComponent implements AbstractComponent{
         return res;
     }
 
+    //GETTERS
+    public String getName() {
+        return name;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public List<AFField> getFields() {
+        return fields;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public AFSwinxConnectionPack getConnectionPack() {
+        return connectionPack;
+    }
+
+    public ViewGroup getView() {
+        return view;
+    }
+
+    public LayoutOrientation getLayoutOrientation() {
+        return layoutOrientation;
+    }
+
+    public LayoutDefinitions getLayoutDefinitions() {
+        return layoutDefinitions;
+    }
+
+    //SETTERS
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
@@ -148,4 +123,22 @@ public abstract class AFComponent implements AbstractComponent{
     public void setSkin(Skin skin) {
         this.skin = skin;
     }
+
+    public void setFields(List<AFField> fields) {
+        this.fields = fields;
+    }
+
+    public void setView(ViewGroup view) {
+        this.view = view;
+    }
+
+    public void setLayoutDefinitions(LayoutDefinitions layoutDefinitions) {
+        this.layoutDefinitions = layoutDefinitions;
+    }
+
+    public void setLayoutOrientation(LayoutOrientation layoutOrientation) {
+        this.layoutOrientation = layoutOrientation;
+    }
+
+
 }

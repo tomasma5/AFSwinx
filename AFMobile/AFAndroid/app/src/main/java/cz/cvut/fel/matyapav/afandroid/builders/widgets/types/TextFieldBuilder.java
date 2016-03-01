@@ -18,11 +18,9 @@ import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
  */
 public class TextFieldBuilder extends BasicBuilder {
 
-    private FieldInfo properties;
 
     public TextFieldBuilder(Skin skin, FieldInfo properties) {
-        super(skin);
-        this.properties = properties;
+        super(skin, properties);
     }
 
     @Override
@@ -30,8 +28,8 @@ public class TextFieldBuilder extends BasicBuilder {
         EditText text = new EditText(activity);
         text.setTextColor(getSkin().getFieldColor());
         text.setTypeface(getSkin().getFieldFont());
-        addInputType(text, properties.getWidgetType());
-        if(properties.isReadOnly()){
+        addInputType(text, getProperties().getWidgetType());
+        if(getProperties().isReadOnly()){
             text.setInputType(InputType.TYPE_NULL);
             text.setTextColor(Color.LTGRAY);
         }
@@ -42,7 +40,7 @@ public class TextFieldBuilder extends BasicBuilder {
     public void setData(final AFField field, final Object value) {
         if(value != null) {
             ((EditText) field.getFieldView()).setText(value.toString());
-            field.setActualData(value.toString());
+            field.setActualData(value);
 
             //TODO zvazit tuhle feature .. non editable texty nejdou posunout v pripade, ze je user nevidi cele.
             if(field.getFieldInfo().isReadOnly()) {

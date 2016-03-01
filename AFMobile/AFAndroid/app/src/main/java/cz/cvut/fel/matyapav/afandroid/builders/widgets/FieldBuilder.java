@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
+import cz.cvut.fel.matyapav.afandroid.components.parts.LayoutProperties;
 import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
@@ -26,13 +27,6 @@ public class FieldBuilder {
 
         AFField field = new AFField(properties);
         field.setId(road.toString()+properties.getId());
-        //LAYOUT PROPERTIES OF FIELD
-        if (properties.getLayout().getLayoutDefinition() != null) {
-            field.setLayoutDefinitions(properties.getLayout().getLayoutDefinition() );
-        }
-        if (properties.getLayout().getLayoutOrientation() != null) {
-            field.setLayoutOrientation(properties.getLayout().getLayoutOrientation());
-        }
 
         //LABEL
         TextView label = new TextView(activity);
@@ -40,9 +34,6 @@ public class FieldBuilder {
             String labelText = Localization.translate(properties.getLabel(), activity);
             //set label position
             LabelPosition pos = properties.getLayout().getLabelPosition();
-            if (pos != null) {
-                field.setLabelPosition(pos);
-            }
             label.setTextColor(skin.getLabelColor());
             label.setTypeface(skin.getLabelFont());
             label.setText(labelText);
@@ -55,9 +46,6 @@ public class FieldBuilder {
         errorView.setTextColor(skin.getValidationColor());
         errorView.setTypeface(skin.getValidationFont());
         field.setErrorView(errorView);
-
-        //VALIDATIONS
-        field.setValidations(properties.getRules());
 
         //Input view
         View inputField = null;
@@ -80,12 +68,18 @@ public class FieldBuilder {
         LinearLayout fullLayout = new LinearLayout(field.getFieldView().getContext());
         fullLayout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
+        LayoutProperties layout = field.getFieldInfo().getLayout();
         //set orientation of label and field itself
-        if(field.getLayoutOrientation().equals(LayoutOrientation.AXISY)){
-            fullLayout.setOrientation(LinearLayout.HORIZONTAL);
-        }else if(field.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
-            fullLayout.setOrientation(LinearLayout.VERTICAL);
+        if(layout.getLayoutOrientation() != null){
+            if(layout.equals(LayoutOrientation.AXISY)){
+                fullLayout.setOrientation(LinearLayout.HORIZONTAL);
+            }else if(layout.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
+                fullLayout.setOrientation(LinearLayout.VERTICAL);
+            }
+        }else{
+            fullLayout.setOrientation(LinearLayout.VERTICAL); //default
         }
+
         //set label and field view layout params
         if(field.getLabel() != null) {
             field.getLabel().setLayoutParams(new LinearLayout.LayoutParams(skin.getLabelWidth(), skin.getLabelHeight()));
@@ -93,17 +87,20 @@ public class FieldBuilder {
         field.getFieldView().setLayoutParams(new LinearLayout.LayoutParams(skin.getInputWidth(), ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //LABEL BEFORE
-        if(field.getLabel() != null && !field.getLabelPosition().equals(LabelPosition.NONE)) {
-            if (field.getLabelPosition().equals(LabelPosition.BEFORE)) {
+        if (field.getLabel() != null && layout.getLabelPosition() != null && !layout.getLabelPosition().equals(LabelPosition.NONE)) {
+            if (layout.getLabelPosition().equals(LabelPosition.BEFORE)) {
                 fullLayout.addView(field.getLabel());
             }
+        }else if(field.getLabel() != null && layout.getLabelPosition() == null){
+            fullLayout.addView(field.getLabel()); //default is before
         }
+
         if(field.getFieldView() != null) {
             fullLayout.addView(field.getFieldView());
         }
         //LABEL AFTER
-        if(field.getLabel() != null && !field.getLabelPosition().equals(LabelPosition.NONE)) {
-            if (field.getLabelPosition().equals(LabelPosition.AFTER)) {
+        if(field.getLabel() != null && layout.getLabelPosition() != null && !layout.getLabelPosition().equals(LabelPosition.NONE)) {
+            if (layout.getLabelPosition().equals(LabelPosition.AFTER)) {
                 fullLayout.addView(field.getLabel());
             }
         }

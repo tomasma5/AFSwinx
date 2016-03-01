@@ -26,14 +26,12 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class DateFieldBuilder extends BasicBuilder {
 
-    private FieldInfo properties;
     private String dateFormat;
     private String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
 
     public DateFieldBuilder(Skin skin, FieldInfo properties){
-        super(skin);
+        super(skin, properties);
         this.dateFormat = "dd.MM.yyyy"; //Default date format
-        this.properties = properties;
     }
 
     @Override
@@ -68,7 +66,7 @@ public class DateFieldBuilder extends BasicBuilder {
             }
         });
 
-        if(properties.isReadOnly()){
+        if(getProperties().isReadOnly()){
             dateText.setInputType(InputType.TYPE_NULL);
             dateText.setTextColor(Color.LTGRAY);
         }

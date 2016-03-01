@@ -15,11 +15,8 @@ import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
  */
 public class CheckboxFieldBuilder extends BasicBuilder {
 
-    private FieldInfo properties;
-
     public CheckboxFieldBuilder(Skin skin, FieldInfo properties) {
-        super(skin);
-        this.properties = properties;
+        super(skin, properties);
     }
 
     @Override
@@ -27,7 +24,7 @@ public class CheckboxFieldBuilder extends BasicBuilder {
         CheckBox checkBox = new CheckBox(activity);
         checkBox.setTextColor(getSkin().getFieldColor());
         checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        if(properties.isReadOnly()){
+        if(getProperties().isReadOnly()){
             checkBox.setEnabled(false);
         }
         return checkBox;
@@ -37,7 +34,7 @@ public class CheckboxFieldBuilder extends BasicBuilder {
     public void setData(AFField field, Object value) {
         CheckBox box = (CheckBox) field.getFieldView();
         box.setChecked(Boolean.valueOf(value.toString()));
-        field.setActualData(value.toString());
+        field.setActualData(value);
     }
 
     @Override

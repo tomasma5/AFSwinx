@@ -108,6 +108,7 @@ public class AFForm extends AFComponent {
         return SupportedComponents.FORM;
     }
 
+    @Override
     public boolean validateData(){
         boolean allValidationsFine = true;
         for(AFField field : getFields()){
@@ -120,7 +121,7 @@ public class AFForm extends AFComponent {
 
     /*TROCHU POUPRAVENA MARTINOVA METODA*/
     public void sendData() throws Exception{
-        if (getSendConnection() == null) {
+        if (getConnectionPack().getSendConnection() == null) {
             throw new IllegalStateException(
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
         }
@@ -128,9 +129,9 @@ public class AFForm extends AFComponent {
         if (data == null) {
             return;
         }
-        System.err.println("SEND CONNECTION "+ Utils.getConnectionEndPoint(getSendConnection()));
-        RequestTask sendTask = new RequestTask(getActivity(),getSendConnection().getHttpMethod(), getSendConnection().getContentType(),
-                getSendConnection().getSecurity(), data, Utils.getConnectionEndPoint(getSendConnection()));
+        System.err.println("SEND CONNECTION "+ Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
+        RequestTask sendTask = new RequestTask(getActivity(),getConnectionPack().getSendConnection().getHttpMethod(), getConnectionPack().getSendConnection().getContentType(),
+                getConnectionPack().getSendConnection().getSecurity(), data, Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
         Object response = sendTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
         if(response instanceof Exception){
             throw (Exception) response;
@@ -144,7 +145,7 @@ public class AFForm extends AFComponent {
         if (!isValid) {
             return null;
         }
-        AFSwinxConnection sendConnection = getSendConnection();
+        AFSwinxConnection sendConnection = getConnectionPack().getSendConnection();
         // Generate send connection based on which will be retrieve data. The send connection is
         // used to generate data in this case it will be generated JSON
         if (sendConnection == null) {
@@ -158,9 +159,10 @@ public class AFForm extends AFComponent {
     public void resetData() {
         for (AFField field: getFields()) {
             AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
-            builder.setData(field, field.getActualData());
+            builder.setData(field, field.getActualData().toString());
         }
     }
+
     public void clearData() {
         for (AFField field: getFields()) {
             field.setActualData(null);
@@ -180,6 +182,4 @@ public class AFForm extends AFComponent {
         AFField field = getFieldById(id);
         FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, data);
     }
-
-
 }

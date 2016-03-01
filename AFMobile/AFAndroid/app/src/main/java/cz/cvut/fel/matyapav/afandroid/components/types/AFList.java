@@ -51,7 +51,7 @@ public class AFList extends AFComponent {
             for(int i=0; i<jsonArray.length(); i++){
                 Map<String, String> row = new HashMap<>();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                insertObject(jsonObject, road, row);
+                insertDataObject(jsonObject, road, row);
                 addRow(row);
                 road = new StringBuilder();
             }
@@ -64,7 +64,7 @@ public class AFList extends AFComponent {
         }
     }
 
-    private void insertObject (JSONObject jsonObject, StringBuilder road, Map<String, String> row) throws JSONException {
+    private void insertDataObject(JSONObject jsonObject, StringBuilder road, Map<String, String> row) throws JSONException {
         Iterator<String> keys = jsonObject.keys();
         while(keys.hasNext()){
             String key = keys.next();
@@ -72,7 +72,7 @@ public class AFList extends AFComponent {
                 String roadBackup = road.toString();
                 road.append(key);
                 road.append(".");
-                insertObject(jsonObject.getJSONObject(key), road, row); //parse class types
+                insertDataObject(jsonObject.getJSONObject(key), road, row); //parse class types
                 road = new StringBuilder(roadBackup.toString());
             }else {
                 AFField field = getFieldById(road + key);
@@ -80,7 +80,7 @@ public class AFList extends AFComponent {
                     String data = jsonObject.get(key).toString();
                     AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
                     builder.setData(field, data);
-                    row.put(road + key, field.getActualData());
+                    row.put(road + key, field.getActualData().toString());
                 }
             }
         }
@@ -114,7 +114,7 @@ public class AFList extends AFComponent {
     }
 
     public Object getDataFromItemOnPosition(int position){
-        AFSwinxConnection sendConnection = getSendConnection();
+        AFSwinxConnection sendConnection = getConnectionPack().getSendConnection();
         // Generate send connection based on which will be retrieve data. The send connection is
         // used to generate data in this case it will be generated JSON
         if (sendConnection == null) {

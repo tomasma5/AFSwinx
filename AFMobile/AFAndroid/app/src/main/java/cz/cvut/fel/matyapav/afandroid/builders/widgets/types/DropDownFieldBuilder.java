@@ -22,11 +22,8 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  */
 public class DropDownFieldBuilder extends BasicBuilder {
 
-    private FieldInfo properties;
-
     public DropDownFieldBuilder(Skin skin,FieldInfo properties) {
-        super(skin);
-        this.properties = properties;
+        super(skin, properties);
     }
 
     @Override
@@ -39,7 +36,7 @@ public class DropDownFieldBuilder extends BasicBuilder {
                     convertOptionsIntoList(activity), getSkin());
             spinner.setAdapter(dataAdapter);
         }
-        if(properties.isReadOnly()){
+        if(getProperties().isReadOnly()){
             spinner.setEnabled(false);
         }
         return spinner;
@@ -63,17 +60,17 @@ public class DropDownFieldBuilder extends BasicBuilder {
         Spinner spinner = (Spinner) field.getFieldView();
         if(value == null){
             spinner.setSelection(0);
-            field.setActualData(spinner.getSelectedItem().toString());
+            field.setActualData(spinner.getSelectedItem());
             return;
         }
         for (int i = 0; i < spinner.getCount(); i++) {
             if(spinner.getItemAtPosition(i).toString().equals(value)){
                 spinner.setSelection(i);
-                field.setActualData(spinner.getSelectedItem().toString());
+                field.setActualData(spinner.getSelectedItem());
                 return;
             }
         }
-        field.setActualData(value.toString());
+        field.setActualData(value);
     }
 
     @Override
@@ -98,8 +95,8 @@ public class DropDownFieldBuilder extends BasicBuilder {
     private List<String> convertOptionsIntoList(Activity activity){
         List<String> list = new ArrayList<>();
         int i = 0;
-        if(properties.getOptions() != null){
-            for (FieldOption option : properties.getOptions()) {
+        if(getProperties().getOptions() != null){
+            for (FieldOption option : getProperties().getOptions()) {
                 if(option.getValue().toString().equals("true")){
                     list.add(Localization.translate("option.yes", activity));
                 }else if(option.getValue().toString().equals("false")){
