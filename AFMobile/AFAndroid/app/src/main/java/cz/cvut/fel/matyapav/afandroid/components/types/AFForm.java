@@ -14,10 +14,10 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.AbstractWidgetBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.WidgetBuilderFactory;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
@@ -64,15 +64,15 @@ public class AFForm extends AFComponent {
     }
 
     private void setFieldValue(AFField field, Object val){
-        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
+        WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
     }
 
     @Override
     public AFDataHolder reserialize() {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
-            AbstractBuilder fieldBuilder =
-                    FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+            AbstractWidgetBuilder fieldBuilder =
+                    WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
             Object data = fieldBuilder.getData(field);
             String propertyName = field.getId();
             // Based on dot notation determine road. Road is used to add object to its right place
@@ -158,7 +158,7 @@ public class AFForm extends AFComponent {
 
     public void resetData() {
         for (AFField field: getFields()) {
-            AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+            AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
             builder.setData(field, field.getActualData().toString());
         }
     }
@@ -173,13 +173,13 @@ public class AFForm extends AFComponent {
     public Object getDataFromFieldWithId(String id){
         AFField field = getFieldById(id);
         if(field != null){
-            return FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).getData(field);
+            return WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).getData(field);
         }
         return null;
     }
 
     public void setDataToFieldWithId(String id, Object data){
         AFField field = getFieldById(id);
-        FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, data);
+        WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, data);
     }
 }

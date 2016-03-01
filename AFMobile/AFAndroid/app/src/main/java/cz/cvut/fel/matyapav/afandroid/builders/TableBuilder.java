@@ -84,8 +84,8 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             columnHeaderText.setTextColor(getSkin().getHeaderRowTextColor());
-            if(field.getFieldInfo().getLabel() != null) {
-                columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
+            if(field.getFieldInfo().getLabelText() != null) {
+                columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText(), getActivity()));
             }
             headerRow.addView(columnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
             ((AFTable) component).setHeaderRow(headerRow);
@@ -95,8 +95,8 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
             Utils.setCellParams(fakeColumnHeaderText, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
-            if(field.getFieldInfo().getLabel() != null) {
-                fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabel(), getActivity()));
+            if(field.getFieldInfo().getLabelText() != null) {
+                fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText(), getActivity()));
             }
             fakeContentRow.addView(fakeColumnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
         }

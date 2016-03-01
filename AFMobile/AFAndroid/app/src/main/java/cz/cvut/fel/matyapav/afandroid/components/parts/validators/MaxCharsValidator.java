@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.components.validators;
+package cz.cvut.fel.matyapav.afandroid.components.parts.validators;
 
 import android.widget.EditText;
 

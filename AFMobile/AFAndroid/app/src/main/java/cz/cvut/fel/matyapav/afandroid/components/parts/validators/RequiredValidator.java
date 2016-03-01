@@ -1,10 +1,6 @@
-package cz.cvut.fel.matyapav.afandroid.components.validators;
+package cz.cvut.fel.matyapav.afandroid.components.parts.validators;
 
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 

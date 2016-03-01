@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
@@ -85,14 +85,14 @@ public class CustomListAdapter extends BaseAdapter {
                 }
                 String label = "";
                 if (i == 0) {
-                    if(field.getFieldInfo().getLabel() != null) {
-                        label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    if(field.getFieldInfo().getLabelText() != null) {
+                        label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabelText(), context) + ": " : "";
                     }
                     textName.setText(label + list.getRows().get(position).get(field.getId()));
                     layout.addView(textName);
                 } else {
-                    if(field.getFieldInfo().getLabel() != null) {
-                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabel(), context) + ": " : "";
+                    if(field.getFieldInfo().getLabelText() != null) {
+                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabelText(), context) + ": " : "";
                     }
                     TextView text = new TextView(context);
                     text.setTextSize(skin.getListItemsTextSize());

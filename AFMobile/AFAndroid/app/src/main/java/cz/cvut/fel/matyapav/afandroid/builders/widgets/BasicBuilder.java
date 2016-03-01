@@ -1,19 +1,14 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
-import android.app.Activity;
-import android.view.View;
-
-import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 
 /**
  * Created by Pavel on 24.02.2016.
  */
-abstract class BasicBuilder implements AbstractBuilder {
+abstract class BasicBuilder implements AbstractWidgetBuilder {
 
     private Skin skin;
-
     private FieldInfo properties;
 
     public BasicBuilder(Skin skin, FieldInfo properties) {

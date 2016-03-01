@@ -1,16 +1,15 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets;
+package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.app.Activity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.WidgetBuilderFactory;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.AbstractWidgetBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.parts.LayoutProperties;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
@@ -30,8 +29,8 @@ public class FieldBuilder {
 
         //LABEL
         TextView label = new TextView(activity);
-        if (properties.getLabel() != null && !properties.getLabel().isEmpty()) {
-            String labelText = Localization.translate(properties.getLabel(), activity);
+        if (properties.getLabelText() != null && !properties.getLabelText().isEmpty()) {
+            String labelText = Localization.translate(properties.getLabelText(), activity);
             //set label position
             LabelPosition pos = properties.getLayout().getLabelPosition();
             label.setTextColor(skin.getLabelColor());
@@ -48,10 +47,10 @@ public class FieldBuilder {
         field.setErrorView(errorView);
 
         //Input view
-        View inputField = null;
-        AbstractBuilder fieldBuilder = FieldBuilderFactory.getInstance().getFieldBuilder(properties, skin);
-        if(fieldBuilder != null && (inputField = fieldBuilder.buildFieldView(activity))!= null){
-            field.setFieldView(inputField);
+        View widget = null;
+        AbstractWidgetBuilder widgetBuilder = WidgetBuilderFactory.getInstance().getFieldBuilder(properties, skin);
+        if(widgetBuilder != null && (widget = widgetBuilder.buildFieldView(activity))!= null){
+            field.setFieldView(widget);
         }
 
         //put it all together

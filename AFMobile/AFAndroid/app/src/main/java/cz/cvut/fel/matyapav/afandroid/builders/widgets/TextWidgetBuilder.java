@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -10,16 +10,16 @@ import android.widget.Toast;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 
 /**
  * Created by Pavel on 14.02.2016.
  */
-public class TextFieldBuilder extends BasicBuilder {
+public class TextWidgetBuilder extends BasicBuilder {
 
 
-    public TextFieldBuilder(Skin skin, FieldInfo properties) {
+    public TextWidgetBuilder(Skin skin, FieldInfo properties) {
         super(skin, properties);
     }
 

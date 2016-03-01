@@ -15,17 +15,16 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.AFComponentFactory;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.DefaultSkin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
-import cz.cvut.fel.matyapav.afandroid.parsers.abstraction.JSONParser;
+import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
@@ -64,7 +63,7 @@ public abstract class AFComponentBuilder<T> {
         return (T) this;
     }
 
-    public void initializeConnections() throws Exception {
+    protected void initializeConnections() throws Exception {
         if (connectionPack == null && connectionKey != null && connectionResource != null) {
             ConnectionParser connectionParser =
                     new ConnectionParser(connectionKey, connectionParameters);

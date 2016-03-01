@@ -2,12 +2,9 @@ package cz.cvut.fel.matyapav.afandroid.components.parts;
 
 import android.view.View;
 import android.widget.TextView;
-import java.util.List;
-import cz.cvut.fel.matyapav.afandroid.components.validators.AFValidator;
-import cz.cvut.fel.matyapav.afandroid.components.validators.ValidatorFactory;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
-import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
-import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
+
+import cz.cvut.fel.matyapav.afandroid.components.parts.validators.AFValidator;
+import cz.cvut.fel.matyapav.afandroid.components.parts.validators.ValidatorFactory;
 
 
 /**

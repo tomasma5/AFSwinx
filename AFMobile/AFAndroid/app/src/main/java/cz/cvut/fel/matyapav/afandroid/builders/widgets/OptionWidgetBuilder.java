@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
 import android.view.View;
@@ -9,15 +9,15 @@ import android.widget.RadioGroup;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 15.02.2016.
  */
-public class OptionFieldBuilder extends BasicBuilder {
+public class OptionWidgetBuilder extends BasicBuilder {
 
-    public OptionFieldBuilder(Skin skin,FieldInfo properties) {
+    public OptionWidgetBuilder(Skin skin, FieldInfo properties) {
         super(skin, properties);
     }
 

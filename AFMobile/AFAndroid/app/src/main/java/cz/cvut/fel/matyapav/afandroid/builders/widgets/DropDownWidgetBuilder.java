@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
 import android.content.Context;
@@ -14,15 +14,15 @@ import java.util.List;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldOption;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
  * Created by Pavel on 15.02.2016.
  */
-public class DropDownFieldBuilder extends BasicBuilder {
+public class DropDownWidgetBuilder extends BasicBuilder {
 
-    public DropDownFieldBuilder(Skin skin,FieldInfo properties) {
+    public DropDownWidgetBuilder(Skin skin, FieldInfo properties) {
         super(skin, properties);
     }
 

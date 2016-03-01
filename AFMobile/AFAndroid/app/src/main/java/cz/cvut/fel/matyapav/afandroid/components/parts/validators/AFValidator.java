@@ -1,6 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.components.validators;
-
-import android.view.View;
+package cz.cvut.fel.matyapav.afandroid.components.parts.validators;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
@@ -10,5 +8,5 @@ import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
  */
 public interface AFValidator {
 
-    public boolean validate(AFField field, StringBuilder errorMsgs, ValidationRule rule);
+    boolean validate(AFField field, StringBuilder errorMsgs, ValidationRule rule);
 }

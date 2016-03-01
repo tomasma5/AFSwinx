@@ -20,11 +20,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.FieldBuilderFactory;
-import cz.cvut.fel.matyapav.afandroid.builders.widgets.types.AbstractBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.WidgetBuilderFactory;
+import cz.cvut.fel.matyapav.afandroid.builders.widgets.AbstractWidgetBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.CustomListAdapter;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
@@ -78,7 +78,7 @@ public class AFList extends AFComponent {
                 AFField field = getFieldById(road + key);
                 if (field != null) {
                     String data = jsonObject.get(key).toString();
-                    AbstractBuilder builder = FieldBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+                    AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
                     builder.setData(field, data);
                     row.put(road + key, field.getActualData().toString());
                 }

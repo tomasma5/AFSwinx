@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;

@@ -12,7 +12,7 @@ public class FieldInfo {
 
     private SupportedWidgets widgetType;
     private String id;
-    private String label;
+    private String labelText;
     private boolean isInnerClass;
     private boolean readOnly;
     private boolean visible;
@@ -39,12 +39,12 @@ public class FieldInfo {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getLabelText() {
+        return labelText;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setLabelText(String labelText) {
+        this.labelText = labelText;
     }
 
     public boolean isInnerClass() {
@@ -106,7 +106,7 @@ public class FieldInfo {
         return "FieldInfo{" +
                 "widgetType='" + widgetType + '\'' +
                 ", id='" + id + '\'' +
-                ", label='" + label + '\'' +
+                ", labelText='" + labelText + '\'' +
                 ", isInnerClass=" + isInnerClass +
                 ", readOnly=" + readOnly +
                 ", visible=" + visible +

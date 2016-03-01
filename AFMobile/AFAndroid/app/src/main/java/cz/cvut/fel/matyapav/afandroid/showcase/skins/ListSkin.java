@@ -3,7 +3,7 @@ package cz.cvut.fel.matyapav.afandroid.showcase.skins;
 import android.content.Context;
 import android.view.ViewGroup;
 
-import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.DefaultSkin;
 
 /**
  * Created by Pavel on 28.02.2016.

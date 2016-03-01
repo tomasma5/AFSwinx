@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.builders.widgets.types;
+package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -18,18 +18,17 @@ import java.util.Locale;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 
 /**
  * Created by Pavel on 14.02.2016.
  */
-public class DateFieldBuilder extends BasicBuilder {
+public class DateWidgetBuilder extends BasicBuilder {
 
     private String dateFormat;
     private String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
 
-    public DateFieldBuilder(Skin skin, FieldInfo properties){
+    public DateWidgetBuilder(Skin skin, FieldInfo properties){
         super(skin, properties);
         this.dateFormat = "dd.MM.yyyy"; //Default date format
     }

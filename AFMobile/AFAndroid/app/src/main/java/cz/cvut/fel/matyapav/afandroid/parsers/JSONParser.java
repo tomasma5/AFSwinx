@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.parsers.abstraction;
+package cz.cvut.fel.matyapav.afandroid.parsers;
 
 import org.json.JSONObject;
 
@@ -9,5 +9,5 @@ import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
  */
 public interface JSONParser {
 
-    public ClassDefinition parse(JSONObject toBeParsed);
+    ClassDefinition parse(JSONObject toBeParsed);
 }

@@ -2,10 +2,8 @@ package cz.cvut.fel.matyapav.afandroid.showcase.skins;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.view.ViewGroup;
 
 import cz.cvut.fel.matyapav.afandroid.R;
-import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
 
 /**
  * Created by Pavel on 26.02.2016.

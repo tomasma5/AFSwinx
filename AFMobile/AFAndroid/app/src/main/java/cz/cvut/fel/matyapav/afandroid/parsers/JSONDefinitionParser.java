@@ -1,12 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.parsers;
 
-import com.tomscz.afrest.commons.AFRestUtils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.ProtocolException;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
@@ -17,7 +13,6 @@ import cz.cvut.fel.matyapav.afandroid.enums.LabelPosition;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
-import cz.cvut.fel.matyapav.afandroid.parsers.abstraction.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
@@ -70,7 +65,7 @@ public class JSONDefinitionParser implements JSONParser {
         }
         fieldInfo.setId(field.getString(Constants.ID));
 
-        fieldInfo.setLabel(field.get(Constants.LABEL).equals(null) ? null : field.get(Constants.LABEL).toString());
+        fieldInfo.setLabelText(field.get(Constants.LABEL).equals(null) ? null : field.get(Constants.LABEL).toString());
         fieldInfo.setIsClass(Boolean.valueOf(field.getString(Constants.CLASS_TYPE)));
         fieldInfo.setVisible(Boolean.valueOf(field.getString(Constants.VISIBLE)));
         fieldInfo.setReadOnly(Boolean.valueOf(field.getString(Constants.READ_ONLY)));
@@ -99,7 +94,7 @@ public class JSONDefinitionParser implements JSONParser {
         if(layoutJson == null){
             layoutProp.setLayoutDefinition(LayoutDefinitions.ONECOLUMNLAYOUT);
             layoutProp.setLayoutOrientation(LayoutOrientation.AXISX);
-            layoutProp.setLabelPossition(LabelPosition.BEFORE);
+            layoutProp.setLabelPosition(LabelPosition.BEFORE);
             return layoutProp; //with default values
         }
 
@@ -120,7 +115,7 @@ public class JSONDefinitionParser implements JSONParser {
 
             LabelPosition labelPos = LabelPosition.valueOf(position);
             if (labelPos != null) {
-                layoutProp.setLabelPossition(labelPos);
+                layoutProp.setLabelPosition(labelPos);
             }
         }catch(IllegalArgumentException e){
             System.err.println(e.getLocalizedMessage());

@@ -34,7 +34,6 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
 
     @Override
     protected View buildComponentView(AFComponent form) {
-        //TODO zobecnit
         LinearLayout formView = new LinearLayout(getActivity());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),

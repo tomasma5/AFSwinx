@@ -37,7 +37,7 @@ public class LayoutProperties {
         return labelPosition;
     }
 
-    public void setLabelPossition(LabelPosition labelPosition) {
+    public void setLabelPosition(LabelPosition labelPosition) {
         this.labelPosition = labelPosition;
     }
 

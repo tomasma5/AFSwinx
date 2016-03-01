@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.afandroid.components.skins;
+package cz.cvut.fel.matyapav.afandroid.builders.skins;
 
 import android.graphics.Typeface;
 import android.view.ViewGroup;

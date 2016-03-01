@@ -1,23 +1,17 @@
 package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.app.Activity;
-import android.os.AsyncTask;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
-import cz.cvut.fel.matyapav.afandroid.components.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
-import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 13.02.2016.

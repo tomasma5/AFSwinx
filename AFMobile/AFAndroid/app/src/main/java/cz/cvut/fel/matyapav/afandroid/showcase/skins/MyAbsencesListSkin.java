@@ -1,12 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.showcase.skins;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.LinearLayout;
-
-import cz.cvut.fel.matyapav.afandroid.components.skins.DefaultSkin;
 
 /**
  * Created by Pavel on 24.02.2016.
