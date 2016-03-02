@@ -60,4 +60,5 @@
     <string name="logout">Odhlásit se</string>
     <string name="login">Přihlášení</string>
     <string name="home">Domů</string>
+    <string name="validation.lessthan">Hodnota musí být menší rovna hodnotě v poli</string>
 </resources>

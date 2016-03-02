@@ -63,4 +63,5 @@
     <string name="createAbsence">Create absence</string>
     <string name="absenceTypeManagement">Absence type management</string>
     <string name="logout">Logout</string>
+    <string name="validation.lessthan">Value must be less or equal than value in field</string>
 </resources>

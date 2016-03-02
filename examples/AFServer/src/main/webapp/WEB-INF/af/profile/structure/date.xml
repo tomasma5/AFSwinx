@@ -5,6 +5,7 @@
 	<readonly>false</readonly>
 	<validations>
 		<required>$required$</required>
+		<lessthan>$lessthan$</lessthan>
 	</validations>
 	<fieldLayout>
 		<layoutOrientation>$layoutOrientation$</layoutOrientation>

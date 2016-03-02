@@ -57,7 +57,7 @@ public class CreateAbsenceFragment extends Fragment {
         securityConstrains.put("user", ShowCaseUtils.getUserLogin(getActivity()));
         try {
             AFForm createAbsenceForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.ABSENCE_ADD_FORM, getResources().openRawResource(R.raw.connection),
+                    ShowcaseConstants.ABSENCE_ADD_FORM, getResources().openRawResource(R.raw.connection_local), //TODO pozor testuji na localu
                     ShowcaseConstants.ABSENCE_ADD_FORM_CONNECTION_KEY,
                     securityConstrains).setSkin(new CreateAbsenceFormSkin(getContext())).createComponent();
             createAbsenceLayout.addView(createAbsenceForm.getView());

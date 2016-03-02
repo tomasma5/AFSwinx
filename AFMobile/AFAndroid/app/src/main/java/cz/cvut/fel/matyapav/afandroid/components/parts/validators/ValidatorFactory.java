@@ -31,6 +31,9 @@ public class ValidatorFactory {
         if (rule.getValidationType().equals(SupportedValidations.MIN.getValidationType())){
             return new MinValueValidator();
         }
+        if(rule.getValidationType().equals(SupportedValidations.LESSTHAN.getValidationType())){
+            return new LessThanValidator();
+        }
 
         System.err.println("VALIDATOR FOR "+rule.getValidationType()+" NOT FOUND");
         return null;

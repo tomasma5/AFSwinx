@@ -41,6 +41,7 @@ public class FieldBuilder {
 
         //ERROR TEXT
         TextView errorView = new TextView(activity);
+        errorView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         errorView.setVisibility(View.GONE);
         errorView.setTextColor(skin.getValidationColor());
         errorView.setTypeface(skin.getValidationFont());

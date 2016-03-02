@@ -10,8 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Past;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
+import com.codingcrayons.aspectfaces.annotations.UILessThan;
 import com.codingcrayons.aspectfaces.annotations.UIWidgetType;
 import com.codingcrayons.aspectfaces.annotations.UiLabel;
 import com.codingcrayons.aspectfaces.annotations.UiOrder;
@@ -61,6 +63,7 @@ public class AbsenceInstance {
 
     @UiRequired
     @UiOrder(value=0)
+    @UILessThan(value="endDate")
     @UiLabel(value="absenceInstance.startDate")
     @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
     public Date getStartDate() {
@@ -70,6 +73,7 @@ public class AbsenceInstance {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
 
     @UiRequired
     @UiOrder(value=1)

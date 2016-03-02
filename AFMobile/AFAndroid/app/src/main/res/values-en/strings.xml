@@ -60,4 +60,5 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="home">Home</string>
+    <string name="validation.lessthan">Value must be less or equal than value in field</string>
 </resources>

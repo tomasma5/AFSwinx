@@ -45,12 +45,13 @@ public abstract class AFComponent implements AbstractComponent{
         if(fields == null){
             fields = new ArrayList<AFField>();
         }
+        field.setParent(this);
         fields.add(field);
     }
 
     public AFField getFieldById(String id){
         for (AFField field: getFields()) {
-            if(field.getId().equals(id)){
+            if(field.getId().equals(id) || field.getFieldInfo().getId().equals(id)){
                 return field;
             }
         }

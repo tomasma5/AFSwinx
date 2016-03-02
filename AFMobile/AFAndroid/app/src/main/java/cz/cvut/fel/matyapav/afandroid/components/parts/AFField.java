@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.components.parts.validators.AFValidator;
 import cz.cvut.fel.matyapav.afandroid.components.parts.validators.ValidatorFactory;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 
 
 /**
@@ -20,6 +21,8 @@ public class AFField {
     private TextView errorView;
     private View completeView;
     private Object actualData;
+
+    private AFComponent parent;
 
     public AFField(FieldInfo fieldInfo) {
         this.fieldInfo = fieldInfo;
@@ -112,5 +115,13 @@ public class AFField {
 
     public Object getActualData() {
         return actualData;
+    }
+
+    public void setParent(AFComponent parent) {
+        this.parent = parent;
+    }
+
+    public AFComponent getParent() {
+        return parent;
     }
 }

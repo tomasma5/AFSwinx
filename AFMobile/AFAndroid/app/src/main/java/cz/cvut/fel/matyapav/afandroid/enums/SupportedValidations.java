@@ -8,7 +8,9 @@ public enum SupportedValidations {
     REQUIRED("REQUIRED"),
     MAXLENGTH("MAXLENGTH"),
     MIN("MIN"),
-    MAX("MAX");
+    MAX("MAX"),
+    LESSTHAN("LESSTHAN");
+    
 
     private String validationType;
 

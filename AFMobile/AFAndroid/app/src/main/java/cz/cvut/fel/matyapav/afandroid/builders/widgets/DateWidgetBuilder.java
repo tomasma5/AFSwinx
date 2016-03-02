@@ -19,6 +19,7 @@ import java.util.Locale;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * Created by Pavel on 14.02.2016.
@@ -26,7 +27,6 @@ import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 public class DateWidgetBuilder extends BasicBuilder {
 
     private String dateFormat;
-    private String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
 
     public DateWidgetBuilder(Skin skin, FieldInfo properties){
         super(skin, properties);
@@ -76,7 +76,7 @@ public class DateWidgetBuilder extends BasicBuilder {
     public void setData(AFField field, Object value) {
         EditText dateText = (EditText) field.getFieldView();
         SimpleDateFormat outputFormatter = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = parseDate(String.valueOf(value));
+        Date date = Utils.parseDate(String.valueOf(value));
         if(date != null) {
             dateText.setText(outputFormatter.format(date));
             field.setActualData(outputFormatter.format(date));
@@ -89,24 +89,12 @@ public class DateWidgetBuilder extends BasicBuilder {
     public Object getData(AFField field) {
         EditText dateText = (EditText) field.getFieldView();
         SimpleDateFormat serverFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-        Date date = parseDate(dateText.getText().toString());
+        Date date = Utils.parseDate(dateText.getText().toString());
         if(date != null) {
             return serverFormatter.format(date);
         }
         return null;
     }
 
-    private Date parseDate(String date){
-        if(date != null){
-            for (String format: formats) {
-                SimpleDateFormat formatter = new SimpleDateFormat(format);
-                try{
-                    return formatter.parse(date);
-                } catch (ParseException e) {
-                    System.err.println("Cannot parse date "+date+" using format "+ format);
-                }
-            }
-        }
-        return null;
-    }
+
 }

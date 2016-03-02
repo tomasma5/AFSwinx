@@ -10,6 +10,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
@@ -81,6 +85,21 @@ public class Utils {
         cell.setGravity(gravity);
         cell.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
         cell.setBackground(rect);
+    }
+
+    public static Date parseDate(String date){
+    String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
+        if(date != null){
+            for (String format: formats) {
+                SimpleDateFormat formatter = new SimpleDateFormat(format);
+                try{
+                    return formatter.parse(date);
+                } catch (ParseException e) {
+                    System.err.println("Cannot parse date "+date+" using format "+ format);
+                }
+            }
+        }
+        return null;
     }
 
 
