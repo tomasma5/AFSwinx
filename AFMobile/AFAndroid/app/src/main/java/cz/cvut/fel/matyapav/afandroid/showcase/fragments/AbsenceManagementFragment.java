@@ -97,12 +97,14 @@ public class AbsenceManagementFragment extends Fragment {
         final AFForm absenceForm = (AFForm) AFAndroid.getInstance().getCreatedComponents()
                 .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM);
 
-        absenceList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                absenceForm.insertData(absenceList.getDataFromItemOnPosition(position));
-            }
-        });
+        if(absenceList != null) {
+            absenceList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    absenceForm.insertData(absenceList.getDataFromItemOnPosition(position));
+                }
+            });
+        }
 
 
         return root;

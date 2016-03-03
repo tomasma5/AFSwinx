@@ -78,7 +78,7 @@ public class ShowCaseUtils {
     public static void showBuildingFailedDialog(Activity activity, Exception e){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         alertDialog.setTitle(Localization.translate("error.building.failed", activity));
-        alertDialog.setMessage(Localization.translate("error.reason", activity)+" :" + e.getMessage());
+        alertDialog.setMessage(Localization.translate("error.reason", activity)+" : " + e.getMessage());
         alertDialog.show();
     }
 

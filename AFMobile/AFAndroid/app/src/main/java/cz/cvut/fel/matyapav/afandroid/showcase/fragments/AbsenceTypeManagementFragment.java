@@ -127,14 +127,10 @@ public class AbsenceTypeManagementFragment extends Fragment {
                         ShowcaseConstants.ABSENCE_TYPE_LIST_CONNECTION_KEY, parameters)
                         .setSkin(new AbsenceManagementListSkin(getContext())).createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeList.getView());
-            } catch (Exception e) {
-                ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
-                e.printStackTrace();
-            }
 
-            HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
-            securityConstrains.put(ShowcaseConstants.ID_KEY, String.valueOf(getCountryId()));
-            try {
+                HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
+                securityConstrains.put(ShowcaseConstants.ID_KEY, String.valueOf(getCountryId()));
+
                 AFForm absenceTypeForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
                         ShowcaseConstants.ABSENCE_TYPE_FORM, getResources().openRawResource(R.raw.connection),
                         ShowcaseConstants.ABSENCE_TYPE_FORM_CONNECTION_KEY, securityConstrains)

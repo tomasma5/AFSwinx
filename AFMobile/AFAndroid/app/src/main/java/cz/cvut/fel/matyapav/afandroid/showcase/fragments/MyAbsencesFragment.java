@@ -38,6 +38,7 @@ public class MyAbsencesFragment extends Fragment{
                     .setSkin(new MyAbsencesListSkin(getContext())).createComponent();
             myAbsencesLayout.addView(list.getView());
         } catch (Exception e) {
+            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
         return root;
