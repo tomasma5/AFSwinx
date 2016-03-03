@@ -136,6 +136,9 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
                 if (rules.getValidationType().equals(SupportedValidations.RETYPE)) {
                     panel.setRetype(true);
                     continue;
+                }else if(rules.getValidationType().equals(SupportedValidations.LESSTHAN)){
+                	panel.setCompareByLessThanWith(rules.getValue());
+                	continue;
                 }
                 SupportedWidgets widget = fieldInfo.getWidgetType();
                 try {

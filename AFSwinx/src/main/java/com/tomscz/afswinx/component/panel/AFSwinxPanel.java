@@ -37,6 +37,7 @@ public class AFSwinxPanel extends JPanel {
     // Unique panel id
     private String panelId;
     private boolean retype = false;
+    private String compareByLessThanWith;
 
     private PriorityQueue<AFValidations> validators = new PriorityQueue<AFValidations>(10,
             new ValidatorPriorityComparator());
@@ -148,6 +149,14 @@ public class AFSwinxPanel extends JPanel {
 
     public void setPanelId(String panelId) {
         this.panelId = panelId;
+    }
+    
+    public void setCompareByLessThanWith (String id){
+    	this.compareByLessThanWith = id;
+    }
+    
+    public String getCompareByLessThanWith(){
+    	return compareByLessThanWith;
     }
 
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"
+        android:id="@+id/beforeLoginGroup">
+        <item
+            android:id="@+id/loginForm"
+            android:icon="@android:drawable/ic_secure"
+            android:title="@string/login" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/afterLoginGroup">
+        <item
+            android:id="@+id/welcome"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/home"
+            />
+        <item
+            android:id="@+id/supportedCountries"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/supportedCountries"
+            />
+        <item
+            android:id="@+id/userProfile"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/profile"
+            />
+        <item
+            android:id="@+id/myAbsences"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/myAbsences"
+            />
+        <item
+            android:id="@+id/absenceManagement"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/absenceManagement"
+            />
+        <item
+            android:id="@+id/createAbsence"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/createAbsence"
+            />
+        <item
+            android:id="@+id/absenceTypeManagement"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/absenceTypeManagement"
+            />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@android:drawable/ic_secure"
+            android:title="@string/logout"
+            />
+    </group>
+
+</menu>

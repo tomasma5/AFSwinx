@@ -1,25 +1,27 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
-import cz.cvut.fel.matyapav.afandroid.LayoutProperties;
-
 /**
- * Created by Marcelka on 25.12.2015.
+ * Enum of supported layout definitions for form
+ * Created by Pavel on 25.12.2015.
  */
 public enum LayoutDefinitions {
 
-    TWOCOLUMNSLAYOUT("TWOCOLUMNSLAYOUT"),
-    ONECOLUMNLAYOUT("ONECOLUMNLAYOUT");
+    TWOCOLUMNSLAYOUT("TWOCOLUMNSLAYOUT", 2),
+    ONECOLUMNLAYOUT("ONECOLUMNLAYOUT", 1);
 
     private String layoutName;
+    private int numberOfColumns;
 
-    LayoutDefinitions(String layoutName) {
+    LayoutDefinitions(String layoutName, int numberOfColumns) {
         this.layoutName = layoutName;
+        this.numberOfColumns = numberOfColumns;
     }
 
     public String getLayoutName() {
         return layoutName;
     }
 
-
-
+    public int getNumberOfColumns() {
+        return numberOfColumns;
+    }
 }

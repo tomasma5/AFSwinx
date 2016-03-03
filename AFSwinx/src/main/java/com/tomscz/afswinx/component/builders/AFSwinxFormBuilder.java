@@ -1,9 +1,13 @@
 package com.tomscz.afswinx.component.builders;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -16,6 +20,7 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
+import com.tomscz.afswinx.validation.LessThanValidator;
 
 /**
  * This is form builder. This class is responsible for create {@link AFSwinxForm} component.
@@ -69,6 +74,20 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             // Initialize layout builder
             BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
             buildFields(classInfo, layoutBuilder, form, "");
+            
+            //add LessThan validations - all fields needs to be created
+            Iterator<Entry<String, ComponentDataPacker>> it = form.getPanels().entrySet().iterator();
+            while (it.hasNext()) {
+            	Entry<String, ComponentDataPacker> pair = (Entry<String, ComponentDataPacker>) it.next();
+            	AFSwinxPanel panel = pair.getValue().getComponent();
+            	String otherPanelId = panel.getCompareByLessThanWith();
+            	if(otherPanelId != null){
+            		AFSwinxPanel otherPanel = form.getPanels().get(otherPanelId).getComponent();
+            		LessThanValidator validator = new LessThanValidator(panel.getWidgetType(), otherPanel);
+            		panel.addValidator(validator);
+                }
+            }
+            
             // Build layout
             layoutBuilder.buildLayout(form);
         }

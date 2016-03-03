@@ -1,7 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
 /**
- * Created by Marcelka on 25.12.2015.
+ * Enum of supported layout orientations for form
+ * Created by Pavel on 25.12.2015.
  */
 public enum LayoutOrientation {
 
@@ -9,7 +10,7 @@ public enum LayoutOrientation {
 
     private final String orientation;
 
-    private LayoutOrientation(String orientation) {
+    LayoutOrientation(String orientation) {
         this.orientation = orientation;
     }
 

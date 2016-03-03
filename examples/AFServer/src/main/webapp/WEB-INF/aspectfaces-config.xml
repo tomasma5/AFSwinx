@@ -32,7 +32,7 @@
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UiUserRolesAnnotationDescriptor</af:name>
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UiBeforeAnnotationDescriptor</af:name>
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UiAfterAnnotationDescriptor</af:name>
-
+		
 		<!-- Hibernate Validator annotations -->
 		<!--
   		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.hibernate.validator.EmailAnnotationDescriptor</af:name>
@@ -76,6 +76,7 @@
 		<!-- REST annotations -->
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UILayoutDescriptor</af:name>
 		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UIWidgetTypeDescriptor</af:name>
+		<af:name>com.codingcrayons.aspectfaces.annotation.descriptors.UILessThanDescriptor</af:name>
 
 		<!-- JPA annotations -->
 		<!-- 

@@ -44,7 +44,7 @@ public class AbsenceInstanceCreateView extends BaseView {
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             securityConstrains.put("user", ApplicationContext.getInstance().getSecurityContext()
                     .getUserLogin());
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
