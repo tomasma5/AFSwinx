@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.showcase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getIntent().hasExtra("bundle") && savedInstanceState==null){
+            savedInstanceState = getIntent().getExtras().getBundle("bundle");
+        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -84,12 +88,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         if(id == R.id.langCZ){
             Localization.changeLanguage(SupportedLanguages.CZ, getThisActivity());
-            getThisActivity().recreate();
+            restartActivity();
             }
         else if(id == R.id.langEN) {
             Localization.changeLanguage(SupportedLanguages.EN, getThisActivity());
-            getThisActivity().recreate();
+            restartActivity();
         }
+        //do not call restart activity if new language was not set
         return super.onOptionsItemSelected(item);
     }
 
@@ -153,4 +158,12 @@ public class MainActivity extends AppCompatActivity
         super.onSaveInstanceState(outState);
     }
 
+    private void restartActivity(){
+        Intent intent = getIntent();
+        Bundle temp_bundle = new Bundle();
+        onSaveInstanceState(temp_bundle);
+        intent.putExtra("bundle", temp_bundle);
+        finish();
+        startActivity(intent);
+    }
 }

@@ -26,6 +26,9 @@ public class AFSwinxLocaleConstants {
     public final static String VALIDATION_RETYPE = "validation.retype";
     
     public final static String VALIDATION_CONTAIN = "validation.contain";
+    
+    public final static String VALIDATION_LESS_THAN = "validation.lessThan";
+    
     //Validation section END
     
 }

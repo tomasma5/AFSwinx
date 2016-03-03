@@ -20,7 +20,7 @@ public class RequiredValidator implements AFValidator {
         boolean validationIsFine = true;
         if(Utils.isFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().equals(SupportedWidgets.CALENDAR)){
             EditText textfield = (EditText) field.getFieldView();
-            if (textfield.getText() == null || textfield.getText().toString().isEmpty()) {
+            if (textfield.getText() == null || textfield.getText().toString().trim().isEmpty()) {
                 validationIsFine = false;
             }
         }

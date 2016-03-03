@@ -4,6 +4,7 @@ import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afswinx.validation.AFValidations;
 import com.tomscz.afswinx.validation.ContainsValidator;
+import com.tomscz.afswinx.validation.LessThanValidator;
 import com.tomscz.afswinx.validation.MinAndMaxLenghtValidator;
 import com.tomscz.afswinx.validation.MinAndMaxValueValidator;
 import com.tomscz.afswinx.validation.NumberValidator;

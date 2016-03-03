@@ -19,6 +19,7 @@ import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.ConnectionParser;
+import com.tomscz.afswinx.validation.LessThanValidator;
 import com.tomscz.afswinx.validation.RetypeValidator;
 
 public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
@@ -207,6 +208,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
                     panelToAdd.addValidator(panelRetype);
                     this.addComponent(retypePanel, layoutBuilder, form);
                 }
+               
             }
         }
     }
