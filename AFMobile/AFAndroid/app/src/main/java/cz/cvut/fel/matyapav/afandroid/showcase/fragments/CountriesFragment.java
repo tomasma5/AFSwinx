@@ -85,17 +85,12 @@ public class CountriesFragment extends Fragment {
                 ShowcaseConstants.COUNTRY_FORM, getResources().openRawResource(R.raw.connection),
                 ShowcaseConstants.COUNTRY_FORM_CONNECTION_KEY, securityConstrains).setSkin(new CountryFormSkin(getContext()));
 
-        //create and insert list
-        try {
-            final AFList list = listBuilder.createComponent();
-            countriesTableLayout.addView(list.getView());
-        } catch (Exception e) {
-            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
-            e.printStackTrace();
-        }
 
         //create and insert form
         try {
+            final AFList list = listBuilder.createComponent();
+            countriesTableLayout.addView(list.getView());
+
             AFForm form = formBuilder.createComponent();
             Button perform =(Button) root.findViewById(R.id.countriesBtnAdd);
             perform.setOnClickListener(onCountryPerformListener);
@@ -113,12 +108,14 @@ public class CountriesFragment extends Fragment {
         final AFList countryList = (AFList) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_LIST);
         final AFForm countryForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
 
-        countryList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                countryForm.insertData(countryList.getDataFromItemOnPosition(position));
-            }
-        });
+        if(countryList != null && countryForm != null) {
+            countryList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    countryForm.insertData(countryList.getDataFromItemOnPosition(position));
+                }
+            });
+        }
 
         return root;
     }

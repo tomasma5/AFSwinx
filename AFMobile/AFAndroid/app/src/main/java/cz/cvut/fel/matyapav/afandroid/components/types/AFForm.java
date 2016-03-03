@@ -159,7 +159,7 @@ public class AFForm extends AFComponent {
     public void resetData() {
         for (AFField field: getFields()) {
             AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
-            builder.setData(field, field.getActualData().toString());
+            builder.setData(field, field.getActualData());
         }
     }
 

@@ -51,7 +51,7 @@ public abstract class AFComponent implements AbstractComponent{
 
     public AFField getFieldById(String id){
         for (AFField field: getFields()) {
-            if(field.getId().equals(id) || field.getFieldInfo().getId().equals(id)){
+            if(field.getId().equals(id)){
                 return field;
             }
         }

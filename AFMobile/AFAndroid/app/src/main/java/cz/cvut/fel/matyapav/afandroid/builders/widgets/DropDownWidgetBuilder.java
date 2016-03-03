@@ -44,6 +44,12 @@ public class DropDownWidgetBuilder extends BasicBuilder {
 
     @Override
     public void setData(AFField field, Object value) {
+        Spinner spinner = (Spinner) field.getFieldView();
+        if(value == null){
+            spinner.setSelection(0);
+            field.setActualData(spinner.getSelectedItem());
+            return;
+        }
         if(value.toString().equals("true")){
             value = Localization.translate("option.yes", field.getFieldView().getContext());
         }else if(value.toString().equals("false")){
@@ -56,12 +62,6 @@ public class DropDownWidgetBuilder extends BasicBuilder {
                     break;
                 }
             }
-        }
-        Spinner spinner = (Spinner) field.getFieldView();
-        if(value == null){
-            spinner.setSelection(0);
-            field.setActualData(spinner.getSelectedItem());
-            return;
         }
         for (int i = 0; i < spinner.getCount(); i++) {
             if(spinner.getItemAtPosition(i).toString().equals(value)){
