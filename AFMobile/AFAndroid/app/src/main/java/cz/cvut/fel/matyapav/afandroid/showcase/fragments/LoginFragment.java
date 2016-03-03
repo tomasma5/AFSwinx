@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.R;
@@ -73,6 +74,30 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(onLoginButtonClick);
         layout.addView(loginButton);
 
+        if(ShowCaseUtils.getUserLogin(getActivity())!= null){
+            TextView lastLoggedAs = new TextView(getContext());
+            lastLoggedAs.setText("Last logged as "+ShowCaseUtils.getUserLogin(getActivity()));
+            lastLoggedAs.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            Button continueAsThisUser = new Button(getContext());
+            continueAsThisUser.setText("Continue as this user");
+            continueAsThisUser.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            continueAsThisUser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //set visibility in menu
+                    Menu menu = ((NavigationView) getActivity().findViewById(R.id.nav_view)).getMenu();
+                    menu.setGroupVisible(R.id.beforeLoginGroup, false);
+                    menu.setGroupVisible(R.id.afterLoginGroup, true);
+
+                    //change fragment
+                    FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
+                    tx.replace(R.id.mainLayout, new WelcomeFragment());
+                    tx.commit();
+                }
+            });
+            layout.addView(lastLoggedAs);
+            layout.addView(continueAsThisUser);
+        }
         return root;
     }
 

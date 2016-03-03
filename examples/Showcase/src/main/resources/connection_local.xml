@@ -5,7 +5,7 @@
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/users/loginForm</endPointParameters>
 			<protocol>http</protocol>
-			<port></port>
+			<port>8080</port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -15,7 +15,7 @@
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/users/login</endPointParameters>
 			<protocol>http</protocol>
-			<port></port>
+			<port>8080</port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -27,7 +27,7 @@
 			<endPoint>localhost</endPoint>
 			<endPointParameters>/AFServer/rest/country/definition</endPointParameters>
 			<protocol>http</protocol>
-			<port></port>
+			<port>8080</port>
 			<header-param>
 				<param>content-type</param>
 				<value>Application/Json</value>
@@ -37,7 +37,7 @@
 			<endPoint>10.0.2.2</endPoint>
 			<endPointParameters>/AFServer/rest/country/list</endPointParameters>
 			<protocol>http</protocol>
-			<port></port>
+			<port>8080</port>
 		</data>
 	</connection>
 	<connection id="countryAdd">

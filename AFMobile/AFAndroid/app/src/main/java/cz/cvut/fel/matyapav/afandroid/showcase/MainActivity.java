@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         if(savedInstanceState == null) {
             Menu menu = navigationView.getMenu();
             menu.setGroupVisible(R.id.beforeLoginGroup, true);
@@ -166,4 +167,6 @@ public class MainActivity extends AppCompatActivity
         finish();
         startActivity(intent);
     }
+
+
 }
