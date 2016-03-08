@@ -2,26 +2,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cz.cvut.fel.matyapav.afandroid">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/launcher_icon"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".showcase.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-
 </manifest>

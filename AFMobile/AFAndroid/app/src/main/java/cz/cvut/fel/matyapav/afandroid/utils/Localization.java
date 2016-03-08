@@ -17,10 +17,13 @@ import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
 public class Localization {
 
     private static SupportedLanguages currentLanguage;
+    private static String pathToStrings; //must be set externally
+    private static Context context; //must be set externally
 
-    public static String translate(String resource, Context context){
+    public static String translate(String resource){
         try {
-            int id = context.getResources().getIdentifier(resource, "string", "cz.cvut.fel.matyapav.afandroid");
+            int id = context.getResources().getIdentifier(resource, "string", pathToStrings);
+            System.err.println("Localization for id "+id+" is "+context.getResources().getString(id));
             return context.getResources().getString(id);
         }catch (Exception e){
             System.err.println("Localization text "+resource+" not found");
@@ -29,7 +32,7 @@ public class Localization {
         }
     }
 
-    public static void changeLanguage(SupportedLanguages lang, Context context){
+    public static void changeLanguage(SupportedLanguages lang){
         Resources res = context.getResources();
         // Change locale settings in the app.
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -41,6 +44,15 @@ public class Localization {
 
     public static SupportedLanguages getCurrentLanguage(){
         return currentLanguage;
+    }
+
+
+    public static void setPathToStrings(String path){
+        pathToStrings = path;
+    }
+
+    public static void setContext(Context ctx){
+        context = ctx;
     }
 
 

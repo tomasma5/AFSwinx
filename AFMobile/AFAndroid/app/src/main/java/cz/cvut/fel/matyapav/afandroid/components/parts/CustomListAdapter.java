@@ -86,13 +86,13 @@ public class CustomListAdapter extends BaseAdapter {
                 String label = "";
                 if (i == 0) {
                     if(field.getFieldInfo().getLabelText() != null) {
-                        label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabelText(), context) + ": " : "";
+                        label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabelText()) + ": " : "";
                     }
                     textName.setText(label + list.getRows().get(position).get(field.getId()));
                     layout.addView(textName);
                 } else {
                     if(field.getFieldInfo().getLabelText() != null) {
-                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabelText(), context) + ": " : "";
+                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabelText()) + ": " : "";
                     }
                     TextView text = new TextView(context);
                     text.setTextSize(skin.getListItemsTextSize());

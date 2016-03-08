@@ -75,7 +75,7 @@ public class AFTable extends AFComponent {
                             getSkin().getCellPaddingBottom(), getSkin().getBorderWidth(), getSkin().getBorderColor());
                     cell.setTextColor(getSkin().getContentTextColor());
                     String value = Localization.translate(((JSONObject) jsonArray.get(i)).
-                            get(column).toString(), getActivity());
+                            get(column).toString());
                     cell.setText(value);     //set text
                     row.addView(cell, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getContentRowHeight()));
 

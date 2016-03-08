@@ -44,7 +44,7 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
         //TODO vymyslet co s timhle
         progressDialog = new ProgressDialog(activity);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(Localization.translate("please.wait", activity));
+        progressDialog.setMessage(Localization.translate("please.wait"));
     }
 
     @Override

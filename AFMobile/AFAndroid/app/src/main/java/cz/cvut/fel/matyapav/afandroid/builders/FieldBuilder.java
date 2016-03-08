@@ -30,7 +30,7 @@ public class FieldBuilder {
         //LABEL
         TextView label = new TextView(activity);
         if (properties.getLabelText() != null && !properties.getLabelText().isEmpty()) {
-            String labelText = Localization.translate(properties.getLabelText(), activity);
+            String labelText = Localization.translate(properties.getLabelText());
             //set label position
             LabelPosition pos = properties.getLayout().getLabelPosition();
             label.setTextColor(skin.getLabelColor());

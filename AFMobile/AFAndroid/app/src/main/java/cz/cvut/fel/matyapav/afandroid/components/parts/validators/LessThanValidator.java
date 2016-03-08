@@ -37,8 +37,8 @@ public class LessThanValidator implements AFValidator {
             }
             if (!validationIsFine) {
                 String otherFieldLabelText = (field.getParent()).getFieldById(rule.getValue()).getFieldInfo().getLabelText();
-                errorMsgs.append(Localization.translate("validation.lessthan", field.getFieldView().getContext()) + " "
-                        + Localization.translate(otherFieldLabelText, field.getFieldView().getContext()));
+                errorMsgs.append(Localization.translate("validation.lessthan") + " "
+                        + Localization.translate(otherFieldLabelText));
             }
         }
         return validationIsFine;

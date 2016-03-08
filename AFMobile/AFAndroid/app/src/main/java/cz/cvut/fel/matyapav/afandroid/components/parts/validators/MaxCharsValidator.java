@@ -22,7 +22,7 @@ public class MaxCharsValidator implements AFValidator {
             }
         }
         if(!validationIsFine){
-            errorMsgs.append(Localization.translate("validation.maxchars", field.getFieldView().getContext()));
+            errorMsgs.append(Localization.translate("validation.maxchars"));
         }
         return true;
     }

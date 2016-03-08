@@ -45,11 +45,11 @@ public class OptionWidgetBuilder extends BasicBuilder {
             options[0] = new RadioButton(activity);
             options[0].setTextColor(getSkin().getFieldColor());
             options[0].setTypeface(getSkin().getFieldFont());
-            options[0].setText(Localization.translate("option.yes", activity));
+            options[0].setText(Localization.translate("option.yes"));
             options[1] = new RadioButton(activity);
             options[1].setTextColor(getSkin().getFieldColor());
             options[1].setTypeface(getSkin().getFieldFont());
-            options[1].setText(Localization.translate("option.no", activity));
+            options[1].setText(Localization.translate("option.no"));
             radioGroup.addView(options[0]);
             radioGroup.addView(options[1]);
         }
@@ -89,9 +89,9 @@ public class OptionWidgetBuilder extends BasicBuilder {
         for (int i = 0; i < group.getChildCount(); i++) {
             RadioButton btn = (RadioButton) group.getChildAt(i);
             if(btn.isChecked()){
-                if(btn.getText().toString().equals(Localization.translate("option.yes", field.getFieldView().getContext()))){
+                if(btn.getText().toString().equals(Localization.translate("option.yes"))){
                     return true;
-                }else if(btn.getText().toString().equals(Localization.translate("option.no", field.getFieldView().getContext()))){
+                }else if(btn.getText().toString().equals(Localization.translate("option.no"))){
                     return false;
                 }else {
                     return btn.getText().toString();
