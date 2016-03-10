@@ -24,7 +24,7 @@ namespace AFWindowsPhone.rest.connection
             return (otherName == null) ? false : name.Equals(otherName);
         }
 
-        public String toString()
+        public override String ToString()
         {
             return name;
         }

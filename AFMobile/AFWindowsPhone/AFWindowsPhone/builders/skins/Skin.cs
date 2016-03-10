@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
 namespace AFWindowsPhone.builders.skins
 {
     interface Skin
     {
-        //common
-        ViewGroup.LayoutParams getTopLayoutParams();
 
         int getComponentMarginLeft();
         int getComponentMarginRight();
@@ -26,6 +25,7 @@ namespace AFWindowsPhone.builders.skins
         Color getValidationColor();
 
         int getInputWidth();
+        HorizontalAlignment getInputHorizontalAlignment();
 
         FontFamily getValidationFont();
 
@@ -34,12 +34,17 @@ namespace AFWindowsPhone.builders.skins
         FontFamily getLabelFont();
 
         int getLabelWidth();
-
+        HorizontalAlignment getLabelHorizontalAlignment();
         int getLabelHeight();
+        VerticalAlignment getLabelVerticalAlignment();
 
         //lists
         int getListWidth();
         int getListHeight();
+
+        HorizontalAlignment getListHorizontalAlignment();
+        VerticalAlignment getListVerticalAlignment();
+  
         Color getListItemBackgroundColor();
         Color getListItemNameColor();
         Color getListItemTextColor();
@@ -49,6 +54,7 @@ namespace AFWindowsPhone.builders.skins
         int getListItemsTextSize();
         bool isListItemNameLabelVisible();
         bool isListItemTextLabelsVisible();
+
         bool isListScrollBarAlwaysVisible();
 
         int getListItemTextPaddingLeft();

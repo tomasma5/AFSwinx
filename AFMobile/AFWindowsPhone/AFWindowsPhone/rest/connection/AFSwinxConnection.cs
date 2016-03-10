@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Web.Http;
 
 namespace AFWindowsPhone.rest.connection
 {
@@ -50,7 +51,7 @@ namespace AFWindowsPhone.rest.connection
             this.acceptedType = HeaderType.JSON;
             this.contentType = HeaderType.JSON;
             this.protocol = PROTOCOL_HTTP;
-            this.httpMethod = HttpMethod.GET;
+            this.httpMethod = HttpMethod.Get;
         }
 
         /**
@@ -72,7 +73,7 @@ namespace AFWindowsPhone.rest.connection
             this.acceptedType = HeaderType.JSON;
             this.contentType = HeaderType.JSON;
             this.protocol = protocol;
-            this.httpMethod = HttpMethod.GET;
+            this.httpMethod = HttpMethod.Get;
         }
 
         /**
@@ -97,7 +98,7 @@ namespace AFWindowsPhone.rest.connection
             this.acceptedType = acceptedType;
             this.contentType = contentType;
             this.protocol = PROTOCOL_HTTP;
-            this.httpMethod = HttpMethod.GET;
+            this.httpMethod = HttpMethod.Get;
         }
 
         /**
@@ -148,7 +149,7 @@ namespace AFWindowsPhone.rest.connection
             this.acceptedType = acceptedType;
             this.contentType = contentType;
             this.protocol = protocol;
-            this.httpMethod = HttpMethod.GET;
+            this.httpMethod = HttpMethod.Get;
         }
 
         /**
@@ -168,7 +169,6 @@ namespace AFWindowsPhone.rest.connection
         public AFSwinxConnection(String address, int port, String parameters, HeaderType acceptedType,
                 HeaderType contentType, String protocol, HttpMethod httpMethod)
         {
-            super();
             this.address = address;
             this.port = port;
             this.parameters = parameters;

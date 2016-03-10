@@ -27,23 +27,23 @@ namespace AFWindowsPhone.builders
         private Skin skin;
         private String connectionKey;
         private String componentKeyName;
-        private IRandomAccessStream connectionResource;
+        private String pathToConnectionResource;
         private Dictionary<String, String> connectionParameters;
 
-        public AFComponentBuilder<T> initBuilder(String componentKeyName, IRandomAccessStream connectionResource, String connectionKey)
+        public AFComponentBuilder<T> initBuilder(String componentKeyName, String pathToConnectionResource, String connectionKey)
         {
             this.componentKeyName = componentKeyName;
-            this.connectionResource = connectionResource;
+            this.pathToConnectionResource = pathToConnectionResource;
             this.connectionKey = connectionKey;
             this.skin = new DefaultSkin();
             return this;
         }
 
-        public AFComponentBuilder<T> initBuilder(String componentKeyName, IRandomAccessStream connectionResource,
+        public AFComponentBuilder<T> initBuilder(String componentKeyName, String pathToConnectionResource,
                          String connectionKey, Dictionary<String, String> connectionParameters)
         {
             this.componentKeyName = componentKeyName;
-            this.connectionResource = connectionResource;
+            this.pathToConnectionResource = pathToConnectionResource;
             this.connectionKey = connectionKey;
             this.connectionParameters = connectionParameters;
             this.skin = new DefaultSkin();
@@ -52,13 +52,13 @@ namespace AFWindowsPhone.builders
 
         protected void initializeConnections()
         {
-            if (connectionPack == null && connectionKey != null && connectionResource != null)
+            if (connectionPack == null && connectionKey != null && pathToConnectionResource != null)
             {
                 ConnectionParser connectionParser =
                         new ConnectionParser(connectionKey, connectionParameters);
                 AFSwinxConnectionPack connections =
-                        connectionParser.parseDocument(com.tomscz.afswinx.common.Utils
-                                .buildDocumentFromFile(connectionResource));
+                        connectionParser.parseDocument(Utils
+                                .buildDocumentFromFile(pathToConnectionResource));
                 connectionPack = connections;
             }
             else {
@@ -98,7 +98,7 @@ namespace AFWindowsPhone.builders
                         road = new StringBuilder(roadBackup);
                     }
                     else {
-                        AFField affield = builder.prepareField(field, road, getActivity(), skin);
+                        AFField affield = builder.prepareField(field, road, skin);
                         if (affield != null)
                         {
                             component.addField(affield);
@@ -129,43 +129,36 @@ namespace AFWindowsPhone.builders
             return component;
         }
 
-        protected String getModelResponse()
+        protected async Task<String> getModelResponse()
         {
             AFSwinxConnection modelConnection = connectionPack.getMetamodelConnection();
             if (modelConnection != null)
             {
-                RequestTask task = new RequestTask(getActivity(), modelConnection.getHttpMethod(), modelConnection.getContentType(),
+                RequestTask task = new RequestTask(modelConnection.getHttpMethod(), modelConnection.getContentType(),
                         modelConnection.getSecurity(), null, Utils.getConnectionEndPoint(modelConnection));
 
-                Object modelResponse = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get(); //make it synchronous to wait for response
-                if (modelResponse is Exception) {
-                    throw (Exception)modelResponse;
-                }
-                return (String)modelResponse;
+                String modelResponse = await task.doRequest();
+                return modelResponse;
             }
             else {
                 throw new Exception("No model connection available. Did you call initializeConnections() before?");
             }
         }
 
-        protected String getDataResponse()
+        protected async Task<String> getDataResponse()
         {
             AFSwinxConnection dataConnection = connectionPack.getDataConnection();
             if (dataConnection != null)
             {
-                RequestTask getData = new RequestTask(getActivity(), dataConnection.getHttpMethod(), dataConnection.getContentType(),
+                RequestTask getData = new RequestTask(dataConnection.getHttpMethod(), dataConnection.getContentType(),
                         dataConnection.getSecurity(), null, Utils.getConnectionEndPoint(dataConnection));
-                Object response = getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
-                if (response is Exception)
-                {
-                    throw (Exception)response;
-                }
-                return (String)response;
+                String response = await getData.doRequest();
+                return response;
             }
             return null;
         }
 
-        public abstract AFComponent createComponent();
+        public abstract Task<AFComponent> createComponent();
 
         protected abstract FrameworkElement buildComponentView(AFComponent component);
 

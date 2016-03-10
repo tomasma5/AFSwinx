@@ -1,6 +1,7 @@
 ﻿using AFWindowsPhone.builders.components.parts;
 using AFWindowsPhone.builders.components.types;
 using AFWindowsPhone.enums;
+using AFWindowsPhone.rest.connection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Xml.Dom;
 using Windows.Storage.Streams;
 
 namespace AFWindowsPhone.utils
@@ -31,12 +33,12 @@ namespace AFWindowsPhone.utils
         public static String getConnectionEndPoint(AFSwinxConnection connection)
         {
             StringBuilder endPointBuilder = new StringBuilder();
-            if (connection.getProtocol() != null && !connection.getProtocol().isEmpty())
+            if (!String.IsNullOrEmpty(connection.getProtocol()))
             {
                 endPointBuilder.Append(connection.getProtocol());
                 endPointBuilder.Append("://");
             }
-            if (connection.getAddress() != null && !connection.getAddress().isEmpty())
+            if (!String.IsNullOrEmpty(connection.getAddress()))
             {
                 endPointBuilder.Append(connection.getAddress());
             }
@@ -45,7 +47,7 @@ namespace AFWindowsPhone.utils
                 endPointBuilder.Append(":");
                 endPointBuilder.Append(connection.getPort());
             }
-            if (connection.getParameters() != null && !connection.getParameters().isEmpty())
+            if (!String.IsNullOrEmpty(connection.getParameters()))
             {
                 endPointBuilder.Append(connection.getParameters());
             }
@@ -64,20 +66,6 @@ namespace AFWindowsPhone.utils
             return true;
         }
 
-        public static void setCellParams(TextView cell, int gravity, int paddingLeft, int paddingRight,
-                                   int paddingTop, int paddingBottom, int borderWidth, int borderColor)
-        {
-            //create border
-            ShapeDrawable rect = new ShapeDrawable(new RectShape());
-            rect.getPaint().setStyle(Paint.Style.STROKE);
-            rect.getPaint().setColor(borderColor);
-            rect.getPaint().setStrokeWidth(borderWidth);
-
-            cell.setGravity(gravity);
-            cell.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
-            cell.setBackground(rect);
-        }
-
         public static DateTime? parseDate(String date)
         {
             String[] formats = { "yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy" };
@@ -92,10 +80,23 @@ namespace AFWindowsPhone.utils
                     catch (FormatException e)
                     {
                         Debug.WriteLine("Cannot parse date " + date + " using format " + format);
+                        Debug.WriteLine(e.StackTrace);
                     }
                 }
             }
             return null;
+        }
+
+        public static void getEnumByValue()
+        {
+
+        }
+
+        public static XmlDocument buildDocumentFromFile(String pathToFile) 
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(pathToFile);
+            return doc;
         }
     }
 }

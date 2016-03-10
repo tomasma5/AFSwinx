@@ -43,7 +43,7 @@ namespace AFWindowsPhone.builders.widgets
             //TODO kdyz nastavim ve swingu datum tak se zobrazuje datum o jeden den nizsi
             dateText.Tapped += async (sender, args) =>
             {
-                //TODO datepicker
+                 //TODO datepicker
             };
 
 

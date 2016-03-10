@@ -2,12 +2,15 @@
 using AFWindowsPhone.builders.skins;
 using AFWindowsPhone.builders.widgets;
 using AFWindowsPhone.enums;
+using AFWindowsPhone.rest.connection;
+using AFWindowsPhone.rest.holder;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.UI.Xaml.Controls;
 
 namespace AFWindowsPhone.builders.components.types
@@ -37,11 +40,11 @@ namespace AFWindowsPhone.builders.components.types
         {
             try
             {
-                JSONArray jsonArray = new JSONArray(dataResponse);
-                for (int i = 0; i < jsonArray.length(); i++)
+                JsonArray jsonArray = JsonArray.Parse(dataResponse);
+                for (int i = 0; i < jsonArray.Count; i++)
                 {
-                    Dictionary<String, String> row = new Dictionary<String, String><>();
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    Dictionary<String, String> row = new Dictionary<String, String>();
+                    JsonObject jsonObject = jsonArray[i].GetObject();
                     insertDataObject(jsonObject, road, row);
                     addRow(row);
                     road = new StringBuilder();
@@ -50,29 +53,27 @@ namespace AFWindowsPhone.builders.components.types
                 ListAdapter listAdapter = new CustomListAdapter(getActivity(), getSkin(), this);
                 getListView().setAdapter(listAdapter);
             }
-            catch (JSONException e)
+            catch (Exception e)
             {
                 Debug.WriteLine("CANNOT PARSE DATA");
-                e.printStackTrace();
+                Debug.WriteLine(e.StackTrace);
             }
         }
 
-        private void insertDataObject(JSONObject jsonObject, StringBuilder road, Dictionary<String, String> row)
+        private void insertDataObject(JsonObject jsonObject, StringBuilder road, Dictionary<String, String> row)
         {
-            Iterator<String> keys = jsonObject.keys();
-            while(keys.hasNext()){
-                String key = keys.next();
-                if (jsonObject.get(key) is JSONObject){
+            foreach(String key in jsonObject.Keys){
+                if (jsonObject[key].ValueType == JsonValueType.Object){
                     String roadBackup = road.ToString();
                     road.Append(key);
                     road.Append(".");
-                    insertDataObject(jsonObject.getJSONObject(key), road, row); //parse class types
+                    insertDataObject(jsonObject[key].GetObject(), road, row); //parse class types
                     road = new StringBuilder(roadBackup.ToString());
                 }else {
                     AFField field = getFieldById(road + key);
                     if (field != null)
                     {
-                        String data = jsonObject.get(key).ToString();
+                        String data = jsonObject[key].GetString();
                         AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
                         builder.setData(field, data);
                         row.Add(road + key, field.getActualData().ToString());
@@ -108,27 +109,27 @@ namespace AFWindowsPhone.builders.components.types
 
             BaseRestBuilder dataBuilder = RestBuilderFactory.getInstance().getBuilder(sendConnection);
             Object data = dataBuilder.reselialize(createFormDataFromList(position));
-            System.err.println("DATA " + data);
+            Debug.WriteLine("DATA " + data);
             return data;
         }
 
         private AFDataHolder createFormDataFromList(int position)
         {
             AFDataHolder dataHolder = new AFDataHolder();
-            for (AFField field : getFields())
+            foreach (AFField field in getFields())
             {
                 String propertyName = field.getId();
-                Object data = rows.get(position).get(propertyName);
+                Object data = rows[position][propertyName];
                 // Based on dot notation determine road. Road is used to add object to its right place
-                String[] roadTrace = propertyName.split("\\.");
-                if (roadTrace.length > 1)
+                String[] roadTrace = propertyName.Split(new String[] {"\\."}, StringSplitOptions.None);
+                if (roadTrace.Length > 1)
                 {
                     AFDataHolder startPoint = dataHolder;
-                    for (int i = 0; i < roadTrace.length; i++)
+                    for (int i = 0; i < roadTrace.Length; i++)
                     {
                         String roadPoint = roadTrace[i];
                         // If road end then add this property as inner propety
-                        if (i + 1 == roadTrace.length)
+                        if (i + 1 == roadTrace.Length)
                         {
                             startPoint.addPropertyAndValue(roadPoint, (String)data);
                         }

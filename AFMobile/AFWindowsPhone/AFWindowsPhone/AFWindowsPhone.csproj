@@ -149,8 +149,10 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="parsers\ConnectionParser.cs" />
     <Compile Include="parsers\JSONDefinitionParser.cs" />
     <Compile Include="parsers\JSONParser.cs" />
+    <Compile Include="parsers\XMLParser.cs" />
     <Compile Include="PivotPage.xaml.cs">
       <DependentUpon>PivotPage.xaml</DependentUpon>
     </Compile>

@@ -1,14 +1,8 @@
-﻿4uusing AFWindowsPhone.builders.components.parts;
+﻿using AFWindowsPhone.builders.components.parts;
 using AFWindowsPhone.builders.skins;
 using System;
 using Windows.UI.Xaml;
-
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using AFWindowsPhone.utils;

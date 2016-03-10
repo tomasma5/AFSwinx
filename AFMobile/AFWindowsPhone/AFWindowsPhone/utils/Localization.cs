@@ -26,6 +26,7 @@ namespace AFWindowsPhone.utils
             catch (Exception e)
             {
                 Debug.WriteLine("Localization text " + resource + " not found");
+                Debug.WriteLine(e.StackTrace);
                 return resource;
             }
         }

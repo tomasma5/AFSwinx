@@ -24,16 +24,24 @@ namespace AFWindowsPhone.builders.components.parts.validators
             }
             if (field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.OPTION))
             {
-                RadioGroup radioGroup = (RadioGroup)field.getFieldView();
-                if (radioGroup.getCheckedRadioButtonId() == -1)
+                StackPanel radioGroup = (StackPanel)field.getFieldView();
+                bool atLeastOneIsChecked = false;
+                foreach(RadioButton child in radioGroup.Children)
+                {
+                    if(child.IsChecked.Value)
+                    {
+                        atLeastOneIsChecked = true;
+                    }
+                }
+                if (!atLeastOneIsChecked)
                 {
                     validationIsFine = false;
                 }
             }
             if (field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.DROPDOWNMENU))
             {
-                Spinner spinner = (Spinner)field.getFieldView();
-                if (spinner.getSelectedItem() == null)
+                ComboBox cb = (ComboBox)field.getFieldView();
+                if (cb.SelectedItem == null)
                 {
                     validationIsFine = false;
                 }

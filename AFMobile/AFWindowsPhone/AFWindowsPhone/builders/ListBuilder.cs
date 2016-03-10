@@ -7,19 +7,20 @@ using AFWindowsPhone.builders.components.types;
 using Windows.UI.Xaml;
 using AFWindowsPhone.enums;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 namespace AFWindowsPhone.builders
 {
     class ListBuilder : AFComponentBuilder<ListBuilder>
     {
-        public override AFComponent createComponent()
+        public async override Task<AFComponent> createComponent()
         {
             initializeConnections();
-            String modelResponse = getModelResponse();
+            String modelResponse = await getModelResponse();
             //create form from response
             AFList list = (AFList)buildComponent(modelResponse, SupportedComponents.LIST);
             //fill it with data (if there are some)
-            String data = getDataResponse();
+            String data = await getDataResponse();
             if (data != null)
             {
                 list.insertData(data);
@@ -31,23 +32,41 @@ namespace AFWindowsPhone.builders
         protected override FrameworkElement buildComponentView(AFComponent component)
         {
             ListView listView = new ListView();
-            listView.Width = getSkin().getListWidth();
-            listView.Height = getSkin().getListHeight();
+            if (getSkin().getListWidth() < 0)
+            {
+                listView.HorizontalAlignment = getSkin().getListHorizontalAlignment();
+            }
+            else {
+                listView.Width = getSkin().getListWidth();
+            }
+            if(getSkin().getListHeight() < 0)
+            {
+                listView.VerticalAlignment = getSkin().getListVerticalAlignment();
+            }
+            else
+            {
+                listView.Height = getSkin().getListHeight();
+            }
+      
             listView.Margin = new Thickness(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
             //create border
             if (getSkin().getListBorderWidth() > 0)
             {
-                RectShape rect = new RectShape();
-                ShapeDrawable rectShapeDrawable = new ShapeDrawable(rect);
-                Paint paint = rectShapeDrawable.getPaint();
-                paint.setColor(getSkin().getListBorderColor());
-                paint.setStyle(Paint.Style.STROKE);
-                paint.setStrokeWidth(getSkin().getListBorderWidth());
-                listView.setBackground(rectShapeDrawable);
+                listView.BorderBrush = new SolidColorBrush(getSkin().getListBorderColor());
+                listView.BorderThickness = new Thickness(getSkin().getListBorderWidth());
             }
-            listView.S
-            listView.setScrollbarFadingEnabled(!getSkin().isListScrollBarAlwaysVisible());
+           
+            //set scroll bar visibility
+            if (getSkin().isListScrollBarAlwaysVisible())
+            {
+                ScrollViewer.SetVerticalScrollBarVisibility(listView, ScrollBarVisibility.Visible);
+            }
+            else
+            {
+                ScrollViewer.SetVerticalScrollBarVisibility(listView, ScrollBarVisibility.Auto);
+            }
+            
             //listView.setBackgroundColor(getSkin().getListBackgroundColor());
             ((AFList)component).setListView(listView);
             return listView;

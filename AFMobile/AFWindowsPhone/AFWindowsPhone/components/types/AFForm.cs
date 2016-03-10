@@ -3,6 +3,8 @@ using AFWindowsPhone.builders.skins;
 using AFWindowsPhone.builders.widgets;
 using AFWindowsPhone.enums;
 using AFWindowsPhone.rest;
+using AFWindowsPhone.rest.connection;
+using AFWindowsPhone.rest.holder;
 using AFWindowsPhone.utils;
 using System;
 using System.Collections.Generic;
@@ -127,7 +129,7 @@ namespace AFWindowsPhone.builders.components.types
         }
 
        
-        public void sendData()
+        public async void sendData()
         {
             if(getConnectionPack().getSendConnection() == null) 
                {
@@ -139,12 +141,9 @@ namespace AFWindowsPhone.builders.components.types
                     return;
                 }
                 Debug.WriteLine("SEND CONNECTION "+ Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
-                RequestTask sendTask = new RequestTask(getActivity(),getConnectionPack().getSendConnection().getHttpMethod(), getConnectionPack().getSendConnection().getContentType(),
+                RequestTask sendTask = new RequestTask(getConnectionPack().getSendConnection().getHttpMethod(), getConnectionPack().getSendConnection().getContentType(),
                     getConnectionPack().getSendConnection().getSecurity(), data, Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
-            Object response = sendTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
-            if(response is Exception){
-                throw (Exception) response;
-            }
+                await sendTask.doRequest();
         }
 
         private Object generateSendData()

@@ -38,7 +38,12 @@ namespace AFWindowsPhone.builders.skins
 
         public FontFamily getFieldFont()
         {
-            return 
+            return new FontFamily("Segoe UI");
+        }
+
+        public HorizontalAlignment getInputHorizontalAlignment()
+        {
+            return HorizontalAlignment.Stretch;
         }
 
         public int getInputWidth()
@@ -53,10 +58,20 @@ namespace AFWindowsPhone.builders.skins
 
         public FontFamily getLabelFont()
         {
-            throw new NotImplementedException();
+            return new FontFamily("Segoe UI");
         }
 
         public int getLabelHeight()
+        {
+            return -1; //see label verticall alignement
+        }
+
+        public HorizontalAlignment getLabelHorizontalAlignment()
+        {
+            return HorizontalAlignment.Left;
+        }
+
+        public VerticalAlignment getLabelVerticalAlignment()
         {
             return VerticalAlignment.Stretch;
         }
@@ -78,12 +93,17 @@ namespace AFWindowsPhone.builders.skins
 
         public int getListContentWidth()
         {
-            return HorizontalAlignment.Stretch;
+            return -1; //see ListHorizontalAlignment
         }
 
         public int getListHeight()
         {
             return 200;
+        }
+
+        public HorizontalAlignment getListHorizontalAlignment()
+        {
+            return HorizontalAlignment.Stretch;
         }
 
         public Color getListItemBackgroundColor()
@@ -98,12 +118,12 @@ namespace AFWindowsPhone.builders.skins
 
         public FontFamily getListItemNameFont()
         {
-            throw new NotImplementedException();
+            return new FontFamily("Segoe UI");
         }
 
         public int getListItemNamePaddingBottom()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public int getListItemNamePaddingLeft()
@@ -138,7 +158,7 @@ namespace AFWindowsPhone.builders.skins
 
         public FontFamily getListItemTextFont()
         {
-            throw new NotImplementedException();
+            return new FontFamily("Segoe UI");
         }
 
         public int getListItemTextPaddingBottom()
@@ -161,34 +181,39 @@ namespace AFWindowsPhone.builders.skins
             return 0;
         }
 
+        public VerticalAlignment getListVerticalAlignment()
+        {
+            return VerticalAlignment.Stretch;
+        }
+
         public int getListWidth()
         {
-            return 0;
+            return -1; //see ListHorizontal
         }
 
         public Color getValidationColor()
         {
-            throw new NotImplementedException();
+            return Colors.Red;
         }
 
         public FontFamily getValidationFont()
         {
-            throw new NotImplementedException();
+            return new FontFamily("Segoe UI");
         }
 
         public bool isListItemNameLabelVisible()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool isListItemTextLabelsVisible()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool isListScrollBarAlwaysVisible()
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

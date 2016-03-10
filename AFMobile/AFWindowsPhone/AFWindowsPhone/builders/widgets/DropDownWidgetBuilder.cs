@@ -102,7 +102,6 @@ namespace AFWindowsPhone.builders.widgets
         private List<String> convertOptionsIntoList()
         {
             List<String> list = new List<String>();
-            int i = 0;
             if (getProperties().getOptions() != null)
             {
                 foreach (FieldOption option in getProperties().getOptions())
