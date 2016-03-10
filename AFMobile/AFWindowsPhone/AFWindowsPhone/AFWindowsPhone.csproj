@@ -97,21 +97,82 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="builders\AFComponentBuilder.cs" />
+    <Compile Include="AFWindowsPhone.cs" />
+    <Compile Include="builders\widgets\AbstractWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\BasicBuilder.cs" />
+    <Compile Include="builders\widgets\CheckboxWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\DateWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\DropDownWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\OptionWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\PasswordWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\TextWidgetBuilder.cs" />
+    <Compile Include="builders\widgets\WidgetBuilderFactory.cs" />
+    <Compile Include="components\AFComponentFactory.cs" />
+    <Compile Include="components\parts\AFField.cs" />
+    <Compile Include="components\parts\ClassDefinition.cs" />
+    <Compile Include="components\parts\FieldInfo.cs" />
+    <Compile Include="components\parts\FieldOption.cs" />
+    <Compile Include="components\parts\LayoutProperties.cs" />
+    <Compile Include="components\parts\ValidationRule.cs" />
+    <Compile Include="components\parts\validators\ValidatorFactory.cs" />
+    <Compile Include="components\parts\validators\AFValidator.cs" />
+    <Compile Include="components\parts\validators\LessThanValidator.cs" />
+    <Compile Include="components\parts\validators\MaxCharsValidator.cs" />
+    <Compile Include="components\parts\validators\MaxValueValidator.cs" />
+    <Compile Include="components\parts\validators\MinValueValidator.cs" />
+    <Compile Include="components\parts\validators\RequiredValidator.cs" />
+    <Compile Include="components\types\AbstractComponent.cs" />
+    <Compile Include="components\types\AFComponent.cs" />
+    <Compile Include="components\types\AFForm.cs" />
+    <Compile Include="components\types\AFList.cs" />
+    <Compile Include="builders\FieldBuilder.cs" />
+    <Compile Include="builders\FormBuilder.cs" />
+    <Compile Include="builders\ListBuilder.cs" />
+    <Compile Include="builders\skins\DefaultSkin.cs" />
+    <Compile Include="builders\skins\Skin.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
+    <Compile Include="enums\LabelPosition.cs" />
+    <Compile Include="enums\LayoutDefinitions.cs" />
+    <Compile Include="enums\LayoutOrientation.cs" />
+    <Compile Include="enums\SupportedComponents.cs" />
+    <Compile Include="enums\SupportedLanguages.cs" />
+    <Compile Include="enums\SupportedValidations.cs" />
+    <Compile Include="enums\SupportedWidgets.cs" />
     <Compile Include="ItemPage.xaml.cs">
       <DependentUpon>ItemPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="parsers\JSONDefinitionParser.cs" />
+    <Compile Include="parsers\JSONParser.cs" />
     <Compile Include="PivotPage.xaml.cs">
       <DependentUpon>PivotPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="rest\connection\AFSwinxConnection.cs" />
+    <Compile Include="rest\connection\AFSwinxConnectionPack.cs" />
+    <Compile Include="rest\connection\BaseRestBuilder.cs" />
+    <Compile Include="rest\connection\ConnectionSecurity.cs" />
+    <Compile Include="rest\connection\HeaderType.cs" />
+    <Compile Include="rest\connection\JSONBuilder.cs" />
+    <Compile Include="rest\connection\Reselization.cs" />
+    <Compile Include="rest\connection\RestBuilderFactory.cs" />
+    <Compile Include="rest\connection\SecurityMethod.cs" />
+    <Compile Include="rest\connection\XMLBuilder.cs" />
+    <Compile Include="rest\holder\AFData.cs" />
+    <Compile Include="rest\holder\AFDataHolder.cs" />
+    <Compile Include="rest\holder\AFDataPack.cs" />
+    <Compile Include="rest\RequestTask.cs" />
+    <Compile Include="utils\Constants.cs" />
+    <Compile Include="utils\Localization.cs" />
+    <Compile Include="utils\StreamExtensions.cs" />
+    <Compile Include="utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -139,6 +200,7 @@
       <SubType>Designer</SubType>
     </PRIResource>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

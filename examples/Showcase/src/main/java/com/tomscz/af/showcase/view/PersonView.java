@@ -35,13 +35,13 @@ public class PersonView extends BaseView {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
         InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection.xml");
+                getClass().getClassLoader().getResourceAsStream("connection_local.xml");
         try {
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()

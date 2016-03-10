@@ -39,7 +39,7 @@ public class WelcomeScreen extends BaseView {
             mainPanel.add(afSwinxLoginButton);
         }
         else{
-            InputStream connectionResrouce = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            InputStream connectionResrouce = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             try {
                 AFSwinxForm form =
                         AFSwinx.getInstance().getFormBuilder()

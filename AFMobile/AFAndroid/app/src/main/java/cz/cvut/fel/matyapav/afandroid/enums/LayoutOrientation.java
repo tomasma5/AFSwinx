@@ -8,7 +8,7 @@ public enum LayoutOrientation {
 
     AXISX("AXISX"), AXISY("AXISY");
 
-    private final String orientation;
+    private String orientation;
 
     LayoutOrientation(String orientation) {
         this.orientation = orientation;

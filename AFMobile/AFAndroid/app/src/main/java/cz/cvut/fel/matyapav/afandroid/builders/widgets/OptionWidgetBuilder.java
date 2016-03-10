@@ -85,7 +85,6 @@ public class OptionWidgetBuilder extends BasicBuilder {
     @Override
     public Object getData(AFField field) {
         RadioGroup group = (RadioGroup) field.getFieldView();
-        group.getCheckedRadioButtonId();
         for (int i = 0; i < group.getChildCount(); i++) {
             RadioButton btn = (RadioButton) group.getChildAt(i);
             if(btn.isChecked()){

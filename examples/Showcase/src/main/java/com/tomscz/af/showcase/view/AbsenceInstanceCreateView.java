@@ -36,7 +36,7 @@ public class AbsenceInstanceCreateView extends BaseView {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
         InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection.xml");
+                getClass().getClassLoader().getResourceAsStream("connection_local.xml");
         try {
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);

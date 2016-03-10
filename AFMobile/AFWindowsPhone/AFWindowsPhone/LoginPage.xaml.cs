@@ -72,10 +72,10 @@ namespace AFWindowsPhone
                 MessageDialog dialog = new MessageDialog(usernameStr + " " + psswd, "credentials");
                 await dialog.ShowAsync();
 
-                ProgressRing ring = new ProgressRing();
-                ring.IsActive = true;
-                ring.Width = 20;
-                ring.Height = 20;
+                    ProgressRing ring = new ProgressRing();
+                    ring.IsActive = true;
+                    ring.Width = 20;
+                    ring.Height = 20;
                 ContentRoot.Children.Add(ring);
                 HttpClient httpClient = new HttpClient();
                 HttpStringContent content = new HttpStringContent("", Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");

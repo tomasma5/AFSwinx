@@ -50,7 +50,7 @@ public class AvaiableCountryView extends BaseView {
         try {
             // Get connection configuration file
             InputStream connectionResource =
-                    getClass().getClassLoader().getResourceAsStream("connection.xml");
+                    getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             // Build selectable table which is build from connection.xml file, has id countryTable
             // and used connection id tableCountryPublic it also used default localization of
             // application
@@ -67,7 +67,7 @@ public class AvaiableCountryView extends BaseView {
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             // Re take connection.xml file
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             // Build form from connection.xml file with key countryForm, from connection.xml with id
             // countryAdd, add security constrains to connection and use localization. Also apply
             // MySkin class as skin.

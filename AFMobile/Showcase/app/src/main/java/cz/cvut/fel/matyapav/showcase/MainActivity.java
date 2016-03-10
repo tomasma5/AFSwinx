@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         //set localization
         Localization.setContext(getThisActivity());
         Localization.setPathToStrings("cz.cvut.fel.matyapav.showcase");
+
         if(savedInstanceState != null && Localization.getCurrentLanguage() != null){
             Localization.changeLanguage(Localization.getCurrentLanguage());
         }

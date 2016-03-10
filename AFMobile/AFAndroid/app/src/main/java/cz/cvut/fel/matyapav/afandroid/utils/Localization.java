@@ -1,15 +1,12 @@
 package cz.cvut.fel.matyapav.afandroid.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
-import android.view.View;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
-import cz.cvut.fel.matyapav.afandroid.utils.SupportedLanguages;
+import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
 
 /**
  * Created by Pavel on 13.02.2016.

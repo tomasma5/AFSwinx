@@ -40,9 +40,9 @@ public class AbsenceInstanceEditView extends BaseView {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
         InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection.xml");
+                getClass().getClassLoader().getResourceAsStream("connection_local.xml");
         try {
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             HashMap<String, String> parameters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             AFSwinxTable table =
@@ -54,7 +54,7 @@ public class AbsenceInstanceEditView extends BaseView {
                             .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection.xml");
+            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
