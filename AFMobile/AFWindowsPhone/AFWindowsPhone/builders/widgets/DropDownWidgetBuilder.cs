@@ -36,6 +36,7 @@ namespace AFWindowsPhone.builders.widgets
         public override object getData(AFField field)
         {
             ComboBox comboBox = (ComboBox)field.getFieldView();
+            comboBox.FontSize = getSkin().getFieldFontSize();
             if (field.getFieldInfo().getOptions() != null)
             {
                 foreach (FieldOption option in field.getFieldInfo().getOptions())

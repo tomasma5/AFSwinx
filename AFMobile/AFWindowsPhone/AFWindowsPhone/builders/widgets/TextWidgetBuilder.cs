@@ -25,6 +25,7 @@ namespace AFWindowsPhone.builders.widgets
             TextBox text = new TextBox();
             text.Foreground = new SolidColorBrush(getSkin().getFieldColor());
             text.FontFamily = getSkin().getFieldFont();
+            text.FontSize = getSkin().getFieldFontSize();
             addInputType(text, getProperties().getWidgetType());
             if (getProperties().isReadOnly())
             {
@@ -62,7 +63,7 @@ namespace AFWindowsPhone.builders.widgets
             {
                 name.NameValue = InputScopeNameValue.Default;
             }
-            else if (widgetType.equals(SupportedWidgets.NUMBERFIELD) || widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD))
+            else if (widgetType.Equals(SupportedWidgets.NUMBERFIELD) || widgetType.Equals(SupportedWidgets.NUMBERDOUBLEFIELD))
             {
                 name.NameValue = InputScopeNameValue.Number;
             }

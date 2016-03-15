@@ -21,14 +21,14 @@ namespace AFWindowsPhone.parsers
             {
                 //Parse class name and create data pack with this class name
                 Debug.WriteLine("PARSING CLASS " + classInfo[Constants.CLASS_NAME]);
-                definition = new ClassDefinition(classInfo[Constants.CLASS_NAME].GetString());
+                definition = new ClassDefinition((String) Utils.TryToGetValueFromJson(classInfo[Constants.CLASS_NAME]));
 
                 //Parse layout
-                JsonObject layout = classInfo[Constants.LAYOUT].GetObject();
+                JsonObject layout = (JsonObject) Utils.TryToGetValueFromJson(classInfo[Constants.LAYOUT]);
                 definition.setLayout(createLayoutProperties(layout));
 
                 //Parse fields
-                JsonArray fields = classInfo[Constants.FIELD_INFO].GetArray();
+                JsonArray fields = (JsonArray) Utils.TryToGetValueFromJson(classInfo[Constants.FIELD_INFO]);
                 if (fields != null)
                 {
                     for (int i = 0; i < fields.Count; i++)
@@ -37,12 +37,12 @@ namespace AFWindowsPhone.parsers
                         definition.addFieldInfo(parseFieldInfo(field));
                     }
                 }
-                JsonArray innerClasses = classInfo[Constants.INNER_CLASSES].GetArray();
+                JsonArray innerClasses = (JsonArray) Utils.TryToGetValueFromJson(classInfo[Constants.INNER_CLASSES]);
                 if (innerClasses != null)
                 {
                     for (int i = 0; i < innerClasses.Count; i++)
                     {
-                        JsonObject innerClass = innerClasses[i].GetObject();
+                        JsonObject innerClass = (JsonObject) Utils.TryToGetValueFromJson(innerClasses[i]);
                         definition.addInnerClass(parse(innerClass)); //recursion;
                     }
                 }
@@ -57,40 +57,40 @@ namespace AFWindowsPhone.parsers
 
         private FieldInfo parseFieldInfo(JsonObject field)
         {
-            Debug.WriteLine("PARSING FIELD " + field[Constants.ID].GetString());
+            Debug.WriteLine("PARSING FIELD " + Utils.TryToGetValueFromJson(field[Constants.ID]));
             FieldInfo fieldInfo = new FieldInfo();
             try
             {
-                fieldInfo.setWidgetType(SupportedWidgets.valueOf(field[Constants.WIDGET_TYPE].GetString()));
+                fieldInfo.setWidgetType(Utils.ValueOf<SupportedWidgets>(typeof(SupportedWidgets), (String) Utils.TryToGetValueFromJson(field[Constants.WIDGET_TYPE])));
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
             }
-            fieldInfo.setId(field[Constants.ID].GetString());
+            fieldInfo.setId((String) Utils.TryToGetValueFromJson(field[Constants.ID]));
 
-            fieldInfo.setLabelText(field[Constants.LABEL].Equals(null) ? null : field[Constants.LABEL].ToString());
-            fieldInfo.setIsClass(Convert.ToBoolean(field[Constants.CLASS_TYPE].GetString()));
-            fieldInfo.setVisible(Convert.ToBoolean(field[Constants.VISIBLE].GetString()));
-            fieldInfo.setReadOnly(Convert.ToBoolean(field[Constants.READ_ONLY].GetString()));
+            fieldInfo.setLabelText((String) Utils.TryToGetValueFromJson(field[Constants.LABEL]));
+            fieldInfo.setIsClass((Boolean) Utils.TryToGetValueFromJson(field[Constants.CLASS_TYPE]));
+            fieldInfo.setVisible((Boolean) Utils.TryToGetValueFromJson(field[Constants.VISIBLE]));
+            fieldInfo.setReadOnly((Boolean) Utils.TryToGetValueFromJson(field[Constants.READ_ONLY]));
             //field layout
-            fieldInfo.setLayout(createLayoutProperties(field[Constants.LAYOUT].GetObject()));
-            //rules
-            JsonArray rules = field[Constants.RULES].GetArray();
+            fieldInfo.setLayout(createLayoutProperties((JsonObject) Utils.TryToGetValueFromJson(field[Constants.LAYOUT])));
+            //rules)
+            JsonArray rules = (JsonArray) Utils.TryToGetValueFromJson(field[Constants.RULES]);
             if (rules != null)
             {
                 for (int i = 0; i < rules.Count; i++)
                 {
-                    fieldInfo.addRule(createRule(rules[i].GetObject()));
+                    fieldInfo.addRule(createRule((JsonObject) Utils.TryToGetValueFromJson(rules[i])));
                 }
             }
             //options
-            JsonArray options = field[Constants.OPTIONS].GetArray();
+            JsonArray options = (JsonArray) Utils.TryToGetValueFromJson(field[Constants.OPTIONS]);
             if (options != null)
             {
                 for (int i = 0; i < options.Count; i++)
                 {
-                    fieldInfo.addOption(createOption(options[i].GetObject()));
+                    fieldInfo.addOption(createOption((JsonObject) Utils.TryToGetValueFromJson(options[i])));
                 }
             }
 
@@ -111,23 +111,23 @@ namespace AFWindowsPhone.parsers
 
             try
             {
-                String layDefName = layoutJson[Constants.LAYOUT_DEF].GetString();
-                LayoutDefinitions layDef = LayoutDefinitions.valueOf(layDefName);
+                String layDefName = (String) Utils.TryToGetValueFromJson(layoutJson[Constants.LAYOUT_DEF]);
+                LayoutDefinitions layDef = Utils.ValueOf<LayoutDefinitions>(typeof(LayoutDefinitions),layDefName);
                 if (layDef != null)
                 {
                     layoutProp.setLayoutDefinition(layDef);
                 }
 
-                String orientation = layoutJson[Constants.LAYOUT_ORIENT].GetString();
-                LayoutOrientation layOrient = LayoutOrientation.valueOf(orientation);
+                String orientation = (String) Utils.TryToGetValueFromJson(layoutJson[Constants.LAYOUT_ORIENT]);
+                LayoutOrientation layOrient = Utils.ValueOf<LayoutOrientation>(typeof(LayoutOrientation),orientation);
                 if (layOrient != null)
                 {
                     layoutProp.setLayoutOrientation(layOrient);
                 }
 
-                String position = layoutJson[Constants.LABEL_POS].GetString();
+                String position = (String) Utils.TryToGetValueFromJson(layoutJson[Constants.LABEL_POS]);
 
-                LabelPosition labelPos = LabelPosition.valueOf(position);
+                LabelPosition labelPos = Utils.ValueOf<LabelPosition>(typeof(LabelPosition),position);
                 if (labelPos != null)
                 {
                     layoutProp.setLabelPosition(labelPos);
@@ -144,17 +144,18 @@ namespace AFWindowsPhone.parsers
         private ValidationRule createRule(JsonObject ruleJson)
         {
             ValidationRule rule = new ValidationRule();
-            rule.setValidationType(ruleJson[Constants.VALIDATION_TYPE].GetString());
-            rule.setValue(ruleJson[Constants.VALUE].GetString());
+            rule.setValidationType((String) Utils.TryToGetValueFromJson(ruleJson[Constants.VALIDATION_TYPE]));
+            rule.setValue((String) Utils.TryToGetValueFromJson(ruleJson[Constants.VALUE]));
             return rule;
         }
 
         private FieldOption createOption(JsonObject optionJson)
         {
             FieldOption option = new FieldOption();
-            option.setKey(optionJson[Constants.KEY].GetString());
-            option.setValue(optionJson[Constants.VALUE].GetString());
+            option.setKey((String) Utils.TryToGetValueFromJson(optionJson[Constants.KEY]));
+            option.setValue((String) Utils.TryToGetValueFromJson(optionJson[Constants.VALUE]));
             return option;
         }
+
     }
 }

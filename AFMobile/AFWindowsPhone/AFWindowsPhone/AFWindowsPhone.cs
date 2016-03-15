@@ -34,6 +34,10 @@ namespace AFWindowsPhone
 
         public void addCreatedComponent(String name, AFComponent component)
         {
+            if (createdComponents.ContainsKey(name))
+            {
+                return;
+            }
             createdComponents.Add(name, component);
         }
 

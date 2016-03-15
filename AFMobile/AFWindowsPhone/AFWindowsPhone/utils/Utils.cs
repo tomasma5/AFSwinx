@@ -8,9 +8,13 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Windows.Data.Json;
 using Windows.Data.Xml.Dom;
+using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace AFWindowsPhone.utils
@@ -18,19 +22,19 @@ namespace AFWindowsPhone.utils
     class Utils
     {
 
-        public static bool isFieldWritable(SupportedWidgets widgetType)
+        public static bool IsFieldWritable(SupportedWidgets widgetType)
         {
             return widgetType.Equals(SupportedWidgets.TEXTFIELD) || widgetType.Equals(SupportedWidgets.NUMBERFIELD)
                     || widgetType.Equals(SupportedWidgets.NUMBERDOUBLEFIELD);
         }
 
-        public static bool isFieldNumberField(AFField field)
+        public static bool IsFieldNumberField(AFField field)
         {
             return field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.NUMBERFIELD)
                     || field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.NUMBERDOUBLEFIELD);
         }
 
-        public static String getConnectionEndPoint(AFSwinxConnection connection)
+        public static String GetConnectionEndPoint(AFSwinxConnection connection)
         {
             StringBuilder endPointBuilder = new StringBuilder();
             if (!String.IsNullOrEmpty(connection.getProtocol()))
@@ -54,7 +58,7 @@ namespace AFWindowsPhone.utils
             return endPointBuilder.ToString();
         }
 
-        public static bool shouldBeInvisible(String column, AFComponent component)
+        public static bool ShouldBeInvisible(String column, AFComponent component)
         {
             foreach (AFField field in component.getFields())
             {
@@ -66,15 +70,20 @@ namespace AFWindowsPhone.utils
             return true;
         }
 
-        public static DateTime? parseDate(String date)
+        public static DateTime? ParseDate(String date)
         {
-            String[] formats = { "yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy" };
+            
+            String[] formats = { "ISO8601", "dd.MM.yyyy" };
             if (date != null)
             {
                 foreach (String format in formats)
                 {
                     try
                     {
+                        if (format.Equals("ISO8601"))
+                        {
+                            return DateTime.Parse(date);
+                        }
                         return DateTime.ParseExact(date, format, CultureInfo.InvariantCulture);
                     }
                     catch (FormatException e)
@@ -87,16 +96,76 @@ namespace AFWindowsPhone.utils
             return null;
         }
 
-        public static void getEnumByValue()
+        public  static XmlDocument BuildDocumentFromFile(String pathToFile)
         {
+            XmlDocument doc = new XmlDocument();
+            try { 
+            doc.LoadXml(XDocument.Load(pathToFile).ToString());
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("File not found");
+            }
+            return doc;
+        }
+
+        public static T ValueOf<T>(Type clazz, String value)
+        {
+            foreach (System.Reflection.FieldInfo field in clazz.GetRuntimeFields())
+            {
+                try
+                {
+                    T enumeration = (T) field.GetValue(null);
+                    foreach (System.Reflection.FieldInfo enumField in enumeration.GetType().GetRuntimeFields())
+                    {
+                        if (enumField.GetValue(enumeration).Equals(value))
+                        {
+                            return enumeration;
+                        }
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    //do nothing
+                }
+
+            }
+            return default(T); //not found in enum
 
         }
 
-        public static XmlDocument buildDocumentFromFile(String pathToFile) 
+        public static Object TryToGetValueFromJson(IJsonValue value)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(pathToFile);
-            return doc;
+            switch (value.ValueType)
+            {
+                case JsonValueType.Null:
+                    return null;
+                case JsonValueType.String:
+                    return value.GetString();
+                case JsonValueType.Boolean:
+                    return value.GetBoolean();
+                case JsonValueType.Object:
+                    return value.GetObject();
+                case JsonValueType.Number:
+                    return value.GetNumber();
+                case JsonValueType.Array:
+                    return value.GetArray();
+                default:
+                    return null;
+            }
+        }
+
+        public static bool TryToConvertIntoBoolean(String value)
+        {
+            try
+            {
+                return Convert.ToBoolean(value);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

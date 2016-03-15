@@ -20,6 +20,7 @@ namespace AFWindowsPhone.builders.widgets
         public override FrameworkElement buildFieldView()
         {
             CheckBox checkBox = new CheckBox();
+            checkBox.FontSize = getSkin().getFieldFontSize();
             checkBox.Foreground = new SolidColorBrush(getSkin().getFieldColor());
             //checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             if (getProperties().isReadOnly())
@@ -39,7 +40,7 @@ namespace AFWindowsPhone.builders.widgets
         public override Object getData(AFField field)
         {
             CheckBox box = (CheckBox)field.getFieldView();
-            return box.IsChecked.ToString();
+            return box.IsChecked.ToString().ToLower();
         }
     }
 }

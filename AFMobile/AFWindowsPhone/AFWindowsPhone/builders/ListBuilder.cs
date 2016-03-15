@@ -13,9 +13,9 @@ namespace AFWindowsPhone.builders
 {
     class ListBuilder : AFComponentBuilder<ListBuilder>
     {
-        public async override Task<AFComponent> createComponent()
+        public override AFComponent createComponent()
         {
-            initializeConnections();
+            /*initializeConnections();
             String modelResponse = await getModelResponse();
             //create form from response
             AFList list = (AFList)buildComponent(modelResponse, SupportedComponents.LIST);
@@ -26,7 +26,8 @@ namespace AFWindowsPhone.builders
                 list.insertData(data);
             }
             AFWindowsPhone.getInstance().addCreatedComponent(getComponentKeyName(), list);
-            return list;
+            return list;*/
+            return null;
         }
 
         protected override FrameworkElement buildComponentView(AFComponent component)

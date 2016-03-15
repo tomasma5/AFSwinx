@@ -7,21 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Data.Json;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
 using Windows.Web.Http;
+using Windows.Web.Http.Headers;
 
 namespace AFWindowsPhone.rest
 {
     class RequestTask
     {
-        HeaderType headerType;
-        HttpMethod httpMethod;
-        ConnectionSecurity security;
-        String address;
-        Object data;
+        private HeaderType headerType;
+        private HttpMethod httpMethod;
+        private ConnectionSecurity security;
+        private String address;
+        private Object data;
 
         public RequestTask(HttpMethod method, HeaderType headerType,
                            ConnectionSecurity security, Object data, String url)
@@ -35,14 +37,11 @@ namespace AFWindowsPhone.rest
 
         public async Task<String> doRequest()
         {
-            //Show progress indicator
-            var statusBar = StatusBar.GetForCurrentView().ProgressIndicator;
-            statusBar.Text = Localization.translate("please.wait");
-            await statusBar.ShowAsync();
 
             HttpClient httpClient = new HttpClient();
             var cancellationTokenSource = new CancellationTokenSource(5000);
-            
+            httpClient.DefaultRequestHeaders.Accept.Add(new HttpMediaTypeWithQualityHeaderValue(headerType.ToString()));
+
             //ContentRoot.Children.Add(ring); //TODO add ring
             if (security != null)
             {
@@ -50,23 +49,23 @@ namespace AFWindowsPhone.rest
                 {
                     IBuffer buffer = CryptographicBuffer.ConvertStringToBinary((security.getUserName() + ":" + security.getPassword()), BinaryStringEncoding.Utf8);
                     String encoded = CryptographicBuffer.EncodeToBase64String(buffer);
-                    httpClient.DefaultRequestHeaders.Authorization = new Windows.Web.Http.Headers.HttpCredentialsHeaderValue("Basic", encoded);
-                    Debug.WriteLine("SECURITY " + "Basic " + encoded);
+                    httpClient.DefaultRequestHeaders.Authorization = new HttpCredentialsHeaderValue("Basic", encoded);
+                    Debug.WriteLine("Authorization object "+ httpClient.DefaultRequestHeaders.Authorization);
+                    Debug.WriteLine("SECURITY " + "Basic " + encoded + " for "+security.getUserName()+":"+security.getPassword());
                 }
             }
 
-            String data = "";
+            String dataStr = "";
             if (data != null && (httpMethod.Equals(HttpMethod.Post) || httpMethod.Equals(HttpMethod.Put)))
             {
-                Debug.WriteLine("DATA " + data.ToString());
-                data = data.ToString();
+                Debug.WriteLine("DATA " + ((JsonObject)data).Stringify());
+                dataStr = ((JsonObject)data).Stringify();
             }
-
           
-            HttpStringContent content = new HttpStringContent(data, Windows.Storage.Streams.UnicodeEncoding.Utf8, headerType.ToString());
+            HttpStringContent content = new HttpStringContent(dataStr, Windows.Storage.Streams.UnicodeEncoding.Utf8, headerType.ToString());
             HttpRequestMessage htm = new HttpRequestMessage(httpMethod, new Uri(address));
             htm.Content = content;
-            HttpResponseMessage response = await httpClient.SendRequestAsync(htm).AsTask(cancellationTokenSource.Token);
+            HttpResponseMessage response = await httpClient.SendRequestAsync(htm).AsTask(cancellationTokenSource.Token).ConfigureAwait(false);
 
             int responseCode = (int) response.StatusCode;
             String responseMsg = response.ReasonPhrase;
@@ -76,8 +75,6 @@ namespace AFWindowsPhone.rest
                 throw new Exception(responseCode + " " + responseMsg);
             }
 
-            //hide progress indicator
-            await statusBar.HideAsync();
             return await response.Content.ReadAsStringAsync();         
         }
 

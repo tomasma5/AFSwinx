@@ -58,7 +58,7 @@ namespace AFWindowsPhone.builders
                         new ConnectionParser(connectionKey, connectionParameters);
                 AFSwinxConnectionPack connections =
                         connectionParser.parseDocument(Utils
-                                .buildDocumentFromFile(pathToConnectionResource));
+                                .BuildDocumentFromFile(pathToConnectionResource));
                 connectionPack = connections;
             }
             else {
@@ -135,7 +135,7 @@ namespace AFWindowsPhone.builders
             if (modelConnection != null)
             {
                 RequestTask task = new RequestTask(modelConnection.getHttpMethod(), modelConnection.getContentType(),
-                        modelConnection.getSecurity(), null, Utils.getConnectionEndPoint(modelConnection));
+                        modelConnection.getSecurity(), null, Utils.GetConnectionEndPoint(modelConnection));
 
                 String modelResponse = await task.doRequest();
                 return modelResponse;
@@ -151,14 +151,14 @@ namespace AFWindowsPhone.builders
             if (dataConnection != null)
             {
                 RequestTask getData = new RequestTask(dataConnection.getHttpMethod(), dataConnection.getContentType(),
-                        dataConnection.getSecurity(), null, Utils.getConnectionEndPoint(dataConnection));
+                        dataConnection.getSecurity(), null, Utils.GetConnectionEndPoint(dataConnection));
                 String response = await getData.doRequest();
                 return response;
             }
             return null;
         }
 
-        public abstract Task<AFComponent> createComponent();
+        public abstract AFComponent createComponent();
 
         protected abstract FrameworkElement buildComponentView(AFComponent component);
 

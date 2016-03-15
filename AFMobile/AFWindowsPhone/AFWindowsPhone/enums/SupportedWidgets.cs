@@ -28,10 +28,5 @@ namespace AFWindowsPhone.enums
         {
             return widgetName;
         }
-
-        internal bool equals(SupportedWidgets tEXTFIELD)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

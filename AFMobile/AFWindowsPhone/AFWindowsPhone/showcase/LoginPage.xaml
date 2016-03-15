@@ -29,17 +29,8 @@
 
         <!--TODO: Content should be placed within the following grid-->
         <ScrollViewer Grid.Row="1">
-            <StackPanel x:Name="ContentRoot" Margin="19,9.5,19,0" Orientation="Vertical" VerticalAlignment="Top">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="150" FontSize="24">Username</TextBlock>
-                    <TextBox Width="200"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="150" FontSize="24">Password</TextBlock>
-                    <TextBox Width="200"/>
-                </StackPanel>
+            <StackPanel x:Name="ContentRoot" Margin="19,9.5,19,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
             </StackPanel>
         </ScrollViewer>
     </Grid>
 </Page>
-

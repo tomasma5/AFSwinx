@@ -14,10 +14,18 @@ namespace AFWindowsPhone.builders.components.parts.validators
         public bool validate(AFField field, StringBuilder errorMsgs, ValidationRule rule)
         {
             bool validationIsFine = true;
-            if (Utils.isFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.CALENDAR))
+            if (Utils.IsFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.CALENDAR))
             {
                 TextBox textfield = (TextBox) field.getFieldView();
                 if (String.IsNullOrWhiteSpace(textfield.Text))
+                {
+                    validationIsFine = false;
+                }
+            }
+            if (field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.PASSWORD))
+            {
+                PasswordBox passwordField = (PasswordBox)field.getFieldView();
+                if (String.IsNullOrWhiteSpace(passwordField.Password))
                 {
                     validationIsFine = false;
                 }

@@ -18,7 +18,7 @@ namespace AFWindowsPhone.builders.components.parts.validators
             Object otherData = ((AFForm)field.getParent()).getDataFromFieldWithId(rule.getValue());
             if (otherData != null)
             {
-                if (Utils.isFieldNumberField(field))
+                if (Utils.IsFieldNumberField(field))
                 {
                     //TODO pro cisla
                 }
@@ -27,8 +27,8 @@ namespace AFWindowsPhone.builders.components.parts.validators
                     Object fieldData = ((AFForm)field.getParent()).getDataFromFieldWithId(field.getId());
                     if (fieldData != null)
                     {
-                        DateTime? date = Utils.parseDate(fieldData.ToString());
-                        DateTime? otherDate = Utils.parseDate(otherData.ToString());
+                        DateTime? date = Utils.ParseDate(fieldData.ToString());
+                        DateTime? otherDate = Utils.ParseDate(otherData.ToString());
                         if (date > otherDate)
                         {
                             validationIsFine = false;

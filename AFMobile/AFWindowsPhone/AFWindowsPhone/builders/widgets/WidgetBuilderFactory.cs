@@ -27,7 +27,7 @@ namespace AFWindowsPhone.builders.widgets
 
         public AbstractWidgetBuilder getFieldBuilder(FieldInfo properties, Skin skin)
         {
-            if (Utils.isFieldWritable(properties.getWidgetType()))
+            if (Utils.IsFieldWritable(properties.getWidgetType()))
             {
                 return new TextWidgetBuilder(skin, properties);
             }

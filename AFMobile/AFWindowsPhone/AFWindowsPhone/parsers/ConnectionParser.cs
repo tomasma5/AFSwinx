@@ -267,7 +267,7 @@ namespace AFWindowsPhone.parsers
             StringBuilder replacedValue = new StringBuilder();
             // Split expression by #{ it gives you strings between and after value which should be
             // replaced
-            String[] values = expressionToEvaluate.Split(new String[]{"#\\{"}, StringSplitOptions.None);
+            String[] values = expressionToEvaluate.Split(new []{ "#{" }, StringSplitOptions.None);
             bool firstCycle = true;
             foreach (String value in values)
             {
@@ -281,7 +281,7 @@ namespace AFWindowsPhone.parsers
                 }
                 // This are values behind string which will be replaced. in first position is string to
                 // replaced
-                String[] valuesBehind = value.Split(new String[]{"\\}"}, StringSplitOptions.None);
+                String[] valuesBehind = value.Split(new []{"}"}, StringSplitOptions.None);
                 // Find replaced value and append it
                 String elValue = parameters[valuesBehind[0].Substring(0, valuesBehind[0].Length)];
                 replacedValue.Append(elValue);
@@ -289,8 +289,12 @@ namespace AFWindowsPhone.parsers
                 // then append them too
                 for (int i = 1; i < valuesBehind.Length; i++)
                 {
+                    if (String.IsNullOrEmpty(valuesBehind[i]))
+                    {
+                        continue;
+                    }
                     replacedValue.Append(valuesBehind[i]);
-                    char firstChar = valuesBehind[i].ToCharArray()[0];
+                    char firstChar = valuesBehind[i][0];
                     //Because split was done by } then it should not be there, then add it if left brackets
                     if (firstChar == '{')
                     {

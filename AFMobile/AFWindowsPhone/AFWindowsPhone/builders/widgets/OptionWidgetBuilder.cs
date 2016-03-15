@@ -30,8 +30,8 @@ namespace AFWindowsPhone.builders.widgets
                 for (int i = 0; i < numberOfOptions; i++)
                 {
                     options[i] = new RadioButton();
-                    options[i].Foreground = new SolidColorBrush(getSkin().getFieldColor());
                     options[i].FontFamily = getSkin().getFieldFont();
+                    options[i].FontSize = getSkin().getFieldFontSize();
                     options[i].Content = getProperties().getOptions()[i].getValue();
                     options[i].GroupName = groupName;
                     if (getProperties().isReadOnly())
@@ -46,12 +46,12 @@ namespace AFWindowsPhone.builders.widgets
                 numberOfOptions = 2;
                 RadioButton[] options = new RadioButton[numberOfOptions];
                 options[0] = new RadioButton();
-                options[0].Foreground = new SolidColorBrush(getSkin().getFieldColor());
                 options[0].FontFamily = getSkin().getFieldFont();
+                options[0].FontSize = getSkin().getFieldFontSize();
                 options[0].Content = Localization.translate("option.yes");
                 options[1] = new RadioButton();
-                options[1].Foreground = new SolidColorBrush(getSkin().getFieldColor());
                 options[1].FontFamily = getSkin().getFieldFont();
+                options[1].FontSize = getSkin().getFieldFontSize();
                 options[1].Content = Localization.translate("option.no");
                 if (getProperties().isReadOnly())
                 {
@@ -82,8 +82,8 @@ namespace AFWindowsPhone.builders.widgets
             {
                 RadioButton btn = (RadioButton) group.Children[i];
                 if (btn.Content.Equals(value)
-                        || (Convert.ToBoolean(value.ToString()) == true && i == 0)
-                        || (Convert.ToBoolean(value.ToString()) == false && i == 1))
+                        || (Utils.TryToConvertIntoBoolean(value.ToString()) == true && i == 0)
+                        || (Utils.TryToConvertIntoBoolean(value.ToString()) == false && i == 1))
                 {
                     btn.IsChecked = true;
                     field.setActualData(value);
@@ -104,11 +104,11 @@ namespace AFWindowsPhone.builders.widgets
                 {
                     if (btn.Content.Equals(Localization.translate("option.yes")))
                     {
-                        return true;
+                        return "true";
                     }
                     else if (btn.Content.Equals(Localization.translate("option.no")))
                     {
-                        return false;
+                        return "false";
                     }
                     else {
                         return btn.Content;

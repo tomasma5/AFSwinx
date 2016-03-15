@@ -28,7 +28,7 @@ namespace AFWindowsPhone.rest.connection
                 {
                     continue;
                 }
-                json.Add(key, JsonValue.Parse(value));
+                json.Add(key, JsonValue.CreateStringValue(value));
             }
             foreach (String childKey in componentData.getInnerClasses().Keys)
             {

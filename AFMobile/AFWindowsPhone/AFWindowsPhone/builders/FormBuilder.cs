@@ -13,12 +13,18 @@ namespace AFWindowsPhone.builders
 {
     class FormBuilder : AFComponentBuilder<FormBuilder>
     {
-        public async override Task<AFComponent> createComponent()
+        public override AFComponent createComponent()
         {
             this.initializeConnections();
-            String modelResponse = await getModelResponse();
+            var modelTask = Task.Run(getModelResponse);
+            modelTask.Wait();
+            String modelResponse = modelTask.Result;
+
             AFForm form = (AFForm)this.buildComponent(modelResponse, SupportedComponents.FORM);
-            String data = await getDataResponse();
+
+            var dataTask = Task.Run(getDataResponse);
+            dataTask.Wait();
+            String data = dataTask.Result;
             if (data != null)
             {
                 form.insertData(data);

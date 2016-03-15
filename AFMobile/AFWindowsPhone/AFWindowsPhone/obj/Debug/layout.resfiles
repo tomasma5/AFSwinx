@@ -7,7 +7,9 @@ Assets\WideLogo.scale-240.png
 AFWindowsPhone.xr.xml
 App.xbf
 ItemPage.xbf
-LoginPage.xbf
 PivotPage.xbf
+showcase\LoginPage.xbf
+showcase\ProfilePage.xbf
 Common\ReadMe.txt
+connection.xml
 DataModel\SampleData.json

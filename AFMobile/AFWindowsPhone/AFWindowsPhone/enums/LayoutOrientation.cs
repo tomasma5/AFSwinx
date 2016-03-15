@@ -18,9 +18,10 @@ namespace AFWindowsPhone.enums
             this.orientation = orientation;
         }
 
+
         public String getName()
         {
-            return orientation;
+            return this.orientation;
         }
     }
 }

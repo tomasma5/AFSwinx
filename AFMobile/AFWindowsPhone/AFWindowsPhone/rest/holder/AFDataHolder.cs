@@ -44,7 +44,14 @@ namespace AFWindowsPhone.rest.holder
 
         public AFDataHolder getInnerClassByKey(String key)
         {
-            return innerClasses[key];
+            if (innerClasses.ContainsKey(key))
+            {
+                return innerClasses[key];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -41,6 +41,11 @@ namespace AFWindowsPhone.builders.skins
             return new FontFamily("Segoe UI");
         }
 
+        public int getFieldFontSize()
+        {
+            return 18;
+        }
+
         public HorizontalAlignment getInputHorizontalAlignment()
         {
             return HorizontalAlignment.Stretch;
@@ -53,12 +58,17 @@ namespace AFWindowsPhone.builders.skins
 
         public Color getLabelColor()
         {
-            return Colors.Black;
+            return Colors.White;
         }
 
         public FontFamily getLabelFont()
         {
             return new FontFamily("Segoe UI");
+        }
+
+        public int getLabelFontSize()
+        {
+            return 18;
         }
 
         public int getLabelHeight()
@@ -199,6 +209,11 @@ namespace AFWindowsPhone.builders.skins
         public FontFamily getValidationFont()
         {
             return new FontFamily("Segoe UI");
+        }
+
+        public int getValidationFontSize()
+        {
+            return 18;
         }
 
         public bool isListItemNameLabelVisible()

@@ -29,40 +29,30 @@ namespace AFWindowsPhone.builders.widgets
             StackPanel dateLayout = new StackPanel();
             dateLayout.Orientation = Orientation.Horizontal;
 
-            TextBox dateText = new TextBox();
-            dateText.VerticalAlignment = VerticalAlignment.Top;
-            dateText.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //dateText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            dateText.Foreground = new SolidColorBrush(getSkin().getFieldColor());
-            dateText.FontFamily = getSkin().getFieldFont();
-            dateText.PlaceholderText = dateFormat;
-            /*dateText.setFocusable(false);
-            dateText.setClickable(true);*/
+            DatePicker datePicker = new DatePicker();
+            datePicker.VerticalAlignment = VerticalAlignment.Top;
+            datePicker.HorizontalAlignment = HorizontalAlignment.Stretch;
 
-            //TODO umoznit clear
-            //TODO kdyz nastavim ve swingu datum tak se zobrazuje datum o jeden den nizsi
-            dateText.Tapped += async (sender, args) =>
-            {
-                 //TODO datepicker
-            };
+            datePicker.FontFamily = getSkin().getFieldFont();
+            datePicker.FontSize = getSkin().getFieldFontSize();
 
 
             if (getProperties().isReadOnly())
             {
-                dateText.IsEnabled = false;
-                dateText.Foreground = new SolidColorBrush(Colors.LightGray);
+                datePicker.IsEnabled = false;
+                datePicker.Foreground = new SolidColorBrush(Colors.LightGray);
             }
-            return dateText;
+            return datePicker;
         }
 
         public override void setData(AFField field, Object value)
         {
-            TextBox dateText = (TextBox)field.getFieldView();
-            DateTime? date = Utils.parseDate(value.ToString());
+            DatePicker dateText = (DatePicker)field.getFieldView();
+            DateTime? date = Utils.ParseDate(value.ToString());
             if (date != null)
             {
-                dateText.Text = date.Value.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture);
-                field.setActualData(date.Value.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture));
+                dateText.Date = date.Value;
+                field.setActualData(date.Value);
             }
             else {
                 //parsing totally failed maybe exception
@@ -71,11 +61,11 @@ namespace AFWindowsPhone.builders.widgets
 
         public override Object getData(AFField field)
         {
-            TextBox dateText = (TextBox)field.getFieldView();
-            DateTime? date = Utils.parseDate(dateText.Text);
+            DatePicker dateText = (DatePicker)field.getFieldView();
+            DateTimeOffset? date = dateText.Date;
             if (date != null)
             {
-                return date.Value.ToString("yyyy-MM-dd'T'HH:mm:ss.SSSZ", CultureInfo.InvariantCulture);
+                return date.Value.ToString("yyyy-MM-dd'T'HH:mm:ss", CultureInfo.InvariantCulture);
             }
             return null;
         }

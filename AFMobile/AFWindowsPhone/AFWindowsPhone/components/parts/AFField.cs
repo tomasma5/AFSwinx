@@ -47,6 +47,10 @@ namespace AFWindowsPhone.builders.components.parts
                         allValidationsFine = validationResult;
                     }
                     Debug.WriteLine("RESULT " + allValidationsFine);
+                    if(rule.getValue() != null)
+                    {
+                        Debug.WriteLine("RULE VALUE " + rule.getValue());
+                    }
                 }
             }
             if (!allValidationsFine)

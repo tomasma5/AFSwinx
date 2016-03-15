@@ -1,6 +1,8 @@
-﻿using AFWindowsPhone.Common;
+﻿using AFWindowsPhone.builders.components.types;
+using AFWindowsPhone.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -17,6 +19,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
+using AFWindowsPhone.showcase;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -38,55 +41,33 @@ namespace AFWindowsPhone
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
-            StackPanel userNamePanel = new StackPanel();
-            userNamePanel.Orientation = Orientation.Horizontal;
-            StackPanel passwordPanel = new StackPanel();
-            passwordPanel.Orientation = Orientation.Horizontal;
-            TextBlock userNameLabel = new TextBlock();
-            userNameLabel.Width = 150;
-            userNameLabel.Text = "Username";
-            userNameLabel.FontSize = 24;
-            TextBlock passwordLabel = new TextBlock();
-            passwordLabel.Width = 150;
-            passwordLabel.Text = "Password";
-            passwordLabel.FontSize = 24;
+      
+            AFForm login = (AFForm) AFWindowsPhone.getInstance().getFormBuilder().initBuilder(ShowcaseConstants.LOGIN_FORM, "connection.xml", ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).createComponent();
+            ContentRoot.Children.Add(login.getView());
+            Button loginBtn = new Button();
+            loginBtn.Content = "Login";
+            loginBtn.Click += LoginBtn_Click;
+            ContentRoot.Children.Add(loginBtn);
+        }
 
-            TextBox userName = new TextBox();
-            userName.Width = 200;
-            PasswordBox password = new PasswordBox();
-            password.Width = 200;
-
-            userNamePanel.Children.Add(userNameLabel);
-            userNamePanel.Children.Add(userName);
-            passwordPanel.Children.Add(passwordLabel);
-            passwordPanel.Children.Add(password);
-            ContentRoot.Children.Add(userNamePanel);
-            ContentRoot.Children.Add(passwordPanel);
-
-            Button btn = new Button();
-            btn.Content = "Sumbit";
-            btn.Click += async (sender, args) =>
-            {
-                String usernameStr = userName.Text;
-                String psswd = password.Password;
-                MessageDialog dialog = new MessageDialog(usernameStr + " " + psswd, "credentials");
-                await dialog.ShowAsync();
-
-                    ProgressRing ring = new ProgressRing();
-                    ring.IsActive = true;
-                    ring.Width = 20;
-                    ring.Height = 20;
-                ContentRoot.Children.Add(ring);
-                HttpClient httpClient = new HttpClient();
-                HttpStringContent content = new HttpStringContent("", Windows.Storage.Streams.UnicodeEncoding.Utf8, "application/json");
-                HttpRequestMessage htm = new HttpRequestMessage(HttpMethod.Get, new Uri("http://toms-cz.com/AFServer/rest/users/loginForm"));
-                htm.Content = content;
-                HttpResponseMessage response = await httpClient.SendRequestAsync(htm);
-                String seznam = await response.Content.ReadAsStringAsync();
-                await new MessageDialog(seznam).ShowAsync();
-                ContentRoot.Children.Remove(ring);
-            };
-            ContentRoot.Children.Add(btn);
+        private async void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (AFWindowsPhone.getInstance().getCreatedComponents().ContainsKey(ShowcaseConstants.LOGIN_FORM)) { 
+                AFForm form = (AFForm) AFWindowsPhone.getInstance().getCreatedComponents()[ShowcaseConstants.LOGIN_FORM];
+                if(form.validateData())
+                {
+                    try {
+                        await form.sendData();
+                        await new MessageDialog("Login success").ShowAsync();
+                        Frame.Navigate(typeof(ProfilePage));
+                    }
+                    catch (Exception ex)
+                    {
+                        await new MessageDialog("Login failed").ShowAsync();
+                        Debug.WriteLine(ex.StackTrace);
+                    }
+                }
+            }
         }
 
         /// <summary>

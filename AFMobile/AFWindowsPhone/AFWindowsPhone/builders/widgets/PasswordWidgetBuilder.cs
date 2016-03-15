@@ -23,6 +23,7 @@ namespace AFWindowsPhone.builders.widgets
             PasswordBox password = new PasswordBox();
             password.Foreground = new SolidColorBrush(getSkin().getFieldColor());
             password.FontFamily = getSkin().getFieldFont();
+            password.FontSize = getSkin().getFieldFontSize();
             if (getProperties().isReadOnly())
             {
                 password.IsEnabled = false;

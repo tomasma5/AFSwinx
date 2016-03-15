@@ -28,10 +28,13 @@ namespace AFWindowsPhone.builders.skins
         HorizontalAlignment getInputHorizontalAlignment();
 
         FontFamily getValidationFont();
+        int getValidationFontSize();
 
         FontFamily getFieldFont();
+        int getFieldFontSize();
 
         FontFamily getLabelFont();
+        int getLabelFontSize();
 
         int getLabelWidth();
         HorizontalAlignment getLabelHorizontalAlignment();

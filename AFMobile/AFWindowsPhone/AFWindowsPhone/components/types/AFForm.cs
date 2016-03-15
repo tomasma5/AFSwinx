@@ -43,15 +43,15 @@ namespace AFWindowsPhone.builders.components.types
                         String roadBackup = road.ToString();
                         road.Append(key);
                         road.Append(".");
-                        insertData(jsonObject[key].ToString(), road); //parse class types
-                        road = new StringBuilder(roadBackup.ToString());
+                        insertData(jsonObject[key].Stringify(), road); //parse class types
+                        road = new StringBuilder(roadBackup);
                     }else {
                         //System.err.println("ROAD+KEY" + (road + key));
                         AFField field = getFieldById(road + key);
                         //System.err.println("FIELD" + field);
                         if (field != null)
                         {
-                            setFieldValue(field, jsonObject[key]);
+                            setFieldValue(field, Utils.TryToGetValueFromJson(jsonObject[key]));
                         }
                     }
                 }
@@ -80,7 +80,7 @@ namespace AFWindowsPhone.builders.components.types
                 Object data = fieldBuilder.getData(field);
                 String propertyName = field.getId();
                 // Based on dot notation determine road. Road is used to add object to its right place
-                String[] roadTrace = propertyName.Split(new String[] { "\\." }, StringSplitOptions.None);
+                String[] roadTrace = propertyName.Split(new [] {"."}, StringSplitOptions.None);
                 if (roadTrace.Length > 1)
                 {
                     AFDataHolder startPoint = dataHolder;
@@ -129,7 +129,7 @@ namespace AFWindowsPhone.builders.components.types
         }
 
        
-        public async void sendData()
+        public async Task sendData()
         {
             if(getConnectionPack().getSendConnection() == null) 
                {
@@ -140,9 +140,9 @@ namespace AFWindowsPhone.builders.components.types
             if(data == null) {
                     return;
                 }
-                Debug.WriteLine("SEND CONNECTION "+ Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
+                Debug.WriteLine("SEND CONNECTION "+ Utils.GetConnectionEndPoint(getConnectionPack().getSendConnection()));
                 RequestTask sendTask = new RequestTask(getConnectionPack().getSendConnection().getHttpMethod(), getConnectionPack().getSendConnection().getContentType(),
-                    getConnectionPack().getSendConnection().getSecurity(), data, Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
+                    getConnectionPack().getSendConnection().getSecurity(), data, Utils.GetConnectionEndPoint(getConnectionPack().getSendConnection()));
                 await sendTask.doRequest();
         }
 

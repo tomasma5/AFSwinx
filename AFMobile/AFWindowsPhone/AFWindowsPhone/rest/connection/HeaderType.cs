@@ -19,11 +19,6 @@ namespace AFWindowsPhone.rest.connection
             this.name = name;
         }
 
-        public bool equalsName(String otherName)
-        {
-            return (otherName == null) ? false : name.Equals(otherName);
-        }
-
         public override String ToString()
         {
             return name;

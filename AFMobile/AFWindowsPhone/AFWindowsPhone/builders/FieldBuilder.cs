@@ -32,6 +32,7 @@ namespace AFWindowsPhone.builders
                 LabelPosition pos = properties.getLayout().getLabelPosition();
                 label.Foreground = new SolidColorBrush(skin.getLabelColor());
                 label.FontFamily = skin.getLabelFont();
+                label.FontSize = skin.getLabelFontSize();
                 label.Text = labelText;
                 field.setLabel(label);
             }
@@ -42,6 +43,7 @@ namespace AFWindowsPhone.builders
             errorView.Visibility = Visibility.Collapsed;
             errorView.Foreground = new SolidColorBrush(skin.getValidationColor());
             errorView.FontFamily = skin.getValidationFont();
+            errorView.FontSize = skin.getValidationFontSize();
             field.setErrorView(errorView);
 
             //Input view
@@ -88,8 +90,21 @@ namespace AFWindowsPhone.builders
             //set label and field view layout params
             if (field.getLabel() != null)
             {
-                field.getLabel().Width = skin.getLabelWidth();
-                field.getLabel().Height = skin.getLabelHeight();
+                if (skin.getLabelWidth() >= 0)
+                {
+                    field.getLabel().Width = skin.getLabelWidth();
+                }
+                else
+                {
+                    field.getLabel().HorizontalAlignment = skin.getLabelHorizontalAlignment();
+                }
+                if(skin.getLabelHeight() >= 0) { 
+                    field.getLabel().Height = skin.getLabelHeight();
+                }
+                else
+                {
+                    field.getLabel().VerticalAlignment = skin.getLabelVerticalAlignment();
+                }
             }
             field.getFieldView().Width = skin.getInputWidth();
             field.getFieldView().VerticalAlignment = VerticalAlignment.Top;

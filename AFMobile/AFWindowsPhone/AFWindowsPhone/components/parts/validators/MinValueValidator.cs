@@ -13,7 +13,7 @@ namespace AFWindowsPhone.builders.components.parts.validators
         public bool validate(AFField field, StringBuilder errorMsgs, ValidationRule rule)
         {
             bool validationIsFine = true;
-            if (Utils.isFieldNumberField(field))
+            if (Utils.IsFieldNumberField(field))
             {
                 TextBox numberField = (TextBox) field.getFieldView();
                 if (String.IsNullOrEmpty(numberField.Text) &&

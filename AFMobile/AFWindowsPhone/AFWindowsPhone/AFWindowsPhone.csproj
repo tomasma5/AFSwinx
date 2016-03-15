@@ -84,7 +84,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="showcase\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="showcase\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -146,7 +150,10 @@
     <Compile Include="ItemPage.xaml.cs">
       <DependentUpon>ItemPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="showcase\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="showcase\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="parsers\ConnectionParser.cs" />
@@ -171,6 +178,8 @@
     <Compile Include="rest\holder\AFDataHolder.cs" />
     <Compile Include="rest\holder\AFDataPack.cs" />
     <Compile Include="rest\RequestTask.cs" />
+    <Compile Include="showcase\ShowcaseConstants.cs" />
+    <Compile Include="showcase\ShowcaseUtils.cs" />
     <Compile Include="utils\Constants.cs" />
     <Compile Include="utils\Localization.cs" />
     <Compile Include="utils\StreamExtensions.cs" />
@@ -197,6 +206,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="connection.xml" />
     <Content Include="DataModel\SampleData.json" />
     <PRIResource Include="Strings\en-US\Resources.resw">
       <SubType>Designer</SubType>

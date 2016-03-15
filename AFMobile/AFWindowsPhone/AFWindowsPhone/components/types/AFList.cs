@@ -50,8 +50,8 @@ namespace AFWindowsPhone.builders.components.types
                     road = new StringBuilder();
                 }
                 //set list adapter
-                ListAdapter listAdapter = new CustomListAdapter(getActivity(), getSkin(), this);
-                getListView().setAdapter(listAdapter);
+                /*ListAdapter listAdapter = new CustomListAdapter(getActivity(), getSkin(), this);
+                getListView().setAdapter(listAdapter);*/
             }
             catch (Exception e)
             {
