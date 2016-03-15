@@ -9,17 +9,17 @@
 
 
 
-namespace AFWindowsPhone
+namespace App1
 {
     public partial class App : global::Windows.UI.Xaml.Markup.IXamlMetadataProvider
     {
-        private global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider _provider;
+        private global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider _provider;
 
         public global::Windows.UI.Xaml.Markup.IXamlType GetXamlType(global::System.Type type)
         {
             if(_provider == null)
             {
-                _provider = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider();
+                _provider = new global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider();
             }
             return _provider.GetXamlTypeByType(type);
         }
@@ -28,7 +28,7 @@ namespace AFWindowsPhone
         {
             if(_provider == null)
             {
-                _provider = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider();
+                _provider = new global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider();
             }
             return _provider.GetXamlTypeByName(fullName);
         }
@@ -40,7 +40,7 @@ namespace AFWindowsPhone
     }
 }
 
-namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
+namespace App1.App1_XamlTypeInfo
 {
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks", "4.0.0.0")]    
@@ -124,31 +124,27 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[11];
-            _typeNameTable[0] = "AFWindowsPhone.ItemPage";
+            _typeNameTable = new string[9];
+            _typeNameTable[0] = "App1.ItemPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[3] = "AFWindowsPhone.Common.NavigationHelper";
+            _typeNameTable[3] = "App1.Common.NavigationHelper";
             _typeNameTable[4] = "Windows.UI.Xaml.DependencyObject";
-            _typeNameTable[5] = "AFWindowsPhone.Common.ObservableDictionary";
+            _typeNameTable[5] = "App1.Common.ObservableDictionary";
             _typeNameTable[6] = "Object";
             _typeNameTable[7] = "String";
-            _typeNameTable[8] = "AFWindowsPhone.showcase.ProfilePage";
-            _typeNameTable[9] = "AFWindowsPhone.LoginPage";
-            _typeNameTable[10] = "AFWindowsPhone.PivotPage";
+            _typeNameTable[8] = "App1.PivotPage";
 
-            _typeTable = new global::System.Type[11];
-            _typeTable[0] = typeof(global::AFWindowsPhone.ItemPage);
+            _typeTable = new global::System.Type[9];
+            _typeTable[0] = typeof(global::App1.ItemPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[3] = typeof(global::AFWindowsPhone.Common.NavigationHelper);
+            _typeTable[3] = typeof(global::App1.Common.NavigationHelper);
             _typeTable[4] = typeof(global::Windows.UI.Xaml.DependencyObject);
-            _typeTable[5] = typeof(global::AFWindowsPhone.Common.ObservableDictionary);
+            _typeTable[5] = typeof(global::App1.Common.ObservableDictionary);
             _typeTable[6] = typeof(global::System.Object);
             _typeTable[7] = typeof(global::System.String);
-            _typeTable[8] = typeof(global::AFWindowsPhone.showcase.ProfilePage);
-            _typeTable[9] = typeof(global::AFWindowsPhone.LoginPage);
-            _typeTable[10] = typeof(global::AFWindowsPhone.PivotPage);
+            _typeTable[8] = typeof(global::App1.PivotPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -183,11 +179,9 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
             return -1;
         }
 
-        private object Activate_0_ItemPage() { return new global::AFWindowsPhone.ItemPage(); }
-        private object Activate_5_ObservableDictionary() { return new global::AFWindowsPhone.Common.ObservableDictionary(); }
-        private object Activate_8_ProfilePage() { return new global::AFWindowsPhone.showcase.ProfilePage(); }
-        private object Activate_9_LoginPage() { return new global::AFWindowsPhone.LoginPage(); }
-        private object Activate_10_PivotPage() { return new global::AFWindowsPhone.PivotPage(); }
+        private object Activate_0_ItemPage() { return new global::App1.ItemPage(); }
+        private object Activate_5_ObservableDictionary() { return new global::App1.Common.ObservableDictionary(); }
+        private object Activate_8_PivotPage() { return new global::App1.PivotPage(); }
         private void MapAdd_5_ObservableDictionary(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.String, global::System.Object>)instance;
@@ -198,16 +192,16 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
-            global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType xamlType = null;
-            global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType userType;
+            global::App1.App1_XamlTypeInfo.XamlSystemBaseType xamlType = null;
+            global::App1.App1_XamlTypeInfo.XamlUserType userType;
             string typeName = _typeNameTable[typeIndex];
             global::System.Type type = _typeTable[typeIndex];
 
             switch (typeIndex)
             {
 
-            case 0:   //  AFWindowsPhone.ItemPage
-                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+            case 0:   //  App1.ItemPage
+                userType = new global::App1.App1_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
                 userType.Activator = Activate_0_ItemPage;
                 userType.AddMemberName("NavigationHelper");
                 userType.AddMemberName("DefaultViewModel");
@@ -216,26 +210,26 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
                 break;
 
             case 1:   //  Windows.UI.Xaml.Controls.Page
-                xamlType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::App1.App1_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 2:   //  Windows.UI.Xaml.Controls.UserControl
-                xamlType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::App1.App1_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 3:   //  AFWindowsPhone.Common.NavigationHelper
-                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
+            case 3:   //  App1.Common.NavigationHelper
+                userType = new global::App1.App1_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.DependencyObject"));
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
             case 4:   //  Windows.UI.Xaml.DependencyObject
-                xamlType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::App1.App1_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 5:   //  AFWindowsPhone.Common.ObservableDictionary
-                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
+            case 5:   //  App1.Common.ObservableDictionary
+                userType = new global::App1.App1_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Object"));
                 userType.DictionaryAdd = MapAdd_5_ObservableDictionary;
                 userType.SetIsReturnTypeStub();
                 userType.SetIsLocalType();
@@ -243,34 +237,16 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
                 break;
 
             case 6:   //  Object
-                xamlType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::App1.App1_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
             case 7:   //  String
-                xamlType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                xamlType = new global::App1.App1_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 8:   //  AFWindowsPhone.showcase.ProfilePage
-                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_8_ProfilePage;
-                userType.AddMemberName("NavigationHelper");
-                userType.AddMemberName("DefaultViewModel");
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 9:   //  AFWindowsPhone.LoginPage
-                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_9_LoginPage;
-                userType.AddMemberName("NavigationHelper");
-                userType.AddMemberName("DefaultViewModel");
-                userType.SetIsLocalType();
-                xamlType = userType;
-                break;
-
-            case 10:   //  AFWindowsPhone.PivotPage
-                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_10_PivotPage;
+            case 8:   //  App1.PivotPage
+                userType = new global::App1.App1_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_8_PivotPage;
                 userType.AddMemberName("NavigationHelper");
                 userType.AddMemberName("DefaultViewModel");
                 userType.SetIsLocalType();
@@ -283,98 +259,54 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
 
         private object get_0_ItemPage_NavigationHelper(object instance)
         {
-            var that = (global::AFWindowsPhone.ItemPage)instance;
+            var that = (global::App1.ItemPage)instance;
             return that.NavigationHelper;
         }
         private object get_1_ItemPage_DefaultViewModel(object instance)
         {
-            var that = (global::AFWindowsPhone.ItemPage)instance;
+            var that = (global::App1.ItemPage)instance;
             return that.DefaultViewModel;
         }
-        private object get_2_ProfilePage_NavigationHelper(object instance)
+        private object get_2_PivotPage_NavigationHelper(object instance)
         {
-            var that = (global::AFWindowsPhone.showcase.ProfilePage)instance;
+            var that = (global::App1.PivotPage)instance;
             return that.NavigationHelper;
         }
-        private object get_3_ProfilePage_DefaultViewModel(object instance)
+        private object get_3_PivotPage_DefaultViewModel(object instance)
         {
-            var that = (global::AFWindowsPhone.showcase.ProfilePage)instance;
-            return that.DefaultViewModel;
-        }
-        private object get_4_LoginPage_NavigationHelper(object instance)
-        {
-            var that = (global::AFWindowsPhone.LoginPage)instance;
-            return that.NavigationHelper;
-        }
-        private object get_5_LoginPage_DefaultViewModel(object instance)
-        {
-            var that = (global::AFWindowsPhone.LoginPage)instance;
-            return that.DefaultViewModel;
-        }
-        private object get_6_PivotPage_NavigationHelper(object instance)
-        {
-            var that = (global::AFWindowsPhone.PivotPage)instance;
-            return that.NavigationHelper;
-        }
-        private object get_7_PivotPage_DefaultViewModel(object instance)
-        {
-            var that = (global::AFWindowsPhone.PivotPage)instance;
+            var that = (global::App1.PivotPage)instance;
             return that.DefaultViewModel;
         }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
-            global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember xamlMember = null;
-            global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType userType;
+            global::App1.App1_XamlTypeInfo.XamlMember xamlMember = null;
+            global::App1.App1_XamlTypeInfo.XamlUserType userType;
 
             switch (longMemberName)
             {
-            case "AFWindowsPhone.ItemPage.NavigationHelper":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.ItemPage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
+            case "App1.ItemPage.NavigationHelper":
+                userType = (global::App1.App1_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App1.ItemPage");
+                xamlMember = new global::App1.App1_XamlTypeInfo.XamlMember(this, "NavigationHelper", "App1.Common.NavigationHelper");
                 xamlMember.Getter = get_0_ItemPage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
-            case "AFWindowsPhone.ItemPage.DefaultViewModel":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.ItemPage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
+            case "App1.ItemPage.DefaultViewModel":
+                userType = (global::App1.App1_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App1.ItemPage");
+                xamlMember = new global::App1.App1_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "App1.Common.ObservableDictionary");
                 xamlMember.Getter = get_1_ItemPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
-            case "AFWindowsPhone.showcase.ProfilePage.NavigationHelper":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.ProfilePage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_2_ProfilePage_NavigationHelper;
+            case "App1.PivotPage.NavigationHelper":
+                userType = (global::App1.App1_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App1.PivotPage");
+                xamlMember = new global::App1.App1_XamlTypeInfo.XamlMember(this, "NavigationHelper", "App1.Common.NavigationHelper");
+                xamlMember.Getter = get_2_PivotPage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
-            case "AFWindowsPhone.showcase.ProfilePage.DefaultViewModel":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.ProfilePage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_3_ProfilePage_DefaultViewModel;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "AFWindowsPhone.LoginPage.NavigationHelper":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.LoginPage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_4_LoginPage_NavigationHelper;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "AFWindowsPhone.LoginPage.DefaultViewModel":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.LoginPage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_5_LoginPage_DefaultViewModel;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "AFWindowsPhone.PivotPage.NavigationHelper":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.PivotPage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_6_PivotPage_NavigationHelper;
-                xamlMember.SetIsReadOnly();
-                break;
-            case "AFWindowsPhone.PivotPage.DefaultViewModel":
-                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.PivotPage");
-                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_7_PivotPage_DefaultViewModel;
+            case "App1.PivotPage.DefaultViewModel":
+                userType = (global::App1.App1_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App1.PivotPage");
+                xamlMember = new global::App1.App1_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "App1.Common.ObservableDictionary");
+                xamlMember.Getter = get_3_PivotPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             }
@@ -433,9 +365,9 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Windows.UI.Xaml.Build.Tasks", "4.0.0.0")]    
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    internal class XamlUserType : global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType
+    internal class XamlUserType : global::App1.App1_XamlTypeInfo.XamlSystemBaseType
     {
-        global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider _provider;
+        global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider _provider;
         global::Windows.UI.Xaml.Markup.IXamlType _baseType;
         bool _isArray;
         bool _isMarkupExtension;
@@ -449,7 +381,7 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
         global::System.Collections.Generic.Dictionary<string, string> _memberNames;
         global::System.Collections.Generic.Dictionary<string, object> _enumValues;
 
-        public XamlUserType(global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider provider, string fullName, global::System.Type fullType, global::Windows.UI.Xaml.Markup.IXamlType baseType)
+        public XamlUserType(global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider provider, string fullName, global::System.Type fullType, global::Windows.UI.Xaml.Markup.IXamlType baseType)
             :base(fullName, fullType)
         {
             _provider = provider;
@@ -642,7 +574,7 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     internal class XamlMember : global::Windows.UI.Xaml.Markup.IXamlMember
     {
-        global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider _provider;
+        global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider _provider;
         string _name;
         bool _isAttachable;
         bool _isDependencyProperty;
@@ -651,7 +583,7 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
         string _typeName;
         string _targetTypeName;
 
-        public XamlMember(global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlTypeInfoProvider provider, string name, string typeName)
+        public XamlMember(global::App1.App1_XamlTypeInfo.XamlTypeInfoProvider provider, string name, string typeName)
         {
             _name = name;
             _typeName = typeName;

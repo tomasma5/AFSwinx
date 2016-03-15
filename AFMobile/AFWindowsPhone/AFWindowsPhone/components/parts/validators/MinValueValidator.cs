@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using AFWindowsPhone.components.parts.validators;
 
 namespace AFWindowsPhone.builders.components.parts.validators
 {
@@ -16,10 +17,17 @@ namespace AFWindowsPhone.builders.components.parts.validators
             if (Utils.IsFieldNumberField(field))
             {
                 TextBox numberField = (TextBox) field.getFieldView();
-                if (String.IsNullOrEmpty(numberField.Text) &&
-                        Convert.ToDouble(numberField.Text) < Convert.ToDouble(rule.getValue()))
+                try
                 {
-                    validationIsFine = false;
+                    if (String.IsNullOrEmpty(numberField.Text) &&
+                        Convert.ToDouble(numberField.Text) < Convert.ToDouble(rule.getValue()))
+                    {
+                        validationIsFine = false;
+                    }
+                }
+                catch (Exception ex) //catch convert exception
+                {
+                    validationIsFine = true; //if there is no number in field we cant validate its value
                 }
             }
             if (!validationIsFine)

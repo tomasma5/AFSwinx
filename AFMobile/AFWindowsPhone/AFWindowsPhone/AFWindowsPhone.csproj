@@ -96,6 +96,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="showcase\WelcomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -119,6 +123,7 @@
     <Compile Include="components\parts\FieldOption.cs" />
     <Compile Include="components\parts\LayoutProperties.cs" />
     <Compile Include="components\parts\ValidationRule.cs" />
+    <Compile Include="components\parts\validators\NumberValidator.cs" />
     <Compile Include="components\parts\validators\ValidatorFactory.cs" />
     <Compile Include="components\parts\validators\AFValidator.cs" />
     <Compile Include="components\parts\validators\LessThanValidator.cs" />
@@ -180,6 +185,9 @@
     <Compile Include="rest\RequestTask.cs" />
     <Compile Include="showcase\ShowcaseConstants.cs" />
     <Compile Include="showcase\ShowcaseUtils.cs" />
+    <Compile Include="showcase\WelcomePage.xaml.cs">
+      <DependentUpon>WelcomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="utils\Constants.cs" />
     <Compile Include="utils\Localization.cs" />
     <Compile Include="utils\StreamExtensions.cs" />
@@ -198,6 +206,7 @@
     <Content Include="Assets\StoreLogo.scale-240.png" />
     <Content Include="Assets\WideLogo.scale-240.png" />
     <Content Include="Common\ReadMe.txt" />
+    <Content Include="showcase\launcher_icon-web.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

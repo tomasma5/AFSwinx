@@ -45,3 +45,8 @@ D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\Lo
 D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\LoginPage.xbf
 D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\ProfilePage.xaml
 D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\ProfilePage.xbf
+D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\bin\Debug\showcase\WelcomePage.xbf
+D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\WelcomePage.g.i.cs
+D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\WelcomePage.g.cs
+D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\WelcomePage.xaml
+D:\Projects\AFSwinx\AFMobile\AFWindowsPhone\AFWindowsPhone\obj\Debug\showcase\WelcomePage.xbf

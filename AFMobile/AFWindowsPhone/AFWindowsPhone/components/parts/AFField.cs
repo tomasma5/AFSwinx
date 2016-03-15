@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using AFWindowsPhone.enums;
 
 namespace AFWindowsPhone.builders.components.parts
 {
@@ -36,6 +37,7 @@ namespace AFWindowsPhone.builders.components.parts
             errorView.Visibility = (Visibility.Collapsed);
             if (fieldInfo.getRules() != null)
             {
+                //add number validation here because it is not among rules in definition
                 foreach (ValidationRule rule in fieldInfo.getRules())
                 {
                     AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);

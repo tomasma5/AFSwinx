@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AFWindowsPhone.builders.components.parts;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using AFWindowsPhone.enums;
 using AFWindowsPhone.utils;
 using Windows.Data.Json;
@@ -20,7 +21,7 @@ namespace AFWindowsPhone.parsers
             try
             {
                 //Parse class name and create data pack with this class name
-                Debug.WriteLine("PARSING CLASS " + classInfo[Constants.CLASS_NAME]);
+                Debug.WriteLine("PARSING CLASS " + Utils.TryToGetValueFromJson(classInfo[Constants.CLASS_NAME]));
                 definition = new ClassDefinition((String) Utils.TryToGetValueFromJson(classInfo[Constants.CLASS_NAME]));
 
                 //Parse layout
@@ -83,6 +84,21 @@ namespace AFWindowsPhone.parsers
                 {
                     fieldInfo.addRule(createRule((JsonObject) Utils.TryToGetValueFromJson(rules[i])));
                 }
+            }
+            //add number rule - it is not among others in json 
+            try
+            {
+                if (fieldInfo.getWidgetType().Equals(SupportedWidgets.NUMBERFIELD))
+                {
+                    ValidationRule numberRule = new ValidationRule();
+                    numberRule.setValidationType("NUMBER");
+                    numberRule.setValue("");
+                    fieldInfo.addRule(numberRule);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
             }
             //options
             JsonArray options = (JsonArray) Utils.TryToGetValueFromJson(field[Constants.OPTIONS]);

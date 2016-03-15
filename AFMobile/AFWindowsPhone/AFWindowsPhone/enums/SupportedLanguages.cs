@@ -10,7 +10,7 @@ namespace AFWindowsPhone.enums
     {
 
         public static readonly SupportedLanguages CZ = new SupportedLanguages("cs", "CZ");
-        public static readonly SupportedLanguages EN = new SupportedLanguages("en", "EN");
+        public static readonly SupportedLanguages EN = new SupportedLanguages("en", "US");
 
         private String lang;
         private String country;

@@ -10,6 +10,8 @@ ItemPage.xbf
 PivotPage.xbf
 showcase\LoginPage.xbf
 showcase\ProfilePage.xbf
+showcase\WelcomePage.xbf
 Common\ReadMe.txt
 connection.xml
 DataModel\SampleData.json
+showcase\launcher_icon-web.png

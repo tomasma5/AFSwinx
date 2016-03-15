@@ -74,7 +74,7 @@ public abstract class AFComponentBuilder<T> {
         } else {
             // Model connection is important if it could be found then throw exception
             throw new Exception(
-                    "There is error during building AFSwinxForm. Connection was not specified. Did you used initBuilder method before build?");
+                    "There is error during building AFForm. Connection was not specified. Did you used initBuilder method before build?");
         }
     }
 

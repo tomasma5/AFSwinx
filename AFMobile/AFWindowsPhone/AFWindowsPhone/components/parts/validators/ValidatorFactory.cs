@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AFWindowsPhone.components.parts.validators;
+using AFWindowsPhone.utils;
 
 namespace AFWindowsPhone.builders.components.parts
 {
@@ -24,7 +26,7 @@ namespace AFWindowsPhone.builders.components.parts
 
         public AFValidator getValidator(ValidationRule rule)
         {
-            if (rule.getValidationType().Equals(SupportedValidations.REQUIRED.getValidationType()) && Convert.ToBoolean(rule.getValue()))
+            if (rule.getValidationType().Equals(SupportedValidations.REQUIRED.getValidationType()) && Utils.TryToConvertIntoBoolean(rule.getValue()))
             {
                 return new RequiredValidator();
             }
@@ -43,6 +45,10 @@ namespace AFWindowsPhone.builders.components.parts
             if (rule.getValidationType().Equals(SupportedValidations.LESSTHAN.getValidationType()))
             {
                 return new LessThanValidator();
+            }
+            if (rule.getValidationType().Equals(SupportedValidations.NUMBER.getValidationType()))
+            {
+                return new NumberValidator();
             }
             //not found
             return null;

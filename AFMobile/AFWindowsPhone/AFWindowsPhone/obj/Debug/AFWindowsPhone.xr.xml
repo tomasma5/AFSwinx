@@ -62,6 +62,12 @@
       <RootProperty Name="Content" />
     </RootType>
     <RootType FullName="AFWindowsPhone.showcase.ProfilePage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.Image">
+      <RootProperty Name="Source" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Margin" />
+    </RootType>
     <RootType FullName="AFWindowsPhone.LoginPage" />
     <RootType FullName="Windows.UI.Xaml.Media.Animation.CommonNavigationTransitionInfo">
       <RootProperty Name="IsStaggeringEnabled" />
@@ -101,5 +107,6 @@
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="AFWindowsPhone.PivotPage" />
+    <RootType FullName="AFWindowsPhone.showcase.WelcomePage" />
   </Roots.RootTypes>
 </Roots>

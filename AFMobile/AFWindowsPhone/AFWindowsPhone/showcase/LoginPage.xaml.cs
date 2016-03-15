@@ -19,7 +19,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
+using AFWindowsPhone.builders.components.parts;
 using AFWindowsPhone.showcase;
+using AFWindowsPhone.utils;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -40,14 +42,34 @@ namespace AFWindowsPhone
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-
       
             AFForm login = (AFForm) AFWindowsPhone.getInstance().getFormBuilder().initBuilder(ShowcaseConstants.LOGIN_FORM, "connection.xml", ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).createComponent();
             ContentRoot.Children.Add(login.getView());
             Button loginBtn = new Button();
             loginBtn.Content = "Login";
+            loginBtn.HorizontalAlignment = HorizontalAlignment.Right;
             loginBtn.Click += LoginBtn_Click;
             ContentRoot.Children.Add(loginBtn);
+        }
+        private void doLogin(AFForm form)
+        {
+            AFField usernameField = form.getFieldById("username");
+            AFField passwordField = form.getFieldById("password");
+            if (usernameField != null && passwordField != null)
+            {
+                //save user to shared preferences
+                String username = (String)form.getDataFromFieldWithId("username");
+                String password = (String)form.getDataFromFieldWithId("password");
+                ShowcaseUtils.setUserInPreferences(username, password);
+                
+                //change content
+                Frame.Navigate(typeof(WelcomePage)); //neco je tu spatne
+                if (this.Frame.CanGoBack)
+                {
+                    this.Frame.BackStack.RemoveAt(0);
+                }
+            }
+            //success
         }
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)
@@ -58,8 +80,8 @@ namespace AFWindowsPhone
                 {
                     try {
                         await form.sendData();
-                        await new MessageDialog("Login success").ShowAsync();
-                        Frame.Navigate(typeof(ProfilePage));
+
+                        doLogin(form);
                     }
                     catch (Exception ex)
                     {
