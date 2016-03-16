@@ -36,9 +36,12 @@ namespace AFWindowsPhone
         {
             if (createdComponents.ContainsKey(name))
             {
-                return;
+                createdComponents[name] = component;
             }
-            createdComponents.Add(name, component);
+            else
+            { 
+                createdComponents.Add(name, component);
+            }
         }
 
         public FormBuilder getFormBuilder()

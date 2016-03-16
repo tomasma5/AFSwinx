@@ -34,6 +34,7 @@ namespace AFWindowsPhone.builders
                 label.FontFamily = skin.getLabelFont();
                 label.FontSize = skin.getLabelFontSize();
                 label.Text = labelText;
+                label.TextWrapping = TextWrapping.Wrap;
                 field.setLabel(label);
             }
 

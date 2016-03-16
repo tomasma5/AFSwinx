@@ -94,6 +94,8 @@ namespace AFWindowsPhone.showcase
                         //TODO refresh form
                         await progressbar.HideAsync();
                         await new MessageDialog("Update successfull").ShowAsync();
+                        Frame.GoBack();
+                        Frame.GoForward();
                     }
                     catch (Exception ex)
                     {

@@ -41,8 +41,8 @@ namespace AFWindowsPhone.builders.components.parts
                 foreach (ValidationRule rule in fieldInfo.getRules())
                 {
                     AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);
-                    Debug.WriteLine("VALIDATION RULE " + rule.ToString());
-                    Debug.WriteLine("VALIDATOR " + validator.ToString());
+                    Debug.WriteLine("VALIDATION RULE " + rule);
+                    Debug.WriteLine("VALIDATOR " + validator);
                     bool validationResult = validator.validate(this, errorMsgs, rule);
                     if (allValidationsFine)
                     { //if once false stays false
@@ -57,7 +57,7 @@ namespace AFWindowsPhone.builders.components.parts
             }
             if (!allValidationsFine)
             {
-                errorView.Text = (errorMsgs.ToString());
+                errorView.Text = errorMsgs.ToString();
                 errorView.Visibility = Visibility.Visible;
             }
             return allValidationsFine;

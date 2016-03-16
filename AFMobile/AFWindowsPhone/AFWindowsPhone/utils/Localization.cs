@@ -19,13 +19,17 @@ namespace AFWindowsPhone.utils
         {
             try
             {
-                ResourceLoader loader = ResourceLoader.GetForViewIndependentUse(pathToStrings);
-                Debug.WriteLine("Localization for is " + loader.GetString(resource));
-                return loader.GetString(resource);
+                ResourceLoader loader = ResourceLoader.GetForCurrentView();
+                String editedResource = resource.Replace('.', '/');
+                if(String.IsNullOrEmpty(loader.GetString(editedResource))){
+                    Debug.WriteLine("Localization text " + resource + " not found");
+                    return resource;
+                }
+                Debug.WriteLine("Localization for is " + loader.GetString(editedResource));
+                return loader.GetString(editedResource);
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Localization text " + resource + " not found");
                 Debug.WriteLine(e.StackTrace);
                 return resource;
             }

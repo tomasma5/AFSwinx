@@ -35,7 +35,7 @@ namespace AFWindowsPhone.builders.widgets
 
             datePicker.FontFamily = getSkin().getFieldFont();
             datePicker.FontSize = getSkin().getFieldFontSize();
-
+            //note .. do not set color - should be according to wp theme
 
             if (getProperties().isReadOnly())
             {
@@ -52,7 +52,7 @@ namespace AFWindowsPhone.builders.widgets
             if (date != null)
             {
                 dateText.Date = date.Value;
-                field.setActualData(date.Value);
+                field.setActualData(date.Value.ToString("dd.MM.yyyy", CultureInfo.InvariantCulture));
             }
             else {
                 //parsing totally failed maybe exception

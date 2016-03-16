@@ -124,7 +124,7 @@
     <value>MY APPLICATION</value>
   </data>
   <data name="login.password" xml:space="preserve">
-    <value>Password</value>
+    <value>Heslo</value>
   </data>
   <data name="NavigationFailedExceptionMessage" xml:space="preserve">
     <value>Navigation failed.</value>
@@ -151,6 +151,6 @@
     <value>secondary command 2</value>
   </data>
   <data name="AFTitle.Text" xml:space="preserve">
-    <value>AF Windows Phone Showcase</value>
+    <value>AF Windows Phone Ukázka</value>
   </data>
 </root>

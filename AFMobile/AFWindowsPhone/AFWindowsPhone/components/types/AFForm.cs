@@ -90,7 +90,7 @@ namespace AFWindowsPhone.builders.components.types
                         // If road end then add this property as inner propety
                         if (i + 1 == roadTrace.Length)
                         {
-                            startPoint.addPropertyAndValue(roadPoint, (String)data);
+                            startPoint.addPropertyAndValue(roadPoint, (String) data);
                         }
                         else {
                             // Otherwise it will be inner class so add if doesn't exist continue.

@@ -1,15 +1,12 @@
-﻿using AFWindowsPhone.builders.components.types;
-using AFWindowsPhone.Common;
+﻿using AFWindowsPhone.Common;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
-using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,78 +15,36 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.Web.Http;
-using AFWindowsPhone.builders.components.parts;
-using AFWindowsPhone.showcase;
-using AFWindowsPhone.utils;
+using AFWindowsPhone.builders.components.types;
+using AFWindowsPhone.showcase.skins;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
-namespace AFWindowsPhone
+namespace AFWindowsPhone.showcase.pages
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LoginPage : Page
+    public sealed partial class MyAbsencesPage : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public LoginPage()
+        public MyAbsencesPage()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
-      
-            AFForm login = (AFForm) AFWindowsPhone.getInstance().getFormBuilder().initBuilder(ShowcaseConstants.LOGIN_FORM, "connection.xml", ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).createComponent();
-            ContentRoot.Children.Add(login.getView());
-            Button loginBtn = new Button();
-            loginBtn.Content = "Login";
-            loginBtn.HorizontalAlignment = HorizontalAlignment.Right;
-            loginBtn.Click += LoginBtn_Click;
-            ContentRoot.Children.Add(loginBtn);
-        }
-        private void doLogin(AFForm form)
-        {
-            AFField usernameField = form.getFieldById("username");
-            AFField passwordField = form.getFieldById("password");
-            if (usernameField != null && passwordField != null)
-            {
-                //save user to shared preferences
-                String username = (String)form.getDataFromFieldWithId("username");
-                String password = (String)form.getDataFromFieldWithId("password");
-                ShowcaseUtils.setUserInPreferences(username, password);
-                
-                //change content
-                Frame.Navigate(typeof(WelcomePage)); //neco je tu spatne
-                if (this.Frame.CanGoBack)
-                {
-                    this.Frame.BackStack.RemoveAt(0);
-                }
-            }
-            //success
-        }
 
-        private async void LoginBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (AFWindowsPhone.getInstance().getCreatedComponents().ContainsKey(ShowcaseConstants.LOGIN_FORM)) { 
-                AFForm form = (AFForm) AFWindowsPhone.getInstance().getCreatedComponents()[ShowcaseConstants.LOGIN_FORM];
-                if(form.validateData())
-                {
-                    try {
-                        await form.sendData();
-
-                        doLogin(form);
-                    }
-                    catch (Exception ex)
-                    {
-                        await new MessageDialog("Login failed").ShowAsync();
-                        Debug.WriteLine(ex.StackTrace);
-                    }
-                }
-            }
+            AFList myAbsencesList = (AFList) AFWindowsPhone.getInstance()
+                .getListBuilder()
+                .initBuilder(ShowcaseConstants.MY_ABSENCES_LIST, "connection.xml",
+                    ShowcaseConstants.MY_ABSENCES_CONNECTION_KEY, ShowcaseUtils.getUserCredentials())
+                .setSkin(new MyAbsencesSkin())
+                .createComponent();
+            ContentRoot.Children.Add(myAbsencesList.getView());
         }
 
         /// <summary>

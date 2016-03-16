@@ -15,19 +15,22 @@ namespace AFWindowsPhone.builders
     {
         public override AFComponent createComponent()
         {
-            /*initializeConnections();
-            String modelResponse = await getModelResponse();
-            //create form from response
+            initializeConnections();
+            var modelTask = Task.Run(getModelResponse);
+            modelTask.Wait();
+            String modelResponse = modelTask.Result;
+            //create list from response
             AFList list = (AFList)buildComponent(modelResponse, SupportedComponents.LIST);
             //fill it with data (if there are some)
-            String data = await getDataResponse();
+            var dataTask = Task.Run(getDataResponse);
+            dataTask.Wait();
+            String data = dataTask.Result;
             if (data != null)
             {
                 list.insertData(data);
             }
             AFWindowsPhone.getInstance().addCreatedComponent(getComponentKeyName(), list);
-            return list;*/
-            return null;
+            return list;
         }
 
         protected override FrameworkElement buildComponentView(AFComponent component)
@@ -47,7 +50,7 @@ namespace AFWindowsPhone.builders
             else
             {
                 listView.Height = getSkin().getListHeight();
-            }
+            }         
       
             listView.Margin = new Thickness(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
@@ -58,16 +61,11 @@ namespace AFWindowsPhone.builders
                 listView.BorderThickness = new Thickness(getSkin().getListBorderWidth());
             }
            
+            //TODO not working 
             //set scroll bar visibility
-            if (getSkin().isListScrollBarAlwaysVisible())
-            {
-                ScrollViewer.SetVerticalScrollBarVisibility(listView, ScrollBarVisibility.Visible);
-            }
-            else
-            {
-                ScrollViewer.SetVerticalScrollBarVisibility(listView, ScrollBarVisibility.Auto);
-            }
-            
+            ScrollViewer.SetVerticalScrollBarVisibility(listView,
+                getSkin().isListScrollBarAlwaysVisible() ? ScrollBarVisibility.Visible : ScrollBarVisibility.Auto);
+
             //listView.setBackgroundColor(getSkin().getListBackgroundColor());
             ((AFList)component).setListView(listView);
             return listView;

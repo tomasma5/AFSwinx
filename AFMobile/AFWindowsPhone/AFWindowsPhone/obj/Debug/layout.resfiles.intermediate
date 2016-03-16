@@ -8,10 +8,13 @@ AFWindowsPhone.xr.xml
 App.xbf
 ItemPage.xbf
 PivotPage.xbf
-showcase\LoginPage.xbf
-showcase\ProfilePage.xbf
-showcase\WelcomePage.xbf
+showcase\pages\AbsenceManagementPage.xbf
+showcase\pages\LoginPage.xbf
+showcase\pages\MyAbsencesPage.xbf
+showcase\pages\ProfilePage.xbf
+showcase\pages\SupportedCountriesPage.xbf
+showcase\pages\WelcomePage.xbf
 Common\ReadMe.txt
 connection.xml
 DataModel\SampleData.json
-showcase\launcher_icon-web.png
+showcase\pages\launcher_icon-web.png

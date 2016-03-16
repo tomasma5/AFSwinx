@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace AFWindowsPhone.showcase
 {
@@ -44,5 +45,6 @@ namespace AFWindowsPhone.showcase
             String username = (String) localSettings.Values["username"];
             return username;
         }
+
     }
 }

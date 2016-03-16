@@ -120,7 +120,7 @@ namespace AFWindowsPhone.builders
             StackPanel componentView = new StackPanel();
             //componentView.setLayoutParams(getSkin().getTopLayoutParams());
             JSONParser parser = new JSONDefinitionParser();
-            JsonObject jsonObj = JsonObject.Parse(modelResponse)[(Constants.CLASS_INFO)].GetObject();
+            JsonObject jsonObj = (JsonObject) Utils.TryToGetValueFromJson(JsonObject.Parse(modelResponse)[(Constants.CLASS_INFO)]);
             ClassDefinition classDef = parser.parse(jsonObj);
             prepareComponent(classDef, component, 0, false, new StringBuilder());
             FrameworkElement view = buildComponentView(component);
@@ -177,9 +177,10 @@ namespace AFWindowsPhone.builders
             return skin;
         }
 
-        public void setSkin(Skin skin)
+        public AFComponentBuilder<T> setSkin(Skin skin)
         {
             this.skin = skin;
+            return this;
         }
 
     }

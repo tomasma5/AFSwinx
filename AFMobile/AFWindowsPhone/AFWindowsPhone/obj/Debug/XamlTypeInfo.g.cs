@@ -124,7 +124,7 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[12];
+            _typeNameTable = new string[15];
             _typeNameTable[0] = "AFWindowsPhone.ItemPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
@@ -133,12 +133,15 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
             _typeNameTable[5] = "AFWindowsPhone.Common.ObservableDictionary";
             _typeNameTable[6] = "Object";
             _typeNameTable[7] = "String";
-            _typeNameTable[8] = "AFWindowsPhone.showcase.ProfilePage";
-            _typeNameTable[9] = "AFWindowsPhone.LoginPage";
-            _typeNameTable[10] = "AFWindowsPhone.PivotPage";
-            _typeNameTable[11] = "AFWindowsPhone.showcase.WelcomePage";
+            _typeNameTable[8] = "AFWindowsPhone.showcase.AbsenceManagementPage";
+            _typeNameTable[9] = "AFWindowsPhone.showcase.pages.MyAbsencesPage";
+            _typeNameTable[10] = "AFWindowsPhone.showcase.ProfilePage";
+            _typeNameTable[11] = "AFWindowsPhone.LoginPage";
+            _typeNameTable[12] = "AFWindowsPhone.PivotPage";
+            _typeNameTable[13] = "AFWindowsPhone.showcase.pages.SupportedCountriesPage";
+            _typeNameTable[14] = "AFWindowsPhone.showcase.WelcomePage";
 
-            _typeTable = new global::System.Type[12];
+            _typeTable = new global::System.Type[15];
             _typeTable[0] = typeof(global::AFWindowsPhone.ItemPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
@@ -147,10 +150,13 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
             _typeTable[5] = typeof(global::AFWindowsPhone.Common.ObservableDictionary);
             _typeTable[6] = typeof(global::System.Object);
             _typeTable[7] = typeof(global::System.String);
-            _typeTable[8] = typeof(global::AFWindowsPhone.showcase.ProfilePage);
-            _typeTable[9] = typeof(global::AFWindowsPhone.LoginPage);
-            _typeTable[10] = typeof(global::AFWindowsPhone.PivotPage);
-            _typeTable[11] = typeof(global::AFWindowsPhone.showcase.WelcomePage);
+            _typeTable[8] = typeof(global::AFWindowsPhone.showcase.AbsenceManagementPage);
+            _typeTable[9] = typeof(global::AFWindowsPhone.showcase.pages.MyAbsencesPage);
+            _typeTable[10] = typeof(global::AFWindowsPhone.showcase.ProfilePage);
+            _typeTable[11] = typeof(global::AFWindowsPhone.LoginPage);
+            _typeTable[12] = typeof(global::AFWindowsPhone.PivotPage);
+            _typeTable[13] = typeof(global::AFWindowsPhone.showcase.pages.SupportedCountriesPage);
+            _typeTable[14] = typeof(global::AFWindowsPhone.showcase.WelcomePage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -187,10 +193,13 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
 
         private object Activate_0_ItemPage() { return new global::AFWindowsPhone.ItemPage(); }
         private object Activate_5_ObservableDictionary() { return new global::AFWindowsPhone.Common.ObservableDictionary(); }
-        private object Activate_8_ProfilePage() { return new global::AFWindowsPhone.showcase.ProfilePage(); }
-        private object Activate_9_LoginPage() { return new global::AFWindowsPhone.LoginPage(); }
-        private object Activate_10_PivotPage() { return new global::AFWindowsPhone.PivotPage(); }
-        private object Activate_11_WelcomePage() { return new global::AFWindowsPhone.showcase.WelcomePage(); }
+        private object Activate_8_AbsenceManagementPage() { return new global::AFWindowsPhone.showcase.AbsenceManagementPage(); }
+        private object Activate_9_MyAbsencesPage() { return new global::AFWindowsPhone.showcase.pages.MyAbsencesPage(); }
+        private object Activate_10_ProfilePage() { return new global::AFWindowsPhone.showcase.ProfilePage(); }
+        private object Activate_11_LoginPage() { return new global::AFWindowsPhone.LoginPage(); }
+        private object Activate_12_PivotPage() { return new global::AFWindowsPhone.PivotPage(); }
+        private object Activate_13_SupportedCountriesPage() { return new global::AFWindowsPhone.showcase.pages.SupportedCountriesPage(); }
+        private object Activate_14_WelcomePage() { return new global::AFWindowsPhone.showcase.WelcomePage(); }
         private void MapAdd_5_ObservableDictionary(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.String, global::System.Object>)instance;
@@ -253,36 +262,63 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
                 xamlType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 8:   //  AFWindowsPhone.showcase.ProfilePage
+            case 8:   //  AFWindowsPhone.showcase.AbsenceManagementPage
                 userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_8_ProfilePage;
+                userType.Activator = Activate_8_AbsenceManagementPage;
                 userType.AddMemberName("NavigationHelper");
                 userType.AddMemberName("DefaultViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 9:   //  AFWindowsPhone.LoginPage
+            case 9:   //  AFWindowsPhone.showcase.pages.MyAbsencesPage
                 userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_9_LoginPage;
+                userType.Activator = Activate_9_MyAbsencesPage;
                 userType.AddMemberName("NavigationHelper");
                 userType.AddMemberName("DefaultViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 10:   //  AFWindowsPhone.PivotPage
+            case 10:   //  AFWindowsPhone.showcase.ProfilePage
                 userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_10_PivotPage;
+                userType.Activator = Activate_10_ProfilePage;
                 userType.AddMemberName("NavigationHelper");
                 userType.AddMemberName("DefaultViewModel");
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
 
-            case 11:   //  AFWindowsPhone.showcase.WelcomePage
+            case 11:   //  AFWindowsPhone.LoginPage
                 userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_11_WelcomePage;
+                userType.Activator = Activate_11_LoginPage;
+                userType.AddMemberName("NavigationHelper");
+                userType.AddMemberName("DefaultViewModel");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 12:   //  AFWindowsPhone.PivotPage
+                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_12_PivotPage;
+                userType.AddMemberName("NavigationHelper");
+                userType.AddMemberName("DefaultViewModel");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 13:   //  AFWindowsPhone.showcase.pages.SupportedCountriesPage
+                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_13_SupportedCountriesPage;
+                userType.AddMemberName("NavigationHelper");
+                userType.AddMemberName("DefaultViewModel");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 14:   //  AFWindowsPhone.showcase.WelcomePage
+                userType = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_14_WelcomePage;
                 userType.AddMemberName("NavigationHelper");
                 userType.AddMemberName("DefaultViewModel");
                 userType.SetIsLocalType();
@@ -303,42 +339,72 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
             var that = (global::AFWindowsPhone.ItemPage)instance;
             return that.DefaultViewModel;
         }
-        private object get_2_ProfilePage_NavigationHelper(object instance)
+        private object get_2_AbsenceManagementPage_NavigationHelper(object instance)
+        {
+            var that = (global::AFWindowsPhone.showcase.AbsenceManagementPage)instance;
+            return that.NavigationHelper;
+        }
+        private object get_3_AbsenceManagementPage_DefaultViewModel(object instance)
+        {
+            var that = (global::AFWindowsPhone.showcase.AbsenceManagementPage)instance;
+            return that.DefaultViewModel;
+        }
+        private object get_4_MyAbsencesPage_NavigationHelper(object instance)
+        {
+            var that = (global::AFWindowsPhone.showcase.pages.MyAbsencesPage)instance;
+            return that.NavigationHelper;
+        }
+        private object get_5_MyAbsencesPage_DefaultViewModel(object instance)
+        {
+            var that = (global::AFWindowsPhone.showcase.pages.MyAbsencesPage)instance;
+            return that.DefaultViewModel;
+        }
+        private object get_6_ProfilePage_NavigationHelper(object instance)
         {
             var that = (global::AFWindowsPhone.showcase.ProfilePage)instance;
             return that.NavigationHelper;
         }
-        private object get_3_ProfilePage_DefaultViewModel(object instance)
+        private object get_7_ProfilePage_DefaultViewModel(object instance)
         {
             var that = (global::AFWindowsPhone.showcase.ProfilePage)instance;
             return that.DefaultViewModel;
         }
-        private object get_4_LoginPage_NavigationHelper(object instance)
+        private object get_8_LoginPage_NavigationHelper(object instance)
         {
             var that = (global::AFWindowsPhone.LoginPage)instance;
             return that.NavigationHelper;
         }
-        private object get_5_LoginPage_DefaultViewModel(object instance)
+        private object get_9_LoginPage_DefaultViewModel(object instance)
         {
             var that = (global::AFWindowsPhone.LoginPage)instance;
             return that.DefaultViewModel;
         }
-        private object get_6_PivotPage_NavigationHelper(object instance)
+        private object get_10_PivotPage_NavigationHelper(object instance)
         {
             var that = (global::AFWindowsPhone.PivotPage)instance;
             return that.NavigationHelper;
         }
-        private object get_7_PivotPage_DefaultViewModel(object instance)
+        private object get_11_PivotPage_DefaultViewModel(object instance)
         {
             var that = (global::AFWindowsPhone.PivotPage)instance;
             return that.DefaultViewModel;
         }
-        private object get_8_WelcomePage_NavigationHelper(object instance)
+        private object get_12_SupportedCountriesPage_NavigationHelper(object instance)
+        {
+            var that = (global::AFWindowsPhone.showcase.pages.SupportedCountriesPage)instance;
+            return that.NavigationHelper;
+        }
+        private object get_13_SupportedCountriesPage_DefaultViewModel(object instance)
+        {
+            var that = (global::AFWindowsPhone.showcase.pages.SupportedCountriesPage)instance;
+            return that.DefaultViewModel;
+        }
+        private object get_14_WelcomePage_NavigationHelper(object instance)
         {
             var that = (global::AFWindowsPhone.showcase.WelcomePage)instance;
             return that.NavigationHelper;
         }
-        private object get_9_WelcomePage_DefaultViewModel(object instance)
+        private object get_15_WelcomePage_DefaultViewModel(object instance)
         {
             var that = (global::AFWindowsPhone.showcase.WelcomePage)instance;
             return that.DefaultViewModel;
@@ -363,52 +429,88 @@ namespace AFWindowsPhone.AFWindowsPhone_XamlTypeInfo
                 xamlMember.Getter = get_1_ItemPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
+            case "AFWindowsPhone.showcase.AbsenceManagementPage.NavigationHelper":
+                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.AbsenceManagementPage");
+                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
+                xamlMember.Getter = get_2_AbsenceManagementPage_NavigationHelper;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "AFWindowsPhone.showcase.AbsenceManagementPage.DefaultViewModel":
+                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.AbsenceManagementPage");
+                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
+                xamlMember.Getter = get_3_AbsenceManagementPage_DefaultViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "AFWindowsPhone.showcase.pages.MyAbsencesPage.NavigationHelper":
+                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.pages.MyAbsencesPage");
+                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
+                xamlMember.Getter = get_4_MyAbsencesPage_NavigationHelper;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "AFWindowsPhone.showcase.pages.MyAbsencesPage.DefaultViewModel":
+                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.pages.MyAbsencesPage");
+                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
+                xamlMember.Getter = get_5_MyAbsencesPage_DefaultViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
             case "AFWindowsPhone.showcase.ProfilePage.NavigationHelper":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.ProfilePage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_2_ProfilePage_NavigationHelper;
+                xamlMember.Getter = get_6_ProfilePage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.showcase.ProfilePage.DefaultViewModel":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.ProfilePage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_3_ProfilePage_DefaultViewModel;
+                xamlMember.Getter = get_7_ProfilePage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.LoginPage.NavigationHelper":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.LoginPage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_4_LoginPage_NavigationHelper;
+                xamlMember.Getter = get_8_LoginPage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.LoginPage.DefaultViewModel":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.LoginPage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_5_LoginPage_DefaultViewModel;
+                xamlMember.Getter = get_9_LoginPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.PivotPage.NavigationHelper":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.PivotPage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_6_PivotPage_NavigationHelper;
+                xamlMember.Getter = get_10_PivotPage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.PivotPage.DefaultViewModel":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.PivotPage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_7_PivotPage_DefaultViewModel;
+                xamlMember.Getter = get_11_PivotPage_DefaultViewModel;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "AFWindowsPhone.showcase.pages.SupportedCountriesPage.NavigationHelper":
+                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.pages.SupportedCountriesPage");
+                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
+                xamlMember.Getter = get_12_SupportedCountriesPage_NavigationHelper;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "AFWindowsPhone.showcase.pages.SupportedCountriesPage.DefaultViewModel":
+                userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.pages.SupportedCountriesPage");
+                xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
+                xamlMember.Getter = get_13_SupportedCountriesPage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.showcase.WelcomePage.NavigationHelper":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.WelcomePage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "NavigationHelper", "AFWindowsPhone.Common.NavigationHelper");
-                xamlMember.Getter = get_8_WelcomePage_NavigationHelper;
+                xamlMember.Getter = get_14_WelcomePage_NavigationHelper;
                 xamlMember.SetIsReadOnly();
                 break;
             case "AFWindowsPhone.showcase.WelcomePage.DefaultViewModel":
                 userType = (global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlUserType)GetXamlTypeByName("AFWindowsPhone.showcase.WelcomePage");
                 xamlMember = new global::AFWindowsPhone.AFWindowsPhone_XamlTypeInfo.XamlMember(this, "DefaultViewModel", "AFWindowsPhone.Common.ObservableDictionary");
-                xamlMember.Getter = get_9_WelcomePage_DefaultViewModel;
+                xamlMember.Getter = get_15_WelcomePage_DefaultViewModel;
                 xamlMember.SetIsReadOnly();
                 break;
             }

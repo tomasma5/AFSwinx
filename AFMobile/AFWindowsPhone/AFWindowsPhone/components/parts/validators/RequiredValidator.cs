@@ -14,7 +14,7 @@ namespace AFWindowsPhone.builders.components.parts.validators
         public bool validate(AFField field, StringBuilder errorMsgs, ValidationRule rule)
         {
             bool validationIsFine = true;
-            if (Utils.IsFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.CALENDAR))
+            if (Utils.IsFieldWritable(field.getFieldInfo().getWidgetType()))
             {
                 TextBox textfield = (TextBox) field.getFieldView();
                 if (String.IsNullOrWhiteSpace(textfield.Text))
@@ -50,6 +50,14 @@ namespace AFWindowsPhone.builders.components.parts.validators
             {
                 ComboBox cb = (ComboBox)field.getFieldView();
                 if (cb.SelectedItem == null)
+                {
+                    validationIsFine = false;
+                }
+            }
+            if (field.getFieldInfo().getWidgetType().Equals(SupportedWidgets.CALENDAR))
+            {
+                DatePicker textfield = (DatePicker)field.getFieldView();
+                if (String.IsNullOrWhiteSpace(textfield.Date.ToString()))
                 {
                     validationIsFine = false;
                 }

@@ -11,224 +11,229 @@ namespace AFWindowsPhone.builders.skins
 {
     class DefaultSkin : Skin
     {
-        public int getComponentMarginBottom()
+        public virtual int getComponentMarginBottom()
+        {
+            return 20;
+        }
+
+        public virtual int getComponentMarginLeft()
         {
             return 0;
         }
 
-        public int getComponentMarginLeft()
+        public virtual int getComponentMarginRight()
         {
             return 0;
         }
 
-        public int getComponentMarginRight()
+        public virtual int getComponentMarginTop()
         {
             return 0;
         }
 
-        public int getComponentMarginTop()
-        {
-            return 0;
-        }
-
-        public Color getFieldColor()
+        public virtual Color getFieldColor()
         {
             return Colors.Black;
         }
 
-        public FontFamily getFieldFont()
+        public virtual FontFamily getFieldFont()
         {
             return new FontFamily("Segoe UI");
         }
 
-        public int getFieldFontSize()
+        public virtual int getFieldFontSize()
         {
             return 18;
         }
 
-        public HorizontalAlignment getInputHorizontalAlignment()
+        public virtual HorizontalAlignment getInputHorizontalAlignment()
         {
             return HorizontalAlignment.Stretch;
         }
 
-        public int getInputWidth()
+        public virtual int getInputWidth()
         {
             return 200;
         }
 
-        public Color getLabelColor()
+        public virtual Color getLabelColor()
         {
             return Colors.White;
         }
 
-        public FontFamily getLabelFont()
+        public virtual FontFamily getLabelFont()
         {
             return new FontFamily("Segoe UI");
         }
 
-        public int getLabelFontSize()
+        public virtual int getLabelFontSize()
         {
             return 18;
         }
 
-        public int getLabelHeight()
+        public virtual int getLabelHeight()
         {
             return -1; //see label verticall alignement
         }
 
-        public HorizontalAlignment getLabelHorizontalAlignment()
+        public virtual HorizontalAlignment getLabelHorizontalAlignment()
         {
             return HorizontalAlignment.Left;
         }
 
-        public VerticalAlignment getLabelVerticalAlignment()
+        public virtual VerticalAlignment getLabelVerticalAlignment()
         {
             return VerticalAlignment.Stretch;
         }
 
-        public int getLabelWidth()
+        public virtual int getLabelWidth()
         {
             return 125;
         }
 
-        public Color getListBorderColor()
-        {
-            return Colors.Black;
-        }
-
-        public float getListBorderWidth()
-        {
-            return 5;
-        }
-
-        public int getListContentWidth()
-        {
-            return -1; //see ListHorizontalAlignment
-        }
-
-        public int getListHeight()
-        {
-            return 200;
-        }
-
-        public HorizontalAlignment getListHorizontalAlignment()
+        public HorizontalAlignment getListContentHorizontalAlignment()
         {
             return HorizontalAlignment.Stretch;
         }
 
-        public Color getListItemBackgroundColor()
-        {
-            return Colors.Transparent;
-        }
-
-        public Color getListItemNameColor()
-        {
-            return Colors.Red;
-        }
-
-        public FontFamily getListItemNameFont()
-        {
-            return new FontFamily("Segoe UI");
-        }
-
-        public int getListItemNamePaddingBottom()
-        {
-            return 0;
-        }
-
-        public int getListItemNamePaddingLeft()
-        {
-            return 10;
-        }
-
-        public int getListItemNamePaddingRight()
-        {
-            return 0;
-        }
-
-        public int getListItemNamePaddingTop()
-        {
-            return 5;
-        }
-
-        public int getListItemNameSize()
-        {
-            return 16;
-        }
-
-        public int getListItemsTextSize()
-        {
-            return 10;
-        }
-
-        public Color getListItemTextColor()
+        public virtual Color getListBorderColor()
         {
             return Colors.White;
         }
 
-        public FontFamily getListItemTextFont()
+        public virtual float getListBorderWidth()
+        {
+            return 1;
+        }
+
+        public virtual int getListContentWidth()
+        {
+            return -1; //see ListContentHorizontalAlignment
+        }
+
+        public virtual int getListHeight()
+        {
+            return 200;
+        }
+
+        public virtual HorizontalAlignment getListHorizontalAlignment()
+        {
+            return HorizontalAlignment.Stretch;
+        }
+
+        public virtual Color getListItemBackgroundColor()
+        {
+            return Colors.Transparent;
+        }
+
+        public virtual Color getListItemNameColor()
+        {
+            return Colors.LightSkyBlue;
+        }
+
+        public virtual FontFamily getListItemNameFont()
         {
             return new FontFamily("Segoe UI");
         }
 
-        public int getListItemTextPaddingBottom()
-        {
-            return 3;
-        }
-
-        public int getListItemTextPaddingLeft()
-        {
-            return 10;
-        }
-
-        public int getListItemTextPaddingRight()
-        {
-            return 5;
-        }
-
-        public int getListItemTextPaddingTop()
+        public virtual int getListItemNamePaddingBottom()
         {
             return 0;
         }
 
-        public VerticalAlignment getListVerticalAlignment()
+        public virtual int getListItemNamePaddingLeft()
         {
-            return VerticalAlignment.Stretch;
+            return 10;
         }
 
-        public int getListWidth()
+        public virtual int getListItemNamePaddingRight()
         {
-            return -1; //see ListHorizontal
+            return 0;
         }
 
-        public Color getValidationColor()
+        public virtual int getListItemNamePaddingTop()
         {
-            return Colors.Red;
+            return 0;
         }
 
-        public FontFamily getValidationFont()
+        public virtual int getListItemNameSize()
+        {
+            return 20;
+        }
+
+        public virtual int getListItemsTextSize()
+        {
+            return 16;
+        }
+
+        public virtual Color getListItemTextColor()
+        {
+            return Colors.White;
+        }
+
+        public virtual FontFamily getListItemTextFont()
         {
             return new FontFamily("Segoe UI");
         }
 
-        public int getValidationFontSize()
+        public virtual int getListItemTextPaddingBottom()
+        {
+            return 3;
+        }
+
+        public virtual int getListItemTextPaddingLeft()
+        {
+            return 10;
+        }
+
+        public virtual int getListItemTextPaddingRight()
+        {
+            return 5;
+        }
+
+        public virtual int getListItemTextPaddingTop()
+        {
+            return 0;
+        }
+
+        public virtual VerticalAlignment getListVerticalAlignment()
+        {
+            return VerticalAlignment.Stretch;
+        }
+
+        public virtual int getListWidth()
+        {
+            return -1; //see ListHorizontal
+        }
+
+        public virtual Color getValidationColor()
+        {
+            return Colors.Red;
+        }
+
+        public virtual FontFamily getValidationFont()
+        {
+            return new FontFamily("Segoe UI");
+        }
+
+        public virtual int getValidationFontSize()
         {
             return 18;
         }
 
-        public bool isListItemNameLabelVisible()
+        public virtual bool isListItemNameLabelVisible()
         {
             return true;
         }
 
-        public bool isListItemTextLabelsVisible()
+        public virtual bool isListItemTextLabelsVisible()
         {
             return true;
         }
 
-        public bool isListScrollBarAlwaysVisible()
+        public virtual bool isListScrollBarAlwaysVisible()
         {
-            return false;
+            return true;
         }
     }
 }

@@ -74,6 +74,7 @@ namespace AFWindowsPhone.builders.skins
         int getListItemNamePaddingBottom();
 
         int getListContentWidth();
+        HorizontalAlignment getListContentHorizontalAlignment();
 
         Color getListBorderColor();
         float getListBorderWidth();

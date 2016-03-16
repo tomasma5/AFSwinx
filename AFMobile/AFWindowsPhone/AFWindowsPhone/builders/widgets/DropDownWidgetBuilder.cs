@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AFWindowsPhone.builders.components.parts;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using AFWindowsPhone.builders.skins;
 using AFWindowsPhone.utils;
 
@@ -21,6 +22,10 @@ namespace AFWindowsPhone.builders.widgets
         public override FrameworkElement buildFieldView()
         {
             ComboBox comboBox = new ComboBox();
+            comboBox.FontSize = getSkin().getFieldFontSize();
+            comboBox.FontFamily = getSkin().getFieldFont();
+            //note - do not set color - should be according to wp theme
+
             List<String> optionsList = convertOptionsIntoList();
             if (optionsList != null)
             {
@@ -49,11 +54,11 @@ namespace AFWindowsPhone.builders.widgets
             }
             if (comboBox.SelectedItem.ToString().Equals(Localization.translate("option.yes")))
             {
-                return true;
+                return "true";
             }
             else if (comboBox.SelectedItem.ToString().Equals(Localization.translate("option.no")))
             {
-                return false;
+                return "false";
             }
             else {
                 return comboBox.SelectedItem.ToString();
@@ -69,11 +74,11 @@ namespace AFWindowsPhone.builders.widgets
                 field.setActualData(comboBox.SelectedItem);
                 return;
             }
-            if (value.ToString().Equals("true"))
+            if (value.ToString().ToLower().Equals("true"))
             {
                 value = Localization.translate("option.yes");
             }
-            else if (value.ToString().Equals("false"))
+            else if (value.ToString().ToLower().Equals("false"))
             {
                 value = Localization.translate("option.no");
             }

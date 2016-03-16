@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using AFWindowsPhone.enums;
+using AFWindowsPhone.utils;
 
 // The Pivot Application template is documented at http://go.microsoft.com/fwlink/?LinkID=391641
 
@@ -36,6 +38,7 @@ namespace AFWindowsPhone
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+            Localization.changeLanguage(SupportedLanguages.CZ);
         }
 
         /// <summary>

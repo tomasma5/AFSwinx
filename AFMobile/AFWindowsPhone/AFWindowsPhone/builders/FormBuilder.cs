@@ -39,7 +39,6 @@ namespace AFWindowsPhone.builders
             StackPanel formView = new StackPanel();
             formView.Margin = new Thickness(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
-    
             //set form layout orientation
             if (form.getLayoutOrientation().Equals(LayoutOrientation.AXISX))
             { //AXIS X
