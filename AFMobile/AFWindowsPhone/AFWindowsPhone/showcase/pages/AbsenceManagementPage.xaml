@@ -23,12 +23,14 @@
 
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="AF Windows Phone Showcase" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="Absence Management" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontSize="40"/>
+            <TextBlock x:Uid="AFTitle" Text="AF Windows Phone Showcase" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            <TextBlock  x:Uid="AbsenceManagementPageName" Text="Absence Management" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" FontSize="40"/>
         </StackPanel>
 
         <ScrollViewer Grid.Row="1" HorizontalAlignment="Stretch">
-            <StackPanel x:Name="ContentRoot" Margin="19,9.5,19,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <StackPanel x:Name="ContentRoot" Margin="19,9.5,19,0" Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <StackPanel x:Name="AMListPanel" Orientation="Vertical" HorizontalAlignment="Stretch"></StackPanel>
+                <StackPanel x:Name="AMFormPanel" Orientation="Vertical" HorizontalAlignment="Center"></StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

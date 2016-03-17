@@ -50,7 +50,10 @@ namespace AFWindowsPhone.builders
             else
             {
                 listView.Height = getSkin().getListHeight();
-            }         
+            }
+
+            //strech all items too width of list view. ItemContainerStrechStyle can be found in App.xaml
+            listView.ItemContainerStyle = Application.Current.Resources["ItemContainerStretchStyle"] as Style;
       
             listView.Margin = new Thickness(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());

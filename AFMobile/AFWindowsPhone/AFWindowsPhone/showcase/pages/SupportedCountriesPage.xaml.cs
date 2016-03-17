@@ -39,6 +39,11 @@ namespace AFWindowsPhone.showcase.pages
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            
+            //show loading indicator
+            StatusBarProgressIndicator progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
+            progressbar.Text = Localization.translate("please.wait");
+            progressbar.ShowAsync();
 
             AFList countryList =
                 (AFList)
@@ -56,15 +61,15 @@ namespace AFWindowsPhone.showcase.pages
             CountryFormPanel.Children.Add(countryForm.getView());
 
             Button perform = new Button();
-            perform.Content = "Perform";
+            perform.Content = Localization.translate("btn.perform");
             perform.Click += Perform_Click;
 
             Button reset = new Button();
-            reset.Content = "Reset";
+            reset.Content = Localization.translate("btn.reset");
             reset.Click += Reset_Click;
 
             Button clear = new Button();
-            clear.Content = "Clear";
+            clear.Content = Localization.translate("btn.clear");
             clear.Click += Clear_Click;
 
             StackPanel buttons = new StackPanel();
@@ -77,6 +82,8 @@ namespace AFWindowsPhone.showcase.pages
 
             countryList.getListView().IsItemClickEnabled = true;
             countryList.getListView().ItemClick += OnItemClick;
+
+            progressbar.HideAsync();
         }
 
         private void OnItemClick(object sender, ItemClickEventArgs itemClickEventArgs)
@@ -124,14 +131,14 @@ namespace AFWindowsPhone.showcase.pages
                     await progressbar.ShowAsync();
                     await form.sendData();
                     await progressbar.HideAsync();
-                    await new MessageDialog("Add or update was successfull").ShowAsync();
+                    await new MessageDialog(Localization.translate("addOrUpdate.success")).ShowAsync();
                     //refresh page
                     Frame.GoBack();
                     Frame.GoForward();
                 } 
                 catch (Exception ex)
                 {
-                    await new MessageDialog("Add or update failed").ShowAsync();
+                    await new MessageDialog(Localization.translate("addOrUpdate.failed")).ShowAsync();
                     Debug.WriteLine(ex.StackTrace);
                 }
                 }

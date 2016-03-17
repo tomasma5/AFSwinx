@@ -150,7 +150,151 @@
   <data name="SecondaryButton2.Label" xml:space="preserve">
     <value>secondary command 2</value>
   </data>
+  <data name="absenceInstance.duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="absenceInstance.endDate" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="absenceInstance.startDate" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="absenceInstance.state" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="absenceInstances.accepted" xml:space="preserve">
+    <value>Accepted</value>
+  </data>
+  <data name="absenceInstances.cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="absenceInstances.denied" xml:space="preserve">
+    <value>Denied</value>
+  </data>
+  <data name="absenceInstances.requested" xml:space="preserve">
+    <value>Requested</value>
+  </data>
+  <data name="AbsenceManagementPageName.Text" xml:space="preserve">
+    <value>Absence management</value>
+  </data>
+  <data name="absenceType.active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="absenceType.maxDaysPerYear" xml:space="preserve">
+    <value>Year quote</value>
+  </data>
+  <data name="absenceType.name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="addOrUpdate.failed" xml:space="preserve">
+    <value>Add or update failed.</value>
+  </data>
+  <data name="addOrUpdate.success" xml:space="preserve">
+    <value>Add or update was successful.</value>
+  </data>
   <data name="AFTitle.Text" xml:space="preserve">
     <value>AF Windows Phone Showcase</value>
+  </data>
+  <data name="btn.clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="btn.login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="btn.logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="btn.perform" xml:space="preserve">
+    <value>Perform</value>
+  </data>
+  <data name="btn.reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="btn.update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="CountriesPageName.Text" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="country.isActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="country.name" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="country.shortCut" xml:space="preserve">
+    <value>Shortcut</value>
+  </data>
+  <data name="login.userName" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="LoginPageName.Text" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="menu.absenceManagement" xml:space="preserve">
+    <value>Absence Management</value>
+  </data>
+  <data name="menu.countries" xml:space="preserve">
+    <value>SupportedCountries</value>
+  </data>
+  <data name="menu.myAbsences" xml:space="preserve">
+    <value>My absences</value>
+  </data>
+  <data name="menu.profile" xml:space="preserve">
+    <value>User profile</value>
+  </data>
+  <data name="MyAbsencesPageName.Text" xml:space="preserve">
+    <value>My absences</value>
+  </data>
+  <data name="option.no" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="option.yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="person.age" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="person.firstName" xml:space="preserve">
+    <value>First name</value>
+  </data>
+  <data name="person.lastName" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="person.updateFailed" xml:space="preserve">
+    <value>Update of profile failed.</value>
+  </data>
+  <data name="person.updateSuccess" xml:space="preserve">
+    <value>Update of profile was successful.</value>
+  </data>
+  <data name="please.wait" xml:space="preserve">
+    <value>Please wait...</value>
+  </data>
+  <data name="ProfilePageName.Text" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="validation.lessThan" xml:space="preserve">
+    <value>Value must be less or equal than value in field</value>
+  </data>
+  <data name="validation.maxchars" xml:space="preserve">
+    <value>Maximum of chars is</value>
+  </data>
+  <data name="validation.maxval" xml:space="preserve">
+    <value>Maximum value is</value>
+  </data>
+  <data name="validation.minval" xml:space="preserve">
+    <value>Minimum value is</value>
+  </data>
+  <data name="validation.required" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="welcome.msg" xml:space="preserve">
+    <value>Welcome user</value>
+  </data>
+  <data name="WelcomePageName.Text" xml:space="preserve">
+    <value>Welcome page</value>
   </data>
 </root>

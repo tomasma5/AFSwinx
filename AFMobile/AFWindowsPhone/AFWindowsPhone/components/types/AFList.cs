@@ -69,17 +69,21 @@ namespace AFWindowsPhone.builders.components.types
         private void insertDataObject(JsonObject jsonObject, StringBuilder road, Dictionary<String, String> row)
         {
             foreach(String key in jsonObject.Keys){
-                if (jsonObject[key].ValueType == JsonValueType.Object){
+                if (jsonObject[key].ValueType == JsonValueType.Object ){
                     String roadBackup = road.ToString();
                     road.Append(key);
                     road.Append(".");
-                    insertDataObject(jsonObject[key].GetObject(), road, row); //parse class types
+                    insertDataObject((JsonObject) Utils.TryToGetValueFromJson(jsonObject[key]), road, row); //parse class types
                     road = new StringBuilder(roadBackup);
                 }else {
                     AFField field = getFieldById(road + key);
                     if (field != null)
                     {
                         Object data = Utils.TryToGetValueFromJson(jsonObject[key]);
+                        if (data == null)
+                        {
+                            data = "";
+                        }
                         AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
                         builder.setData(field, data);
                         row.Add(road + key, field.getActualData().ToString());
@@ -173,14 +177,17 @@ namespace AFWindowsPhone.builders.components.types
                 panel.Width = getSkin().getListContentWidth();
             }
             panel.Background = new SolidColorBrush(getSkin().getListItemBackgroundColor());
-            //vertical layer for text
-            StackPanel layout = new StackPanel();
-            if (getLayoutOrientation().Equals(LayoutOrientation.AXISX))
+            
+            Grid layout = new Grid();
+            for (int j = 0; j < getLayoutDefinitions().getNumberOfColumns(); j++)
             {
-                layout.Orientation = Orientation.Vertical;;
-            }
-            else {
-                layout.Orientation = Orientation.Horizontal;
+                if (getLayoutOrientation().Equals(LayoutOrientation.AXISX))
+                {
+                    layout.ColumnDefinitions.Add(new ColumnDefinition());
+                }else if (getLayoutOrientation().Equals(LayoutOrientation.AXISY))
+                {
+                    layout.RowDefinitions.Add(new RowDefinition());                    
+                }
             }
 
             TextBlock textName = new TextBlock();
@@ -201,7 +208,8 @@ namespace AFWindowsPhone.builders.components.types
             }
 
             int i = 0;
-            StackPanel setOfFields = null;
+            int row = 0;
+            int column = 0;
             foreach (AFField field in getFields())
             {
                 if (!field.getFieldInfo().isVisible())
@@ -213,49 +221,65 @@ namespace AFWindowsPhone.builders.components.types
                 {
                     if (field.getFieldInfo().getLabelText() != null)
                     {
-                        label = getSkin().isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabelText()) + ": " : "";
+                        label = getSkin().isListItemNameLabelVisible()
+                            ? Localization.translate(field.getFieldInfo().getLabelText()) + ": "
+                            : "";
                     }
+                   
                     textName.Text = label + getRows()[position][field.getId()];
+                   
+                    layout.RowDefinitions.Add(new RowDefinition());
+                    Grid.SetRow(textName, row);
+                    Grid.SetColumnSpan(textName, getLayoutDefinitions().getNumberOfColumns());
                     layout.Children.Add(textName);
                 }
-                else {
+                else
+                {
                     if (field.getFieldInfo().getLabelText() != null)
                     {
-                        label = getSkin().isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabelText()) + ": " : "";
+                        label = getSkin().isListItemTextLabelsVisible()
+                            ? Localization.translate(field.getFieldInfo().getLabelText()) + ": "
+                            : "";
                     }
                     TextBlock text = new TextBlock();
                     text.FontSize = getSkin().getListItemsTextSize();
                     text.Foreground = new SolidColorBrush(getSkin().getListItemTextColor());
                     text.FontFamily = getSkin().getListItemTextFont();
+                  
                     text.Text = label + getRows()[position][field.getId()];
-                    text.Margin = new Thickness(getSkin().getListItemTextPaddingLeft(), getSkin().getListItemTextPaddingTop(),
-                            getSkin().getListItemTextPaddingRight(), getSkin().getListItemTextPaddingBottom());
+                    
+                    text.Margin = new Thickness(getSkin().getListItemTextPaddingLeft(),
+                        getSkin().getListItemTextPaddingTop(),
+                        getSkin().getListItemTextPaddingRight(), getSkin().getListItemTextPaddingBottom());
 
                     int numberOfColumns = getLayoutDefinitions().getNumberOfColumns();
 
-                    if ((i - 1) % numberOfColumns == 0)
+                    if ((i - 1)%numberOfColumns == 0)
                     {
-                        if (setOfFields != null)
+                        if (getLayoutOrientation().Equals(LayoutOrientation.AXISX))
                         {
-                            layout.Children.Add(setOfFields);
+                            layout.RowDefinitions.Add(new RowDefinition());
+                            row++;
+                            column = 0;
                         }
-                        setOfFields = new StackPanel();
-                        setOfFields.Orientation = setOfFieldsOrientation;
-                        setOfFields.HorizontalAlignment = HorizontalAlignment.Stretch;
+                        else if (getLayoutOrientation().Equals(LayoutOrientation.AXISY))
+                        {
+                            layout.ColumnDefinitions.Add(new ColumnDefinition());
+                            column++;
+                            row = 1;
+                        }
                     }
-                    //TODO jak predelat toto 
-                    /*if (setOfFieldsOrientation == Orientation.Horizontal)
-                    {
-                        text.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f / numberOfColumns));
-                    }
-                    else {
-                        text.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                    }*/
-                    setOfFields.Children.Add(text);
+                    Grid.SetRow(text, row);
+                    Grid.SetColumn(text, column);
+                    layout.Children.Add(text);
 
-                    if (i == getVisibleFieldsCount() - 1)
+                    if (getLayoutOrientation().Equals(LayoutOrientation.AXISX))
                     {
-                        layout.Children.Add(setOfFields);
+                        column++;
+                    }
+                    else if (getLayoutOrientation().Equals(LayoutOrientation.AXISY))
+                    {
+                        row++;
                     }
                 }
                 i++;

@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using AFWindowsPhone.builders.components.types;
 using AFWindowsPhone.showcase.skins;
+using AFWindowsPhone.utils;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -38,6 +39,11 @@ namespace AFWindowsPhone.showcase.pages
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
+            //show loading indicator
+            StatusBarProgressIndicator progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
+            progressbar.Text = Localization.translate("please.wait");
+            progressbar.ShowAsync();
+
             AFList myAbsencesList = (AFList) AFWindowsPhone.getInstance()
                 .getListBuilder()
                 .initBuilder(ShowcaseConstants.MY_ABSENCES_LIST, "connection.xml",
@@ -45,6 +51,8 @@ namespace AFWindowsPhone.showcase.pages
                 .setSkin(new MyAbsencesSkin())
                 .createComponent();
             ContentRoot.Children.Add(myAbsencesList.getView());
+
+            progressbar.HideAsync();
         }
 
         /// <summary>

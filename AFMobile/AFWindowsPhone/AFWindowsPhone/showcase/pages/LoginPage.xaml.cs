@@ -41,13 +41,13 @@ namespace AFWindowsPhone
         public LoginPage()
         {
             this.InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Disabled; 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
 
             StatusBarProgressIndicator progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
             progressbar.Text = Localization.translate("please.wait");
+            progressbar.ShowAsync();
 
             CommandBar commandBar = new CommandBar();
             AppBarButton cz = new AppBarButton();
@@ -95,16 +95,19 @@ namespace AFWindowsPhone
             AFForm login = (AFForm) AFWindowsPhone.getInstance().getFormBuilder().initBuilder(ShowcaseConstants.LOGIN_FORM, "connection.xml", ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).setSkin(new LoginFormSkin()).createComponent();
             ContentRoot.Children.Add(login.getView());
             Button loginBtn = new Button();
-            loginBtn.Content = "Login";
+            loginBtn.Content = Localization.translate("btn.login");
             loginBtn.HorizontalAlignment = HorizontalAlignment.Right;
             loginBtn.Click += LoginBtn_Click;
             ContentRoot.Children.Add(loginBtn);
+
+            progressbar.HideAsync();
         }
 
         
 
         private void doLogin(AFForm form)
         {
+
             AFField usernameField = form.getFieldById("username");
             AFField passwordField = form.getFieldById("password");
             if (usernameField != null && passwordField != null)
@@ -131,8 +134,13 @@ namespace AFWindowsPhone
                 if(form.validateData())
                 {
                     try {
+
+                        StatusBarProgressIndicator progressbar = StatusBar.GetForCurrentView().ProgressIndicator;
+                        progressbar.Text = Localization.translate("please.wait");
+                        await progressbar.ShowAsync();
                         await form.sendData();
                         doLogin(form);
+                        await progressbar.HideAsync();
                     }
                     catch (Exception ex)
                     {

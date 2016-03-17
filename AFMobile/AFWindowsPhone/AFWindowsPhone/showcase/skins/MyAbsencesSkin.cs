@@ -40,7 +40,5 @@ namespace AFWindowsPhone.showcase.skins
         {
             return VerticalAlignment.Top;
         }
-
-
     }
 }

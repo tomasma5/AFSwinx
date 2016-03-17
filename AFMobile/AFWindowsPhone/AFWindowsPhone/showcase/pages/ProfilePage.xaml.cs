@@ -52,10 +52,10 @@ namespace AFWindowsPhone.showcase
             ContentRoot.Children.Add(profileForm.getView());
            
             Button updateButton = new Button();
-            updateButton.Content = "Update";
+            updateButton.Content = Localization.translate("btn.update");
             updateButton.Click += UpdateButtonOnClick;
             Button resetButton = new Button();
-            resetButton.Content = "Reset";
+            resetButton.Content = Localization.translate("btn.reset");
             resetButton.Click += ResetButtonOnClick;
             StackPanel buttons = new StackPanel();
             buttons.Orientation = Orientation.Horizontal;
@@ -91,15 +91,14 @@ namespace AFWindowsPhone.showcase
                         progressbar.Text = Localization.translate("please.wait");
                         await progressbar.ShowAsync();
                         await form.sendData();
-                        //TODO refresh form
                         await progressbar.HideAsync();
-                        await new MessageDialog("Update successfull").ShowAsync();
+                        await new MessageDialog(Localization.translate("person.updateSuccess")).ShowAsync();
                         Frame.GoBack();
                         Frame.GoForward();
                     }
                     catch (Exception ex)
                     {
-                        await new MessageDialog("Update failed").ShowAsync();
+                        await new MessageDialog(Localization.translate("person.updateFailed")).ShowAsync();
                         Debug.WriteLine(ex.StackTrace);
                     }
                 }
