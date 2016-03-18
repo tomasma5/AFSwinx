@@ -30,7 +30,7 @@ public class FieldBuilder {
         //LABEL
         TextView label = new TextView(activity);
         if (properties.getLabelText() != null && !properties.getLabelText().isEmpty()) {
-            String labelText = Localization.translate(properties.getLabelText(), activity);
+            String labelText = Localization.translate(properties.getLabelText());
             //set label position
             LabelPosition pos = properties.getLayout().getLabelPosition();
             label.setTextColor(skin.getLabelColor());
@@ -71,7 +71,7 @@ public class FieldBuilder {
         LayoutProperties layout = field.getFieldInfo().getLayout();
         //set orientation of label and field itself
         if(layout.getLayoutOrientation() != null){
-            if(layout.equals(LayoutOrientation.AXISY)){
+            if(layout.getLayoutOrientation().equals(LayoutOrientation.AXISY)){
                 fullLayout.setOrientation(LinearLayout.HORIZONTAL);
             }else if(layout.getLayoutOrientation().equals(LayoutOrientation.AXISX)){
                 fullLayout.setOrientation(LinearLayout.VERTICAL);

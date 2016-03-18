@@ -37,7 +37,7 @@ public class RequiredValidator implements AFValidator {
             }
         }
         if(!validationIsFine){
-            errorMsgs.append(Localization.translate("validation.required", field.getFieldView().getContext()));
+            errorMsgs.append(Localization.translate("validation.required"));
         }
         return validationIsFine;
     }

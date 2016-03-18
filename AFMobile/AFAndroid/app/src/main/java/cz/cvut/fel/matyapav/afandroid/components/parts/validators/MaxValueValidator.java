@@ -23,7 +23,7 @@ public class MaxValueValidator implements AFValidator {
             }
         }
         if(!validationIsFine){
-            errorMsgs.append(Localization.translate("validation.maxval", field.getFieldView().getContext())+" "+rule.getValue());
+            errorMsgs.append(Localization.translate("validation.maxval")+" "+rule.getValue());
         }
         return validationIsFine;
     }

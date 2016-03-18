@@ -1,10 +1,9 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
     defaultConfig {
-        applicationId "cz.cvut.fel.matyapav.afandroid"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

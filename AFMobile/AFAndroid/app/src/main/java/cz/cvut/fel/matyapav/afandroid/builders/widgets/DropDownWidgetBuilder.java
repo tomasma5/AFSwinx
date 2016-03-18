@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.afandroid.R;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldOption;
@@ -29,11 +30,10 @@ public class DropDownWidgetBuilder extends BasicBuilder {
     @Override
     public View buildFieldView(Activity activity) {
         Spinner spinner = new Spinner(activity);
-        TextView spinnerItem = new TextView(activity);
-        if(convertOptionsIntoList(activity) != null) {
+        if(convertOptionsIntoList() != null) {
             ArrayAdapter<String> dataAdapter = new MySpinnerAdapter<>(activity,
-                    android.support.design.R.layout.support_simple_spinner_dropdown_item,
-                    convertOptionsIntoList(activity), getSkin());
+                    R.layout.support_simple_spinner_dropdown_item,
+                    convertOptionsIntoList(), getSkin());
             spinner.setAdapter(dataAdapter);
         }
         if(getProperties().isReadOnly()){
@@ -51,14 +51,14 @@ public class DropDownWidgetBuilder extends BasicBuilder {
             return;
         }
         if(value.toString().equals("true")){
-            value = Localization.translate("option.yes", field.getFieldView().getContext());
+            value = Localization.translate("option.yes");
         }else if(value.toString().equals("false")){
-            value = Localization.translate("option.no", field.getFieldView().getContext());
+            value = Localization.translate("option.no");
         }
         if(field.getFieldInfo().getOptions() != null) {
             for (FieldOption option : field.getFieldInfo().getOptions()) {
                 if(option.getKey().equals(value)){
-                    value = Localization.translate(option.getValue(),field.getFieldView().getContext());
+                    value = Localization.translate(option.getValue());
                     break;
                 }
             }
@@ -78,31 +78,31 @@ public class DropDownWidgetBuilder extends BasicBuilder {
         Spinner spinner = (Spinner) field.getFieldView();
         if(field.getFieldInfo().getOptions() != null) {
             for (FieldOption option : field.getFieldInfo().getOptions()) {
-                if(Localization.translate(option.getValue(), field.getFieldView().getContext()).equals(spinner.getSelectedItem().toString())){
+                if(Localization.translate(option.getValue()).equals(spinner.getSelectedItem().toString())){
                     return option.getKey();
                 }
             }
         }
-        if(spinner.getSelectedItem().toString().equals(Localization.translate("option.yes", field.getFieldView().getContext()))){
+        if(spinner.getSelectedItem().toString().equals(Localization.translate("option.yes"))){
             return true;
-        }else if(spinner.getSelectedItem().toString().equals(Localization.translate("option.no", field.getFieldView().getContext()))){
+        }else if(spinner.getSelectedItem().toString().equals(Localization.translate("option.no"))){
             return false;
         }else {
             return spinner.getSelectedItem().toString();
         }
     }
 
-    private List<String> convertOptionsIntoList(Activity activity){
+    private List<String> convertOptionsIntoList(){
         List<String> list = new ArrayList<>();
         int i = 0;
         if(getProperties().getOptions() != null){
             for (FieldOption option : getProperties().getOptions()) {
                 if(option.getValue().toString().equals("true")){
-                    list.add(Localization.translate("option.yes", activity));
+                    list.add(Localization.translate("option.yes"));
                 }else if(option.getValue().toString().equals("false")){
-                    list.add(Localization.translate("option.no", activity));
+                    list.add(Localization.translate("option.no"));
                 }else {
-                    list.add(Localization.translate(option.getValue(), activity));
+                    list.add(Localization.translate(option.getValue()));
                 }
             }
             return list;

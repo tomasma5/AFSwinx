@@ -53,10 +53,10 @@ public class StartUpBean implements Serializable {
     }
 
     private void generateCountries() {
-        em.persist(new Country(IdGenerator.getNextCountryId(), "Czech republic", "CR", true));
-        em.persist(new Country(IdGenerator.getNextCountryId(), "Denmark", "DNK", true));
-        em.persist(new Country(IdGenerator.getNextCountryId(), "Switzerland", "CHE", true));
-        em.persist(new Country(IdGenerator.getNextCountryId(), "Slovakia", "SLO", false));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Czech republic", "CZE", true));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Denmark", "DEN", true));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Switzerland", "SWISS", true));
+        em.persist(new Country(IdGenerator.getNextCountryId(), "Slovakia", "SVK", false));
     }
 
     private void generateUsers() {

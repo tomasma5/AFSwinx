@@ -23,7 +23,6 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
  */
 public class RequestTask extends AsyncTask<String,Integer,Object> {
 
-    ProgressDialog progressDialog;
     Activity activity;
 
     HeaderType headerType;
@@ -40,22 +39,11 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
         this.security = security;
         this.address = url;
         this.data = data;
-
-        //TODO vymyslet co s timhle
-        progressDialog = new ProgressDialog(activity);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(Localization.translate("please.wait", activity));
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        this.activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.show();
-            }
-        });
     }
 
     @Override
@@ -90,6 +78,7 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
                 OutputStream os = urlConnection.getOutputStream();
                 os.write(data.toString().getBytes("UTF-8"));
                 os.close();
+
             }
 
             int responseCode = urlConnection.getResponseCode();
@@ -118,12 +107,5 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
         @Override
     protected void onPostExecute(final Object response){
         super.onPostExecute(response);
-        this.activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.dismiss();
-            }
-        });
-
     }
 }

@@ -23,7 +23,7 @@ public class MinValueValidator implements AFValidator {
             }
         }
         if(!validationIsFine){
-            errorMsgs.append(Localization.translate("validation.minval", field.getFieldView().getContext())+" "+rule.getValue());
+            errorMsgs.append(Localization.translate("validation.minval")+" "+rule.getValue());
         }
         return validationIsFine;
     }

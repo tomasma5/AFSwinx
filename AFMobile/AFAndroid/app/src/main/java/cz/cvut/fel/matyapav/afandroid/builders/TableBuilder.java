@@ -85,7 +85,7 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             columnHeaderText.setTextColor(getSkin().getHeaderRowTextColor());
             if(field.getFieldInfo().getLabelText() != null) {
-                columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText(), getActivity()));
+                columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText()));
             }
             headerRow.addView(columnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
             ((AFTable) component).setHeaderRow(headerRow);
@@ -96,7 +96,7 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             if(field.getFieldInfo().getLabelText() != null) {
-                fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText(), getActivity()));
+                fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText()));
             }
             fakeContentRow.addView(fakeColumnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
         }
