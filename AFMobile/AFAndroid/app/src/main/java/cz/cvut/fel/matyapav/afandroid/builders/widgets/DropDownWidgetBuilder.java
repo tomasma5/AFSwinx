@@ -30,7 +30,6 @@ public class DropDownWidgetBuilder extends BasicBuilder {
     @Override
     public View buildFieldView(Activity activity) {
         Spinner spinner = new Spinner(activity);
-        TextView spinnerItem = new TextView(activity);
         if(convertOptionsIntoList() != null) {
             ArrayAdapter<String> dataAdapter = new MySpinnerAdapter<>(activity,
                     R.layout.support_simple_spinner_dropdown_item,

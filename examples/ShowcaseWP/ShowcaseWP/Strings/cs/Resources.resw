@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddAppBarButton.Label" xml:space="preserve">
+    <value>add</value>
+  </data>
+  <data name="Header.Text" xml:space="preserve">
+    <value>MY APPLICATION</value>
+  </data>
+  <data name="login.password" xml:space="preserve">
+    <value>Heslo</value>
+  </data>
+  <data name="NavigationFailedExceptionMessage" xml:space="preserve">
+    <value>Navigation failed.</value>
+  </data>
+  <data name="NewItemDescription" xml:space="preserve">
+    <value>Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.</value>
+  </data>
+  <data name="NewItemTitle" xml:space="preserve">
+    <value>Item Title: {0}</value>
+  </data>
+  <data name="PivotItem1.Header" xml:space="preserve">
+    <value>Typy absencí</value>
+  </data>
+  <data name="PivotItem2.Header" xml:space="preserve">
+    <value>Přidat/Upravit typ</value>
+  </data>
+  <data name="SecondaryButton1.Label" xml:space="preserve">
+    <value>secondary command 1</value>
+  </data>
+  <data name="SecondaryButton2.Label" xml:space="preserve">
+    <value>secondary command 2</value>
+  </data>
+  <data name="absenceInstance.duration" xml:space="preserve">
+    <value>Doba trvání</value>
+  </data>
+  <data name="absenceInstance.endDate" xml:space="preserve">
+    <value>Konec</value>
+  </data>
+  <data name="absenceInstance.startDate" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="absenceInstance.state" xml:space="preserve">
+    <value>Stav</value>
+  </data>
+  <data name="absenceInstances.accepted" xml:space="preserve">
+    <value>Přijata</value>
+  </data>
+  <data name="absenceInstances.cancelled" xml:space="preserve">
+    <value>Zrušena</value>
+  </data>
+  <data name="absenceInstances.denied" xml:space="preserve">
+    <value>Zamítnuta</value>
+  </data>
+  <data name="absenceInstances.requested" xml:space="preserve">
+    <value>Zažádána</value>
+  </data>
+  <data name="AbsenceManagementPageName.Text" xml:space="preserve">
+    <value>Správa absencí</value>
+  </data>
+  <data name="absenceType.active" xml:space="preserve">
+    <value>Aktivní</value>
+  </data>
+  <data name="absenceType.maxDaysPerYear" xml:space="preserve">
+    <value>Roční kvóta</value>
+  </data>
+  <data name="absenceType.name" xml:space="preserve">
+    <value>Název</value>
+  </data>
+  <data name="addOrUpdate.failed" xml:space="preserve">
+    <value>Přidání či aktualizace selhalo.</value>
+  </data>
+  <data name="addOrUpdate.success" xml:space="preserve">
+    <value>Přidání či aktualizace proběhlo úspěšně.</value>
+  </data>
+  <data name="AFTitle.Text" xml:space="preserve">
+    <value>AF Windows Phone Ukázka</value>
+  </data>
+  <data name="btn.clear" xml:space="preserve">
+    <value>Vyčistit</value>
+  </data>
+  <data name="btn.login" xml:space="preserve">
+    <value>Přihlásit se</value>
+  </data>
+  <data name="btn.logout" xml:space="preserve">
+    <value>Odhlásit se</value>
+  </data>
+  <data name="btn.perform" xml:space="preserve">
+    <value>Proveď</value>
+  </data>
+  <data name="btn.reset" xml:space="preserve">
+    <value>Resetovat</value>
+  </data>
+  <data name="btn.update" xml:space="preserve">
+    <value>Aktualizovat</value>
+  </data>
+  <data name="CountriesPageName.Text" xml:space="preserve">
+    <value>Země</value>
+  </data>
+  <data name="country.isActive" xml:space="preserve">
+    <value>Aktivní</value>
+  </data>
+  <data name="country.name" xml:space="preserve">
+    <value>Země</value>
+  </data>
+  <data name="country.shortCut" xml:space="preserve">
+    <value>Zkratka</value>
+  </data>
+  <data name="login.userName" xml:space="preserve">
+    <value>Uživatelské jméno</value>
+  </data>
+  <data name="LoginPageName.Text" xml:space="preserve">
+    <value>Přihlášení</value>
+  </data>
+  <data name="menu.absenceManagement" xml:space="preserve">
+    <value>Správa absencí</value>
+  </data>
+  <data name="menu.countries" xml:space="preserve">
+    <value>Podporované země</value>
+  </data>
+  <data name="menu.myAbsences" xml:space="preserve">
+    <value>Moje absence</value>
+  </data>
+  <data name="menu.profile" xml:space="preserve">
+    <value>Profil uživatele</value>
+  </data>
+  <data name="MyAbsencesPageName.Text" xml:space="preserve">
+    <value>Moje absence</value>
+  </data>
+  <data name="option.no" xml:space="preserve">
+    <value>Ne</value>
+  </data>
+  <data name="option.yes" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="person.age" xml:space="preserve">
+    <value>Věk</value>
+  </data>
+  <data name="person.firstName" xml:space="preserve">
+    <value>Jméno</value>
+  </data>
+  <data name="person.lastName" xml:space="preserve">
+    <value>Příjmení</value>
+  </data>
+  <data name="person.updateFailed" xml:space="preserve">
+    <value>Aktualizace profilu selhala.</value>
+  </data>
+  <data name="person.updateSuccess" xml:space="preserve">
+    <value>Aktualizace profilu proběhla úspěšně.</value>
+  </data>
+  <data name="please.wait" xml:space="preserve">
+    <value>Prosím počkejte...</value>
+  </data>
+  <data name="ProfilePageName.Text" xml:space="preserve">
+    <value>Profil</value>
+  </data>
+  <data name="validation.lessThan" xml:space="preserve">
+    <value>Hodnota musí být menší rovna hodnotě v poli</value>
+  </data>
+  <data name="validation.maxchars" xml:space="preserve">
+    <value>Maximální počet znaků je</value>
+  </data>
+  <data name="validation.maxval" xml:space="preserve">
+    <value>Maximální hodnota je</value>
+  </data>
+  <data name="validation.minval" xml:space="preserve">
+    <value>Minimální hodnota je</value>
+  </data>
+  <data name="validation.required" xml:space="preserve">
+    <value>Toto pole je povinné</value>
+  </data>
+  <data name="welcome.msg" xml:space="preserve">
+    <value>Vítejte uživateli</value>
+  </data>
+  <data name="WelcomePageName.Text" xml:space="preserve">
+    <value>Uvítací stránka</value>
+  </data>
+  <data name="AbsenceTypePagePivot.Title" xml:space="preserve">
+    <value>AF Windows Phone Ukázka</value>
+  </data>
+  <data name="add.failed" xml:space="preserve">
+    <value>Přidání selhalo.</value>
+  </data>
+  <data name="add.success" xml:space="preserve">
+    <value>Přidání bylo úspěšné.</value>
+  </data>
+  <data name="button.add" xml:space="preserve">
+    <value>Přidat</value>
+  </data>
+  <data name="CreateAbsencePageName.Text" xml:space="preserve">
+    <value>Tvorba absence.</value>
+  </data>
+  <data name="login.failed" xml:space="preserve">
+    <value>Přihlášení selhalo.</value>
+  </data>
+  <data name="menu.absenceTypes" xml:space="preserve">
+    <value>Správa absenčních typů</value>
+  </data>
+  <data name="menu.createAbsence" xml:space="preserve">
+    <value>Vytvořit absenci</value>
+  </data>
+  <data name="build.failed" xml:space="preserve">
+    <value>Něco selhalo při vytváření komponent. Zkuste zkontrolovat, zda jste připojeni k Internetu.</value>
+  </data>
+  <data name="choose.country" xml:space="preserve">
+    <value>Prosím, vyberte zemi.</value>
+  </data>
+  <data name="validation.double" xml:space="preserve">
+    <value>Prosím, vložte celé nebo desetinné číslo.</value>
+  </data>
+  <data name="validation.integer" xml:space="preserve">
+    <value>Prosím, vložte celé číslo.</value>
+  </data>
+</root>
