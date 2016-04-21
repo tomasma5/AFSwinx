@@ -27,12 +27,11 @@ public class MyAbsenceInstanceView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection_local.xml");
+        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             HashMap<String, String> connectionParmeters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
+            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()

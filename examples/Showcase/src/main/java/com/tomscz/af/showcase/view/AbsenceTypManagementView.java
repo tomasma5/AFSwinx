@@ -43,8 +43,7 @@ public class AbsenceTypManagementView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection_local.xml");
+        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             Box horizontalTopBox = Box.createHorizontalBox();
             horizontalTopBox.setAlignmentX(CENTER_ALIGNMENT);
@@ -65,8 +64,7 @@ public class AbsenceTypManagementView extends BaseView {
         }
         if (isDisplayAdditionalsField()) {
             try {
-                connectionResource =
-                        getClass().getClassLoader().getResourceAsStream("connection_local.xml");
+                connectionResource = ApplicationContext.getInstance().getConnectionFile();
                 HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id", String.valueOf(selectedCountry));
                 AFSwinxTable table =
@@ -82,8 +80,7 @@ public class AbsenceTypManagementView extends BaseView {
                         ApplicationContext.getInstance().getSecurityContext()
                                 .getUserNameAndPasswodr();
                 securityConstrains.put("id", String.valueOf(selectedCountry));
-                connectionResource =
-                        getClass().getClassLoader().getResourceAsStream("connection.xml");
+                connectionResource = ApplicationContext.getInstance().getConnectionFile();
                 AFSwinxForm form =
                         AFSwinx.getInstance()
                                 .getFormBuilder()

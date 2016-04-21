@@ -35,8 +35,7 @@ public class AbsenceInstanceCreateView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource =
-                getClass().getClassLoader().getResourceAsStream("connection_local.xml");
+        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);
@@ -44,7 +43,7 @@ public class AbsenceInstanceCreateView extends BaseView {
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             securityConstrains.put("user", ApplicationContext.getInstance().getSecurityContext()
                     .getUserLogin());
-            connectionResource = getClass().getClassLoader().getResourceAsStream("connection_local.xml");
+            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
