@@ -8,9 +8,14 @@
 		<default tag="structure/date.xml" />
 		<!--<condition expression="${type == 'state'}" tag="html/state.xhtml"/> -->
 	</mapping>
+	
+	<mapping>
+		<type>String</type>
+		<default tag="structure/inputField.xml" maxLength="255" size="30" />
+	</mapping>
 
 	<mapping>
-		<type>AbsenceType</type>
+		<type>Address</type>
 		<default tag="structure/entity.xml" />
 	</mapping>
 

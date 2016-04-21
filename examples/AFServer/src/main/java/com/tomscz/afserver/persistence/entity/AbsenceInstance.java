@@ -27,95 +27,133 @@ import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 @Entity
 public class AbsenceInstance {
 
-    @Id
-    private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private AbsenceType absenceType;
-    @Temporal(value = TemporalType.DATE)
-    private Date startDate;
-    @Temporal(value = TemporalType.DATE)
-    private Date endDate;
-    @Enumerated(EnumType.STRING)
-    private AbsenceInstanceState status;
-    private int duration;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Person affectedPerson;
+	@Id
+	private int id;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private AbsenceType absenceType;
+	@Temporal(value = TemporalType.DATE)
+	private Date startDate;
+	@Temporal(value = TemporalType.DATE)
+	private Date endDate;
+	@Enumerated(EnumType.STRING)
+	private AbsenceInstanceState status;
+	private int duration;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Person affectedPerson;
 
-    @UiOrder(value=2)
-    public AbsenceType getAbsenceType() {
-        return absenceType;
-    }
+	private String reason;
+	private String emergencyContact;
+	private Address vacationPlace;
 
-    public void setAbsenceType(AbsenceType absenceType) {
-        this.absenceType = absenceType;
-    }
+	@UiOrder(value = 2)
+	public AbsenceType getAbsenceType() {
+		return absenceType;
+	}
 
-    @UiLabel(value="absenceInstance.duration")
-    @UiType(value = "readOnly")
-    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
-    public int getDuration() {
-        return duration;
-    }
+	public void setAbsenceType(AbsenceType absenceType) {
+		this.absenceType = absenceType;
+	}
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+	@UiLabel(value = "absenceInstance.duration")
+	@UiType(value = "readOnly")
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public int getDuration() {
+		return duration;
+	}
 
-    @UiRequired
-    @UiOrder(value=0)
-    @UILessThan(value="endDate")
-    @UiLabel(value="absenceInstance.startDate")
-    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
-    public Date getStartDate() {
-        return startDate;
-    }
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+	@UiRequired
+	@UiOrder(value = 0)
+	@UILessThan(value = "endDate")
+	@UiLabel(value = "absenceInstance.startDate")
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public Date getStartDate() {
+		return startDate;
+	}
 
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-    @UiRequired
-    @UiOrder(value=1)
-    @UiLabel(value="absenceInstance.endDate")
-    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
-    public Date getEndDate() {
-        return endDate;
-    }
+	@UiRequired
+	@UiOrder(value = 1)
+	@UiLabel(value = "absenceInstance.endDate")
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public Date getEndDate() {
+		return endDate;
+	}
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-    
-    @UiLabel(value="absenceInstance.state")
-    @UiRequired
-    @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
-    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
-    public AbsenceInstanceState getStatus() {
-        return status;
-    }
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
-    public void setStatus(AbsenceInstanceState status) {
-        this.status = status;
-    }
+	@UiLabel(value = "absenceInstance.state")
+	@UiRequired
+	@UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public AbsenceInstanceState getStatus() {
+		return status;
+	}
 
-    @UiType(value = "id")
-    @UILayout(labelPossition=LabelPosition.BEFORE, layout=LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation=LayoutOrientation.AXISY)
-    public int getId() {
-        return id;
-    }
+	public void setStatus(AbsenceInstanceState status) {
+		this.status = status;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@UiType(value = "id")
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public int getId() {
+		return id;
+	}
 
-    @UiOrder(value = -1)
-    public Person getAffectedPerson() {
-        return affectedPerson;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setAffectedPerson(Person affectedPerson) {
-        this.affectedPerson = affectedPerson;
-    }
+	@UiOrder(value = -1)
+	public Person getAffectedPerson() {
+		return affectedPerson;
+	}
+
+	public void setAffectedPerson(Person affectedPerson) {
+		this.affectedPerson = affectedPerson;
+	}
+
+	@UiRequired
+	@UiOrder(value = 3)
+	@UiLabel(value = "absenceInstance.reason")
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	@UiRequired
+	@UiOrder(value = 3)
+	@UiLabel(value = "absenceInstance.emergencyContect")
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public String getEmergencyContact() {
+		return emergencyContact;
+	}
+
+	public void setEmergencyContact(String emergencyContact) {
+		this.emergencyContact = emergencyContact;
+	}
+
+	@UiRequired
+	@UiOrder(value = 3)
+	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+	public Address getVacationPlace() {
+		return vacationPlace;
+	}
+
+	public void setVacationPlace(Address vacationPlace) {
+		this.vacationPlace = vacationPlace;
+	}
 
 }
