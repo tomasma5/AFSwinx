@@ -1,5 +1,6 @@
 package com.tomscz.afclassification.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BusinessCase {
@@ -17,6 +18,13 @@ public class BusinessCase {
 	public BusinessCase(String name, String description) {
 		this.name = name;
 		this.description = description;
+	}
+	
+	public void addPhase(BCPhase phase){
+		if(phases == null){
+			phases = new ArrayList<BCPhase>();
+		}
+		this.phases.add(phase);
 	}
 
 	public List<BCPhase> getPhases() {

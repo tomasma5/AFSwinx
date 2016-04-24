@@ -11,6 +11,7 @@
 		<module>AFRest</module>
 		<module>AFClassification</module>
 		<module>examples/Showcase</module>
+		<module>examples/ClassificationShowcase</module>
 		<module>examples/AFServer</module>
 	</modules>
 
