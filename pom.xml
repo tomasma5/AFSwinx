@@ -9,6 +9,7 @@
 	<modules>
 		<module>AFSwinx</module>
 		<module>AFRest</module>
+		<module>AFClassification</module>
 		<module>examples/Showcase</module>
 		<module>examples/AFServer</module>
 	</modules>
