@@ -6,11 +6,19 @@ public class BCField {
 
 	private BCPhase phase;
 	
+	private BCFieldSeverity fieldSpecification;
+	
 	private String classUri;
 
 	public BCField(Field field, BCPhase phase) {
 		this.field = field;
 		this.phase = phase;
+	}
+	
+	public BCField(Field field, BCPhase phase, String classUri) {
+		this.field = field;
+		this.phase = phase;
+		this.classUri = classUri;
 	}
 
 	public BCPhase getPhase() {
@@ -35,6 +43,14 @@ public class BCField {
 
 	public void setClassUri(String classUri) {
 		this.classUri = classUri;
+	}
+
+	public BCFieldSeverity getFieldSpecification() {
+		return fieldSpecification;
+	}
+
+	public void setFieldSpecification(BCFieldSeverity fieldSpecification) {
+		this.fieldSpecification = fieldSpecification;
 	}
 
 }

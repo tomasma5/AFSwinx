@@ -1,5 +1,6 @@
 package com.tomscz.afclassification.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BCPhase {
@@ -9,6 +10,13 @@ public class BCPhase {
 	private List<BCField> fields;
 
 	private List<Configuration> configurations;
+	
+	public synchronized void addBCField(BCField field){
+		if(this.fields == null){
+			this.fields = new ArrayList<>();
+		}
+		this.fields.add(field);
+	}
 
 	public BusinessCase getBusinessCase() {
 		return businessCase;
