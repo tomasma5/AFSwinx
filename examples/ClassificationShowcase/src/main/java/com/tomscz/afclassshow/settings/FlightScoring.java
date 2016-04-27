@@ -79,6 +79,9 @@ public class FlightScoring implements Scoring {
 			}
 		}
 		System.out.print("Computed score:" + score);
+		if(score > 100D){
+			score = 100D;
+		}
 		return score;
 	}
 

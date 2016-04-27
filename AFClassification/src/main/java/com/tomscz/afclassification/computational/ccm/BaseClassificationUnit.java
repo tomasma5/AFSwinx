@@ -14,9 +14,6 @@ public class BaseClassificationUnit implements Classification {
 
 	private Configuration findBestConfiguration(Double score,
 			List<Configuration> configurations) {
-		if (score > 100D) {
-			score = 100D;
-		}
 		Configuration selectedConfiguration = configurations.get(0);
 		for (Configuration config : configurations) {
 			if (score >= config.getThresholdStart()
