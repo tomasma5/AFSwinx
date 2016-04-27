@@ -38,8 +38,8 @@ public class FlighShowcase {
 		BCPhase reserveTicketPhase = new BCPhase();
 		reserveTicketPhase.setBusinessCase(orderTicket, "Reserve ticket");
 		searchPhase.setBusinessCase(orderTicket, "Search ticket");
-		orderTicket.addPhase(reserveTicketPhase);
 		orderTicket.addPhase(searchPhase);
+		orderTicket.addPhase(reserveTicketPhase);
 		// Create fields for search
 		BCField source = createField(createFlightField("source", "airport"),
 				searchPhase, "flight.airport", Severity.CRITICAL,
@@ -52,13 +52,13 @@ public class FlighShowcase {
 				searchPhase, "flight", Severity.REQUIRED,
 				Purpose.SYSTEM_IDENTIFICATION);
 		BCField flightEnd = createField(createFlightField("end", "date"),
-				searchPhase, "flight", Severity.REQUIRED,
-				Purpose.SYSTEM_IDENTIFICATION);
+				searchPhase, "flight", Severity.NEEDED,
+				Purpose.SYSTEM_INFORMATION);
 		BCField flightPrice = createField(createFlightField("price", "double"),
 				searchPhase, "flight", Severity.NEEDED,
 				Purpose.SYSTEM_INFORMATION);
 		BCField flightRank = createField(createFlightField("rank", "double"),
-				searchPhase, "flight", Severity.NEEDED,
+				searchPhase, "flight", Severity.NICE_TO_HAVE,
 				Purpose.FUTURE_INTERACTION);
 		// Add them to phase
 		searchPhase.addBCField(source);
@@ -92,12 +92,8 @@ public class FlighShowcase {
 				"usert", Severity.NICE_TO_HAVE,
 				Purpose.SYSTEM_INFORMATION);
 		BCField numberOfPassangers = createField(
-				createUserField("email", "string"), reserveTicketPhase,
-				"usert", Severity.NEEDED,
-				Purpose.SYSTEM_IDENTIFICATION);
-		BCField reservationFlight = createField(
 				createReservationField("numberOfPassangers", "int"), reserveTicketPhase,
-				"user.reservation", Severity.NEEDED,
+				"user.reservation", Severity.CRITICAL,
 				Purpose.SYSTEM_IDENTIFICATION);
 		//add them to phase
 		reserveTicketPhase.addBCField(clientName);
@@ -107,7 +103,6 @@ public class FlighShowcase {
 		reserveTicketPhase.addBCField(clientStreet);
 		reserveTicketPhase.addBCField(clientCity);
 		reserveTicketPhase.addBCField(numberOfPassangers);
-		reserveTicketPhase.addBCField(reservationFlight);
 		// Add business case to set
 		businessCases.add(orderTicket);
 
@@ -116,18 +111,21 @@ public class FlighShowcase {
 	public List<Configuration> getStrictConfiguration() {
 		List<Configuration> configurations = new ArrayList<Configuration>();
 		Configuration requiredConfiguration = new Configuration(
-				Behavior.REQUIRED, 60D, 100D);
+				Behavior.REQUIRED, 70D, 100D);
 		Configuration validationConfiguration = new Configuration(
-				Behavior.VALIADTION, 0D, 40D);
-		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN,
+				Behavior.VALIDATION, 40D, 70D);
+		Configuration onlyDisplayConfiguration = new Configuration(Behavior.ONLY_DISPLAY,
 				0D, 40D);
+		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN,
+				0D, 0D);
 		Configuration notPresentConfiguration = new Configuration(
-				Behavior.NOT_PRESENT, 0D, 0D);
+				Behavior.NOT_PRESENT, -10D, -10D);
 
 		configurations.add(requiredConfiguration);
 		configurations.add(validationConfiguration);
 		configurations.add(hiddenConfiguration);
 		configurations.add(notPresentConfiguration);
+		configurations.add(onlyDisplayConfiguration);
 		return configurations;
 	}
 
@@ -136,16 +134,19 @@ public class FlighShowcase {
 		Configuration requiredConfiguration = new Configuration(
 				Behavior.REQUIRED, 90D, 100D);
 		Configuration validationConfiguration = new Configuration(
-				Behavior.VALIADTION, 60D, 90D);
+				Behavior.VALIDATION, 60D, 90D);
+		Configuration onlyDisplayConfiguration = new Configuration(Behavior.ONLY_DISPLAY,
+				40D, 60D);
 		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN,
-				30D, 60D);
+				10D, 40D);
 		Configuration notPresentConfiguration = new Configuration(
-				Behavior.NOT_PRESENT, 0D, 30D);
+				Behavior.NOT_PRESENT, 0D, 10D);
 
 		configurations.add(requiredConfiguration);
 		configurations.add(validationConfiguration);
 		configurations.add(hiddenConfiguration);
 		configurations.add(notPresentConfiguration);
+		configurations.add(onlyDisplayConfiguration);
 		return configurations;
 	}
 

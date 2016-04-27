@@ -2,7 +2,7 @@ package com.tomscz.afclassification.model;
 
 public enum Behavior {
 	REQUIRED,
-	VALIADTION,
+	VALIDATION,
 	ONLY_DISPLAY,
 	HIDDEN,
 	NOT_PRESENT

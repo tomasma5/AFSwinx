@@ -1,5 +1,6 @@
 package com.tomscz.afclassification.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
@@ -22,6 +23,13 @@ public class Client {
 		return clientProperties;
 	}
 
+	public void addProperty(ClientProperty clientProperty) {
+		if(this.clientProperties == null){
+			this.clientProperties = new ArrayList<ClientProperty>();
+		}
+		this.clientProperties.add(clientProperty);
+	}
+	
 	public void setClientProperties(List<ClientProperty> clientProperties) {
 		this.clientProperties = clientProperties;
 	}
