@@ -35,9 +35,12 @@ public class FlighShowcase {
 		BusinessCase orderTicket = new BusinessCase("Ticket order",
 				"Users wants to find and book flight");
 		BCPhase searchPhase = new BCPhase();
-		searchPhase.setBusinessCase(orderTicket, "Order ticket");
+		BCPhase reserveTicketPhase = new BCPhase();
+		reserveTicketPhase.setBusinessCase(orderTicket, "Reserve ticket");
+		searchPhase.setBusinessCase(orderTicket, "Search ticket");
+		orderTicket.addPhase(reserveTicketPhase);
 		orderTicket.addPhase(searchPhase);
-		// Create fields
+		// Create fields for search
 		BCField source = createField(createFlightField("source", "airport"),
 				searchPhase, "flight.airport", Severity.CRITICAL,
 				Purpose.SYSTEM_IDENTIFICATION);
@@ -64,6 +67,47 @@ public class FlighShowcase {
 		searchPhase.addBCField(flightEnd);
 		searchPhase.addBCField(flightPrice);
 		searchPhase.addBCField(flightRank);
+		//Create reserve phase
+		BCField clientName = createField(createUserField("name", "string"),
+				reserveTicketPhase, "user", Severity.NEEDED,
+				Purpose.SYSTEM_INFORMATION);
+		BCField clientSurname = createField(
+				createUserField("surname", "string"), reserveTicketPhase,
+				"usert", Severity.NEEDED,
+				Purpose.SYSTEM_INFORMATION);
+		BCField clientPhone = createField(
+				createUserField("phoneNumber", "string"), reserveTicketPhase,
+				"usert", Severity.CRITICAL,
+				Purpose.SYSTEM_IDENTIFICATION);
+		BCField clientEmail = createField(
+				createUserField("email", "string"), reserveTicketPhase,
+				"usert", Severity.CRITICAL,
+				Purpose.SYSTEM_IDENTIFICATION);
+		BCField clientStreet = createField(
+				createUserField("street", "string"), reserveTicketPhase,
+				"usert", Severity.NICE_TO_HAVE,
+				Purpose.FUTURE_INTERACTION);
+		BCField clientCity = createField(
+				createUserField("city", "string"), reserveTicketPhase,
+				"usert", Severity.NICE_TO_HAVE,
+				Purpose.SYSTEM_INFORMATION);
+		BCField numberOfPassangers = createField(
+				createUserField("email", "string"), reserveTicketPhase,
+				"usert", Severity.NEEDED,
+				Purpose.SYSTEM_IDENTIFICATION);
+		BCField reservationFlight = createField(
+				createReservationField("numberOfPassangers", "int"), reserveTicketPhase,
+				"user.reservation", Severity.NEEDED,
+				Purpose.SYSTEM_IDENTIFICATION);
+		//add them to phase
+		reserveTicketPhase.addBCField(clientName);
+		reserveTicketPhase.addBCField(clientSurname);
+		reserveTicketPhase.addBCField(clientPhone);
+		reserveTicketPhase.addBCField(clientEmail);
+		reserveTicketPhase.addBCField(clientStreet);
+		reserveTicketPhase.addBCField(clientCity);
+		reserveTicketPhase.addBCField(numberOfPassangers);
+		reserveTicketPhase.addBCField(reservationFlight);
 		// Add business case to set
 		businessCases.add(orderTicket);
 
@@ -123,6 +167,22 @@ public class FlighShowcase {
 	private Field createFlightField(String fieldName, String type) {
 		Field flight = new Field();
 		flight.setClassName(FLIGHT_CLASS);
+		flight.setFieldName(fieldName);
+		flight.setType(type);
+		return flight;
+	}
+	
+	private Field createUserField(String fieldName, String type) {
+		Field flight = new Field();
+		flight.setClassName(USER_CLASS);
+		flight.setFieldName(fieldName);
+		flight.setType(type);
+		return flight;
+	}
+	
+	private Field createReservationField(String fieldName, String type) {
+		Field flight = new Field();
+		flight.setClassName(RESERVATION_CLASS);
 		flight.setFieldName(fieldName);
 		flight.setType(type);
 		return flight;
