@@ -11,6 +11,8 @@ public class BCPhase {
 
 	private List<Configuration> configurations;
 	
+	private String name;
+	
 	public synchronized void addBCField(BCField field){
 		if(this.fields == null){
 			this.fields = new ArrayList<>();
@@ -22,8 +24,9 @@ public class BCPhase {
 		return businessCase;
 	}
 
-	public void setBusinessCase(BusinessCase businessCase) {
+	public void setBusinessCase(BusinessCase businessCase, String name) {
 		this.businessCase = businessCase;
+		this.setName(name);
 	}
 
 	public List<BCField> getFields() {
@@ -40,6 +43,14 @@ public class BCPhase {
 
 	public void setConfigurations(List<Configuration> configurations) {
 		this.configurations = configurations;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

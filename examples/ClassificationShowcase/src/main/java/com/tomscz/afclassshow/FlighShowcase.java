@@ -35,7 +35,7 @@ public class FlighShowcase {
 		BusinessCase orderTicket = new BusinessCase("Ticket order",
 				"Users wants to find and book flight");
 		BCPhase searchPhase = new BCPhase();
-		searchPhase.setBusinessCase(orderTicket);
+		searchPhase.setBusinessCase(orderTicket, "Order ticket");
 		orderTicket.addPhase(searchPhase);
 		// Create fields
 		BCField source = createField(createFlightField("source", "airport"),
@@ -68,33 +68,45 @@ public class FlighShowcase {
 		businessCases.add(orderTicket);
 
 	}
-	
-	public List<Configuration> getStrictConfiguration(){
+
+	public List<Configuration> getStrictConfiguration() {
 		List<Configuration> configurations = new ArrayList<Configuration>();
-		Configuration requiredConfiguration = new Configuration(Behavior.REQUIRED, 100D);
-		Configuration validationConfiguration = new Configuration(Behavior.VALIADTION, 80D);
-		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN, 60D);
-		Configuration notPresentConfiguration = new Configuration(Behavior.NOT_PRESENT, 0D);
-		
+		Configuration requiredConfiguration = new Configuration(
+				Behavior.REQUIRED, 60D, 100D);
+		Configuration validationConfiguration = new Configuration(
+				Behavior.VALIADTION, 0D, 40D);
+		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN,
+				0D, 40D);
+		Configuration notPresentConfiguration = new Configuration(
+				Behavior.NOT_PRESENT, 0D, 0D);
+
 		configurations.add(requiredConfiguration);
 		configurations.add(validationConfiguration);
 		configurations.add(hiddenConfiguration);
 		configurations.add(notPresentConfiguration);
 		return configurations;
 	}
-	
-	public List<Configuration> getBeneConfiguration(){
+
+	public List<Configuration> getBeneConfiguration() {
 		List<Configuration> configurations = new ArrayList<Configuration>();
-		Configuration requiredConfiguration = new Configuration(Behavior.REQUIRED, 90D);
-		Configuration validationConfiguration = new Configuration(Behavior.VALIADTION, 70D);
-		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN, 40D);
-		Configuration notPresentConfiguration = new Configuration(Behavior.NOT_PRESENT, 20D);
-		
+		Configuration requiredConfiguration = new Configuration(
+				Behavior.REQUIRED, 90D, 100D);
+		Configuration validationConfiguration = new Configuration(
+				Behavior.VALIADTION, 60D, 90D);
+		Configuration hiddenConfiguration = new Configuration(Behavior.HIDDEN,
+				30D, 60D);
+		Configuration notPresentConfiguration = new Configuration(
+				Behavior.NOT_PRESENT, 0D, 30D);
+
 		configurations.add(requiredConfiguration);
 		configurations.add(validationConfiguration);
 		configurations.add(hiddenConfiguration);
 		configurations.add(notPresentConfiguration);
 		return configurations;
+	}
+
+	public List<BusinessCase> getBusinessCases() {
+		return businessCases;
 	}
 
 	private BCField createField(Field field, BCPhase phase, String classUri,

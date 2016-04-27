@@ -4,23 +4,18 @@ public class Configuration {
 	
 	private Behavior behavior;
 	
-	private Double threshold;
+	private Double thresholdStart;
+	
+	private Double thresholdEnd;
 
 	public Configuration(){
 		
 	}
 	
-	public Configuration(Behavior behavior, Double threshold){
+	public Configuration(Behavior behavior, Double thresholdStart, Double thresholdEnd){
 		this.behavior = behavior;
-		this.threshold = threshold;
-	}
-	
-	public Double getThreshold() {
-		return threshold;
-	}
-
-	public void setThreshold(Double threshold) {
-		this.threshold = threshold;
+		this.thresholdStart = thresholdStart;
+		this.thresholdEnd = thresholdEnd;
 	}
 
 	public Behavior getBehavior() {
@@ -29,6 +24,22 @@ public class Configuration {
 
 	public void setBehavior(Behavior behavior) {
 		this.behavior = behavior;
+	}
+
+	public Double getThresholdStart() {
+		return thresholdStart;
+	}
+
+	public void setThresholdStart(Double thresholdStart) {
+		this.thresholdStart = thresholdStart;
+	}
+
+	public Double getThresholdEnd() {
+		return thresholdEnd;
+	}
+
+	public void setThresholdEnd(Double thresholdEnd) {
+		this.thresholdEnd = thresholdEnd;
 	}
 
 }
