@@ -1,7 +1,6 @@
-package cz.cvut.fel.matyapav.nearbytest;
+package cz.cvut.fel.matyapav.nearbytest.Adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -10,7 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.List;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import cz.cvut.fel.matyapav.nearbytest.Device;
+import cz.cvut.fel.matyapav.nearbytest.R;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -19,8 +23,8 @@ import java.util.List;
 
 public class NearbyDeviceListAdapter extends ArrayAdapter<Device> {
 
-    public NearbyDeviceListAdapter(@NonNull Context context, @NonNull List<Device> devices) {
-        super(context, 0, devices);
+    public NearbyDeviceListAdapter(@NonNull Context context, @NonNull Set<Device> devices) {
+        super(context, 0, new ArrayList<>(devices));
     }
 
     @NonNull
@@ -37,7 +41,7 @@ public class NearbyDeviceListAdapter extends ArrayAdapter<Device> {
 
         if(device != null) {
             deviceName.setText(device.getName() != null? device.getName() : "Cannot get name");
-            deviceAddress.setText(device.getAddress() != null ? device.getAddress() : "Cannot get address");
+            deviceAddress.setText(device.getMacAddress() != null ? device.getMacAddress() : "Cannot get address");
             deviceType.setText(device.getDeviceType().toString());
             switch (device.getDeviceType()){
                 case BLUETOOTH:

@@ -1,9 +1,8 @@
-package cz.cvut.fel.matyapav.nearbytest;
+package cz.cvut.fel.matyapav.nearbytest.Tasks;
 
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.renderscript.Element;
 import android.text.format.Formatter;
 import android.util.Log;
 
@@ -12,20 +11,25 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.nearbytest.Helpers.Constants;
+import cz.cvut.fel.matyapav.nearbytest.Device;
+import cz.cvut.fel.matyapav.nearbytest.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.NearbyDevicesFinder;
+
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
 
-public class GetConnectedDevicesTask extends AsyncTask<Void, Void, List<Device>> {
+public class ScanWifiNetworkForDevicesTask extends AsyncTask<Void, Void, List<Device>> {
 
+    private NearbyDevicesFinder finder;
     private WifiManager wifiManager;
-    private MainActivity activity;
     private int pingTimeout = 100;
 
-    GetConnectedDevicesTask(WifiManager wifiManager, MainActivity activity) {
+    public ScanWifiNetworkForDevicesTask(WifiManager wifiManager, NearbyDevicesFinder finder) {
         this.wifiManager = wifiManager;
-        this.activity = activity;
+        this.finder = finder;
     }
 
     @Override
@@ -57,6 +61,6 @@ public class GetConnectedDevicesTask extends AsyncTask<Void, Void, List<Device>>
     @Override
     protected void onPostExecute(List<Device> devices) {
         super.onPostExecute(devices);
-        activity.addDevices(devices);
+        finder.addDevices(devices);
     }
 }

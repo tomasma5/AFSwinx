@@ -8,7 +8,7 @@ package cz.cvut.fel.matyapav.nearbytest;
 public class Device {
 
     private String name;
-    private String address;
+    private String macAddress;
     private DeviceType deviceType;
 
     public Device() {
@@ -24,7 +24,7 @@ public class Device {
 
     public Device(String name, String address, DeviceType deviceType) {
         this.name = name;
-        this.address = address;
+        this.macAddress = address;
         this.deviceType = deviceType;
 
     }
@@ -37,11 +37,24 @@ public class Device {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getMacAddress() {
+        return macAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Device device = (Device) o;
+        return macAddress.equals(device.macAddress);
+    }
+
+    @Override
+    public int hashCode() {
+        return macAddress.hashCode();
     }
 }

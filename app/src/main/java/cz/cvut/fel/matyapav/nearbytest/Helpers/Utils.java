@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest;
+package cz.cvut.fel.matyapav.nearbytest.Helpers;
 
 import android.bluetooth.BluetoothClass;
 
