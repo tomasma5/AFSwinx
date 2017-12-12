@@ -14,6 +14,7 @@ import java.util.List;
 import cz.cvut.fel.matyapav.nearbytest.Helpers.Constants;
 import cz.cvut.fel.matyapav.nearbytest.Device;
 import cz.cvut.fel.matyapav.nearbytest.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.Helpers.Utils;
 import cz.cvut.fel.matyapav.nearbytest.NearbyDevicesFinder;
 
 /**
@@ -25,7 +26,6 @@ public class ScanWifiNetworkForDevicesTask extends AsyncTask<Void, Void, List<De
 
     private NearbyDevicesFinder finder;
     private WifiManager wifiManager;
-    private int pingTimeout = 100;
 
     public ScanWifiNetworkForDevicesTask(WifiManager wifiManager, NearbyDevicesFinder finder) {
         this.wifiManager = wifiManager;
@@ -45,10 +45,14 @@ public class ScanWifiNetworkForDevicesTask extends AsyncTask<Void, Void, List<De
                 String testIp = prefix + String.valueOf(i);
 
                 InetAddress address = InetAddress.getByName(testIp);
+                int pingTimeout = 100;
                 boolean reachable = address.isReachable(pingTimeout);
-                if (reachable) {
-                    Log.w(Constants.TAG, address.getCanonicalHostName() + " " + address.getHostAddress() + " " + DeviceType.WIFI_DEVICE);
-                    connectedDevices.add(new Device(address.getCanonicalHostName(), address.getHostAddress(), DeviceType.WIFI_DEVICE));
+                if (reachable){
+                    String macAddress = Utils.getMacAddressFromIp(address.getHostAddress());
+                    if(!macAddress.equals(Constants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table
+                        Log.w(Constants.APPLICATION_TAG, address.getCanonicalHostName() + " " + macAddress + " " + DeviceType.WIFI_DEVICE);
+                        connectedDevices.add(new Device(address.getCanonicalHostName(), macAddress, DeviceType.WIFI_DEVICE));
+                    }
                 }
             }
         } catch (IOException e) {

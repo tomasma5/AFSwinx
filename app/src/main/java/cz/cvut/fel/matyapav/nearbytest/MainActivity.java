@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import cz.cvut.fel.matyapav.nearbytest.Adapters.NearbyDeviceListAdapter;
 import cz.cvut.fel.matyapav.nearbytest.Helpers.Constants;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         nearbyDevicesFinder = new NearbyDevicesFinder(this);
-        NearbyDeviceListAdapter adapter = new NearbyDeviceListAdapter(this, nearbyDevicesFinder.getFoundDevices());
-        nearbyDevicesFinder.setAdapter(adapter);
         ListView listView = (ListView) findViewById(R.id.nearby_devices_list_view);
-        listView.setAdapter(adapter);
+        listView.setAdapter(nearbyDevicesFinder.getAdapter());
 
         Button getNearbyButton = (Button) findViewById(R.id.get_nearby_devices_btn);
         getNearbyButton.setOnClickListener(view -> {
@@ -38,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 nearbyDevicesFinder.findNearbyDevices();
             }
         });
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {

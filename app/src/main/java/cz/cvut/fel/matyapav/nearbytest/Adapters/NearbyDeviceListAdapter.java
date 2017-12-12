@@ -9,9 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.Device;
 import cz.cvut.fel.matyapav.nearbytest.R;
@@ -23,8 +21,8 @@ import cz.cvut.fel.matyapav.nearbytest.R;
 
 public class NearbyDeviceListAdapter extends ArrayAdapter<Device> {
 
-    public NearbyDeviceListAdapter(@NonNull Context context, @NonNull Set<Device> devices) {
-        super(context, 0, new ArrayList<>(devices));
+    public NearbyDeviceListAdapter(@NonNull Context context, @NonNull List<Device> devices) {
+        super(context, 0, devices);
     }
 
     @NonNull

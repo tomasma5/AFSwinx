@@ -26,7 +26,6 @@ public class Device {
         this.name = name;
         this.macAddress = address;
         this.deviceType = deviceType;
-
     }
 
     public String getName() {
@@ -49,12 +48,19 @@ public class Device {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Device device = (Device) o;
-        return macAddress.equals(device.macAddress);
+
+        if (macAddress != null ? macAddress.equals(device.macAddress) : device.macAddress == null && deviceType == device.deviceType)
+            return true;
+        else return false;
+
     }
 
     @Override
     public int hashCode() {
-        return macAddress.hashCode();
+        int result = macAddress != null ? macAddress.hashCode() : 0;
+        result = 31 * result + (deviceType != null ? deviceType.hashCode() : 0);
+        return result;
     }
 }

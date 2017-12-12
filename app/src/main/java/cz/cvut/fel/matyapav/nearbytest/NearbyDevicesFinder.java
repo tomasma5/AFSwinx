@@ -13,6 +13,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,9 +36,9 @@ public class NearbyDevicesFinder {
     private WifiManager wifiManager;
     private BluetoothManager btManager;
     private BluetoothAdapter btAdapter;
-    private Set<Device> devices;
+    private List<Device> devices;
 
-    private ArrayAdapter adapter;
+    private ArrayAdapter<Device> adapter;
 
 
     public NearbyDevicesFinder(Activity activity) {
@@ -45,7 +46,8 @@ public class NearbyDevicesFinder {
         wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         btManager = (BluetoothManager) activity.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
         btAdapter = btManager.getAdapter();
-        devices = new HashSet<>();
+        devices = new ArrayList<>();
+        adapter = new NearbyDeviceListAdapter(activity, devices);
     }
 
     public void findNearbyDevices() {
@@ -77,7 +79,7 @@ public class NearbyDevicesFinder {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.i(Constants.TAG, "Bluetooth Device found: " +
+                Log.i(Constants.APPLICATION_TAG, "Bluetooth Device found: " +
                         bluetoothDevice.getName() + "; MAC " +
                         bluetoothDevice.getAddress() +
                         " " +
@@ -104,28 +106,38 @@ public class NearbyDevicesFinder {
 
 
     public void addDevices(List<Device> devices) {
-        this.devices.addAll(devices);
-        if(adapter != null){
-            adapter.notifyDataSetChanged();
-        } else {
-            System.err.println("Cannot update adapter collection - maybe you forgot to set it?");
+        boolean somethingNew = false;
+        for (Device device: devices) {
+            if(!this.devices.contains(device)){
+                this.devices.add(device);
+                somethingNew = true;
+            }
+        }
+        if(somethingNew) {
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
+            } else {
+                System.err.println("Cannot update adapter collection - maybe you forgot to set it?");
+            }
         }
     }
 
     public void addDevice(Device device){
-        devices.add(device);
-        if(adapter != null) {
-            adapter.notifyDataSetChanged();
-        } else {
-            System.err.println("Cannot update adapter collection - maybe you forgot to set it?");
+        if(!devices.contains(device)) {
+            devices.add(device);
+            if(adapter != null) {
+                adapter.notifyDataSetChanged();
+            } else {
+                System.err.println("Cannot update adapter collection - maybe you forgot to set it?");
+            }
         }
     }
 
-    public Set<Device> getFoundDevices() {
+    public List<Device> getFoundDevices() {
         return devices;
     }
 
-    public void setAdapter(ArrayAdapter adapter) {
-        this.adapter = adapter;
+    public ArrayAdapter<Device> getAdapter() {
+        return this.adapter;
     }
 }
