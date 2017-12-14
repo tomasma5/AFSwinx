@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyConstants;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.NearbyDevicesFinder;
 
 public class MainActivity extends AppCompatActivity {
 
