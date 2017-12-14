@@ -15,14 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import cz.cvut.fel.matyapav.nearbytest.Adapters.NearbyDeviceListAdapter;
-import cz.cvut.fel.matyapav.nearbytest.Helpers.Constants;
-import cz.cvut.fel.matyapav.nearbytest.Helpers.Utils;
-import cz.cvut.fel.matyapav.nearbytest.Tasks.ScanWifiNetworkForDevicesTask;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Adapters.NearbyDeviceListAdapter;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyConstants;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyUtils;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Device;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Tasks.ScanWifiNetworkForDevicesTask;
 
 
 /**
@@ -79,11 +79,11 @@ public class NearbyDevicesFinder {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Log.i(Constants.APPLICATION_TAG, "Bluetooth Device found: " +
+                Log.i(NearbyConstants.APPLICATION_TAG, "Bluetooth Device found: " +
                         bluetoothDevice.getName() + "; MAC " +
                         bluetoothDevice.getAddress() +
                         " " +
-                        Utils.getBluetoothDeviceType(bluetoothDevice.getBluetoothClass().getMajorDeviceClass()));
+                        NearbyUtils.getBluetoothDeviceType(bluetoothDevice.getBluetoothClass().getMajorDeviceClass()));
                 Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH);
                 addDevice(device);
             }
@@ -103,7 +103,6 @@ public class NearbyDevicesFinder {
             }
         }
     }
-
 
     public void addDevices(List<Device> devices) {
         boolean somethingNew = false;

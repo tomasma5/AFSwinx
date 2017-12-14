@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Helpers;
+package cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers;
 
 import android.bluetooth.BluetoothClass;
 import android.util.Log;
@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
+
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
 
-public class Utils {
+public class NearbyUtils {
 
-    private Utils() {
+    private NearbyUtils() {
     }
 
     public static String getBluetoothDeviceType(int bluetoothDeviceTypeInteger){
@@ -49,13 +51,13 @@ public class Utils {
     }
 
     public static String getMacAddressFromIp(String ip) {
-        String macAddress = Constants.EMPTY_MAC_ADDRESS;
+        String macAddress = NearbyConstants.EMPTY_MAC_ADDRESS;
         BufferedReader bufferedReader = null;
         try {
             if (ip != null) {
-                String ptrn = String.format(Constants.MAC_REGULAR_EXPRESSION, ip.replace(".", "\\."));
-                Pattern pattern = Pattern.compile(ptrn);
-                bufferedReader = new BufferedReader(new FileReader("/proc/net/arp"), 8 * 1024);
+                String patternStr = String.format(NearbyConstants.MAC_REGULAR_EXPRESSION, ip.replace(".", "\\."));
+                Pattern pattern = Pattern.compile(patternStr);
+                bufferedReader = new BufferedReader(new FileReader(NearbyConstants.ARP_LOCATION), 8 * 1024);
                 String line;
                 Matcher matcher;
                 while ((line = bufferedReader.readLine()) != null) {
@@ -66,10 +68,10 @@ public class Utils {
                     }
                 }
             } else {
-                Log.e(Constants.APPLICATION_TAG, "ip is null");
+                Log.e(AppConstants.APPLICATION_TAG, "ip is null");
             }
         } catch (IOException e) {
-            Log.e(Constants.APPLICATION_TAG, "Can't open/read file ARP: " + e.getMessage());
+            Log.e(AppConstants.APPLICATION_TAG, "Can't open/read file ARP: " + e.getMessage());
             return macAddress;
         } finally {
             try {
@@ -77,7 +79,7 @@ public class Utils {
                     bufferedReader.close();
                 }
             } catch (IOException e) {
-                Log.e(Constants.APPLICATION_TAG, e.getMessage());
+                Log.e(AppConstants.APPLICATION_TAG, e.getMessage());
             }
         }
         return macAddress;

@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Tasks;
+package cz.cvut.fel.matyapav.nearbytest.Nearby.Tasks;
 
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -11,10 +11,11 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.cvut.fel.matyapav.nearbytest.Helpers.Constants;
-import cz.cvut.fel.matyapav.nearbytest.Device;
-import cz.cvut.fel.matyapav.nearbytest.DeviceType;
-import cz.cvut.fel.matyapav.nearbytest.Helpers.Utils;
+import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyConstants;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Device;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyUtils;
 import cz.cvut.fel.matyapav.nearbytest.NearbyDevicesFinder;
 
 /**
@@ -48,9 +49,9 @@ public class ScanWifiNetworkForDevicesTask extends AsyncTask<Void, Void, List<De
                 int pingTimeout = 100;
                 boolean reachable = address.isReachable(pingTimeout);
                 if (reachable){
-                    String macAddress = Utils.getMacAddressFromIp(address.getHostAddress());
-                    if(!macAddress.equals(Constants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table
-                        Log.w(Constants.APPLICATION_TAG, address.getCanonicalHostName() + " " + macAddress + " " + DeviceType.WIFI_DEVICE);
+                    String macAddress = NearbyUtils.getMacAddressFromIp(address.getHostAddress());
+                    if(!macAddress.equals(NearbyConstants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table
+                        Log.w(AppConstants.APPLICATION_TAG, address.getCanonicalHostName() + " " + macAddress + " " + DeviceType.WIFI_DEVICE);
                         connectedDevices.add(new Device(address.getCanonicalHostName(), macAddress, DeviceType.WIFI_DEVICE));
                     }
                 }

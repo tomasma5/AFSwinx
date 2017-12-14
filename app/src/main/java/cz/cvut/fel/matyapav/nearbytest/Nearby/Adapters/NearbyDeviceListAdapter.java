@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Adapters;
+package cz.cvut.fel.matyapav.nearbytest.Nearby.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-import cz.cvut.fel.matyapav.nearbytest.Device;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Device;
 import cz.cvut.fel.matyapav.nearbytest.R;
 
 /**

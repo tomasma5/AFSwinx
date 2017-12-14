@@ -11,7 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import cz.cvut.fel.matyapav.nearbytest.Helpers.Constants;
+import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyConstants;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         getNearbyButton.setOnClickListener(view -> {
             //ACCESS_COARSE_LOCATION is marked as dangerous permission and must be requested externally
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, Constants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST);
             } else {
                 nearbyDevicesFinder.findNearbyDevices();
             }
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
-            case Constants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST:
+            case AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST:
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     nearbyDevicesFinder.findNearbyDevices();
