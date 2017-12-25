@@ -12,7 +12,7 @@ import java.util.TimerTask;
 
 import cz.cvut.fel.matyapav.nearbytest.nearby.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.R;
-import cz.cvut.fel.matyapav.nearbytest.nearby.finder.INearbyDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.AbstractNearbyDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.SubnetDevicesFinder;
 
 /**
@@ -22,7 +22,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.finder.SubnetDevicesFinder;
 
 public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
 
-    private List<INearbyDevicesFinder> nearbyDevicesFinders;
+    private List<AbstractNearbyDevicesFinder> nearbyDevicesFinders;
     private NearbyFinderManager finder;
     private int timeoutInMillis = 12000;
 
@@ -35,7 +35,7 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        nearbyDevicesFinders.forEach(INearbyDevicesFinder::startFindingDevices);
+        nearbyDevicesFinders.forEach(AbstractNearbyDevicesFinder::startFindingDevices);
         Timer timer = new Timer();
         int timeStep = 100;
         timer.schedule(
@@ -70,7 +70,7 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
         }
     }
 
-    public FindDevicesTask addNearbyDevicesFinder(INearbyDevicesFinder finder) {
+    public FindDevicesTask addNearbyDevicesFinder(AbstractNearbyDevicesFinder finder) {
         if (finder instanceof SubnetDevicesFinder) {
             ((SubnetDevicesFinder) finder).setTimeOutMillis(timeoutInMillis);
         }
@@ -83,7 +83,7 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
 
     public FindDevicesTask setRecommendedTimeout(int timeoutInMillis) {
         if (nearbyDevicesFinders != null) {
-            for (INearbyDevicesFinder finder : nearbyDevicesFinders) {
+            for (AbstractNearbyDevicesFinder finder : nearbyDevicesFinders) {
                 if (finder instanceof SubnetDevicesFinder) {
                     ((SubnetDevicesFinder) finder).setTimeOutMillis(timeoutInMillis);
                 }

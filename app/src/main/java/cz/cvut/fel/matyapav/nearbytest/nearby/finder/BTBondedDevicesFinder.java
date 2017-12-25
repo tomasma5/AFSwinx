@@ -24,7 +24,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyUtils;
  * @since 1.0.0..
  */
 
-public class BTBondedDevicesFinder extends INearbyDevicesFinder {
+public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private Activity activity;
     private BluetoothAdapter btAdapter;

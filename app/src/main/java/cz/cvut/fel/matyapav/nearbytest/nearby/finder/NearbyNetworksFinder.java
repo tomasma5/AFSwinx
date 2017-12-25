@@ -15,7 +15,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
  * @since 1.0.0..
  */
 
-public class NearbyNetworksFinder extends INearbyDevicesFinder {
+public class NearbyNetworksFinder extends AbstractNearbyDevicesFinder {
 
     private WifiManager wifiManager;
     private boolean active;

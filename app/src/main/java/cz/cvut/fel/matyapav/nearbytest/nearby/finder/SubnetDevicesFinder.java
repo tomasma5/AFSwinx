@@ -22,7 +22,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyUtils;
 
-public class SubnetDevicesFinder extends INearbyDevicesFinder {
+public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private WifiManager wifiManager;
     private int noThreads = 255;

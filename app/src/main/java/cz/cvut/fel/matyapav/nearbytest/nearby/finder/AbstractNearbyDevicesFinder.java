@@ -14,7 +14,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceAdditionalInfo;
  * @since 1.0.0..
  */
 
-public abstract class INearbyDevicesFinder {
+public abstract class AbstractNearbyDevicesFinder {
 
     private List<Device> foundDevices = new ArrayList<>();
 
