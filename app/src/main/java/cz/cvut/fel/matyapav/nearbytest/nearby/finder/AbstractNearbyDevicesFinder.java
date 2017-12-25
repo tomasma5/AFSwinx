@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.nearbytest.nearby.finder;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceAdditionalInfo;
 public abstract class AbstractNearbyDevicesFinder {
 
     private List<Device> foundDevices = new ArrayList<>();
+    private Activity activity;
+
+    public AbstractNearbyDevicesFinder(Activity activity) {
+        this.activity = activity;
+    }
 
     public abstract void startFindingDevices();
 
@@ -47,5 +53,9 @@ public abstract class AbstractNearbyDevicesFinder {
             }
         }
        Log.i(AppConstants.APPLICATION_TAG, logBuilder.toString());
+    }
+
+    public Activity getActivity() {
+        return activity;
     }
 }

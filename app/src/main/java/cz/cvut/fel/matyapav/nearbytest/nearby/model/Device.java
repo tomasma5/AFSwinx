@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.enums.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 
 /**

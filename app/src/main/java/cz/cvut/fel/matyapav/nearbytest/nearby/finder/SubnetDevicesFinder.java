@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.enums.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyUtils;
 
@@ -33,6 +33,7 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
 
 
     public SubnetDevicesFinder(Activity activity) {
+        super(activity);
         this.wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         this.executor = Executors.newFixedThreadPool(this.noThreads);
         this.submittedTasks = new ArrayList<>();

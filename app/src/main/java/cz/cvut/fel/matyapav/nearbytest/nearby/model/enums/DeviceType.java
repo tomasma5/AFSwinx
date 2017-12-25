@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.nearby.model;
+package cz.cvut.fel.matyapav.nearbytest.nearby.model.enums;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

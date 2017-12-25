@@ -11,21 +11,44 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import cz.cvut.fel.matyapav.nearbytest.devicestatus.DeviceStatusManager;
+import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.BatteryStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.LocationStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.devicestatus.model.DeviceStatus;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTBondedDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.NearbyNetworksFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearby.NearbyFinderManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    NearbyFinderManager nearbyDevicesFinder;
+    NearbyFinderManager nearbyFinderManager;
+    DeviceStatusManager deviceStatusManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nearbyDevicesFinder = new NearbyFinderManager(this);
+        deviceStatusManager = new DeviceStatusManager(this)
+                    .addStatusMiner(new BatteryStatusMiner(this))
+                    .addStatusMiner(new LocationStatusMiner(this));
+
+        DeviceStatus deviceStatus = deviceStatusManager.getDeviceStatus();
+
+        nearbyFinderManager = new NearbyFinderManager(this)
+                .setRecommendedTimeout(10000)
+                .setDeviceStatus(deviceStatus)
+                .addNearbyDevicesFinder(new BTBondedDevicesFinder(this), 20)
+                .addNearbyDevicesFinder(new BTDevicesFinder(this), 20)
+                .addNearbyDevicesFinder(new NearbyNetworksFinder(this), 20)
+                .addNearbyDevicesFinder(new SubnetDevicesFinder(this), 30);
+
+        //TODO set device status to view
         ListView listView = (ListView) findViewById(R.id.nearby_devices_list_view);
-        listView.setAdapter(nearbyDevicesFinder.getAdapter());
+        listView.setAdapter(nearbyFinderManager.getAdapter());
 
         Button getNearbyButton = (Button) findViewById(R.id.get_nearby_devices_btn);
         getNearbyButton.setOnClickListener(view -> {
@@ -33,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST);
             } else {
-                nearbyDevicesFinder.findNearbyDevices();
+                nearbyFinderManager.findNearbyDevices();
             }
         });
     }
@@ -44,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             case AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST:
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    nearbyDevicesFinder.findNearbyDevices();
+                    nearbyFinderManager.findNearbyDevices();
                 } else {
                     //permission denied
                     Toast.makeText(this, "This app won't work without this permission", Toast.LENGTH_LONG).show();

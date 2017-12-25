@@ -8,7 +8,7 @@ import android.net.wifi.WifiManager;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.enums.DeviceType;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -21,6 +21,7 @@ public class NearbyNetworksFinder extends AbstractNearbyDevicesFinder {
     private boolean active;
 
     public NearbyNetworksFinder(Activity activity) {
+        super(activity);
         wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 

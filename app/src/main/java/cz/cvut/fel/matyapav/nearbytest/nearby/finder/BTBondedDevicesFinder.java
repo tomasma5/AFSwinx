@@ -14,7 +14,7 @@ import java.util.Set;
 
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.BluetoothUtil;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.enums.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
 
 import static cz.cvut.fel.matyapav.nearbytest.nearby.util.AdditionalInfoNames.*;
@@ -26,12 +26,11 @@ import static cz.cvut.fel.matyapav.nearbytest.nearby.util.AdditionalInfoNames.*;
 
 public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
 
-    private Activity activity;
     private BluetoothAdapter btAdapter;
     private boolean active;
 
     public BTBondedDevicesFinder(Activity activity) {
-        this.activity = activity;
+        super(activity);
         BluetoothManager btManager = (BluetoothManager) activity.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
         btAdapter = btManager.getAdapter();
     }
@@ -39,7 +38,7 @@ public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
     @Override
     public void startFindingDevices() {
         if (btAdapter == null) {
-            Toast.makeText(activity, NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
             return;
         }
         if (!btAdapter.isEnabled()) {
@@ -55,7 +54,7 @@ public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
             device.addAdditionalInformation(ADDITIONAL_INFO_BT_MAJOR_CLASS, BluetoothUtil.getBluetoothMajorDeviceClass(bluetoothDevice));
             device.addAdditionalInformation(ADDITIONAL_INFO_BT_CLASS, BluetoothUtil.getBluetoothDeviceClass(bluetoothDevice));
             deviceFound(device);
-
+            //TODO should I connect to the device and get its services - I can get more information but only sometimes - most of them are not relevant for our purpose
         }
     }
 

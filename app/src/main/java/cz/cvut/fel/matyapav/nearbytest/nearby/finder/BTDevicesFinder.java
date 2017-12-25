@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.enums.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.BluetoothUtil;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
 
@@ -26,23 +26,22 @@ import static cz.cvut.fel.matyapav.nearbytest.nearby.util.AdditionalInfoNames.*;
 
 public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
 
-    private Activity activity;
     private BluetoothAdapter btAdapter;
 
     public BTDevicesFinder(Activity activity) {
-        this.activity = activity;
-        BluetoothManager btManager = (BluetoothManager) activity.getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
+        super(activity);
+        BluetoothManager btManager = (BluetoothManager) getActivity().getApplicationContext().getSystemService(Context.BLUETOOTH_SERVICE);
         btAdapter = btManager.getAdapter();
     }
 
     @Override
     public void startFindingDevices() {
         if (btAdapter == null) {
-            Toast.makeText(activity, NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
         } else {
             if (btAdapter.isEnabled()) {
                 IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                activity.registerReceiver(mReceiver, filter);
+                getActivity().registerReceiver(mReceiver, filter);
                 if (btAdapter.isDiscovering()) {
                     btAdapter.cancelDiscovery();
                 }
