@@ -38,7 +38,7 @@ class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
     protected Void doInBackground(Void... voids) {
         nearbyDevicesFinders.forEach(INearbyDevicesFinder::startFindingDevices);
         Timer timer = new Timer();
-        int timeStep = 250;
+        int timeStep = 100;
         timer.schedule(
                 new TimerTask() {
                     int i = 0;
