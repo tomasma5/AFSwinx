@@ -37,9 +37,9 @@ public abstract class AbstractNearbyDevicesFinder {
         StringBuilder logBuilder =  new StringBuilder();
         logBuilder.append("Device found! - ")
                 .append(device.getName())
-                .append("; MAC ")
+                .append("[ MAC ")
                 .append(device.getMacAddress())
-                .append(" type + ").append(device.getDeviceType());
+                .append("] TYPE = ").append(device.getDeviceType());
         if(device.getAdditionalInformations() != null) {
             logBuilder.append("\n Additional informations: \n");
             for (DeviceAdditionalInfo info : device.getAdditionalInformations()) {

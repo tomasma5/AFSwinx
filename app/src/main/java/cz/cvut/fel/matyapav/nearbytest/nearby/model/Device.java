@@ -54,7 +54,7 @@ public class Device {
 
     public void addAdditionalInformation(String informationName, String informationContent) {
         if(informationName == null || informationContent == null || informationName.isEmpty() || informationContent.isEmpty()){
-            Log.e(AppConstants.APPLICATION_TAG, "This information is useless. Throwing it away...");
+            Log.e(AppConstants.APPLICATION_TAG, "This information ["+informationName+":"+informationContent+"] is useless. Throwing it away...");
             return;
         }
         if(additionalInformations == null) {
@@ -73,9 +73,9 @@ public class Device {
 
         Device device = (Device) o;
 
-        if (macAddress != null ? macAddress.equals(device.macAddress) : device.macAddress == null && deviceType == device.deviceType)
-            return true;
-        else return false;
+        if (macAddress != null ? !macAddress.equals(device.macAddress) : device.macAddress != null)
+            return false;
+        return deviceType == device.deviceType;
 
     }
 
