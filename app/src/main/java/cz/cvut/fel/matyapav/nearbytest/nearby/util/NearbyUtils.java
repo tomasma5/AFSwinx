@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers;
+package cz.cvut.fel.matyapav.nearbytest.nearby.util;
 
 import android.bluetooth.BluetoothClass;
 import android.util.Log;
@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
+import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

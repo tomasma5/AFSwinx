@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Nearby.Adapters;
+package cz.cvut.fel.matyapav.nearbytest.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-import cz.cvut.fel.matyapav.nearbytest.Nearby.Device;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.R;
 
 /**
@@ -42,7 +42,7 @@ public class NearbyDeviceListAdapter extends ArrayAdapter<Device> {
             deviceAddress.setText(device.getMacAddress() != null ? device.getMacAddress() : "Cannot get address");
             deviceType.setText(device.getDeviceType().toString());
             switch (device.getDeviceType()){
-                case BLUETOOTH:
+                case BLUETOOTH_DISCOVERED:
                     deviceIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_bluetooth));
                     break;
                 case WIFI_DEVICE:

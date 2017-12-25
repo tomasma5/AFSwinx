@@ -1,4 +1,7 @@
-package cz.cvut.fel.matyapav.nearbytest.Nearby;
+package cz.cvut.fel.matyapav.nearbytest.nearby.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -10,6 +13,7 @@ public class Device {
     private String name;
     private String macAddress;
     private DeviceType deviceType;
+    private List<DeviceAdditionalInfo> additionalInformations;
 
     public Device() {
     }
@@ -42,6 +46,16 @@ public class Device {
 
     public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
+    }
+
+    public void addAdditionalInformation(String informationName, String informationContent) {
+        if(additionalInformations == null) {
+            additionalInformations = new ArrayList<>();
+        }
+        additionalInformations.add(new DeviceAdditionalInfo(informationName, informationContent));
+    }
+    public List<DeviceAdditionalInfo> getAdditionalInformations() {
+        return additionalInformations;
     }
 
     @Override

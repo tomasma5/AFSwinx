@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Nearby.Finders;
+package cz.cvut.fel.matyapav.nearbytest.nearby.finder;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,11 +16,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.Device;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.DeviceType;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyConstants;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyUtils;
+import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
+import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
+import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyUtils;
 
 public class SubnetDevicesFinder extends INearbyDevicesFinder {
 

@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Helpers;
+package cz.cvut.fel.matyapav.nearbytest.util;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

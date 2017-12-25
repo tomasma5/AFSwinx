@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.Nearby;
+package cz.cvut.fel.matyapav.nearbytest.nearby.model;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -6,7 +6,8 @@ package cz.cvut.fel.matyapav.nearbytest.Nearby;
  */
 
 public enum DeviceType {
-    BLUETOOTH,
+    BLUETOOTH_DISCOVERED,
+    BLUETOOTH_BONDED,
     WIFI_NETWORK,
     WIFI_DEVICE
 }
