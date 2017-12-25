@@ -7,10 +7,11 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTBondedDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 import cz.cvut.fel.matyapav.nearbytest.ui.adapter.NearbyDeviceListAdapter;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearby.finder.FindDevicesTask;
+import cz.cvut.fel.matyapav.nearbytest.nearby.task.FindDevicesTask;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.NearbyNetworksFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
@@ -41,6 +42,7 @@ public class NearbyFinderManager {
                 .addNearbyDevicesFinder(new BTDevicesFinder(activity))
                 .addNearbyDevicesFinder(new SubnetDevicesFinder(activity))
                 .addNearbyDevicesFinder(new NearbyNetworksFinder(activity))
+                .addNearbyDevicesFinder(new BTBondedDevicesFinder(activity))
                 .execute();
     }
 

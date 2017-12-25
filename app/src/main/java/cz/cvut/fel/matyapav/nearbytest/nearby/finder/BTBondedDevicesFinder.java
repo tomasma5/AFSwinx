@@ -28,6 +28,7 @@ public class BTBondedDevicesFinder extends INearbyDevicesFinder {
 
     private Activity activity;
     private BluetoothAdapter btAdapter;
+    private boolean active;
 
     public BTBondedDevicesFinder(Activity activity) {
         this.activity = activity;
@@ -41,9 +42,12 @@ public class BTBondedDevicesFinder extends INearbyDevicesFinder {
             Toast.makeText(activity, NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
         } else {
             if (btAdapter.isEnabled()) {
-                // Do whatever you want to do with your bluetoothAdapter
+                active = true;
                 Set<BluetoothDevice> bondedDevices = btAdapter.getBondedDevices();
                 for (BluetoothDevice bluetoothDevice : bondedDevices) {
+                    if (!active) {
+                        break;
+                    }
                     Device device = new Device(
                             bluetoothDevice.getName(),
                             bluetoothDevice.getAddress(),
@@ -57,6 +61,7 @@ public class BTBondedDevicesFinder extends INearbyDevicesFinder {
                             )
                     );
                     deviceFound(device);
+
                 }
             }
         }
@@ -64,9 +69,7 @@ public class BTBondedDevicesFinder extends INearbyDevicesFinder {
 
     @Override
     public List<Device> stopFindingAndCollectDevices() {
-        if (btAdapter.isDiscovering()) {
-            btAdapter.cancelDiscovery();
-        }
+        active = false;
         return getFoundDevices();
     }
 

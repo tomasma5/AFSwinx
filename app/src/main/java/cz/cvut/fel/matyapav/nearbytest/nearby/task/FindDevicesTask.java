@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.nearby.finder;
+package cz.cvut.fel.matyapav.nearbytest.nearby.task;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -12,6 +12,8 @@ import java.util.TimerTask;
 
 import cz.cvut.fel.matyapav.nearbytest.nearby.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.R;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.INearbyDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearby.finder.SubnetDevicesFinder;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

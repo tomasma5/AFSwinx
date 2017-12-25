@@ -18,7 +18,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
 public class NearbyNetworksFinder extends INearbyDevicesFinder {
 
     private WifiManager wifiManager;
-    private boolean active = true;
+    private boolean active;
 
     public NearbyNetworksFinder(Activity activity) {
         wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -28,12 +28,14 @@ public class NearbyNetworksFinder extends INearbyDevicesFinder {
     public void startFindingDevices() {
         List<ScanResult> scanResults = wifiManager.getScanResults();
         Device device;
+        active = true;
         for (int i = 0; i < scanResults.size(); i++) {
-            if(active) {
-                ScanResult scanresult = scanResults.get(i);
-                device = new Device(scanresult.SSID, scanresult.BSSID, DeviceType.WIFI_NETWORK);
-                deviceFound(device);
+            if (!active) {
+                break;
             }
+            ScanResult scanresult = scanResults.get(i);
+            device = new Device(scanresult.SSID, scanresult.BSSID, DeviceType.WIFI_NETWORK);
+            deviceFound(device);
         }
     }
 
