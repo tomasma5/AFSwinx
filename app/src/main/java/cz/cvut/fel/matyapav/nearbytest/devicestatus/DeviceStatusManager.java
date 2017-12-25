@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.AbstractStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.BatteryStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.LocationStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.model.DeviceStatus;
 
 /**

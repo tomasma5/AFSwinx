@@ -9,14 +9,10 @@ import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.AbstractNearbyDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTBondedDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
-import cz.cvut.fel.matyapav.nearbytest.ui.adapter.NearbyDeviceListAdapter;
-import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearby.task.FindDevicesTask;
-import cz.cvut.fel.matyapav.nearbytest.nearby.finder.NearbyNetworksFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearby.finder.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
+import cz.cvut.fel.matyapav.nearbytest.nearby.task.FindDevicesTask;
+import cz.cvut.fel.matyapav.nearbytest.ui.adapter.NearbyDeviceListAdapter;
+import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

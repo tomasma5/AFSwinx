@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -51,14 +52,19 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(nearbyFinderManager.getAdapter());
 
         Button getNearbyButton = (Button) findViewById(R.id.get_nearby_devices_btn);
-        getNearbyButton.setOnClickListener(view -> {
+        getNearbyButton.setOnClickListener(getNearbyDevices());
+    }
+
+    @NonNull
+    private View.OnClickListener getNearbyDevices() {
+        return view -> {
             //ACCESS_COARSE_LOCATION is marked as dangerous permission and must be requested externally
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST);
             } else {
                 nearbyFinderManager.findNearbyDevices();
             }
-        });
+        };
     }
 
     @Override
