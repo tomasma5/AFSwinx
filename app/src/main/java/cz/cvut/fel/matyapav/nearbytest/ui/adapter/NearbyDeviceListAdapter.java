@@ -47,6 +47,7 @@ public class NearbyDeviceListAdapter extends ArrayAdapter<Device> {
                     break;
                 case BLUETOOTH_BONDED:
                     deviceIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_bluetooth));
+                    break;
                 case WIFI_DEVICE:
                     deviceIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_device));
                     break;
