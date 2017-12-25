@@ -27,8 +27,10 @@ public abstract class AbstractNearbyDevicesFinder {
     }
 
     void deviceFound(Device device) {
-        foundDevices.add(device);
-        logDevice(device);
+        if(!foundDevices.contains(device)){
+            foundDevices.add(device);
+            logDevice(device);
+        }
     }
 
     private void logDevice(Device device) {
@@ -44,6 +46,6 @@ public abstract class AbstractNearbyDevicesFinder {
                 logBuilder.append(info.toString()).append("\n");
             }
         }
-       Log.d(AppConstants.APPLICATION_TAG, logBuilder.toString());
+       Log.i(AppConstants.APPLICATION_TAG, logBuilder.toString());
     }
 }

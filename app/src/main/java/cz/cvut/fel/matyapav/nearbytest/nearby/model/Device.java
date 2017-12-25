@@ -1,7 +1,11 @@
 package cz.cvut.fel.matyapav.nearbytest.nearby.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -49,6 +53,10 @@ public class Device {
     }
 
     public void addAdditionalInformation(String informationName, String informationContent) {
+        if(informationName == null || informationContent == null || informationName.isEmpty() || informationContent.isEmpty()){
+            Log.e(AppConstants.APPLICATION_TAG, "This information is useless. Throwing it away...");
+            return;
+        }
         if(additionalInformations == null) {
             additionalInformations = new ArrayList<>();
         }

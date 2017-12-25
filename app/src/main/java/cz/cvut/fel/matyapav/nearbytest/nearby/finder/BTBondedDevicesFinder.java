@@ -7,17 +7,17 @@ import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
 import java.util.Set;
 
-import cz.cvut.fel.matyapav.nearbytest.util.AppConstants;
+import cz.cvut.fel.matyapav.nearbytest.nearby.util.BluetoothUtil;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
-import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyUtils;
+
+import static cz.cvut.fel.matyapav.nearbytest.nearby.util.AdditionalInfoNames.*;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -40,32 +40,25 @@ public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
     public void startFindingDevices() {
         if (btAdapter == null) {
             Toast.makeText(activity, NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
-        } else {
-            if (btAdapter.isEnabled()) {
-                active = true;
-                Set<BluetoothDevice> bondedDevices = btAdapter.getBondedDevices();
-                for (BluetoothDevice bluetoothDevice : bondedDevices) {
-                    if (!active) {
-                        break;
-                    }
-                    Device device = new Device(
-                            bluetoothDevice.getName(),
-                            bluetoothDevice.getAddress(),
-                            DeviceType.BLUETOOTH_BONDED
-                    );
-                    device.addAdditionalInformation(
-                            NearbyConstants.ADDITIONAL_INFO_BT_MAJOR_CLASS,
-                            NearbyUtils.getBluetoothDeviceType(bluetoothDevice
-                                    .getBluetoothClass()
-                                    .getMajorDeviceClass()
-                            )
-                    );
-                    deviceFound(device);
-
-                }
+            return;
+        }
+        if (!btAdapter.isEnabled()) {
+            return;
+        }
+        active = true;
+        Set<BluetoothDevice> bondedDevices = btAdapter.getBondedDevices();
+        for (BluetoothDevice bluetoothDevice : bondedDevices) {
+            if (!active) {
+                break;
             }
+            Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH_BONDED);
+            device.addAdditionalInformation(ADDITIONAL_INFO_BT_MAJOR_CLASS, BluetoothUtil.getBluetoothMajorDeviceClass(bluetoothDevice));
+            device.addAdditionalInformation(ADDITIONAL_INFO_BT_CLASS, BluetoothUtil.getBluetoothDeviceClass(bluetoothDevice));
+            deviceFound(device);
+
         }
     }
+
 
     @Override
     public List<Device> stopFindingAndCollectDevices() {
@@ -78,20 +71,11 @@ public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                LogFoundDevice(bluetoothDevice);
                 Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH_DISCOVERED);
                 deviceFound(device);
             }
         }
     };
-
-    private void LogFoundDevice(BluetoothDevice bluetoothDevice) {
-        Log.i(AppConstants.APPLICATION_TAG, "Bluetooth Device found: " +
-                bluetoothDevice.getName() + "; MAC " +
-                bluetoothDevice.getAddress() +
-                " " +
-                NearbyUtils.getBluetoothDeviceType(bluetoothDevice.getBluetoothClass().getMajorDeviceClass()));
-    }
 }
 
 

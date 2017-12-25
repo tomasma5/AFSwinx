@@ -14,8 +14,10 @@ import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearby.model.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearby.util.BluetoothUtil;
 import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyConstants;
-import cz.cvut.fel.matyapav.nearbytest.nearby.util.NearbyUtils;
+
+import static cz.cvut.fel.matyapav.nearbytest.nearby.util.AdditionalInfoNames.*;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -63,12 +65,8 @@ public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH_DISCOVERED);
-                device.addAdditionalInformation(NearbyConstants.ADDITIONAL_INFO_BT_MAJOR_CLASS,
-                        NearbyUtils.getBluetoothDeviceType(bluetoothDevice
-                                        .getBluetoothClass()
-                                        .getMajorDeviceClass()
-                        )
-                );
+                device.addAdditionalInformation(ADDITIONAL_INFO_BT_MAJOR_CLASS, BluetoothUtil.getBluetoothMajorDeviceClass(bluetoothDevice));
+                device.addAdditionalInformation(ADDITIONAL_INFO_BT_CLASS, BluetoothUtil.getBluetoothDeviceClass(bluetoothDevice));
                 deviceFound(device);
             }
         }

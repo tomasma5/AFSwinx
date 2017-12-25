@@ -24,34 +24,6 @@ public class NearbyUtils {
     private NearbyUtils() {
     }
 
-    public static String getBluetoothDeviceType(int bluetoothDeviceTypeInteger) {
-        switch (bluetoothDeviceTypeInteger) {
-            case BluetoothClass.Device.Major.AUDIO_VIDEO:
-                return "AUDIO-VIDEO";
-            case BluetoothClass.Device.Major.COMPUTER:
-                return "COMPUTER";
-            case BluetoothClass.Device.Major.HEALTH:
-                return "HEALTH";
-            case BluetoothClass.Device.Major.IMAGING:
-                return "IMAGING";
-            case BluetoothClass.Device.Major.MISC:
-                return "MISC";
-            case BluetoothClass.Device.Major.NETWORKING:
-                return "NETWORKING";
-            case BluetoothClass.Device.Major.PERIPHERAL:
-                return "PERIPHERAL";
-            case BluetoothClass.Device.Major.PHONE:
-                return "PHONE";
-            case BluetoothClass.Device.Major.TOY:
-                return "TOY";
-            case BluetoothClass.Device.Major.UNCATEGORIZED:
-                return "UNCATEGORIZED";
-            case BluetoothClass.Device.Major.WEARABLE:
-                return "WEARABLE";
-            default:
-                return null;
-        }
-    }
 
     public static String getMacAddressFromIp(String ip) {
         String macAddress = NearbyConstants.EMPTY_MAC_ADDRESS;
@@ -104,7 +76,7 @@ public class NearbyUtils {
      */
     private static ArrayList<String> getLinesInARPCache() {
         ArrayList<String> lines = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(NearbyConstants.ARP_LOCATION))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(NearbyConstants.ARP_LOCATION))) {
             String line;
             while ((line = br.readLine()) != null) {
                 lines.add(line);

@@ -15,5 +15,4 @@ public class NearbyConstants {
 
     public static final String BLUETOOTH_MISSING_MSG = "This device doesn't support bluetooth.";
 
-    public static final String ADDITIONAL_INFO_BT_MAJOR_CLASS = "bluetooth-major-class";
 }
