@@ -12,18 +12,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.NearbyDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.Nearby.NearbyFinder;
 
 public class MainActivity extends AppCompatActivity {
 
-    NearbyDevicesFinder nearbyDevicesFinder;
+    NearbyFinder nearbyDevicesFinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nearbyDevicesFinder = new NearbyDevicesFinder(this);
+        nearbyDevicesFinder = new NearbyFinder(this);
         ListView listView = (ListView) findViewById(R.id.nearby_devices_list_view);
         listView.setAdapter(nearbyDevicesFinder.getAdapter());
 

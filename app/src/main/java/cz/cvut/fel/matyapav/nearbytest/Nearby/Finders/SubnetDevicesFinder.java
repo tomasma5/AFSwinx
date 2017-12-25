@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import cz.cvut.fel.matyapav.nearbytest.Helpers.AppConstants;
@@ -20,20 +21,21 @@ import cz.cvut.fel.matyapav.nearbytest.Nearby.Device;
 import cz.cvut.fel.matyapav.nearbytest.Nearby.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyConstants;
 import cz.cvut.fel.matyapav.nearbytest.Nearby.Helpers.NearbyUtils;
-import cz.cvut.fel.matyapav.nearbytest.Nearby.NearbyDevicesFinder;
 
-public class SubnetDevicesFinder implements INearbyDevicesFinder {
+public class SubnetDevicesFinder extends INearbyDevicesFinder {
 
     private WifiManager wifiManager;
     private int noThreads = 255;
-    private int timeoutMillis = 2500;
+    private int timeoutMillis = 1000;
     private ArrayList<String> addresses;
-    private List<Device> devicesFound;
-    private NearbyDevicesFinder finder;
+    private ExecutorService executor;
+    private List<Future> submittedTasks;
 
-    public SubnetDevicesFinder(Activity activity, NearbyDevicesFinder finder) {
+
+    public SubnetDevicesFinder(Activity activity) {
         this.wifiManager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        this.finder = finder;
+        this.executor = Executors.newFixedThreadPool(this.noThreads);
+        this.submittedTasks = new ArrayList<>();
     }
 
     public void setNoThreads(int noThreads) throws IllegalArgumentException {
@@ -51,28 +53,32 @@ public class SubnetDevicesFinder implements INearbyDevicesFinder {
     }
 
     @Override
-    public void findDevices() {
+    public void startFindingDevices() {
         if(wifiManager.isWifiEnabled() && wifiManager.getConnectionInfo().getNetworkId() != -1) {
-            devicesFound = new ArrayList<>();
-            prepareAddressFromInspection();
-            ExecutorService executor = Executors.newFixedThreadPool(this.noThreads);
+            prepareAddressForInspection();
 
             for (final String add : addresses) {
                 Runnable worker = new SubnetDeviceFinderRunnable(add);
-                executor.execute(worker);
+                submittedTasks.add(executor.submit(worker));
             }
             executor.shutdown();
-
             try {
-                executor.awaitTermination(1, TimeUnit.HOURS);
+                executor.awaitTermination(timeoutMillis, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            finder.addDevices(devicesFound);
         }
     }
 
-    private void prepareAddressFromInspection() {
+    @Override
+    public List<Device> stopFindingAndCollectDevices() {
+        for(Future taskFuture : submittedTasks){
+            taskFuture.cancel(true);
+        }
+        return getFoundDevices();
+    }
+
+    private void prepareAddressForInspection() {
         WifiInfo connectionInfo = wifiManager.getConnectionInfo();
         String ipAddress = Formatter.formatIpAddress(connectionInfo.getIpAddress()); //TODO deprecated
         addresses = new ArrayList<>();
@@ -89,7 +95,7 @@ public class SubnetDevicesFinder implements INearbyDevicesFinder {
     }
 
     private synchronized void subnetDeviceFound(Device device){
-        devicesFound.add(device);
+        deviceFound(device);
     }
 
     private class SubnetDeviceFinderRunnable implements Runnable {
@@ -103,7 +109,7 @@ public class SubnetDevicesFinder implements INearbyDevicesFinder {
         public void run() {
             try {
                 InetAddress ia = InetAddress.getByName(address);
-                boolean reachable = ia.isReachable(timeoutMillis);
+                boolean reachable = ia.isReachable(500);
                 if (reachable){
                     String macAddress = NearbyUtils.getMacAddressFromIp(ia.getHostAddress());
                     if(!macAddress.equals(NearbyConstants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table

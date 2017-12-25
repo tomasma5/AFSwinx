@@ -3,6 +3,7 @@ package cz.cvut.fel.matyapav.nearbytest.Nearby;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,14 @@ import cz.cvut.fel.matyapav.nearbytest.Nearby.Finders.SubnetDevicesFinder;
  * @since 1.0.0..
  */
 
-public class NearbyDevicesFinder {
+public class NearbyFinder {
 
     private Activity activity;
     private List<Device> devices;
     private ArrayAdapter<Device> adapter;
 
 
-    public NearbyDevicesFinder(Activity activity) {
+    public NearbyFinder(Activity activity) {
         this.activity = activity;
         devices = new ArrayList<>();
         adapter = new NearbyDeviceListAdapter(activity, devices);
@@ -32,37 +33,26 @@ public class NearbyDevicesFinder {
 
     public void findNearbyDevices() {
         devices.clear();
-        //TODO make all of them run in background ...
-        //access points
-        new NearbyNetworksFinder(activity, this).findDevices();
-        //subnet devices
-        new SubnetDevicesFinder(activity, this).findDevices();
-        //bluetooth
-        new BTDevicesFinder(activity, this).findDevices();
+        adapter.notifyDataSetChanged();
+        new FindDevicesTask(activity, this)
+                .setRecommendedTimeout(10000)
+                .addNearbyDevicesFinder(new BTDevicesFinder(activity))
+                .addNearbyDevicesFinder(new SubnetDevicesFinder(activity))
+                .addNearbyDevicesFinder(new NearbyNetworksFinder(activity))
+                .execute();
     }
 
-    public void addDevices(List<Device> devices) {
+    void addDevices(List<Device> devices) {
         boolean somethingNew = false;
-        for (Device device: devices) {
-            if(!this.devices.contains(device)){
+        for (Device device : devices) {
+            if (!this.devices.contains(device)) {
                 this.devices.add(device);
                 somethingNew = true;
             }
         }
-        if(somethingNew) {
+        if (somethingNew) {
             if (adapter != null) {
-                adapter.notifyDataSetChanged();
-            } else {
-                Log.e(AppConstants.APPLICATION_TAG, "Cannot update adapter collection - maybe you forgot to set it?");
-            }
-        }
-    }
-
-    public void addDevice(Device device){
-        if(!devices.contains(device)) {
-            devices.add(device);
-            if(adapter != null) {
-                adapter.notifyDataSetChanged();
+                activity.runOnUiThread(() -> adapter.notifyDataSetChanged());
             } else {
                 Log.e(AppConstants.APPLICATION_TAG, "Cannot update adapter collection - maybe you forgot to set it?");
             }
@@ -76,4 +66,5 @@ public class NearbyDevicesFinder {
     public ArrayAdapter<Device> getAdapter() {
         return this.adapter;
     }
+
 }
