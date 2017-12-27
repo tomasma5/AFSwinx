@@ -15,6 +15,7 @@ import android.widget.Toast;
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.DeviceStatusManager;
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.BatteryStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.LocationStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.NetworkStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTBondedDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearby.finder.BTDevicesFinder;
@@ -33,10 +34,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        deviceStatusManager = new DeviceStatusManager(this)
-                    .addStatusMiner(new BatteryStatusMiner(this))
-                    .addStatusMiner(new LocationStatusMiner(this));
+        //ACCESS_COARSE_LOCATION is marked as dangerous permission and must be requested externally
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, AppConstants.ACCESS_FINE_LOCATION_PERMISSION_REQUEST);
+        }
 
+        deviceStatusManager = new DeviceStatusManager(this)
+                .addStatusMiner(new BatteryStatusMiner(this))
+                .addStatusMiner(new LocationStatusMiner(this))
+                .addStatusMiner(new NetworkStatusMiner(this));
+
+        //TODO set device status to view
+
+        /*TODO udelat pak nejakeho defualt srace ktery bude poustet jak device status manager tak nearby manager
+         a bude observovat kdy je to dokoncene a zabali v te metode ten objekt do jsonu a nekam posle
+         api uz pro nej asi delat nebudu nebot chci aby obe veci byly pouzitelne zvlast a zvlast se nasetovaly
+         takze do default srace uz budu posilat asi jen uz pripravene findery.. tohle je zvazim*/
         DeviceStatus deviceStatus = deviceStatusManager.getDeviceStatus();
 
         nearbyFinderManager = new NearbyFinderManager(this)
@@ -47,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 .addNearbyDevicesFinder(new NearbyNetworksFinder(this), 20)
                 .addNearbyDevicesFinder(new SubnetDevicesFinder(this), 30);
 
-        //TODO set device status to view
         ListView listView = (ListView) findViewById(R.id.nearby_devices_list_view);
         listView.setAdapter(nearbyFinderManager.getAdapter());
 
@@ -57,14 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     @NonNull
     private View.OnClickListener getNearbyDevices() {
-        return view -> {
-            //ACCESS_COARSE_LOCATION is marked as dangerous permission and must be requested externally
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST);
-            } else {
-                nearbyFinderManager.findNearbyDevices();
-            }
-        };
+        return view -> nearbyFinderManager.findNearbyDevices();
     }
 
     @Override
@@ -72,10 +80,12 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case AppConstants.ACCESS_COARSE_LOCATION_PERMISSION_REQUEST:
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    nearbyFinderManager.findNearbyDevices();
-                } else {
-                    //permission denied
+                if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(this, "This app won't work without this permission", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case AppConstants.ACCESS_FINE_LOCATION_PERMISSION_REQUEST:
+                if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     Toast.makeText(this, "This app won't work without this permission", Toast.LENGTH_LONG).show();
                 }
                 break;

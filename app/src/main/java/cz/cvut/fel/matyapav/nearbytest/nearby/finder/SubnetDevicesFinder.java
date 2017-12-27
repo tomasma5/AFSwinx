@@ -79,11 +79,12 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
         return getFoundDevices();
     }
 
+
     private void prepareAddressForInspection() {
         WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-        String ipAddress = Formatter.formatIpAddress(connectionInfo.getIpAddress()); //TODO deprecated
+        @SuppressWarnings("deprecation") //WIFI info does not support ipv6 yet so deprecation does not make sense
+        String ipAddress = Formatter.formatIpAddress(connectionInfo.getIpAddress());
         addresses = new ArrayList<>();
-
         // Get addresses from ARP Info first as they are likely to be pingable
         addresses.addAll(NearbyUtils.getAllIPAddressesInARPCache());
         // Add all missing addresses in subnet

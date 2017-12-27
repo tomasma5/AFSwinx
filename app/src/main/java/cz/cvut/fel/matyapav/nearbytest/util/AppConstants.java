@@ -12,4 +12,6 @@ public class AppConstants {
     public static final String APPLICATION_TAG = "NearbyTestService";
     //permissions
     public static final int ACCESS_COARSE_LOCATION_PERMISSION_REQUEST = 1;
+
+    public static final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST = 2;
 }

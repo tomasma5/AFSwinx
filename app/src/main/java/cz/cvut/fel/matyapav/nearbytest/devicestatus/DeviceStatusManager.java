@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.AbstractStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.devicestatus.miner.DeviceInfoMiner;
 import cz.cvut.fel.matyapav.nearbytest.devicestatus.model.DeviceStatus;
 
 /**
@@ -20,6 +21,7 @@ public class DeviceStatusManager {
 
     public DeviceStatusManager(Activity activity) {
         this.activity = activity;
+        addStatusMiner(new DeviceInfoMiner(activity)); //device info is mined ALWAYS
     }
 
     public DeviceStatus getDeviceStatus(){

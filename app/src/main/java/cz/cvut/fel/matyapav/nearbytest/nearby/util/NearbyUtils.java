@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.nearbytest.nearby.util;
 
-import android.bluetooth.BluetoothClass;
 import android.util.Log;
 import android.util.Pair;
 
