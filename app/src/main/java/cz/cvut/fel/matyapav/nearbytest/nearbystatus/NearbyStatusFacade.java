@@ -8,6 +8,8 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task.NearbyFinderVisitor;
 
 /**
+ * Facade for executing nearby devices finding and status mining processes
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
@@ -24,6 +26,9 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
         this.deviceStatusManager = deviceStatusManager;
     }
 
+    /**
+     * Runs device status mining and nearby devices finding processes
+     */
     public void runProcess() {
         deviceStatusManager.mineDeviceStatus(this);
     }

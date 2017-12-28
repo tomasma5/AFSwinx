@@ -8,6 +8,9 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearby
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
+ * {@link NearbyStatusFacade} builder facade - it allows user to specify status miners and nearby
+ * devices finders. As well user can specify timout of the process
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
@@ -19,9 +22,14 @@ public class NearbyStatusFacadeBuilder {
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
 
+    //hide constructor of this class - singleton class should never be instantiated
     private NearbyStatusFacadeBuilder(){
     }
 
+    /**
+     * Gets instance of {@link NearbyStatusFacadeBuilder}
+     * @return instnce of builder
+     */
     public static synchronized NearbyStatusFacadeBuilder getInstance() {
         if(instance == null) {
             instance = new NearbyStatusFacadeBuilder();
@@ -29,6 +37,23 @@ public class NearbyStatusFacadeBuilder {
         return instance;
     }
 
+    /**
+     * Initializes builder - prepares all needed parts used in building process
+     * Must be called right after getting instance of {@link NearbyStatusFacadeBuilder}!
+     * @param activity android activity - it requires context
+     * @return initialized instance of builder
+     */
+    public NearbyStatusFacadeBuilder initialize(Activity activity) {
+        nearbyFinderManager = new NearbyFinderManager(activity);
+        deviceStatusManager = new DeviceStatusManager(activity);
+        return this;
+    }
+
+    /**
+     * Sets recommended timeout of both nearby devices finding and status mining processes
+     * @param recommendedTimeout recommended timout in milliseconds
+     * @return updated instance of builder
+     */
     public NearbyStatusFacadeBuilder setRecommendedTimeout(int recommendedTimeout){
         try {
             nearbyFinderManager.setRecommendedTimeout(recommendedTimeout);
@@ -40,6 +65,15 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
+    /**
+     * Adds nearby devices finder - if it is added it will be considered during nearby devices
+     * finding process. It is also possible to specify battery level limit for specific finder. It
+     * means the finder will not be used (turned off) if battery level is below this limit.
+     *
+     * @param nearbyDevicesFinder nearby devices finder
+     * @param batteryLevelLimit battery level limitation
+     * @return updated instance of builder
+     */
     public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit){
         try {
             nearbyFinderManager.addNearbyDevicesFinder(nearbyDevicesFinder, batteryLevelLimit);
@@ -51,6 +85,13 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
+    /**
+     * Adds nearby devices finder - if it is added it will be considered during nearby devices
+     * finding process.
+     *
+     * @param nearbyDevicesFinder nearby devices finder
+     * @return updated instance of builder
+     */
     public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
         try {
             nearbyFinderManager.addNearbyDevicesFinder(nearbyDevicesFinder);
@@ -62,7 +103,12 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
-
+    /**
+     * Adds status miner to miners list - if miner is added it will be considered during device
+     * status mining process.
+     * @param statusMiner status miner
+     * @return updated instance of builder
+     */
     public NearbyStatusFacadeBuilder addStatusMiner(AbstractStatusMiner statusMiner){
         try {
             deviceStatusManager.addStatusMiner(statusMiner);
@@ -74,16 +120,18 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
-    public NearbyStatusFacadeBuilder initialize(Activity activity) {
-        nearbyFinderManager = new NearbyFinderManager(activity);
-        deviceStatusManager = new DeviceStatusManager(activity);
-        return this;
-    }
-
+    /**
+     * Builds nearby devices finding and device status mining processes execution {@link NearbyStatusFacade}
+     * from properties previously set to {@link NearbyStatusFacadeBuilder}
+     * @return execution facade
+     */
     public NearbyStatusFacade build() {
         return new NearbyStatusFacade(nearbyFinderManager, deviceStatusManager);
     }
 
+    /**
+     * Logs uninitialized {@link NearbyFinderManager} or {@link DeviceStatusManager} manager error
+     */
     private void logUninitializedManagerError() {
         Log.e(GlobalConstants.APPLICATION_TAG, "Nearby finder manager was not initialized. You probably forgot to call initialize");
     }

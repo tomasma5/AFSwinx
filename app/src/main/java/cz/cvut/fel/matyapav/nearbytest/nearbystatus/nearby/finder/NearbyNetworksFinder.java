@@ -7,13 +7,14 @@ import android.net.wifi.WifiManager;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
 
 /**
+ * This nearby devices finder is responsible for finding nearby WIFI networks (access points)
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class NearbyNetworksFinder extends AbstractNearbyDevicesFinder {
 
     private boolean active;

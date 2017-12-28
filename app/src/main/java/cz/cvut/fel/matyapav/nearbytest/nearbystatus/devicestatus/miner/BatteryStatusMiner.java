@@ -11,12 +11,13 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.B
 import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.util.DeviceStatusConstants.BATTERY_PROPERTY_UNKNOWN;
 
 /**
+ * This miner is responsible for mining information about battery
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
+ *
  */
-
 public class BatteryStatusMiner extends AbstractStatusMiner {
-
 
     @Override
     public void mineAndFillStatus(DeviceStatus deviceStatus){
@@ -39,7 +40,6 @@ public class BatteryStatusMiner extends AbstractStatusMiner {
         int status = i.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         return status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL;
     }
-
 
     private int extractBatteryLevel(Intent i){
         return i.getIntExtra(BatteryManager.EXTRA_LEVEL, BATTERY_PROPERTY_UNKNOWN);

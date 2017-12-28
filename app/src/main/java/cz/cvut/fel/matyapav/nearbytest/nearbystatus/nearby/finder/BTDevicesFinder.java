@@ -12,17 +12,18 @@ import android.widget.Toast;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.BluetoothUtil;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyConstants;
 
 import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.AdditionalInfoNames.*;
 
 /**
+ * This nearby devices finder finds reachable visible bluetooth devices in device surroundings
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private BluetoothAdapter btAdapter;
@@ -53,6 +54,9 @@ public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
         return getFoundDevices();
     }
 
+    /**
+     * If device is found this receiver will register it
+     */
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();

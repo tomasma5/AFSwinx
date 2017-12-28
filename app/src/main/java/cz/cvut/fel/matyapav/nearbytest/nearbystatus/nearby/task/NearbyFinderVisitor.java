@@ -1,11 +1,15 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task;
 
 /**
+ * Callback interface for nearby status finding
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public interface NearbyFinderVisitor {
 
+    /**
+     * Should be called when nearby devices finding process has finished
+     */
     void onNearbyDevicesSearchFinished();
 }

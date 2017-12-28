@@ -1,10 +1,11 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial;
 
 /**
+ * Location status model - keeps information about location of device
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class LocationStatus {
 
     private double latitude;

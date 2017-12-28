@@ -6,10 +6,12 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.L
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.NetworkStatus;
 
 /**
+ * Device status model - keeps all partial information about device in one place
+ * Consisted of {@link DeviceInfo}, {@link BatteryStatus}, {@link LocationStatus}, {@link NetworkStatus}
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class DeviceStatus {
 
     private DeviceInfo deviceInfo;

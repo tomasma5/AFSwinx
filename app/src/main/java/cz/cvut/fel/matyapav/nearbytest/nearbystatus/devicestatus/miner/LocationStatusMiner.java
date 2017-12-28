@@ -15,11 +15,13 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceSta
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.LocationStatus;
 
 /**
+ * This miner is responsible for mining location of device - informations like longitude, latitude etc.
+ * TODO CURRENTLY NOT WORKING
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
+ *
  */
-
-//TODO not working ....
 public class LocationStatusMiner extends AbstractStatusMiner implements LocationListener {
 
     private LocationManager locationManager;

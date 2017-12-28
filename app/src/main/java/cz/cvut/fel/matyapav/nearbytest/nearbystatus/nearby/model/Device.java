@@ -2,23 +2,23 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
+ * Common device model - same for all devices (bluetooth, wifi network, subnet device...)
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class Device {
 
     private String name;
     private String macAddress;
     private DeviceType deviceType;
-    private List<DeviceAdditionalInfo> additionalInformations;
+    private Map<String, String> additionalInformations;
 
     public DeviceType getDeviceType() {
         return deviceType;
@@ -38,17 +38,23 @@ public class Device {
         return macAddress;
     }
 
+    /**
+     * Adds additional information about device;
+     * @param informationName name of information as a key
+     * @param informationContent conent of information as value
+     */
     public void addAdditionalInformation(String informationName, String informationContent) {
         if(informationName == null || informationContent == null || informationName.isEmpty() || informationContent.isEmpty()){
             Log.e(GlobalConstants.APPLICATION_TAG, "This information ["+informationName+":"+informationContent+"] is useless. Throwing it away...");
             return;
         }
         if(additionalInformations == null) {
-            additionalInformations = new ArrayList<>();
+            additionalInformations = new HashMap<>();
         }
-        additionalInformations.add(new DeviceAdditionalInfo(informationName, informationContent));
+        additionalInformations.put(informationName, informationContent);
     }
-    public List<DeviceAdditionalInfo> getAdditionalInformations() {
+
+    public Map<String, String> getAdditionalInformations() {
         return additionalInformations;
     }
 

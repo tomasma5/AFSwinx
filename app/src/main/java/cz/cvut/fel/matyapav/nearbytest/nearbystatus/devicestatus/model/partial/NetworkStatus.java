@@ -1,10 +1,11 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial;
 
 /**
+ * Network status model - keeps information about device connectivity and active network
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class NetworkStatus {
 
     private boolean connected;

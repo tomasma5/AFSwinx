@@ -12,10 +12,13 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.N
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.WifiStatus;
 
 /**
+ * This miner is resposible for getting information about active network - that means information
+ * like if device is connected, network type and if its WIFI connection information about wifi network as well
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
+ *
  */
-
 public class NetworkStatusMiner extends AbstractStatusMiner {
 
     private ConnectivityManager connectivityManager;
@@ -47,6 +50,10 @@ public class NetworkStatusMiner extends AbstractStatusMiner {
         deviceStatus.setNetworkStatus(networkStatus);
     }
 
+    /**
+     * Gets wifi status - ssid, bssid, name and ipaddress;
+     * @return wifi status
+     */
     private WifiStatus mineWifiStatus(){
         WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();

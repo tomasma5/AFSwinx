@@ -1,12 +1,14 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.util;
 
 /**
+ * Constants for device status mining process
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class DeviceStatusConstants {
 
+    //hide constructor - this class should not be instantiated
     private DeviceStatusConstants () {}
 
     public static final int BATTERY_PROPERTY_UNKNOWN = -1;

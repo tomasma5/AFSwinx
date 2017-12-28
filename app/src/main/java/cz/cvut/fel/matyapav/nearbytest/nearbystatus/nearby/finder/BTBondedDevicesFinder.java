@@ -3,9 +3,7 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import java.util.List;
@@ -13,16 +11,17 @@ import java.util.Set;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.BluetoothUtil;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyConstants;
 
 import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.AdditionalInfoNames.*;
 
 /**
+ * This nearby devices finder is responsible for getting paired bluetooth devices
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private boolean active;
@@ -49,6 +48,7 @@ public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
             device.addAdditionalInformation(ADDITIONAL_INFO_BT_CLASS, BluetoothUtil.getBluetoothDeviceClass(bluetoothDevice));
             deviceFound(device);
             //TODO should I connect to the device and get its services - I can get more information but only sometimes - most of them are not relevant for our purpose
+            //TODO at least i should connect to it to consider this nearby device
         }
     }
 
@@ -58,17 +58,6 @@ public class BTBondedDevicesFinder extends AbstractNearbyDevicesFinder {
         active = false;
         return getFoundDevices();
     }
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH_DISCOVERED);
-                deviceFound(device);
-            }
-        }
-    };
 }
 
 

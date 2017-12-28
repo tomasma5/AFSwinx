@@ -10,10 +10,11 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.DeviceStatusManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 
 /**
+ * Asynchronous task used fo getting information about device in background
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class DeviceStatusMinerTask extends AsyncTask<Void, Integer, Void> {
 
     private DeviceStatusManager deviceStatusManager;

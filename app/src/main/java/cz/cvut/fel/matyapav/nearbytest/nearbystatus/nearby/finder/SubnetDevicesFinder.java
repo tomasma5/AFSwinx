@@ -17,10 +17,19 @@ import java.util.concurrent.TimeUnit;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyUtils;
 
+/**
+ * This nearby devices finder is responsible for scan through wifi network the device is connected
+ * and find devices connected to same wifi network. Finder should do it in parallel manner.
+ * <p>
+ * TODO scanning only last 255 addresses - consult it with someone who is good in networks
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
+ */
 public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private WifiManager wifiManager;
@@ -36,16 +45,27 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
         this.submittedTasks = new ArrayList<>();
     }
 
-    public void setNoThreads(int noThreads) throws IllegalArgumentException {
+    /**
+     * Sets number of threads which should process subnet addresses
+     *
+     * @param noThreads positive number of threads
+     */
+    public void setNoThreads(int noThreads) {
         if (noThreads < 1) {
-            throw new IllegalArgumentException("Cannot have less than 1 thread");
+            Log.e(GlobalConstants.APPLICATION_TAG, "Cannot have less than 1 thread");
+            return;
         }
         this.noThreads = noThreads;
     }
 
-    public void setTimeOutMillis(int timeOutMillis) throws IllegalArgumentException {
-        if (timeOutMillis<0) {
-            throw new IllegalArgumentException("Timeout cannot be less than 0");
+    /**
+     * Sets timeout in milliseconds - after how long all tasks should terminate
+     * @param timeOutMillis
+     */
+    public void setTimeOutMillis(int timeOutMillis) {
+        if (timeOutMillis < 0) {
+            Log.e(GlobalConstants.APPLICATION_TAG, "Timeout cannot be less than 0");
+            return;
         }
         this.timeoutMillis = timeOutMillis;
     }
@@ -53,7 +73,7 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
     @Override
     public void startFindingDevices() {
         this.wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if(wifiManager.isWifiEnabled() && wifiManager.getConnectionInfo().getNetworkId() != -1) {
+        if (wifiManager.isWifiEnabled() && wifiManager.getConnectionInfo().getNetworkId() != -1) {
             prepareAddressForInspection();
 
             for (final String add : addresses) {
@@ -71,17 +91,20 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
 
     @Override
     public List<Device> stopFindingAndCollectDevices() {
-        for(Future taskFuture : submittedTasks){
+        for (Future taskFuture : submittedTasks) {
             taskFuture.cancel(true);
         }
         return getFoundDevices();
     }
 
-
+    /**
+     * Prepares addresses for inspection - firstly it get addresses from arp cache beacause those
+     * will probably be reachable and then adds remaining ip addresses
+     */
     private void prepareAddressForInspection() {
         WifiInfo connectionInfo = wifiManager.getConnectionInfo();
         @SuppressWarnings("deprecation") //WIFI info does not support ipv6 yet so deprecation does not make sense
-        String ipAddress = Formatter.formatIpAddress(connectionInfo.getIpAddress());
+                String ipAddress = Formatter.formatIpAddress(connectionInfo.getIpAddress());
         addresses = new ArrayList<>();
         // Get addresses from ARP Info first as they are likely to be pingable
         addresses.addAll(NearbyUtils.getAllIPAddressesInARPCache());
@@ -94,10 +117,18 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
         }
     }
 
-    private synchronized void subnetDeviceFound(Device device){
+    /**
+     * Called when subnet device is found
+     *
+     * @param device found device
+     */
+    private synchronized void subnetDeviceFound(Device device) {
         deviceFound(device);
     }
 
+    /**
+     * Runnable which checks if given ip address is reachable
+     */
     private class SubnetDeviceFinderRunnable implements Runnable {
         private final String address;
 
@@ -110,9 +141,9 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
             try {
                 InetAddress ia = InetAddress.getByName(address);
                 boolean reachable = ia.isReachable(500);
-                if (reachable){
+                if (reachable) {
                     String macAddress = NearbyUtils.getMacAddressFromIp(ia.getHostAddress());
-                    if(!macAddress.equals(NearbyConstants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table
+                    if (!macAddress.equals(NearbyConstants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table
                         Log.w(GlobalConstants.APPLICATION_TAG, ia.getCanonicalHostName() + " " + macAddress + " " + DeviceType.WIFI_DEVICE);
                         subnetDeviceFound(new Device(ia.getCanonicalHostName(), macAddress, DeviceType.WIFI_DEVICE));
                     }
@@ -122,7 +153,6 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
             }
         }
     }
-
 
 
 }

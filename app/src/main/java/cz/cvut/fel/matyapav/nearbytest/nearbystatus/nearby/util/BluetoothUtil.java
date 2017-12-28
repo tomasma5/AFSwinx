@@ -4,14 +4,21 @@ import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 
 /**
+ * Util class for bluetooth devices
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class BluetoothUtil {
 
-    private BluetoothUtil() {};
+    //hides constructor - this class should never be instantiated
+    private BluetoothUtil() {}
 
+    /**
+     * Gets major device class as a string - the implementation must be done this way because {@link BluetoothClass.Device.Major} is not an enum
+     * @param bluetoothDevice bluetooth device
+     * @return major device class as a string
+     */
     public static String getBluetoothMajorDeviceClass(BluetoothDevice bluetoothDevice) {
         int bluetoothDeviceTypeInteger = bluetoothDevice.getBluetoothClass().getMajorDeviceClass();
         switch (bluetoothDeviceTypeInteger) {
@@ -42,6 +49,11 @@ public class BluetoothUtil {
         }
     }
 
+    /**
+     * Gets device class as a string - the implementation must be done this way because {@link BluetoothClass.Device} is not an enum
+     * @param bluetoothDevice bluetooth device
+     * @return device class as a string
+     */
     public static String getBluetoothDeviceClass(BluetoothDevice bluetoothDevice) {
         int bluetoothDeviceTypeInteger = bluetoothDevice.getBluetoothClass().getDeviceClass();
         switch (bluetoothDeviceTypeInteger) {

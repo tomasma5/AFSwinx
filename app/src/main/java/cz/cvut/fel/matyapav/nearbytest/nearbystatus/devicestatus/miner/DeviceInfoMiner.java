@@ -14,10 +14,12 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.util.DeviceStatusConstants.NETWORK_INTERFACE_WLAN_0;
 
 /**
+ * This miner is responsible for getting basic device info like device api level, name, model etc.
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
+ *
  */
-
 public class DeviceInfoMiner extends AbstractStatusMiner {
 
     @Override
@@ -37,6 +39,10 @@ public class DeviceInfoMiner extends AbstractStatusMiner {
         deviceStatus.setDeviceInfo(deviceInfo);
     }
 
+    /**
+     * Gets mac address of device from wlan0 network interface
+     * @return mac address of device or null if something during process gone wrong
+     */
     private String getMacAddress() {
         try {
             List<NetworkInterface> networkInterfaces;

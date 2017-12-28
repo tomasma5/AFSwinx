@@ -1,12 +1,14 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util;
 
 /**
+ * Constants used during nearby devices finding process
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class NearbyConstants {
 
+    //hides constructor - this class should never be instantiated
     private NearbyConstants(){}
 
     public static final String EMPTY_MAC_ADDRESS = "00:00:00:00:00:00";

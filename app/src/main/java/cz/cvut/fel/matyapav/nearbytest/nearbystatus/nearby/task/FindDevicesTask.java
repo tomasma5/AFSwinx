@@ -13,10 +13,11 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
 
 /**
+ * Asynchronous task for finding nearby devices in background
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
 
     private NearbyFinderManager finder;
@@ -57,6 +58,7 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
         return null;
     }
 
+    @Override
     protected void onProgressUpdate(Integer... progress) {
         if(progressBar.getVisibility() != View.VISIBLE){
             progressBar.setVisibility(View.VISIBLE);
@@ -69,6 +71,11 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
         }
     }
 
+    /**
+     * Sets recommended timeout for task in milliseconds
+     * @param timeoutInMillis timeout in milliseconds
+     * @return task
+     */
     public FindDevicesTask setRecommendedTimeout(int timeoutInMillis) {
         this.timeoutInMillis = timeoutInMillis;
         return this;

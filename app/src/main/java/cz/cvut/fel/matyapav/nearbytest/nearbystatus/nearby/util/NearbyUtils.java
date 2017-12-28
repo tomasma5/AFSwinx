@@ -7,6 +7,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -14,16 +17,22 @@ import java.util.stream.Collectors;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
+ * Util methods used during nearby devices finding process
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class NearbyUtils {
 
+    //hides constructor - this class should never be instantiated
     private NearbyUtils() {
     }
 
-
+    /**
+     * Gets mac address from ip address
+     * @param ip ip address
+     * @return mac address
+     */
     public static String getMacAddressFromIp(String ip) {
         String macAddress = NearbyConstants.EMPTY_MAC_ADDRESS;
         if (ip != null) {
@@ -49,23 +58,28 @@ public class NearbyUtils {
      *
      * @return list of IP addresses found
      */
-    public static ArrayList<String> getAllIPAddressesInARPCache() {
-        return getAllIPAndMACAddressesInARPCache().stream().map(ipMacPair -> ipMacPair.first).collect(Collectors.toCollection(ArrayList::new));
+    public static Set<String> getAllIPAddressesInARPCache() {
+
+        return getAllIPAndMACAddressesInARPCache().keySet();
     }
 
-    private static ArrayList<Pair<String, String>> getAllIPAndMACAddressesInARPCache() {
-        ArrayList<Pair<String, String>> macList = new ArrayList<>();
+    /**
+     * Gets all ip and mac addresses from ARP Cache
+     * @return hashmap of pairs - ip address, mac address from ARP cache
+     */
+    private static Map<String, String> getAllIPAndMACAddressesInARPCache() {
+        Map<String, String> macMap = new HashMap<>();
         for (String line : getLinesInARPCache()) {
             String[] splitted = line.split(" +");
             if (splitted.length >= 4) {
                 // Ignore values with invalid MAC addresses
                 if (splitted[3].matches("..:..:..:..:..:..")
                         && !splitted[3].equals("00:00:00:00:00:00")) {
-                    macList.add(new Pair<>(splitted[0], splitted[3]));
+                    macMap.put(splitted[0], splitted[3]);
                 }
             }
         }
-        return macList;
+        return macMap;
     }
 
     /**

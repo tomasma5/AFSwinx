@@ -1,10 +1,11 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial;
 
 /**
+ * Wifi status model - keeps info about active wifi network, this model is part of {@link NetworkStatus} model
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class WifiStatus {
 
     private String bssid; //basic name of wifi network in form of mac addresss
