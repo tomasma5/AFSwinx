@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import cz.cvut.fel.matyapav.nearbytest.R;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.DeviceStatusManager;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.DeviceStatusManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 
 /**

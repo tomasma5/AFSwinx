@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyConstants;
@@ -113,7 +113,7 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
                 if (reachable){
                     String macAddress = NearbyUtils.getMacAddressFromIp(ia.getHostAddress());
                     if(!macAddress.equals(NearbyConstants.EMPTY_MAC_ADDRESS)) { //add only devices with mac address readable from ARP table
-                        Log.w(Constants.APPLICATION_TAG, ia.getCanonicalHostName() + " " + macAddress + " " + DeviceType.WIFI_DEVICE);
+                        Log.w(GlobalConstants.APPLICATION_TAG, ia.getCanonicalHostName() + " " + macAddress + " " + DeviceType.WIFI_DEVICE);
                         subnetDeviceFound(new Device(ia.getCanonicalHostName(), macAddress, DeviceType.WIFI_DEVICE));
                     }
                 }

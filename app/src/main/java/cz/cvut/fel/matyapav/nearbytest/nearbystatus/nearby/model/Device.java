@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.enums.DeviceType;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -20,15 +20,8 @@ public class Device {
     private DeviceType deviceType;
     private List<DeviceAdditionalInfo> additionalInformations;
 
-    public Device() {
-    }
-
     public DeviceType getDeviceType() {
         return deviceType;
-    }
-
-    public void setDeviceType(DeviceType deviceType) {
-        this.deviceType = deviceType;
     }
 
     public Device(String name, String address, DeviceType deviceType) {
@@ -41,21 +34,13 @@ public class Device {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getMacAddress() {
         return macAddress;
     }
 
-    public void setMacAddress(String macAddress) {
-        this.macAddress = macAddress;
-    }
-
     public void addAdditionalInformation(String informationName, String informationContent) {
         if(informationName == null || informationContent == null || informationName.isEmpty() || informationContent.isEmpty()){
-            Log.e(Constants.APPLICATION_TAG, "This information ["+informationName+":"+informationContent+"] is useless. Throwing it away...");
+            Log.e(GlobalConstants.APPLICATION_TAG, "This information ["+informationName+":"+informationContent+"] is useless. Throwing it away...");
             return;
         }
         if(additionalInformations == null) {

@@ -5,8 +5,10 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.enums.BatteryChargeType;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.BatteryChargeType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.BatteryStatus;
+
+import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.util.DeviceStatusConstants.BATTERY_PROPERTY_UNKNOWN;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -15,7 +17,6 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.B
 
 public class BatteryStatusMiner extends AbstractStatusMiner {
 
-    private static final int BATTERY_PROPERTY_UNKNOWN = -1;
 
     @Override
     public void mineAndFillStatus(DeviceStatus deviceStatus){

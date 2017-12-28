@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -39,7 +39,7 @@ public class NearbyUtils {
                 }
             }
         } else {
-            Log.e(Constants.APPLICATION_TAG, "ip is null");
+            Log.e(GlobalConstants.APPLICATION_TAG, "ip is null");
         }
         return macAddress;
     }
@@ -81,7 +81,7 @@ public class NearbyUtils {
                 lines.add(line);
             }
         } catch (IOException e) {
-            Log.e(Constants.APPLICATION_TAG, "Can't open/read file ARP: " + e.getMessage());
+            Log.e(GlobalConstants.APPLICATION_TAG, "Can't open/read file ARP: " + e.getMessage());
             e.printStackTrace();
         }
         return lines;

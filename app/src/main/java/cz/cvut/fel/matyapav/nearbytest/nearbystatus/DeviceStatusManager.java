@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus;
+package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
 import android.app.Activity;
 
@@ -23,12 +23,12 @@ public class DeviceStatusManager {
     private DeviceStatusMinerTask deviceStatusMinerTask;
     private DeviceStatus deviceStatus;
 
-    public DeviceStatusManager(Activity activity) {
+    DeviceStatusManager(Activity activity) {
         this.activity = activity;
         addStatusMiner(new DeviceInfoMiner()); //device info is mined ALWAYS
     }
 
-    public void mineDeviceStatus(DeviceStatusVisitor callbackClass){
+    void mineDeviceStatus(DeviceStatusVisitor callbackClass){
         if(deviceStatusMinerTask == null){
             deviceStatusMinerTask = new DeviceStatusMinerTask(activity, this, callbackClass);
         }
@@ -39,11 +39,11 @@ public class DeviceStatusManager {
         this.deviceStatus = deviceStatus;
     }
 
-    public DeviceStatus getDeviceStatus() {
+    DeviceStatus getDeviceStatus() {
         return deviceStatus;
     }
 
-    public void addStatusMiner(AbstractStatusMiner statusMiner){
+    void addStatusMiner(AbstractStatusMiner statusMiner){
         if(minerList == null){
             minerList = new ArrayList<>();
         }

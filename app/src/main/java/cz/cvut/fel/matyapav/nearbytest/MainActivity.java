@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusBuilder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.LocationStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkStatusMiner;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @NonNull
     private View.OnClickListener getNearbyDevices() {
         return view -> {
-            NearbyStatusBuilder.getInstance()
+            NearbyStatusFacadeBuilder.getInstance()
                     .initialize(this)
                     .setRecommendedTimeout(10000)
                     .addNearbyDevicesFinder(new BTBondedDevicesFinder())

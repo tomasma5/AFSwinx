@@ -9,7 +9,9 @@ import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.DeviceInfo;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
+
+import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.util.DeviceStatusConstants.NETWORK_INTERFACE_WLAN_0;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -17,8 +19,6 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
  */
 
 public class DeviceInfoMiner extends AbstractStatusMiner {
-
-    private static final String WLAN_0 = "wlan0";
 
     @Override
     public void mineAndFillStatus(DeviceStatus deviceStatus) {
@@ -42,7 +42,7 @@ public class DeviceInfoMiner extends AbstractStatusMiner {
             List<NetworkInterface> networkInterfaces;
             networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface networkInterface : networkInterfaces) {
-                if (!networkInterface.getName().equalsIgnoreCase(WLAN_0)) continue;
+                if (!networkInterface.getName().equalsIgnoreCase(NETWORK_INTERFACE_WLAN_0)) continue;
                 byte[] macBytes = new byte[0];
                 macBytes = networkInterface.getHardwareAddress();
                 if (macBytes == null) {
@@ -58,7 +58,7 @@ public class DeviceInfoMiner extends AbstractStatusMiner {
                 return macAddressBuilder.toString();
             }
         }catch (Exception ex){
-            Log.e(Constants.APPLICATION_TAG, "Cannot get mac address from network interfaces");
+            Log.e(GlobalConstants.APPLICATION_TAG, "Cannot get mac address from network interfaces");
             ex.printStackTrace();
         }
         return null;

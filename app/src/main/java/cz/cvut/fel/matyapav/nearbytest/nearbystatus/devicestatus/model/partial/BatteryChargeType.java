@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.enums;
+package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

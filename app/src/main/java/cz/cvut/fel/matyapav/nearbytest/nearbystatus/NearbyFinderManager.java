@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby;
+package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
 import android.app.Activity;
 
@@ -26,12 +26,12 @@ public class NearbyFinderManager {
     private int recommendedTimeout = 10000; //10 seconds
     private FindDevicesTask findDevicesTask;
 
-    public NearbyFinderManager(Activity activity) {
+    NearbyFinderManager(Activity activity) {
         this.activity = activity;
         devices = new ArrayList<>();
     }
 
-    public void findNearbyDevices(NearbyFinderVisitor callbackClass) {
+    void findNearbyDevices(NearbyFinderVisitor callbackClass) {
         devices.clear();
         if(findDevicesTask == null){
             findDevicesTask = new FindDevicesTask(activity, this, callbackClass).setRecommendedTimeout(recommendedTimeout);
@@ -45,16 +45,16 @@ public class NearbyFinderManager {
         });
     }
 
-    public void setRecommendedTimeout(int recommendedTimeout){
+    void setRecommendedTimeout(int recommendedTimeout){
         this.recommendedTimeout = recommendedTimeout;
     }
 
-    public void addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit){
+    void addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit){
         nearbyDevicesFinder.setBatteryLimit(batteryLevelLimit);
         addNearbyDevicesFinder(nearbyDevicesFinder);
     }
 
-    public void addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
+    void addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
         nearbyDevicesFinder.setActivity(activity);
         if (nearbyDevicesFinder instanceof SubnetDevicesFinder) {
             ((SubnetDevicesFinder) nearbyDevicesFinder).setTimeOutMillis(recommendedTimeout);
@@ -65,7 +65,7 @@ public class NearbyFinderManager {
         nearbyDevicesFinders.add(nearbyDevicesFinder);
     }
 
-    public void filterNearbyFindersByDeviceStatus(DeviceStatus deviceStatus) {
+    void filterNearbyFindersByDeviceStatus(DeviceStatus deviceStatus) {
         nearbyDevicesFinders = nearbyDevicesFinders.stream()
                 .filter(finder -> deviceStatus.getBatteryStatus().getBatteryLevel() >= finder.getBatteryLimit())
                 .collect(Collectors.toList());
@@ -75,7 +75,7 @@ public class NearbyFinderManager {
         return nearbyDevicesFinders;
     }
 
-    public List<Device> getFoundDevices() {
+    List<Device> getFoundDevices() {
         return devices;
     }
 

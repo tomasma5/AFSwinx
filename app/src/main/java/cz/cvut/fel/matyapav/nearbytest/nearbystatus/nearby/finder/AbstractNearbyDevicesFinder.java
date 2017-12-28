@@ -6,7 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceAdditionalInfo;
 
@@ -49,7 +49,7 @@ public abstract class AbstractNearbyDevicesFinder {
                 logBuilder.append(info.toString()).append("\n");
             }
         }
-       Log.i(Constants.APPLICATION_TAG, logBuilder.toString());
+       Log.i(GlobalConstants.APPLICATION_TAG, logBuilder.toString());
     }
 
     public Activity getActivity() {

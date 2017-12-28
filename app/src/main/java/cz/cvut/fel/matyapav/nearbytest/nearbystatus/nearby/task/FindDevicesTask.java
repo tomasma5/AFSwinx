@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cz.cvut.fel.matyapav.nearbytest.R;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.NearbyFinderManager;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
 
 /**

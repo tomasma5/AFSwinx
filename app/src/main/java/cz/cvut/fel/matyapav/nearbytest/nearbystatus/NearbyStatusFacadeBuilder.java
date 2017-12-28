@@ -3,35 +3,33 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 import android.app.Activity;
 import android.util.Log;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.DeviceStatusManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.AbstractStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.Constants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
 
-public class NearbyStatusBuilder {
+public class NearbyStatusFacadeBuilder {
 
-    private static NearbyStatusBuilder instance = null;
+    private static NearbyStatusFacadeBuilder instance = null;
 
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
 
-    private NearbyStatusBuilder(){
+    private NearbyStatusFacadeBuilder(){
     }
 
-    public static synchronized NearbyStatusBuilder getInstance() {
+    public static synchronized NearbyStatusFacadeBuilder getInstance() {
         if(instance == null) {
-            instance = new NearbyStatusBuilder();
+            instance = new NearbyStatusFacadeBuilder();
         }
         return instance;
     }
 
-    public NearbyStatusBuilder setRecommendedTimeout(int recommendedTimeout){
+    public NearbyStatusFacadeBuilder setRecommendedTimeout(int recommendedTimeout){
         try {
             nearbyFinderManager.setRecommendedTimeout(recommendedTimeout);
         } catch (NullPointerException npe) {
@@ -42,7 +40,7 @@ public class NearbyStatusBuilder {
         return this;
     }
 
-    public NearbyStatusBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit){
+    public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit){
         try {
             nearbyFinderManager.addNearbyDevicesFinder(nearbyDevicesFinder, batteryLevelLimit);
         }  catch (NullPointerException npe) {
@@ -53,7 +51,7 @@ public class NearbyStatusBuilder {
         return this;
     }
 
-    public NearbyStatusBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
+    public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
         try {
             nearbyFinderManager.addNearbyDevicesFinder(nearbyDevicesFinder);
         }  catch (NullPointerException npe) {
@@ -65,7 +63,7 @@ public class NearbyStatusBuilder {
     }
 
 
-    public NearbyStatusBuilder addStatusMiner(AbstractStatusMiner statusMiner){
+    public NearbyStatusFacadeBuilder addStatusMiner(AbstractStatusMiner statusMiner){
         try {
             deviceStatusManager.addStatusMiner(statusMiner);
         } catch (NullPointerException npe) {
@@ -76,18 +74,18 @@ public class NearbyStatusBuilder {
         return this;
     }
 
-    public NearbyStatusBuilder initialize(Activity activity) {
+    public NearbyStatusFacadeBuilder initialize(Activity activity) {
         nearbyFinderManager = new NearbyFinderManager(activity);
         deviceStatusManager = new DeviceStatusManager(activity);
         return this;
     }
 
-    public NearbyStatus build() {
-        return new NearbyStatus(nearbyFinderManager, deviceStatusManager);
+    public NearbyStatusFacade build() {
+        return new NearbyStatusFacade(nearbyFinderManager, deviceStatusManager);
     }
 
     private void logUninitializedManagerError() {
-        Log.e(Constants.APPLICATION_TAG, "Nearby finder manager was not initialized. You probably forgot to call initialize");
+        Log.e(GlobalConstants.APPLICATION_TAG, "Nearby finder manager was not initialized. You probably forgot to call initialize");
     }
 
 

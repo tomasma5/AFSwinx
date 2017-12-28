@@ -5,10 +5,10 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus.util;
  * @since 1.0.0..
  */
 
-public class Constants {
+public class GlobalConstants {
 
-    private Constants(){}
+    private GlobalConstants(){}
 
-    public static final String APPLICATION_TAG = "NearbyTestService";
+    public static final String APPLICATION_TAG = "NearbyStatusService";
 
 }
