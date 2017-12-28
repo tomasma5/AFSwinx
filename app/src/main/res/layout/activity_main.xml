@@ -30,13 +30,4 @@
         android:textColor="@color/colorWhite"
         android:text="@string/get_nearby_devices"/>
 
-    <ListView
-        android:id="@+id/nearby_devices_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/colorWhite"
-        android:text="@string/get_nearby_devices"/>
-
 </RelativeLayout>

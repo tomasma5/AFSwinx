@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-import cz.cvut.fel.matyapav.nearbytest.nearby.model.Device;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.R;
 
 /**
