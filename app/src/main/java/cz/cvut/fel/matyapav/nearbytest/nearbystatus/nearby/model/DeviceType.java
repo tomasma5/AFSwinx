@@ -7,8 +7,7 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model;
  * @since 1.0.0..
  */
 public enum DeviceType {
-    BLUETOOTH_DISCOVERED,
-    BLUETOOTH_BONDED,
+    BLUETOOTH,
     WIFI_NETWORK,
     WIFI_DEVICE
 }

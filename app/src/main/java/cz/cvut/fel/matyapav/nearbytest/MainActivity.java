@@ -15,7 +15,6 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.LocationStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.BTBondedDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.BTDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.NearbyNetworksFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.SubnetDevicesFinder;
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             NearbyStatusFacadeBuilder.getInstance()
                     .initialize(this)
                     .setRecommendedTimeout(10000)
-                    .addNearbyDevicesFinder(new BTBondedDevicesFinder())
                     .addNearbyDevicesFinder(new BTDevicesFinder())
                     .addNearbyDevicesFinder(new NearbyNetworksFinder(), 20)
                     .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)

@@ -11,4 +11,5 @@ public class AdditionalInfoNames {
 
     public static final String ADDITIONAL_INFO_BT_MAJOR_CLASS = "bluetooth-major-class";
     public static final String ADDITIONAL_INFO_BT_CLASS = "bluetooth-class";
+    public static final String ADDITIONAL_INFO_BT_BONDED = "bluetooth-bonded";
 }

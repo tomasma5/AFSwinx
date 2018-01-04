@@ -14,7 +14,6 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class NearbyStatusFacadeBuilder {
 
     private static NearbyStatusFacadeBuilder instance = null;

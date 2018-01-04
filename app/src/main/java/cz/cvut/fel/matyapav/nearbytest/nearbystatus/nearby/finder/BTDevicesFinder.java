@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Set;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
@@ -27,6 +28,7 @@ import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.Additiona
 public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private BluetoothAdapter btAdapter;
+    private Set<BluetoothDevice> bondedDevices;
 
     @Override
     public void startFindingDevices() {
@@ -36,6 +38,7 @@ public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
             Toast.makeText(getActivity(), NearbyConstants.BLUETOOTH_MISSING_MSG, Toast.LENGTH_SHORT).show();
         } else {
             if (btAdapter.isEnabled()) {
+                bondedDevices = btAdapter.getBondedDevices();
                 IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
                 getActivity().registerReceiver(mReceiver, filter);
                 if (btAdapter.isDiscovering()) {
@@ -62,13 +65,28 @@ public class BTDevicesFinder extends AbstractNearbyDevicesFinder {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH_DISCOVERED);
+                Device device = new Device(bluetoothDevice.getName(), bluetoothDevice.getAddress(), DeviceType.BLUETOOTH);
+                if(isBondedToDevice(bluetoothDevice)){
+                    device.addAdditionalInformation(ADDITIONAL_INFO_BT_BONDED, Boolean.toString(true));
+                }
                 device.addAdditionalInformation(ADDITIONAL_INFO_BT_MAJOR_CLASS, BluetoothUtil.getBluetoothMajorDeviceClass(bluetoothDevice));
                 device.addAdditionalInformation(ADDITIONAL_INFO_BT_CLASS, BluetoothUtil.getBluetoothDeviceClass(bluetoothDevice));
                 deviceFound(device);
             }
         }
     };
+
+    private boolean isBondedToDevice(BluetoothDevice btDevice){
+        if(bondedDevices == null) {
+            return false;
+        }
+        for(BluetoothDevice device : bondedDevices){
+            if(device.getAddress().equals(btDevice.getAddress())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 

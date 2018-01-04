@@ -37,7 +37,9 @@ public class NetworkStatus {
     }
 
     public void setNetworkSubtypeName(String networkSubtypeName) {
-        this.networkSubtypeName = networkSubtypeName;
+        if(!networkSubtypeName.isEmpty()) {
+            this.networkSubtypeName = networkSubtypeName;
+        }
     }
 
     public WifiStatus getWifiStatus() {
