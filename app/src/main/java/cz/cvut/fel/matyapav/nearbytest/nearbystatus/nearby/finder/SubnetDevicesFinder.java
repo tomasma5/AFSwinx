@@ -92,8 +92,10 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
     @Override
     public List<Device> stopFindingAndCollectDevices() {
         for (Future taskFuture : submittedTasks) {
-            taskFuture.cancel(true);
-        }
+            if(!taskFuture.isDone()) {
+                taskFuture.cancel(true);
+            }
+            }
         return getFoundDevices();
     }
 
