@@ -26,6 +26,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyUtils;
  * and find devices connected to same wifi network. Finder should do it in parallel manner.
  * <p>
  * TODO scanning only last 255 addresses - consult it with someone who is good in networks
+ * TODO E/LocationManager: thread is not runable, msg ignore, state:TERMINATED, pkg:cz.cvut.fel.matyapav.nearbytest
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
@@ -34,11 +35,10 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
 
     private WifiManager wifiManager;
     private int noThreads = 255;
-    private int timeoutMillis = 1000;
+    private int timeoutMillis = 60*1000;
     private ArrayList<String> addresses;
     private ExecutorService executor;
     private List<Future> submittedTasks;
-
 
     public SubnetDevicesFinder() {
         this.executor = Executors.newFixedThreadPool(this.noThreads);
@@ -82,7 +82,7 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
             }
             executor.shutdown();
             try {
-                executor.awaitTermination(timeoutMillis, TimeUnit.MILLISECONDS);
+                executor.awaitTermination(60*1000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -95,7 +95,8 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
             if(!taskFuture.isDone()) {
                 taskFuture.cancel(true);
             }
-            }
+        }
+        submittedTasks.clear();
         return getFoundDevices();
     }
 

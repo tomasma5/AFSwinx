@@ -13,6 +13,9 @@ public class LocationStatus {
     private double altitude;
     private double speed;
 
+    public LocationStatus() {
+    }
+
     public double getLatitude() {
         return latitude;
     }

@@ -20,8 +20,7 @@ public class Device {
     private DeviceType deviceType;
     private Map<String, String> additionalInformations;
 
-    public DeviceType getDeviceType() {
-        return deviceType;
+    public Device() {
     }
 
     public Device(String name, String address, DeviceType deviceType) {
@@ -36,6 +35,26 @@ public class Device {
 
     public String getMacAddress() {
         return macAddress;
+    }
+
+    public DeviceType getDeviceType() {
+        return deviceType;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    public void setDeviceType(DeviceType deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public void setAdditionalInformations(Map<String, String> additionalInformations) {
+        this.additionalInformations = additionalInformations;
     }
 
     /**

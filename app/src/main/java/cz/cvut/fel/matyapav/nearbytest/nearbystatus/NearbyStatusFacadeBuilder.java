@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.AbstractStatusMiner;
@@ -17,6 +18,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 public class NearbyStatusFacadeBuilder {
 
     private static NearbyStatusFacadeBuilder instance = null;
+    private Context context;
 
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
@@ -43,6 +45,7 @@ public class NearbyStatusFacadeBuilder {
      * @return initialized instance of builder
      */
     public NearbyStatusFacadeBuilder initialize(Activity activity) {
+        context = activity;
         nearbyFinderManager = new NearbyFinderManager(activity);
         deviceStatusManager = new DeviceStatusManager(activity);
         return this;
@@ -125,7 +128,7 @@ public class NearbyStatusFacadeBuilder {
      * @return execution facade
      */
     public NearbyStatusFacade build() {
-        return new NearbyStatusFacade(nearbyFinderManager, deviceStatusManager);
+        return new NearbyStatusFacade(context, nearbyFinderManager, deviceStatusManager);
     }
 
     /**

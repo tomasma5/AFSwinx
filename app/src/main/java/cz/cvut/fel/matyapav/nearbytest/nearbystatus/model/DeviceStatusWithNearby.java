@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.model;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
@@ -15,15 +14,18 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 
 public class DeviceStatusWithNearby {
 
-    private Timestamp timestamp;
+    private long timestamp;
     private DeviceStatus deviceStatus;
     private List<Device> nearbyDevices;
 
-    public Timestamp getTimestamp() {
+    public DeviceStatusWithNearby() {
+    }
+
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 

@@ -10,24 +10,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.fitness.Fitness;
-import com.google.android.gms.fitness.FitnessOptions;
 import com.google.android.gms.fitness.data.BleDevice;
 import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.request.BleScanCallback;
-import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.tasks.Task;
 
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
@@ -66,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         Button getNearbyButton = (Button) findViewById(R.id.get_nearby_devices_btn);
         getNearbyButton.setOnClickListener((o) -> {
             getNearbyDevices();
-            ///
-            FitnessOptions fitnessOptions = FitnessOptions.builder()
+            /// TODO Google Fit not working
+           /* FitnessOptions fitnessOptions = FitnessOptions.builder()
                     .addDataType(DataType.TYPE_HEART_RATE_BPM, FitnessOptions.ACCESS_READ)
                     .addDataType(DataType.AGGREGATE_HEART_RATE_SUMMARY, FitnessOptions.ACCESS_READ)
                     .build();
@@ -80,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         fitnessOptions);
             } else {
                 accessGoogleFit();
-            }
+            } */
         });
 
     }
@@ -97,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 .addStatusMiner(new LocationStatusMiner())
                 .addStatusMiner(new NetworkStatusMiner())
                 .build()
+                .sendDataToServerAfterTimeout("http://192.168.100.8:8080/NSRest")
                 .runProcess();
     }
 
@@ -147,8 +141,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        //TODO check if it is not working only on my fitness band ... try to borrow xiaomi mi band or something like that and chceck if it can be found.
-        Task<Void> response = Fitness.getBleClient(this,
+        /*TODO check if it is not working only on my fitness band ... try to borrow xiaomi mi band or something like that and chceck if it can be found.*/ Task<Void> response = Fitness.getBleClient(this,
                 GoogleSignIn.getLastSignedInAccount(this))
                 .startBleScan(Collections.singletonList(DataType.TYPE_STEP_COUNT_DELTA),
                         1000, bleScanCallbacks);

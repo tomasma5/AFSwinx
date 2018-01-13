@@ -83,9 +83,6 @@ public class NearbyFinderManager {
      */
     void addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
         nearbyDevicesFinder.setActivity(activity);
-        if (nearbyDevicesFinder instanceof SubnetDevicesFinder) {
-            ((SubnetDevicesFinder) nearbyDevicesFinder).setTimeOutMillis(recommendedTimeout);
-        }
         if (nearbyDevicesFinders == null) {
             nearbyDevicesFinders = new ArrayList<>();
         }
