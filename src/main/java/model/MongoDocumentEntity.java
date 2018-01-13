@@ -1,15 +1,18 @@
 package model;
 
-import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-public class Device extends Document {
-    //TODO
+public class MongoDocumentEntity {
+
+    MongoDocumentEntity() { }
 
     private ObjectId id;
 
     public ObjectId getId() {
         return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 }
