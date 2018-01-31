@@ -80,53 +80,11 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     public void onNearbyDevicesSearchFinished() {
         deviceStatusWithNearby.setNearbyDevices(nearbyFinderManager.getFoundDevices());
         if(sendAsJsonToServer) {
-            String json = serializeDeviceStatusWithNearbyIntoJson();
-            sendDataToServer(json);
+            new DataSenderTask(context, deviceStatusWithNearby, serverUrl).execute();
         }
         if(deviceStatusAndNearbySearchEvent != null){
             deviceStatusAndNearbySearchEvent.onSearchFinished();
         }
-    }
-
-    private void sendDataToServer(String json) {
-        if(serverUrl == null) {
-            Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Server URL was not set!");
-            return;
-        }
-        if(json == null) {
-            Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Missing sended data!");
-            return;
-        }
-        // Instantiate the RequestQueue.
-        HttpProvider http = HttpProvider.getInstance(context);
-        StringRequest jsonRequest = new StringRequest(POST, serverUrl,
-                response -> Log.i(GlobalConstants.APPLICATION_TAG, "[JSON - SUCCESS] Sending JSON data was successfull."),
-                error -> Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Sending JSON data failed. Message: " + error.getMessage())
-        ) {
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return json.getBytes("utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", json, "utf-8");
-                    return null;
-                }
-            }
-        };
-        //this prevents sending request twice
-        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        http.addToRequestQueue(jsonRequest, GlobalConstants.VOLLEY_DSWN_REQUEST_TAG);
-    }
-
-    private String serializeDeviceStatusWithNearbyIntoJson(){
-        Gson gson = new Gson();
-        return gson.toJson(deviceStatusWithNearby);
     }
 
     /**
