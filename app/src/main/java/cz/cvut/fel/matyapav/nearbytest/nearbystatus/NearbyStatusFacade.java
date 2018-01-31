@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.task.DeviceStat
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.model.DeviceStatusWithNearby;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task.NearbyFinderVisitor;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.HttpProvider;
 
 import static com.android.volley.Request.Method.POST;
 
@@ -35,18 +37,23 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     private DeviceStatusWithNearby deviceStatusWithNearby;
     private String serverUrl;
     private boolean sendAsJsonToServer;
+    private DeviceStatusAndNearbySearchEvent deviceStatusAndNearbySearchEvent;
 
-    NearbyStatusFacade(Context context, NearbyFinderManager nearbyFinderManager, DeviceStatusManager deviceStatusManager) {
+    NearbyStatusFacade(Context context, NearbyFinderManager nearbyFinderManager, DeviceStatusManager deviceStatusManager, DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent) {
         this.context = context;
         this.nearbyFinderManager = nearbyFinderManager;
         this.deviceStatusManager = deviceStatusManager;
         this.sendAsJsonToServer = false;
+        this.deviceStatusAndNearbySearchEvent = nearbyDevicesSearchEvent;
     }
 
     /**
      * Runs device status mining and nearby devices finding processes
      */
     public void runProcess() {
+        if(deviceStatusAndNearbySearchEvent != null) {
+            deviceStatusAndNearbySearchEvent.onSearchStart();
+        }
         if(deviceStatusWithNearby == null){
             deviceStatusWithNearby = new DeviceStatusWithNearby();
             //set timestamp to the beginning of process
@@ -76,14 +83,9 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
             String json = serializeDeviceStatusWithNearbyIntoJson();
             sendDataToServer(json);
         }
-    }
-
-    /**
-     * Gets found data as @{@link DeviceStatusWithNearby} wrapper
-     * @return found data
-     */
-    public DeviceStatusWithNearby getFoundData() {
-        return deviceStatusWithNearby;
+        if(deviceStatusAndNearbySearchEvent != null){
+            deviceStatusAndNearbySearchEvent.onSearchFinished();
+        }
     }
 
     private void sendDataToServer(String json) {
@@ -97,8 +99,7 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
         }
         // Instantiate the RequestQueue.
         HttpProvider http = HttpProvider.getInstance(context);
-        String path = "/api/consumer/add";
-        StringRequest jsonRequest = new StringRequest(POST, serverUrl + path,
+        StringRequest jsonRequest = new StringRequest(POST, serverUrl,
                 response -> Log.i(GlobalConstants.APPLICATION_TAG, "[JSON - SUCCESS] Sending JSON data was successfull."),
                 error -> Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Sending JSON data failed. Message: " + error.getMessage())
         ) {
@@ -118,11 +119,23 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
                 }
             }
         };
-        http.addToRequestQueue(jsonRequest, "DeviceStatusWithNearbyJson");
+        //this prevents sending request twice
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        http.addToRequestQueue(jsonRequest, GlobalConstants.VOLLEY_DSWN_REQUEST_TAG);
     }
 
     private String serializeDeviceStatusWithNearbyIntoJson(){
         Gson gson = new Gson();
         return gson.toJson(deviceStatusWithNearby);
     }
+
+    /**
+     * Gets found data as @{@link DeviceStatusWithNearby} wrapper
+     * @return found data
+     */
+    public DeviceStatusWithNearby getFoundData() {
+        return deviceStatusWithNearby;
+    }
+
+
 }

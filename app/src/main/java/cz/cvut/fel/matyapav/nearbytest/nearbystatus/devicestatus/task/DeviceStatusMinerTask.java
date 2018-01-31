@@ -20,11 +20,8 @@ public class DeviceStatusMinerTask extends AsyncTask<Void, Integer, Void> {
     private DeviceStatusManager deviceStatusManager;
     private DeviceStatusVisitor deviceStatusVisitor;
 
-    private ProgressBar progressBar;
-
-    public DeviceStatusMinerTask(Activity activity, DeviceStatusManager deviceStatusMiner, DeviceStatusVisitor deviceStatusVisitor) {
+    public DeviceStatusMinerTask(DeviceStatusManager deviceStatusMiner, DeviceStatusVisitor deviceStatusVisitor) {
         this.deviceStatusManager = deviceStatusMiner;
-        this.progressBar = (ProgressBar) activity.findViewById(R.id.progressBar);
         this.deviceStatusVisitor = deviceStatusVisitor;
     }
 
@@ -35,18 +32,6 @@ public class DeviceStatusMinerTask extends AsyncTask<Void, Integer, Void> {
         deviceStatusManager.setDeviceStatus(status);
         deviceStatusVisitor.onDeviceStatusMined();
         return null;
-    }
-
-    protected void onProgressUpdate(Integer... progress) {
-        if(progressBar.getVisibility() != View.VISIBLE){
-            progressBar.setVisibility(View.VISIBLE);
-        }
-        int currentProgress = progress[0];
-
-        progressBar.setProgress(currentProgress);
-        if(currentProgress == 100){
-            progressBar.setVisibility(View.GONE);
-        }
     }
 
 }

@@ -72,8 +72,8 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
 
     @Override
     public void startFindingDevices() {
-        this.wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        if (wifiManager.isWifiEnabled() && wifiManager.getConnectionInfo().getNetworkId() != -1) {
+        this.wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if (wifiManager != null && wifiManager.isWifiEnabled() && wifiManager.getConnectionInfo().getNetworkId() != -1) {
             prepareAddressForInspection();
 
             for (final String add : addresses) {

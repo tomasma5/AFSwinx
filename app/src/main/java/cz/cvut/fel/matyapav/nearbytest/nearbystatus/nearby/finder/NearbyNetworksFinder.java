@@ -3,6 +3,7 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 
 import java.util.List;
 
@@ -17,29 +18,48 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
  */
 public class NearbyNetworksFinder extends AbstractNearbyDevicesFinder {
 
-    private boolean active;
+    private NearbyNetworkFinderTask task;
 
     @Override
     public void startFindingDevices() {
-        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        List<ScanResult> scanResults = wifiManager.getScanResults();
-        Device device;
-        active = true;
-        for (int i = 0; i < scanResults.size(); i++) {
-            if (!active) {
-                break;
-            }
-            ScanResult scanresult = scanResults.get(i);
-            device = new Device(scanresult.SSID, scanresult.BSSID, DeviceType.WIFI_NETWORK);
-            deviceFound(device);
-        }
+        WifiManager wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        task = new NearbyNetworkFinderTask(wifiManager, this);
+        task.execute();
     }
 
     @Override
     public List<Device> stopFindingAndCollectDevices() {
-        this.active = false;
+        task.cancel(true);
         return getFoundDevices();
     }
 
+    private static class NearbyNetworkFinderTask extends AsyncTask<Void, Void, Void> {
+
+        private WifiManager wifiManager;
+        private AbstractNearbyDevicesFinder finder;
+
+        NearbyNetworkFinderTask(WifiManager wifiManager, AbstractNearbyDevicesFinder finder) {
+            this.wifiManager = wifiManager;
+            this.finder = finder;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            if(wifiManager == null) {
+                return null;
+            }
+            List<ScanResult> scanResults = wifiManager.getScanResults();
+            if(scanResults == null) {
+                return null;
+            }
+            Device device;
+            for (int i = 0; i < scanResults.size(); i++) {
+                ScanResult scanresult = scanResults.get(i);
+                device = new Device(scanresult.SSID, scanresult.BSSID, DeviceType.WIFI_NETWORK);
+                finder.deviceFound(device);
+            }
+            return null;
+        }
+    }
 
 }

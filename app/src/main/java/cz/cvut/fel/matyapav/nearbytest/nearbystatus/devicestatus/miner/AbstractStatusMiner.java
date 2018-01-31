@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner;
 
 import android.app.Activity;
+import android.content.Context;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 
@@ -13,7 +14,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceSta
  */
 public abstract class AbstractStatusMiner {
 
-    private Activity activity;
+    private Context context;
 
     /**
      * Gets desired status information from device and fills these information into {@link DeviceStatus} object
@@ -21,11 +22,11 @@ public abstract class AbstractStatusMiner {
      */
     public abstract void mineAndFillStatus(DeviceStatus deviceStatus);
 
-    Activity getActivity() {
-        return activity;
+    Context getContext() {
+        return context;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setContext(Context context) {
+        this.context = context;
     }
 }

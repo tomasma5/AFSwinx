@@ -1,6 +1,6 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
-import android.app.Activity;
+import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.task.DeviceStat
 
 public class DeviceStatusManager {
 
-    private Activity activity;
+    private Context context;
     private List<AbstractStatusMiner> minerList;
     private DeviceStatusMinerTask deviceStatusMinerTask;
     private DeviceStatus deviceStatus;
 
-    DeviceStatusManager(Activity activity) {
-        this.activity = activity;
+    DeviceStatusManager(Context context) {
+        this.context = context;
         addStatusMiner(new DeviceInfoMiner()); //device info is mined ALWAYS
     }
 
@@ -37,7 +37,7 @@ public class DeviceStatusManager {
      */
     void mineDeviceStatus(DeviceStatusVisitor callbackClass){
         if(deviceStatusMinerTask == null){
-            deviceStatusMinerTask = new DeviceStatusMinerTask(activity, this, callbackClass);
+            deviceStatusMinerTask = new DeviceStatusMinerTask(this, callbackClass);
         }
          deviceStatusMinerTask.execute();
     }
@@ -58,7 +58,7 @@ public class DeviceStatusManager {
         if(minerList == null){
             minerList = new ArrayList<>();
         }
-        statusMiner.setActivity(activity);
+        statusMiner.setContext(context);
         minerList.add(statusMiner);
     }
 

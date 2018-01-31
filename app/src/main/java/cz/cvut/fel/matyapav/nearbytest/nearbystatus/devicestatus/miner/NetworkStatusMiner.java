@@ -28,7 +28,7 @@ public class NetworkStatusMiner extends AbstractStatusMiner {
         NetworkStatus networkStatus = new NetworkStatus();
 
         if(connectivityManager == null) {
-            connectivityManager = (ConnectivityManager) getActivity().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManager = (ConnectivityManager) getContext().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         }
 
         //are we connected?
@@ -55,7 +55,7 @@ public class NetworkStatusMiner extends AbstractStatusMiner {
      * @return wifi status
      */
     private WifiStatus mineWifiStatus(){
-        WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         if(wifiInfo != null) { //we are connected to some wifi
 

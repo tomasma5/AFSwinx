@@ -1,6 +1,6 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
-import android.app.Activity;
+import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task.FindDevicesTask;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task.NearbyFinderVisitor;
@@ -21,14 +20,14 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task.NearbyFinderVisi
  */
 public class NearbyFinderManager {
 
-    private Activity activity;
+    private Context context;
     private List<Device> devices;
     private List<AbstractNearbyDevicesFinder> nearbyDevicesFinders;
     private int recommendedTimeout = 10000; //10 seconds
     private FindDevicesTask findDevicesTask;
 
-    NearbyFinderManager(Activity activity) {
-        this.activity = activity;
+    NearbyFinderManager(Context context) {
+        this.context = context;
         devices = new ArrayList<>();
     }
 
@@ -40,7 +39,7 @@ public class NearbyFinderManager {
     void findNearbyDevices(NearbyFinderVisitor callbackClass) {
         devices.clear();
         if(findDevicesTask == null){
-            findDevicesTask = new FindDevicesTask(activity, this, callbackClass).setRecommendedTimeout(recommendedTimeout);
+            findDevicesTask = new FindDevicesTask(this, callbackClass).setRecommendedTimeout(recommendedTimeout);
         }
         findDevicesTask.execute();
     }
@@ -82,7 +81,7 @@ public class NearbyFinderManager {
      * @param nearbyDevicesFinder nearby devices finder
      */
     void addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
-        nearbyDevicesFinder.setActivity(activity);
+        nearbyDevicesFinder.setContext(context);
         if (nearbyDevicesFinders == null) {
             nearbyDevicesFinders = new ArrayList<>();
         }

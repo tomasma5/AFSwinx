@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -22,6 +21,7 @@ public class NearbyStatusFacadeBuilder {
 
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
+    private DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent;
 
     //hide constructor of this class - singleton class should never be instantiated
     private NearbyStatusFacadeBuilder(){
@@ -41,13 +41,13 @@ public class NearbyStatusFacadeBuilder {
     /**
      * Initializes builder - prepares all needed parts used in building process
      * Must be called right after getting instance of {@link NearbyStatusFacadeBuilder}!
-     * @param activity android activity - it requires context
+     * @param context application context - it requires context
      * @return initialized instance of builder
      */
-    public NearbyStatusFacadeBuilder initialize(Activity activity) {
-        context = activity;
-        nearbyFinderManager = new NearbyFinderManager(activity);
-        deviceStatusManager = new DeviceStatusManager(activity);
+    public NearbyStatusFacadeBuilder initialize(Context context) {
+        this.context = context;
+        nearbyFinderManager = new NearbyFinderManager(context);
+        deviceStatusManager = new DeviceStatusManager(context);
         return this;
     }
 
@@ -56,7 +56,7 @@ public class NearbyStatusFacadeBuilder {
      * @param recommendedTimeout recommended timout in milliseconds
      * @return updated instance of builder
      */
-    public NearbyStatusFacadeBuilder setRecommendedTimeout(int recommendedTimeout){
+    public NearbyStatusFacadeBuilder setRecommendedTimeoutForNearbySearch(int recommendedTimeout){
         try {
             nearbyFinderManager.setRecommendedTimeout(recommendedTimeout);
         } catch (NullPointerException npe) {
@@ -84,6 +84,11 @@ public class NearbyStatusFacadeBuilder {
             npe.printStackTrace();
             return null;
         }
+        return this;
+    }
+
+    public NearbyStatusFacadeBuilder setNearbyDevicesSearchEvent(DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent) {
+        this.nearbyDevicesSearchEvent = nearbyDevicesSearchEvent;
         return this;
     }
 
@@ -128,7 +133,7 @@ public class NearbyStatusFacadeBuilder {
      * @return execution facade
      */
     public NearbyStatusFacade build() {
-        return new NearbyStatusFacade(context, nearbyFinderManager, deviceStatusManager);
+        return new NearbyStatusFacade(context, nearbyFinderManager, deviceStatusManager, nearbyDevicesSearchEvent);
     }
 
     /**

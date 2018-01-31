@@ -22,7 +22,7 @@ public class BatteryStatusMiner extends AbstractStatusMiner {
     @Override
     public void mineAndFillStatus(DeviceStatus deviceStatus){
         BatteryStatus batteryStatus = new BatteryStatus();
-        Intent batteryStatusIntent = getActivity().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        Intent batteryStatusIntent = getContext().registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         //get battery levels
         batteryStatus.setBatteryLevel(extractBatteryLevel(batteryStatusIntent));
         batteryStatus.setTemperatureLevel(extractTemperature(batteryStatusIntent));

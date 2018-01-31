@@ -14,4 +14,8 @@ public class GlobalConstants {
 
     public static final String APPLICATION_TAG = "NearbyStatusService";
 
+    public static final String GOOGLE_FIT_TAG  = "Google_FIT_API_Service";
+
+    public static final String VOLLEY_DSWN_REQUEST_TAG = "DeviceStatusWithNearbyJsonRequest";
+
 }

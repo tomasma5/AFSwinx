@@ -1,6 +1,8 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder;
 
 import android.app.Activity;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 public abstract class AbstractNearbyDevicesFinder {
 
     private List<Device> foundDevices = new ArrayList<>();
-    private Activity activity;
+    private Context context;
     private int batteryLimit;
 
     /**
@@ -64,12 +66,12 @@ public abstract class AbstractNearbyDevicesFinder {
        Log.i(GlobalConstants.APPLICATION_TAG, logBuilder.toString());
     }
 
-    Activity getActivity() {
-        return activity;
+    Context getContext() {
+        return context;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public int getBatteryLimit() {

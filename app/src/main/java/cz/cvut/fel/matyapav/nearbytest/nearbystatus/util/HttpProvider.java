@@ -1,13 +1,9 @@
-package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
+package cz.cvut.fel.matyapav.nearbytest.nearbystatus.util;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
 /**
