@@ -1,6 +1,5 @@
 package dao;
 
-import dao.GenericMongoDao;
 import model.DeviceStatusWithNearby;
 
 public abstract class DeviceStatusWithNearbyDao extends GenericMongoDao<DeviceStatusWithNearby>{

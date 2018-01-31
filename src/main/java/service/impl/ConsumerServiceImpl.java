@@ -1,11 +1,9 @@
 package service.impl;
 
 import Utils.Constants;
-import com.sun.deploy.net.HttpResponse;
 import dao.DeviceStatusWithNearbyDao;
 import model.DeviceStatusWithNearby;
 import model.partial.Device;
-import org.bson.types.ObjectId;
 import service.ConsumerService;
 
 import javax.enterprise.context.ApplicationScoped;

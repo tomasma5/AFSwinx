@@ -1,7 +1,6 @@
 package rest;
 
 import model.DeviceStatusWithNearby;
-import org.bson.types.ObjectId;
 import service.ConsumerService;
 
 import javax.inject.Inject;

@@ -11,7 +11,7 @@ public abstract class GenericMongoDao<T extends MongoDocumentEntity> {
 
     protected MongoCollection<T> collection;
 
-    public GenericMongoDao() {
+    GenericMongoDao() {
         collection = MongoConnection.getInstance().getDatabase().getCollection(getCollectionName(), getModelClass());
     }
 
