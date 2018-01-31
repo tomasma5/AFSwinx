@@ -9,8 +9,17 @@ import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Sorts.descending;
+import static java.lang.Math.abs;
 
+/**
+ * Implementation of Mongo DAO for devices with status and its nearby devices
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0
+ */
 @ApplicationScoped
 public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
 
@@ -20,6 +29,22 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
 
     protected String getCollectionName() {
         return "Devices";
+    }
+
+    @Override
+    public DeviceStatusWithNearby getFirstEarlierThanTimestamp(long timestamp) {
+        return collection.find(lt("timestamp", timestamp))
+                .sort(descending("timestamp"))
+                .limit(1)
+                .first();
+    }
+
+    @Override
+    public DeviceStatusWithNearby getFirstLaterThanTimestamp(long timestamp) {
+        return collection.find(gt("timestamp", timestamp))
+                .sort(ascending("timestamp"))
+                .limit(1)
+                .first();
     }
 
     public void create(DeviceStatusWithNearby record) {

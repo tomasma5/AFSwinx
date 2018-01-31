@@ -9,6 +9,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
+/**
+ * Consumer endpoint - used for storing data into this app
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0
+ */
 @Path("/consumer")
 public class ConsumerEndpoint {
 

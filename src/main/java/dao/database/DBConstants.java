@@ -1,6 +1,12 @@
 package dao.database;
 
-public class DBConstants {
+/**
+ * MongoDB connection information constants
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0
+ */
+class DBConstants {
 
     private DBConstants(){};
 

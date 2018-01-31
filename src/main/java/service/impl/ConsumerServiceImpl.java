@@ -1,10 +1,10 @@
 package service.impl;
 
-import Utils.Constants;
 import dao.DeviceStatusWithNearbyDao;
 import model.DeviceStatusWithNearby;
 import model.partial.Device;
 import service.ConsumerService;
+import utils.Constants;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,6 +18,12 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementation of service for getting data from application
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0
+ */
 @ApplicationScoped
 public class ConsumerServiceImpl implements ConsumerService {
 
