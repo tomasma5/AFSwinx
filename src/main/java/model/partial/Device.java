@@ -12,6 +12,7 @@ public class Device {
 
     private String name;
     private String macAddress;
+    private String macVendor;
     private DeviceType deviceType;
     private Map<String, String> additionalInformations;
 
@@ -48,5 +49,13 @@ public class Device {
 
     public void setAdditionalInformations(Map<String, String> additionalInformations) {
         this.additionalInformations = additionalInformations;
+    }
+
+    public String getMacVendor() {
+        return macVendor;
+    }
+
+    public void setMacVendor(String macVendor) {
+        this.macVendor = macVendor;
     }
 }
