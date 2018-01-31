@@ -22,10 +22,45 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-public class NearbyUtils {
+public class NetworkUtils {
 
     //hides constructor - this class should never be instantiated
-    private NearbyUtils() {
+    private NetworkUtils() {
+    }
+
+    public static String nextIpAddress(final String input) {
+        final String[] tokens = input.split("\\.");
+
+        for (int i = tokens.length - 1; i >= 0; i--) {
+            final int item = Integer.parseInt(tokens[i]);
+            if (item < 255) {
+                tokens[i] = String.valueOf(item + 1);
+                for (int j = i + 1; j < 4; j++) {
+                    tokens[j] = "0";
+                }
+                break;
+            }
+        }
+        return tokens[0] + '.' +
+                tokens[1] + '.' +
+                tokens[2] + '.' +
+                tokens[3];
+    }
+
+    public static int getRangeFromMask(String maskAddress) {
+        String[] parts = maskAddress.split("\\.");
+        int[] ranges = new int[parts.length];
+        int i = 0;
+        for(String part : parts){
+            int value = Integer.parseInt(part);
+            ranges[i] = (255 - value) + 1;
+            i++;
+        }
+        int result = 1;
+        for (int range : ranges){
+            result *= range;
+        }
+        return result;
     }
 
     /**

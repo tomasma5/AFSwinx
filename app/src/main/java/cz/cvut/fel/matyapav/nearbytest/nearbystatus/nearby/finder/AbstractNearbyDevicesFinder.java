@@ -1,16 +1,14 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 /**
  * Abstract template for all nearby devices finders
@@ -39,7 +37,7 @@ public abstract class AbstractNearbyDevicesFinder {
      * Adds found device into found devices list and logs it
      * @param device
      */
-    void deviceFound(Device device) {
+    public void deviceFound(Device device) {
         if(!foundDevices.contains(device)){
             foundDevices.add(device);
             logDevice(device);
@@ -66,7 +64,7 @@ public abstract class AbstractNearbyDevicesFinder {
        Log.i(GlobalConstants.APPLICATION_TAG, logBuilder.toString());
     }
 
-    Context getContext() {
+    public Context getContext() {
         return context;
     }
 
@@ -82,7 +80,7 @@ public abstract class AbstractNearbyDevicesFinder {
         this.batteryLimit = batteryLimit;
     }
 
-    List<Device> getFoundDevices() {
+    protected List<Device> getFoundDevices() {
         return foundDevices;
     }
 

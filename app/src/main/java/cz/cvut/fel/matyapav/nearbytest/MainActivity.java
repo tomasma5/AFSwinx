@@ -38,9 +38,9 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.LocationStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.BTDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.NearbyNetworksFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.SubnetDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.bluetooth.BTDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.network.NearbyNetworksFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.subnet.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 
 public class MainActivity extends AppCompatActivity {
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build()
                 //.sendDataToServerAfterTimeout("http://192.168.100.8:8080/NSRest/api/consumer/add")
-                .sendDataToServerAfterTimeout("http://10.50.109.67:8080/NSRest/api/consumer/add")
+                //.sendDataToServerAfterTimeout("http://10.50.109.67:8080/NSRest/api/consumer/add")
                 .sendDataToServerAfterTimeout("http://147.32.217.40:8080/NSRest/api/consumer/add")
                 .runProcess();
     }

@@ -1,8 +1,18 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
+
+import static com.google.android.gms.internal.zzahn.runOnUiThread;
 
 /**
  * Asynchronous task for finding nearby devices in background
@@ -23,13 +33,22 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
+        Timer timer = new Timer();
+        timer.schedule(
+                new TimerTask() {
+
+                    @Override
+                    public void run() {
+                            finder.getNearbyDevicesFinders().forEach(nearbyFinder -> finder.addDevices(nearbyFinder.stopFindingAndCollectDevices()));
+                            timer.cancel();
+                            timer.purge();
+                            runOnUiThread(() -> nearbyFinderVisitor.onNearbyDevicesSearchFinished());
+                    }
+
+                }, timeoutInMillis
+        );
+
         finder.getNearbyDevicesFinders().forEach(AbstractNearbyDevicesFinder::startFindingDevices);
-        try {
-            Thread.sleep(timeoutInMillis);
-            finder.getNearbyDevicesFinders().forEach(nearbyFinder -> finder.addDevices(nearbyFinder.stopFindingAndCollectDevices()));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
@@ -43,9 +62,4 @@ public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
         return this;
     }
 
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        nearbyFinderVisitor.onNearbyDevicesSearchFinished();
-    }
 }

@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;

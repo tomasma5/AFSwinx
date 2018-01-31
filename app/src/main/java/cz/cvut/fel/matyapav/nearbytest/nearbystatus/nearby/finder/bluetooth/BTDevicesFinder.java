@@ -1,4 +1,4 @@
-package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder;
+package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Set;
 
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.BluetoothUtil;
