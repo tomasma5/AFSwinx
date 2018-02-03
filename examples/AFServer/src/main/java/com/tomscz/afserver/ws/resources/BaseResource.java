@@ -4,18 +4,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import com.tomscz.afserver.manager.AbsenceInstanceManager;
-import com.tomscz.afserver.manager.AbsenceInstanceManagerImpl;
-import com.tomscz.afserver.manager.AbsenceTypeManager;
-import com.tomscz.afserver.manager.AbsenceTypeManagerImpl;
-import com.tomscz.afserver.manager.CountryManager;
-import com.tomscz.afserver.manager.CountryManagerImp;
-import com.tomscz.afserver.manager.PersonManager;
-import com.tomscz.afserver.manager.PersonManagerImpl;
-import com.tomscz.afserver.persistence.entity.AbsenceInstance;
-import com.tomscz.afserver.persistence.entity.AbsenceType;
-import com.tomscz.afserver.persistence.entity.Country;
-import com.tomscz.afserver.persistence.entity.Person;
+import com.tomscz.afserver.manager.*;
+import com.tomscz.afserver.persistence.entity.*;
 import com.tomscz.afserver.utils.Utils;
 
 /**
@@ -61,6 +51,14 @@ public abstract class BaseResource {
                 (AbsenceInstanceManager<AbsenceInstance>) ctx.lookup(Utils
                         .getJNDIName(AbsenceInstanceManagerImpl.NAME));
         return absenceTypeManager;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected VehicleManager<Vehicle> getVehicleManager() throws NamingException {
+        Context ctx = new InitialContext();
+        VehicleManager<Vehicle> vehicleManager =
+                (VehicleManager<Vehicle>) ctx.lookup(Utils.getJNDIName(VehicleManagerImpl.name));
+        return vehicleManager;
     }
 
     public abstract String getResourceUrl();

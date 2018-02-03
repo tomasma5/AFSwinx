@@ -47,6 +47,7 @@ public class Person {
     private boolean confidentialAgreement;
     @OneToOne
     private Address myAddress;
+    @OneToOne
     private Country country;
 
     public Person() {
