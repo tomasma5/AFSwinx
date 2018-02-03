@@ -61,6 +61,22 @@ public abstract class BaseResource {
         return vehicleManager;
     }
 
+    @SuppressWarnings("unchecked")
+    protected BusinessTripManager<BusinessTrip> getBusinessTripManager() throws NamingException {
+        Context ctx = new InitialContext();
+        BusinessTripManager<BusinessTrip> businessTripManager =
+                (BusinessTripManager<BusinessTrip>) ctx.lookup(Utils.getJNDIName(BusinessTripManagerImpl.name));
+        return businessTripManager;
+    }
+
+    @SuppressWarnings("unchecked")
+    protected BusinessTripPartManager<BusinessTripPart> getBusinessTripPartManager() throws NamingException {
+        Context ctx = new InitialContext();
+        BusinessTripPartManager<BusinessTripPart> businessTripPartManager =
+                (BusinessTripPartManager<BusinessTripPart>) ctx.lookup(Utils.getJNDIName(BusinessTripPartManagerImpl.name));
+        return businessTripPartManager;
+    }
+
     public abstract String getResourceUrl();
 
 }

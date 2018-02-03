@@ -18,6 +18,7 @@ public class IdGenerator {
     private static int absenceTypeEmployeeId = 1;
     private static int userRoleId = 1;
     private static int vehicleId = 1;
+    private static int businessTripId = 1;
 
     public static synchronized int getNextPersonId() {
         return personId++;
@@ -50,6 +51,10 @@ public class IdGenerator {
 
     public static synchronized int getNextVehicleId () {
         return vehicleId++;
+    }
+
+    public static synchronized int getNextBusinessTripId () {
+        return businessTripId++;
     }
     
 }
