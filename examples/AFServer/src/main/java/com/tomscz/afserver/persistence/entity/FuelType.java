@@ -1,15 +1,15 @@
 package com.tomscz.afserver.persistence.entity;
 
-public enum  VehicleType {
+public enum FuelType {
 
-    CAR("vehicleType.car"),
-    BUS("vehicleType.bus"),
-    PLANE("vehicleType.plane"),
-    MOTOCYCLE("vehicleType.motocycle");
+    OIL_FUEL("fuelType.oilFuel"),
+    PETROL("fuelType.petrol"),
+    LPG("fuelType.lpg"),
+    PLANE_FUEL("fuelType.planeFuel");
 
     private final String name;
 
-    VehicleType(String name){
+    FuelType(String name){
         this.name = name;
     }
 

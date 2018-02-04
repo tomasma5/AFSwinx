@@ -11,14 +11,11 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Id;
 
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.IdGenerator;
-import com.tomscz.afserver.persistence.entity.Address;
-import com.tomscz.afserver.persistence.entity.Country;
-import com.tomscz.afserver.persistence.entity.Gender;
-import com.tomscz.afserver.persistence.entity.Person;
-import com.tomscz.afserver.persistence.entity.UserRoles;
+import com.tomscz.afserver.persistence.entity.*;
 
 /**
  * This is start up bean which is used to initialize database.
@@ -46,6 +43,7 @@ public class StartUpBean implements Serializable {
         try {
             generateCountries();
             generateUsers();
+            generateVehicles();
         } catch (Exception e) {
             // Just print stack trace, this mean, that there are no data initialized
             e.printStackTrace();
@@ -100,6 +98,16 @@ public class StartUpBean implements Serializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    private void generateVehicles(){
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Renault Clio", VehicleType.CAR, FuelType.PETROL, 6.5, 20000, "Romanovo clio", true));
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Škoda Karoq", VehicleType.CAR, FuelType.PETROL, 6.5,  10500.3, "Podstatně dražší než yeti, ale univerzálnější", true));
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Škoda Octavia 1.9 TDI 2004", VehicleType.CAR, FuelType.OIL_FUEL, 5.5, 125012.9, "", true));
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Setra S 515 HD", VehicleType.BUS, FuelType.OIL_FUEL, 18.3, 145798, "Spotřeba uvedena pro celý autobus = nerozpočítána na cestující", true));
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Airbus 318", VehicleType.PLANE, FuelType.PLANE_FUEL, 5.5, 5000000, "Spotřeba je brána na 1 osobu na 100km", true));
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "S 1000 XR", VehicleType.MOTOCYCLE, FuelType.PETROL, 6.5, 12300, "Mimořádná výbava: Alarm proti krádeži", true));
+        em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Inactive car", VehicleType.CAR, FuelType.LPG, 12.5, 74699,"Neaktivní auto pro ilustraci", false));
     }
 
 }

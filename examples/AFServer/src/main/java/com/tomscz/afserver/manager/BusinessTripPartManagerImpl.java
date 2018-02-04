@@ -26,6 +26,9 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
     @EJB
     private AddressManager<Address> addressManager;
 
+    @EJB
+    private VehicleManager<Vehicle> vehicleManager;
+
     public static final String name = "BusinessTripPartManager";
 
     private static final long serialVersionUID = 1L;
@@ -131,8 +134,13 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
         }
         businessTripPart.setEndPlace(endPlace);
 
-        //update total distance in business trip
+        //update total distance in business trip and vehicle
         businessTrip.setTotalDistance(businessTrip.getTotalDistance() + businessTripPart.getDistance());
+        Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
+        if(vehicle != null){
+            vehicle.setTachometerKilometers(vehicle.getTachometerKilometers() + businessTripPart.getDistance());
+            vehicleManager.createOrupdate(vehicle);
+        }
         businessTripManager.createOrUpdate(businessTrip, securityContext.getLoggedUserName(), securityContext);
 
         return businessTripPart;
@@ -145,16 +153,20 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
                 && !existingBusinessTripPart.getBusinessTrip().getStatus().equals(BusinessTripState.INPROGRESS))) {
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
-        if(businessTripPart.getStartDate().before(businessTripPart.getBusinessTrip().getStartDate()) ||
-                businessTripPart.getEndDate().after(businessTripPart.getBusinessTrip().getEndDate())){
+        if(businessTripPart.getDistance() <= 0 || (businessTripPart.getStartDate().before(businessTripPart.getBusinessTrip().getStartDate()) ||
+                businessTripPart.getEndDate().after(businessTripPart.getBusinessTrip().getEndDate()))){
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
         existingBusinessTripPart.setStartDate(businessTripPart.getStartDate());
         existingBusinessTripPart.setEndDate(businessTripPart.getEndDate());
 
-        //subtract existing value and add new value7
-        businessTrip.setTotalDistance(businessTrip.getTotalDistance() - existingBusinessTripPart.getDistance());
-        businessTrip.setTotalDistance(businessTrip.getTotalDistance() + businessTripPart.getDistance());
+        //subtract existing distance value and add new value to bussiness trip and to vehicle
+        businessTrip.setTotalDistance(businessTrip.getTotalDistance() - existingBusinessTripPart.getDistance() + businessTripPart.getDistance());
+        Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
+        if(vehicle != null){
+            vehicle.setTachometerKilometers(vehicle.getTachometerKilometers() - existingBusinessTripPart.getDistance() + businessTripPart.getDistance());
+            vehicleManager.createOrupdate(vehicle);
+        }
         businessTripManager.createOrUpdate(businessTrip, securityContext.getLoggedUserName(), securityContext);
 
         existingBusinessTripPart.setDistance(businessTripPart.getDistance());

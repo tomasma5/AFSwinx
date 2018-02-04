@@ -14,7 +14,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.ws.rs.core.Response;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Stateless(name = BusinessTripManagerImpl.name)
@@ -87,8 +86,11 @@ public class BusinessTripManagerImpl extends BaseManager<BusinessTrip> implement
                                                String username) throws BusinessException {
         businessTrip.setId(IdGenerator.getNextBusinessTripId());
         Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
-        businessTrip.setVehicle(vehicle);
         Person person = personManager.findUser(username);
+        if(person == null || vehicle == null){
+            throw new BusinessException(Response.Status.BAD_REQUEST);
+        }
+        businessTrip.setVehicle(vehicle);
         businessTrip.setPerson(person);
 
         Address startPlace = addressManager.findById(businessTrip.getStartPlace().getId());
@@ -112,33 +114,48 @@ public class BusinessTripManagerImpl extends BaseManager<BusinessTrip> implement
 
     private BusinessTrip updateExistingBusinessTrip(BusinessTrip businessTrip, AFSecurityContext securityContext) throws BusinessException {
         BusinessTrip existingBusinessTrip = findById(businessTrip.getId());
-        if (!securityContext.isUserInRole(UserRoles.ADMIN)
-                && (businessTrip.getStatus().name().equals(BusinessTripState.ACCEPTED.name()) || businessTrip
-                .getStatus().name().equals(BusinessTripState.DENIED.name()))) {
+        if (!securityContext.isUserInRole(UserRoles.ADMIN) &&
+                !(businessTrip.getStatus().name().equals(BusinessTripState.REQUESTED.name()) ||
+                businessTrip.getStatus().name().equals(BusinessTripState.INPROGRESS.name()) ||
+                businessTrip.getStatus().name().equals(BusinessTripState.FINISHED.name()))) {
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
-        existingBusinessTrip.setStatus(businessTrip.getStatus());
-        existingBusinessTrip.setStartDate(businessTrip.getStartDate());
-        existingBusinessTrip.setEndDate(businessTrip.getEndDate());
-        existingBusinessTrip.setDescription(businessTrip.getDescription());
-        existingBusinessTrip.setTotalDistance(businessTrip.getTotalDistance());
-        Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
-        existingBusinessTrip.setVehicle(vehicle);
+        if(businessTrip.getStatus().name().equals(BusinessTripState.FINISHED.name())){
+            if(!businessTrip.getStatus().name().equals(BusinessTripState.INPROGRESS.name())){
+                //cannot finish trip that is not in progress
+                throw new BusinessException(Response.Status.BAD_REQUEST);
+            }
+            existingBusinessTrip.setStatus(businessTrip.getStatus());
+        }
+        else if(businessTrip.getStatus().name().equals(BusinessTripState.INPROGRESS.name())){
+            if(!businessTrip.getStatus().name().equals(BusinessTripState.ACCEPTED.name())){
+                //cannot start trip that was not accepted
+                throw new BusinessException(Response.Status.BAD_REQUEST);
+            }
+            existingBusinessTrip.setStatus(businessTrip.getStatus());
+        }else if(businessTrip.getStatus().name().equals(BusinessTripState.REQUESTED.name())) {
+            //if it is only requested information can be edited - except total distance = read only field
+            existingBusinessTrip.setStartDate(businessTrip.getStartDate());
+            existingBusinessTrip.setEndDate(businessTrip.getEndDate());
+            existingBusinessTrip.setDescription(businessTrip.getDescription());
+            Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
+            existingBusinessTrip.setVehicle(vehicle);
+            Address startPlace = addressManager.findById(businessTrip.getStartPlace().getId());
+            if(startPlace == null){
+                startPlace = businessTrip.getStartPlace();
+                startPlace.setId(IdGenerator.getNextAddressId());
+                addressManager.createOrupdate(startPlace);
+            }
+            existingBusinessTrip.setStartPlace(startPlace);
+            Address endPlace = addressManager.findById(businessTrip.getEndPlace().getId());
+            if(endPlace == null){
+                endPlace = businessTrip.getEndPlace();
+                endPlace.setId(IdGenerator.getNextAddressId());
+                addressManager.createOrupdate(endPlace);
+            }
+            existingBusinessTrip.setEndPlace(endPlace);
+        }
 
-        Address startPlace = addressManager.findById(businessTrip.getStartPlace().getId());
-        if(startPlace == null){
-            startPlace = businessTrip.getStartPlace();
-            startPlace.setId(IdGenerator.getNextAddressId());
-            addressManager.createOrupdate(startPlace);
-        }
-        existingBusinessTrip.setStartPlace(startPlace);
-        Address endPlace = addressManager.findById(businessTrip.getEndPlace().getId());
-        if(endPlace == null){
-            endPlace = businessTrip.getEndPlace();
-            endPlace.setId(IdGenerator.getNextAddressId());
-            addressManager.createOrupdate(endPlace);
-        }
-        existingBusinessTrip.setEndPlace(endPlace);
         return existingBusinessTrip;
     }
 

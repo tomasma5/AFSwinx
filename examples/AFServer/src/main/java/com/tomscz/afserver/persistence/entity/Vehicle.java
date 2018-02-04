@@ -16,23 +16,26 @@ public class Vehicle {
     private String name;
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
+    @Enumerated(EnumType.STRING)
+    private FuelType fuelType;
     private double fuelConsumption;
     private String note;
     private boolean available;
+    private double tachometerKilometers;
 
     public Vehicle() {
     }
 
-    public Vehicle(int id, String name, VehicleType vehicleType, double fuelConsumption, String note, boolean active) {
+    public Vehicle(int id, String name, VehicleType vehicleType, FuelType fuelType, double fuelConsumption, double tachometerKilometers, String note, boolean active) {
         this.id = id;
         this.name = name;
         this.vehicleType = vehicleType;
         this.fuelConsumption = fuelConsumption;
         this.note = note;
         this.available = active;
+        this.tachometerKilometers = tachometerKilometers;
     }
 
-    @UiType(value="id")
     public int getId() {
         return id;
     }
@@ -66,6 +69,7 @@ public class Vehicle {
         this.vehicleType = vehicleType;
     }
 
+    @UiType(value = "id")
     @UiRequired
     @UiOrder(value = 2)
     @UiLabel(value = "vehicle.fuelConsumption")
@@ -79,8 +83,8 @@ public class Vehicle {
     }
 
     @UiRequired
-    @UiOrder(value = 3)
-    @UiLabel(value = "vehicle.fuelConsumption")
+    @UiOrder(value = 5)
+    @UiLabel(value = "vehicle.note")
     @UIWidgetType(widgetType = SupportedWidgets.TEXTAREA)
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public String getNote() {
@@ -92,9 +96,9 @@ public class Vehicle {
     }
 
     @UiRequired
-    @UiLabel(value="vehicle.isAvailable")
-    @UiOrder(value=4)
-    @UILayout(labelPossition=LabelPosition.BEFORE,layout=LayouDefinitions.ONECOLUMNLAYOUT,layoutOrientation=LayoutOrientation.AXISY)
+    @UiLabel(value = "vehicle.isAvailable")
+    @UiOrder(value = 6)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public boolean isAvailable() {
         return available;
     }
@@ -103,9 +107,35 @@ public class Vehicle {
         this.available = active;
     }
 
+    @UiRequired
+    @UiOrder(value = 3)
+    @UiLabel(value = "vehicle.fuelType")
+    @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    public FuelType getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(FuelType fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    @UiRequired
+    @UiOrder(value = 4)
+    @UiLabel(value = "vehicle.tachometerKilometers")
+    @UIWidgetType(widgetType = SupportedWidgets.NUMBERDOUBLEFIELD)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    public double getTachometerKilometers() {
+        return tachometerKilometers;
+    }
+
+    public void setTachometerKilometers(double tachometerKilometers) {
+        this.tachometerKilometers = tachometerKilometers;
+    }
+
     @Override
     public String toString() {
-        return "["+vehicleType.toString() + "] " + name + ", " + fuelConsumption + "l/100km";
+        return "[" + vehicleType.toString() + "] " + name + ", " + fuelConsumption + "l/100km";
     }
 
 
