@@ -2,12 +2,12 @@ package com.tomscz.afserver.ws.resources;
 
 import com.tomscz.afrest.AFRest;
 import com.tomscz.afrest.AFRestGenerator;
+import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.BusinessTripManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
-import com.tomscz.afserver.persistence.entity.BusinessTrip;
-import com.tomscz.afserver.persistence.entity.Vehicle;
+import com.tomscz.afserver.persistence.entity.*;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
@@ -56,6 +56,7 @@ public class BusinessTripResource extends BaseResource {
 
             afSwing.setMapping("businessTripAdd.xml");
             HashMap<String, String> customStructureMapping = new HashMap<>();
+            //TODO check if its right usage
             customStructureMapping.put("vehicle", "vehicle.xml");
             customStructureMapping.put(BusinessTrip.class.getCanonicalName(), "businessTripPartAdd.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName(),
@@ -68,7 +69,22 @@ public class BusinessTripResource extends BaseResource {
                         options.put(String.valueOf(vehicle.getId()), vehicle.toString());
                     }
                 }
-                data.setOptionsToFields(options, "businessTripPart.id");
+                data.setOptionsToFields(options, "vehicle");
+
+                AFSecurityContext securityContex =
+                        (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
+                if (securityContex.isUserInRole(UserRoles.ADMIN)) {
+                    HashMap<String, String> stateOptions = AFRestUtils.getDataInEnumClass(BusinessTripState.class
+                                    .getCanonicalName());
+                    data.setOptionsToFields(stateOptions, "status");
+                } else {
+                    HashMap<String, String> stateOptions = new HashMap<String, String>();
+                    stateOptions.put(BusinessTripState.CANCELLED.name(), BusinessTripState.CANCELLED.name());
+                    stateOptions.put(BusinessTripState.REQUESTED.name(), BusinessTripState.REQUESTED.name());
+                    stateOptions.put(BusinessTripState.INPROGRESS.name(), BusinessTripState.REQUESTED.name());
+                    stateOptions.put(BusinessTripState.FINISHED.name(), BusinessTripState.FINISHED.name());
+                    data.setOptionsToFields(stateOptions, "status");
+                }
             } catch (NamingException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
