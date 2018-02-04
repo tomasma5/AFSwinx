@@ -1,39 +1,35 @@
 package com.tomscz.af.showcase.view;
 
-import java.awt.event.ActionListener;
-import java.io.InputStream;
-import java.util.HashMap;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.skin.AbsenceInstanceEditSkin;
+import com.tomscz.af.showcase.view.skin.MySkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
-public class AbsenceInstanceEditView extends BaseView {
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.io.InputStream;
+import java.util.HashMap;
+
+public class BusinessTripEditView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    public static final String ABSENCE_INSTANCE_EDIT_TABLE = "absenceInstaceEditTable";
-    public static final String ABSENCE_INSTANCE_EDIT_TABLE_CONNECTION =
-            "absenceInstaceEditTableConnection";
-    public static final String ABSENCE_INSTANCE_EDIT_FORM = "absenceInstaceEditForm";
-    public static final String ABSENCE_INSTANCE_EDIT_FORM_CONNECTION =
-            "absenceInstaceEditFormConnection";
+    public static final String BUSINESS_TRIP_EDIT_TABLE = "businessTripEditTable";
+    public static final String BUSINESS_TRIP_EDIT_TABLE_CONNECTION =
+            "businessTripEditTableConnection";
+    public static final String BUSINESS_TRIP_EDIT_FORM = "businessTripEditForm";
+    public static final String BUSINESS_TRIP_EDIT_FORM_CONNECTION =
+            "businessTripEditFormConnection";
 
     private JButton chooseButton;
     private JButton performButton;
 
-    public AbsenceInstanceEditView() {
+    public BusinessTripEditView() {
         intialize();
     }
-    
 
     @Override
     protected JPanel createContent() {
@@ -47,9 +43,10 @@ public class AbsenceInstanceEditView extends BaseView {
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_EDIT_TABLE, connectionResource,
-                                    ABSENCE_INSTANCE_EDIT_TABLE_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_EDIT_TABLE, connectionResource,
+                                    BUSINESS_TRIP_EDIT_TABLE_CONNECTION, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
+                            .setSkin(new MySkin())
                             .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
@@ -57,10 +54,11 @@ public class AbsenceInstanceEditView extends BaseView {
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_EDIT_FORM, connectionResource,
-                                    ABSENCE_INSTANCE_EDIT_FORM_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_EDIT_FORM, connectionResource,
+                                    BUSINESS_TRIP_EDIT_FORM_CONNECTION, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new AbsenceInstanceEditSkin()).buildComponent();
+                            .setSkin(new MySkin())
+                            .buildComponent();
             centerPanel.add(form);
             performButton =
                     new JButton(Localization.getLocalizationText("avaiableCountryView.buttton.add"));

@@ -21,6 +21,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 
+@Path("/businessTrip")
 public class BusinessTripResource extends BaseResource {
 
     @Override
@@ -32,7 +33,6 @@ public class BusinessTripResource extends BaseResource {
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin", "user"})
     public Response getDefinition(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
@@ -52,15 +52,8 @@ public class BusinessTripResource extends BaseResource {
     public Response getAddDefinition(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
-            String mainlayout = "templates/oneColumnLayout.xml";
-
-            afSwing.setMapping("businessTripAdd.xml");
-            HashMap<String, String> customStructureMapping = new HashMap<>();
-            //TODO check if its right usage
-            customStructureMapping.put("vehicle", "vehicle.xml");
-            customStructureMapping.put(BusinessTrip.class.getCanonicalName(), "businessTripPartAdd.xml");
-            AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName(),
-                    customStructureMapping, mainlayout);
+            afSwing.setMainLayout("templates/structure.xml");
+            AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName());
             try {
                 List<Vehicle> vehicles = getVehicleManager().findAllVehicles();
                 HashMap<String, String> options = new HashMap<>();
@@ -70,6 +63,16 @@ public class BusinessTripResource extends BaseResource {
                     }
                 }
                 data.setOptionsToFields(options, "vehicle");
+
+                List<Country> countries = getCountryManager().findAllCountry();
+                HashMap<String, String> countryOptions = new HashMap<>();
+                for (Country country : countries) {
+                    if(country.isActive()) {
+                        countryOptions.put(String.valueOf(country.getId()), country.getName());
+                    }
+                }
+                data.setOptionsToFields(countryOptions, "startPlace.country");
+                data.setOptionsToFields(countryOptions, "endPlace.country");
 
                 AFSecurityContext securityContex =
                         (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);

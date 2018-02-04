@@ -22,6 +22,9 @@ public class AFApplication extends Application {
         singletons.add(new UserResource());
         singletons.add(new AbsenceTypeResource());
         singletons.add(new AbsenceInstanceResource());
+        singletons.add(new BusinessTripResource());
+        singletons.add(new BusinessTripPartResource());
+        singletons.add(new VehicleResource());
     }
 
     @Override

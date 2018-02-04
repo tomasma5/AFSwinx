@@ -2,14 +2,7 @@ package com.tomscz.afserver.persistence.entity;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.Past;
 
 import com.codingcrayons.aspectfaces.annotations.UILayout;
@@ -43,6 +36,7 @@ public class AbsenceInstance {
 
 	private String reason;
 	private String emergencyContact;
+	@OneToOne
 	private Address vacationPlace;
 
 	@UiOrder(value = 2)

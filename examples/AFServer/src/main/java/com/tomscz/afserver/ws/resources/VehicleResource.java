@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 
+@Path("/vehicle")
 public class VehicleResource extends BaseResource {
 
     @Override

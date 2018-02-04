@@ -84,7 +84,7 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
             throw new BusinessException(Response.Status.NOT_FOUND);
         }
         BusinessTrip businessTrip = businessTripManager.findById(businessTripPart.getBusinessTrip().getId());
-        if (businessTrip == null || (!securityContext.isUserInRole(UserRoles.ADMIN) && !businessTrip.getStatus().equals(BusinessTripState.INPROGRESS))){
+        if (businessTrip == null || (!securityContext.isUserInRole(UserRoles.ADMIN) && !businessTrip.getStatus().name().equals(BusinessTripState.INPROGRESS.name()))){
            throw new BusinessException(Response.Status.BAD_REQUEST);
         }
 
@@ -108,7 +108,7 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
     private BusinessTripPart createNewBusinessTripPart(BusinessTripPart businessTripPart, int businessTripId,
                                                    AFSecurityContext securityContext) throws BusinessException {
         BusinessTrip businessTrip = businessTripManager.findById(businessTripId);
-        if(businessTrip == null || (!securityContext.isUserInRole(UserRoles.ADMIN) && !businessTrip.getStatus().equals(BusinessTripState.INPROGRESS))){
+        if(businessTrip == null || (!securityContext.isUserInRole(UserRoles.ADMIN) && !businessTrip.getStatus().name().equals(BusinessTripState.INPROGRESS.name()))){
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
         if(businessTripPart.getStartDate().before(businessTripPart.getBusinessTrip().getStartDate()) ||
@@ -150,7 +150,7 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
         BusinessTripPart existingBusinessTripPart = findById(businessTripPart.getId());
         BusinessTrip businessTrip = existingBusinessTripPart.getBusinessTrip();
         if (businessTrip == null || (!securityContext.isUserInRole(UserRoles.ADMIN)
-                && !existingBusinessTripPart.getBusinessTrip().getStatus().equals(BusinessTripState.INPROGRESS))) {
+                && !existingBusinessTripPart.getBusinessTrip().getStatus().name().equals(BusinessTripState.INPROGRESS.name()))) {
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
         if(businessTripPart.getDistance() <= 0 || (businessTripPart.getStartDate().before(businessTripPart.getBusinessTrip().getStartDate()) ||

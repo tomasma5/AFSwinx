@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 
+@Path("/businessTripPart")
 public class BusinessTripPartResource extends BaseResource {
 
     @Override
@@ -33,7 +34,6 @@ public class BusinessTripPartResource extends BaseResource {
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin", "user"})
     public Response getDefinition(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
@@ -49,16 +49,13 @@ public class BusinessTripPartResource extends BaseResource {
     @Path("/definitionAdd")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin", "user"})
     public Response getAddDefinition(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
-            String mainlayout = "templates/oneColumnLayout.xml";
-
+            String mainlayout = "templates/structure.xml";
             afSwing.setMapping("businessTripAdd.xml");
             HashMap<String, String> customStructureMapping = new HashMap<>();
             customStructureMapping.put("vehicle", "vehicle.xml");
-            customStructureMapping.put(BusinessTrip.class.getCanonicalName(), "businessTripAdd.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName(),
                     customStructureMapping, mainlayout);
             try {
@@ -69,7 +66,7 @@ public class BusinessTripPartResource extends BaseResource {
                         options.put(String.valueOf(vehicle.getId()), vehicle.toString());
                     }
                 }
-                data.setOptionsToFields(options, "businessTrip.id");
+                data.setOptionsToFields(options, "vehicle");
             } catch (NamingException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }

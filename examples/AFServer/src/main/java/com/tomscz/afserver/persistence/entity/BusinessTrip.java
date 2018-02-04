@@ -147,7 +147,7 @@ public class BusinessTrip {
     }
 
     @UiRequired
-    @UiLabel(value = "businessTrip.description")
+    @UiLabel(value = "businessTrip.vehicle")
     @UiOrder(value = 4)
     @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
@@ -159,9 +159,10 @@ public class BusinessTrip {
         this.vehicle = vehicle;
     }
 
-    @UiLabel(value = "businessTrip.totalDistance")
     @UiOrder(value = 7)
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
+    @UiType(value = "readOnly")
+    @UiLabel(value = "businessTrip.totalDistance")
     public double getTotalDistance() {
         return totalDistance;
     }

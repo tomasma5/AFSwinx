@@ -9,7 +9,11 @@
 		<class>com.tomscz.afserver.persistence.entity.AbsenceInstance</class>
 		<class>com.tomscz.afserver.persistence.entity.AbsenceType</class>
 		<class>com.tomscz.afserver.persistence.entity.Address</class>
-		<class>com.tomscz.afserver.persistence.entity.Person</class> <!-- transaction-type="JTA" -->
+		<class>com.tomscz.afserver.persistence.entity.Person</class>
+		<class>com.tomscz.afserver.persistence.entity.Vehicle</class>
+		<class>com.tomscz.afserver.persistence.entity.BusinessTrip</class>
+		<class>com.tomscz.afserver.persistence.entity.BusinessTripPart</class>
+		<!-- transaction-type="JTA" -->
 		<properties>
 			<property name="eclipselink.target-database" value="DERBY" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />

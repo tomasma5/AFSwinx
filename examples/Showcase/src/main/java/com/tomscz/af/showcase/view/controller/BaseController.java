@@ -7,14 +7,7 @@ import java.util.List;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
-import com.tomscz.af.showcase.view.AbsenceInstanceCreateView;
-import com.tomscz.af.showcase.view.AbsenceInstanceEditView;
-import com.tomscz.af.showcase.view.AbsenceTypManagementView;
-import com.tomscz.af.showcase.view.AvaiableCountryView;
-import com.tomscz.af.showcase.view.BaseView;
-import com.tomscz.af.showcase.view.MyAbsenceInstanceView;
-import com.tomscz.af.showcase.view.PersonView;
-import com.tomscz.af.showcase.view.WelcomeScreen;
+import com.tomscz.af.showcase.view.*;
 import com.tomscz.af.showcase.view.model.AbsenceTypeManagementModel;
 import com.tomscz.af.showcase.view.model.BaseModel;
 import com.tomscz.afswinx.component.AFSwinx;
@@ -53,6 +46,7 @@ public abstract class BaseController {
         view.addCzechButtonListener(onCzechButtonExec);
         view.addEnglishButtonListener(onEnglishButtonExec);
         view.addLogoutButtonMenuListener(logoutButtonListener);
+        view.addBusinessTripsListener(businessTripsListener);
     }
 
     // This section register listeners from menu and localization
@@ -144,11 +138,23 @@ public abstract class BaseController {
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
             MyAbsenceInstanceView myAbsenceInstanceView = new MyAbsenceInstanceView();
-            MyAbsenceInstanceController controller =
-                    new MyAbsenceInstanceController(myAbsenceInstanceView);
+            MyAbsenceInstanceController controller = new MyAbsenceInstanceController(myAbsenceInstanceView);
             view.setVisible(false);
             view = null;
             myAbsenceInstanceView.setVisible(true);
+        }
+    };
+
+    private ActionListener businessTripsListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
+            BusinessTripEditView businessTripEditView = new BusinessTripEditView();
+            BusinessTripEditController controller = new BusinessTripEditController(businessTripEditView);
+            view.setVisible(false);
+            view = null;
+            businessTripEditView.setVisible(true);
         }
     };
 

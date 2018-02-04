@@ -33,6 +33,7 @@ public abstract class BaseView extends JPanel {
     private JButton addAbsenceButton;
     private JButton addAbsenceTypeButton;
     private JButton logoutButton;
+    private JButton businessTripsButton;
     private JButton czech;
     private JButton english;
     private MainFrame mainFrame = MainFrame.getInstance();
@@ -109,9 +110,10 @@ public abstract class BaseView extends JPanel {
         editAbsenceButton.setPreferredSize(buttonSize);
         addAbsenceButton = new JButton(Localization.getLocalizationText("link.createAbsence"));
         addAbsenceButton.setPreferredSize(buttonSize);
-        addAbsenceTypeButton =
-                new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
+        addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
         addAbsenceTypeButton.setPreferredSize(buttonSize);
+        businessTripsButton = new JButton(Localization.getLocalizationText("link.businessTrips"));
+        businessTripsButton.setPreferredSize(buttonSize);
         logoutButton = new JButton(Localization.getLocalizationText("logout.button"));
         logoutButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
@@ -126,6 +128,7 @@ public abstract class BaseView extends JPanel {
             menu.add(editAbsenceButton);
             menu.add(addAbsenceButton);
             menu.add(addAbsenceTypeButton);
+            menu.add(businessTripsButton);
             menu.add(logoutButton);
         } else {
             loginButton = new JButton(Localization.getLocalizationText("link.login"));
@@ -174,6 +177,12 @@ public abstract class BaseView extends JPanel {
     public void addAbsencesInstanceEditListener(ActionListener a) {
         if (editAbsenceButton != null) {
             editAbsenceButton.addActionListener(a);
+        }
+    }
+
+    public void addBusinessTripsListener(ActionListener a){
+        if(businessTripsButton != null){
+            businessTripsButton.addActionListener(a);
         }
     }
 
