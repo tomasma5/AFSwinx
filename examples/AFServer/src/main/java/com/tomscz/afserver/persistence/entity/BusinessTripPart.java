@@ -25,22 +25,19 @@ public class BusinessTripPart {
     private Address startPlace;
     @OneToOne
     private Address endPlace;
-    @OneToOne
-    private Vehicle vehicle;
     private double distance;
 
     public BusinessTripPart() {
     }
 
     public BusinessTripPart(int id, BusinessTrip businessTrip, Date startDate, Date endDate, Address startPlace,
-                            Address endPlace, Vehicle vehicle, double distance) {
+                            Address endPlace, double distance) {
         this.id = id;
         this.businessTrip = businessTrip;
         this.startDate = startDate;
         this.endDate = endDate;
         this.startPlace = startPlace;
         this.endPlace = endPlace;
-        this.vehicle = vehicle;
         this.distance = distance;
     }
 
@@ -92,6 +89,7 @@ public class BusinessTripPart {
     @UiRequired
     @UiOrder(value = 2)
     @UiLabel(value = "businessTripPart.startPlace")
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public Address getStartPlace() {
         return startPlace;
     }
@@ -103,6 +101,7 @@ public class BusinessTripPart {
     @UiRequired
     @UiOrder(value = 3)
     @UiLabel(value = "businessTripPart.endPlace")
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public Address getEndPlace() {
         return endPlace;
     }
@@ -112,19 +111,9 @@ public class BusinessTripPart {
     }
 
     @UiRequired
-    @UiLabel(value = "businessTrip.description")
     @UiOrder(value = 4)
-    @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
+    @UiLabel(value = "businessTripPart.distance")
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    @UiRequired
     public double getDistance() {
         return distance;
     }

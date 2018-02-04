@@ -4,9 +4,10 @@ import com.tomscz.afrest.AFRest;
 import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
-import com.tomscz.afserver.manager.BusinessTripManager;
+import com.tomscz.afserver.manager.BusinessTripPartManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.BusinessTrip;
+import com.tomscz.afserver.persistence.entity.BusinessTripPart;
 import com.tomscz.afserver.persistence.entity.Vehicle;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
@@ -21,11 +22,11 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 
-public class BusinessTripResource extends BaseResource {
+public class BusinessTripPartResource extends BaseResource {
 
     @Override
     public String getResourceUrl() {
-        return  "/AFServer/rest/businessTrip/";
+        return  "/AFServer/rest/businessTripPart/";
     }
 
     @GET
@@ -37,7 +38,7 @@ public class BusinessTripResource extends BaseResource {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             AFMetaModelPack data =
-                    afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName());
+                    afSwing.generateSkeleton(BusinessTripPart.class.getCanonicalName());
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -57,7 +58,7 @@ public class BusinessTripResource extends BaseResource {
             afSwing.setMapping("businessTripAdd.xml");
             HashMap<String, String> customStructureMapping = new HashMap<>();
             customStructureMapping.put("vehicle", "vehicle.xml");
-            customStructureMapping.put(BusinessTrip.class.getCanonicalName(), "businessTripPartAdd.xml");
+            customStructureMapping.put(BusinessTrip.class.getCanonicalName(), "businessTripAdd.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName(),
                     customStructureMapping, mainlayout);
             try {
@@ -68,7 +69,7 @@ public class BusinessTripResource extends BaseResource {
                         options.put(String.valueOf(vehicle.getId()), vehicle.toString());
                     }
                 }
-                data.setOptionsToFields(options, "businessTripPart.id");
+                data.setOptionsToFields(options, "businessTrip.id");
             } catch (NamingException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
@@ -79,37 +80,39 @@ public class BusinessTripResource extends BaseResource {
     }
 
     @GET
-    @Path("/list")
+    @Path("/list/{businessTripId}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin"})
-    public Response getUsersAllBusinessTrips() {
+    public Response getUsersAllBusinessTrips(@PathParam("businessTripId") int businessTripId) {
         try {
-            List<BusinessTrip> btpInstances =
-                    getBusinessTripManager().getAllBusinessTrips();
-            final GenericEntity<List<BusinessTrip>> businessTripGeneric =
-                    new GenericEntity<List<BusinessTrip>>(btpInstances) {};
+            List<BusinessTripPart> btpInstances =
+                    getBusinessTripPartManager().getAllBusinessTripParts(businessTripId);
+            final GenericEntity<List<BusinessTripPart>> businessTripGeneric =
+                    new GenericEntity<List<BusinessTripPart>>(btpInstances) {};
             return Response.status(Response.Status.OK).entity(businessTripGeneric).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        } catch (BusinessException e) {
+            return Response.status(e.getStatus()).build();
         }
     }
 
     @GET
-    @Path("/user/{username}")
+    @Path("/user/{username}/list/{businessTripId}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin", "user"})
     public Response getUsersAllBusinessTrips(@javax.ws.rs.core.Context HttpServletRequest request,
-                                         @PathParam("username") String username) {
+                                         @PathParam("username") String username, @PathParam("businessTripId") int businessTripId) {
         try {
             AFSecurityContext securityContex =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
-            List<BusinessTrip> businessTrips =
-                    getBusinessTripManager().getBusinessTripsForPerson(username, securityContex);
-            final GenericEntity<List<BusinessTrip>> businessTripGeneric =
-                    new GenericEntity<List<BusinessTrip>>(businessTrips) {};
-            return Response.status(Response.Status.OK).entity(businessTripGeneric).build();
+            List<BusinessTripPart> businessTripParts =
+                    getBusinessTripPartManager().getBusinessTripsPartsForPerson(username, businessTripId, securityContex);
+            final GenericEntity<List<BusinessTripPart>> businessTripPartGeneric =
+                    new GenericEntity<List<BusinessTripPart>>(businessTripParts) {};
+            return Response.status(Response.Status.OK).entity(businessTripPartGeneric).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         } catch (BusinessException e) {
@@ -119,17 +122,17 @@ public class BusinessTripResource extends BaseResource {
 
 
     @POST
-    @Path("/add/{username}")
+    @Path("/user/{username}/add/{businessTripId}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin", "user"})
-    public Response createOrUpdateBusinessTrip(
+    public Response createOrUpdateBusinessTripPart(
             @javax.ws.rs.core.Context HttpServletRequest request,
-            @PathParam("username") String username, BusinessTrip businessTrip) {
+            @PathParam("username") String username, @PathParam("businessTripId") int businessTripId, BusinessTripPart businessTripPart) {
         try {
             AFSecurityContext securityContext =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
-            getBusinessTripManager().createOrUpdate(businessTrip, username, securityContext);
+            getBusinessTripPartManager().createOrUpdate(businessTripPart, businessTripId, username, securityContext);
             return Response.status(Response.Status.OK).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -139,18 +142,18 @@ public class BusinessTripResource extends BaseResource {
     }
 
     @DELETE
-    @Path("/remove/{id}")
+    @Path("/user/{username}/remove/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin"})
-    public Response deleteBusinessTrip(@PathParam("id") int id) {
+    @RolesAllowed({"admin", "user"})
+    public Response deleteBusinessTrip(@javax.ws.rs.core.Context HttpServletRequest request,
+                                       @PathParam("username") String username,
+                                       @PathParam("id") int id) {
         try {
-            BusinessTripManager<BusinessTrip> businessTripManager = getBusinessTripManager();
-            BusinessTrip businessTripToDelete = businessTripManager.findById(id);
-            if (businessTripToDelete == null) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
-            businessTripManager.delete(businessTripToDelete);
+            AFSecurityContext securityContex =
+                    (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
+            BusinessTripPartManager<BusinessTripPart> businessTripPartManager = getBusinessTripPartManager();
+            businessTripPartManager.remove(id, username, securityContex);
             return Response.status(Response.Status.OK).build();
         } catch (BusinessException e) {
             return Response.status(e.getStatus()).build();
