@@ -82,8 +82,7 @@ public class BusinessTripManagerImpl extends BaseManager<BusinessTrip> implement
         super.createOrupdate(businessTrip);
     }
 
-    private BusinessTrip createNewBusinessTrip(BusinessTrip businessTrip,
-                                               String username) throws BusinessException {
+    private BusinessTrip createNewBusinessTrip(BusinessTrip businessTrip, String username) throws BusinessException {
         businessTrip.setId(IdGenerator.getNextBusinessTripId());
         Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
         Person person = personManager.findUser(username);

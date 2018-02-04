@@ -36,6 +36,7 @@ public class Vehicle {
         this.tachometerKilometers = tachometerKilometers;
     }
 
+    @UiType(value = "id")
     public int getId() {
         return id;
     }

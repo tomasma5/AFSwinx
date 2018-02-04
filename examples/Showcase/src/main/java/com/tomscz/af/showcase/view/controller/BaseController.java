@@ -47,6 +47,7 @@ public abstract class BaseController {
         view.addEnglishButtonListener(onEnglishButtonExec);
         view.addLogoutButtonMenuListener(logoutButtonListener);
         view.addBusinessTripsListener(businessTripsListener);
+        view.addVehiclesButtonListener(vehiclesButtonListener);
     }
 
     // This section register listeners from menu and localization
@@ -142,6 +143,19 @@ public abstract class BaseController {
             view.setVisible(false);
             view = null;
             myAbsenceInstanceView.setVisible(true);
+        }
+    };
+
+    private ActionListener vehiclesButtonListener = new ActionListener() {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AFSwinx.getInstance().removeAllComponents();
+            AvailableVehiclesView vehiclesView = new AvailableVehiclesView();
+            AvailableVehiclesController controller = new AvailableVehiclesController(vehiclesView);
+            view.setVisible(false);
+            view = null;
+            vehiclesView.setVisible(true);
         }
     };
 

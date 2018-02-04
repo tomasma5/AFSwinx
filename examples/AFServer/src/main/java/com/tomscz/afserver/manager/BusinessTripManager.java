@@ -1,7 +1,6 @@
 package com.tomscz.afserver.manager;
 
 import com.tomscz.afserver.manager.exceptions.BusinessException;
-import com.tomscz.afserver.persistence.entity.AbsenceInstance;
 import com.tomscz.afserver.persistence.entity.BusinessTrip;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 

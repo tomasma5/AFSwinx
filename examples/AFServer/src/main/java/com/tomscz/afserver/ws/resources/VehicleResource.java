@@ -2,14 +2,13 @@ package com.tomscz.afserver.ws.resources;
 
 import com.tomscz.afrest.AFRest;
 import com.tomscz.afrest.AFRestGenerator;
+import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.CountryManager;
 import com.tomscz.afserver.manager.VehicleManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
-import com.tomscz.afserver.persistence.entity.Country;
-import com.tomscz.afserver.persistence.entity.UserRoles;
-import com.tomscz.afserver.persistence.entity.Vehicle;
+import com.tomscz.afserver.persistence.entity.*;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
@@ -47,6 +46,7 @@ public class VehicleResource extends BaseResource {
         try {
             HashMap<String, Object> readOnlyVariables = new HashMap<String, Object>();
             // If user was authenticate and is admin then
+            //TODO zjistit jak funguji readonly
             if (request.getAttribute(AFServerConstants.SECURITY_CONTEXT) != null) {
                 AFSecurityContext securityContext = (AFSecurityContext) request
                         .getAttribute(AFServerConstants.SECURITY_CONTEXT);
@@ -60,11 +60,20 @@ public class VehicleResource extends BaseResource {
 
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             afSwing.setVariablesToContext(readOnlyVariables);
-            afSwing.setMainLayout("templates/oneColumnLayout.xml");
+            afSwing.setMainLayout("templates/structure.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(Vehicle.class.getCanonicalName());
 
+            HashMap<String, String> vehicleTypeOptions = AFRestUtils.getDataInEnumClass(VehicleType.class
+                    .getCanonicalName());
+            data.setOptionsToFields(vehicleTypeOptions, "vehicleType");
+
+            HashMap<String, String> fuelTypeOptions = AFRestUtils.getDataInEnumClass(FuelType.class
+                    .getCanonicalName());
+            data.setOptionsToFields(fuelTypeOptions, "fuelType");
+
+
             HashMap<String, String> availableFlag = new HashMap<String, String>();
-            // Define possibilities about active
+            // Define possibilities about available
             availableFlag.put("true", "true");
             availableFlag.put("false", "false");
             data.setOptionsToFields(availableFlag, "available");

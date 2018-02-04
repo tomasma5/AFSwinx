@@ -53,13 +53,15 @@ public class BusinessTripResource extends BaseResource {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             afSwing.setMainLayout("templates/structure.xml");
+
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName());
             try {
+                //Todo vozidlo se nezobrazuje
                 List<Vehicle> vehicles = getVehicleManager().findAllVehicles();
-                HashMap<String, String> options = new HashMap<>();
+                HashMap<String, String> options = new HashMap<String, String>();
                 for (Vehicle vehicle : vehicles) {
                     if(vehicle.isAvailable()) {
-                        options.put(String.valueOf(vehicle.getId()), vehicle.toString());
+                        options.put(String.valueOf(vehicle.getId()), vehicle.getName());
                     }
                 }
                 data.setOptionsToFields(options, "vehicle");
@@ -73,6 +75,7 @@ public class BusinessTripResource extends BaseResource {
                 }
                 data.setOptionsToFields(countryOptions, "startPlace.country");
                 data.setOptionsToFields(countryOptions, "endPlace.country");
+
 
                 AFSecurityContext securityContex =
                         (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
@@ -146,6 +149,7 @@ public class BusinessTripResource extends BaseResource {
             @javax.ws.rs.core.Context HttpServletRequest request,
             @PathParam("username") String username, BusinessTrip businessTrip) {
         try {
+            //Todo spadne kvuli tomu, ze je vozidlo null!
             AFSecurityContext securityContext =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
             getBusinessTripManager().createOrUpdate(businessTrip, username, securityContext);

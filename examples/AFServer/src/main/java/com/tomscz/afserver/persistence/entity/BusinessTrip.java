@@ -159,10 +159,7 @@ public class BusinessTrip {
         this.vehicle = vehicle;
     }
 
-    @UiOrder(value = 7)
-    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
-    @UiType(value = "readOnly")
-    @UiLabel(value = "businessTrip.totalDistance")
+    @UiIgnore
     public double getTotalDistance() {
         return totalDistance;
     }

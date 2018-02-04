@@ -34,6 +34,7 @@ public abstract class BaseView extends JPanel {
     private JButton addAbsenceTypeButton;
     private JButton logoutButton;
     private JButton businessTripsButton;
+    private JButton vehiclesButton;
     private JButton czech;
     private JButton english;
     private MainFrame mainFrame = MainFrame.getInstance();
@@ -114,6 +115,8 @@ public abstract class BaseView extends JPanel {
         addAbsenceTypeButton.setPreferredSize(buttonSize);
         businessTripsButton = new JButton(Localization.getLocalizationText("link.businessTrips"));
         businessTripsButton.setPreferredSize(buttonSize);
+        vehiclesButton = new JButton(Localization.getLocalizationText("link.vehicles"));
+        vehiclesButton.setPreferredSize(buttonSize);
         logoutButton = new JButton(Localization.getLocalizationText("logout.button"));
         logoutButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
@@ -129,6 +132,7 @@ public abstract class BaseView extends JPanel {
             menu.add(addAbsenceButton);
             menu.add(addAbsenceTypeButton);
             menu.add(businessTripsButton);
+            menu.add(vehiclesButton);
             menu.add(logoutButton);
         } else {
             loginButton = new JButton(Localization.getLocalizationText("link.login"));
@@ -183,6 +187,12 @@ public abstract class BaseView extends JPanel {
     public void addBusinessTripsListener(ActionListener a){
         if(businessTripsButton != null){
             businessTripsButton.addActionListener(a);
+        }
+    }
+
+    public void addVehiclesButtonListener(ActionListener a) {
+        if(vehiclesButton != null){
+            vehiclesButton.addActionListener(a);
         }
     }
 
