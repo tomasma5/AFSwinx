@@ -8,6 +8,7 @@ import com.tomscz.afserver.manager.BusinessTripPartManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.BusinessTrip;
 import com.tomscz.afserver.persistence.entity.BusinessTripPart;
+import com.tomscz.afserver.persistence.entity.Country;
 import com.tomscz.afserver.persistence.entity.Vehicle;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
@@ -49,29 +50,25 @@ public class BusinessTripPartResource extends BaseResource {
     @Path("/definitionAdd")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
     public Response getAddDefinition(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             String mainlayout = "templates/structure.xml";
-            afSwing.setMapping("businessTripAdd.xml");
             HashMap<String, String> customStructureMapping = new HashMap<>();
-            customStructureMapping.put("vehicle", "vehicle.xml");
-            AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName(),
+            AFMetaModelPack data = afSwing.generateSkeleton(BusinessTripPart.class.getCanonicalName(),
                     customStructureMapping, mainlayout);
-            try {
-                List<Vehicle> vehicles = getVehicleManager().findAllVehicles();
-                HashMap<String, String> options = new HashMap<>();
-                for (Vehicle vehicle : vehicles) {
-                    if(vehicle.isAvailable()) {
-                        options.put(String.valueOf(vehicle.getId()), vehicle.toString());
-                    }
+            List<Country> countries = getCountryManager().findAllCountry();
+            HashMap<String, String> countryOptions = new HashMap<>();
+            for (Country country : countries) {
+                if(country.isActive()) {
+                    countryOptions.put(country.getName(), country.getName());
                 }
-                data.setOptionsToFields(options, "vehicle");
-            } catch (NamingException e) {
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
             }
+            data.setOptionsToFields(countryOptions, "startPlace.country");
+            data.setOptionsToFields(countryOptions, "endPlace.country");
             return Response.status(Response.Status.OK).entity(data).build();
-        } catch (MetamodelException e) {
+        } catch (MetamodelException | NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }

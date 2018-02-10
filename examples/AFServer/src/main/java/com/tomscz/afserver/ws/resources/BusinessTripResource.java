@@ -66,6 +66,7 @@ public class BusinessTripResource extends BaseResource {
 
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName());
             try {
+                //supply vehicles dropdown menu
                 AFFieldInfo fieldInfo = Utils.getFieldInfoById(data.getClassInfo(), "vehicle");
                 if(fieldInfo != null) {
                     fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
@@ -85,7 +86,13 @@ public class BusinessTripResource extends BaseResource {
                     }
                     data.setOptionsToFields(options, "vehicle");
                 }
+                //set total distance readonly
+                fieldInfo = Utils.getFieldInfoById(data.getClassInfo(), "totalDistance");
+                if(fieldInfo != null){
+                    fieldInfo.setReadOnly(true);
+                }
 
+                //supply countries for address country drowdowns
                 List<Country> countries = getCountryManager().findAllCountry();
                 HashMap<String, String> countryOptions = new HashMap<>();
                 for (Country country : countries) {
@@ -96,6 +103,7 @@ public class BusinessTripResource extends BaseResource {
                 data.setOptionsToFields(countryOptions, "startPlace.country");
                 data.setOptionsToFields(countryOptions, "endPlace.country");
 
+                //supply statuses for different roles
                 AFSecurityContext securityContex =
                         (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
                 if (securityContex.isUserInRole(UserRoles.ADMIN)) {

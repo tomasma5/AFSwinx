@@ -325,6 +325,59 @@
 			</security-params>
 		</send>
 	</connection>
+	<!-- ################# BUSINESS TRIP PARTS ###################-->
+	<connection id="businessTripPartsTableConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/definition/</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
+		<data>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/user/#{username}/list/#{businessTripId}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</data>
+	</connection>
+	<connection id="businessTripPartsFormConnection">
+		<metaModel>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/definitionAdd/</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</metaModel>
+		<send>
+			<endPoint>localhost</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/user/#{username}/add/#{businessTripId}</endPointParameters>
+			<protocol>http</protocol>
+			<method>post</method>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</send>
+	</connection>
 	<!-- ################# VEHICLES ###################-->
 	<connection id="vehiclesTableConnection">
 		<metaModel>

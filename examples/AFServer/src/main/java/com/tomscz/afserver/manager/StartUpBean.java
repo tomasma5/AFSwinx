@@ -33,6 +33,9 @@ public class StartUpBean implements Serializable {
 
     @EJB
     CountryManager<Country> countryManager;
+
+    @EJB
+    PersonManager<Person> personManager;
     /**
      * 
      */
@@ -44,6 +47,7 @@ public class StartUpBean implements Serializable {
             generateCountries();
             generateUsers();
             generateVehicles();
+            generateBusinessTrips();
         } catch (Exception e) {
             // Just print stack trace, this mean, that there are no data initialized
             e.printStackTrace();
@@ -110,4 +114,30 @@ public class StartUpBean implements Serializable {
         em.persist(new Vehicle(IdGenerator.getNextVehicleId(), "Inactive car", VehicleType.CAR, FuelType.LPG, 12.5, 74699,"Neaktivní auto pro ilustraci", false));
     }
 
+    private void generateBusinessTrips(){
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Address startAddress = new Address(IdGenerator.getNextAddressId(), "Somewhere", "Some city", 48601, "Czech republic");
+            Address endAddress = new Address(IdGenerator.getNextAddressId(), "Elsewhere", "Other city", 578984, "Czech republic");
+            em.persist(startAddress);
+            em.persist(endAddress);
+
+            BusinessTrip bt1 = new BusinessTrip(
+                    IdGenerator.getNextBusinessTripId(),
+                    personManager.findUser("sa2"),
+                    sdf.parse("10/02/2018"),
+                    sdf.parse("15/02/2018"),
+                    startAddress,
+                    endAddress,
+                    BusinessTripState.REQUESTED,
+                    "Some description",
+                    "Škoda Karoq",
+                    null,
+                    0);
+
+            em.persist(bt1);
+        } catch (BusinessException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

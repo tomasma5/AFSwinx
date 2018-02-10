@@ -7,6 +7,7 @@ import com.tomscz.afrest.layout.definitions.LayouDefinitions;
 import com.tomscz.afrest.layout.definitions.LayoutOrientation;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -154,7 +155,9 @@ public class BusinessTrip {
         this.vehicle = vehicle;
     }
 
-    @UiIgnore
+    @UiLabel(value = "businessTrip.totalDistance")
+    @UiOrder(value = 7)
+    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public double getTotalDistance() {
         return totalDistance;
     }
@@ -170,5 +173,12 @@ public class BusinessTrip {
 
     public void setTripParts(List<BusinessTripPart> tripParts) {
         this.tripParts = tripParts;
+    }
+
+    public void addTripPart(BusinessTripPart businessTripPart) {
+        if(tripParts == null) {
+            tripParts = new ArrayList<>();
+        }
+        tripParts.add(businessTripPart);
     }
 }

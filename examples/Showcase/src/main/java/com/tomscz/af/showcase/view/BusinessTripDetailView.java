@@ -9,25 +9,32 @@ import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.InputStream;
 import java.util.HashMap;
 
-public class BusinessTripEditView extends BaseView {
+public class BusinessTripDetailView extends BaseView {
+
+    private int businessTripId;
+    private String dateFrom;
+    private String dateTo;
 
     private static final long serialVersionUID = 1L;
-    public static final String BUSINESS_TRIP_EDIT_TABLE = "businessTripEditTable";
-    public static final String BUSINESS_TRIP_EDIT_TABLE_CONNECTION =
-            "businessTripEditTableConnection";
-    public static final String BUSINESS_TRIP_EDIT_FORM = "businessTripEditForm";
-    public static final String BUSINESS_TRIP_EDIT_FORM_CONNECTION =
-            "businessTripEditFormConnection";
+    public static final String BUSINESS_TRIP_PARTS_TABLE = "businessTripPartsTable";
+    public static final String BUSINESS_TRIP_PARTS_TABLE_CONNECTION =
+            "businessTripPartsTableConnection";
+    public static final String BUSINESS_TRIP_PARTS_FORM = "businessTripPartsForm";
+    public static final String BUSINESS_TRIP_PARTS_FORM_CONNECTION =
+            "businessTripPartsFormConnection";
 
     private JButton chooseButton;
-    private JButton detailButton;
     private JButton performButton;
 
-    public BusinessTripEditView() {
+    public BusinessTripDetailView(int businessTripId, String dateFrom, String dateTo) {
+        this.businessTripId = businessTripId;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
         intialize();
     }
 
@@ -40,11 +47,12 @@ public class BusinessTripEditView extends BaseView {
             connectionResource = ApplicationContext.getInstance().getConnectionFile();
             HashMap<String, String> parameters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
+            parameters.put("businessTripId", String.valueOf(businessTripId));
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(BUSINESS_TRIP_EDIT_TABLE, connectionResource,
-                                    BUSINESS_TRIP_EDIT_TABLE_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_PARTS_TABLE, connectionResource,
+                                    BUSINESS_TRIP_PARTS_TABLE_CONNECTION, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();
@@ -54,32 +62,31 @@ public class BusinessTripEditView extends BaseView {
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(BUSINESS_TRIP_EDIT_FORM, connectionResource,
-                                    BUSINESS_TRIP_EDIT_FORM_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_PARTS_FORM, connectionResource,
+                                    BUSINESS_TRIP_PARTS_FORM_CONNECTION, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();
             centerPanel.add(form);
-            performButton = new JButton(Localization.getLocalizationText("businessTrip.buttton.add"));
+            performButton =
+                    new JButton(Localization.getLocalizationText("businessTrip.buttton.add"));
             performButton.setAlignmentX(CENTER_ALIGNMENT);
             Box buttonBox = Box.createHorizontalBox();
             buttonBox.add(performButton);
             centerPanel.add(Box.createVerticalStrut(20));
             centerPanel.add(buttonBox);
-            Box buttonBox2 = Box.createHorizontalBox();
-            chooseButton = new JButton(Localization.getLocalizationText("businessTrip.buttton.choose"));
-            chooseButton.setAlignmentX(LEFT_ALIGNMENT);
-            detailButton = new JButton(Localization.getLocalizationText("businessTrip.button.detail"));
-            detailButton.setAlignmentX(RIGHT_ALIGNMENT);
-            buttonBox2.add(chooseButton);
-            buttonBox2.add(detailButton);
+            chooseButton =
+                    new JButton(
+                            Localization.getLocalizationText("businessTrip.buttton.choose"));
+            chooseButton.setAlignmentX(RIGHT_ALIGNMENT);
 
             Box centerBox = Box.createHorizontalBox();
             centerBox.add(centerPanel);
             centerBox.add(Box.createHorizontalStrut(100));
-
+            b1.add(new Label(Localization.getLocalizationText("businessTripDetail.heading") + " " +
+                    businessTripId + " [" + dateFrom + " - " + dateTo + "]"));
             b1.add(table);
-            b1.add(buttonBox2);
+            b1.add(chooseButton);
             b1.add(Box.createVerticalStrut(40));
             b1.add(centerBox);
             b1.add(Box.createVerticalStrut(40));
@@ -102,12 +109,6 @@ public class BusinessTripEditView extends BaseView {
     public void addChooseButtonActionListener(ActionListener a) {
         if (chooseButton != null) {
             chooseButton.addActionListener(a);
-        }
-    }
-
-    public void addDetailButtonActionListener(ActionListener a) {
-        if (detailButton != null) {
-            detailButton.addActionListener(a);
         }
     }
 

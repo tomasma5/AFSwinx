@@ -111,12 +111,11 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
         if(businessTrip == null || (!securityContext.isUserInRole(UserRoles.ADMIN) && !businessTrip.getStatus().name().equals(BusinessTripState.INPROGRESS.name()))){
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
-        if(businessTripPart.getStartDate().before(businessTripPart.getBusinessTrip().getStartDate()) ||
-                businessTripPart.getEndDate().after(businessTripPart.getBusinessTrip().getEndDate())){
+        if(businessTripPart.getStartDate().before(businessTrip.getStartDate()) ||
+                businessTripPart.getEndDate().after(businessTrip.getEndDate())){
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
         businessTripPart.setBusinessTrip(businessTrip);
-
         businessTripPart.setId(IdGenerator.getNextBusinessTripPartId());
 
         Address startPlace = addressManager.findById(businessTripPart.getStartPlace().getId());
@@ -126,7 +125,7 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
             addressManager.createOrupdate(startPlace);
         }
         businessTripPart.setStartPlace(startPlace);
-        Address endPlace = addressManager.findById(businessTripPart.getStartPlace().getId());
+        Address endPlace = addressManager.findById(businessTripPart.getEndPlace().getId());
         if(endPlace == null){
             endPlace = businessTripPart.getEndPlace();
             endPlace.setId(IdGenerator.getNextAddressId());
@@ -153,8 +152,8 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
                 && !existingBusinessTripPart.getBusinessTrip().getStatus().name().equals(BusinessTripState.INPROGRESS.name()))) {
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
-        if(businessTripPart.getDistance() <= 0 || (businessTripPart.getStartDate().before(businessTripPart.getBusinessTrip().getStartDate()) ||
-                businessTripPart.getEndDate().after(businessTripPart.getBusinessTrip().getEndDate()))){
+        if(businessTripPart.getDistance() <= 0 || (businessTripPart.getStartDate().before(businessTrip.getStartDate()) ||
+                businessTripPart.getEndDate().after(businessTrip.getEndDate()))){
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
         existingBusinessTripPart.setStartDate(businessTripPart.getStartDate());
@@ -171,19 +170,12 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
 
         existingBusinessTripPart.setDistance(businessTripPart.getDistance());
 
-        Address startPlace = addressManager.findById(businessTripPart.getStartPlace().getId());
-        if(startPlace == null){
-            startPlace = businessTripPart.getStartPlace();
-            startPlace.setId(IdGenerator.getNextAddressId());
-            addressManager.createOrupdate(startPlace);
-        }
+        Address startPlace = businessTripPart.getStartPlace();
+        addressManager.createOrupdate(startPlace);
         existingBusinessTripPart.setStartPlace(startPlace);
-        Address endPlace = addressManager.findById(businessTripPart.getStartPlace().getId());
-        if(endPlace == null){
-            endPlace = businessTripPart.getEndPlace();
-            endPlace.setId(IdGenerator.getNextAddressId());
-            addressManager.createOrupdate(endPlace);
-        }
+
+        Address endPlace = businessTripPart.getEndPlace();
+        addressManager.createOrupdate(endPlace);
         existingBusinessTripPart.setEndPlace(endPlace);
 
         return existingBusinessTripPart;

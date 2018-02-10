@@ -325,10 +325,63 @@
 			</security-params>
 		</send>
 	</connection>
+	<!-- ################# BUSINESS TRIP PARTS ###################-->
+	<connection id="businessTripPartsTableConnection">
+		<metaModel>
+			<endPoint>toms-cz.com</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/definition/</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+		</metaModel>
+		<data>
+			<endPoint>toms-cz.com</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/user/#{username}/list/#{businessTripId}</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</data>
+	</connection>
+	<connection id="businessTripPartsFormConnection">
+		<metaModel>
+			<endPoint>toms-cz.com</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/definitionAdd/</endPointParameters>
+			<protocol>http</protocol>
+			<port>8080</port>
+			<header-param>
+				<param>content-type</param>
+				<value>Application/Json</value>
+			</header-param>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</metaModel>
+		<send>
+			<endPoint>toms-cz.com</endPoint>
+			<endPointParameters>/AFServer/rest/businessTripPart/user/#{username}/add/#{businessTripId}</endPointParameters>
+			<protocol>http</protocol>
+			<method>post</method>
+			<port>8080</port>
+			<security-params>
+				<security-method>basic</security-method>
+				<userName>#{username}</userName>
+				<password>#{password}</password>
+			</security-params>
+		</send>
+	</connection>
 	<!-- ################# VEHICLES ###################-->
 	<connection id="vehiclesTableConnection">
 		<metaModel>
-			<endPoint>localhost</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/vehicle/definition/</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
@@ -338,7 +391,7 @@
 			</header-param>
 		</metaModel>
 		<data>
-			<endPoint>localhost</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/vehicle/list</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
@@ -346,7 +399,7 @@
 	</connection>
 	<connection id="vehiclesFormConnection">
 		<metaModel>
-			<endPoint>localhost</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/vehicle/definition/</endPointParameters>
 			<protocol>http</protocol>
 			<port>8080</port>
@@ -356,7 +409,7 @@
 			</header-param>
 		</metaModel>
 		<send>
-			<endPoint>localhost</endPoint>
+			<endPoint>toms-cz.com</endPoint>
 			<endPointParameters>/AFServer/rest/vehicle/</endPointParameters>
 			<protocol>http</protocol>
 			<method>post</method>
@@ -368,5 +421,4 @@
 			</security-params>
 		</send>
 	</connection>
-
 </connectionRoot>
