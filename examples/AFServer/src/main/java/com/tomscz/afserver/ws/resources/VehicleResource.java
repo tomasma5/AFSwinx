@@ -47,7 +47,7 @@ public class VehicleResource extends BaseResource {
             HashMap<String, Object> readOnlyVariables = new HashMap<String, Object>();
             // If user was authenticate and is admin then
             //TODO zjistit jak funguji readonly
-            if (request.getAttribute(AFServerConstants.SECURITY_CONTEXT) != null) {
+           /* if (request.getAttribute(AFServerConstants.SECURITY_CONTEXT) != null) {
                 AFSecurityContext securityContext = (AFSecurityContext) request
                         .getAttribute(AFServerConstants.SECURITY_CONTEXT);
                 if (!securityContext.isUserInRole(UserRoles.ADMIN)) {
@@ -56,11 +56,11 @@ public class VehicleResource extends BaseResource {
             } else {
                 // otherwise all fields will be readonly
                 readOnlyVariables.put("readonly", "true");
-            }
+            }*/
 
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
             afSwing.setVariablesToContext(readOnlyVariables);
-            afSwing.setMainLayout("templates/structure.xml");
+            afSwing.setMainLayout("templates/oneColumnLayout.xml");
             AFMetaModelPack data = afSwing.generateSkeleton(Vehicle.class.getCanonicalName());
 
             HashMap<String, String> vehicleTypeOptions = AFRestUtils.getDataInEnumClass(VehicleType.class

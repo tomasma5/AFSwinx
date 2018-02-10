@@ -84,12 +84,11 @@ public class BusinessTripManagerImpl extends BaseManager<BusinessTrip> implement
 
     private BusinessTrip createNewBusinessTrip(BusinessTrip businessTrip, String username) throws BusinessException {
         businessTrip.setId(IdGenerator.getNextBusinessTripId());
-        Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
+        Vehicle vehicle = vehicleManager.findByName(businessTrip.getVehicle());
         Person person = personManager.findUser(username);
         if (person == null || vehicle == null) {
             throw new BusinessException(Response.Status.BAD_REQUEST);
         }
-        businessTrip.setVehicle(vehicle);
         businessTrip.setPerson(person);
 
         Address startPlace = addressManager.findById(businessTrip.getStartPlace().getId());
@@ -99,7 +98,7 @@ public class BusinessTripManagerImpl extends BaseManager<BusinessTrip> implement
             addressManager.createOrupdate(startPlace);
         }
         businessTrip.setStartPlace(startPlace);
-        Address endPlace = addressManager.findById(businessTrip.getStartPlace().getId());
+        Address endPlace = addressManager.findById(businessTrip.getEndPlace().getId());
         if (endPlace == null) {
             endPlace = businessTrip.getEndPlace();
             endPlace.setId(IdGenerator.getNextAddressId());
@@ -147,21 +146,18 @@ public class BusinessTripManagerImpl extends BaseManager<BusinessTrip> implement
             existingBusinessTrip.setStartDate(businessTrip.getStartDate());
             existingBusinessTrip.setEndDate(businessTrip.getEndDate());
             existingBusinessTrip.setDescription(businessTrip.getDescription());
-            Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
-            existingBusinessTrip.setVehicle(vehicle);
-            Address startPlace = addressManager.findById(businessTrip.getStartPlace().getId());
-            if (startPlace == null) {
-                startPlace = businessTrip.getStartPlace();
-                startPlace.setId(IdGenerator.getNextAddressId());
-                addressManager.createOrupdate(startPlace);
+            Vehicle vehicle = vehicleManager.findByName(businessTrip.getVehicle());
+            if ( vehicle == null) {
+                throw new BusinessException(Response.Status.BAD_REQUEST);
             }
+            existingBusinessTrip.setVehicle(businessTrip.getVehicle());
+
+            Address startPlace = businessTrip.getStartPlace();
+            addressManager.createOrupdate(startPlace);
             existingBusinessTrip.setStartPlace(startPlace);
-            Address endPlace = addressManager.findById(businessTrip.getEndPlace().getId());
-            if (endPlace == null) {
-                endPlace = businessTrip.getEndPlace();
-                endPlace.setId(IdGenerator.getNextAddressId());
-                addressManager.createOrupdate(endPlace);
-            }
+
+            Address endPlace = businessTrip.getEndPlace();
+            addressManager.createOrupdate(endPlace);
             existingBusinessTrip.setEndPlace(endPlace);
         }
 

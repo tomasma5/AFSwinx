@@ -3,12 +3,22 @@ package com.tomscz.afserver.ws.resources;
 import com.tomscz.afrest.AFRest;
 import com.tomscz.afrest.AFRestGenerator;
 import com.tomscz.afrest.commons.AFRestUtils;
+import com.tomscz.afrest.commons.SupportedValidations;
+import com.tomscz.afrest.commons.SupportedWidgets;
 import com.tomscz.afrest.exception.MetamodelException;
+import com.tomscz.afrest.layout.Layout;
+import com.tomscz.afrest.layout.definitions.LabelPosition;
+import com.tomscz.afrest.layout.definitions.LayouDefinitions;
+import com.tomscz.afrest.layout.definitions.LayoutOrientation;
+import com.tomscz.afrest.rest.dto.AFClassInfo;
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afserver.manager.BusinessTripManager;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
 import com.tomscz.afserver.persistence.entity.*;
 import com.tomscz.afserver.utils.AFServerConstants;
+import com.tomscz.afserver.utils.Utils;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
 import javax.annotation.security.RolesAllowed;
@@ -56,26 +66,35 @@ public class BusinessTripResource extends BaseResource {
 
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName());
             try {
-                //Todo vozidlo se nezobrazuje
-                List<Vehicle> vehicles = getVehicleManager().findAllVehicles();
-                HashMap<String, String> options = new HashMap<String, String>();
-                for (Vehicle vehicle : vehicles) {
-                    if(vehicle.isAvailable()) {
-                        options.put(String.valueOf(vehicle.getId()), vehicle.getName());
+                AFFieldInfo fieldInfo = Utils.getFieldInfoById(data.getClassInfo(), "vehicle");
+                if(fieldInfo != null) {
+                    fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
+                    fieldInfo.setWidgetType(SupportedWidgets.DROPDOWNMENU);
+                    fieldInfo.setLabel("businessTrip.vehicle");
+                    Layout layout = new Layout();
+                    layout.setLabelPosstion(LabelPosition.BEFORE);
+                    layout.setLayoutDefinition(LayouDefinitions.ONECOLUMNLAYOUT);
+                    layout.setLayoutOrientation(LayoutOrientation.AXISY);
+                    fieldInfo.setLayout(layout);
+                    List<Vehicle> vehicles = getVehicleManager().findAllVehicles();
+                    HashMap<String, String> options = new HashMap<String, String>();
+                    for (Vehicle vehicle : vehicles) {
+                        if (vehicle.isAvailable()) {
+                            options.put(String.valueOf(vehicle.getName()), vehicle.getName());
+                        }
                     }
+                    data.setOptionsToFields(options, "vehicle");
                 }
-                data.setOptionsToFields(options, "vehicle");
 
                 List<Country> countries = getCountryManager().findAllCountry();
                 HashMap<String, String> countryOptions = new HashMap<>();
                 for (Country country : countries) {
                     if(country.isActive()) {
-                        countryOptions.put(String.valueOf(country.getId()), country.getName());
+                        countryOptions.put(country.getName(), country.getName());
                     }
                 }
                 data.setOptionsToFields(countryOptions, "startPlace.country");
                 data.setOptionsToFields(countryOptions, "endPlace.country");
-
 
                 AFSecurityContext securityContex =
                         (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
@@ -85,10 +104,10 @@ public class BusinessTripResource extends BaseResource {
                     data.setOptionsToFields(stateOptions, "status");
                 } else {
                     HashMap<String, String> stateOptions = new HashMap<String, String>();
-                    stateOptions.put(BusinessTripState.CANCELLED.name(), BusinessTripState.CANCELLED.name());
-                    stateOptions.put(BusinessTripState.REQUESTED.name(), BusinessTripState.REQUESTED.name());
-                    stateOptions.put(BusinessTripState.INPROGRESS.name(), BusinessTripState.REQUESTED.name());
-                    stateOptions.put(BusinessTripState.FINISHED.name(), BusinessTripState.FINISHED.name());
+                    stateOptions.put(BusinessTripState.REQUESTED.toString(), BusinessTripState.REQUESTED.toString());
+                    stateOptions.put(BusinessTripState.CANCELLED.toString(), BusinessTripState.CANCELLED.toString());
+                    stateOptions.put(BusinessTripState.INPROGRESS.toString(), BusinessTripState.INPROGRESS.toString());
+                    stateOptions.put(BusinessTripState.FINISHED.toString(), BusinessTripState.FINISHED.toString());
                     data.setOptionsToFields(stateOptions, "status");
                 }
             } catch (NamingException e) {
@@ -149,7 +168,6 @@ public class BusinessTripResource extends BaseResource {
             @javax.ws.rs.core.Context HttpServletRequest request,
             @PathParam("username") String username, BusinessTrip businessTrip) {
         try {
-            //Todo spadne kvuli tomu, ze je vozidlo null!
             AFSecurityContext securityContext =
                     (AFSecurityContext) request.getAttribute(AFServerConstants.SECURITY_CONTEXT);
             getBusinessTripManager().createOrUpdate(businessTrip, username, securityContext);

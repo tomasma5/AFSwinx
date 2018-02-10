@@ -30,6 +30,7 @@ public class Vehicle {
         this.id = id;
         this.name = name;
         this.vehicleType = vehicleType;
+        this.fuelType = fuelType;
         this.fuelConsumption = fuelConsumption;
         this.note = note;
         this.available = active;
@@ -124,7 +125,6 @@ public class Vehicle {
     @UiRequired
     @UiOrder(value = 4)
     @UiLabel(value = "vehicle.tachometerKilometers")
-    @UIWidgetType(widgetType = SupportedWidgets.NUMBERDOUBLEFIELD)
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public double getTachometerKilometers() {
         return tachometerKilometers;
@@ -133,11 +133,5 @@ public class Vehicle {
     public void setTachometerKilometers(double tachometerKilometers) {
         this.tachometerKilometers = tachometerKilometers;
     }
-
-    @Override
-    public String toString() {
-        return "[" + vehicleType.toString() + "] " + name + ", " + fuelConsumption + "l/100km";
-    }
-
 
 }

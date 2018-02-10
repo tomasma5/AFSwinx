@@ -1,6 +1,6 @@
 package com.tomscz.afserver.persistence.entity;
 
-public enum  VehicleType {
+public enum VehicleType {
 
     CAR("vehicleType.car"),
     BUS("vehicleType.bus"),

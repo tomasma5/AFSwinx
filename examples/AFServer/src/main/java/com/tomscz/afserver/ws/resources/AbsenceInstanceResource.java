@@ -22,11 +22,7 @@ import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.exception.MetamodelException;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
-import com.tomscz.afserver.persistence.entity.AbsenceInstance;
-import com.tomscz.afserver.persistence.entity.AbsenceInstanceState;
-import com.tomscz.afserver.persistence.entity.AbsenceType;
-import com.tomscz.afserver.persistence.entity.Person;
-import com.tomscz.afserver.persistence.entity.UserRoles;
+import com.tomscz.afserver.persistence.entity.*;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.ws.security.AFSecurityContext;
 
@@ -61,6 +57,13 @@ public class AbsenceInstanceResource extends BaseResource {
                     options.put(String.valueOf(absenceType.getId()), absenceType.getName());
                 }
                 data.setOptionsToFields(options, "absenceType.id");
+
+                List<Country> supportedCountries = getCountryManager().findAllCountry();
+                HashMap<String, String> countryOptions = new HashMap<String, String>();
+                for (Country country : supportedCountries) {
+                    countryOptions.put(country.getName(), country.getName());
+                }
+                data.setOptionsToFields(countryOptions, "vacationPlace.country");
             } catch (BusinessException e) {
                 return Response.status(e.getStatus()).build();
             } catch (NamingException e) {

@@ -136,7 +136,7 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
 
         //update total distance in business trip and vehicle
         businessTrip.setTotalDistance(businessTrip.getTotalDistance() + businessTripPart.getDistance());
-        Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
+        Vehicle vehicle = vehicleManager.findByName(businessTrip.getVehicle());
         if(vehicle != null){
             vehicle.setTachometerKilometers(vehicle.getTachometerKilometers() + businessTripPart.getDistance());
             vehicleManager.createOrupdate(vehicle);
@@ -162,7 +162,7 @@ public class BusinessTripPartManagerImpl extends BaseManager<BusinessTripPart>
 
         //subtract existing distance value and add new value to bussiness trip and to vehicle
         businessTrip.setTotalDistance(businessTrip.getTotalDistance() - existingBusinessTripPart.getDistance() + businessTripPart.getDistance());
-        Vehicle vehicle = vehicleManager.findById(businessTrip.getVehicle().getId());
+        Vehicle vehicle = vehicleManager.findByName(businessTrip.getVehicle());
         if(vehicle != null){
             vehicle.setTachometerKilometers(vehicle.getTachometerKilometers() - existingBusinessTripPart.getDistance() + businessTripPart.getDistance());
             vehicleManager.createOrupdate(vehicle);

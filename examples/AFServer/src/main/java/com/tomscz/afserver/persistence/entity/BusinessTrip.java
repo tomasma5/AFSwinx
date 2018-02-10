@@ -28,8 +28,7 @@ public class BusinessTrip {
     @Enumerated(EnumType.STRING)
     private BusinessTripState status;
     private String description;
-    @OneToOne
-    private Vehicle vehicle;
+    private String vehicle;
     @OneToMany(mappedBy = "businessTrip")
     private List<BusinessTripPart> tripParts;
 
@@ -39,7 +38,7 @@ public class BusinessTrip {
     }
 
     public BusinessTrip(int id, Person person, Date startDate, Date endDate, Address startPlace, Address endPlace,
-                        BusinessTripState status, String description, Vehicle vehicle,
+                        BusinessTripState status, String description, String vehicle,
                         List<BusinessTripPart> tripParts, double totalDistance) {
         this.id = id;
         this.person = person;
@@ -146,16 +145,12 @@ public class BusinessTrip {
         this.description = description;
     }
 
-    @UiRequired
-    @UiLabel(value = "businessTrip.vehicle")
     @UiOrder(value = 4)
-    @UIWidgetType(widgetType = SupportedWidgets.DROPDOWNMENU)
-    @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
-    public Vehicle getVehicle() {
+    public String getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle vehicle) {
+    public void setVehicle(String vehicle) {
         this.vehicle = vehicle;
     }
 
