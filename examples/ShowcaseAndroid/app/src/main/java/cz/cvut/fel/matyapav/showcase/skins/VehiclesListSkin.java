@@ -10,9 +10,9 @@ import cz.cvut.fel.matyapav.showcase.R;
  *
  *@since 1.0.0..
  */
-public class AbsenceManagementListSkin extends ListSkin{
+public class VehiclesListSkin extends ListSkin{
 
-    public AbsenceManagementListSkin(Context context) {
+    public VehiclesListSkin(Context context) {
         super(context);
     }
 
@@ -29,7 +29,7 @@ public class AbsenceManagementListSkin extends ListSkin{
 
     @Override
     public int getListItemNameColor() {
-        return ContextCompat.getColor(getContext(), R.color.colorAccent2);
+        return ContextCompat.getColor(getContext(), R.color.clear);
     }
 
     @Override

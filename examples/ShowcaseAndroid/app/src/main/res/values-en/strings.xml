@@ -61,4 +61,41 @@
     <string name="login">Login</string>
     <string name="home">Home</string>
     <string name="validation.lessthan">Value must be less or equal than value in field</string>
+    <string name="businessTrips">Business trips</string>
+    <string name="vehicleManagement">Vehicles</string>
+    <!-- businessTrip -->
+    <string name="businessTrip.startDate">Start</string>
+    <string name="businessTrip.endDate">End</string>
+    <string name="businessTrip.state">Status</string>
+    <string name="businessTrip.description">Description</string>
+    <string name="businessTrip.totalDistance">Total distance</string>
+    <string name="businessTripState.requested">Requested</string>
+    <string name="businessTripState.accepted">Accepted</string>
+    <string name="businessTripState.cancelled">Cancelled</string>
+    <string name="businessTripState.denied">Denied</string>
+    <string name="businessTripState.inprogress">In progress</string>
+    <string name="businessTripState.finished">Finished</string>
+    <string name="businessTrip.vehicle">Vehicle</string>
+    <string name="businessTripPart.startDate">Start</string>
+    <string name="businessTripPart.endDate">End</string>
+    <string name="businessTripPart.distance">Distance</string>
+    <string name="businessTripDetail.heading">Detail of trip with id </string>
+    <!-- Vehicles -->
+    <string name="vehicle.name">Vehicle name</string>
+    <string name="vehicle.type">Vehicle type</string>
+    <string name="vehicle.fuelConsumption">Fuel consumption</string>
+    <string name="vehicle.fuelType">Fuel type</string>
+    <string name="vehicle.tachometerKilometers">Tachometer</string>
+    <string name="vehicle.note">Note</string>
+    <string name="vehicle.isAvailable">Available?</string>
+    <string name="fuelType.oilFuel">Oil</string>
+    <string name="fuelType.petrol">Petrol</string>
+    <string name="fuelType.lpg">LPG</string>
+    <string name="fuelType.planeFuel">Plane fuel</string>
+    <string name="vehicleType.car">Car</string>
+    <string name="vehicleType.bus">Bus</string>
+    <string name="vehicleType.plane">Plane</string>
+    <string name="vehicleType.motocycle">Motocycle</string>
+    <string name="title_activity_business_trip_detail">Business trip detail</string>
+    <string name="businessTrips.parts">Trip parts</string>
 </resources>

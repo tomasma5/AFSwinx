@@ -8,16 +8,24 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.HashMap;
 
+import cz.cvut.fel.matyapav.afandroid.AFAndroid;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.showcase.R;
 import cz.cvut.fel.matyapav.showcase.fragments.LoginFragment;
 
 /**
- * Created by Pavel on 20.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class ShowCaseUtils {
 
@@ -80,6 +88,23 @@ public class ShowCaseUtils {
         alertDialog.setTitle(Localization.translate("error.building.failed"));
         alertDialog.setMessage(Localization.translate("error.reason")+" : " + e.getMessage());
         alertDialog.show();
+    }
+
+    public static void connectFormAndList(final String listId, final String formId) {
+        //connect list and form
+        final AFList list = (AFList) AFAndroid.getInstance().getCreatedComponents().get(listId);
+        final AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(formId);
+
+        if (list != null && form != null) {
+            list.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    form.insertData(list.getDataFromItemOnPosition(position));
+                }
+            });
+        } else {
+            Log.e(ShowCaseUtils.class.getName(), "One or both components were not found, therefore cannot be connected.");
+        }
     }
 
 }

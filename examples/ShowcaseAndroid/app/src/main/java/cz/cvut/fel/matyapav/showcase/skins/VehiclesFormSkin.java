@@ -9,15 +9,10 @@ import cz.cvut.fel.matyapav.afandroid.builders.skins.DefaultSkin;
  *
  *@since 1.0.0..
  */
-public class CreateAbsenceFormSkin extends DefaultSkin {
+public class VehiclesFormSkin extends DefaultSkin {
 
-    public CreateAbsenceFormSkin(Context context) {
+    public VehiclesFormSkin(Context context) {
         super(context);
-    }
-
-    @Override
-    public int getLabelWidth() {
-        return convertDpToPixels(100, getContext());
     }
 
     @Override
@@ -25,4 +20,8 @@ public class CreateAbsenceFormSkin extends DefaultSkin {
         return convertDpToPixels(200, getContext());
     }
 
+    @Override
+    public int getLabelWidth() {
+        return convertDpToPixels(120, getContext());
+    }
 }

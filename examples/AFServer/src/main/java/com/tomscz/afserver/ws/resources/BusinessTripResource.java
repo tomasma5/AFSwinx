@@ -62,7 +62,7 @@ public class BusinessTripResource extends BaseResource {
     public Response getAddDefinition(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
-            afSwing.setMainLayout("templates/structure.xml");
+            afSwing.setMainLayout("templates/oneColumnLayout.xml");
 
             AFMetaModelPack data = afSwing.generateSkeleton(BusinessTrip.class.getCanonicalName());
             try {

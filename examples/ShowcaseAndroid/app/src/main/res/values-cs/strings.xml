@@ -61,4 +61,42 @@
     <string name="login">Přihlášení</string>
     <string name="home">Domů</string>
     <string name="validation.lessthan">Hodnota musí být menší rovna hodnotě v poli</string>
+    <string name="businessTrips">Služební cesty</string>
+    <string name="vehicleManagement">Vozidla</string>
+    <!-- businessTrip -->
+    <string name="businessTrip.startDate">Start</string>
+    <string name="businessTrip.endDate">Konec</string>
+    <string name="businessTrip.state">Stav</string>
+    <string name="businessTrip.description">Popis</string>
+    <string name="businessTrip.totalDistance">Celková vzdálenost</string>
+    <string name="businessTripState.requested">Zažádáno</string>
+    <string name="businessTripState.accepted">Přijato</string>
+    <string name="businessTripState.cancelled">Zrušeno</string>
+    <string name="businessTripState.denied">Zamítnuto</string>
+    <string name="businessTripState.inprogress">V průběhu</string>
+    <string name="businessTripState.finished">Dokončeno</string>
+    <string name="businessTrip.vehicle">Vozidlo</string>
+    <string name="businessTripPart.startDate">Začátek</string>
+    <string name="businessTripPart.endDate">Konec</string>
+    <string name="businessTripPart.distance">Vzdálenost</string>
+    <string name="businessTripDetail.heading">Detail cesty s id</string>
+    <!-- Vehicles -->
+    <string name="vehicle.name">Název vozidla</string>
+    <string name="vehicle.type">Typ vozidla</string>
+    <string name="vehicle.fuelConsumption">Spotřeba</string>
+    <string name="vehicle.fuelType">Typ paliva</string>
+    <string name="vehicle.tachometerKilometers">Stav tachometru</string>
+    <string name="vehicle.note">Poznámka</string>
+    <string name="vehicle.isAvailable">Dostupné?</string>
+    <string name="fuelType.oilFuel">Nafta</string>
+    <string name="fuelType.petrol">Benzín</string>
+    <string name="fuelType.lpg">LPG</string>
+    <string name="fuelType.planeFuel">Letecké palivo</string>
+    <string name="vehicleType.car">Auto</string>
+    <string name="vehicleType.bus">Autobus</string>
+    <string name="vehicleType.plane">Letadlo</string>
+    <string name="vehicleType.motocycle">Motocykl</string>
+    <string name="title_activity_business_trip_detail">Detail služební cesty</string>
+    <string name="businessTrips.parts">Části cesty</string>
+
 </resources>

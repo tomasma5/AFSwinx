@@ -4,7 +4,9 @@ import android.content.Context;
 import android.widget.AbsListView;
 
 /**
- * Created by Pavel on 24.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class MyAbsencesListSkin extends ListSkin {
 
@@ -22,6 +24,8 @@ public class MyAbsencesListSkin extends ListSkin {
     public int getComponentMarginTop() {
         return convertDpToPixels(20, getContext());
     }
+
+
 }
 
 

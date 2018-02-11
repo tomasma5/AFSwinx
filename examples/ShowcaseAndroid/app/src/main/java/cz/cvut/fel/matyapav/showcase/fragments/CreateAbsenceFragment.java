@@ -20,6 +20,8 @@ import cz.cvut.fel.matyapav.showcase.skins.CreateAbsenceFormSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+
 
 /**
  * Created by Pavel on 28.02.2016.
@@ -54,10 +56,12 @@ public class CreateAbsenceFragment extends Fragment {
         View root = inflater.inflate(R.layout.create_absence_fragment_layout, container, false);
         LinearLayout createAbsenceLayout = (LinearLayout) root.findViewById(R.id.createAbsenceLayout);
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
-        securityConstrains.put("user", ShowCaseUtils.getUserLogin(getActivity()));
+        if (securityConstrains != null) {
+            securityConstrains.put("user", ShowCaseUtils.getUserLogin(getActivity()));
+        }
         try {
             AFForm createAbsenceForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.ABSENCE_ADD_FORM, getResources().openRawResource(R.raw.connection_local),
+                    ShowcaseConstants.ABSENCE_ADD_FORM, getResources().openRawResource(connectionXmlId),
                     ShowcaseConstants.ABSENCE_ADD_FORM_CONNECTION_KEY,
                     securityConstrains).setSkin(new CreateAbsenceFormSkin(getContext())).createComponent();
             createAbsenceLayout.addView(createAbsenceForm.getView());

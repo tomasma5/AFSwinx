@@ -26,6 +26,8 @@ import cz.cvut.fel.matyapav.showcase.skins.CountryFormSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+
 
 /**
  * Created by Pavel on 28.02.2016.
@@ -99,7 +101,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
 
         try {
             AFForm chooseCountryForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.CHOOSE_COUNTRY_FORM, getResources().openRawResource(R.raw.connection_local),
+                    ShowcaseConstants.CHOOSE_COUNTRY_FORM, getResources().openRawResource(connectionXmlId),
                     ShowcaseConstants.CHOOSE_COUNTRY_FORM_CONNECTION_KEY).createComponent();
             formWithBtn.addView(chooseCountryForm.getView());
 
@@ -125,7 +127,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
             parameters.put(ShowcaseConstants.ID_KEY, String.valueOf(getCountryId()));
             try {
                 AFList absenceTypeList = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                        ShowcaseConstants.ABSENCE_TYPE_LIST, getResources().openRawResource(R.raw.connection_local),
+                        ShowcaseConstants.ABSENCE_TYPE_LIST, getResources().openRawResource(connectionXmlId),
                         ShowcaseConstants.ABSENCE_TYPE_LIST_CONNECTION_KEY, parameters)
                         .setSkin(new AbsenceManagementListSkin(getContext())).createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeList.getView());
@@ -134,7 +136,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
                 securityConstrains.put(ShowcaseConstants.ID_KEY, String.valueOf(getCountryId()));
 
                 AFForm absenceTypeForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                        ShowcaseConstants.ABSENCE_TYPE_FORM, getResources().openRawResource(R.raw.connection_local),
+                        ShowcaseConstants.ABSENCE_TYPE_FORM, getResources().openRawResource(connectionXmlId),
                         ShowcaseConstants.ABSENCE_TYPE_FORM_CONNECTION_KEY, securityConstrains)
                         .setSkin(new CountryFormSkin(getContext())).createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeForm.getView());
@@ -165,16 +167,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
             absenceTypeManagementLayout.addView(btns);
 
             //connect list and form
-            final AFList absenceTypeList = (AFList) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_LIST);
-            final AFForm absenceTypeForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if(absenceTypeList != null && absenceTypeForm != null) {
-                absenceTypeList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        absenceTypeForm.insertData(absenceTypeList.getDataFromItemOnPosition(position));
-                    }
-                });
-            }
+            ShowCaseUtils.connectFormAndList(ShowcaseConstants.ABSENCE_TYPE_LIST, ShowcaseConstants.ABSENCE_TYPE_FORM);
 
         }
 

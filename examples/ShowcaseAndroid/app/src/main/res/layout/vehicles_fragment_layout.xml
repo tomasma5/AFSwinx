@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cz.cvut.fel.matyapav.afandroid.VerticalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vehiclesLayout"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/vehiclesTableWrapper"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/vehiclesFormWrapper"
+        android:paddingTop="25dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/vehiclesButtonWrapper"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/vehiclesBtnAdd"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent2"
+            android:text="@string/button.perform"/>
+        <Button
+        android:id="@+id/vehiclesBtnReset"
+        android:layout_width="100dp"
+        android:background="@color/colorAccent"
+        android:layout_height="wrap_content"
+        android:text="@string/button.reset"/>
+        <Button
+            android:id="@+id/vehiclesBtnClear"
+            android:layout_width="100dp"
+            android:background="@color/clear"
+            android:layout_height="wrap_content"
+            android:text="@string/button.clear"/>
+    </LinearLayout>
+</LinearLayout>
+</cz.cvut.fel.matyapav.afandroid.VerticalScrollView>

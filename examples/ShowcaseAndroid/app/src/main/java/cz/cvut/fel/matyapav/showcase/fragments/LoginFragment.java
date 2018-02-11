@@ -23,6 +23,8 @@ import cz.cvut.fel.matyapav.showcase.skins.LoginSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+
 
 /**
  * Created by Pavel on 16.02.2016.
@@ -58,7 +60,7 @@ public class LoginFragment extends Fragment {
         try {
             //init builder
             AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.LOGIN_FORM, getResources().openRawResource(R.raw.connection_local),
+                    ShowcaseConstants.LOGIN_FORM, getResources().openRawResource(connectionXmlId),
                     ShowcaseConstants.LOGIN_FORM_CONNECTION_KEY).
                     setSkin(new LoginSkin(getContext())).createComponent();
             layout.addView(form.getView());

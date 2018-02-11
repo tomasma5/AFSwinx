@@ -29,6 +29,7 @@ public class BusinessTripEditController extends BaseController {
         businessTripEditView.addChooseButtonActionListener(onChooseBusinessTripListener);
         businessTripEditView.addPerformButtonActionListener(onBussinesTripEditListener);
         businessTripEditView.addDetailButtonActionListener(onBusinessTripDetailButtonClicked);
+        //TODO dodelat delete
         super.registerListeners();
     }
 

@@ -24,6 +24,8 @@ import cz.cvut.fel.matyapav.showcase.skins.AbsenceManagementListSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+
 
 /**
  * Created by Pavel on 16.02.2016.
@@ -59,7 +61,7 @@ public class AbsenceManagementFragment extends Fragment {
         LinearLayout layout = (LinearLayout) root.findViewById(R.id.absenceManagementLayout);
 
         //get connection.xml as stream
-        InputStream connectionResource = getResources().openRawResource(R.raw.connection_local);
+        InputStream connectionResource = getResources().openRawResource(connectionXmlId);
         //build security constraints
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
 
@@ -74,7 +76,7 @@ public class AbsenceManagementFragment extends Fragment {
             e.printStackTrace();
         }
 
-        connectionResource = getResources().openRawResource(R.raw.connection_local); //must be called again
+        connectionResource = getResources().openRawResource(connectionXmlId); //must be called again
         try {
             AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
                     ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM, connectionResource,

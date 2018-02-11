@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.showcase.R;
 import cz.cvut.fel.matyapav.showcase.skins.CountryFormSkin;
 import cz.cvut.fel.matyapav.showcase.skins.ListSkin;
+import cz.cvut.fel.matyapav.showcase.skins.VehiclesFormSkin;
+import cz.cvut.fel.matyapav.showcase.skins.VehiclesListSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
@@ -27,16 +30,14 @@ import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXm
 
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- *
- *@since 1.0.0..
+ * Created by Pavel on 23.02.2016.
  */
-public class CountriesFragment extends Fragment {
+public class VehiclesFragment extends Fragment {
 
-    private View.OnClickListener onCountryPerformListener = new View.OnClickListener() {
+    private View.OnClickListener onFormPerformListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
             if (form != null && form.validateData()) {
                 try {
                     form.sendData();
@@ -50,20 +51,20 @@ public class CountriesFragment extends Fragment {
         }
     };
 
-    private View.OnClickListener onCountryResetListener = new View.OnClickListener() {
+    private View.OnClickListener onFormResetListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
             if(form != null) {
                 form.resetData();
             }
         }
     };
 
-    private View.OnClickListener onCountryClearListener = new View.OnClickListener() {
+    private View.OnClickListener onFormClearListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
+            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
             if(form != null) {
                 form.clearData();
             }
@@ -73,44 +74,44 @@ public class CountriesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.countries_fragment_layout, container, false);
+        View root = inflater.inflate(R.layout.vehicles_fragment_layout, container, false);
         //get layouts where we want to put components
-        LinearLayout countriesTableLayout = (LinearLayout) root.findViewById(R.id.countriesTable);
-        LinearLayout countriesFormLayout = (LinearLayout) root.findViewById(R.id.countriesForm);
+        LinearLayout vehiclesTableLayout = (LinearLayout) root.findViewById(R.id.vehiclesTableWrapper);
+        LinearLayout vehiclesFromLayout = (LinearLayout) root.findViewById(R.id.vehiclesFormWrapper);
 
         //initialize builders
         HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
 
         ListBuilder listBuilder = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                ShowcaseConstants.COUNTRY_LIST, getResources().openRawResource(connectionXmlId),
-                ShowcaseConstants.COUNTRY_LIST_CONNECTION_KEY, securityConstrains).setSkin(new ListSkin(getContext()));
+                ShowcaseConstants.VEHICLES_LIST, getResources().openRawResource(connectionXmlId),
+                ShowcaseConstants.VEHICLES_LIST_CONNECTION_KEY, securityConstrains).setSkin(new VehiclesListSkin(getContext()));
 
         FormBuilder formBuilder = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                ShowcaseConstants.COUNTRY_FORM, getResources().openRawResource(connectionXmlId),
-                ShowcaseConstants.COUNTRY_FORM_CONNECTION_KEY, securityConstrains).setSkin(new CountryFormSkin(getContext()));
+                ShowcaseConstants.VEHICLES_FORM, getResources().openRawResource(connectionXmlId),
+                ShowcaseConstants.VEHICLES_FORM_CONNECTION_KEY, securityConstrains).setSkin(new VehiclesFormSkin(getContext()));
 
 
         //create and insert form
         try {
             final AFList list = listBuilder.createComponent();
-            countriesTableLayout.addView(list.getView());
+            vehiclesTableLayout.addView(list.getView());
 
             AFForm form = formBuilder.createComponent();
 
-            Button perform =(Button) root.findViewById(R.id.countriesBtnAdd);
-            perform.setOnClickListener(onCountryPerformListener);
-            Button reset = (Button) root.findViewById(R.id.countriesBtnReset);
-            reset.setOnClickListener(onCountryResetListener);
-            countriesFormLayout.addView(form.getView());
-            Button clear = (Button) root.findViewById(R.id.countriesBtnClear);
-            clear.setOnClickListener(onCountryClearListener);
+            Button perform =(Button) root.findViewById(R.id.vehiclesBtnAdd);
+            perform.setOnClickListener(onFormPerformListener);
+            Button reset = (Button) root.findViewById(R.id.vehiclesBtnReset);
+            reset.setOnClickListener(onFormResetListener);
+            vehiclesFromLayout.addView(form.getView());
+            Button clear = (Button) root.findViewById(R.id.vehiclesBtnClear);
+            clear.setOnClickListener(onFormClearListener);
         } catch (Exception e) {
             ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();
         }
 
         //connect list and form
-        ShowCaseUtils.connectFormAndList(ShowcaseConstants.COUNTRY_LIST, ShowcaseConstants.COUNTRY_FORM);
+        ShowCaseUtils.connectFormAndList(ShowcaseConstants.VEHICLES_LIST, ShowcaseConstants.VEHICLES_FORM);
 
         return root;
     }

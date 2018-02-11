@@ -22,6 +22,8 @@ import cz.cvut.fel.matyapav.showcase.R;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+
 /**
  * Created by Pavel on 16.02.2016.
  */
@@ -63,7 +65,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        InputStream connectionResource = getResources().openRawResource(R.raw.connection_local);
+        InputStream connectionResource = getResources().openRawResource(connectionXmlId);
 
         View root = inflater.inflate(R.layout.profile_fragment_layout, container, false);
         LinearLayout layout = (LinearLayout) root.findViewById(R.id.profileLayout);
@@ -71,7 +73,7 @@ public class ProfileFragment extends Fragment {
 
         try {
             AFForm form = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.PROFILE_FORM, getResources().openRawResource(R.raw.connection_local),
+                    ShowcaseConstants.PROFILE_FORM, getResources().openRawResource(connectionXmlId),
                     ShowcaseConstants.PROFILE_FORM_CONNECTION_KEY, securityConstrains).createComponent();
             layout.addView(form.getView());
         } catch (Exception e) {

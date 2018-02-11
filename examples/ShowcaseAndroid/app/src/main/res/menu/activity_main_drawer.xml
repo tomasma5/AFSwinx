@@ -4,53 +4,54 @@
         android:id="@+id/beforeLoginGroup">
         <item
             android:id="@+id/loginForm"
-            android:icon="@android:drawable/ic_secure"
+            android:icon="@drawable/ic_lock_open_black_24dp"
             android:title="@string/login" />
     </group>
 
-    <group android:checkableBehavior="single"
-        android:id="@+id/afterLoginGroup">
+    <group
+        android:id="@+id/afterLoginGroup"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/welcome"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/home"
-            />
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home" />
         <item
             android:id="@+id/supportedCountries"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/supportedCountries"
-            />
+            android:icon="@drawable/ic_map_black_24dp"
+            android:title="@string/supportedCountries" />
         <item
             android:id="@+id/userProfile"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/profile"
-            />
+            android:icon="@drawable/ic_account_circle_black_24dp"
+            android:title="@string/profile" />
         <item
             android:id="@+id/myAbsences"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/myAbsences"
-            />
+            android:icon="@drawable/ic_access_time_black_24dp"
+            android:title="@string/myAbsences" />
         <item
             android:id="@+id/absenceManagement"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/absenceManagement"
-            />
+            android:icon="@drawable/ic_subject_black_24dp"
+            android:title="@string/absenceManagement" />
         <item
             android:id="@+id/createAbsence"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/createAbsence"
-            />
+            android:icon="@drawable/ic_playlist_add_black_24dp"
+            android:title="@string/createAbsence" />
         <item
             android:id="@+id/absenceTypeManagement"
-            android:icon="@drawable/ic_menu_send"
-            android:title="@string/absenceTypeManagement"
-            />
+            android:icon="@drawable/ic_subject_black_24dp"
+            android:title="@string/absenceTypeManagement" />
+        <item
+            android:id="@+id/businessTrips"
+            android:icon="@drawable/ic_business_center_black_24dp"
+            android:title="@string/businessTrips" />
+        <item
+            android:id="@+id/vehiclesManagement"
+            android:icon="@drawable/ic_directions_car_black_24dp"
+            android:title="@string/vehicleManagement" />
 
         <item
             android:id="@+id/logout"
-            android:icon="@android:drawable/ic_secure"
-            android:title="@string/logout"
-            />
+            android:icon="@drawable/ic_lock_outline_black_24dp"
+            android:title="@string/logout" />
     </group>
 
 </menu>

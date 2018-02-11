@@ -1,9 +1,16 @@
 package cz.cvut.fel.matyapav.showcase.utils;
 
+import cz.cvut.fel.matyapav.showcase.R;
+
 /**
- * Created by Pavel on 28.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class ShowcaseConstants {
+
+    public static final int connectionXmlId = R.raw.connection_local;
+    public static final int BUSINESS_TRIP_EDIT_REQUEST = 127;
 
     //absence type management
     public static final String CHOOSE_COUNTRY_FORM = "chooseCountryForm";
@@ -42,5 +49,23 @@ public class ShowcaseConstants {
     public static final String ABSENCE_INSTANCE_EDIT_FORM_CONNECTION_KEY = "absenceInstaceEditFormConnection";
     public static final String ABSENCE_INSTANCE_EDIT_LIST = "absenceInstaceEditTable";
     public static final String ABSENCE_INSTANCE_EDIT_LIST_CONNECTION_KEY = "absenceInstaceEditTableConnection";
+
+    //business trips
+    public static final String BUSINESS_TRIPS_LIST = "businessTripsList";
+    public static final String BUSINESS_TRIPS_LIST_CONNECTION_KEY = "businessTripEditTableConnection";
+    public static final String BUSINESS_TRIPS_EDIT_FORM = "businessTripsForm";
+    public static final String BUSINESS_TRIPS_EDIT_FORM_CONNECTION_KEY = "businessTripEditFormConnection";
+
+    //business trips parts
+    public static final String BUSINESS_TRIPS_PARTS_LIST = "businessTripsPartsList";
+    public static final String BUSINESS_TRIPS_PARTS_LIST_CONNECTION_KEY = "businessTripPartsTableConnection";
+    public static final String BUSINESS_TRIPS_PARTS_EDIT_FORM = "businessTripsPartsForm";
+    public static final String BUSINESS_TRIPS_PARTS_EDIT_FORM_CONNECTION_KEY = "businessTripPartsFormConnection";
+
+    //vehicles
+    public static final String VEHICLES_LIST = "vehiclesList";
+    public static final String VEHICLES_LIST_CONNECTION_KEY = "vehiclesTableConnection";
+    public static final String VEHICLES_FORM = "vehiclesForm";
+    public static final String VEHICLES_FORM_CONNECTION_KEY = "vehiclesFormConnection";
 
 }

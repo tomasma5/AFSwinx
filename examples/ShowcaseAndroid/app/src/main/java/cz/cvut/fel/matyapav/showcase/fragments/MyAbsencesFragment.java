@@ -17,6 +17,8 @@ import cz.cvut.fel.matyapav.showcase.skins.MyAbsencesListSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+
 /**
  * Created by Pavel on 26.02.2016.
  */
@@ -33,7 +35,7 @@ public class MyAbsencesFragment extends Fragment {
 
         try {
             AFList list = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.MY_ABSENCES_LIST , getResources().openRawResource(R.raw.connection_local),
+                    ShowcaseConstants.MY_ABSENCES_LIST , getResources().openRawResource(connectionXmlId),
                     ShowcaseConstants.MY_ABSENCES_CONNECTION_KEY, securityConstrains)
                     .setSkin(new MyAbsencesListSkin(getContext())).createComponent();
             myAbsencesLayout.addView(list.getView());
