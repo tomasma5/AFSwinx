@@ -1,13 +1,9 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Objects" %>
 <ul class="sidenav" id="menu">
-    <%
-        String selectedApp = request.getParameter("app");
-        boolean applicationSelected = selectedApp != null;
-    %>
-    <li><a href="${pageContext.request.contextPath}/home">Home</a></li>
-    <li><a href="${pageContext.request.contextPath}/applications">Applications</a></li>
-    <% if (applicationSelected) { %>
-    <li><a href="${pageContext.request.contextPath}/screens?app=<%=selectedApp%>">Screens</a></li>
-    <li><a href="${pageContext.request.contextPath}/components?app=<<%=selectedApp%>">Components</a></li>
-    <% } %>
+    <h3>${applicationName}</h3>
+    <c:if test="${applicationName != null && applicationId != null}">
+    <li><a href="${pageContext.request.contextPath}/screens/list?app=${applicationId}">Screens</a></li>
+    <li><a href="${pageContext.request.contextPath}/components/list?app=${applicationId}">Components</a></li>
+    </c:if>
 </ul>

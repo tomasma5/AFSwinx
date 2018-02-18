@@ -26,7 +26,7 @@ public class ScreenDaoImpl extends GenericMongoDaoImpl<Screen> implements Screen
 
     @Override
     public String getCollectionName() {
-        return "Screens";
+        return "screens";
     }
 
 }

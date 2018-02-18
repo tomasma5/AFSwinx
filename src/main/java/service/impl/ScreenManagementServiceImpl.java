@@ -38,7 +38,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
 
     @Override
     public List<Screen> getAllScreensByApplication(ObjectId applicationId) {
-        return screenDao.findAll().stream().filter(screen -> screen.getApplicationId() == applicationId).collect(Collectors.toList());
+        return screenDao.findAll().stream().filter(screen -> screen.getApplicationId().equals(applicationId)).collect(Collectors.toList());
     }
 
     @Override

@@ -24,4 +24,24 @@
         <url-pattern>/apps/create</url-pattern>
     </servlet-mapping>
 
+    <!-- SCREENS MAPPING -->
+    <servlet>
+        <servlet-name>ScreenListServlet</servlet-name>
+        <servlet-class>servlet.screens.ScreenListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScreenCreateServlet</servlet-name>
+        <servlet-class>servlet.screens.ScreenCreateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ScreenListServlet</servlet-name>
+        <url-pattern>/screens/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScreenCreateServlet</servlet-name>
+        <url-pattern>/screens/create</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

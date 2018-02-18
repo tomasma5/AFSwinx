@@ -31,16 +31,22 @@
                         <td>${app.remoteUrl}</td>
                         <td>${app.remotePort}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/apps/create?applicationId=${app.id}"><button class="btn btn-primary">Edit</button></a>
+                            <a href="${pageContext.request.contextPath}/apps/create?applicationId=${app.id}">
+                                <button class="btn btn-primary">Edit</button>
+                            </a>
                         </td>
                         <td>
                             <form method="post" action="list">
                                 <input type="hidden" name="applicationId" value="${app.id}">
-                                <button type="submit" class="btn btn-danger" onclick="if (!confirm('Are you sure?')) { return false }">Delete</button>
+                                <button type="submit" class="btn btn-danger"
+                                        onclick="if (!confirm('Are you sure?')) { return false }">Delete
+                                </button>
                             </form>
                         </td>
                         <td>
-                            <button class="btn btn-success">Select</button>
+                            <a href="${pageContext.request.contextPath}/screens/list?app=${app.id}">
+                                <button class="btn btn-success">Select</button>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>
