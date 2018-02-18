@@ -14,6 +14,9 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ApplicationDaoImpl extends GenericMongoDaoImpl<Application> implements ApplicationDao {
 
+    public ApplicationDaoImpl() {
+    }
+
     @Override
     public Class getModelClass() {
         return Application.class;
@@ -21,7 +24,7 @@ public class ApplicationDaoImpl extends GenericMongoDaoImpl<Application> impleme
 
     @Override
     public String getCollectionName() {
-        return "Applications";
+        return "applications";
     }
 
 }

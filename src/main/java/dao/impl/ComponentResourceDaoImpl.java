@@ -17,14 +17,17 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ComponentResourceDaoImpl extends GenericMongoDaoImpl<ComponentResource> implements ComponentResourceDao {
 
+    public ComponentResourceDaoImpl() {
+    }
+
     @Override
     public Class getModelClass() {
-        return Screen.class;
+        return ComponentResource.class;
     }
 
     @Override
     public String getCollectionName() {
-        return "Screens";
+        return "components";
     }
 
 }

@@ -1,8 +1,9 @@
 package service;
 
 import model.Application;
-import model.Screen;
 import org.bson.types.ObjectId;
+
+import java.util.List;
 
 public interface ApplicationsManagementService {
 
@@ -11,5 +12,9 @@ public interface ApplicationsManagementService {
     public void removeApplication(ObjectId id);
 
     public void updateApplication(Application updatedScreen);
+
+    public Application findById(ObjectId id);
+
+    public List<Application> getAll();
 
 }

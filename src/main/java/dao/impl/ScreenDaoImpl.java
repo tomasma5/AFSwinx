@@ -16,6 +16,9 @@ import javax.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ScreenDaoImpl extends GenericMongoDaoImpl<Screen> implements ScreenDao {
 
+    public ScreenDaoImpl() {
+    }
+
     @Override
     public Class getModelClass() {
         return Screen.class;

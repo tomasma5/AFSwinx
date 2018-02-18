@@ -1,7 +1,10 @@
 package service;
 
+import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
+
+import java.util.List;
 
 public interface ScreenManagementService {
 
@@ -11,5 +14,8 @@ public interface ScreenManagementService {
 
     public void updateScreen(Screen updatedScreen);
 
+    public List<Screen> getAllScreensByApplication(ObjectId applicationId);
+
+    public Screen findScreenById(ObjectId id);
 
 }

@@ -5,4 +5,13 @@
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>UIxy</display-name>
 
+    <servlet>
+        <servlet-name>ApplicationsServlet</servlet-name>
+        <servlet-class>servlet.ApplicationsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ApplicationsServlet</servlet-name>
+        <url-pattern>/apps</url-pattern>
+    </servlet-mapping>
 </web-app>
