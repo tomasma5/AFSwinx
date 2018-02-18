@@ -32,17 +32,17 @@ public abstract class GenericMongoDaoImpl<T extends MongoDocumentEntity> impleme
 
     @Override
     public void update(T record) {
-        collection.replaceOne(eq("id", record.getId()), record);
+        collection.replaceOne(eq("_id", record.getId()), record);
     }
 
     @Override
     public T findByObjectId(ObjectId id) {
-       return collection.find(eq("id", id)).first();
+       return collection.find(eq("_id", id)).first();
     }
 
     @Override
     public void deleteByObjectId(ObjectId id) {
-        collection.deleteOne(eq("id", id));
+        collection.deleteOne(eq("_id", id));
     }
 
     @Override

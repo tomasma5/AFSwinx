@@ -33,8 +33,8 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
     }
 
     @Override
-    public void updateApplication(Application updatedScreen) {
-        applicationDao.update(updatedScreen);
+    public void updateApplication(Application app) {
+        applicationDao.update(app);
     }
 
     @Override

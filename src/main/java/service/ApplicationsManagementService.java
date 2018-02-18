@@ -11,7 +11,7 @@ public interface ApplicationsManagementService {
 
     public void removeApplication(ObjectId id);
 
-    public void updateApplication(Application updatedScreen);
+    public void updateApplication(Application app);
 
     public Application findById(ObjectId id);
 

@@ -5,13 +5,23 @@
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <display-name>UIxy</display-name>
 
+    <!-- APPLICATIONS MAPPING -->
     <servlet>
-        <servlet-name>ApplicationsServlet</servlet-name>
-        <servlet-class>servlet.ApplicationsServlet</servlet-class>
+        <servlet-name>ApplicationsListServlet</servlet-name>
+        <servlet-class>servlet.applications.AppListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApplicationsCreateServlet</servlet-name>
+        <servlet-class>servlet.applications.AppCreateServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ApplicationsServlet</servlet-name>
-        <url-pattern>/apps</url-pattern>
+        <servlet-name>ApplicationsListServlet</servlet-name>
+        <url-pattern>/apps/list</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApplicationsCreateServlet</servlet-name>
+        <url-pattern>/apps/create</url-pattern>
+    </servlet-mapping>
+
 </web-app>
