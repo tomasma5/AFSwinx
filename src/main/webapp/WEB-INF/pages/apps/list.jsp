@@ -31,13 +31,13 @@
                         <td>${app.remoteUrl}</td>
                         <td>${app.remotePort}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/apps/create?applicationId=${app.id}">
+                            <a href="${pageContext.request.contextPath}/apps/create?app=${app.id}">
                                 <button class="btn btn-primary">Edit</button>
                             </a>
                         </td>
                         <td>
                             <form method="post" action="list">
-                                <input type="hidden" name="applicationId" value="${app.id}">
+                                <input type="hidden" name="app" value="${app.id}">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>

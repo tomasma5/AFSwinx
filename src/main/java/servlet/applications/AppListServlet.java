@@ -2,6 +2,7 @@ package servlet.applications;
 
 import org.bson.types.ObjectId;
 import service.ApplicationsManagementService;
+import servlet.ParameterNames;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class AppListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId objectId = new ObjectId(req.getParameter("applicationId"));
+        ObjectId objectId = new ObjectId(req.getParameter(ParameterNames.APPLICATION_ID));
         applicationsManagementService.removeApplication(objectId);
         resp.sendRedirect("list");
     }

@@ -3,6 +3,7 @@ package servlet.applications;
 import model.Application;
 import org.bson.types.ObjectId;
 import service.ApplicationsManagementService;
+import servlet.ParameterNames;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -18,17 +19,19 @@ public class AppCreateServlet extends HttpServlet {
 
     private static final String CREATE_URL = "/WEB-INF/pages/apps/create.jsp";
 
+
+
     @Inject
     private ApplicationsManagementService applicationsManagementService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("applicationId");
+        String id = request.getParameter(ParameterNames.APPLICATION_ID);
         if (id != null) {
             Application application = applicationsManagementService.findById(new ObjectId(id));
-            request.setAttribute("applicationId", application.getId());
-            request.setAttribute("applicationName", application.getApplicationName());
-            request.setAttribute("remoteUrl", application.getRemoteUrl());
-            request.setAttribute("remotePort", application.getRemotePort());
+            request.setAttribute(ParameterNames.APPLICATION_ID, application.getId());
+            request.setAttribute(ParameterNames.APPLICATION_NAME, application.getApplicationName());
+            request.setAttribute(ParameterNames.APPLICATION_REMOTE_URL, application.getRemoteUrl());
+            request.setAttribute(ParameterNames.APPLICATION_REMOTE_PORT, application.getRemotePort());
         }
         getServletContext().getRequestDispatcher(CREATE_URL).forward(request, response);
     }
@@ -36,10 +39,10 @@ public class AppCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //TODO refactor???
-        String applicationId = req.getParameter("applicationId");
-        String applicationName = req.getParameter("applicationName");
-        String remoteUrl = req.getParameter("remoteUrl");
-        String port = req.getParameter("remotePort");
+        String applicationId = req.getParameter(ParameterNames.APPLICATION_ID);
+        String applicationName = req.getParameter(ParameterNames.APPLICATION_NAME);
+        String remoteUrl = req.getParameter(ParameterNames.APPLICATION_REMOTE_URL);
+        String port = req.getParameter(ParameterNames.APPLICATION_REMOTE_PORT);
         try {
             new URL(remoteUrl); //check format of url with trying to create URL object
 
@@ -67,9 +70,9 @@ public class AppCreateServlet extends HttpServlet {
             req.setAttribute("remotePortError", "Port must be a number.");
         }
 
-        req.setAttribute("applicationName", applicationName);
-        req.setAttribute("remoteUrl", remoteUrl);
-        req.setAttribute("remotePort", port);
+        req.setAttribute(ParameterNames.APPLICATION_NAME, applicationName);
+        req.setAttribute(ParameterNames.APPLICATION_REMOTE_URL, remoteUrl);
+        req.setAttribute(ParameterNames.APPLICATION_REMOTE_PORT, port);
         req.getRequestDispatcher(CREATE_URL).forward(req, resp);
 
     }

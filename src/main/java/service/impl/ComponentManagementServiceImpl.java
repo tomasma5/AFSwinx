@@ -9,6 +9,7 @@ import service.ComponentManagementService;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ComponentManagementServiceImpl implements ComponentManagementService {
 
@@ -46,6 +47,13 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     @Override
     public ComponentResource findById(ObjectId id) {
         return componentResourceDao.findByObjectId(id);
+    }
+
+    @Override
+    public List<ComponentResource> getAllComponentsByApplication(ObjectId applicationId) {
+        return componentResourceDao.findAll().stream()
+                .filter(componentResource -> componentResource.getApplicationId().equals(applicationId))
+                .collect(Collectors.toList());
     }
 
     @Override

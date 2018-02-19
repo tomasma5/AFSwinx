@@ -10,7 +10,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading height-50px">
             Screens
-            <a href="${pageContext.request.contextPath}/screens/create?app=${applicationId}">
+            <a href="${pageContext.request.contextPath}/screens/create?app=${app}">
                 <button class="btn btn-success float-right">Add screen</button>
             </a>
         </div>
@@ -29,13 +29,14 @@
                         <td>${screen.heading}</td>
                         <td>${screen.screenUrl}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/screens/create?app=${applicationId}&screen=${screen.id}">
+                            <a href="${pageContext.request.contextPath}/screens/create?app=${app}&screen=${screen.id}">
                                 <button class="btn btn-primary">Edit</button>
                             </a>
                         </td>
                         <td>
-                            <form method="post" action="list">
-                                <input type="hidden" name="screenId" value="${screen.id}">
+                            <form method="post" action="list?app=${app}">
+                                <input type="hidden" name="screen" value="${screen.id}">
+                                <input type="hidden" name="app" value="${screen.applicationId}">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>

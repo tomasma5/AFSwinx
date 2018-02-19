@@ -11,14 +11,16 @@ public class ComponentResource extends MongoDocumentEntity {
     private SupportedComponentType type;
     private ComponentConnectionPack connections;
     private List<ObjectId> referencedScreensIds;
+    private ObjectId applicationId;
 
     public ComponentResource() {
     }
 
-    public ComponentResource(String name, SupportedComponentType type, ComponentConnectionPack connections) {
+    public ComponentResource(String name, SupportedComponentType type, ComponentConnectionPack connections, ObjectId applicationId) {
         this.name = name;
         this.type = type;
         this.connections = connections;
+        this.applicationId = applicationId;
     }
 
     public void referencedByScreen(Screen screen){
@@ -60,6 +62,14 @@ public class ComponentResource extends MongoDocumentEntity {
         this.referencedScreensIds = referencedScreensIds;
     }
 
+    public ObjectId getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(ObjectId applicationId) {
+        this.applicationId = applicationId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,13 +78,15 @@ public class ComponentResource extends MongoDocumentEntity {
         ComponentResource that = (ComponentResource) o;
 
         if (!name.equals(that.name)) return false;
-        return type == that.type;
+        if (type != that.type) return false;
+        return applicationId.equals(that.applicationId);
     }
 
     @Override
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + type.hashCode();
+        result = 31 * result + applicationId.hashCode();
         return result;
     }
 }

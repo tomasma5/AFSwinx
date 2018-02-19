@@ -13,7 +13,7 @@
         </div>
         <div class="panel-body ">
             <form action="create" method="post">
-                <input type="hidden" name="applicationId" value="${applicationId}">
+                <input type="hidden" name="app" value="${app}">
                 <div class="form-group">
                     <label for="applicationName">Application name</label>
                     <input type="text" class="form-control" id="applicationName" name="applicationName"
@@ -23,7 +23,7 @@
 
                 <div class="form-group">
                     <label for="remoteUrl">Remote url</label>
-                    <input type="text" class="form-control" id="remoteUrl" name="remoteUrl"
+                    <input type="url" class="form-control" id="remoteUrl" name="remoteUrl"
                            placeholder="Example: http://example.com" value="${remoteUrl}" required>
                     <c:if test="${not empty remoteUrlError}" >${remoteUrlError}</c:if>
                 </div>

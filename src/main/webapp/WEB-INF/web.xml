@@ -43,5 +43,24 @@
         <url-pattern>/screens/create</url-pattern>
     </servlet-mapping>
 
+    <!-- COMPONENTS MAPPING -->
+    <servlet>
+        <servlet-name>ComponentListServlet</servlet-name>
+        <servlet-class>servlet.components.ComponentListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ComponentCreateServlet</servlet-name>
+        <servlet-class>servlet.components.ComponentCreateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ComponentListServlet</servlet-name>
+        <url-pattern>/components/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ComponentCreateServlet</servlet-name>
+        <url-pattern>/components/create</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
