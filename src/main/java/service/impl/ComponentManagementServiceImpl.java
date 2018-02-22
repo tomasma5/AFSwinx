@@ -41,7 +41,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         ComponentResource componentResource = componentResourceDao.findByObjectId(updated.getId());
         removeComponentFromReferencedScreens(componentResource);
         addComponentToReferencedScreens(updated);
-        componentResourceDao.update(componentResource);
+        componentResourceDao.update(updated);
     }
 
     @Override

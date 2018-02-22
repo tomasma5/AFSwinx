@@ -10,10 +10,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.PrinterAbortException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ComponentCreateServlet extends HttpServlet {
 
@@ -35,7 +38,7 @@ public class ComponentCreateServlet extends HttpServlet {
             setExistingComponentToRequest(request, componentId);
         }
         List<String> options = new ArrayList<>();
-        for (SupportedComponentType type: SupportedComponentType.class.getEnumConstants()) {
+        for (SupportedComponentType type : SupportedComponentType.class.getEnumConstants()) {
             options.add(type.getName());
         }
         request.setAttribute("componentTypeOptions", options);
@@ -51,61 +54,84 @@ public class ComponentCreateServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
+        //get base component information
         String componentId = req.getParameter(ParameterNames.COMPONENT_ID);
         String componentName = req.getParameter(ParameterNames.COMPONENT_NAME);
         SupportedComponentType componentType = SupportedComponentType.valueOf(req.getParameter(ParameterNames.COMPONENT_TYPE)); //TODO copy enum from value from afrest utils
-        String modelConnectionProtocol = req.getParameter(ParameterNames.MODEL_CONNECTION_PROTOCOL);
-        String modelConnectionAddress = req.getParameter(ParameterNames.MODEL_CONNECTION_ADDRESS);
-        String modelConnectionPort = req.getParameter(ParameterNames.MODEL_CONNECTION_PORT);
-        String modelConnectionParameters = req.getParameter(ParameterNames.MODEL_CONNECTION_PARAMETERS);
-        //TODO header params and security params
-        String dataConnectionProtocol = req.getParameter(ParameterNames.DATA_CONNECTION_PROTOCOL);
-        String dataConnectionAddress = req.getParameter(ParameterNames.DATA_CONNECTION_ADDRESS);
-        String dataConnectionPort = req.getParameter(ParameterNames.DATA_CONNECTION_PORT);
-        String dataConnectionParameters = req.getParameter(ParameterNames.DATA_CONNECTION_PARAMETERS);
-        //TODO header params and security params
-        String sendConnectionProtocol = req.getParameter(ParameterNames.SEND_CONNECTION_PROTOCOL);
-        String sendConnectionAddress = req.getParameter(ParameterNames.SEND_CONNECTION_ADDRESS);
-        String sendConnectionPort = req.getParameter(ParameterNames.SEND_CONNECTION_PORT);
-        String sendConnectionParameters = req.getParameter(ParameterNames.SEND_CONNECTION_PARAMETERS);
-        //TODO header params and security params
+
+        //determine if connection is activated
+        String modelConnectionActiveString = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION_ACTIVE);
+        String dataConnectionActiveString = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION_ACTIVE);
+        String sendConnectionActiveString = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION_ACTIVE);
+        boolean modelConnectionActive = modelConnectionActiveString != null && Integer.parseInt(modelConnectionActiveString) == 1;
+        boolean dataConnectionActive = dataConnectionActiveString != null && Integer.parseInt(dataConnectionActiveString) == 1;
+        boolean sendConnectionActive = sendConnectionActiveString != null && Integer.parseInt(sendConnectionActiveString) == 1;
+
+        //get connection info from request
+        String modelConnectionProtocol = null, modelConnectionAddress = null, modelConnectionPort = null, modelConnectionParameters = null;
+        String dataConnectionProtocol = null, dataConnectionAddress = null, dataConnectionPort = null, dataConnectionParameters = null;
+        String sendConnectionProtocol = null, sendConnectionAddress = null, sendConnectionPort = null, sendConnectionParameters = null;
+        int modelHeaderParamsCount = 0, modelSecurityParamsCount = 0;
+        int dataHeaderParamsCount = 0, dataSecurityParamsCount = 0;
+        int sendHeaderParamsCount = 0, sendSecurityParamsCount = 0;
+
+        if (modelConnectionActive) {
+            modelConnectionProtocol = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.PROTOCOL);
+            modelConnectionAddress = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.ADDRESS);
+            modelConnectionPort = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.PORT);
+            modelConnectionParameters = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
+            modelHeaderParamsCount = Integer.parseInt(req.getParameter(ParameterNames.MODEL + ParameterNames.HEADER_PARAMS_COUNT));
+            modelSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.MODEL + ParameterNames.SECURITY_PARAMS_COUNT));
+        }
+
+        if (dataConnectionActive) {
+            dataConnectionProtocol = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.PROTOCOL);
+            dataConnectionAddress = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.ADDRESS);
+            dataConnectionPort = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.PORT);
+            dataConnectionParameters = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
+            dataHeaderParamsCount = Integer.parseInt(req.getParameter(ParameterNames.DATA + ParameterNames.HEADER_PARAMS_COUNT));
+            dataSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.DATA + ParameterNames.SECURITY_PARAMS_COUNT));
+        }
+        if (sendConnectionActive) {
+            sendConnectionProtocol = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.PROTOCOL);
+            sendConnectionAddress = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.ADDRESS);
+            sendConnectionPort = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.PORT);
+            sendConnectionParameters = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
+            sendHeaderParamsCount = Integer.parseInt(req.getParameter(ParameterNames.SEND + ParameterNames.HEADER_PARAMS_COUNT));
+            sendSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.SEND + ParameterNames.SECURITY_PARAMS_COUNT));
+        }
+
+        //TODO data validation
 
         try {
-            ComponentResource componentResource;
-            if (componentId == null || componentId.isEmpty()) {
-                componentResource = new ComponentResource();
-                ComponentConnectionPack connectionPack = new ComponentConnectionPack();
-                connectionPack.setModelConnection(new ComponentConnection()); //TODO make it optional
-                connectionPack.setDataConnection(new ComponentConnection()); //TODO make it optional
-                connectionPack.setSendConnection(new ComponentConnection()); //TODO make it optional
-            } else {
-                componentResource = componentManagementService.findById(new ObjectId(componentId));
-            }
+            ComponentResource componentResource = getComponentResource(componentId, modelConnectionActive, dataConnectionActive, sendConnectionActive);
+
+            //set attributes to component resource
             componentResource.setName(componentName);
             componentResource.setType(componentType);
             componentResource.setApplicationId(new ObjectId(appIdString));
-            try {
-                setConnectionAttributes(modelConnectionAddress, modelConnectionParameters, modelConnectionProtocol,
-                        modelConnectionPort, componentResource.getConnections().getModelConnection()
-                );
-            } catch (NumberFormatException ex) {
-                req.setAttribute("modelConnectionPortError", "Port must be a number.");
+
+            //set connection data
+            if (modelConnectionActive) {
+                setConnectionAttributes(req, ParameterNames.MODEL, modelConnectionAddress, modelConnectionParameters, modelConnectionProtocol,
+                        modelConnectionPort, modelHeaderParamsCount, modelSecurityParamsCount, componentResource.getConnections().getModelConnection());
+            } else {
+                componentResource.getConnections().setModelConnection(null);
             }
-            try {
-                setConnectionAttributes(dataConnectionAddress, dataConnectionParameters, dataConnectionProtocol,
-                        dataConnectionPort, componentResource.getConnections().getDataConnection()
-                );
-            } catch (NumberFormatException ex) {
-                req.setAttribute("dataConnectionPortError", "Port must be a number.");
+            if (dataConnectionActive) {
+                setConnectionAttributes(req, ParameterNames.DATA, dataConnectionAddress, dataConnectionParameters, dataConnectionProtocol,
+                        dataConnectionPort, dataHeaderParamsCount, dataSecurityParamsCount, componentResource.getConnections().getDataConnection());
+            } else {
+                componentResource.getConnections().setDataConnection(null);
             }
-            try {
-                setConnectionAttributes(sendConnectionAddress, sendConnectionParameters, sendConnectionProtocol,
-                        sendConnectionPort, componentResource.getConnections().getSendConnection()
-                );
-            } catch (NumberFormatException ex) {
-                req.setAttribute("sendConnectionPortError", "Port must be a number.");
+            if (sendConnectionActive) {
+                setConnectionAttributes(req, ParameterNames.SEND, sendConnectionAddress, sendConnectionParameters, sendConnectionProtocol,
+                        sendConnectionPort, sendHeaderParamsCount, sendSecurityParamsCount, componentResource.getConnections().getSendConnection());
+            } else {
+                componentResource.getConnections().setSendConnection(null);
             }
 
+            //create or update component
             if (componentId == null || componentId.isEmpty()) {
                 componentManagementService.addComponent(componentResource);
             } else {
@@ -113,21 +139,35 @@ public class ComponentCreateServlet extends HttpServlet {
             }
             resp.sendRedirect("list?app=" + appIdString);
             return;
-        } catch (MalformedURLException ex) {
-            req.setAttribute("screenUrlError", "URL has bad format.");
+        } catch (NumberFormatException ex) {
+            //TODO
         }
 
-        //set failed form data
-        setComponentInputToRequest(req, componentId, componentName, componentType);
-        setModelConnectionInputToRequest(req, modelConnectionAddress, modelConnectionPort, modelConnectionParameters);
-        //TODO header params and security params
-        setDataConnectionInputToRequest(req, dataConnectionProtocol, dataConnectionAddress, dataConnectionPort, dataConnectionParameters);
-        //TODO header params and security params
-        setSendConnectionInputToRequest(req, sendConnectionProtocol, sendConnectionAddress, sendConnectionPort, sendConnectionParameters);
-        //TODO header params and security params
+        //TODO set failed form data
+
         req.setAttribute(ParameterNames.APPLICATION_ID, appIdString);
         req.getRequestDispatcher(CREATE_URL).forward(req, resp);
 
+    }
+
+    private ComponentResource getComponentResource(String componentId, boolean modelConnectionActive, boolean dataConnectionActive, boolean sendConnectionActive) {
+        ComponentResource componentResource;
+        if (componentId == null || componentId.isEmpty()) {
+            componentResource = new ComponentResource();
+            ComponentConnectionPack connectionPack = new ComponentConnectionPack();
+            if (modelConnectionActive) {
+                connectionPack.setModelConnection(new ComponentConnection());
+            }
+            if (dataConnectionActive) {
+                connectionPack.setDataConnection(new ComponentConnection());
+            }
+            if (sendConnectionActive) {
+                connectionPack.setSendConnection(new ComponentConnection());
+            }
+        } else {
+            componentResource = componentManagementService.findById(new ObjectId(componentId));
+        }
+        return componentResource;
     }
 
     private void setComponentInputToRequest(HttpServletRequest req, String componentId, String componentName, SupportedComponentType componentType) {
@@ -136,66 +176,91 @@ public class ComponentCreateServlet extends HttpServlet {
         req.setAttribute(ParameterNames.COMPONENT_TYPE, componentType.getName());
     }
 
-    private void setSendConnectionInputToRequest(HttpServletRequest req, String sendConnectionProtocol, String sendConnectionAddress, String sendConnectionPort, String sendConnectionParameters) {
-        req.setAttribute(ParameterNames.SEND_CONNECTION_PROTOCOL, sendConnectionProtocol);
-        req.setAttribute(ParameterNames.SEND_CONNECTION_ADDRESS, sendConnectionAddress);
-        req.setAttribute(ParameterNames.SEND_CONNECTION_PORT, sendConnectionPort);
-        req.setAttribute(ParameterNames.SEND_CONNECTION_PARAMETERS, sendConnectionParameters);
+
+    private void setConnectionInputToRequest(HttpServletRequest req, String type, String connectionProtocol,
+                                             String connectionAddress, int connectionPort,
+                                             Map<String, String> headerParams, Map<String, String> securityParams,
+                                             String connectionParameters) {
+        req.setAttribute(type + ParameterNames.CONNECTION_ACTIVE, 1);
+        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PROTOCOL, connectionProtocol);
+        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.ADDRESS, connectionAddress);
+        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PORT, connectionPort);
+        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS, connectionParameters);
+        if (headerParams != null) {
+            req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.HEADER_PARAMS, headerParams);
+        }
+        if (securityParams != null) {
+            req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.SECURITY_PARAMS, securityParams);
+        }
     }
 
-    private void setDataConnectionInputToRequest(HttpServletRequest req, String dataConnectionProtocol, String dataConnectionAddress, String dataConnectionPort, String dataConnectionParameters) {
-        req.setAttribute(ParameterNames.DATA_CONNECTION_PROTOCOL, dataConnectionProtocol);
-        req.setAttribute(ParameterNames.DATA_CONNECTION_ADDRESS, dataConnectionAddress);
-        req.setAttribute(ParameterNames.DATA_CONNECTION_PORT, dataConnectionPort);
-        req.setAttribute(ParameterNames.DATA_CONNECTION_PARAMETERS, dataConnectionParameters);
-    }
-
-    private void setModelConnectionInputToRequest(HttpServletRequest req, String modelConnectionAddress, String modelConnectionPort, String modelConnectionParameters) {
-        req.setAttribute(ParameterNames.MODEL_CONNECTION_PROTOCOL, modelConnectionPort);
-        req.setAttribute(ParameterNames.MODEL_CONNECTION_ADDRESS, modelConnectionAddress);
-        req.setAttribute(ParameterNames.MODEL_CONNECTION_PORT, modelConnectionPort);
-        req.setAttribute(ParameterNames.MODEL_CONNECTION_PARAMETERS, modelConnectionParameters);
-    }
-
-    private void setConnectionAttributes(String address, String parameters, String protocol,
-                                         String port, ComponentConnection connection) {
-        if (connection != null) {
+    private void setConnectionAttributes(HttpServletRequest req, String type,
+                                         String address, String parameters,
+                                         String protocol, String port, int headerParamsCount,
+                                         int securityParamsCount, ComponentConnection connection) {
+        if (connection != null &&
+                (parameters != null && !parameters.isEmpty()) &&
+                (protocol != null && !protocol.isEmpty()) &&
+                (port != null && !port.isEmpty())) {
             connection.setProtocol(protocol);
             connection.setProtocol(address);
             connection.setPort(Integer.parseInt(port));
             connection.setParameters(parameters);
-            //TODO security and header params
+            if (headerParamsCount > 0) {
+                Map<String, String> headerParams = new HashMap<>();
+                for (int i = 1; i <= headerParamsCount; i++) {
+                    String key = req.getParameter(type + ParameterNames.HEADER_PARAM + ParameterNames.KEY + i);
+                    String value = req.getParameter(type + ParameterNames.HEADER_PARAM + ParameterNames.VALUE + i);
+                    headerParams.put(key, value);
+                }
+                connection.setHeaderParams(headerParams);
+            }
+            if (securityParamsCount > 0) {
+                Map<String, String> securityParams = new HashMap<>();
+                for (int i = 1; i <= securityParamsCount; i++) {
+                    String key = req.getParameter(type + ParameterNames.SECURITY_PARAM + ParameterNames.KEY + i);
+                    String value = req.getParameter(type + ParameterNames.SECURITY_PARAM + ParameterNames.VALUE + i);
+                    securityParams.put(key, value);
+                }
+                connection.setSecurityParams(securityParams);
+            }
         }
     }
 
     private void setExistingComponentToRequest(HttpServletRequest request, String componentId) {
         ComponentResource component = componentManagementService.findById(new ObjectId(componentId));
-        request.setAttribute(ParameterNames.COMPONENT_ID, component.getId());
-        request.setAttribute(ParameterNames.COMPONENT_NAME, component.getName());
-        request.setAttribute(ParameterNames.COMPONENT_TYPE, component.getType().getName());
+        setComponentInputToRequest(request, component.getId().toString(), component.getName(), component.getType());
+
         ComponentConnection modelConnection = component.getConnections().getModelConnection();
-        if (modelConnection != null) {
-            request.setAttribute(ParameterNames.MODEL_CONNECTION_PROTOCOL, modelConnection.getProtocol());
-            request.setAttribute(ParameterNames.MODEL_CONNECTION_ADDRESS, modelConnection.getAddress());
-            request.setAttribute(ParameterNames.MODEL_CONNECTION_PORT, modelConnection.getPort());
-            request.setAttribute(ParameterNames.MODEL_CONNECTION_PARAMETERS, modelConnection.getParameters());
-            //TODO header params and security params
-        }
         ComponentConnection dataConnection = component.getConnections().getDataConnection();
-        if (dataConnection != null) {
-            request.setAttribute(ParameterNames.DATA_CONNECTION_PROTOCOL, dataConnection.getProtocol());
-            request.setAttribute(ParameterNames.DATA_CONNECTION_ADDRESS, dataConnection.getAddress());
-            request.setAttribute(ParameterNames.DATA_CONNECTION_PORT, dataConnection.getPort());
-            request.setAttribute(ParameterNames.DATA_CONNECTION_PARAMETERS, dataConnection.getParameters());
-            //TODO header params and security params
-        }
         ComponentConnection sendConnection = component.getConnections().getSendConnection();
+
+        if (modelConnection != null) {
+            setConnectionInputToRequest(request, ParameterNames.MODEL, modelConnection.getProtocol(),
+                    modelConnection.getAddress(), modelConnection.getPort(),
+                    modelConnection.getHeaderParams(),
+                    modelConnection.getSecurityParams(),
+                    modelConnection.getParameters());
+        } else {
+            request.setAttribute(ParameterNames.MODEL + ParameterNames.CONNECTION_ACTIVE, 0);
+        }
+        if (dataConnection != null) {
+            setConnectionInputToRequest(request, ParameterNames.DATA, dataConnection.getProtocol(),
+                    dataConnection.getAddress(), dataConnection.getPort(),
+                    dataConnection.getHeaderParams(),
+                    dataConnection.getSecurityParams(),
+                    dataConnection.getParameters());
+        }else {
+            request.setAttribute(ParameterNames.DATA + ParameterNames.CONNECTION_ACTIVE, 0);
+        }
         if (sendConnection != null) {
-            request.setAttribute(ParameterNames.SEND_CONNECTION_PROTOCOL, sendConnection.getProtocol());
-            request.setAttribute(ParameterNames.SEND_CONNECTION_ADDRESS, sendConnection.getAddress());
-            request.setAttribute(ParameterNames.SEND_CONNECTION_PORT, sendConnection.getPort());
-            request.setAttribute(ParameterNames.SEND_CONNECTION_PARAMETERS, sendConnection.getParameters());
-            //TODO header params and security params
+            setConnectionInputToRequest(request, ParameterNames.SEND, sendConnection.getProtocol(),
+                    sendConnection.getAddress(), sendConnection.getPort(),
+                    sendConnection.getHeaderParams(),
+                    sendConnection.getSecurityParams(),
+                    sendConnection.getParameters());
+        }else {
+            request.setAttribute(ParameterNames.SEND + ParameterNames.CONNECTION_ACTIVE, 0);
         }
     }
 }
