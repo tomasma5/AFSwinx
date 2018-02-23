@@ -54,7 +54,8 @@
                                 </div>
                             </div>
 
-                            <div id="modelConnection" class="panel-body ${modelConnectionActive == 0? 'notVisible' : ''}">
+                            <div id="modelConnection"
+                                 class="panel-body ${modelConnectionActive == 0? 'notVisible' : ''}">
                                 <div class="form-group">
                                     <label for="modelConnectionProtocol">Protocol</label>
                                     <input type="text" class="form-control" id="modelConnectionProtocol"
@@ -94,11 +95,22 @@
                                         onclick="removeParam('model', 'Header')">Remove Header Param
                                 </button>
                                 <input type="hidden" id="modelHeaderParamsCount" name="modelHeaderParamsCount"
-                                       value="0"/>
+                                       value="${modelConnectionHeaderParams.size()}"/>
                                 <div id="modelHeaderParams">
-                                    <c:forEach var="headerParam" items="${modelConnectionHeaderParams}">
-                                        ${headerParam.key}
-                                        ${headerParam.value}
+                                    <c:forEach var="headerParam" items="${modelConnectionHeaderParams}"
+                                               varStatus="loop">
+                                        <div class="form-group">
+                                            <label for="modelHeaderParamKey${loop.index+1}">Key</label>
+                                            <input type="text" class="form-control"
+                                                   id="modelHeaderParamKey${loop.index+1}"
+                                                   name="modelHeaderParamKey${loop.index+1}"
+                                                   value="${headerParam.key}"/>
+                                            <label for="modelHeaderParamValue${loop.index+1}">Value</label>
+                                            <input type="text" class="form-control"
+                                                   id="modelHeaderParamValue${loop.index+1}"
+                                                   name="modelHeaderParamValue${loop.index+1}"
+                                                   value="${headerParam.value}"/>
+                                        </div>
                                     </c:forEach>
                                 </div>
 
@@ -110,8 +122,24 @@
                                         onclick="removeParam('model', 'Security')">Remove Security Param
                                 </button>
                                 <input type="hidden" id="modelSecurityParamsCount" name="modelSecurityParamsCount"
-                                       value="0"/>
-                                <div id="modelSecurityParams"></div>
+                                       value="${modelConnectionSecurityParams.size()}"/>
+                                <div id="modelSecurityParams">
+                                    <c:forEach var="securityParam" items="${modelConnectionSecurityParams}"
+                                               varStatus="loop">
+                                        <div class="form-group">
+                                            <label for="modelSecurityParamKey${loop.index+1}">Key</label>
+                                            <input type="text" class="form-control"
+                                                   id="modelSecurityParamKey${loop.index+1}"
+                                                   name="modelSecurityParamKey${loop.index+1}"
+                                                   value="${securityParam.key}"/>
+                                            <label for="modelSecurityParamValue${loop.index+1}">Value</label>
+                                            <input type="text" class="form-control"
+                                                   id="modelSecurityParamValue${loop.index+1}"
+                                                   name="modelSecurityParamValue${loop.index+1}"
+                                                   value="${securityParam.value}"/>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -166,9 +194,24 @@
                                 <button type="button" class="btn btn-danger" id="dataHeaderParamsRemoveButton"
                                         onclick="removeParam('data', 'Header')">Remove Header Param
                                 </button>
-                                <input type="hidden" id="dataHeaderParamsCount" name="dataHeaderParamsCount" value="0"/>
+                                <input type="hidden" id="dataHeaderParamsCount" name="dataHeaderParamsCount"
+                                       value="${dataConnectionHeaderParams.size()}"/>
                                 <div id="dataHeaderParams">
-
+                                    <c:forEach var="headerParam" items="${dataConnectionHeaderParams}"
+                                               varStatus="loop">
+                                        <div class="form-group">
+                                            <label for="dataHeaderParamKey${loop.index+1}">Key</label>
+                                            <input type="text" class="form-control"
+                                                   id="dataHeaderParamKey${loop.index+1}"
+                                                   name="dataHeaderParamKey${loop.index+1}"
+                                                   value="${headerParam.key}"/>
+                                            <label for="dataHeaderParamValue${loop.index+1}">Value</label>
+                                            <input type="text" class="form-control"
+                                                   id="dataHeaderParamValue${loop.index+1}"
+                                                   name="dataHeaderParamValue${loop.index+1}"
+                                                   value="${headerParam.value}"/>
+                                        </div>
+                                    </c:forEach>
                                 </div>
 
                                 <h4>Security parameters</h4>
@@ -179,8 +222,24 @@
                                         onclick="removeParam('data', 'Security')">Remove Security Param
                                 </button>
                                 <input type="hidden" id="dataSecurityParamsCount" name="dataSecurityParamsCount"
-                                       value="0"/>
-                                <div id="dataSecurityParams"></div>
+                                       value="${dataConnectionSecurityParams.size()}"/>
+                                <div id="dataSecurityParams">
+                                    <c:forEach var="securityParam" items="${dataConnectionSecurityParams}"
+                                               varStatus="loop">
+                                        <div class="form-group">
+                                            <label for="dataSecurityParamKey${loop.index+1}">Key</label>
+                                            <input type="text" class="form-control"
+                                                   id="dataSecurityParamKey${loop.index+1}"
+                                                   name="dataSecurityParamKey${loop.index+1}"
+                                                   value="${securityParam.key}"/>
+                                            <label for="dataSecurityParamValue${loop.index+1}">Value</label>
+                                            <input type="text" class="form-control"
+                                                   id="dataSecurityParamValue${loop.index+1}"
+                                                   name="dataSecurityParamValue${loop.index+1}"
+                                                   value="${securityParam.value}"/>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -235,8 +294,25 @@
                                 <button type="button" class="btn btn-danger" id="sendHeaderParamsRemoveButton"
                                         onclick="removeParam('send', 'Header')">Remove Header Param
                                 </button>
-                                <input type="hidden" id="sendHeaderParamsCount" name="sendHeaderParamsCount" value="0"/>
-                                <div id="sendHeaderParams"></div>
+                                <input type="hidden" id="sendHeaderParamsCount" name="sendHeaderParamsCount"
+                                       value="${sendConnectionHeaderParams.size()}"/>
+                                <div id="sendHeaderParams">
+                                    <c:forEach var="headerParam" items="${sendConnectionHeaderParams}"
+                                               varStatus="loop">
+                                        <div class="form-group">
+                                            <label for="sendHeaderParamKey${loop.index+1}">Key</label>
+                                            <input type="text" class="form-control"
+                                                   id="sendHeaderParamKey${loop.index+1}"
+                                                   name="sendHeaderParamKey${loop.index+1}"
+                                                   value="${headerParam.key}"/>
+                                            <label for="sendHeaderParamValue${loop.index+1}">Value</label>
+                                            <input type="text" class="form-control"
+                                                   id="sendHeaderParamValue${loop.index+1}"
+                                                   name="sendHeaderParamValue${loop.index+1}"
+                                                   value="${headerParam.value}"/>
+                                        </div>
+                                    </c:forEach>
+                                </div>
 
                                 <h4>Security parameters</h4>
                                 <button type="button" class="btn btn-success" id="sendSecurityParamsAddButton"
@@ -246,8 +322,24 @@
                                         onclick="removeParam('send', 'Security')">Remove Security Param
                                 </button>
                                 <input type="hidden" id="sendSecurityParamsCount" name="sendSecurityParamsCount"
-                                       value="0"/>
-                                <div id="sendSecurityParams"></div>
+                                       value="${sendConnectionSecurityParams.size()}"/>
+                                <div id="sendSecurityParams">
+                                    <c:forEach var="securityParam" items="${sendConnectionSecurityParams}"
+                                               varStatus="loop">
+                                        <div class="form-group">
+                                            <label for="sendSecurityParamKey${loop.index+1}">Key</label>
+                                            <input type="text" class="form-control"
+                                                   id="sendSecurityParamKey${loop.index+1}"
+                                                   name="sendSecurityParamKey${loop.index+1}"
+                                                   value="${securityParam.key}"/>
+                                            <label for="sendSecurityParamValue${loop.index+1}">Value</label>
+                                            <input type="text" class="form-control"
+                                                   id="sendSecurityParamValue${loop.index+1}"
+                                                   name="sendSecurityParamValue${loop.index+1}"
+                                                   value="${securityParam.value}"/>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </div>
