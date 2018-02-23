@@ -36,6 +36,10 @@ public class ComponentCreateServlet extends HttpServlet {
 
         if (componentId != null) {
             setExistingComponentToRequest(request, componentId);
+        } else {
+            request.setAttribute(ParameterNames.MODEL+ParameterNames.CONNECTION_ACTIVE, 1);
+            request.setAttribute(ParameterNames.DATA+ParameterNames.CONNECTION_ACTIVE, 1);
+            request.setAttribute(ParameterNames.SEND+ParameterNames.CONNECTION_ACTIVE, 1);
         }
         List<String> options = new ArrayList<>();
         for (SupportedComponentType type : SupportedComponentType.class.getEnumConstants()) {
@@ -164,6 +168,7 @@ public class ComponentCreateServlet extends HttpServlet {
             if (sendConnectionActive) {
                 connectionPack.setSendConnection(new ComponentConnection());
             }
+            componentResource.setConnections(connectionPack);
         } else {
             componentResource = componentManagementService.findById(new ObjectId(componentId));
         }
@@ -203,7 +208,7 @@ public class ComponentCreateServlet extends HttpServlet {
                 (protocol != null && !protocol.isEmpty()) &&
                 (port != null && !port.isEmpty())) {
             connection.setProtocol(protocol);
-            connection.setProtocol(address);
+            connection.setAddress(address);
             connection.setPort(Integer.parseInt(port));
             connection.setParameters(parameters);
             if (headerParamsCount > 0) {

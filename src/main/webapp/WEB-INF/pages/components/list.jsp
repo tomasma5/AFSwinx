@@ -31,15 +31,15 @@
                         <td>${component.type.name}</td>
                         <td>
                             <c:if test="${component.connections.modelConnection != null}">
-                                <b>Model:</b> ${component.connections.modelConnection.protocol}://${component.connections.modelConnection.address}:${component.connections.modelConnection.port}${component.connections.modelConnection.parameters}
+                                <b>Model:</b> ${component.connections.modelConnection.protocol}://${component.connections.modelConnection.address}:${component.connections.modelConnection.port}/${component.connections.modelConnection.parameters}
                                 <br>
                             </c:if>
                             <c:if test="${component.connections.dataConnection != null}">
-                                <b>Data:</b> ${component.connections.dataConnection.protocol}://${component.connections.dataConnection.address}:${component.connections.dataConnection.port}${component.connections.dataConnection.parameters}
+                                <b>Data:</b> ${component.connections.dataConnection.protocol}://${component.connections.dataConnection.address}:${component.connections.dataConnection.port}/${component.connections.dataConnection.parameters}
                                 <br>
                             </c:if>
                             <c:if test="${component.connections.sendConnection != null}">
-                                <b>Send:</b> ${component.connections.sendConnection.protocol}://${component.connections.sendConnection.address}:${component.connections.sendConnection.port}${component.connections.sendConnection.parameters}
+                                <b>Send:</b> ${component.connections.sendConnection.protocol}://${component.connections.sendConnection.address}:${component.connections.sendConnection.port}/${component.connections.sendConnection.parameters}
                                 <br>
                             </c:if>
                         </td>

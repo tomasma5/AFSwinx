@@ -82,7 +82,7 @@
                                     <label for="modelConnectionParameters">Paramaters</label>
                                     <input type="text" class="form-control" id="modelConnectionParameters"
                                            name="modelConnectionParameters"
-                                           placeholder="Example: /AFServer/rest/country/model"
+                                           placeholder="Example: AFServer/rest/.../model"
                                            value="${modelConnectionParameters}" required>
                                     <c:if test="${not empty modelConnectionParametersError}">${modelConnectionParametersError}</c:if>
                                 </div>
@@ -95,7 +95,7 @@
                                         onclick="removeParam('model', 'Header')">Remove Header Param
                                 </button>
                                 <input type="hidden" id="modelHeaderParamsCount" name="modelHeaderParamsCount"
-                                       value="${modelConnectionHeaderParams.size()}"/>
+                                       value="${modelConnectionHeaderParams != null? modelConnectionHeaderParams.size() : 0}"/>
                                 <div id="modelHeaderParams">
                                     <c:forEach var="headerParam" items="${modelConnectionHeaderParams}"
                                                varStatus="loop">
@@ -122,7 +122,7 @@
                                         onclick="removeParam('model', 'Security')">Remove Security Param
                                 </button>
                                 <input type="hidden" id="modelSecurityParamsCount" name="modelSecurityParamsCount"
-                                       value="${modelConnectionSecurityParams.size()}"/>
+                                       value="${modelConnectionSecurityParams != null? modelConnectionSecurityParams.size() : 0}"/>
                                 <div id="modelSecurityParams">
                                     <c:forEach var="securityParam" items="${modelConnectionSecurityParams}"
                                                varStatus="loop">
@@ -182,7 +182,7 @@
                                     <label for="dataConnectionParameters">Parameters</label>
                                     <input type="text" class="form-control" id="dataConnectionParameters"
                                            name="dataConnectionParameters"
-                                           placeholder="Example: /AFServer/rest/country/model"
+                                           placeholder="Example: AFServer/rest/.../data"
                                            value="${dataConnectionParameters}" required>
                                     <c:if test="${not empty dataConnectionParametersError}">${dataConnectionParametersError}</c:if>
                                 </div>
@@ -195,7 +195,7 @@
                                         onclick="removeParam('data', 'Header')">Remove Header Param
                                 </button>
                                 <input type="hidden" id="dataHeaderParamsCount" name="dataHeaderParamsCount"
-                                       value="${dataConnectionHeaderParams.size()}"/>
+                                       value="${dataConnectionHeaderParams != null? dataConnectionHeaderParams.size() : 0}"/>
                                 <div id="dataHeaderParams">
                                     <c:forEach var="headerParam" items="${dataConnectionHeaderParams}"
                                                varStatus="loop">
@@ -222,7 +222,7 @@
                                         onclick="removeParam('data', 'Security')">Remove Security Param
                                 </button>
                                 <input type="hidden" id="dataSecurityParamsCount" name="dataSecurityParamsCount"
-                                       value="${dataConnectionSecurityParams.size()}"/>
+                                       value="${dataConnectionSecurityParams != null? dataConnectionSecurityParams.size() : 0}"/>
                                 <div id="dataSecurityParams">
                                     <c:forEach var="securityParam" items="${dataConnectionSecurityParams}"
                                                varStatus="loop">
@@ -282,7 +282,7 @@
                                     <label for="sendConnectionParameters">Port</label>
                                     <input type="text" class="form-control" id="sendConnectionParameters"
                                            name="sendConnectionParameters"
-                                           placeholder="Example: /AFServer/rest/country/model"
+                                           placeholder="Example: AFServer/rest/.../send"
                                            value="${sendConnectionParameters}" required>
                                     <c:if test="${not empty sendConnectionParametersError}">${sendConnectionParametersError}</c:if>
                                 </div>
@@ -295,7 +295,7 @@
                                         onclick="removeParam('send', 'Header')">Remove Header Param
                                 </button>
                                 <input type="hidden" id="sendHeaderParamsCount" name="sendHeaderParamsCount"
-                                       value="${sendConnectionHeaderParams.size()}"/>
+                                       value="${sendConnectionHeaderParams != null? sendConnectionHeaderParams.size() : 0}"/>
                                 <div id="sendHeaderParams">
                                     <c:forEach var="headerParam" items="${sendConnectionHeaderParams}"
                                                varStatus="loop">
@@ -322,7 +322,7 @@
                                         onclick="removeParam('send', 'Security')">Remove Security Param
                                 </button>
                                 <input type="hidden" id="sendSecurityParamsCount" name="sendSecurityParamsCount"
-                                       value="${sendConnectionSecurityParams.size()}"/>
+                                       value="${sendConnectionSecurityParams != null? sendConnectionSecurityParams.size() : 0}"/>
                                 <div id="sendSecurityParams">
                                     <c:forEach var="securityParam" items="${sendConnectionSecurityParams}"
                                                varStatus="loop">
