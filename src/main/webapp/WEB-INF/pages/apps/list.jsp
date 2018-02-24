@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="panel-body ">
-            <table class="table table-responsive">
+            <table class="table table-responsive display-block-important">
                 <thead>
                 <tr>
                     <th>App name</th>

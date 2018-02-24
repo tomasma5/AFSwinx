@@ -1,6 +1,8 @@
 package service.impl;
 
+import dao.ComponentResourceDao;
 import dao.ScreenDao;
+import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
 import service.ScreenManagementService;
@@ -18,6 +20,9 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     @Inject
     private ScreenDao screenDao;
 
+    @Inject
+    private ComponentResourceDao componentResourceDao;
+
     public ScreenManagementServiceImpl() {
     }
 
@@ -33,6 +38,16 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
 
     @Override
     public void updateScreen(Screen updatedScreen) {
+        List<ComponentResource> componentResources = componentResourceDao.findAll().stream()
+                .filter(componentResource -> componentResource.getReferencedScreensIds().contains(updatedScreen.getId()))
+                .collect(Collectors.toList());
+
+        for (ComponentResource componentResource : componentResources){
+            if(!updatedScreen.getComponents().contains(componentResource)){
+                componentResource.getReferencedScreensIds().remove(updatedScreen.getId());
+                componentResourceDao.update(componentResource);
+            }
+        }
         screenDao.update(updatedScreen);
     }
 

@@ -27,7 +27,9 @@ public class Screen extends MongoDocumentEntity {
         if(components == null) {
             components = new ArrayList<>();
         }
-        components.add(componentResource);
+        if(!components.contains(componentResource)) {
+            components.add(componentResource);
+        }
     }
 
     public void removeComponentResource(ComponentResource componentResource) {

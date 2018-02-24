@@ -7,29 +7,103 @@
 <body>
 <jsp:include page="../partials/header.jsp"/>
 <div class="center-90-percent from-top-40-px">
-    <div class="panel panel-warning">
+    <div class="panel panel-primary">
         <div class="panel-heading height-50px">
-            <a href="${pageContext.request.contextPath}/screens/list?app=${app}">Screens</a> > Create/Edit screen
+            <a class="link" href="${pageContext.request.contextPath}/screens/list?app=${app}">
+                <button class="btn button-light">Screens</button>
+            </a> >
+            <button type="button" class="btn btn-primary" disabled>Create/Edit screen</button>
         </div>
         <div class="panel-body ">
             <form action="create?app=${app}" method="post">
                 <input type="hidden" name="screen" value="${screen}">
-                <input type="hidden"  id="app" name="app" value="${app}">
+                <input type="hidden" id="app" name="app" value="${app}">
                 <div class="form-group">
                     <label for="heading">Screen heading</label>
                     <input type="text" class="form-control" id="heading" name="heading"
                            placeholder="Enter screen heading" value="${heading}" required>
-                    <c:if test="${not empty screenHeadingError}" >${screenHeadingError}</c:if>
+                    <c:if test="${not empty screenHeadingError}">${screenHeadingError}</c:if>
                 </div>
 
                 <div class="form-group">
                     <label for="screenUrl">Screen url</label>
                     <input type="url" class="form-control" id="screenUrl" name="screenUrl"
                            placeholder="Example: http://example.com/" value="${screenUrl}" required>
-                    <c:if test="${not empty screenUrlError}" >${screenUrlError}</c:if>
+                    <c:if test="${not empty screenUrlError}">${screenUrlError}</c:if>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <h4>Linked components</h4>
+
+                <div class="row">
+                    <div class="col-xs-13 col-md-5">
+                        <div class="panel panel-default min-h-350px">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">
+                                Model connection
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="componentSelect">Component</label>
+                                    <select class="form-control" id="componentSelect" name="componentSelect" size="5">
+                                        <c:forEach var="componentOption" items="${componentsOptions}">
+                                            <option value="${componentOption.id}" ondblclick="addComponent()">
+                                                [${componentOption.type}] ${componentOption.name}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-13 col-md-2 flex-center">
+                        <div class="btn btn-success" onclick="addComponent()" id="addComponentButton">Add component
+                        </div>
+                    </div>
+                    <div class="col-xs-13 col-md-5">
+                        <div class="panel panel-default min-h-350px">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">
+                                Model connection
+                            </div>
+                            <div class="panel-body">
+                                <input type="hidden" id="linkedComponentsCount" name="linkedComponentsCount"
+                                       value="${linkedComponents != null? linkedComponents.size() : 0}">
+                                <div id="linkedComponents">
+                                    <c:forEach var="component" items="${linkedComponents}" varStatus="loop">
+                                        <form-group>
+                                            <label for="linkedHiddenComponent${loop.index+1}">Component ${loop.index+1}</label>
+                                            <input type="hidden" id="linkedHiddenComponent${loop.index+1}"
+                                                   name="linkedHiddenComponent${loop.index+1}"
+                                                   required="required"
+                                                   value="${component.id}">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="linkedComponentText${loop.index+1}"
+                                                       name="linkedComponentText${loop.index+1}"
+                                                       required="required"
+                                                       disabled="disabled"
+                                                       value="[${component.type.name}] ${component.name}"/>
+                                                <span class="input-group-btn">
+                                        <button class="btn btn-danger"
+                                                type="button"
+                                                id="linkedComponentButton${loop.index+1}"
+                                                onclick="removeComponent(${loop.index+1})"
+                                        >Remove</button>
+                                </span>
+                                            </div>
+                                        </form-group>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="row flex-center">
+                    <button type="submit" class="btn btn-primary col-xs-11 col-sm-5 col-md-3 height-50px">Submit
+                    </button>
+                </div>
             </form>
         </div>
     </div>

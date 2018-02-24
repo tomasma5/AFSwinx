@@ -35,5 +35,10 @@ public class ParameterNames {
     public static final String PORT = "Port";
     public static final String PARAMETERS = "Parameters";
 
+    public static final String LINKED_COMPONENTS = "linkedComponents";
+    public static final String COMPONENTS_OPTIONS = "componentsOptions";
+    public static final String LINKED_COMPONENTS_COUNT = "linkedComponentsCount";
+    public static final String LINKED_COMPONENT_ID = "linkedHiddenComponent";
+
 
  }

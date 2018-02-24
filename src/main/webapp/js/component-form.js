@@ -59,7 +59,6 @@ function toggleConnection(connectionType) {
         disableInputs(modelConnectionForm, false);
         modelConnectionForm.classList.remove("notVisible");
     }
-
 }
 
 function disableInputs(el, disabled) {
@@ -69,3 +68,4 @@ function disableInputs(el, disabled) {
         all[i].disabled = disabled;
     }
 }
+

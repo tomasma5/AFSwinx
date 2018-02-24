@@ -1,7 +1,9 @@
 package servlet.screens;
 
+import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
+import service.ComponentManagementService;
 import service.ScreenManagementService;
 import servlet.ParameterNames;
 
@@ -14,14 +16,18 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ScreenCreateServlet extends HttpServlet {
+import static java.util.stream.Collectors.toList;
 
+public class ScreenCreateServlet extends HttpServlet {
 
 
     private static final String CREATE_URL = "/WEB-INF/pages/screens/create.jsp";
 
     @Inject
     private ScreenManagementService screenManagementService;
+
+    @Inject
+    private ComponentManagementService componentManagementService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationId = request.getParameter(ParameterNames.APPLICATION_ID);
@@ -36,8 +42,17 @@ public class ScreenCreateServlet extends HttpServlet {
             request.setAttribute(ParameterNames.SCREEN_ID, screen.getId());
             request.setAttribute(ParameterNames.SCREEN_URL, screen.getScreenUrl());
             request.setAttribute(ParameterNames.SCREEN_HEADING, screen.getHeading());
+            request.setAttribute(ParameterNames.LINKED_COMPONENTS, screen.getComponents());
+            request.setAttribute(ParameterNames.COMPONENTS_OPTIONS, componentManagementService
+                    .getAllComponentsByApplication(new ObjectId(applicationId)).stream()
+                    .filter(componentResource -> !componentResource.getReferencedScreensIds().contains(new ObjectId(screenId)))
+                    .collect(toList()));
+        } else {
+            request.setAttribute(ParameterNames.COMPONENTS_OPTIONS, componentManagementService.getAllComponentsByApplication(new ObjectId(applicationId)));
         }
         request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
+
+
         getServletContext().getRequestDispatcher(CREATE_URL).forward(request, response);
     }
 
@@ -52,8 +67,9 @@ public class ScreenCreateServlet extends HttpServlet {
         String screenId = req.getParameter(ParameterNames.SCREEN_ID);
         String heading = req.getParameter(ParameterNames.SCREEN_HEADING);
         String screenUrl = req.getParameter(ParameterNames.SCREEN_URL);
+        String linkedComponentsCountString = req.getParameter(ParameterNames.LINKED_COMPONENTS_COUNT);
         try {
-            new URL(screenUrl); //check format of url with trying to create URL object
+            int linkedComponentsCount = Integer.parseInt(linkedComponentsCountString);
 
             Screen screen;
             if (screenId == null || screenId.isEmpty()) {
@@ -66,12 +82,22 @@ public class ScreenCreateServlet extends HttpServlet {
             screen.setScreenUrl(screenUrl);
             screen.setApplicationId(new ObjectId(appIdString));
 
+            if (screen.getComponents() != null) {
+                screen.getComponents().clear();
+            }
+            for (int i = 0; i < linkedComponentsCount; i++) {
+                String componentId = req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1));
+                ComponentResource componentResource = componentManagementService.findById(new ObjectId(componentId));
+                componentManagementService.addComponentToScreen(componentResource, screen);
+                componentManagementService.filterComponentsScreenReferences(componentResource);
+            }
+
             if (screenId == null || screenId.isEmpty()) {
                 screenManagementService.addNewScreen(screen);
             } else {
                 screenManagementService.updateScreen(screen);
             }
-            resp.sendRedirect("list?app="+appIdString);
+            resp.sendRedirect("list?app=" + appIdString);
             return;
         } catch (MalformedURLException ex) {
             req.setAttribute("screenUrlError", "URL has bad format.");

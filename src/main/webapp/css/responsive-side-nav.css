@@ -8,6 +8,7 @@ ul.sidenav {
     background-color: #b8b8b8;
     position: fixed;
     height: 100%;
+    top: 35px;
     overflow: auto;
     text-align: center;
 }
@@ -32,7 +33,7 @@ ul.sidenav li a:hover:not(.active) {
 
 div.content {
     margin-left: 15%;
-    padding: 1px 16px;
+    padding: 16px;
     height: 1000px;
     margin-top: 25px;
 }

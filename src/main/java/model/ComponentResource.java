@@ -27,7 +27,9 @@ public class ComponentResource extends MongoDocumentEntity {
         if(referencedScreensIds == null){
             referencedScreensIds = new ArrayList<>();
         }
-        referencedScreensIds.add(screen.getId());
+        if(!referencedScreensIds.contains(screen.getId())) {
+            referencedScreensIds.add(screen.getId());
+        }
     }
 
     public String getName() {

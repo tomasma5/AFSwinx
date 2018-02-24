@@ -57,18 +57,30 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     }
 
     @Override
-    public void addComponentToScreen(ObjectId componentResourceId, ObjectId screenId) {
-        Screen screen = screenDao.findByObjectId(screenId);
-        ComponentResource componentResource = componentResourceDao.findByObjectId(componentResourceId);
+    public void addComponentToScreen(ComponentResource componentResource, Screen screen) {
+        componentResource.referencedByScreen(screen);
         screen.addComponentResource(componentResource);
         screenDao.update(screen);
+        componentResourceDao.update(componentResource);
     }
+
+    @Override
+    public void filterComponentsScreenReferences(ComponentResource componentResource) {
+        List<ObjectId> screenIds = screenDao.findAll().stream()
+                .filter(screen -> screen.getApplicationId().equals(componentResource.getApplicationId()) &&
+                                screen.getComponents().contains(componentResource))
+                .map(Screen::getId)
+                .collect(Collectors.toList());
+        componentResource.setReferencedScreensIds(screenIds);
+        componentResourceDao.update(componentResource);
+    }
+
 
     private void addComponentToReferencedScreens(ComponentResource componentResource) {
         List<ObjectId> updatedReferencedScreens = componentResource.getReferencedScreensIds();
         if(updatedReferencedScreens != null) {
             for (ObjectId screenId: updatedReferencedScreens) {
-                addComponentToScreen(componentResource.getId(), screenId);
+                addComponentToScreen(componentResource, screenDao.findByObjectId(screenId));
             }
         }
     }

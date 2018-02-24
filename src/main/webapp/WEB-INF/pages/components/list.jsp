@@ -9,18 +9,19 @@
 <div class="content">
     <div class="panel panel-primary">
         <div class="panel-heading height-50px">
-            Components
+            <button type="button" class="btn btn-primary" disabled>Components</button>
             <a href="${pageContext.request.contextPath}/components/create?app=${app}">
                 <button class="btn btn-success float-right">Add component</button>
             </a>
         </div>
         <div class="panel-body ">
-            <table class="table table-responsive">
+            <table class="table table-responsive display-block-important">
                 <thead>
                 <tr>
                     <th>Component name</th>
                     <th>Component type</th>
                     <th>Connections</th>
+                    <th>Referenced in</th>
                     <th colspan="2">Actions</th>
                 </tr>
                 </thead>
@@ -43,7 +44,7 @@
                                 <br>
                             </c:if>
                         </td>
-                        <td></td>
+                        <td>${component.referencedScreensIds != null? component.referencedScreensIds.size() : 0} screen(s)</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/components/create?app=${app}&component=${component.id}">
                                 <button class="btn btn-primary">Edit</button>

@@ -9,18 +9,19 @@
 <div class="content">
     <div class="panel panel-primary">
         <div class="panel-heading height-50px">
-            Screens
+            <button type="button" class="btn btn-primary" disabled>Screens</button>
             <a href="${pageContext.request.contextPath}/screens/create?app=${app}">
                 <button class="btn btn-success float-right">Add screen</button>
             </a>
         </div>
         <div class="panel-body ">
-            <table class="table table-responsive">
+            <table class="table table-responsive display-block-important">
                 <thead>
                 <tr>
                     <th>Screen heading</th>
                     <th>Screen url</th>
-                    <th colspan="2">Actions</th>
+                    <th>Number of components</th>
+                    <th colspan="3">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -28,6 +29,7 @@
                     <tr>
                         <td>${screen.heading}</td>
                         <td>${screen.screenUrl}</td>
+                        <td>${screen.components != null? screen.components.size() : 0}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/screens/create?app=${app}&screen=${screen.id}">
                                 <button class="btn btn-primary">Edit</button>
@@ -41,6 +43,13 @@
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>
                             </form>
+                        </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/screens/manage?app=${app}&screen=${screen.id}">
+                                <button class="btn btn-info">
+                                    Manage
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>
