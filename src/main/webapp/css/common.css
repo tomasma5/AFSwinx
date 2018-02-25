@@ -18,7 +18,7 @@ hr {
 }
 
 .app-name {
-    background: #5cb85c;
+    background: #3580bf;
     margin: 0;
     padding: 20px;
     color: white;
@@ -33,6 +33,7 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .center-90-percent {

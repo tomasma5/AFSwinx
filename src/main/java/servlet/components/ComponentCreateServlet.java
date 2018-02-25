@@ -35,9 +35,9 @@ public class ComponentCreateServlet extends HttpServlet {
         if (componentId != null) {
             setExistingComponentToRequest(request, componentId);
         } else {
-            request.setAttribute(ParameterNames.MODEL+ParameterNames.CONNECTION_ACTIVE, 1);
-            request.setAttribute(ParameterNames.DATA+ParameterNames.CONNECTION_ACTIVE, 1);
-            request.setAttribute(ParameterNames.SEND+ParameterNames.CONNECTION_ACTIVE, 1);
+            request.setAttribute(ParameterNames.MODEL + ParameterNames.CONNECTION_ACTIVE, 1);
+            request.setAttribute(ParameterNames.DATA + ParameterNames.CONNECTION_ACTIVE, 1);
+            request.setAttribute(ParameterNames.SEND + ParameterNames.CONNECTION_ACTIVE, 1);
         }
         List<String> options = new ArrayList<>();
         for (SupportedComponentType type : SupportedComponentType.class.getEnumConstants()) {
@@ -103,7 +103,7 @@ public class ComponentCreateServlet extends HttpServlet {
             sendSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.SEND + ParameterNames.SECURITY_PARAMS_COUNT));
         }
 
-        //TODO data validation
+        //TODO data validation?
 
         try {
             ComponentResource componentResource = getComponentResource(componentId, modelConnectionActive, dataConnectionActive, sendConnectionActive);
@@ -115,22 +115,35 @@ public class ComponentCreateServlet extends HttpServlet {
 
             //set connection data
             if (modelConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.MODEL, modelConnectionAddress, modelConnectionParameters, modelConnectionProtocol,
-                        modelConnectionPort, modelHeaderParamsCount, modelSecurityParamsCount, componentResource.getConnections().getModelConnection());
+
+                setConnectionAttributes(req, ParameterNames.MODEL, modelConnectionAddress, modelConnectionParameters,
+                        modelConnectionProtocol, modelConnectionPort, modelHeaderParamsCount, modelSecurityParamsCount,
+                        componentResource.getId(),
+                        componentResource.getRealConnections().getModelConnection(),
+                        componentResource.getProxyConnections().getModelConnection());
             } else {
-                componentResource.getConnections().setModelConnection(null);
+                componentResource.getRealConnections().setModelConnection(null);
+                componentResource.getProxyConnections().setModelConnection(null);
             }
             if (dataConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.DATA, dataConnectionAddress, dataConnectionParameters, dataConnectionProtocol,
-                        dataConnectionPort, dataHeaderParamsCount, dataSecurityParamsCount, componentResource.getConnections().getDataConnection());
+                setConnectionAttributes(req, ParameterNames.DATA, dataConnectionAddress, dataConnectionParameters,
+                        dataConnectionProtocol, dataConnectionPort, dataHeaderParamsCount, dataSecurityParamsCount,
+                        componentResource.getId(),
+                        componentResource.getRealConnections().getDataConnection(),
+                        componentResource.getProxyConnections().getDataConnection());
             } else {
-                componentResource.getConnections().setDataConnection(null);
+                componentResource.getRealConnections().setDataConnection(null);
+                componentResource.getProxyConnections().setDataConnection(null);
             }
             if (sendConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.SEND, sendConnectionAddress, sendConnectionParameters, sendConnectionProtocol,
-                        sendConnectionPort, sendHeaderParamsCount, sendSecurityParamsCount, componentResource.getConnections().getSendConnection());
+                setConnectionAttributes(req, ParameterNames.SEND, sendConnectionAddress, sendConnectionParameters,
+                        sendConnectionProtocol, sendConnectionPort, sendHeaderParamsCount, sendSecurityParamsCount,
+                        componentResource.getId(),
+                        componentResource.getRealConnections().getSendConnection(),
+                        componentResource.getProxyConnections().getSendConnection());
             } else {
-                componentResource.getConnections().setSendConnection(null);
+                componentResource.getRealConnections().setSendConnection(null);
+                componentResource.getProxyConnections().setSendConnection(null);
             }
 
             //create or update component
@@ -156,21 +169,52 @@ public class ComponentCreateServlet extends HttpServlet {
         ComponentResource componentResource;
         if (componentId == null || componentId.isEmpty()) {
             componentResource = new ComponentResource();
-            ComponentConnectionPack connectionPack = new ComponentConnectionPack();
-            if (modelConnectionActive) {
-                connectionPack.setModelConnection(new ComponentConnection());
-            }
-            if (dataConnectionActive) {
-                connectionPack.setDataConnection(new ComponentConnection());
-            }
-            if (sendConnectionActive) {
-                connectionPack.setSendConnection(new ComponentConnection());
-            }
-            componentResource.setConnections(connectionPack);
+            componentResource.setId(new ObjectId());
+            componentResource.setRealConnections(createNewConnectionPack(modelConnectionActive, dataConnectionActive, sendConnectionActive));
+            componentResource.setProxyConnections(createNewConnectionPack(modelConnectionActive, dataConnectionActive, sendConnectionActive));
         } else {
             componentResource = componentManagementService.findById(new ObjectId(componentId));
+            resetConnectionsInExistingComponent(modelConnectionActive, dataConnectionActive, sendConnectionActive, componentResource);
         }
         return componentResource;
+    }
+
+    private void resetConnectionsInExistingComponent(boolean modelConnectionActive, boolean dataConnectionActive, boolean sendConnectionActive, ComponentResource componentResource) {
+        if (modelConnectionActive &&
+                componentResource.getRealConnections().getModelConnection() == null &&
+                componentResource.getProxyConnections().getModelConnection() == null) {
+            componentResource.getRealConnections().setModelConnection(new ComponentConnection());
+            componentResource.getProxyConnections().setModelConnection(new ComponentConnection());
+        }
+
+        if (dataConnectionActive &&
+                componentResource.getRealConnections().getDataConnection() == null &&
+                componentResource.getProxyConnections().getDataConnection() == null) {
+            componentResource.getRealConnections().setModelConnection(new ComponentConnection());
+            componentResource.getProxyConnections().setModelConnection(new ComponentConnection());
+        }
+
+        if (sendConnectionActive &&
+                componentResource.getRealConnections().getSendConnection() == null &&
+                componentResource.getProxyConnections().getSendConnection() == null) {
+            componentResource.getRealConnections().setModelConnection(new ComponentConnection());
+            componentResource.getProxyConnections().setModelConnection(new ComponentConnection());
+        }
+    }
+
+    private ComponentConnectionPack createNewConnectionPack(boolean modelConnectionActive, boolean dataConnectionActive, boolean sendConnectionActive) {
+        ComponentConnectionPack connectionPack = new ComponentConnectionPack();
+        if (modelConnectionActive) {
+            connectionPack.setModelConnection(new ComponentConnection());
+        }
+        if (dataConnectionActive) {
+            connectionPack.setDataConnection(new ComponentConnection());
+        }
+        if (sendConnectionActive) {
+            connectionPack.setSendConnection(new ComponentConnection());
+        }
+
+        return connectionPack;
     }
 
     private void setComponentInputToRequest(HttpServletRequest req, String componentId, String componentName, SupportedComponentType componentType) {
@@ -200,7 +244,7 @@ public class ComponentCreateServlet extends HttpServlet {
     private void setConnectionAttributes(HttpServletRequest req, String type,
                                          String address, String parameters,
                                          String protocol, String port, int headerParamsCount,
-                                         int securityParamsCount, ComponentConnection connection) {
+                                         int securityParamsCount, ObjectId componentResource, ComponentConnection connection, ComponentConnection proxyConnection) {
         if (connection != null &&
                 (parameters != null && !parameters.isEmpty()) &&
                 (protocol != null && !protocol.isEmpty()) &&
@@ -227,16 +271,24 @@ public class ComponentCreateServlet extends HttpServlet {
                 }
                 connection.setSecurityParams(securityParams);
             }
+            //generate proxy url
+            proxyConnection.setProtocol(req.getScheme());
+            proxyConnection.setAddress(req.getServerName());
+            proxyConnection.setPort(req.getServerPort());
+            proxyConnection.setParameters(req.getContextPath() + "/api/connections/" + type + "/component/" + componentResource);
+            proxyConnection.setHeaderParams(connection.getHeaderParams());
+            proxyConnection.setSecurityParams(connection.getSecurityParams());
         }
     }
+
 
     private void setExistingComponentToRequest(HttpServletRequest request, String componentId) {
         ComponentResource component = componentManagementService.findById(new ObjectId(componentId));
         setComponentInputToRequest(request, component.getId().toString(), component.getName(), component.getType());
 
-        ComponentConnection modelConnection = component.getConnections().getModelConnection();
-        ComponentConnection dataConnection = component.getConnections().getDataConnection();
-        ComponentConnection sendConnection = component.getConnections().getSendConnection();
+        ComponentConnection modelConnection = component.getRealConnections().getModelConnection();
+        ComponentConnection dataConnection = component.getRealConnections().getDataConnection();
+        ComponentConnection sendConnection = component.getRealConnections().getSendConnection();
 
         if (modelConnection != null) {
             setConnectionInputToRequest(request, ParameterNames.MODEL, modelConnection.getProtocol(),
@@ -253,7 +305,7 @@ public class ComponentCreateServlet extends HttpServlet {
                     dataConnection.getHeaderParams(),
                     dataConnection.getSecurityParams(),
                     dataConnection.getParameters());
-        }else {
+        } else {
             request.setAttribute(ParameterNames.DATA + ParameterNames.CONNECTION_ACTIVE, 0);
         }
         if (sendConnection != null) {
@@ -262,7 +314,7 @@ public class ComponentCreateServlet extends HttpServlet {
                     sendConnection.getHeaderParams(),
                     sendConnection.getSecurityParams(),
                     sendConnection.getParameters());
-        }else {
+        } else {
             request.setAttribute(ParameterNames.SEND + ParameterNames.CONNECTION_ACTIVE, 0);
         }
     }

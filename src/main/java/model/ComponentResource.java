@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -9,17 +10,21 @@ public class ComponentResource extends MongoDocumentEntity {
 
     private String name;
     private SupportedComponentType type;
-    private ComponentConnectionPack connections;
+    private ComponentConnectionPack proxyConnections;
+    @JsonIgnore
+    private ComponentConnectionPack realConnections;
     private List<ObjectId> referencedScreensIds;
     private ObjectId applicationId;
 
     public ComponentResource() {
     }
 
-    public ComponentResource(String name, SupportedComponentType type, ComponentConnectionPack connections, ObjectId applicationId) {
+    public ComponentResource(String name, SupportedComponentType type, ComponentConnectionPack proxyConnections,
+                             ComponentConnectionPack realConnections, ObjectId applicationId) {
         this.name = name;
         this.type = type;
-        this.connections = connections;
+        this.proxyConnections = proxyConnections;
+        this.realConnections = realConnections;
         this.applicationId = applicationId;
     }
 
@@ -48,12 +53,12 @@ public class ComponentResource extends MongoDocumentEntity {
         this.type = type;
     }
 
-    public ComponentConnectionPack getConnections() {
-        return connections;
+    public ComponentConnectionPack getRealConnections() {
+        return realConnections;
     }
 
-    public void setConnections(ComponentConnectionPack connections) {
-        this.connections = connections;
+    public void setRealConnections(ComponentConnectionPack realConnections) {
+        this.realConnections = realConnections;
     }
 
     public List<ObjectId> getReferencedScreensIds() {
@@ -62,6 +67,14 @@ public class ComponentResource extends MongoDocumentEntity {
 
     public void setReferencedScreensIds(List<ObjectId> referencedScreensIds) {
         this.referencedScreensIds = referencedScreensIds;
+    }
+
+    public ComponentConnectionPack getProxyConnections() {
+        return proxyConnections;
+    }
+
+    public void setProxyConnections(ComponentConnectionPack proxyConnections) {
+        this.proxyConnections = proxyConnections;
     }
 
     public ObjectId getApplicationId() {
@@ -91,4 +104,6 @@ public class ComponentResource extends MongoDocumentEntity {
         result = 31 * result + applicationId.hashCode();
         return result;
     }
+
+
 }

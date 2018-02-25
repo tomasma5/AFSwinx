@@ -96,8 +96,10 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             Screen screen;
             for (ObjectId screenId : referencedScreens) {
                 screen = screenDao.findByObjectId(screenId);
-                screen.removeComponentResource(componentResource);
-                screenDao.update(screen);
+                if(screen != null) {
+                    screen.removeComponentResource(componentResource);
+                    screenDao.update(screen);
+                }
             }
         }
     }

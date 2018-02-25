@@ -20,26 +20,26 @@ public class ComponentResourcesEndpoint {
     private ComponentResourceService componentResourceService;
 
     @GET
-    @Path("/model/screen/{screen_id}/component/{component_id}")
+    @Path("/model/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getModelDefinition(@PathParam("screen_id") ObjectId screenId, @PathParam("component_id") ObjectId componentId) {
+    public String getModelDefinition( @PathParam("component_id") ObjectId componentId) {
         //TODO implement me
         return null;
     }
 
     @GET
-    @Path("/data/screen/{screen_id}/component/{component_id}")
+    @Path("/data/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getComponentData(@PathParam("screen_id") ObjectId screenId, @PathParam("component_id") ObjectId componentId) {
+    public String getComponentData(@PathParam("component_id") ObjectId componentId) {
         //TODO implement me
         return null;
     }
 
     @POST
-    @Path("/send/screen/{screen_id}/component/{component_id}")
+    @Path("/send/component/{component_id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void sendComponentData(@PathParam("screen_id") ObjectId screenId, @PathParam("component_id") ObjectId componentId) {
+    public void sendComponentData(@PathParam("component_id") ObjectId componentId) {
         //TODO implement me
     }
 }

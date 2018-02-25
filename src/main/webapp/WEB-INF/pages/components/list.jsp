@@ -31,16 +31,30 @@
                         <td>${component.name}</td>
                         <td>${component.type.name}</td>
                         <td>
-                            <c:if test="${component.connections.modelConnection != null}">
-                                <b>Model:</b> ${component.connections.modelConnection.protocol}://${component.connections.modelConnection.address}:${component.connections.modelConnection.port}/${component.connections.modelConnection.parameters}
+                            <h4 class="text-primary">Real connections</h4>
+                            <c:if test="${component.realConnections.modelConnection != null}">
+                                <b>Model:</b> ${component.realConnections.modelConnection.protocol}://${component.realConnections.modelConnection.address}:${component.realConnections.modelConnection.port}/${component.realConnections.modelConnection.parameters}
                                 <br>
                             </c:if>
-                            <c:if test="${component.connections.dataConnection != null}">
-                                <b>Data:</b> ${component.connections.dataConnection.protocol}://${component.connections.dataConnection.address}:${component.connections.dataConnection.port}/${component.connections.dataConnection.parameters}
+                            <c:if test="${component.realConnections.dataConnection != null}">
+                                <b>Data:</b> ${component.realConnections.dataConnection.protocol}://${component.realConnections.dataConnection.address}:${component.realConnections.dataConnection.port}/${component.realConnections.dataConnection.parameters}
                                 <br>
                             </c:if>
-                            <c:if test="${component.connections.sendConnection != null}">
-                                <b>Send:</b> ${component.connections.sendConnection.protocol}://${component.connections.sendConnection.address}:${component.connections.sendConnection.port}/${component.connections.sendConnection.parameters}
+                            <c:if test="${component.realConnections.sendConnection != null}">
+                                <b>Send:</b> ${component.realConnections.sendConnection.protocol}://${component.realConnections.sendConnection.address}:${component.realConnections.sendConnection.port}/${component.realConnections.sendConnection.parameters}
+                                <br>
+                            </c:if>
+                            <h4 class="text-primary">Proxy connections</h4>
+                            <c:if test="${component.proxyConnections.modelConnection != null}">
+                                <b>Model:</b> ${component.proxyConnections.modelConnection.protocol}://${component.proxyConnections.modelConnection.address}:${component.proxyConnections.modelConnection.port}/${component.proxyConnections.modelConnection.parameters}
+                                <br>
+                            </c:if>
+                            <c:if test="${component.proxyConnections.dataConnection != null}">
+                                <b>Data:</b> ${component.proxyConnections.dataConnection.protocol}://${component.proxyConnections.dataConnection.address}:${component.proxyConnections.dataConnection.port}/${component.proxyConnections.dataConnection.parameters}
+                                <br>
+                            </c:if>
+                            <c:if test="${component.proxyConnections.sendConnection != null}">
+                                <b>Send:</b> ${component.proxyConnections.sendConnection.protocol}://${component.proxyConnections.sendConnection.address}:${component.proxyConnections.sendConnection.port}/${component.proxyConnections.sendConnection.parameters}
                                 <br>
                             </c:if>
                         </td>
@@ -51,7 +65,7 @@
                             </a>
                         </td>
                         <td>
-                            <form method="post" action="list?app=${app}">
+                            <form method="post" action="list?app=${app}&component=${component.id}">
                                 <input type="hidden" name="screen" value="${component.id}">
                                 <input type="hidden" name="app" value="${component.applicationId}">
                                 <button type="submit" class="btn btn-danger"

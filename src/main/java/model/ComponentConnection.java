@@ -70,4 +70,5 @@ public class ComponentConnection {
     public void setSecurityParams(Map<String, String> securityParams) {
         this.securityParams = securityParams;
     }
+
 }
