@@ -2,14 +2,15 @@ package rest;
 
 import model.Screen;
 import org.bson.types.ObjectId;
+import rest.model.MenuItem;
 import service.exception.ServiceException;
 import service.rest.ScreenRestService;
-import service.servlet.ScreenManagementService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +28,13 @@ public class ScreenEndpoint {
     @GET
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Screen> getAllApplicationScreens() {
-        return screenRestService.getAllScreens();
+    public List<MenuItem> getAllApplicationScreens() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        List<Screen> screens = screenRestService.getAllScreens();
+        for (Screen screen : screens) {
+            menuItems.add(new MenuItem(screen.getHeading(), screen.getScreenUrl()));
+        }
+        return menuItems;
     }
 
     @GET
@@ -41,6 +47,5 @@ public class ScreenEndpoint {
         }
         return screen;
     }
-
 
 }

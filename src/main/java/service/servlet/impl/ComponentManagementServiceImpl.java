@@ -7,10 +7,16 @@ import model.Screen;
 import org.bson.types.ObjectId;
 import service.servlet.ComponentManagementService;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Named("componentManagementService")
+@ApplicationScoped
+@Transactional(rollbackOn = Exception.class)
 public class ComponentManagementServiceImpl implements ComponentManagementService {
 
     @Inject
@@ -58,7 +64,6 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     @Override
     public void addComponentToScreen(ComponentResource componentResource, Screen screen) {
-        componentResource.referencedByScreen(screen);
         screen.addComponentResource(componentResource);
         screenDao.update(screen);
         componentResourceDao.update(componentResource);
@@ -68,7 +73,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     public void filterComponentsScreenReferences(ComponentResource componentResource) {
         List<ObjectId> screenIds = screenDao.findAll().stream()
                 .filter(screen -> screen.getApplicationId().equals(componentResource.getApplicationId()) &&
-                                screen.getComponents().contains(componentResource))
+                        screen.getComponents().contains(componentResource))
                 .map(Screen::getId)
                 .collect(Collectors.toList());
         componentResource.setReferencedScreensIds(screenIds);
@@ -78,8 +83,8 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     private void addComponentToReferencedScreens(ComponentResource componentResource) {
         List<ObjectId> updatedReferencedScreens = componentResource.getReferencedScreensIds();
-        if(updatedReferencedScreens != null) {
-            for (ObjectId screenId: updatedReferencedScreens) {
+        if (updatedReferencedScreens != null) {
+            for (ObjectId screenId : updatedReferencedScreens) {
                 addComponentToScreen(componentResource, screenDao.findByObjectId(screenId));
             }
         }
@@ -87,7 +92,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     private void removeComponentFromReferencedScreens(ComponentResource componentResource) {
         List<ObjectId> referencedScreens = componentResource.getReferencedScreensIds();
-        if(referencedScreens != null) {
+        if (referencedScreens != null) {
             Screen screen;
             for (ObjectId screenId : referencedScreens) {
                 screen = screenDao.findByObjectId(screenId);
@@ -96,8 +101,6 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             }
         }
     }
-
-
 
 
 }

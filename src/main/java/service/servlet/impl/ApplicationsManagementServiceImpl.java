@@ -25,13 +25,9 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
 
     @Override
     public void addNewApplication(Application app) {
-        String uuid = generateUuid(app);
+        String uuid = generateUuid();
         app.setUuid(uuid);
         applicationDao.create(app);
-    }
-
-    private String generateUuid(Application app) {
-        return UUID.fromString(app.getApplicationName()).toString();
     }
 
     @Override
@@ -62,5 +58,9 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
     @Override
     public Application findByUuid(String uuid) {
         return applicationDao.findByUuid(uuid);
+    }
+
+    private String generateUuid() {
+        return UUID.randomUUID().toString();
     }
 }

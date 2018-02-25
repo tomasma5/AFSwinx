@@ -12,6 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -27,6 +30,9 @@ public class ScreenCreateServlet extends HttpServlet {
 
     @Inject
     private ComponentManagementService componentManagementService;
+
+    @Context
+    private ResourceInfo resourceInfo;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationId = request.getParameter(ParameterNames.APPLICATION_ID);
@@ -73,13 +79,23 @@ public class ScreenCreateServlet extends HttpServlet {
             Screen screen;
             if (screenId == null || screenId.isEmpty()) {
                 screen = new Screen();
+                screen.setId(new ObjectId());
             } else {
                 screen = screenManagementService.findScreenById(new ObjectId(screenId));
             }
 
             screen.setHeading(heading);
-            screen.setScreenUrl(screenUrl);
             screen.setApplicationId(new ObjectId(appIdString));
+            if(screenUrl == null || screenUrl.isEmpty()){
+                screenUrl = req.getScheme() +
+                        "://" +
+                        req.getServerName() +
+                        req.getServerPort() +
+                        req.getContextPath() +
+                        "/api/screens/" +
+                        screen.getId();
+            }
+            screen.setScreenUrl(screenUrl);
 
             if (screen.getComponents() != null) {
                 screen.getComponents().clear();
@@ -91,7 +107,10 @@ public class ScreenCreateServlet extends HttpServlet {
                 componentManagementService.filterComponentsScreenReferences(componentResource);
             }
 
+
+
             if (screenId == null || screenId.isEmpty()) {
+
                 screenManagementService.addNewScreen(screen);
             } else {
                 screenManagementService.updateScreen(screen);
@@ -103,7 +122,6 @@ public class ScreenCreateServlet extends HttpServlet {
         }
 
         req.setAttribute(ParameterNames.SCREEN_HEADING, heading);
-        req.setAttribute(ParameterNames.SCREEN_URL, screenUrl);
         req.setAttribute(ParameterNames.APPLICATION_ID, appIdString);
         req.getRequestDispatcher(CREATE_URL).forward(req, resp);
 

@@ -25,13 +25,13 @@
                     <c:if test="${not empty screenHeadingError}">${screenHeadingError}</c:if>
                 </div>
 
+                <c:if test="${not empty screenUrl}">
                 <div class="form-group">
                     <label for="screenUrl">Screen url</label>
                     <input type="url" class="form-control" id="screenUrl" name="screenUrl"
-                           placeholder="Example: http://example.com/" value="${screenUrl}" required>
-                    <c:if test="${not empty screenUrlError}">${screenUrlError}</c:if>
+                           placeholder="Will be generated automatically." value="${screenUrl}">
                 </div>
-
+                </c:if>
                 <h4>Linked components</h4>
 
                 <div class="row">
