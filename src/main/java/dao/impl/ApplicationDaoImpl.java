@@ -2,8 +2,11 @@ package dao.impl;
 
 import dao.ApplicationDao;
 import model.Application;
+import servlet.ParameterNames;
 
 import javax.enterprise.context.ApplicationScoped;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Implementation of Mongo DAO for devices with status and its nearby devices
@@ -27,4 +30,13 @@ public class ApplicationDaoImpl extends GenericMongoDaoImpl<Application> impleme
         return "applications";
     }
 
+    @Override
+    public Application findByName(String name) {
+        return collection.find(eq(ParameterNames.APPLICATION_NAME, name)).first();
+    }
+
+    @Override
+    public Application findByUuid(String uuid) {
+        return collection.find(eq("uuid", uuid)).first();
+    }
 }

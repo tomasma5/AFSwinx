@@ -19,7 +19,7 @@ import static com.mongodb.client.model.Filters.eq;
  */
 public abstract class GenericMongoDaoImpl<T extends MongoDocumentEntity> implements GenericMongoDao<T> {
 
-    private MongoCollection<T> collection;
+    protected MongoCollection<T> collection;
 
     GenericMongoDaoImpl() {
         collection = MongoConnection.getInstance().getDatabase().getCollection(getCollectionName(), getModelClass());

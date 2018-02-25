@@ -5,6 +5,7 @@ import dao.ScreenDao;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
+import rest.security.RequestContext;
 import service.servlet.ScreenManagementService;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Application extends MongoDocumentEntity{
 
+    private String uuid;
     private String applicationName;
     private String remoteUrl;
     private int remotePort;
@@ -13,7 +14,8 @@ public class Application extends MongoDocumentEntity{
     public Application() {
     }
 
-    public Application(String applicationName, String remoteUrl, int remotePort, List<Screen> screenList) {
+    public Application(String uuid, String applicationName, String remoteUrl, int remotePort, List<Screen> screenList) {
+        this.uuid = uuid;
         this.applicationName = applicationName;
         this.screenList = screenList;
         this.remoteUrl = remoteUrl;
@@ -50,5 +52,13 @@ public class Application extends MongoDocumentEntity{
 
     public void setRemotePort(int remotePort) {
         this.remotePort = remotePort;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

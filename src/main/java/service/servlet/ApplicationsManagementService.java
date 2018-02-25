@@ -15,6 +15,10 @@ public interface ApplicationsManagementService {
 
     public Application findById(ObjectId id);
 
+    public Application findByName(String name);
+
     public List<Application> getAll();
+
+    public Application findByUuid(String uuid);
 
 }

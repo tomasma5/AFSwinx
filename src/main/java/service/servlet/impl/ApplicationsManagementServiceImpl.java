@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Named("applicationsManagementService")
 @ApplicationScoped
@@ -24,7 +25,13 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
 
     @Override
     public void addNewApplication(Application app) {
+        String uuid = generateUuid(app);
+        app.setUuid(uuid);
         applicationDao.create(app);
+    }
+
+    private String generateUuid(Application app) {
+        return UUID.fromString(app.getApplicationName()).toString();
     }
 
     @Override
@@ -43,7 +50,17 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
     }
 
     @Override
+    public Application findByName(String name) {
+        return applicationDao.findByName(name);
+    }
+
+    @Override
     public List<Application> getAll() {
         return applicationDao.findAll();
+    }
+
+    @Override
+    public Application findByUuid(String uuid) {
+        return applicationDao.findByUuid(uuid);
     }
 }

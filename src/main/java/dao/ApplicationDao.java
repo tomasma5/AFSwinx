@@ -10,6 +10,8 @@ import model.Application;
  */
 public interface ApplicationDao extends GenericMongoDao<Application> {
 
-    // no need to implement any more method that is in abstractDao
+    public Application findByName(String name);
+
+    public Application findByUuid(String uuid);
 
 }

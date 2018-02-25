@@ -21,6 +21,7 @@
                     <th>App name</th>
                     <th>Remote url</th>
                     <th>Remote port</th>
+                    <th>UUID</th>
                     <th colspan="3">Actions</th>
                 </tr>
                 </thead>
@@ -30,6 +31,7 @@
                         <td>${app.applicationName}</td>
                         <td>${app.remoteUrl}</td>
                         <td>${app.remotePort}</td>
+                        <td>${app.uuid}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/apps/create?app=${app.id}">
                                 <button class="btn btn-primary">Edit</button>
