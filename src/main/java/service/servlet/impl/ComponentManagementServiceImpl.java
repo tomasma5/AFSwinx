@@ -1,11 +1,11 @@
-package service.impl;
+package service.servlet.impl;
 
 import dao.ComponentResourceDao;
 import dao.ScreenDao;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
-import service.ComponentManagementService;
+import service.servlet.ComponentManagementService;
 
 import javax.inject.Inject;
 import java.util.List;

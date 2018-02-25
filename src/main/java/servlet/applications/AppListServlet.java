@@ -1,7 +1,7 @@
 package servlet.applications;
 
 import org.bson.types.ObjectId;
-import service.ApplicationsManagementService;
+import service.servlet.ApplicationsManagementService;
 import servlet.ParameterNames;
 
 import javax.inject.Inject;

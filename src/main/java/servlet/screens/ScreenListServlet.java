@@ -1,8 +1,8 @@
 package servlet.screens;
 
 import org.bson.types.ObjectId;
-import service.ApplicationsManagementService;
-import service.ScreenManagementService;
+import service.servlet.ApplicationsManagementService;
+import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 
 import javax.inject.Inject;

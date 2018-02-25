@@ -3,8 +3,8 @@ package servlet.screens;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
-import service.ComponentManagementService;
-import service.ScreenManagementService;
+import service.servlet.ComponentManagementService;
+import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 
 import javax.inject.Inject;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import static java.util.stream.Collectors.toList;
 

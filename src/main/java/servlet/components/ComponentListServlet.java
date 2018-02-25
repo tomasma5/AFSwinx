@@ -1,8 +1,8 @@
 package servlet.components;
 
 import org.bson.types.ObjectId;
-import service.ApplicationsManagementService;
-import service.ComponentManagementService;
+import service.servlet.ApplicationsManagementService;
+import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
 
 import javax.inject.Inject;

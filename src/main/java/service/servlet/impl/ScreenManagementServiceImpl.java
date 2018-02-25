@@ -1,11 +1,11 @@
-package service.impl;
+package service.servlet.impl;
 
 import dao.ComponentResourceDao;
 import dao.ScreenDao;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
-import service.ScreenManagementService;
+import service.servlet.ScreenManagementService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

@@ -2,7 +2,7 @@ package servlet.components;
 
 import model.*;
 import org.bson.types.ObjectId;
-import service.ComponentManagementService;
+import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
 
 import javax.inject.Inject;
@@ -10,9 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.print.PrinterAbortException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

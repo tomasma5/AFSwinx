@@ -1,9 +1,9 @@
-package service.impl;
+package service.servlet.impl;
 
 import dao.ApplicationDao;
 import model.Application;
 import org.bson.types.ObjectId;
-import service.ApplicationsManagementService;
+import service.servlet.ApplicationsManagementService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

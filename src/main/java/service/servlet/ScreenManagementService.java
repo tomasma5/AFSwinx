@@ -1,4 +1,4 @@
-package service;
+package service.servlet;
 
 import model.ComponentResource;
 import model.Screen;
