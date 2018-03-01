@@ -56,14 +56,14 @@ public class AbsenceInstanceResource extends BaseResource {
                 for (AbsenceType absenceType : absenceTypesInCountry) {
                     options.put(String.valueOf(absenceType.getId()), absenceType.getName());
                 }
-                data.setOptionsToFields(options, "absenceType.id");
+                data.assignOptionsToFields(options, "absenceType.id");
 
                 List<Country> supportedCountries = getCountryManager().findAllCountry();
                 HashMap<String, String> countryOptions = new HashMap<String, String>();
                 for (Country country : supportedCountries) {
                     countryOptions.put(country.getName(), country.getName());
                 }
-                data.setOptionsToFields(countryOptions, "vacationPlace.country");
+                data.assignOptionsToFields(countryOptions, "vacationPlace.country");
             } catch (BusinessException e) {
                 return Response.status(e.getStatus()).build();
             } catch (NamingException e) {
@@ -119,12 +119,12 @@ public class AbsenceInstanceResource extends BaseResource {
                 stateOptions =
                         AFRestUtils.getDataInEnumClass(AbsenceInstanceState.class
                                 .getCanonicalName());
-                data.setOptionsToFields(stateOptions, "status");
+                data.assignOptionsToFields(stateOptions, "status");
             } else {
                 HashMap<String, String> stateOptions = new HashMap<String, String>();
                 stateOptions.put(AbsenceInstanceState.CANCELLED.name(), AbsenceInstanceState.CANCELLED.name());
                 stateOptions.put(AbsenceInstanceState.REQUESTED.name(), AbsenceInstanceState.REQUESTED.name());
-                data.setOptionsToFields(stateOptions, "status");
+                data.assignOptionsToFields(stateOptions, "status");
             }
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {

@@ -41,9 +41,9 @@ public class AFMetaModelPack implements Serializable {
      *        on variable person in root class and in their inner variable country and in their
      *        inner variable name will be set options.
      */
-    public void setOptionsToFields(HashMap<String, String> options, String fieldId) {
+    public void assignOptionsToFields(HashMap<String, String> options, String fieldId) {
         if (classInfo != null) {
-            classInfo.setOptionsToField(options, fieldId);
+            classInfo.assignOptionsToField(options, fieldId);
         }
     }
 
@@ -56,9 +56,9 @@ public class AFMetaModelPack implements Serializable {
      *        on variable person in root class and in their inner variable country and in their
      *        inner variable name will be set options.
      */
-    public void setOptionsToFields(List<String> options, String fieldId) {
+    public void assignOptionsToFields(List<String> options, String fieldId) {
         if (classInfo != null) {
-            classInfo.setOptionsToFields(options, fieldId);
+            classInfo.assingOptionsToFields(options, fieldId);
         }
     }
 

@@ -65,8 +65,8 @@ public class BusinessTripPartResource extends BaseResource {
                     countryOptions.put(country.getName(), country.getName());
                 }
             }
-            data.setOptionsToFields(countryOptions, "startPlace.country");
-            data.setOptionsToFields(countryOptions, "endPlace.country");
+            data.assignOptionsToFields(countryOptions, "startPlace.country");
+            data.assignOptionsToFields(countryOptions, "endPlace.country");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException | NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

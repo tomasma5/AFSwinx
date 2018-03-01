@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
+import com.tomscz.afswinx.component.builders.AFSwinxMenuBuilder;
 import com.tomscz.afswinx.component.builders.AFSwinxTableBuilder;
 import com.tomscz.afswinx.component.skin.Skin;
 
@@ -58,6 +59,16 @@ public class AFSwinx {
      */
     public AFSwinxTableBuilder getTableBuilder() {
         return new AFSwinxTableBuilder();
+    }
+
+
+    /**
+     * This method return builder which must be used to build {@link AFSwinxMenu}
+     *
+     * @return new instance of builder which can build menu
+     */
+    public AFSwinxMenuBuilder getMenuBuilder() {
+        return new AFSwinxMenuBuilder();
     }
 
     /**

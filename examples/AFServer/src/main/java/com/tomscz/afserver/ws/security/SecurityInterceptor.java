@@ -1,31 +1,5 @@
 package com.tomscz.afserver.ws.security;
 
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.StringTokenizer;
-
-import javax.annotation.security.DenyAll;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.ext.Provider;
-
-import org.jboss.resteasy.annotations.interception.ServerInterceptor;
-import org.jboss.resteasy.core.ResourceMethod;
-import org.jboss.resteasy.core.ServerResponse;
-import org.jboss.resteasy.spi.Failure;
-import org.jboss.resteasy.spi.HttpRequest;
-import org.jboss.resteasy.spi.interception.PreProcessInterceptor;
-import org.jboss.resteasy.util.Base64;
-
 import com.tomscz.afserver.manager.PersonManager;
 import com.tomscz.afserver.manager.PersonManagerImpl;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
@@ -33,6 +7,23 @@ import com.tomscz.afserver.persistence.entity.Person;
 import com.tomscz.afserver.persistence.entity.UserRoles;
 import com.tomscz.afserver.utils.AFServerConstants;
 import com.tomscz.afserver.utils.Utils;
+
+import javax.annotation.security.DenyAll;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * This class is security interceptor. Some of logic was transfered from my previous project:
@@ -45,34 +36,21 @@ import com.tomscz.afserver.utils.Utils;
  * @since 1.0.0.
  */
 @Provider
-@ServerInterceptor
-public class SecurityInterceptor implements PreProcessInterceptor {
+public class SecurityInterceptor implements ContainerRequestFilter {
 
     private AFSecurityContext securityContext = null;
     private boolean isPermitAll = false;
 
+    @javax.ws.rs.core.Context
+    private ResourceInfo resourceInfo;
+
+    @javax.ws.rs.core.Context
+    private HttpServletRequest httpRequest;
+
     public SecurityInterceptor() {}
 
-    @Override
-    public ServerResponse preProcess(HttpRequest request, ResourceMethod method) throws Failure,
-            WebApplicationException {
-        ServerResponse securityResponse = checkPermissions(request, method);
-        // Always remove security context
-        request.removeAttribute(AFServerConstants.SECURITY_CONTEXT);
-        if (securityContext != null) {
-            request.setAttribute(AFServerConstants.SECURITY_CONTEXT, securityContext);
-        }
-        if (securityResponse != null) {
-            if (isPermitAll) {
-                return null;
-            }
-            return securityResponse;
-        }
-        return null;
-    }
-
-    private ServerResponse checkPermissions(HttpRequest request, ResourceMethod method) {
-        Method methodToVerify = method.getMethod();
+    private Response checkPermissions(ContainerRequestContext requestContext) {
+        Method methodToVerify = resourceInfo.getResourceMethod();
         // Check default global annotations
         if (methodToVerify.isAnnotationPresent(DenyAll.class)) {
             return AFServerConstants.ACCESS_FORBIDDEN;
@@ -82,7 +60,7 @@ public class SecurityInterceptor implements PreProcessInterceptor {
                 || !methodToVerify.isAnnotationPresent(RolesAllowed.class)) {
             this.isPermitAll = true;
         }
-        final MultivaluedMap<String, String> headers = request.getHttpHeaders().getRequestHeaders();
+        final MultivaluedMap<String, String> headers = requestContext.getHeaders();
         // Get authorization header
         final List<String> authorization = headers.get(AFServerConstants.AUTHORIZATION_HEADER);
         if (authorization == null || authorization.isEmpty()) {
@@ -93,11 +71,7 @@ public class SecurityInterceptor implements PreProcessInterceptor {
                 authorization.get(0)
                         .replaceFirst(AFServerConstants.AUTHENTICATION_SCHEME + " ", "");
         String usernameAndPassword;
-        try {
-            usernameAndPassword = new String(Base64.decode(encodedUserPassword));
-        } catch (IOException e) {
-            return AFServerConstants.SERVER_ERROR;
-        }
+        usernameAndPassword = new String(org.glassfish.jersey.internal.util.Base64.decode(encodedUserPassword.getBytes()));
         final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
         final String nickname = tokenizer.nextToken();
         final String password = tokenizer.nextToken();
@@ -154,5 +128,21 @@ public class SecurityInterceptor implements PreProcessInterceptor {
             // Do nothing, null will be returned
         }
         return null;
+    }
+
+
+    @Override
+    public void filter(ContainerRequestContext requestContext) throws IOException {
+        Response securityResponse = checkPermissions(requestContext);
+        // Always remove security context
+        httpRequest.removeAttribute(AFServerConstants.SECURITY_CONTEXT);
+        if (securityContext != null) {
+            httpRequest.setAttribute(AFServerConstants.SECURITY_CONTEXT, securityContext);
+        }
+        if (securityResponse != null) {
+            if (!isPermitAll) {
+                requestContext.abortWith(securityResponse);
+            }
+        }
     }
 }

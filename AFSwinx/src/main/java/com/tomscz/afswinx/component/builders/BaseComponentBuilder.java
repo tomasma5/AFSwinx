@@ -1,6 +1,5 @@
 package com.tomscz.afswinx.component.builders;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -18,9 +17,9 @@ import com.tomscz.afswinx.component.widget.builder.WidgetBuilder;
 import com.tomscz.afswinx.component.widget.builder.abstraction.BaseLayoutBuilder;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
-import com.tomscz.afswinx.rest.connection.ConnectionParser;
-import com.tomscz.afswinx.validation.LessThanValidator;
+import com.tomscz.afswinx.rest.connection.JsonConnectionParser;
 import com.tomscz.afswinx.validation.RetypeValidator;
+import org.json.JSONObject;
 
 public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
 
@@ -33,7 +32,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected AFSwinxConnection dataConnection;
     protected AFSwinxConnection sendConnection;
     protected String connectionKey;
-    protected InputStream connectionConfiguration;
+    protected JSONObject connectionConfiguration;
 
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
@@ -47,7 +46,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, InputStream connectionConfiguration, String connectionKey) {
+    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration, String connectionKey) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
         this.connectionKey = connectionKey;
@@ -57,7 +56,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     /**
      * This method init builder. It set existed connection to builder. There are connection types,
      * which are used to retrieve model definitions, data and post data back.
-     * 
+     *
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param modelConnection connection to end point where model is defined couldn't be null
@@ -78,6 +77,18 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
         return (T) this;
     }
 
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T initBuilder(JSONObject connectionConfiguration) {
+        this.connectionConfiguration = connectionConfiguration;
+        return (T) this;
+    }
+
+    public void setConnectionKey(String connectionKey) {
+        this.connectionKey = connectionKey;
+    }
+
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
      * are connection types, which are used to retrieve model definitions, data and post data back.
@@ -91,7 +102,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
+    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
             String connectionKey, String connectionValue) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
@@ -114,7 +125,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
+    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
@@ -132,11 +143,10 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
 
     protected void initializeConnections() throws AFSwinxBuildException {
         if (modelConnection == null && connectionKey != null && connectionConfiguration != null) {
-            ConnectionParser connectionParser =
-                    new ConnectionParser(connectionKey, connectionParameters);
+            JsonConnectionParser connectionParser =
+                    new JsonConnectionParser(connectionKey, connectionParameters);
             AFSwinxConnectionPack connections =
-                    connectionParser.parseDocument(Utils
-                            .buildDocumentFromFile(connectionConfiguration));
+                    connectionParser.parse(connectionConfiguration);
             modelConnection = connections.getMetamodelConnection();
             dataConnection = connections.getDataConnection();
             sendConnection = connections.getSendConnection();

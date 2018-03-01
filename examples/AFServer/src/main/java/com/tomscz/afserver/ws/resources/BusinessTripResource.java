@@ -84,7 +84,7 @@ public class BusinessTripResource extends BaseResource {
                             options.put(String.valueOf(vehicle.getName()), vehicle.getName());
                         }
                     }
-                    data.setOptionsToFields(options, "vehicle");
+                    data.assignOptionsToFields(options, "vehicle");
                 }
                 //set total distance readonly
                 fieldInfo = Utils.getFieldInfoById(data.getClassInfo(), "totalDistance");
@@ -100,8 +100,8 @@ public class BusinessTripResource extends BaseResource {
                         countryOptions.put(country.getName(), country.getName());
                     }
                 }
-                data.setOptionsToFields(countryOptions, "startPlace.country");
-                data.setOptionsToFields(countryOptions, "endPlace.country");
+                data.assignOptionsToFields(countryOptions, "startPlace.country");
+                data.assignOptionsToFields(countryOptions, "endPlace.country");
 
                 //supply statuses for different roles
                 AFSecurityContext securityContex =
@@ -109,14 +109,14 @@ public class BusinessTripResource extends BaseResource {
                 if (securityContex.isUserInRole(UserRoles.ADMIN)) {
                     HashMap<String, String> stateOptions = AFRestUtils.getDataInEnumClass(BusinessTripState.class
                                     .getCanonicalName());
-                    data.setOptionsToFields(stateOptions, "status");
+                    data.assignOptionsToFields(stateOptions, "status");
                 } else {
                     HashMap<String, String> stateOptions = new HashMap<String, String>();
                     stateOptions.put(BusinessTripState.REQUESTED.toString(), BusinessTripState.REQUESTED.toString());
                     stateOptions.put(BusinessTripState.CANCELLED.toString(), BusinessTripState.CANCELLED.toString());
                     stateOptions.put(BusinessTripState.INPROGRESS.toString(), BusinessTripState.INPROGRESS.toString());
                     stateOptions.put(BusinessTripState.FINISHED.toString(), BusinessTripState.FINISHED.toString());
-                    data.setOptionsToFields(stateOptions, "status");
+                    data.assignOptionsToFields(stateOptions, "status");
                 }
             } catch (NamingException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

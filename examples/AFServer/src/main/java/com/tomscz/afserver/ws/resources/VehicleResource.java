@@ -65,18 +65,18 @@ public class VehicleResource extends BaseResource {
 
             HashMap<String, String> vehicleTypeOptions = AFRestUtils.getDataInEnumClass(VehicleType.class
                     .getCanonicalName());
-            data.setOptionsToFields(vehicleTypeOptions, "vehicleType");
+            data.assignOptionsToFields(vehicleTypeOptions, "vehicleType");
 
             HashMap<String, String> fuelTypeOptions = AFRestUtils.getDataInEnumClass(FuelType.class
                     .getCanonicalName());
-            data.setOptionsToFields(fuelTypeOptions, "fuelType");
+            data.assignOptionsToFields(fuelTypeOptions, "fuelType");
 
 
             HashMap<String, String> availableFlag = new HashMap<String, String>();
             // Define possibilities about available
             availableFlag.put("true", "true");
             availableFlag.put("false", "false");
-            data.setOptionsToFields(availableFlag, "available");
+            data.assignOptionsToFields(availableFlag, "available");
 
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {

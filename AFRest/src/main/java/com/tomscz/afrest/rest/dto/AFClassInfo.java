@@ -70,12 +70,12 @@ public class AFClassInfo implements Serializable {
      *        on variable person in root class and in their inner variable country and in their
      *        inner variable name will be set options.
      */
-    public void setOptionsToField(HashMap<String, String> options, String fieldId) {
+    public void assignOptionsToField(HashMap<String, String> options, String fieldId) {
         ArrayList<AFOptions> afOptions = new ArrayList<AFOptions>();
         for (String key : options.keySet()) {
             afOptions.add(new AFOptions(key, options.get(key)));
         }
-        setOptionsToField(afOptions, fieldId);
+        assignOptionsToField(afOptions, fieldId);
     }
 
     /**
@@ -88,7 +88,7 @@ public class AFClassInfo implements Serializable {
      *        on variable person in root class and in their inner variable country and in their
      *        inner variable name will be set options.
      */
-    private void setOptionsToField(List<AFOptions> options, String fieldId) {
+    private void assignOptionsToField(List<AFOptions> options, String fieldId) {
         String[] path = fieldId.split("\\.");
         String fieldInfoId = "";
         boolean findInClasses = false;
@@ -108,7 +108,7 @@ public class AFClassInfo implements Serializable {
                     for (int i = 1; i < path.length; i++) {
                         sb.append(path[i]);
                     }
-                    currentClass.setOptionsToField(options, sb.toString());
+                    currentClass.assignOptionsToField(options, sb.toString());
                     return;
                 }
             }
@@ -130,12 +130,12 @@ public class AFClassInfo implements Serializable {
      *        on variable person in root class and in their inner variable country and in their
      *        inner variable name will be set options.
      */
-    public void setOptionsToFields(List<String> options, String fieldId) {
+    public void assingOptionsToFields(List<String> options, String fieldId) {
         ArrayList<AFOptions> afOtions = new ArrayList<AFOptions>();
         for (String option : options) {
             afOtions.add(new AFOptions(option, option));
         }
-        setOptionsToField(afOtions, fieldId);
+        assignOptionsToField(afOtions, fieldId);
     }
 
     public List<AFClassInfo> getInnerClasses() {

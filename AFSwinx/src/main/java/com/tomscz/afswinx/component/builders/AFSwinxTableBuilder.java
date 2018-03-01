@@ -12,6 +12,7 @@ import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afswinx.component.AFSwinx;
@@ -102,6 +103,11 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
         }
 
         return afSwinxTable;
+    }
+
+    @Override
+    public SupportedComponents getBuiltComponentType() {
+        return SupportedComponents.TABLE;
     }
 
     @Override

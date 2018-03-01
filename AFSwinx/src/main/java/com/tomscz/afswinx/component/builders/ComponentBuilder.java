@@ -4,10 +4,13 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
+import org.json.JSONObject;
 
 /**
  * This interface specify operation which must provide every builder which is used to build
@@ -65,17 +68,25 @@ public interface ComponentBuilder<T> {
             AFSwinxConnection dataConnection, AFSwinxConnection postConnection);
 
     /**
+     * This method init builder. It set existed connection to builder. There are connection types,
+     * which are used to retrieve model definitions, data and post data back.
+     * @param connectionConfiguration json string in which will be found connection
+     * @return it returns this builder which could be used to build
+     */
+    public T initBuilder(JSONObject connectionConfiguration);
+
+    /**
      * This method init builder. It set variable based on which will be obtained connections. There
      * are connection types, which are used to retrieve model definitions, data and post data back.
      * 
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
-     * @param connectionConfiguration file in which will be found connection
+     * @param connectionConfiguration json object in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionValue value which will be added to connection configuration based on EL.
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
+    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
             String connectionKey, String connectionValue);
 
     /**
@@ -84,11 +95,11 @@ public interface ComponentBuilder<T> {
      * 
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
-     * @param connectionConfiguration file in which will be found connection
+     * @param connectionConfiguration json object in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
+    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
             String connectionKey);
 
     /**
@@ -97,11 +108,14 @@ public interface ComponentBuilder<T> {
      * 
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
-     * @param connectionConfiguration file in which will be found connection
+     * @param connectionConfiguration json object in which will be found connection
      * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionParameters which will be added to connection configuration file based on EL.
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, InputStream connectionConfiguration,
+    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
             String connectionKey, HashMap<String, String> connectionParameters);
+
+    public SupportedComponents getBuiltComponentType();
+
 }

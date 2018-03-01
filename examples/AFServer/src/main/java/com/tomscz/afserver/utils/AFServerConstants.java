@@ -1,7 +1,6 @@
 package com.tomscz.afserver.utils;
 
-import org.jboss.resteasy.core.Headers;
-import org.jboss.resteasy.core.ServerResponse;
+import javax.ws.rs.core.Response;
 
 /**
  * This class holds all constants which will be used in application.
@@ -20,12 +19,9 @@ public class AFServerConstants {
 
     public static final String SECURITY_CONTEXT = "securityContext";
 
-    public static final ServerResponse ACCESS_FORBIDDEN = new ServerResponse(
-            "Nobody can access this resource", 403, new Headers<Object>());;
-    public static final ServerResponse ACCESS_DENIED = new ServerResponse(
-            "Access denied for this resource", 401, new Headers<Object>());;
+    public static final Response ACCESS_FORBIDDEN = Response.status(403).entity("Nobody can access this resource").build();
+    public static final Response ACCESS_DENIED = Response.status(401).entity("Access denied for this resource").build();
     public static final String AUTHENTICATION_SCHEME = "Basic";
-    public static final ServerResponse SERVER_ERROR = new ServerResponse("INTERNAL SERVER ERROR",
-            500, new Headers<Object>());;
+    public static final Response SERVER_ERROR = Response.status(500).entity("INTERNAL SERVER ERROR").build();
 
 }

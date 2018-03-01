@@ -14,6 +14,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -51,7 +52,7 @@ public class CountryResource extends BaseResource {
     @Path("/definition")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request) {
+    public Response getResources(@Context HttpServletRequest request) {
         try {
             HashMap<String, Object> readOnlyVariables = new HashMap<String, Object>();
             // If user was authenticate and is admin then
@@ -74,7 +75,7 @@ public class CountryResource extends BaseResource {
             // Define possibilities about active
             activeFlag.put("true", "true");
             activeFlag.put("false", "false");
-            data.setOptionsToFields(activeFlag, "active");
+            data.assignOptionsToFields(activeFlag, "active");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

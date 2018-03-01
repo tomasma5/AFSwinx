@@ -60,11 +60,11 @@ public class UserResource extends BaseResource {
                     for (Country country : countries) {
                         countriesToChoose.put(country.getName(), country.getName());
                     }
-                    data.setOptionsToFields(countriesToChoose, "myAddress.country");
+                    data.assignOptionsToFields(countriesToChoose, "myAddress.country");
                     HashMap<String, String> genderOptions = new HashMap<String, String>();
                     genderOptions.put(Gender.MALE.name(), Gender.MALE.name());
                     genderOptions.put(Gender.FEMALE.name(), Gender.FEMALE.name());
-                    data.setOptionsToFields(genderOptions, "gender");
+                    data.assignOptionsToFields(genderOptions, "gender");
                 } catch (NamingException e) {
                     // Do nothing.
                 }

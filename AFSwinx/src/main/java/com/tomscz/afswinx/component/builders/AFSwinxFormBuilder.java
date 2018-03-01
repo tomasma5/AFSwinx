@@ -1,10 +1,12 @@
 package com.tomscz.afswinx.component.builders;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
@@ -51,6 +53,11 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             throw new AFSwinxBuildException(e.getMessage());
         }
         return form;
+    }
+
+    @Override
+    public SupportedComponents getBuiltComponentType() {
+        return SupportedComponents.FORM;
     }
 
     /**

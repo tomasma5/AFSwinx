@@ -1,54 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
-	<display-name>AFServer</display-name>
-	<!-- Jackson configuration changes -->
-	<context-param>
-		<param-name>resteasy.providers</param-name>
-		<param-value>com.tomscz.afserver.ws.json.JacksonConfig, com.tomscz.afserver.ws.security.SecurityInterceptor</param-value>
-	</context-param>
-	<listener>
-		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
-	</listener>
-	<listener>
-		<!-- Include Aspect Faces listener to perform proper framework initialization 
-			during application start -->
-		<listener-class>com.codingcrayons.aspectfaces.plugins.j2ee.AspectFacesListener</listener-class>
-	</listener>
-	<servlet>
-		<servlet-name>resteasy-servlet</servlet-name>
-		<servlet-class>
-			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-		</servlet-class>
-		<init-param>
-			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>com.tomscz.afserver.ws.resources.AFApplication</param-value>
-		</init-param>
-	</servlet>
-	<context-param>
-		<param-name>resteasy.servlet.mapping.prefix</param-name>
-		<param-value>/rest</param-value>
-	</context-param>
-	<servlet-mapping>
-		<servlet-name>resteasy-servlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
-	</servlet-mapping>
-	<servlet>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>/faces/*</url-pattern>
-	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>welcome.xhtml</welcome-file>
-	</welcome-file-list>
-	<context-param>
-		<param-name>javax.faces.WEBAPP_RESOURCES_DIRECTORY</param-name>
-		<param-value>/resources</param-value>
-	</context-param>
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <display-name>AFServer</display-name>
+    <!-- Jackson configuration changes -->
+
+    <listener>
+        <!-- Include Aspect Faces listener to perform proper framework initialization
+            during application start -->
+        <listener-class>com.codingcrayons.aspectfaces.plugins.j2ee.AspectFacesListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>welcome.xhtml</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>javax.faces.WEBAPP_RESOURCES_DIRECTORY</param-name>
+        <param-value>/resources</param-value>
+    </context-param>
 </web-app>

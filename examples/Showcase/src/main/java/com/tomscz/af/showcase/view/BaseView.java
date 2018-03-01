@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
+import com.tomscz.afswinx.component.AFSwinx;
 
 /**
  * This class is base view which extends all view. This view hold left menu, localization bar and
@@ -120,6 +121,9 @@ public abstract class BaseView extends JPanel {
         logoutButton = new JButton(Localization.getLocalizationText("logout.button"));
         logoutButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
+        List<AFSwinxButton> buttons = AFSwinx.getInstance().getMenuBuilder().getMenuButtons();
+        menu.add(buttons);
+
         if (ApplicationContext.getInstance().getSecurityContext() != null
                 && ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
             loginButton = new JButton(Localization.getLocalizationText("link.home"));

@@ -46,7 +46,7 @@ public class AbsenceTypeResource extends BaseResource {
             HashMap<String, String> options = new HashMap<String, String>();
             options.put("true", "true");
             options.put("false", "false");
-            data.setOptionsToFields(options, "active");
+            data.assignOptionsToFields(options, "active");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -74,7 +74,7 @@ public class AbsenceTypeResource extends BaseResource {
             for (Country country : supportedCountries) {
                 options.put(String.valueOf(country.getId()), country.getName());
             }
-            data.setOptionsToFields(options, "country");
+            data.assignOptionsToFields(options, "country");
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

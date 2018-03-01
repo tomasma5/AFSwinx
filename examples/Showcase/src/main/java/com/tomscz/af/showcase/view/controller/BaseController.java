@@ -85,6 +85,7 @@ public abstract class BaseController {
             AFSwinx.getInstance().removeAllComponents();
             AvaiableCountryView avaiableCountry = new AvaiableCountryView();
             AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
+            List<AFComponent> ...
             view.setVisible(false);
             view = null;
             avaiableCountry.setVisible(true);
