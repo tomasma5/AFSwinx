@@ -62,11 +62,11 @@ function toggleConnection(connectionType) {
 }
 
 function disableInputs(el, disabled) {
-    //TODO kdyz je vypnuto hned na zacatku pri editu, tak ty fieldy neexistuji
     var all = el.getElementsByTagName('input'),
         i;
     for (i = 0; i < all.length; i++) {
         all[i].disabled = disabled;
+        all[i].required = !disabled;
     }
 }
 

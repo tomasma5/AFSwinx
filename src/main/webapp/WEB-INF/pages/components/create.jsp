@@ -60,32 +60,65 @@
                                  class="panel-body ${modelConnectionActive == 0? 'notVisible' : ''}">
                                 <div class="form-group">
                                     <label for="modelConnectionProtocol">Protocol</label>
-                                    <input type="text" class="form-control" id="modelConnectionProtocol"
-                                           name="modelConnectionProtocol"
-                                           placeholder="Example: http" value="${modelConnectionProtocol}" required>
+                                    <c:if test="${modelConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="modelConnectionProtocol"
+                                               name="modelConnectionProtocol"
+                                               placeholder="Example: http" value="${modelConnectionProtocol}" disabled>
+                                    </c:if>
+                                    <c:if test="${modelConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="modelConnectionProtocol"
+                                               name="modelConnectionProtocol"
+                                               placeholder="Example: http" value="${modelConnectionProtocol}" required>
+                                    </c:if>
                                     <c:if test="${not empty modelConnectionProtocolError}">${modelConnectionProtocolError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="modelConnectionAddress">Address</label>
-                                    <input type="text" class="form-control" id="modelConnectionAddress"
-                                           name="modelConnectionAddress"
-                                           placeholder="Example: example.com" value="${modelConnectionAddress}"
-                                           required>
+                                    <c:if test="${modelConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="modelConnectionAddress"
+                                               name="modelConnectionAddress"
+                                               placeholder="Example: example.com" value="${modelConnectionAddress}"
+                                               disabled>
+                                    </c:if>
+                                    <c:if test="${modelConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="modelConnectionAddress"
+                                               name="modelConnectionAddress"
+                                               placeholder="Example: example.com" value="${modelConnectionAddress}"
+                                               required>
+                                    </c:if>
                                     <c:if test="${not empty modelConnectionAddressError}">${modelConnectionAddressError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="modelConnectionPort">Port</label>
-                                    <input type="number" class="form-control" id="modelConnectionPort"
-                                           name="modelConnectionPort"
-                                           value="${modelConnectionPort}" required>
+                                    <c:if test="${modelConnectionActive == 0}">
+                                        <input type="number" class="form-control" id="modelConnectionPort"
+                                               name="modelConnectionPort"
+                                               value="${modelConnectionPort}"
+                                               disabled>
+                                    </c:if>
+                                    <c:if test="${modelConnectionActive != 0}">
+                                        <input type="number" class="form-control" id="modelConnectionPort"
+                                               name="modelConnectionPort"
+                                               value="${modelConnectionPort}"
+                                               required>
+                                    </c:if>
                                     <c:if test="${not empty modelConnectionPortError}">${modelConnectionPortError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="modelConnectionParameters">Paramaters</label>
-                                    <input type="text" class="form-control" id="modelConnectionParameters"
-                                           name="modelConnectionParameters"
-                                           placeholder="Example: AFServer/rest/.../model"
-                                           value="${modelConnectionParameters}" required>
+                                    <c:if test="${modelConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="modelConnectionParameters"
+                                               name="modelConnectionParameters"
+                                               placeholder="Example: AFServer/rest/.../model"
+                                               value="${modelConnectionParameters}" disabled>
+                                    </c:if>
+                                    <c:if test="${modelConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="modelConnectionParameters"
+                                               name="modelConnectionParameters"
+                                               placeholder="Example: AFServer/rest/.../model"
+                                               value="${modelConnectionParameters}" required>
+                                    </c:if>
+
                                     <c:if test="${not empty modelConnectionParametersError}">${modelConnectionParametersError}</c:if>
                                 </div>
 
@@ -163,32 +196,68 @@
 
                                 <div class="form-group">
                                     <label for="dataConnectionProtocol">Protocol</label>
-                                    <input type="text" class="form-control" id="dataConnectionProtocol"
-                                           name="dataConnectionProtocol"
-                                           placeholder="Example: http" value="${dataConnectionProtocol}" required>
+                                    <c:if test="${dataConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="dataConnectionProtocol"
+                                               name="dataConnectionProtocol"
+                                               placeholder="Example: http"
+                                               value="${dataConnectionProtocol}"
+                                               disabled>
+                                    </c:if>
+                                    <c:if test="${dataConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="dataConnectionProtocol"
+                                               name="dataConnectionProtocol"
+                                               placeholder="Example: http"
+                                               value="${dataConnectionProtocol}"
+                                               required>
+                                    </c:if>
                                     <c:if test="${not empty dataConnectionProtocolError}">${dataConnectionProtocolError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="dataConnectionAddress">Address</label>
-                                    <input type="text" class="form-control" id="dataConnectionAddress"
-                                           name="dataConnectionAddress"
-                                           placeholder="Example: example.com" value="${dataConnectionAddress}"
-                                           required>
+                                    <c:if test="${dataConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="dataConnectionAddress"
+                                               name="dataConnectionAddress"
+                                               placeholder="Example: example.com" value="${dataConnectionAddress}"
+                                               disabled>
+                                    </c:if>
+                                    <c:if test="${dataConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="dataConnectionAddress"
+                                               name="dataConnectionAddress"
+                                               placeholder="Example: example.com" value="${dataConnectionAddress}"
+                                               required>
+                                    </c:if>
                                     <c:if test="${not empty dataConnectionAddressError}">${dataConnectionAddressError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="dataConnectionPort">Port</label>
-                                    <input type="number" class="form-control" id="dataConnectionPort"
-                                           name="dataConnectionPort"
-                                           value="${dataConnectionPort}" required>
+                                    <c:if test="${dataConnectionActive == 0}">
+                                        <input type="number" class="form-control" id="dataConnectionPort"
+                                               name="dataConnectionPort"
+                                               value="${dataConnectionPort}" disabled>
+                                    </c:if>
+                                    <c:if test="${dataConnectionActive != 0}">
+                                        <input type="number" class="form-control" id="dataConnectionPort"
+                                               name="dataConnectionPort"
+                                               value="${dataConnectionPort}" required>
+                                    </c:if>
+
                                     <c:if test="${not empty dataConnectionPortError}">${dataConnectionPortError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="dataConnectionParameters">Parameters</label>
-                                    <input type="text" class="form-control" id="dataConnectionParameters"
-                                           name="dataConnectionParameters"
-                                           placeholder="Example: AFServer/rest/.../data"
-                                           value="${dataConnectionParameters}" required>
+                                    <c:if test="${dataConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="dataConnectionParameters"
+                                               name="dataConnectionParameters"
+                                               placeholder="Example: AFServer/rest/.../data"
+                                               value="${dataConnectionParameters}" disabled>
+                                    </c:if>
+                                    <c:if test="${dataConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="dataConnectionParameters"
+                                               name="dataConnectionParameters"
+                                               placeholder="Example: AFServer/rest/.../data"
+                                               value="${dataConnectionParameters}" required>
+                                    </c:if>
+
                                     <c:if test="${not empty dataConnectionParametersError}">${dataConnectionParametersError}</c:if>
                                 </div>
 
@@ -265,32 +334,64 @@
                                  class="panel-body ${sendConnectionActive == 0? 'notVisible' : ''}">
                                 <div class="form-group">
                                     <label for="sendConnectionProtocol">Protocol</label>
-                                    <input type="text" class="form-control" id="sendConnectionProtocol"
-                                           name="sendConnectionProtocol"
-                                           placeholder="Example: http" value="${sendConnectionProtocol}" required>
+                                    <c:if test="${sendConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="sendConnectionProtocol"
+                                               name="sendConnectionProtocol"
+                                               placeholder="Example: http" value="${sendConnectionProtocol}" disabled>
+                                    </c:if>
+                                    <c:if test="${sendConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="sendConnectionProtocol"
+                                               name="sendConnectionProtocol"
+                                               placeholder="Example: http" value="${sendConnectionProtocol}" required>
+                                    </c:if>
+
                                     <c:if test="${not empty sendConnectionProtocolError}">${sendConnectionProtocolError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="sendConnectionAddress">Address</label>
-                                    <input type="text" class="form-control" id="sendConnectionAddress"
-                                           name="sendConnectionAddress"
-                                           placeholder="Example: example.com" value="${sendConnectionAddress}"
-                                           required>
+                                    <c:if test="${sendConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="sendConnectionAddress"
+                                               name="sendConnectionAddress"
+                                               placeholder="Example: example.com" value="${sendConnectionAddress}"
+                                               disabled>
+                                    </c:if>
+                                    <c:if test="${sendConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="sendConnectionAddress"
+                                               name="sendConnectionAddress"
+                                               placeholder="Example: example.com" value="${sendConnectionAddress}"
+                                               required>
+                                    </c:if>
                                     <c:if test="${not empty sendConnectionAddressError}">${sendConnectionAddressError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="sendConnectionPort">Port</label>
-                                    <input type="number" class="form-control" id="sendConnectionPort"
-                                           name="sendConnectionPort"
-                                           value="${sendConnectionPort}" required>
+                                    <c:if test="${sendConnectionActive == 0}">
+                                        <input type="number" class="form-control" id="sendConnectionPort"
+                                               name="sendConnectionPort"
+                                               value="${sendConnectionPort}" disabled>
+                                    </c:if>
+                                    <c:if test="${sendConnectionActive != 0}">
+                                        <input type="number" class="form-control" id="sendConnectionPort"
+                                               name="sendConnectionPort"
+                                               value="${sendConnectionPort}" required>
+                                    </c:if>
                                     <c:if test="${not empty sendConnectionPortError}">${sendConnectionPortError}</c:if>
                                 </div>
                                 <div class="form-group">
                                     <label for="sendConnectionParameters">Port</label>
-                                    <input type="text" class="form-control" id="sendConnectionParameters"
-                                           name="sendConnectionParameters"
-                                           placeholder="Example: AFServer/rest/.../send"
-                                           value="${sendConnectionParameters}" required>
+                                    <c:if test="${sendConnectionActive == 0}">
+                                        <input type="text" class="form-control" id="sendConnectionParameters"
+                                               name="sendConnectionParameters"
+                                               placeholder="Example: AFServer/rest/.../send"
+                                               value="${sendConnectionParameters}" disabled>
+                                    </c:if>
+                                    <c:if test="${sendConnectionActive != 0}">
+                                        <input type="text" class="form-control" id="sendConnectionParameters"
+                                               name="sendConnectionParameters"
+                                               placeholder="Example: AFServer/rest/.../send"
+                                               value="${sendConnectionParameters}" required>
+                                    </c:if>
+
                                     <c:if test="${not empty sendConnectionParametersError}">${sendConnectionParametersError}</c:if>
                                 </div>
 

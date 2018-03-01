@@ -1,10 +1,13 @@
 package rest;
 
 import org.bson.types.ObjectId;
+import service.exception.ComponentRequestException;
 import service.rest.ComponentResourceService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -22,24 +25,23 @@ public class ComponentResourcesEndpoint {
     @GET
     @Path("/model/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getModelDefinition( @PathParam("component_id") ObjectId componentId) {
-        //TODO implement me
-        return null;
+    public String getModelDefinition(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+        //TODO check if component belongs to application
+        return componentResourceService.getComponentModel(componentId, headers);
     }
 
     @GET
     @Path("/data/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getComponentData(@PathParam("component_id") ObjectId componentId) {
-        //TODO implement me
-        return null;
+    public String getComponentData(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+        return componentResourceService.getComponentData(componentId, headers);
     }
 
     @POST
     @Path("/send/component/{component_id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void sendComponentData(@PathParam("component_id") ObjectId componentId) {
-        //TODO implement me
+    public void sendComponentData(String data, @Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+        componentResourceService.sendComponentData(componentId, headers, data);
     }
 }

@@ -12,7 +12,6 @@ import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.*;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.util.Base64;
 
 /**
  * Filter for application authorization via Basic auth method.
@@ -34,28 +33,24 @@ public class ApplicationFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Basic ")) {
-            abortOnUnauthorized(requestContext, "Authorization header must be provided");
+        String applicationUuid = requestContext.getHeaderString("Application");
+        if (applicationUuid == null) {
+            abortOnBadRequest(requestContext, "Application header must be provided");
             return;
         }
 
-        String base64hash = authorizationHeader.substring("Basic".length()).trim();
-        String applicationName = new String(Base64.getDecoder().decode(base64hash));
-
-        Application application = applicationsManagementService.findByUuid(applicationName);
-        // password validation
+        Application application = applicationsManagementService.findByUuid(applicationUuid);
         if (application == null) {
-            abortOnUnauthorized(requestContext, "Invalid application.");
+            abortOnBadRequest(requestContext, "Invalid application.");
             return;
         }
         this.requestContext.setCurrentApplication(application);
     }
 
-    private void abortOnUnauthorized(ContainerRequestContext context, String reason, Object... reasonArgs) {
+    private void abortOnBadRequest(ContainerRequestContext context, String reason, Object... reasonArgs) {
         String text = String.format(reason, reasonArgs);
         context.abortWith(Response.status(
-                Response.Status.UNAUTHORIZED)
+                Response.Status.BAD_REQUEST)
                 .type(MediaType.TEXT_HTML)
                 .entity(text)
                 .build());
