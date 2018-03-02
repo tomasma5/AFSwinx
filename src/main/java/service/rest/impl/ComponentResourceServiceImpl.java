@@ -1,10 +1,13 @@
 package service.rest.impl;
 
 import dao.ComponentResourceDao;
+import model.Application;
 import model.ComponentConnection;
 import model.ComponentResource;
 import org.bson.types.ObjectId;
+import rest.security.RequestContext;
 import service.exception.ComponentRequestException;
+import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
 import service.rest.ScreenRestService;
 import utils.HttpUtils;
@@ -15,6 +18,7 @@ import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -31,13 +35,21 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     @Inject
     ComponentResourceDao componentResourceDao;
 
+    @Inject
+    RequestContext requestContext;
+
     @Override
     public String getComponentModel(ObjectId id, HttpHeaders headers) throws ComponentRequestException {
-        ComponentResource componentResource = componentResourceDao.findByObjectId(id);
+        Application application = requestContext.getCurrentApplication();
         String modelStr = null;
-        if (componentResource != null) {
+        ComponentResource componentResource = componentResourceDao.findByObjectId(id);
+        if (componentResource != null && application != null) {
+            if (!componentResource.getApplicationId().equals(application.getId())) {
+                String errorMsg = "Cannot get component model, this component belongs to another application";
+                LOGGER.log(Level.SEVERE, errorMsg);
+                throw new ComponentRequestException(errorMsg);
+            }
             ComponentConnection realModelConnection = componentResource.getRealConnections().getModelConnection();
-
             //TODO add context filtering
             try {
                 modelStr = HttpUtils.getRequest(buildUrl(realModelConnection), headers.getRequestHeaders());
@@ -68,7 +80,6 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     @Override
     public void sendComponentData(ObjectId id, HttpHeaders headers, String data) throws ComponentRequestException {
         ComponentResource componentResource = componentResourceDao.findByObjectId(id);
-        String modelStr = null;
         if (componentResource != null) {
             ComponentConnection realDataConnection = componentResource.getRealConnections().getSendConnection();
 

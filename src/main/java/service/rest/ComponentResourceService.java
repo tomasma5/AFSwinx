@@ -2,6 +2,7 @@ package service.rest;
 
 import org.bson.types.ObjectId;
 import service.exception.ComponentRequestException;
+import service.exception.ServiceException;
 
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;

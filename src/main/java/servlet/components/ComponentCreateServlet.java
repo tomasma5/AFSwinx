@@ -2,6 +2,7 @@ package servlet.components;
 
 import model.*;
 import org.bson.types.ObjectId;
+import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
 
@@ -24,6 +25,9 @@ public class ComponentCreateServlet extends HttpServlet {
     @Inject
     private ComponentManagementService componentManagementService;
 
+    @Inject
+    private ApplicationsManagementService applicationsManagementService;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationId = request.getParameter(ParameterNames.APPLICATION_ID);
         String componentId = request.getParameter(ParameterNames.COMPONENT_ID);
@@ -31,7 +35,7 @@ public class ComponentCreateServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
+        Application application = applicationsManagementService.findById(new ObjectId(applicationId));
         if (componentId != null) {
             setExistingComponentToRequest(request, componentId);
         } else {
@@ -50,16 +54,16 @@ public class ComponentCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO refactor???
         String appIdString = req.getParameter(ParameterNames.APPLICATION_ID);
         if (appIdString == null || appIdString.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
+        Application application = applicationsManagementService.findById(new ObjectId(appIdString));
         //get base component information
         String componentId = req.getParameter(ParameterNames.COMPONENT_ID);
         String componentName = req.getParameter(ParameterNames.COMPONENT_NAME);
-        SupportedComponentType componentType = SupportedComponentType.valueOf(req.getParameter(ParameterNames.COMPONENT_TYPE)); //TODO copy enum from value from afrest utils
+        SupportedComponentType componentType = SupportedComponentType.valueOf(req.getParameter(ParameterNames.COMPONENT_TYPE));
 
         //determine if connection is activated
         String modelConnectionActiveString = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION_ACTIVE);
@@ -70,40 +74,29 @@ public class ComponentCreateServlet extends HttpServlet {
         boolean sendConnectionActive = sendConnectionActiveString != null && Integer.parseInt(sendConnectionActiveString) == 1;
 
         //get connection info from request
-        String modelConnectionProtocol = null, modelConnectionAddress = null, modelConnectionPort = null, modelConnectionParameters = null;
-        String dataConnectionProtocol = null, dataConnectionAddress = null, dataConnectionPort = null, dataConnectionParameters = null;
-        String sendConnectionProtocol = null, sendConnectionAddress = null, sendConnectionPort = null, sendConnectionParameters = null;
+        String modelConnectionParameters = null;
+        String dataConnectionParameters = null;
+        String sendConnectionParameters = null;
         int modelHeaderParamsCount = 0, modelSecurityParamsCount = 0;
         int dataHeaderParamsCount = 0, dataSecurityParamsCount = 0;
         int sendHeaderParamsCount = 0, sendSecurityParamsCount = 0;
 
         if (modelConnectionActive) {
-            modelConnectionProtocol = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.PROTOCOL);
-            modelConnectionAddress = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.ADDRESS);
-            modelConnectionPort = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.PORT);
             modelConnectionParameters = req.getParameter(ParameterNames.MODEL + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
             modelHeaderParamsCount = Integer.parseInt(req.getParameter(ParameterNames.MODEL + ParameterNames.HEADER_PARAMS_COUNT));
             modelSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.MODEL + ParameterNames.SECURITY_PARAMS_COUNT));
         }
 
         if (dataConnectionActive) {
-            dataConnectionProtocol = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.PROTOCOL);
-            dataConnectionAddress = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.ADDRESS);
-            dataConnectionPort = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.PORT);
             dataConnectionParameters = req.getParameter(ParameterNames.DATA + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
             dataHeaderParamsCount = Integer.parseInt(req.getParameter(ParameterNames.DATA + ParameterNames.HEADER_PARAMS_COUNT));
             dataSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.DATA + ParameterNames.SECURITY_PARAMS_COUNT));
         }
         if (sendConnectionActive) {
-            sendConnectionProtocol = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.PROTOCOL);
-            sendConnectionAddress = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.ADDRESS);
-            sendConnectionPort = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.PORT);
             sendConnectionParameters = req.getParameter(ParameterNames.SEND + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
             sendHeaderParamsCount = Integer.parseInt(req.getParameter(ParameterNames.SEND + ParameterNames.HEADER_PARAMS_COUNT));
             sendSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.SEND + ParameterNames.SECURITY_PARAMS_COUNT));
         }
-
-        //TODO data validation?
 
         try {
             ComponentResource componentResource = getComponentResource(componentId, modelConnectionActive, dataConnectionActive, sendConnectionActive);
@@ -116,8 +109,8 @@ public class ComponentCreateServlet extends HttpServlet {
             //set connection data
             if (modelConnectionActive) {
 
-                setConnectionAttributes(req, ParameterNames.MODEL, modelConnectionAddress, modelConnectionParameters,
-                        modelConnectionProtocol, modelConnectionPort, modelHeaderParamsCount, modelSecurityParamsCount,
+                setConnectionAttributes(req, ParameterNames.MODEL, application,
+                        modelConnectionParameters, modelHeaderParamsCount, modelSecurityParamsCount,
                         componentResource.getId(),
                         componentResource.getRealConnections().getModelConnection(),
                         componentResource.getProxyConnections().getModelConnection());
@@ -126,8 +119,8 @@ public class ComponentCreateServlet extends HttpServlet {
                 componentResource.getProxyConnections().setModelConnection(null);
             }
             if (dataConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.DATA, dataConnectionAddress, dataConnectionParameters,
-                        dataConnectionProtocol, dataConnectionPort, dataHeaderParamsCount, dataSecurityParamsCount,
+                setConnectionAttributes(req, ParameterNames.DATA, application, dataConnectionParameters,
+                        dataHeaderParamsCount, dataSecurityParamsCount,
                         componentResource.getId(),
                         componentResource.getRealConnections().getDataConnection(),
                         componentResource.getProxyConnections().getDataConnection());
@@ -136,8 +129,8 @@ public class ComponentCreateServlet extends HttpServlet {
                 componentResource.getProxyConnections().setDataConnection(null);
             }
             if (sendConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.SEND, sendConnectionAddress, sendConnectionParameters,
-                        sendConnectionProtocol, sendConnectionPort, sendHeaderParamsCount, sendSecurityParamsCount,
+                setConnectionAttributes(req, ParameterNames.SEND, application, sendConnectionParameters,
+                        sendHeaderParamsCount, sendSecurityParamsCount,
                         componentResource.getId(),
                         componentResource.getRealConnections().getSendConnection(),
                         componentResource.getProxyConnections().getSendConnection());
@@ -157,8 +150,6 @@ public class ComponentCreateServlet extends HttpServlet {
         } catch (NumberFormatException ex) {
             //TODO
         }
-
-        //TODO set failed form data
 
         req.setAttribute(ParameterNames.APPLICATION_ID, appIdString);
         req.getRequestDispatcher(CREATE_URL).forward(req, resp);
@@ -224,14 +215,10 @@ public class ComponentCreateServlet extends HttpServlet {
     }
 
 
-    private void setConnectionInputToRequest(HttpServletRequest req, String type, String connectionProtocol,
-                                             String connectionAddress, int connectionPort,
+    private void setConnectionInputToRequest(HttpServletRequest req, String type,
                                              Map<String, String> headerParams, Map<String, String> securityParams,
                                              String connectionParameters) {
         req.setAttribute(type + ParameterNames.CONNECTION_ACTIVE, 1);
-        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PROTOCOL, connectionProtocol);
-        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.ADDRESS, connectionAddress);
-        req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PORT, connectionPort);
         req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS, connectionParameters);
         if (headerParams != null) {
             req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.HEADER_PARAMS, headerParams);
@@ -242,16 +229,16 @@ public class ComponentCreateServlet extends HttpServlet {
     }
 
     private void setConnectionAttributes(HttpServletRequest req, String type,
-                                         String address, String parameters,
-                                         String protocol, String port, int headerParamsCount,
-                                         int securityParamsCount, ObjectId componentResource, ComponentConnection connection, ComponentConnection proxyConnection) {
-        if (connection != null &&
-                (parameters != null && !parameters.isEmpty()) &&
-                (protocol != null && !protocol.isEmpty()) &&
-                (port != null && !port.isEmpty())) {
+                                         Application application, String parameters,
+                                         int headerParamsCount,
+                                         int securityParamsCount, ObjectId componentResource,
+                                         ComponentConnection connection, ComponentConnection proxyConnection) {
+        if (connection != null && (parameters != null && !parameters.isEmpty()) && (application != null)) {
+            String protocol = application.getRemoteUrl().substring(0, application.getRemoteUrl().indexOf(":"));
+            String address = application.getRemoteUrl().substring(application.getRemoteUrl().indexOf("://") + 3);
             connection.setProtocol(protocol);
             connection.setAddress(address);
-            connection.setPort(Integer.parseInt(port));
+            connection.setPort(application.getRemotePort());
             connection.setParameters(parameters);
             if (headerParamsCount > 0) {
                 Map<String, String> headerParams = new HashMap<>();
@@ -275,7 +262,7 @@ public class ComponentCreateServlet extends HttpServlet {
             proxyConnection.setProtocol(req.getScheme());
             proxyConnection.setAddress(req.getServerName());
             proxyConnection.setPort(req.getServerPort());
-            proxyConnection.setParameters(req.getContextPath() + "/api/connections/" + type + "/component/" + componentResource);
+            proxyConnection.setParameters(req.getContextPath().substring(1) + "/api/connections/" + type + "/component/" + componentResource);
             proxyConnection.setHeaderParams(connection.getHeaderParams());
             proxyConnection.setSecurityParams(connection.getSecurityParams());
         }
@@ -291,8 +278,7 @@ public class ComponentCreateServlet extends HttpServlet {
         ComponentConnection sendConnection = component.getRealConnections().getSendConnection();
 
         if (modelConnection != null) {
-            setConnectionInputToRequest(request, ParameterNames.MODEL, modelConnection.getProtocol(),
-                    modelConnection.getAddress(), modelConnection.getPort(),
+            setConnectionInputToRequest(request, ParameterNames.MODEL,
                     modelConnection.getHeaderParams(),
                     modelConnection.getSecurityParams(),
                     modelConnection.getParameters());
@@ -300,8 +286,7 @@ public class ComponentCreateServlet extends HttpServlet {
             request.setAttribute(ParameterNames.MODEL + ParameterNames.CONNECTION_ACTIVE, 0);
         }
         if (dataConnection != null) {
-            setConnectionInputToRequest(request, ParameterNames.DATA, dataConnection.getProtocol(),
-                    dataConnection.getAddress(), dataConnection.getPort(),
+            setConnectionInputToRequest(request, ParameterNames.DATA,
                     dataConnection.getHeaderParams(),
                     dataConnection.getSecurityParams(),
                     dataConnection.getParameters());
@@ -309,8 +294,7 @@ public class ComponentCreateServlet extends HttpServlet {
             request.setAttribute(ParameterNames.DATA + ParameterNames.CONNECTION_ACTIVE, 0);
         }
         if (sendConnection != null) {
-            setConnectionInputToRequest(request, ParameterNames.SEND, sendConnection.getProtocol(),
-                    sendConnection.getAddress(), sendConnection.getPort(),
+            setConnectionInputToRequest(request, ParameterNames.SEND,
                     sendConnection.getHeaderParams(),
                     sendConnection.getSecurityParams(),
                     sendConnection.getParameters());
