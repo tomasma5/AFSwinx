@@ -10,9 +10,17 @@ package com.tomscz.afrest.commons;
  */
 public enum SupportedWidgets {
 
-    TEXTFIELD("textField"), LABEL("label"), NUMBERFIELD("numberField"), NUMBERLONGFIELD(
-            "numberLongField"), NUMBERDOUBLEFIELD("numberDoubleField"), DROPDOWNMENU("dropDownMenu"), CHECKBOX(
-            "checkBox"), TEXTAREA("textArea"), OPTION("option"), CALENDAR("calendar"), PASSWORD("password");
+    TEXTFIELD("TEXTFIELD"),
+    LABEL("LABEL"),
+    NUMBERFIELD("NUMBERFIELD"),
+    NUMBERLONGFIELD("NUMBERLONGFIELD"),
+    NUMBERDOUBLEFIELD("NUMBERDOUBLEFIELD"),
+    DROPDOWNMENU("DROPDOWNMENU"),
+    CHECKBOX("CHECKBOX"),
+    TEXTAREA("TEXTAREA"),
+    OPTION("OPTION"),
+    CALENDAR("CALENDAR"),
+    PASSWORD("PASSWORD");
 
     private final String name;
 

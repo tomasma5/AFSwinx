@@ -4,15 +4,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Map;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.view.*;
 import com.tomscz.af.showcase.view.model.AbsenceTypeManagementModel;
 import com.tomscz.af.showcase.view.model.BaseModel;
-import com.tomscz.afswinx.component.AFSwinx;
-import com.tomscz.afswinx.component.AFSwinxForm;
-import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afrest.commons.SupportedComponents;
+import com.tomscz.afswinx.component.*;
+import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
+import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 
 /**
@@ -36,56 +40,57 @@ public abstract class BaseController {
      * This method register all listeners for this controller.
      */
     protected void registerListeners() {
-        view.addLoginButtonListener(loginButtonListener);
-        view.addAvaiableCountryListener(avaiableCountryPublicListener);
-        view.addMyProfileListener(myProfileListener);
-        view.addAbsenceTypeListener(absenceTypeListener);
-        view.addAbsenceAddListener(absenceInstanceCreateListener);
-        view.addMyAbsencesListener(myAbsenceInstanceListener);
-        view.addAbsencesInstanceEditListener(absenceInstanceEditListener);
         view.addCzechButtonListener(onCzechButtonExec);
         view.addEnglishButtonListener(onEnglishButtonExec);
-        view.addLogoutButtonMenuListener(logoutButtonListener);
-        view.addBusinessTripsListener(businessTripsListener);
-        view.addVehiclesButtonListener(vehiclesButtonListener);
+        Map<String, AFSwinxMenuButton> menuButtons = view.getSwinxMenu().getMenuButtons();
+        for(Map.Entry<String, AFSwinxMenuButton> menuBtnPair : menuButtons.entrySet()) {
+            if(menuBtnPair.getKey().equals("Login")) {
+                menuBtnPair.getValue().setScreenPreparedListener(loginButtonListener);
+            }
+            if(menuBtnPair.getKey().equals("Available countries")){
+                menuBtnPair.getValue().setScreenPreparedListener(avaiableCountryPublicListener);
+            }
+            //TODO other screen prepared listeners
+        }
+        //TODO register button listeners
     }
 
     // This section register listeners from menu and localization
 
-    private ActionListener loginButtonListener = new ActionListener() {
+    private ScreenPreparedListener loginButtonListener = new ScreenPreparedListener() {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
-            WelcomeScreen welcomeScreen = new WelcomeScreen();
-            WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
+            LoginScreen loginScreen = new LoginScreen(afProxyScreenDefinition);
+            LoginScreenController controller = new LoginScreenController(loginScreen);
             view.setVisible(false);
             view = null;
-            welcomeScreen.setVisible(true);
+            loginScreen.setVisible(true);
         }
+
     };
 
-    private ActionListener logoutButtonListener = new ActionListener() {
+    private ScreenPreparedListener logoutButtonListener = new ScreenPreparedListener() {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             ApplicationContext.getInstance().setSecurityContext(null);
-            WelcomeScreen welcomeScreen = new WelcomeScreen();
+            WelcomeScreen welcomeScreen = new WelcomeScreen(afProxyScreenDefinition);
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
             view.setVisible(false);
             view = null;
             welcomeScreen.setVisible(true);
         }
+
     };
 
-    private ActionListener avaiableCountryPublicListener = new ActionListener() {
-
+    private ScreenPreparedListener avaiableCountryPublicListener = new ScreenPreparedListener() {
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
-            AvaiableCountryView avaiableCountry = new AvaiableCountryView();
+            AvaiableCountryView avaiableCountry = new AvaiableCountryView(afProxyScreenDefinition);
             AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
-            List<AFComponent> ...
             view.setVisible(false);
             view = null;
             avaiableCountry.setVisible(true);
@@ -97,7 +102,7 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            PersonView personView = new PersonView();
+            PersonView personView = new PersonView(null);
             PersonController controller = new PersonController(personView);
             view.setVisible(false);
             personView.setVisible(true);
@@ -110,7 +115,7 @@ public abstract class BaseController {
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
             AbsenceTypeManagementModel model = new AbsenceTypeManagementModel();
-            AbsenceTypManagementView absenceTypeManagementView = new AbsenceTypManagementView();
+            AbsenceTypManagementView absenceTypeManagementView = new AbsenceTypManagementView(null);
             AbsenceTypeManagementController controller =
                     new AbsenceTypeManagementController(absenceTypeManagementView);
             controller.setModel(model);
@@ -125,7 +130,7 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            AbsenceInstanceCreateView absenceInstanceCreateView = new AbsenceInstanceCreateView();
+            AbsenceInstanceCreateView absenceInstanceCreateView = new AbsenceInstanceCreateView(null);
             AbsenceInstanceCreateController controller =
                     new AbsenceInstanceCreateController(absenceInstanceCreateView);
             view.setVisible(false);
@@ -139,7 +144,7 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            MyAbsenceInstanceView myAbsenceInstanceView = new MyAbsenceInstanceView();
+            MyAbsenceInstanceView myAbsenceInstanceView = new MyAbsenceInstanceView(null);
             MyAbsenceInstanceController controller = new MyAbsenceInstanceController(myAbsenceInstanceView);
             view.setVisible(false);
             view = null;
@@ -152,7 +157,7 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            AvailableVehiclesView vehiclesView = new AvailableVehiclesView();
+            AvailableVehiclesView vehiclesView = new AvailableVehiclesView(null);
             AvailableVehiclesController controller = new AvailableVehiclesController(vehiclesView);
             view.setVisible(false);
             view = null;
@@ -165,7 +170,7 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            BusinessTripEditView businessTripEditView = new BusinessTripEditView();
+            BusinessTripEditView businessTripEditView = new BusinessTripEditView(null);
             BusinessTripEditController controller = new BusinessTripEditController(businessTripEditView);
             view.setVisible(false);
             view = null;
@@ -178,7 +183,7 @@ public abstract class BaseController {
         @Override
         public void actionPerformed(ActionEvent e) {
             AFSwinx.getInstance().removeAllComponents();
-            AbsenceInstanceEditView absenceInstanceEditView = new AbsenceInstanceEditView();
+            AbsenceInstanceEditView absenceInstanceEditView = new AbsenceInstanceEditView(null);
             AbsenceInstanceEditController controller =
                     new AbsenceInstanceEditController(absenceInstanceEditView);
             view.setVisible(false);

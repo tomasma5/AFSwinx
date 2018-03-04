@@ -33,10 +33,10 @@ public interface ComponentBuilder<T> {
     public T setLocalization(ResourceBundle localization);
 
     /**
-     * This method set localization to builder. The generic is used because you have to return any
+     * This method set skin to builder. The generic is used because you have to return any
      * type of builder.
      * 
-     * @param localization resource bundle with localization
+     * @param skin skin of built component
      * @return actual builder class which will be used to another builder settings or to return
      *         object which was build
      */
@@ -73,7 +73,7 @@ public interface ComponentBuilder<T> {
      * @param connectionConfiguration json string in which will be found connection
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(JSONObject connectionConfiguration);
+    public T initBuilder(String connectionConfiguration);
 
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
@@ -82,12 +82,10 @@ public interface ComponentBuilder<T> {
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration json object in which will be found connection
-     * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionValue value which will be added to connection configuration based on EL.
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
-            String connectionKey, String connectionValue);
+    public T initBuilder(String componentKeyName, String connectionConfiguration, String connectionValue);
 
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
@@ -96,11 +94,9 @@ public interface ComponentBuilder<T> {
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration json object in which will be found connection
-     * @param connectionKey key of connection which will be found in connection configuration file
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
-            String connectionKey);
+    public T initBuilder(String componentKeyName, String connectionConfiguration);
 
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
@@ -109,12 +105,12 @@ public interface ComponentBuilder<T> {
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration json object in which will be found connection
-     * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionParameters which will be added to connection configuration file based on EL.
      * @return it returns this builder which could be used to build
      */
-    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
-            String connectionKey, HashMap<String, String> connectionParameters);
+    public T initBuilder(String componentKeyName, String connectionConfiguration, HashMap<String, String> connectionParameters);
+
+    public T setConnectionParameters( HashMap<String, String> connectionParameters);
 
     public SupportedComponents getBuiltComponentType();
 

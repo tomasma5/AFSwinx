@@ -17,6 +17,7 @@ import com.tomscz.af.showcase.view.skin.AbsenceInstanceCreateSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 public class AbsenceInstanceCreateView extends BaseView {
 
@@ -27,7 +28,8 @@ public class AbsenceInstanceCreateView extends BaseView {
 
     private JButton createButton;
 
-    public AbsenceInstanceCreateView() {
+    public AbsenceInstanceCreateView(AFProxyScreenDefinition screenDefinition) {
+        super(screenDefinition);
         intialize();
     }
 
@@ -35,7 +37,6 @@ public class AbsenceInstanceCreateView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);
@@ -43,12 +44,10 @@ public class AbsenceInstanceCreateView extends BaseView {
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             securityConstrains.put("user", ApplicationContext.getInstance().getSecurityContext()
                     .getUserLogin());
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_ADD_FORM, connectionResource,
-                                    ABSENCE_INSTANCE_ADD_FORM_CONNECTION, securityConstrains)
+                            .initBuilder(ABSENCE_INSTANCE_ADD_FORM, null, securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new AbsenceInstanceCreateSkin()).buildComponent();
             centerPanel.add(form);

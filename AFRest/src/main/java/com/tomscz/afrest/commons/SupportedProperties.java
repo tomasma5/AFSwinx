@@ -11,8 +11,12 @@ package com.tomscz.afrest.commons;
  */
 public enum SupportedProperties {
 
-    WIDGETTYPE("widgetType"), FIELDNAME("fieldName"), LABEL("label"), OPTIONS("options"), READNOLY(
-            "readonly"), VISIBLE("visible");
+    WIDGETTYPE("widgetType"),
+    FIELDNAME("fieldName"),
+    LABEL("label"),
+    OPTIONS("options"),
+    READNOLY("readonly"),
+    VISIBLE("visible");
 
     private final String name;
 

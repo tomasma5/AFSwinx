@@ -1,7 +1,10 @@
 package com.tomscz.af.showcase.view;
 
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -14,7 +17,15 @@ import javax.swing.JScrollPane;
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
+import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
+import com.tomscz.afswinx.component.AFSwinxMenu;
+import com.tomscz.afswinx.component.AFSwinxMenuButton;
+import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
+import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
+import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 
 /**
  * This class is base view which extends all view. This view hold left menu, localization bar and
@@ -26,21 +37,17 @@ import com.tomscz.afswinx.component.AFSwinx;
  */
 public abstract class BaseView extends JPanel {
 
-    private JButton loginButton;
-    private JButton avaiableCountryButton;
-    private JButton myProfileButton;
-    private JButton myAbsencesButton;
-    private JButton editAbsenceButton;
-    private JButton addAbsenceButton;
-    private JButton addAbsenceTypeButton;
-    private JButton logoutButton;
-    private JButton businessTripsButton;
-    private JButton vehiclesButton;
     private JButton czech;
     private JButton english;
+    private AFSwinxMenu swinxMenu;
+    private AFProxyScreenDefinition screenDefinition;
     private MainFrame mainFrame = MainFrame.getInstance();
 
     private static final long serialVersionUID = 1L;
+
+    public BaseView(AFProxyScreenDefinition screenDefinition) {
+        this.screenDefinition = screenDefinition;
+    }
 
     protected abstract JPanel createContent();
 
@@ -56,7 +63,9 @@ public abstract class BaseView extends JPanel {
         Box b1 = Box.createHorizontalBox();
         b1.add(createLeftMenu());
         b1.add(Box.createHorizontalGlue());
-        JPanel content = createContent();
+        JPanel content;
+        content = createContent();
+
         b1.add(content);
         contentPanel.add(b1);
         mainPanel.add(contentPanel);
@@ -100,110 +109,26 @@ public abstract class BaseView extends JPanel {
     protected JPanel createLeftMenu() {
         JPanel menu = new JPanel();
         Dimension buttonSize = new Dimension(200, 30);
-        avaiableCountryButton =
-                new JButton(Localization.getLocalizationText("link.supportedCountries"));
-        avaiableCountryButton.setPreferredSize(new Dimension(150, 30));
-        avaiableCountryButton.setPreferredSize(buttonSize);
-        myProfileButton = new JButton(Localization.getLocalizationText("link.myProfile"));
-        myProfileButton.setPreferredSize(buttonSize);
-        myAbsencesButton = new JButton(Localization.getLocalizationText("link.myAbsence"));
-        myAbsencesButton.setPreferredSize(buttonSize);
-        editAbsenceButton = new JButton(Localization.getLocalizationText("link.editMyAbsences"));
-        editAbsenceButton.setPreferredSize(buttonSize);
-        addAbsenceButton = new JButton(Localization.getLocalizationText("link.createAbsence"));
-        addAbsenceButton.setPreferredSize(buttonSize);
-        addAbsenceTypeButton = new JButton(Localization.getLocalizationText("link.manageAbsenceType"));
-        addAbsenceTypeButton.setPreferredSize(buttonSize);
-        businessTripsButton = new JButton(Localization.getLocalizationText("link.businessTrips"));
-        businessTripsButton.setPreferredSize(buttonSize);
-        vehiclesButton = new JButton(Localization.getLocalizationText("link.vehicles"));
-        vehiclesButton.setPreferredSize(buttonSize);
-        logoutButton = new JButton(Localization.getLocalizationText("logout.button"));
-        logoutButton.setPreferredSize(buttonSize);
         menu.setPreferredSize(new Dimension(250, 500));
-        List<AFSwinxButton> buttons = AFSwinx.getInstance().getMenuBuilder().getMenuButtons();
-        menu.add(buttons);
-
-        if (ApplicationContext.getInstance().getSecurityContext() != null
-                && ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
-            loginButton = new JButton(Localization.getLocalizationText("link.home"));
-            loginButton.setPreferredSize(buttonSize);
-            menu.add(loginButton);
-            menu.add(avaiableCountryButton);
-            menu.add(myProfileButton);
-            menu.add(myAbsencesButton);
-            menu.add(editAbsenceButton);
-            menu.add(addAbsenceButton);
-            menu.add(addAbsenceTypeButton);
-            menu.add(businessTripsButton);
-            menu.add(vehiclesButton);
-            menu.add(logoutButton);
-        } else {
-            loginButton = new JButton(Localization.getLocalizationText("link.login"));
-            loginButton.setPreferredSize(buttonSize);
-            menu.add(loginButton);
+        try {
+            swinxMenu = AFSwinx.getInstance().getMenuBuilder().setUrl("http://localhost:8081/UIxy/api/screens/").buildComponent();
+            if(swinxMenu.getMenuButtons() != null) {
+                for (AFSwinxMenuButton button : swinxMenu.getMenuButtons().values()) {
+                    button.setPreferredSize(buttonSize);
+                    menu.add(button);
+                }
+            }
+        } catch (AFSwinxBuildException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
         return menu;
     }
 
-    //These methods add action to current button in menu.
-    
-    public void addLoginButtonListener(ActionListener a) {
-        loginButton.addActionListener(a);
-    }
-
-    public void addAvaiableCountryListener(ActionListener a) {
-        if (avaiableCountryButton != null) {
-            avaiableCountryButton.addActionListener(a);
-        }
-    }
-
-    public void addMyProfileListener(ActionListener a) {
-        if (myProfileButton != null) {
-            myProfileButton.addActionListener(a);
-        }
-    }
-
-    public void addAbsenceTypeListener(ActionListener a) {
-        if (addAbsenceTypeButton != null) {
-            addAbsenceTypeButton.addActionListener(a);
-        }
-    }
-
-    public void addAbsenceAddListener(ActionListener a) {
-        if (addAbsenceButton != null) {
-            addAbsenceButton.addActionListener(a);
-        }
-    }
-
-    public void addMyAbsencesListener(ActionListener a) {
-        if (myAbsencesButton != null) {
-            myAbsencesButton.addActionListener(a);
-        }
-    }
-
-    public void addAbsencesInstanceEditListener(ActionListener a) {
-        if (editAbsenceButton != null) {
-            editAbsenceButton.addActionListener(a);
-        }
-    }
-
-    public void addBusinessTripsListener(ActionListener a){
-        if(businessTripsButton != null){
-            businessTripsButton.addActionListener(a);
-        }
-    }
-
-    public void addVehiclesButtonListener(ActionListener a) {
-        if(vehiclesButton != null){
-            vehiclesButton.addActionListener(a);
-        }
-    }
-
-    public void addLogoutButtonMenuListener(ActionListener a) {
-        if (logoutButton != null) {
-            logoutButton.addActionListener(a);
-        }
+    public void addOnScreenPreparedListener(AFSwinxMenuButton button, ScreenPreparedListener spl) {
+        button.setScreenPreparedListener(spl);
     }
 
     public void addEnglishButtonListener(ActionListener a) {
@@ -230,4 +155,11 @@ public abstract class BaseView extends JPanel {
         this.mainFrame = mainFrame;
     }
 
+    public AFSwinxMenu getSwinxMenu() {
+        return swinxMenu;
+    }
+
+    public AFProxyScreenDefinition getScreenDefinition() {
+        return screenDefinition;
+    }
 }

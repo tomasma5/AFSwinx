@@ -2,9 +2,15 @@ package com.tomscz.afrest.commons;
 
 public enum SupportedValidations {
 
-    REQUIRED("required"), NUMBER("number"), CONTAINS("contains"), MIN("minValue"), MAX(
-            "maxValue"), MINLENGTH("minLength"), MAXLENGTH("maxLength"),RETYPE("retype"),
-    		LESSTHAN("lessthan");
+    REQUIRED("REQUIRED"),
+    NUMBER("NUMBER"),
+    CONTAINS("CONTAINS"),
+    MIN("MIN"),
+    MAX("MAX"),
+    MINLENGTH("MINLENGTH"),
+    MAXLENGTH("MAXLENGTH"),
+    RETYPE("RETYPE"),
+    LESSTHAN("LESSTHAN");
 
     private final String name;
 

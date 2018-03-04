@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
 import com.tomscz.afswinx.component.builders.AFSwinxMenuBuilder;
 import com.tomscz.afswinx.component.builders.AFSwinxTableBuilder;
+import com.tomscz.afswinx.component.builders.BaseComponentBuilder;
 import com.tomscz.afswinx.component.skin.Skin;
 
 /**

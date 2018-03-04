@@ -7,6 +7,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -17,17 +18,14 @@ public class BusinessTripEditView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String BUSINESS_TRIP_EDIT_TABLE = "businessTripEditTable";
-    public static final String BUSINESS_TRIP_EDIT_TABLE_CONNECTION =
-            "businessTripEditTableConnection";
     public static final String BUSINESS_TRIP_EDIT_FORM = "businessTripEditForm";
-    public static final String BUSINESS_TRIP_EDIT_FORM_CONNECTION =
-            "businessTripEditFormConnection";
 
     private JButton chooseButton;
     private JButton detailButton;
     private JButton performButton;
 
-    public BusinessTripEditView() {
+    public BusinessTripEditView(AFProxyScreenDefinition screenDefinition) {
+        super(screenDefinition);
         intialize();
     }
 
@@ -43,8 +41,7 @@ public class BusinessTripEditView extends BaseView {
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(BUSINESS_TRIP_EDIT_TABLE, connectionResource,
-                                    BUSINESS_TRIP_EDIT_TABLE_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_EDIT_TABLE, null, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();
@@ -54,8 +51,7 @@ public class BusinessTripEditView extends BaseView {
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(BUSINESS_TRIP_EDIT_FORM, connectionResource,
-                                    BUSINESS_TRIP_EDIT_FORM_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_EDIT_FORM, null, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();

@@ -8,6 +8,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -28,14 +29,13 @@ public class AvailableVehiclesView extends BaseView {
 
     public static final String VEHICLES_TABLE = "vehiclesTable";
     public static final String VEHICLES_FORM = "vehiclesForm";
-    public static final String VEHICLES_TABLE_CONNECTION_KEY = "vehiclesTableConnection";
-    public static final String VEHICLES_FORM_CONNECTION_KEY = "vehiclesFormConnection";
 
     private JButton addVehicleButton;
     private JButton chooseVehicleButton;
     private JButton resetForm;
 
-    public AvailableVehiclesView() {
+    public AvailableVehiclesView(AFProxyScreenDefinition screenDefinition) {
+        super(screenDefinition);
         intialize();
     }
 
@@ -45,11 +45,9 @@ public class AvailableVehiclesView extends BaseView {
         Box b1 = Box.createVerticalBox();
         InputStream connectionResource;
         try {
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
-
             AFSwinxTable table = AFSwinx.getInstance()
                     .getTableBuilder()
-                    .initBuilder(VEHICLES_TABLE, connectionResource, VEHICLES_TABLE_CONNECTION_KEY)
+                    .initBuilder(VEHICLES_TABLE, null)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
                     .buildComponent();
             Box centerPanel = Box.createVerticalBox();
@@ -59,7 +57,7 @@ public class AvailableVehiclesView extends BaseView {
             connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxForm form = AFSwinx.getInstance()
                     .getFormBuilder()
-                    .initBuilder(VEHICLES_FORM, connectionResource, VEHICLES_FORM_CONNECTION_KEY, securityConstrains)
+                    .initBuilder(VEHICLES_FORM, null, securityConstrains)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
                     .setSkin(new MySkin()).buildComponent();
             centerPanel.add(form);

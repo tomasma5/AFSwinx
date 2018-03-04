@@ -89,7 +89,7 @@ public class BusinessTripEditController extends BaseController {
                 }
                 if(businessTripId != -1 && dateFrom != null && dateTo != null){
                     AFSwinx.getInstance().removeAllComponents();
-                    BusinessTripDetailView detailView = new BusinessTripDetailView(businessTripId, dateFrom, dateTo);
+                    BusinessTripDetailView detailView = new BusinessTripDetailView(null, businessTripId, dateFrom, dateTo);
                     BusinessTripDetailController controller = new BusinessTripDetailController(detailView, businessTripId);
                     view.removeAll();
                     view.setVisible(false);

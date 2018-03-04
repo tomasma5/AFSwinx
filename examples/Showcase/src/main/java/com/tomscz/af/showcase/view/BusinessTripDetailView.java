@@ -7,6 +7,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,16 +23,13 @@ public class BusinessTripDetailView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String BUSINESS_TRIP_PARTS_TABLE = "businessTripPartsTable";
-    public static final String BUSINESS_TRIP_PARTS_TABLE_CONNECTION =
-            "businessTripPartsTableConnection";
     public static final String BUSINESS_TRIP_PARTS_FORM = "businessTripPartsForm";
-    public static final String BUSINESS_TRIP_PARTS_FORM_CONNECTION =
-            "businessTripPartsFormConnection";
 
     private JButton chooseButton;
     private JButton performButton;
 
-    public BusinessTripDetailView(int businessTripId, String dateFrom, String dateTo) {
+    public BusinessTripDetailView(AFProxyScreenDefinition screenDefinition, int businessTripId, String dateFrom, String dateTo) {
+        super(screenDefinition);
         this.businessTripId = businessTripId;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
@@ -51,8 +49,7 @@ public class BusinessTripDetailView extends BaseView {
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(BUSINESS_TRIP_PARTS_TABLE, connectionResource,
-                                    BUSINESS_TRIP_PARTS_TABLE_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_PARTS_TABLE, null, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();
@@ -62,8 +59,7 @@ public class BusinessTripDetailView extends BaseView {
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(BUSINESS_TRIP_PARTS_FORM, connectionResource,
-                                    BUSINESS_TRIP_PARTS_FORM_CONNECTION, parameters)
+                            .initBuilder(BUSINESS_TRIP_PARTS_FORM, null, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();

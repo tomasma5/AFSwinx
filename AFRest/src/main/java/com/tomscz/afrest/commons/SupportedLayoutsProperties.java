@@ -12,9 +12,9 @@ import com.codingcrayons.aspectfaces.annotation.descriptors.UILayoutDescriptor;
  */
 public enum SupportedLayoutsProperties {
 
-    LAYOUT(UILayoutDescriptor.LAYOUT_AF_VARIABLE), LABELPOSSTION(
-            UILayoutDescriptor.LABEL_POSSTION_AF_VARIABLE), LAYOUTORIENTATION(
-            UILayoutDescriptor.LAYOUT_ORIENTATION_VARIABLE);
+    LAYOUT(UILayoutDescriptor.LAYOUT_AF_VARIABLE),
+    LABELPOSSTION(UILayoutDescriptor.LABEL_POSSTION_AF_VARIABLE),
+    LAYOUTORIENTATION(UILayoutDescriptor.LAYOUT_ORIENTATION_VARIABLE);
 
     private final String name;
 

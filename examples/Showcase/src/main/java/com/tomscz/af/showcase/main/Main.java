@@ -22,7 +22,7 @@ public class Main {
                 // Do nothing localization wont be used
             }
         }
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
+        WelcomeScreen welcomeScreen = new WelcomeScreen(null);
         WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
     }
 

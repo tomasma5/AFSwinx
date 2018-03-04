@@ -31,8 +31,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected AFSwinxConnection modelConnection;
     protected AFSwinxConnection dataConnection;
     protected AFSwinxConnection sendConnection;
-    protected String connectionKey;
-    protected JSONObject connectionConfiguration;
+    protected String connectionConfiguration;
 
     /**
      * This method init builder. It set variable based on which will be obtained connections. There
@@ -41,15 +40,13 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration file in which will be found connection
-     * @param connectionKey key of connection which will be found in connection configuration file
      * @return it returns this builder which could be used to build {@link AFSwinxTopLevelComponent}
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration, String connectionKey) {
+    public T initBuilder(String componentKeyName, String connectionConfiguration) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
-        this.connectionKey = connectionKey;
         return (T) this;
     }
 
@@ -80,13 +77,9 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(JSONObject connectionConfiguration) {
+    public T initBuilder(String connectionConfiguration) {
         this.connectionConfiguration = connectionConfiguration;
         return (T) this;
-    }
-
-    public void setConnectionKey(String connectionKey) {
-        this.connectionKey = connectionKey;
     }
 
     /**
@@ -96,17 +89,14 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration file in which will be found connection
-     * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionValue value which will be added to connection configuration based on EL.
      * @return it returns this builder which could be used to build {@link AFSwinxTopLevelComponent}
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
-            String connectionKey, String connectionValue) {
+    public T initBuilder(String componentKeyName, String connectionConfiguration, String connectionValue) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
-        this.connectionKey = connectionKey;
         this.connectionParameters = new HashMap<String, String>();
         connectionParameters.put("value", connectionValue);
         return (T) this;
@@ -119,17 +109,14 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param componentKeyName key in which you should retrieve this component back and do other
      *        staff with it
      * @param connectionConfiguration file in which will be found connection
-     * @param connectionKey key of connection which will be found in connection configuration file
      * @param connectionParameters which will be added to connection configuration file based on EL.
      * @return it returns this builder which could be used to build {@link AFSwinxTopLevelComponent}
      */
     @SuppressWarnings("unchecked")
     @Override
-    public T initBuilder(String componentKeyName, JSONObject connectionConfiguration,
-            String connectionKey, HashMap<String, String> connectionParameters) {
+    public T initBuilder(String componentKeyName, String connectionConfiguration, HashMap<String, String> connectionParameters) {
         this.componentKeyName = componentKeyName;
         this.connectionConfiguration = connectionConfiguration;
-        this.connectionKey = connectionKey;
         this.connectionParameters = connectionParameters;
         return (T) this;
     }
@@ -142,11 +129,11 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     }
 
     protected void initializeConnections() throws AFSwinxBuildException {
-        if (modelConnection == null && connectionKey != null && connectionConfiguration != null) {
+        if (connectionConfiguration != null) {
             JsonConnectionParser connectionParser =
-                    new JsonConnectionParser(connectionKey, connectionParameters);
+                    new JsonConnectionParser(connectionParameters);
             AFSwinxConnectionPack connections =
-                    connectionParser.parse(connectionConfiguration);
+                    connectionParser.parse(new JSONObject(connectionConfiguration));
             modelConnection = connections.getMetamodelConnection();
             dataConnection = connections.getDataConnection();
             sendConnection = connections.getSendConnection();
@@ -233,4 +220,10 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
     protected abstract void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent component);
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public T setConnectionParameters(HashMap<String, String> connectionParameters) {
+        this.connectionParameters = connectionParameters;
+        return (T) this;
+    }
 }

@@ -16,6 +16,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 public class AbsenceTypManagementView extends BaseView {
 
@@ -35,7 +36,8 @@ public class AbsenceTypManagementView extends BaseView {
     private boolean displayAdditionalsField = false;
     private int selectedCountry=0;
     
-    public AbsenceTypManagementView() {
+    public AbsenceTypManagementView(AFProxyScreenDefinition screenDefinition) {
+        super(screenDefinition);
         intialize();
     }
 
@@ -49,7 +51,7 @@ public class AbsenceTypManagementView extends BaseView {
             horizontalTopBox.setAlignmentX(CENTER_ALIGNMENT);
             AFSwinxForm chooseCountry =
                     AFSwinx.getInstance().getFormBuilder()
-                            .initBuilder(COUNTRY_FORM, connectionResource, COUNTRY_CONNECTION)
+                            .initBuilder(COUNTRY_FORM, null, COUNTRY_CONNECTION)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin()).buildComponent();
             chooseCountryButton = new JButton(Localization.getLocalizationText("button.choose"));
@@ -64,14 +66,12 @@ public class AbsenceTypManagementView extends BaseView {
         }
         if (isDisplayAdditionalsField()) {
             try {
-                connectionResource = ApplicationContext.getInstance().getConnectionFile();
                 HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id", String.valueOf(selectedCountry));
                 AFSwinxTable table =
                         AFSwinx.getInstance()
                                 .getTableBuilder()
-                                .initBuilder(ABSENCE_TYPE_TABLE, connectionResource,
-                                        ABSENCY_TYPE_TABLE_CONNECTION,parameters)
+                                .initBuilder(ABSENCE_TYPE_TABLE, null,parameters)
                                 .setLocalization(ApplicationContext.getInstance().getLocalization())
                                 .buildComponent();
                 Box centerPanel = Box.createVerticalBox();
@@ -80,12 +80,10 @@ public class AbsenceTypManagementView extends BaseView {
                         ApplicationContext.getInstance().getSecurityContext()
                                 .getUserNameAndPasswodr();
                 securityConstrains.put("id", String.valueOf(selectedCountry));
-                connectionResource = ApplicationContext.getInstance().getConnectionFile();
                 AFSwinxForm form =
                         AFSwinx.getInstance()
                                 .getFormBuilder()
-                                .initBuilder(ABSENCY_TYPE_FORM, connectionResource,
-                                        ABSENCY_TYPE_FORM_CONNECTION, securityConstrains)
+                                .initBuilder(ABSENCY_TYPE_FORM, null, securityConstrains)
                                 .setLocalization(ApplicationContext.getInstance().getLocalization())
                                 .setSkin(new MySkin()).buildComponent();
                 centerPanel.add(form);

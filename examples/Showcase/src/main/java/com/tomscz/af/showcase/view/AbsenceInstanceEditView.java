@@ -16,6 +16,7 @@ import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 public class AbsenceInstanceEditView extends BaseView {
 
@@ -30,35 +31,30 @@ public class AbsenceInstanceEditView extends BaseView {
     private JButton chooseButton;
     private JButton performButton;
 
-    public AbsenceInstanceEditView() {
+    public AbsenceInstanceEditView(AFProxyScreenDefinition screenDefinition) {
+        super(screenDefinition);
         intialize();
     }
-    
 
     @Override
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource;
         try {
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             HashMap<String, String> parameters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_EDIT_TABLE, connectionResource,
-                                    ABSENCE_INSTANCE_EDIT_TABLE_CONNECTION, parameters)
+                            .initBuilder(ABSENCE_INSTANCE_EDIT_TABLE, null, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_EDIT_FORM, connectionResource,
-                                    ABSENCE_INSTANCE_EDIT_FORM_CONNECTION, parameters)
+                            .initBuilder(ABSENCE_INSTANCE_EDIT_FORM, null, parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new AbsenceInstanceEditSkin()).buildComponent();
             centerPanel.add(form);

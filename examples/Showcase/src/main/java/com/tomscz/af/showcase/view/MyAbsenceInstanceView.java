@@ -11,6 +11,7 @@ import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 public class MyAbsenceInstanceView extends BaseView {
 
@@ -19,7 +20,8 @@ public class MyAbsenceInstanceView extends BaseView {
     public static final String MY_INSTANCE_TABLE_CONNECTION = "myAbsenceInstancesTableConnection";
     
 
-    public MyAbsenceInstanceView(){
+    public MyAbsenceInstanceView(AFProxyScreenDefinition screenDefinition){
+        super(screenDefinition);
         intialize();
     }
     
@@ -27,16 +29,13 @@ public class MyAbsenceInstanceView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             HashMap<String, String> connectionParmeters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxTable table =
                     AFSwinx.getInstance()
                             .getTableBuilder()
-                            .initBuilder(MY_INSTANCE_TABLE, connectionResource,
-                                    MY_INSTANCE_TABLE_CONNECTION, connectionParmeters)
+                            .initBuilder(MY_INSTANCE_TABLE, null, connectionParmeters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization()).setFitSize(true).setDynamicSize(true)
                             .buildComponent();
             b1.add(table);

@@ -17,16 +17,17 @@ import com.tomscz.af.showcase.view.skin.LongInputSkin;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 
 public class PersonView extends BaseView {
 
     private static final long serialVersionUID = 1L;
     public static final String PERSON_FORM = "personForm";
-    public static final String PERSON_CONNECTION_KEY = "personProfile";
 
     private JButton updateButton;
 
-    public PersonView() {
+    public PersonView(AFProxyScreenDefinition screenDefinition) {
+        super(screenDefinition);
         intialize();
     }
 
@@ -34,18 +35,15 @@ public class PersonView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxForm form =
                     AFSwinx.getInstance()
                             .getFormBuilder()
-                            .initBuilder(PERSON_FORM, connectionResource,
-                                    PERSON_CONNECTION_KEY, securityConstrains)
+                            .initBuilder(PERSON_FORM, null, securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new LongInputSkin()).buildComponent();
             centerPanel.add(form);
