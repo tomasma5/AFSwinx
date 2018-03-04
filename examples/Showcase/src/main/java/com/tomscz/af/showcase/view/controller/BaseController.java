@@ -62,8 +62,8 @@ public abstract class BaseController {
         @Override
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
-            LoginScreen loginScreen = new LoginScreen(afProxyScreenDefinition);
-            LoginScreenController controller = new LoginScreenController(loginScreen);
+            WelcomeScreen loginScreen = new WelcomeScreen(afProxyScreenDefinition);
+            WelcomeScreenController controller = new WelcomeScreenController(loginScreen);
             view.setVisible(false);
             view = null;
             loginScreen.setVisible(true);
