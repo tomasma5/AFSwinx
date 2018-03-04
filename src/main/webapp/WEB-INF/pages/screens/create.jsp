@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label for="screenUrl">Screen url</label>
                     <input type="url" class="form-control" id="screenUrl" name="screenUrl"
-                           placeholder="Will be generated automatically." value="${screenUrl}">
+                           placeholder="Will be generated automatically." value="${screenUrl}" disabled>
                 </div>
                 </c:if>
                 <h4>Linked components</h4>
@@ -39,7 +39,7 @@
                         <div class="panel panel-default min-h-350px">
                             <!-- Default panel contents -->
                             <div class="panel-heading">
-                                Model connection
+                                Available components
                             </div>
                             <div class="panel-body">
                                 <div class="form-group">
@@ -63,7 +63,7 @@
                         <div class="panel panel-default min-h-350px">
                             <!-- Default panel contents -->
                             <div class="panel-heading">
-                                Model connection
+                                Added components
                             </div>
                             <div class="panel-body">
                                 <input type="hidden" id="linkedComponentsCount" name="linkedComponentsCount"

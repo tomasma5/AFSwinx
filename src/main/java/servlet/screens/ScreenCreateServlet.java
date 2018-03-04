@@ -50,7 +50,7 @@ public class ScreenCreateServlet extends HttpServlet {
             request.setAttribute(ParameterNames.LINKED_COMPONENTS, screen.getComponents());
             request.setAttribute(ParameterNames.COMPONENTS_OPTIONS, componentManagementService
                     .getAllComponentsByApplication(new ObjectId(applicationId)).stream()
-                    .filter(componentResource -> !componentResource.getReferencedScreensIds().contains(new ObjectId(screenId)))
+                    .filter(componentResource -> componentResource.getReferencedScreensIds() == null || !componentResource.getReferencedScreensIds().contains(new ObjectId(screenId)))
                     .collect(toList()));
         } else {
             request.setAttribute(ParameterNames.COMPONENTS_OPTIONS, componentManagementService.getAllComponentsByApplication(new ObjectId(applicationId)));
@@ -63,7 +63,6 @@ public class ScreenCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO refactor???
         String appIdString = req.getParameter(ParameterNames.APPLICATION_ID);
         if (appIdString == null || appIdString.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -86,10 +85,11 @@ public class ScreenCreateServlet extends HttpServlet {
 
             screen.setHeading(heading);
             screen.setApplicationId(new ObjectId(appIdString));
-            if(screenUrl == null || screenUrl.isEmpty()){
+            if (screenUrl == null || screenUrl.isEmpty()) {
                 screenUrl = req.getScheme() +
                         "://" +
                         req.getServerName() +
+                        ":" +
                         req.getServerPort() +
                         req.getContextPath() +
                         "/api/screens/" +
@@ -106,7 +106,6 @@ public class ScreenCreateServlet extends HttpServlet {
                 componentManagementService.addComponentToScreen(componentResource, screen);
                 componentManagementService.filterComponentsScreenReferences(componentResource);
             }
-
 
 
             if (screenId == null || screenId.isEmpty()) {

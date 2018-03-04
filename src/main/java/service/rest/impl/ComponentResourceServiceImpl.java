@@ -7,17 +7,13 @@ import model.ComponentResource;
 import org.bson.types.ObjectId;
 import rest.security.RequestContext;
 import service.exception.ComponentRequestException;
-import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
-import service.rest.ScreenRestService;
 import utils.HttpUtils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +38,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     public String getComponentModel(ObjectId id, HttpHeaders headers) throws ComponentRequestException {
         Application application = requestContext.getCurrentApplication();
         String modelStr = null;
-        ComponentResource componentResource = componentResourceDao.findByObjectId(id);
+        ComponentResource componentResource = componentResourceDao.findById(id);
         if (componentResource != null && application != null) {
             if (!componentResource.getApplicationId().equals(application.getId())) {
                 String errorMsg = "Cannot get component model, this component belongs to another application";
@@ -62,34 +58,36 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     @Override
     public String getComponentData(ObjectId id, HttpHeaders headers) throws ComponentRequestException {
-        ComponentResource componentResource = componentResourceDao.findByObjectId(id);
-        String modelStr = null;
+        ComponentResource componentResource = componentResourceDao.findById(id);
+        String dataStr = null;
         if (componentResource != null) {
             ComponentConnection realDataConnection = componentResource.getRealConnections().getDataConnection();
 
             //TODO add context filtering
             try {
-                modelStr = HttpUtils.getRequest(buildUrl(realDataConnection), headers.getRequestHeaders());
+                dataStr = HttpUtils.getRequest(buildUrl(realDataConnection), headers.getRequestHeaders());
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
         }
-        return modelStr;
+        return dataStr;
     }
 
     @Override
-    public void sendComponentData(ObjectId id, HttpHeaders headers, String data) throws ComponentRequestException {
-        ComponentResource componentResource = componentResourceDao.findByObjectId(id);
+    public String sendComponentData(ObjectId id, HttpHeaders headers, String data) throws ComponentRequestException {
+        ComponentResource componentResource = componentResourceDao.findById(id);
+        String response = null;
         if (componentResource != null) {
             ComponentConnection realDataConnection = componentResource.getRealConnections().getSendConnection();
 
             //TODO add context filtering
             try {
-                HttpUtils.postRequest(buildUrl(realDataConnection), headers.getRequestHeaders(), data);
+                response = HttpUtils.postRequest(buildUrl(realDataConnection), headers.getRequestHeaders(), data);
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
         }
+        return response;
     }
 
     private String buildUrl(ComponentConnection componentConnection) {
@@ -99,7 +97,6 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         url.append(componentConnection.getAddress());
         url.append(":");
         url.append(componentConnection.getPort());
-        url.append("/");
         url.append(componentConnection.getParameters());
         return url.toString();
     }

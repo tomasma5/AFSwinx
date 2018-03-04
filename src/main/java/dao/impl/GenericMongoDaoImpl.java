@@ -36,7 +36,7 @@ public abstract class GenericMongoDaoImpl<T extends MongoDocumentEntity> impleme
     }
 
     @Override
-    public T findByObjectId(ObjectId id) {
+    public T findById(ObjectId id) {
        return collection.find(eq("_id", id)).first();
     }
 

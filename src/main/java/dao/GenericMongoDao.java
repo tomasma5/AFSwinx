@@ -42,7 +42,7 @@ public interface GenericMongoDao<T extends MongoDocumentEntity> {
      * @param id object id of record which should be found
      * @return found record
      */
-    T findByObjectId(ObjectId id);
+    T findById(ObjectId id);
 
     /**
      * Deletes record by object id

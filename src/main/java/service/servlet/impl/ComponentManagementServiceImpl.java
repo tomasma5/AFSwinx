@@ -36,7 +36,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     @Override
     public void removeComponent(ObjectId id) {
-        ComponentResource componentResource = componentResourceDao.findByObjectId(id);
+        ComponentResource componentResource = componentResourceDao.findById(id);
         removeComponentFromReferencedScreens(componentResource);
         componentResourceDao.deleteByObjectId(id);
 
@@ -44,7 +44,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     @Override
     public void updateComponent(ComponentResource updated) {
-        ComponentResource componentResource = componentResourceDao.findByObjectId(updated.getId());
+        ComponentResource componentResource = componentResourceDao.findById(updated.getId());
         removeComponentFromReferencedScreens(componentResource);
         addComponentToReferencedScreens(updated);
         componentResourceDao.update(updated);
@@ -52,7 +52,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     @Override
     public ComponentResource findById(ObjectId id) {
-        return componentResourceDao.findByObjectId(id);
+        return componentResourceDao.findById(id);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     public void filterComponentsScreenReferences(ComponentResource componentResource) {
         List<ObjectId> screenIds = screenDao.findAll().stream()
                 .filter(screen -> screen.getApplicationId().equals(componentResource.getApplicationId()) &&
-                        screen.getComponents().contains(componentResource))
+                        (screen.getComponents() != null && screen.getComponents().contains(componentResource)))
                 .map(Screen::getId)
                 .collect(Collectors.toList());
         componentResource.setReferencedScreensIds(screenIds);
@@ -85,7 +85,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         List<ObjectId> updatedReferencedScreens = componentResource.getReferencedScreensIds();
         if (updatedReferencedScreens != null) {
             for (ObjectId screenId : updatedReferencedScreens) {
-                addComponentToScreen(componentResource, screenDao.findByObjectId(screenId));
+                addComponentToScreen(componentResource, screenDao.findById(screenId));
             }
         }
     }
@@ -95,7 +95,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         if (referencedScreens != null) {
             Screen screen;
             for (ObjectId screenId : referencedScreens) {
-                screen = screenDao.findByObjectId(screenId);
+                screen = screenDao.findById(screenId);
                 if(screen != null) {
                     screen.removeComponentResource(componentResource);
                     screenDao.update(screen);

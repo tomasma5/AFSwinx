@@ -262,7 +262,7 @@ public class ComponentCreateServlet extends HttpServlet {
             proxyConnection.setProtocol(req.getScheme());
             proxyConnection.setAddress(req.getServerName());
             proxyConnection.setPort(req.getServerPort());
-            proxyConnection.setParameters(req.getContextPath().substring(1) + "/api/connections/" + type + "/component/" + componentResource);
+            proxyConnection.setParameters(req.getContextPath() + "/api/connections/" + type + "/component/" + componentResource);
             proxyConnection.setHeaderParams(connection.getHeaderParams());
             proxyConnection.setSecurityParams(connection.getSecurityParams());
         }

@@ -40,8 +40,8 @@ public class ScreenEndpoint {
     @GET
     @Path("/{screen_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Screen getScreenDefinition(@PathParam("screen_id") ObjectId screenId) throws ServiceException{
-        Screen screen = screenRestService.getScreenById(screenId);
+    public Screen getScreenDefinition(@PathParam("screen_id") String screenId) throws ServiceException{
+        Screen screen = screenRestService.getScreenById(new ObjectId(screenId));
         if(screen == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

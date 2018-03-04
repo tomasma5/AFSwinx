@@ -1,14 +1,11 @@
 package utils;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.ws.rs.POST;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,10 +40,10 @@ public class HttpUtils {
         return response.toString();
     }
 
-    public static void postRequest(String url,  MultivaluedMap<String, String> requestHeaders, String data) throws IOException {
+    public static String postRequest(String url,  MultivaluedMap<String, String> requestHeaders, String data) throws IOException {
 
         URL obj = new URL(url);
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         //add reuqest header
         con.setRequestMethod(HTTP_POST);
@@ -72,9 +69,7 @@ public class HttpUtils {
         }
         in.close();
 
-        //print result
-        System.out.println(response.toString());
-
+        return response.toString();
     }
 
 

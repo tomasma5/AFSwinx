@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
-@Path("/connection")
+@Path("/connections")
 public class ComponentResourcesEndpoint {
 
     @Inject
@@ -41,7 +41,7 @@ public class ComponentResourcesEndpoint {
     @Path("/send/component/{component_id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public void sendComponentData(String data, @Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
-        componentResourceService.sendComponentData(componentId, headers, data);
+    public String sendComponentData(String data, @Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+        return componentResourceService.sendComponentData(componentId, headers, data);
     }
 }

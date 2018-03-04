@@ -42,7 +42,7 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
 
     @Override
     public Application findById(ObjectId id) {
-        return applicationDao.findByObjectId(id);
+        return applicationDao.findById(id);
     }
 
     @Override

@@ -12,4 +12,6 @@ public interface ScreenDao extends GenericMongoDao<Screen> {
 
     // no need to implement any more method that is in abstractDao
 
+    public Screen findByName(String name);
+
 }

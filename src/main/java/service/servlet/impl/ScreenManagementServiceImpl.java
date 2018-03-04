@@ -5,7 +5,6 @@ import dao.ScreenDao;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
-import rest.security.RequestContext;
 import service.servlet.ScreenManagementService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -42,7 +41,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     @Override
     public void updateScreen(Screen updatedScreen) {
         List<ComponentResource> componentResources = componentResourceDao.findAll().stream()
-                .filter(componentResource -> componentResource.getReferencedScreensIds().contains(updatedScreen.getId()))
+                .filter(componentResource -> componentResource.getReferencedScreensIds() != null && componentResource.getReferencedScreensIds().contains(updatedScreen.getId()))
                 .collect(Collectors.toList());
 
         for (ComponentResource componentResource : componentResources){
@@ -63,6 +62,6 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
 
     @Override
     public Screen findScreenById(ObjectId id) {
-        return screenDao.findByObjectId(id);
+        return screenDao.findById(id);
     }
 }

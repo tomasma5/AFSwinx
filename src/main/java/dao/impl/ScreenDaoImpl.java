@@ -7,6 +7,8 @@ import model.Screen;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import static com.mongodb.client.model.Filters.eq;
+
 /**
  * Implementation of Mongo DAO for application screens
  *
@@ -29,4 +31,8 @@ public class ScreenDaoImpl extends GenericMongoDaoImpl<Screen> implements Screen
         return "screens";
     }
 
+    @Override
+    public Screen findByName(String name) {
+        return collection.find(eq("heading", name)).first();
+    }
 }
