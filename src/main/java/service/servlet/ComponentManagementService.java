@@ -19,6 +19,8 @@ public interface ComponentManagementService {
 
     public List<ComponentResource> getAllComponentsByApplication(ObjectId applicationId);
 
+    List<ComponentResource> getComponentsNotInScreen(ObjectId screenId, ObjectId applicationId);
+
     public void addComponentToScreen(ComponentResource componentResource, Screen screen);
 
     public void filterComponentsScreenReferences(ComponentResource componentResource);

@@ -1,6 +1,7 @@
 package dao;
 
 import model.Screen;
+import org.bson.types.ObjectId;
 
 /**
  * Mongo DAO for application screens
@@ -9,8 +10,6 @@ import model.Screen;
  * @since 1.0.0
  */
 public interface ScreenDao extends GenericMongoDao<Screen> {
-
-    // no need to implement any more method that is in abstractDao
 
     public Screen findByName(String name);
 

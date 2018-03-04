@@ -4,6 +4,7 @@ import dao.ApplicationDao;
 import dao.ScreenDao;
 import model.Application;
 import model.Screen;
+import org.bson.types.ObjectId;
 
 import javax.enterprise.context.ApplicationScoped;
 

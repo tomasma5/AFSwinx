@@ -20,6 +20,7 @@
                 <tr>
                     <th>Screen heading</th>
                     <th>Screen url</th>
+                    <th>Menu order</th>
                     <th>Number of components</th>
                     <th colspan="3">Actions</th>
                 </tr>
@@ -29,6 +30,7 @@
                     <tr>
                         <td>${screen.heading}</td>
                         <td>${screen.screenUrl}</td>
+                        <td>${screen.menuOrder}</td>
                         <td>${screen.components != null? screen.components.size() : 0}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/screens/create?app=${app}&screen=${screen.id}">

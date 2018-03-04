@@ -19,7 +19,6 @@ public class AppCreateServlet extends HttpServlet {
     private static final String CREATE_URL = "/WEB-INF/pages/apps/create.jsp";
 
 
-
     @Inject
     private ApplicationsManagementService applicationsManagementService;
 
@@ -37,7 +36,6 @@ public class AppCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //TODO refactor???
         String applicationId = req.getParameter(ParameterNames.APPLICATION_ID);
         String applicationName = req.getParameter(ParameterNames.APPLICATION_NAME);
         String remoteUrl = req.getParameter(ParameterNames.APPLICATION_REMOTE_URL);

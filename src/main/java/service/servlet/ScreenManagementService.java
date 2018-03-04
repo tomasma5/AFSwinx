@@ -18,4 +18,6 @@ public interface ScreenManagementService {
 
     public Screen findScreenById(ObjectId id);
 
+    public int getScreenCount(ObjectId applicationId);
+
 }

@@ -10,15 +10,17 @@ public class Screen extends MongoDocumentEntity {
 
     private String heading;
     private String screenUrl;
+    private int menuOrder;
     private List<ComponentResource> components;
     private ObjectId applicationId;
 
     public Screen() {
     }
 
-    public Screen(String heading, String screenUrl, List<ComponentResource> components, ObjectId applicationId) {
+    public Screen(String heading, String screenUrl, int menuOrder, List<ComponentResource> components, ObjectId applicationId) {
         this.heading = heading;
         this.screenUrl = screenUrl;
+        this.menuOrder = menuOrder;
         this.components = components;
         this.applicationId = applicationId;
     }
@@ -69,5 +71,13 @@ public class Screen extends MongoDocumentEntity {
 
     public void setApplicationId(ObjectId applicationId) {
         this.applicationId = applicationId;
+    }
+
+    public int getMenuOrder() {
+        return menuOrder;
+    }
+
+    public void setMenuOrder(int menuOrder) {
+        this.menuOrder = menuOrder;
     }
 }

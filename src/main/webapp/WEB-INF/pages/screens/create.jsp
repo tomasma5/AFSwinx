@@ -32,6 +32,11 @@
                            placeholder="Will be generated automatically." value="${screenUrl}" disabled>
                 </div>
                 </c:if>
+                <div class="form-group">
+                    <label for="menuOrder">Menu button order</label>
+                    <input type="number" class="form-control" id="menuOrder" name="menuOrder" value="${menuOrder}" required>
+                    <c:if test="${not empty menuOrderError}">${menuOrderError}</c:if>
+                </div>
                 <h4>Linked components</h4>
 
                 <div class="row">

@@ -14,6 +14,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Named("componentManagementService")
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)
@@ -60,6 +62,14 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         return componentResourceDao.findAll().stream()
                 .filter(componentResource -> componentResource.getApplicationId().equals(applicationId))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ComponentResource> getComponentsNotInScreen(ObjectId screenId, ObjectId applicationId){
+        return getAllComponentsByApplication(applicationId).stream()
+                .filter(componentResource -> componentResource.getReferencedScreensIds() == null ||
+                        !componentResource.getReferencedScreensIds().contains(screenId))
+                .collect(toList());
     }
 
     @Override

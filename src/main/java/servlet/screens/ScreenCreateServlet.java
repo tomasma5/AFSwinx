@@ -41,19 +41,22 @@ public class ScreenCreateServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
+        ObjectId appObjId = new ObjectId(applicationId);
         if (screenId != null) {
-            Screen screen = screenManagementService.findScreenById(new ObjectId(screenId));
+            ObjectId screenObjId = new ObjectId(screenId);
+
+            Screen screen = screenManagementService.findScreenById(screenObjId);
             request.setAttribute(ParameterNames.SCREEN_ID, screen.getId());
             request.setAttribute(ParameterNames.SCREEN_URL, screen.getScreenUrl());
             request.setAttribute(ParameterNames.SCREEN_HEADING, screen.getHeading());
+            request.setAttribute(ParameterNames.SCREEN_MENU_ORDER, screen.getMenuOrder());
             request.setAttribute(ParameterNames.LINKED_COMPONENTS, screen.getComponents());
-            request.setAttribute(ParameterNames.COMPONENTS_OPTIONS, componentManagementService
-                    .getAllComponentsByApplication(new ObjectId(applicationId)).stream()
-                    .filter(componentResource -> componentResource.getReferencedScreensIds() == null || !componentResource.getReferencedScreensIds().contains(new ObjectId(screenId)))
-                    .collect(toList()));
+            request.setAttribute(ParameterNames.COMPONENTS_OPTIONS,
+                    componentManagementService.getComponentsNotInScreen(screenObjId, appObjId));
         } else {
-            request.setAttribute(ParameterNames.COMPONENTS_OPTIONS, componentManagementService.getAllComponentsByApplication(new ObjectId(applicationId)));
+            request.setAttribute(ParameterNames.COMPONENTS_OPTIONS,
+                    componentManagementService.getAllComponentsByApplication(appObjId));
+            request.setAttribute(ParameterNames.SCREEN_MENU_ORDER, screenManagementService.getScreenCount(appObjId) + 1);
         }
         request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
 
@@ -71,6 +74,7 @@ public class ScreenCreateServlet extends HttpServlet {
         String screenId = req.getParameter(ParameterNames.SCREEN_ID);
         String heading = req.getParameter(ParameterNames.SCREEN_HEADING);
         String screenUrl = req.getParameter(ParameterNames.SCREEN_URL);
+        String menuOrder = req.getParameter(ParameterNames.SCREEN_MENU_ORDER);
         String linkedComponentsCountString = req.getParameter(ParameterNames.LINKED_COMPONENTS_COUNT);
         try {
             int linkedComponentsCount = Integer.parseInt(linkedComponentsCountString);
@@ -96,6 +100,7 @@ public class ScreenCreateServlet extends HttpServlet {
                         screen.getId();
             }
             screen.setScreenUrl(screenUrl);
+            screen.setMenuOrder(Integer.parseInt(menuOrder));
 
             if (screen.getComponents() != null) {
                 screen.getComponents().clear();
@@ -121,6 +126,8 @@ public class ScreenCreateServlet extends HttpServlet {
         }
 
         req.setAttribute(ParameterNames.SCREEN_HEADING, heading);
+        req.setAttribute(ParameterNames.SCREEN_URL, screenUrl);
+        req.setAttribute(ParameterNames.SCREEN_MENU_ORDER, menuOrder);
         req.setAttribute(ParameterNames.APPLICATION_ID, appIdString);
         req.getRequestDispatcher(CREATE_URL).forward(req, resp);
 

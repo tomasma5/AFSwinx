@@ -10,7 +10,5 @@ public interface ScreenRestService {
 
     public Screen getScreenById(ObjectId screenId) throws ServiceException;
 
-    public Screen getScreenByName(String name) throws ServiceException;
-
     public List<Screen> getAllScreens();
 }

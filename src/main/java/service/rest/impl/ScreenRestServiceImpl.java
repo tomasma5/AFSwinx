@@ -51,23 +51,6 @@ public class ScreenRestServiceImpl implements ScreenRestService {
     }
 
     @Override
-    public Screen getScreenByName(String name) throws ServiceException {
-        Application application = requestContext.getCurrentApplication();
-        if (application != null) {
-            Screen screen = screenDao.findByName(name);
-            if (screen.getApplicationId().equals(application.getId())) {
-                return screen;
-            } else {
-                //this screen belongs to another application
-                String errorMsg = "Cannot get screen, this screen belongs to another application";
-                LOGGER.log(Level.SEVERE, errorMsg);
-                throw new ServiceException(errorMsg);
-            }
-        }
-        return null;
-    }
-
-    @Override
     public List<Screen> getAllScreens() {
         Application application = requestContext.getCurrentApplication();
         if (application != null) {

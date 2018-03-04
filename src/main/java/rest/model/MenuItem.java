@@ -4,13 +4,15 @@ public class MenuItem {
 
     private String title;
     private String url;
+    private int menuOrder;
 
     public MenuItem() {
     }
 
-    public MenuItem(String title, String url) {
+    public MenuItem(String title, String url, int menuOrder) {
         this.title = title;
         this.url = url;
+        this.menuOrder = menuOrder;
     }
 
     public String getTitle() {
@@ -27,5 +29,13 @@ public class MenuItem {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getMenuOrder() {
+        return menuOrder;
+    }
+
+    public void setMenuOrder(int menuOrder) {
+        this.menuOrder = menuOrder;
     }
 }

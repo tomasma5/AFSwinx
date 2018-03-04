@@ -32,7 +32,7 @@ public class ScreenEndpoint {
         List<MenuItem> menuItems = new ArrayList<>();
         List<Screen> screens = screenRestService.getAllScreens();
         for (Screen screen : screens) {
-            menuItems.add(new MenuItem(screen.getHeading(), screen.getScreenUrl()));
+            menuItems.add(new MenuItem(screen.getHeading(), screen.getScreenUrl(), screen.getMenuOrder()));
         }
         return menuItems;
     }

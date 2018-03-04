@@ -10,6 +10,7 @@ public class ParameterNames {
     public static final String SCREEN_ID = "screen";
     public static final String SCREEN_URL = "screenUrl";
     public static final String SCREEN_HEADING = "heading";
+    public static final String SCREEN_MENU_ORDER = "menuOrder";
 
     public static final String COMPONENT_ID = "component";
     public static final String COMPONENT_NAME = "componentName";
@@ -41,4 +42,4 @@ public class ParameterNames {
     public static final String LINKED_COMPONENT_ID = "linkedHiddenComponent";
 
 
- }
+}

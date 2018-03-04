@@ -64,4 +64,9 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     public Screen findScreenById(ObjectId id) {
         return screenDao.findById(id);
     }
+
+    @Override
+    public int getScreenCount(ObjectId applicationId) {
+        return getAllScreensByApplication(applicationId).size();
+    }
 }
