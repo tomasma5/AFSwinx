@@ -1,3 +1,4 @@
 .idea/
 UIxy.iml
 target/
+*.json
