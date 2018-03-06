@@ -25,12 +25,12 @@ public class Main {
             }
         }
         try {
-            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder()
-                    .setUrl("http://localhost:8081/UIxy/api/screens/5a9955636402eb092c3b56c7")
+            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance()
+                    .getScreenDefinitionBuilder("http://localhost:8081/UIxy/api/screens/5a9955636402eb092c3b56c7")
                     .getScreenDefinition();
             WelcomeScreen welcomeScreen = new WelcomeScreen(screenDefinition);
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
-        } catch (IOException e) {
+        } catch (Exception e) {
             //TODO something went wrong
             e.printStackTrace();
         }

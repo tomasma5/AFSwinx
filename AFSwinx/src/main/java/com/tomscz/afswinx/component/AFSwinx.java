@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.*;
 import com.tomscz.afswinx.component.skin.Skin;
@@ -70,8 +69,8 @@ public class AFSwinx {
         return new AFSwinxMenuBuilder();
     }
 
-    public AFSwinxScreenBuilder getScreenDefinitionBuilder() {
-        return new AFSwinxScreenBuilder();
+    public AFSwinxScreenDefinitionBuilder getScreenDefinitionBuilder(String url) {
+        return new AFSwinxScreenDefinitionBuilder(url);
     }
     /**
      * This method add component to current hash map, which hold all components which could be

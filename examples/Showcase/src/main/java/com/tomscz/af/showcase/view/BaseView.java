@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.application.SecurityContext;
 import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
 import com.tomscz.afrest.commons.SupportedComponents;
@@ -64,6 +65,9 @@ public abstract class BaseView extends JPanel {
         b1.add(createLeftMenu());
         b1.add(Box.createHorizontalGlue());
         JPanel content;
+        if(getScreenDefinition() != null){
+            getScreenDefinition().reload();
+        }
         content = createContent();
 
         b1.add(content);
@@ -113,9 +117,19 @@ public abstract class BaseView extends JPanel {
         try {
             swinxMenu = AFSwinx.getInstance().getMenuBuilder().setUrl("http://localhost:8081/UIxy/api/screens/").buildComponent();
             if(swinxMenu.getMenuButtons() != null) {
-                for (AFSwinxMenuButton button : swinxMenu.getMenuButtons().values()) {
-                    button.setPreferredSize(buttonSize);
-                    menu.add(button);
+                if(ApplicationContext.getInstance().getSecurityContext() != null &&
+                        ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
+                    for (AFSwinxMenuButton button : swinxMenu.getMenuButtons().values()) {
+                        if(button.getTitle().equals("Login")){
+                            continue;
+                        }
+                        button.setPreferredSize(buttonSize);
+                        menu.add(button);
+                    }
+                } else {
+                    AFSwinxMenuButton loginButton = swinxMenu.getMenuButtons().get("Login");
+                    loginButton.setPreferredSize(buttonSize);
+                    menu.add(loginButton);
                 }
             }
         } catch (AFSwinxBuildException e) {

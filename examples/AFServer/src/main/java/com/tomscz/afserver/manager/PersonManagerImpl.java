@@ -107,7 +107,6 @@ public class PersonManagerImpl extends BaseManager<Person>
         } catch (BusinessException e) {
             throw e;
         }
-        // TODO Auto-generated method stub
         return null;
     }
 

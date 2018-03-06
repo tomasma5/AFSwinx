@@ -10,11 +10,7 @@ import org.json.JSONObject;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class AFSwinxMenuButtonBuilder {
 
@@ -34,47 +30,28 @@ public class AFSwinxMenuButtonBuilder {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO send request to get screen components from given url
-                try {
-                    String screenJson = getScreenDefinition(url);
-                    AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder().getScreenDefinition(new JSONObject(screenJson));
-                    ScreenPreparedListener screenPreparedListener = button.getScreenPreparedListener();
-                    if (screenPreparedListener != null) {
-                        screenPreparedListener.onScreenPrepared(screenDefinition);
-                    }
-                    //execute user defined action listener
-                    ActionListener onClickListener = button.getOnClickListener();
-                    if (onClickListener != null) {
-                        onClickListener.actionPerformed(e);
-                    }
-                } catch (JsonSyntaxException | IOException e1) {
-                    //TODO handle exception
-                    e1.printStackTrace();
+                loadScreen(button, url);
+                ActionListener onClickListener = button.getOnClickListener();
+                if (onClickListener != null) {
+                    onClickListener.actionPerformed(e);
                 }
             }
         });
         return button;
     }
 
-
-    private String getScreenDefinition(String url) throws IOException {
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-        con.setRequestMethod("GET");
-
-        con.setRequestProperty("Application", "4f1eea54-f08b-4f55-bb93-e6d8642abefa"); //TODO move UUID to properties or something
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+    public void loadScreen(AFSwinxMenuButton button, String screenUrl) {
+        try {
+            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl).getScreenDefinition();
+            ScreenPreparedListener screenPreparedListener = button.getScreenPreparedListener();
+            if (screenPreparedListener != null) {
+                screenPreparedListener.onScreenPrepared(screenDefinition);
+            }
+        } catch (JsonSyntaxException | IOException e1) {
+            //TODO handle exception
+            e1.printStackTrace();
         }
-        in.close();
-
-        return response.toString();
     }
+
 
 }

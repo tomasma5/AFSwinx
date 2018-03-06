@@ -26,7 +26,6 @@ public class AFSwinxMenuBuilder {
     }
 
     public AFSwinxMenu buildComponent() throws AFSwinxBuildException, IOException {
-        //TODO get menu definition from middleware
         AFSwinxMenu menu = new AFSwinxMenu();
         String menuJson = getMenuDefinition(url);
         JSONArray menuItems = new JSONArray(menuJson);

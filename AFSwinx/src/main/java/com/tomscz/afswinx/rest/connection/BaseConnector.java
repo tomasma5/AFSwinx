@@ -101,7 +101,7 @@ public abstract class BaseConnector implements Connector {
                     new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod,
                             this.headersParams, getContext(), this.security);
             HttpRequest request = requestBuilder.getRequest(getParameter());
-            request.setHeader("Application", "4f1eea54-f08b-4f55-bb93-e6d8642abefa"); //TODO nekam s tim do properties
+            request.setHeader("Application", "4f1eea54-f08b-4f55-bb93-e6d8642abefa"); //TODO move UUID to properties or something
             InputStream inputStream;
             boolean transformResponseData = true;
             if (body != null

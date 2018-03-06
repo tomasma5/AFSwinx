@@ -43,15 +43,9 @@ public abstract class BaseController {
         view.addCzechButtonListener(onCzechButtonExec);
         view.addEnglishButtonListener(onEnglishButtonExec);
         Map<String, AFSwinxMenuButton> menuButtons = view.getSwinxMenu().getMenuButtons();
-        for(Map.Entry<String, AFSwinxMenuButton> menuBtnPair : menuButtons.entrySet()) {
-            if(menuBtnPair.getKey().equals("Login")) {
-                menuBtnPair.getValue().setScreenPreparedListener(loginButtonListener);
-            }
-            if(menuBtnPair.getKey().equals("Available countries")){
-                menuBtnPair.getValue().setScreenPreparedListener(avaiableCountryPublicListener);
-            }
-            //TODO other screen prepared listeners
-        }
+        menuButtons.get("Login").setScreenPreparedListener(loginButtonListener);
+        menuButtons.get("Available countries").setScreenPreparedListener(avaiableCountryPublicListener);
+        menuButtons.get("Vehicles").setScreenPreparedListener(vehiclesButtonListener);
         //TODO register button listeners
     }
 
@@ -152,12 +146,12 @@ public abstract class BaseController {
         }
     };
 
-    private ActionListener vehiclesButtonListener = new ActionListener() {
+    private ScreenPreparedListener vehiclesButtonListener = new ScreenPreparedListener() {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
-            AvailableVehiclesView vehiclesView = new AvailableVehiclesView(null);
+            AvailableVehiclesView vehiclesView = new AvailableVehiclesView(afProxyScreenDefinition);
             AvailableVehiclesController controller = new AvailableVehiclesController(vehiclesView);
             view.setVisible(false);
             view = null;

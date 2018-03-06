@@ -1,6 +1,7 @@
 package com.tomscz.af.showcase.view;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
+import com.tomscz.af.showcase.application.SecurityContext;
 import com.tomscz.af.showcase.utils.Localization;
 import com.tomscz.af.showcase.view.controller.AvaiableCountryController;
 import com.tomscz.af.showcase.view.skin.MySkin;
@@ -43,23 +44,21 @@ public class AvailableVehiclesView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource;
         try {
-            AFSwinxTable table = AFSwinx.getInstance()
-                    .getTableBuilder()
-                    .initBuilder(VEHICLES_TABLE, null)
+            AFSwinxTable table = getScreenDefinition().getTableBuilderByKey(VEHICLES_TABLE)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
                     .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
-            HashMap<String, String> securityConstrains =
-                    ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
-            AFSwinxForm form = AFSwinx.getInstance()
-                    .getFormBuilder()
-                    .initBuilder(VEHICLES_FORM, null, securityConstrains)
+
+            SecurityContext securityContext = ApplicationContext.getInstance().getSecurityContext();
+
+            AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(VEHICLES_FORM)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
-                    .setSkin(new MySkin()).buildComponent();
+                    .setConnectionParameters(securityContext != null? securityContext.getUserNameAndPasswodr() : null)
+                    .setSkin(new MySkin())
+                    .buildComponent();
+
             centerPanel.add(form);
             //Add buttons
             addVehicleButton = new JButton(Localization.getLocalizationText("vehicles.buttton.add"));
