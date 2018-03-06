@@ -54,6 +54,7 @@ public class ComponentCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //TODO maybe refactor
         String appIdString = req.getParameter(ParameterNames.APPLICATION_ID);
         if (appIdString == null || appIdString.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -98,62 +99,53 @@ public class ComponentCreateServlet extends HttpServlet {
             sendSecurityParamsCount = Integer.parseInt(req.getParameter(ParameterNames.SEND + ParameterNames.SECURITY_PARAMS_COUNT));
         }
 
-        try {
-            ComponentResource componentResource = getComponentResource(componentId, modelConnectionActive, dataConnectionActive, sendConnectionActive);
 
-            //set attributes to component resource
-            componentResource.setName(componentName);
-            componentResource.setType(componentType);
-            componentResource.setApplicationId(new ObjectId(appIdString));
+        ComponentResource componentResource = getComponentResource(componentId, modelConnectionActive, dataConnectionActive, sendConnectionActive);
 
-            //set connection data
-            if (modelConnectionActive) {
+        //set attributes to component resource
+        componentResource.setName(componentName);
+        componentResource.setType(componentType);
+        componentResource.setApplicationId(new ObjectId(appIdString));
 
-                setConnectionAttributes(req, ParameterNames.MODEL, application,
-                        modelConnectionParameters, modelHeaderParamsCount, modelSecurityParamsCount,
-                        componentResource.getId(),
-                        componentResource.getRealConnections().getModelConnection(),
-                        componentResource.getProxyConnections().getModelConnection());
-            } else {
-                componentResource.getRealConnections().setModelConnection(null);
-                componentResource.getProxyConnections().setModelConnection(null);
-            }
-            if (dataConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.DATA, application, dataConnectionParameters,
-                        dataHeaderParamsCount, dataSecurityParamsCount,
-                        componentResource.getId(),
-                        componentResource.getRealConnections().getDataConnection(),
-                        componentResource.getProxyConnections().getDataConnection());
-            } else {
-                componentResource.getRealConnections().setDataConnection(null);
-                componentResource.getProxyConnections().setDataConnection(null);
-            }
-            if (sendConnectionActive) {
-                setConnectionAttributes(req, ParameterNames.SEND, application, sendConnectionParameters,
-                        sendHeaderParamsCount, sendSecurityParamsCount,
-                        componentResource.getId(),
-                        componentResource.getRealConnections().getSendConnection(),
-                        componentResource.getProxyConnections().getSendConnection());
-            } else {
-                componentResource.getRealConnections().setSendConnection(null);
-                componentResource.getProxyConnections().setSendConnection(null);
-            }
-
-            //create or update component
-            if (componentId == null || componentId.isEmpty()) {
-                componentManagementService.addComponent(componentResource);
-            } else {
-                componentManagementService.updateComponent(componentResource);
-            }
-            resp.sendRedirect("list?app=" + appIdString);
-            return;
-        } catch (NumberFormatException ex) {
-            //TODO
+        //set connection data
+        if (modelConnectionActive) {
+            setConnectionAttributes(req, ParameterNames.MODEL, application,
+                    modelConnectionParameters, modelHeaderParamsCount, modelSecurityParamsCount,
+                    componentResource.getId(),
+                    componentResource.getRealConnections().getModelConnection(),
+                    componentResource.getProxyConnections().getModelConnection());
+        } else {
+            componentResource.getRealConnections().setModelConnection(null);
+            componentResource.getProxyConnections().setModelConnection(null);
+        }
+        if (dataConnectionActive) {
+            setConnectionAttributes(req, ParameterNames.DATA, application, dataConnectionParameters,
+                    dataHeaderParamsCount, dataSecurityParamsCount,
+                    componentResource.getId(),
+                    componentResource.getRealConnections().getDataConnection(),
+                    componentResource.getProxyConnections().getDataConnection());
+        } else {
+            componentResource.getRealConnections().setDataConnection(null);
+            componentResource.getProxyConnections().setDataConnection(null);
+        }
+        if (sendConnectionActive) {
+            setConnectionAttributes(req, ParameterNames.SEND, application, sendConnectionParameters,
+                    sendHeaderParamsCount, sendSecurityParamsCount,
+                    componentResource.getId(),
+                    componentResource.getRealConnections().getSendConnection(),
+                    componentResource.getProxyConnections().getSendConnection());
+        } else {
+            componentResource.getRealConnections().setSendConnection(null);
+            componentResource.getProxyConnections().setSendConnection(null);
         }
 
-        req.setAttribute(ParameterNames.APPLICATION_ID, appIdString);
-        req.getRequestDispatcher(CREATE_URL).forward(req, resp);
-
+        //create or update component
+        if (componentId == null || componentId.isEmpty()) {
+            componentManagementService.addComponent(componentResource);
+        } else {
+            componentManagementService.updateComponent(componentResource);
+        }
+        resp.sendRedirect("list?app=" + appIdString);
     }
 
     private ComponentResource getComponentResource(String componentId, boolean modelConnectionActive, boolean dataConnectionActive, boolean sendConnectionActive) {

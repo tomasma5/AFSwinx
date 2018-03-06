@@ -26,7 +26,6 @@ public class ComponentResourcesEndpoint {
     @Path("/model/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
     public String getModelDefinition(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
-        //TODO check if component belongs to application
         return componentResourceService.getComponentModel(componentId, headers);
     }
 

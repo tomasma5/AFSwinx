@@ -1,8 +1,13 @@
 package servlet.applications;
 
 import model.Application;
+import model.ComponentConnection;
+import model.ComponentConnectionPack;
+import model.ComponentResource;
 import org.bson.types.ObjectId;
+import service.rest.ComponentResourceService;
 import service.servlet.ApplicationsManagementService;
+import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
 
 import javax.inject.Inject;
@@ -18,9 +23,11 @@ public class AppCreateServlet extends HttpServlet {
 
     private static final String CREATE_URL = "/WEB-INF/pages/apps/create.jsp";
 
-
     @Inject
     private ApplicationsManagementService applicationsManagementService;
+
+    @Inject
+    private ComponentManagementService componentManagementService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter(ParameterNames.APPLICATION_ID);
@@ -44,10 +51,14 @@ public class AppCreateServlet extends HttpServlet {
             new URL(remoteUrl); //check format of url with trying to create URL object
 
             Application application;
+            ObjectId id;
             if (applicationId == null || applicationId.isEmpty()) {
                 application = new Application();
+                id = new ObjectId();
+                application.setId(id);
             } else {
                 application = applicationsManagementService.findById(new ObjectId(applicationId));
+                id = application.getId();
             }
 
             application.setApplicationName(applicationName);
@@ -57,6 +68,7 @@ public class AppCreateServlet extends HttpServlet {
             if (applicationId == null || applicationId.isEmpty()) {
                 applicationsManagementService.addNewApplication(application);
             } else {
+                updateComponentConnections(application);
                 applicationsManagementService.updateApplication(application);
             }
             resp.sendRedirect("list");
@@ -72,5 +84,24 @@ public class AppCreateServlet extends HttpServlet {
         req.setAttribute(ParameterNames.APPLICATION_REMOTE_PORT, port);
         req.getRequestDispatcher(CREATE_URL).forward(req, resp);
 
+    }
+
+    private void updateComponentConnections(Application application) {
+        for(ComponentResource componentResource : componentManagementService.getAllComponentsByApplication(application.getId())){
+            ComponentConnectionPack realConnectionsPack = componentResource.getRealConnections();
+            updateConnectionParameters(application, realConnectionsPack.getModelConnection());
+            updateConnectionParameters(application, realConnectionsPack.getModelConnection());
+            updateConnectionParameters(application, realConnectionsPack.getModelConnection());
+            componentManagementService.updateComponent(componentResource);
+        }
+    }
+
+    private void updateConnectionParameters(Application application, ComponentConnection connection) {
+        if(connection != null){
+            //TODO rozdelit i v aplikace na protocol, adresu a port at nedelam takove veci
+            connection.setProtocol(application.getRemoteUrl().substring(0, application.getRemoteUrl().indexOf(":")));
+            connection.setAddress(application.getRemoteUrl().substring(application.getRemoteUrl().indexOf("://") + 3));
+            connection.setPort(application.getRemotePort());
+        }
     }
 }
