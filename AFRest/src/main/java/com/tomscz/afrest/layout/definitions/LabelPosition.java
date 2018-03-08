@@ -8,9 +8,9 @@ package com.tomscz.afrest.layout.definitions;
  */
 public enum LabelPosition {
     
-    BEFORE("before"),
-    AFTER("after"),
-    NONE("none");
+    BEFORE("BEFORE"),
+    AFTER("AFTER"),
+    NONE("NONE");
     
     private final String name; 
     

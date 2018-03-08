@@ -52,18 +52,20 @@ public class AvaiableCountryView extends BaseView {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
         try {
-            AFSwinxTable table = getScreenDefinition().getTableBuilderByKey(COUNTRY_TABLE)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .buildComponent();
+            AFSwinxTable table = getScreenDefinition()
+                    .getTableBuilderByKey(COUNTRY_TABLE)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
             // Because of security policy, get logged user
 
             SecurityContext securityContext = ApplicationContext.getInstance().getSecurityContext();
 
-            AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(COUNTRY_FORM)
+            AFSwinxForm form = getScreenDefinition()
+                    .getFormBuilderByKey(COUNTRY_FORM)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
-                    .setConnectionParameters(securityContext != null? securityContext.getUserNameAndPasswodr() : null)
+                    .setConnectionParameters(securityContext != null ? securityContext.getUserNameAndPasswodr() : null)
                     .setSkin(new MySkin())
                     .buildComponent();
             centerPanel.add(form);

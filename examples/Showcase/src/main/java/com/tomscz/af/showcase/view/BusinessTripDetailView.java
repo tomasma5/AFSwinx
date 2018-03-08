@@ -22,8 +22,8 @@ public class BusinessTripDetailView extends BaseView {
     private String dateTo;
 
     private static final long serialVersionUID = 1L;
-    public static final String BUSINESS_TRIP_PARTS_TABLE = "businessTripPartsTable";
-    public static final String BUSINESS_TRIP_PARTS_FORM = "businessTripPartsForm";
+    public static final String BUSINESS_TRIP_PARTS_TABLE = "businessTripPartTable";
+    public static final String BUSINESS_TRIP_PARTS_FORM = "businessTripPartForm";
 
     private JButton chooseButton;
     private JButton performButton;
@@ -40,26 +40,22 @@ public class BusinessTripDetailView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource;
         try {
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             HashMap<String, String> parameters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             parameters.put("businessTripId", String.valueOf(businessTripId));
-            AFSwinxTable table =
-                    AFSwinx.getInstance()
-                            .getTableBuilder()
-                            .initBuilder(BUSINESS_TRIP_PARTS_TABLE, null, parameters)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new MySkin())
-                            .buildComponent();
+            AFSwinxTable table = getScreenDefinition()
+                    .getTableBuilderByKey(BUSINESS_TRIP_PARTS_TABLE)
+                    .setConnectionParameters(parameters)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .setSkin(new MySkin())
+                    .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             AFSwinxForm form =
-                    AFSwinx.getInstance()
-                            .getFormBuilder()
-                            .initBuilder(BUSINESS_TRIP_PARTS_FORM, null, parameters)
+                    getScreenDefinition()
+                            .getFormBuilderByKey(BUSINESS_TRIP_PARTS_FORM)
+                            .setConnectionParameters(parameters)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new MySkin())
                             .buildComponent();

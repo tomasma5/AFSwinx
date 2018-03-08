@@ -1,45 +1,31 @@
 package com.tomscz.af.showcase.view;
 
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import com.tomscz.af.showcase.application.ApplicationContext;
-import com.tomscz.af.showcase.application.SecurityContext;
-import com.tomscz.af.showcase.utils.Localization;
+import com.tomscz.af.showcase.utils.ProxyConstants;
 import com.tomscz.af.showcase.view.dialogs.Dialogs;
-import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxMenu;
-import com.tomscz.afswinx.component.AFSwinxMenuButton;
-import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
-import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
+import com.tomscz.afswinx.component.AFSwinxScreenButton;
 import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * This class is base view which extends all view. This view hold left menu, localization bar and
  * has abstract method to fill content. In this method place your content.
- * 
+ *
  * @author Martin Tomasek (martin@toms-cz.com)
- * 
  * @since 1.0.0.
  */
 public abstract class BaseView extends JPanel {
 
     private JButton czech;
     private JButton english;
+    private AFSwinxScreenButton logoutButton;
     private AFSwinxMenu swinxMenu;
     private AFProxyScreenDefinition screenDefinition;
     private MainFrame mainFrame = MainFrame.getInstance();
@@ -65,7 +51,7 @@ public abstract class BaseView extends JPanel {
         b1.add(createLeftMenu());
         b1.add(Box.createHorizontalGlue());
         JPanel content;
-        if(getScreenDefinition() != null){
+        if (getScreenDefinition() != null) {
             getScreenDefinition().reload();
         }
         content = createContent();
@@ -90,6 +76,7 @@ public abstract class BaseView extends JPanel {
 
     /**
      * This method will create localization bar.
+     *
      * @return localization bar which could be added to frame.
      */
     protected JPanel createLocalizationToolbar() {
@@ -108,41 +95,48 @@ public abstract class BaseView extends JPanel {
 
     /**
      * This method will create left menu.
+     *
      * @return left menu panel which could be added to frame.
      */
     protected JPanel createLeftMenu() {
         JPanel menu = new JPanel();
         Dimension buttonSize = new Dimension(200, 30);
         menu.setPreferredSize(new Dimension(250, 500));
+
         try {
-            swinxMenu = AFSwinx.getInstance().getMenuBuilder().setUrl("http://localhost:8081/UIxy/api/screens/").buildComponent();
-            if(swinxMenu.getMenuButtons() != null) {
-                if(ApplicationContext.getInstance().getSecurityContext() != null &&
+            swinxMenu = AFSwinx.getInstance().getMenuBuilder().setUrl(ApplicationContext.getInstance().getUiProxyUrl() + "/api/screens/").buildComponent();
+            if (swinxMenu.getMenuButtons() != null) {
+                if (ApplicationContext.getInstance().getSecurityContext() != null &&
                         ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
-                    for (AFSwinxMenuButton button : swinxMenu.getMenuButtons().values()) {
-                        if(button.getTitle().equals("Login")){
-                            continue;
+                    for (AFSwinxScreenButton button : swinxMenu.getMenuButtons().values()) {
+                        if (button.getKey().equals(ProxyConstants.BTN_KEY_LOGIN)) {
+                            button.setText("Home");
+                            logoutButton = AFSwinx.getInstance().getScreenButtonBuilder().buildComponent(ProxyConstants.BTN_CUSTOM_LOGOUT, button.getUrl());
                         }
                         button.setPreferredSize(buttonSize);
                         menu.add(button);
                     }
+                    logoutButton.setPreferredSize(buttonSize);
+                    menu.add(logoutButton);
                 } else {
-                    AFSwinxMenuButton loginButton = swinxMenu.getMenuButtons().get("Login");
+                    AFSwinxScreenButton loginButton = swinxMenu.getMenuButtons().get(ProxyConstants.BTN_KEY_LOGIN);
                     loginButton.setPreferredSize(buttonSize);
+                    loginButton.setText("Login");
                     menu.add(loginButton);
                 }
             }
         } catch (AFSwinxBuildException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            getDialogs().failed("Cannot build menu", e.getMessage());
             e.printStackTrace();
         }
 
         return menu;
     }
 
-    public void addOnScreenPreparedListener(AFSwinxMenuButton button, ScreenPreparedListener spl) {
-        button.setScreenPreparedListener(spl);
+    public void addLogoutButtonMenuListener(ScreenPreparedListener a) {
+        if (logoutButton != null) {
+            logoutButton.setScreenPreparedListener(a);
+        }
     }
 
     public void addEnglishButtonListener(ActionListener a) {

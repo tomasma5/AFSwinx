@@ -21,12 +21,8 @@ import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 public class AbsenceInstanceEditView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    public static final String ABSENCE_INSTANCE_EDIT_TABLE = "absenceInstaceEditTable";
-    public static final String ABSENCE_INSTANCE_EDIT_TABLE_CONNECTION =
-            "absenceInstaceEditTableConnection";
-    public static final String ABSENCE_INSTANCE_EDIT_FORM = "absenceInstaceEditForm";
-    public static final String ABSENCE_INSTANCE_EDIT_FORM_CONNECTION =
-            "absenceInstaceEditFormConnection";
+    public static final String ABSENCE_INSTANCE_EDIT_TABLE = "absenceInstanceEditTable";
+    public static final String ABSENCE_INSTANCE_EDIT_FORM = "absenceInstanceEditForm";
 
     private JButton chooseButton;
     private JButton performButton;
@@ -43,20 +39,18 @@ public class AbsenceInstanceEditView extends BaseView {
         try {
             HashMap<String, String> parameters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            AFSwinxTable table =
-                    AFSwinx.getInstance()
-                            .getTableBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_EDIT_TABLE, null, parameters)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .buildComponent();
+            AFSwinxTable table = getScreenDefinition()
+                    .getTableBuilderByKey(ABSENCE_INSTANCE_EDIT_TABLE)
+                    .setConnectionParameters(parameters)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
-            AFSwinxForm form =
-                    AFSwinx.getInstance()
-                            .getFormBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_EDIT_FORM, null, parameters)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new AbsenceInstanceEditSkin()).buildComponent();
+            AFSwinxForm form = getScreenDefinition()
+                    .getFormBuilderByKey(ABSENCE_INSTANCE_EDIT_FORM)
+                    .setConnectionParameters(parameters)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .setSkin(new AbsenceInstanceEditSkin()).buildComponent();
             centerPanel.add(form);
             performButton =
                     new JButton(Localization.getLocalizationText("avaiableCountryView.buttton.add"));
@@ -73,7 +67,7 @@ public class AbsenceInstanceEditView extends BaseView {
             centerBox.add(centerPanel);
             centerBox.add(Box.createHorizontalStrut(100));
             b1.add(table);
-             b1.add(chooseButton);
+            b1.add(chooseButton);
             b1.add(Box.createVerticalStrut(40));
             b1.add(centerBox);
             b1.add(Box.createVerticalStrut(40));
@@ -86,15 +80,15 @@ public class AbsenceInstanceEditView extends BaseView {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         return mainPanel;
     }
-    
-    public void addPerformButtonActionListener(ActionListener a){
-        if(performButton != null){
+
+    public void addPerformButtonActionListener(ActionListener a) {
+        if (performButton != null) {
             performButton.addActionListener(a);
         }
     }
-    
-    public void addChooseButtonActionListener(ActionListener a){
-        if(chooseButton != null){
+
+    public void addChooseButtonActionListener(ActionListener a) {
+        if (chooseButton != null) {
             chooseButton.addActionListener(a);
         }
     }

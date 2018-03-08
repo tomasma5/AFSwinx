@@ -3,13 +3,8 @@ package com.tomscz.afswinx.rest.connection;
 import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afswinx.common.Utils;
 import org.json.JSONObject;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * This class parse connection from input file (xml) and build connection from them.
@@ -30,14 +25,22 @@ public class JsonConnectionParser implements JSONParser {
     private static final String PASSWORD = "password";
 
     // Concrete value of connection
-    private static final String END_POINT = "address";
+    private static final String ADDRESS = "address";
     private static final String END_POINT_PARAMETERS = "parameters";
     private static final String PROTOCOL = "protocol";
     private static final String PORT = "port";
+
+    private static final String REAL_ADDRESS = "realAddress";
+    private static final String REAL_END_POINT_PARAMETERS = "realParameters";
+    private static final String REAL_PROTOCOL = "realProtocol";
+    private static final String REAL_PORT = "realPort";
+
     private static final String HEADER_PARAM = "headerParams";
     private static final String SECURITY_PARAMS = "securityParams";
     private static final String CONTENT_TYPE = "content-type";
     private static final String ACCEPT_TYPE = "accept-type";
+
+    private static final String REAL_ENDPOINT = "real-endpoint";
 
     private HashMap<String, String> elConnectionData;
 
@@ -72,13 +75,13 @@ public class JsonConnectionParser implements JSONParser {
         JSONObject modelConnection = connections.optJSONObject(METAMODEL_CONNECTION);
         JSONObject dataConnection = connections.optJSONObject(DATA_CONNECTION);
         JSONObject sendConnection = connections.optJSONObject(SEND_CONNECTION);
-        if(modelConnection != null) {
+        if (modelConnection != null) {
             parseConnection(connectionPack, METAMODEL_CONNECTION, modelConnection);
         }
-        if(dataConnection != null) {
+        if (dataConnection != null) {
             parseConnection(connectionPack, DATA_CONNECTION, dataConnection);
         }
-        if(sendConnection != null) {
+        if (sendConnection != null) {
             parseConnection(connectionPack, SEND_CONNECTION, sendConnection);
         }
 
@@ -87,10 +90,16 @@ public class JsonConnectionParser implements JSONParser {
 
     private void parseConnection(AFSwinxConnectionPack connectionPack, String connectionName, JSONObject connectionObj) {
         AFSwinxConnection connection = new AFSwinxConnection();
-        connection.setAddress(evaluateEL(connectionObj.getString(END_POINT)));
+        connection.setAddress(evaluateEL(connectionObj.getString(ADDRESS)));
         connection.setParameters(evaluateEL(connectionObj.getString(END_POINT_PARAMETERS)));
         connection.setPort(connectionObj.getInt(PORT));
         connection.setProtocol(evaluateEL(connectionObj.getString(PROTOCOL)));
+        String realAddress = evaluateEL(connectionObj.getString(REAL_ADDRESS));
+        String realParameters = evaluateEL(connectionObj.getString(REAL_END_POINT_PARAMETERS));
+        int realPort = connectionObj.getInt(REAL_PORT);
+        String realProtocol = evaluateEL(connectionObj.getString(REAL_PROTOCOL));
+        String realEndpoint = realProtocol + "://" + realAddress + (realPort != 0 ? ":" + realPort : "") + realParameters;
+        connection.addHeaderParam(REAL_ENDPOINT, realEndpoint);
         parseHeaderParam(connection, connectionObj.optJSONObject(HEADER_PARAM));
         parseSecurityParams(connection, connectionObj.optJSONObject(SECURITY_PARAMS));
         // Set created connection to connection holder based on connection type
@@ -121,12 +130,12 @@ public class JsonConnectionParser implements JSONParser {
      * @param securityParams node with security options
      */
     private void parseSecurityParams(AFSwinxConnection connection, JSONObject securityParams) {
-        if(securityParams == null){
+        if (securityParams == null) {
             return;
         }
         ConnectionSecurity security = new ConnectionSecurity();
         String key, value;
-        for(String nextKey : securityParams.keySet()) {
+        for (String nextKey : securityParams.keySet()) {
             key = evaluateEL(nextKey);
             value = evaluateEL(securityParams.getString(nextKey));
             if (value != null) {
@@ -146,11 +155,11 @@ public class JsonConnectionParser implements JSONParser {
     }
 
     private void parseHeaderParam(AFSwinxConnection connection, JSONObject headerParams) {
-        if(headerParams == null){
+        if (headerParams == null) {
             return;
         }
         String key, value;
-        for(String nextKey : headerParams.keySet()){
+        for (String nextKey : headerParams.keySet()) {
             key = evaluateEL(nextKey);
             value = evaluateEL(headerParams.getString(nextKey));
             // Parse content type and accept type separately

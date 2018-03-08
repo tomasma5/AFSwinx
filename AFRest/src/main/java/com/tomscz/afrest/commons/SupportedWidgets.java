@@ -22,6 +22,7 @@ public enum SupportedWidgets {
     CALENDAR("CALENDAR"),
     PASSWORD("PASSWORD");
 
+
     private final String name;
 
     private SupportedWidgets(String name) {

@@ -1,35 +1,42 @@
 package com.tomscz.afswinx.component;
 
-import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class AFSwinxMenuButton extends JButton{
+public class AFSwinxScreenButton extends JButton{
 
     private static final long serialVersionUID = 1L;
 
-    private String title;
+    private String key;
     private String url;
+    private String displayText;
     private int menuOrder;
     private ActionListener onClickListener;
     private ScreenPreparedListener screenPreparedListener;
 
-    public AFSwinxMenuButton() {
+    public AFSwinxScreenButton() {
     }
 
-    public AFSwinxMenuButton(String title, String url) {
-        this.title = title;
+    public AFSwinxScreenButton(String key, String displayText, String url) {
+        this.key = key;
+        this.displayText = displayText;
         this.url = url;
     }
 
-    public String getTitle() {
-        return title;
+    public AFSwinxScreenButton(String key, String url) {
+        this.key = key;
+        this.displayText = key;
+        this.url = url;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getUrl() {
@@ -62,5 +69,13 @@ public class AFSwinxMenuButton extends JButton{
 
     public void setMenuOrder(int menuOrder) {
         this.menuOrder = menuOrder;
+    }
+
+    public String getDisplayText() {
+        return displayText;
+    }
+
+    public void setDisplayText(String displayText) {
+        this.displayText = displayText;
     }
 }

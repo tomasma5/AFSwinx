@@ -8,8 +8,8 @@ package com.tomscz.afrest.layout.definitions;
  */
 public enum LayouDefinitions {
     
-        TWOCOLUMNSLAYOUT("TwoColumnsLayout"),
-        ONECOLUMNLAYOUT("OneColumnLayout");
+        TWOCOLUMNSLAYOUT("TWOCOLUMNSLAYOUT"),
+        ONECOLUMNLAYOUT("ONECOLUMNLAYOUT");
         
         private final String name; 
         

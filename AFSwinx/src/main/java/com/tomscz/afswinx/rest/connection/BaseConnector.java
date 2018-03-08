@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
 
+import com.tomscz.afswinx.component.AFSwinx;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
@@ -101,7 +102,7 @@ public abstract class BaseConnector implements Connector {
                     new HttpRequestBuilder(this.accept, this.contentType, this.httpMethod,
                             this.headersParams, getContext(), this.security);
             HttpRequest request = requestBuilder.getRequest(getParameter());
-            request.setHeader("Application", "4f1eea54-f08b-4f55-bb93-e6d8642abefa"); //TODO move UUID to properties or something
+            request.setHeader("Application", AFSwinx.getInstance().getProxyApplicationContext());
             InputStream inputStream;
             boolean transformResponseData = true;
             if (body != null

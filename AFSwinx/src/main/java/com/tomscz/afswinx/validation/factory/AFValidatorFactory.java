@@ -52,10 +52,10 @@ public class AFValidatorFactory {
         if (validation.equals(SupportedValidations.NUMBER)) {
             return new NumberValidator(widgetType);
         }
-        if (validation.equals(SupportedValidations.MIN)) {
+        if (validation.equals(SupportedValidations.MINVALUE)) {
             return new MinAndMaxValueValidator(widgetType, value, true);
         }
-        if (validation.equals(SupportedValidations.MAX)) {
+        if (validation.equals(SupportedValidations.MAXVALUE)) {
             return new MinAndMaxValueValidator(widgetType, value, false);
         }
         if (validation.equals(SupportedValidations.CONTAINS)) {

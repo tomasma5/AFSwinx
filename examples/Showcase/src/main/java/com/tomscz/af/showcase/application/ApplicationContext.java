@@ -25,7 +25,9 @@ public class ApplicationContext {
 
 	private SecurityContext securityContext;
 
-	private String connectionFileName;
+	private String uiProxyApplicationUuid;
+
+	private String uiProxyUrl;
 
 	private ResourceBundle localization;
 
@@ -48,26 +50,30 @@ public class ApplicationContext {
 		}
 	}
 
-	private void loadConnectionile() throws IOException {
+	private void loadUIProxyApplicationUuid() throws IOException {
 		Properties applicationProperties = new Properties();
-		InputStream propInput = getClass().getClassLoader()
-				.getResourceAsStream(APP_CONFIG_FILE);
+		InputStream propInput = getClass().getClassLoader().getResourceAsStream(APP_CONFIG_FILE);
 		applicationProperties.load(propInput);
-		String environment = applicationProperties
-				.getProperty("application.env");
-		this.connectionFileName = "connection_" + environment + ".xml";
+		this.uiProxyApplicationUuid = applicationProperties.getProperty("proxy.uuid");
 	}
 
-	public InputStream getConnectionFile() {
-		if (connectionFileName == null) {
-			try {
-				loadConnectionile();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+
+	public void loadUIProxyUrl() throws IOException {
+		Properties applicationProperties = new Properties();
+		InputStream propInput = getClass().getClassLoader().getResourceAsStream(APP_CONFIG_FILE);
+		applicationProperties.load(propInput);
+		this.uiProxyUrl = applicationProperties.getProperty("proxy.url");
+	}
+
+	public String getUiProxyUrl() {
+		return uiProxyApplicationUuid;
+	}
+
+	public String getUiProxyApplicationUuid() throws IOException {
+		if(uiProxyApplicationUuid == null || uiProxyApplicationUuid.isEmpty()) {
+			loadUIProxyApplicationUuid();
 		}
-		return getClass().getClassLoader().getResourceAsStream(
-				connectionFileName);
+		return uiProxyApplicationUuid;
 	}
 
 	public ResourceBundle getLocalization() {

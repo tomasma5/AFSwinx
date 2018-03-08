@@ -22,9 +22,7 @@ import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 public class AbsenceInstanceCreateView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    public static final String ABSENCE_INSTANCE_ADD_FORM = "absenceInstanceAddForm";
-    public static final String ABSENCE_INSTANCE_ADD_FORM_CONNECTION =
-            "absenceInstanceAddConnection";
+    public static final String ABSENCE_INSTANCE_FORM = "absenceInstanceForm";
 
     private JButton createButton;
 
@@ -44,12 +42,10 @@ public class AbsenceInstanceCreateView extends BaseView {
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
             securityConstrains.put("user", ApplicationContext.getInstance().getSecurityContext()
                     .getUserLogin());
-            AFSwinxForm form =
-                    AFSwinx.getInstance()
-                            .getFormBuilder()
-                            .initBuilder(ABSENCE_INSTANCE_ADD_FORM, null, securityConstrains)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new AbsenceInstanceCreateSkin()).buildComponent();
+            AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(ABSENCE_INSTANCE_FORM)
+                    .setConnectionParameters(securityConstrains)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .setSkin(new AbsenceInstanceCreateSkin()).buildComponent();
             centerPanel.add(form);
             Box buttonBox = Box.createHorizontalBox();
             buttonBox.add(Box.createHorizontalStrut(60));
@@ -80,7 +76,7 @@ public class AbsenceInstanceCreateView extends BaseView {
         }
         return mainPanel;
     }
-    
+
     public void addCreateButtonActionListener(ActionListener e) {
         if (createButton != null) {
             createButton.addActionListener(e);

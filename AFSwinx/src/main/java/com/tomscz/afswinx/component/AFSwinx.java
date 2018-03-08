@@ -30,6 +30,8 @@ public class AFSwinx {
 
     private Skin applicationSkin;
 
+    private String applicationContextUuid;
+
     private AFSwinx() {
         components = new HashMap<>();
     }
@@ -71,6 +73,10 @@ public class AFSwinx {
 
     public AFSwinxScreenDefinitionBuilder getScreenDefinitionBuilder(String url) {
         return new AFSwinxScreenDefinitionBuilder(url);
+    }
+
+    public AFSwinxScreenButtonBuilder getScreenButtonBuilder(){
+        return new AFSwinxScreenButtonBuilder();
     }
     /**
      * This method add component to current hash map, which hold all components which could be
@@ -145,4 +151,11 @@ public class AFSwinx {
         this.applicationSkin = applicationSkin;
     }
 
+    public void setProxyApplicationContext(String applicationUuid) {
+        this.applicationContextUuid = applicationUuid;
+    }
+
+    public String getProxyApplicationContext() {
+        return applicationContextUuid;
+    }
 }

@@ -25,17 +25,14 @@ public class AbsenceTypManagementView extends BaseView {
     public static final String ABSENCE_TYPE_TABLE = "absenceTypeTable";
     public static final String ABSENCY_TYPE_FORM = "absenceTypeForm";
     public static final String COUNTRY_FORM = "absenceCountryForm";
-    public static final String COUNTRY_CONNECTION = "absenceCountryConnection";
-    public static final String ABSENCY_TYPE_FORM_CONNECTION = "tableAbsenceTypeFormConnection";
-    public static final String ABSENCY_TYPE_TABLE_CONNECTION = "absenceTypeTableConnection";
 
     private JButton chooseButton;
     private JButton chooseCountryButton;
     private JButton performButton;
     private JButton formResetButton;
     private boolean displayAdditionalsField = false;
-    private int selectedCountry=0;
-    
+    private int selectedCountry = 0;
+
     public AbsenceTypManagementView(AFProxyScreenDefinition screenDefinition) {
         super(screenDefinition);
         intialize();
@@ -45,15 +42,12 @@ public class AbsenceTypManagementView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource = ApplicationContext.getInstance().getConnectionFile();
         try {
             Box horizontalTopBox = Box.createHorizontalBox();
             horizontalTopBox.setAlignmentX(CENTER_ALIGNMENT);
-            AFSwinxForm chooseCountry =
-                    AFSwinx.getInstance().getFormBuilder()
-                            .initBuilder(COUNTRY_FORM, null, COUNTRY_CONNECTION)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new MySkin()).buildComponent();
+            AFSwinxForm chooseCountry = getScreenDefinition().getFormBuilderByKey(COUNTRY_FORM)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .setSkin(new MySkin()).buildComponent();
             chooseCountryButton = new JButton(Localization.getLocalizationText("button.choose"));
             horizontalTopBox.add(chooseCountry);
             horizontalTopBox.add(Box.createHorizontalStrut(10));
@@ -68,12 +62,11 @@ public class AbsenceTypManagementView extends BaseView {
             try {
                 HashMap<String, String> parameters = new HashMap<String, String>();
                 parameters.put("id", String.valueOf(selectedCountry));
-                AFSwinxTable table =
-                        AFSwinx.getInstance()
-                                .getTableBuilder()
-                                .initBuilder(ABSENCE_TYPE_TABLE, null,parameters)
-                                .setLocalization(ApplicationContext.getInstance().getLocalization())
-                                .buildComponent();
+                AFSwinxTable table = getScreenDefinition()
+                        .getTableBuilderByKey(ABSENCE_TYPE_TABLE)
+                        .setConnectionParameters(parameters)
+                        .setLocalization(ApplicationContext.getInstance().getLocalization())
+                        .buildComponent();
                 Box centerPanel = Box.createVerticalBox();
                 centerPanel.setAlignmentX(CENTER_ALIGNMENT);
                 HashMap<String, String> securityConstrains =
@@ -81,9 +74,8 @@ public class AbsenceTypManagementView extends BaseView {
                                 .getUserNameAndPasswodr();
                 securityConstrains.put("id", String.valueOf(selectedCountry));
                 AFSwinxForm form =
-                        AFSwinx.getInstance()
-                                .getFormBuilder()
-                                .initBuilder(ABSENCY_TYPE_FORM, null, securityConstrains)
+                        getScreenDefinition().getFormBuilderByKey(ABSENCY_TYPE_FORM)
+                                .setConnectionParameters(securityConstrains)
                                 .setLocalization(ApplicationContext.getInstance().getLocalization())
                                 .setSkin(new MySkin()).buildComponent();
                 centerPanel.add(form);
@@ -127,7 +119,7 @@ public class AbsenceTypManagementView extends BaseView {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         return mainPanel;
     }
-    
+
     public void addChooseButtonActionListener(ActionListener a) {
         if (chooseButton != null) {
             chooseButton.addActionListener(a);

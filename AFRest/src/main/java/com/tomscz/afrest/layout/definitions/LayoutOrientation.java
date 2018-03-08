@@ -9,7 +9,7 @@ package com.tomscz.afrest.layout.definitions;
  */
 public enum LayoutOrientation {
 
-    AXISX("AxisX"), AXISY("AxisY");
+    AXISX("AXISX"), AXISY("AXISY");
 
     private final String name;
 

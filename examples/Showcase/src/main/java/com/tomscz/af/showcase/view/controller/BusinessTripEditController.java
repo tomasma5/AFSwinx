@@ -4,6 +4,8 @@ import com.tomscz.af.showcase.view.*;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxForm;
 import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
+import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionException;
 import com.tomscz.afswinx.rest.rebuild.holder.AFData;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
@@ -65,9 +67,10 @@ public class BusinessTripEditController extends BaseController {
         }
     };
 
-    private ActionListener onBusinessTripDetailButtonClicked = new ActionListener() {
+    private ScreenPreparedListener onBusinessTripDetailButtonClicked = new ScreenPreparedListener() {
+
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinxTable table = (AFSwinxTable) AFSwinx.getInstance().getExistedComponent(BusinessTripEditView.BUSINESS_TRIP_EDIT_TABLE);
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -77,19 +80,19 @@ public class BusinessTripEditController extends BaseController {
                 String dateFrom = null;
                 String dateTo = null;
                 for (AFData data : datas) {
-                    if(data.getKey().equals("id")){
+                    if (data.getKey().equals("id")) {
                         businessTripId = Integer.parseInt(data.getValue());
                     }
-                    if(data.getKey().equals("startDate")){
+                    if (data.getKey().equals("startDate")) {
                         dateFrom = sdf.format(fromFormat.parse(data.getValue()));
                     }
-                    if(data.getKey().equals("endDate")){
+                    if (data.getKey().equals("endDate")) {
                         dateTo = sdf.format(fromFormat.parse(data.getValue()));
                     }
                 }
-                if(businessTripId != -1 && dateFrom != null && dateTo != null){
+                if (businessTripId != -1 && dateFrom != null && dateTo != null) {
                     AFSwinx.getInstance().removeAllComponents();
-                    BusinessTripDetailView detailView = new BusinessTripDetailView(null, businessTripId, dateFrom, dateTo);
+                    BusinessTripDetailView detailView = new BusinessTripDetailView(afProxyScreenDefinition, businessTripId, dateFrom, dateTo);
                     BusinessTripDetailController controller = new BusinessTripDetailController(detailView, businessTripId);
                     view.removeAll();
                     view.setVisible(false);

@@ -45,7 +45,8 @@ public class AvailableVehiclesView extends BaseView {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
         try {
-            AFSwinxTable table = getScreenDefinition().getTableBuilderByKey(VEHICLES_TABLE)
+            AFSwinxTable table = getScreenDefinition()
+                    .getTableBuilderByKey(VEHICLES_TABLE)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
                     .buildComponent();
             Box centerPanel = Box.createVerticalBox();
@@ -53,7 +54,8 @@ public class AvailableVehiclesView extends BaseView {
 
             SecurityContext securityContext = ApplicationContext.getInstance().getSecurityContext();
 
-            AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(VEHICLES_FORM)
+            AFSwinxForm form = getScreenDefinition()
+                    .getFormBuilderByKey(VEHICLES_FORM)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
                     .setConnectionParameters(securityContext != null? securityContext.getUserNameAndPasswodr() : null)
                     .setSkin(new MySkin())

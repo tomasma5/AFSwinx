@@ -11,9 +11,10 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static com.tomscz.af.showcase.view.WelcomeScreen.LOGIN_FORM_NAME;
+
 public class WelcomeScreenController extends BaseController {
 
-    public final static String loginFormName = "loginForm";
 
     public WelcomeScreenController(WelcomeScreen screen) {
         super(screen);
@@ -38,10 +39,10 @@ public class WelcomeScreenController extends BaseController {
                     registerListeners();
                     view.getMainFrame().getContentPane().repaint();
                 }
-                else if(AFSwinx.getInstance().getExistedComponent(loginFormName).validateData()){
-                    AFSwinx.getInstance().getExistedComponent(loginFormName).sendData();
+                else if(AFSwinx.getInstance().getExistedComponent(LOGIN_FORM_NAME).validateData()){
+                    AFSwinx.getInstance().getExistedComponent(LOGIN_FORM_NAME).sendData();
                     AFDataHolder data =
-                            AFSwinx.getInstance().getExistedComponent(loginFormName)
+                            AFSwinx.getInstance().getExistedComponent(LOGIN_FORM_NAME)
                                     .resealize();
                     // Parse send userName and password. This part is depend on server source.
                     String userName = null;

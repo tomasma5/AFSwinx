@@ -22,7 +22,7 @@ import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 public class PersonView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    public static final String PERSON_FORM = "personForm";
+    public static final String PERSON_FORM = "personProfileForm";
 
     private JButton updateButton;
 
@@ -40,10 +40,9 @@ public class PersonView extends BaseView {
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            AFSwinxForm form =
-                    AFSwinx.getInstance()
-                            .getFormBuilder()
-                            .initBuilder(PERSON_FORM, null, securityConstrains)
+
+            AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(PERSON_FORM)
+                            .setConnectionParameters(securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new LongInputSkin()).buildComponent();
             centerPanel.add(form);

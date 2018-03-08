@@ -27,8 +27,7 @@ import java.util.*;
 
 /**
  * This class is security interceptor. Some of logic was transfered from my previous project:
- * https://
- * gitlab.fit.cvut.cz/listivit/letadla/blob/master/flightAirlines/src/main/java/cz/cvut/fel/aos
+ * https://gitlab.fit.cvut.cz/listivit/letadla/blob/master/flightAirlines/src/main/java/cz/cvut/fel/aos
  * /flightAirlines/security/MySecurityInterceptor.java
  * 
  * @author Martin Tomasek (martin@toms-cz.com)
@@ -71,7 +70,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
                 authorization.get(0)
                         .replaceFirst(AFServerConstants.AUTHENTICATION_SCHEME + " ", "");
         String usernameAndPassword;
-        usernameAndPassword = new String(org.glassfish.jersey.internal.util.Base64.decode(encodedUserPassword.getBytes()));
+        usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
         final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
         final String nickname = tokenizer.nextToken();
         final String password = tokenizer.nextToken();

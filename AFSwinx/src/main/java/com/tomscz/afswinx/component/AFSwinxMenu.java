@@ -9,20 +9,20 @@ public class AFSwinxMenu {
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, AFSwinxMenuButton> menuButtons;
+    private Map<String, AFSwinxScreenButton> menuButtons;
 
     public AFSwinxMenu() {
     }
 
-    public AFSwinxMenu(Map<String, AFSwinxMenuButton> menuButtons) {
+    public AFSwinxMenu(Map<String, AFSwinxScreenButton> menuButtons) {
         this.menuButtons = menuButtons;
     }
 
-    public void addMenuButton(AFSwinxMenuButton button) {
-        addMenuButton(button.getTitle(), button);
+    public void addMenuButton(AFSwinxScreenButton button) {
+        addMenuButton(button.getKey(), button);
     }
 
-    public void addMenuButton(String key, AFSwinxMenuButton button) {
+    public void addMenuButton(String key, AFSwinxScreenButton button) {
         if(menuButtons == null) {
             menuButtons = new HashMap<>();
         }
@@ -31,7 +31,7 @@ public class AFSwinxMenu {
 
     public void addOnClickListenerToButton(String key, ActionListener listener) {
         if(menuButtons != null){
-            AFSwinxMenuButton button = menuButtons.get(key);
+            AFSwinxScreenButton button = menuButtons.get(key);
             if(button != null){
                 button.setOnClickListener(listener);
             }
@@ -40,7 +40,7 @@ public class AFSwinxMenu {
 
     public void addOnScreenPreparedListenerToButton(String key, ScreenPreparedListener listener) {
         if(menuButtons != null){
-            AFSwinxMenuButton button = menuButtons.get(key);
+            AFSwinxScreenButton button = menuButtons.get(key);
             if(button != null){
                 button.setScreenPreparedListener(listener);
             }
@@ -49,7 +49,7 @@ public class AFSwinxMenu {
 
     public void sort(){
         if(menuButtons != null){
-            Map<String, AFSwinxMenuButton> sorted = new TreeMap<>(new MenuOrderComparator(menuButtons));
+            Map<String, AFSwinxScreenButton> sorted = new TreeMap<>(new MenuOrderComparator(menuButtons));
             sorted.putAll(menuButtons);
             menuButtons = sorted;
         }
@@ -59,15 +59,15 @@ public class AFSwinxMenu {
         return menuButtons.keySet();
     }
 
-    public Map<String, AFSwinxMenuButton> getMenuButtons() {
+    public Map<String, AFSwinxScreenButton> getMenuButtons() {
         return menuButtons;
     }
 
     class MenuOrderComparator implements Comparator<String>{
 
-        HashMap<String, AFSwinxMenuButton> map = new HashMap<>();
+        HashMap<String, AFSwinxScreenButton> map = new HashMap<>();
 
-        MenuOrderComparator(Map<String, AFSwinxMenuButton> map){
+        MenuOrderComparator(Map<String, AFSwinxScreenButton> map){
             this.map.putAll(map);
         }
 

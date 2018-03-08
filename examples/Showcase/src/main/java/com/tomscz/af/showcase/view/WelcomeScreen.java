@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 public class WelcomeScreen extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    public final static String loginFormName = "loginForm";
+    public final static String LOGIN_FORM_NAME = "loginForm";
 
     private JButton afSwinxLoginButton;
 
@@ -34,7 +34,7 @@ public class WelcomeScreen extends BaseView {
             mainPanel.add(afSwinxLoginButton);
         } else {
             try {
-                AFSwinxForm form = getScreenDefinition().getFormBuilderByKey("loginForm")
+                AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(LOGIN_FORM_NAME)
                         .setLocalization(ApplicationContext.getInstance().getLocalization())
                         .setSkin(new LoginSkin())
                         .buildComponent();

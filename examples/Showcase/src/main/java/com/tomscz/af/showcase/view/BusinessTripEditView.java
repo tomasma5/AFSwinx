@@ -2,12 +2,11 @@ package com.tomscz.af.showcase.view;
 
 import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.utils.Localization;
+import com.tomscz.af.showcase.utils.ProxyConstants;
 import com.tomscz.af.showcase.view.skin.MySkin;
-import com.tomscz.afswinx.component.AFSwinx;
-import com.tomscz.afswinx.component.AFSwinxBuildException;
-import com.tomscz.afswinx.component.AFSwinxForm;
-import com.tomscz.afswinx.component.AFSwinxTable;
+import com.tomscz.afswinx.component.*;
 import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
+import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -17,11 +16,11 @@ import java.util.HashMap;
 public class BusinessTripEditView extends BaseView {
 
     private static final long serialVersionUID = 1L;
-    public static final String BUSINESS_TRIP_EDIT_TABLE = "businessTripEditTable";
-    public static final String BUSINESS_TRIP_EDIT_FORM = "businessTripEditForm";
+    public static final String BUSINESS_TRIP_EDIT_TABLE = "businessTripTable";
+    public static final String BUSINESS_TRIP_EDIT_FORM = "businessTripForm";
 
     private JButton chooseButton;
-    private JButton detailButton;
+    private AFSwinxScreenButton detailButton;
     private JButton performButton;
 
     public BusinessTripEditView(AFProxyScreenDefinition screenDefinition) {
@@ -33,28 +32,23 @@ public class BusinessTripEditView extends BaseView {
     protected JPanel createContent() {
         JPanel mainPanel = new JPanel();
         Box b1 = Box.createVerticalBox();
-        InputStream connectionResource;
         try {
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
             HashMap<String, String> parameters =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-            AFSwinxTable table =
-                    AFSwinx.getInstance()
-                            .getTableBuilder()
-                            .initBuilder(BUSINESS_TRIP_EDIT_TABLE, null, parameters)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new MySkin())
-                            .buildComponent();
+            AFSwinxTable table = getScreenDefinition()
+                    .getTableBuilderByKey(BUSINESS_TRIP_EDIT_TABLE)
+                    .setConnectionParameters(parameters)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .setSkin(new MySkin())
+                    .buildComponent();
             Box centerPanel = Box.createVerticalBox();
             centerPanel.setAlignmentX(CENTER_ALIGNMENT);
-            connectionResource = ApplicationContext.getInstance().getConnectionFile();
-            AFSwinxForm form =
-                    AFSwinx.getInstance()
-                            .getFormBuilder()
-                            .initBuilder(BUSINESS_TRIP_EDIT_FORM, null, parameters)
-                            .setLocalization(ApplicationContext.getInstance().getLocalization())
-                            .setSkin(new MySkin())
-                            .buildComponent();
+            AFSwinxForm form = getScreenDefinition()
+                    .getFormBuilderByKey(BUSINESS_TRIP_EDIT_FORM)
+                    .setConnectionParameters(parameters)
+                    .setLocalization(ApplicationContext.getInstance().getLocalization())
+                    .setSkin(new MySkin())
+                    .buildComponent();
             centerPanel.add(form);
             performButton = new JButton(Localization.getLocalizationText("businessTrip.buttton.add"));
             performButton.setAlignmentX(CENTER_ALIGNMENT);
@@ -65,7 +59,11 @@ public class BusinessTripEditView extends BaseView {
             Box buttonBox2 = Box.createHorizontalBox();
             chooseButton = new JButton(Localization.getLocalizationText("businessTrip.buttton.choose"));
             chooseButton.setAlignmentX(LEFT_ALIGNMENT);
-            detailButton = new JButton(Localization.getLocalizationText("businessTrip.button.detail"));
+            detailButton = AFSwinx.getInstance().getScreenButtonBuilder().buildComponent(
+                    ProxyConstants.BTN_CUSTOM_BUSINESS_TRIP_DETAIL,
+                    Localization.getLocalizationText("businessTrip.button.detail"),
+                    getScreenDefinition().getScreenUrl()
+            );
             detailButton.setAlignmentX(RIGHT_ALIGNMENT);
             buttonBox2.add(chooseButton);
             buttonBox2.add(detailButton);
@@ -101,9 +99,9 @@ public class BusinessTripEditView extends BaseView {
         }
     }
 
-    public void addDetailButtonActionListener(ActionListener a) {
+    public void addDetailButtonActionListener(ScreenPreparedListener a) {
         if (detailButton != null) {
-            detailButton.addActionListener(a);
+            detailButton.setScreenPreparedListener(a);
         }
     }
 

@@ -16,6 +16,9 @@ public class Main {
 
         try {
             ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.ENGLISH_BUNDLE);
+            //setup ui proxy
+            AFSwinx.getInstance().setProxyApplicationContext(ApplicationContext.getInstance().getUiProxyApplicationUuid());
+            ApplicationContext.getInstance().loadUIProxyUrl();
         } catch (FileNotFoundException e) {
             // Try czech bundle
             try {
@@ -23,10 +26,14 @@ public class Main {
             } catch (FileNotFoundException fileNotFoundException) {
                 // Do nothing localization wont be used
             }
+        } catch (IOException e) {
+            System.err.println("Cannot get application uuid from properties");
+            e.printStackTrace();
         }
+
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance()
-                    .getScreenDefinitionBuilder("http://localhost:8081/UIxy/api/screens/5a9955636402eb092c3b56c7")
+                    .getScreenDefinitionBuilder(ApplicationContext.getInstance().getUiProxyUrl()+"/api/screens/5a9955636402eb092c3b56c7")
                     .getScreenDefinition();
             WelcomeScreen welcomeScreen = new WelcomeScreen(screenDefinition);
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);

@@ -27,10 +27,10 @@ public class AbsenceInstanceCreateController extends BaseController {
         public void actionPerformed(ActionEvent e) {
             try {
                 if (AFSwinx.getInstance()
-                        .getExistedComponent(AbsenceInstanceCreateView.ABSENCE_INSTANCE_ADD_FORM)
+                        .getExistedComponent(AbsenceInstanceCreateView.ABSENCE_INSTANCE_FORM)
                         .validateData()) {
                     AFSwinx.getInstance()
-                            .getExistedComponent(AbsenceInstanceCreateView.ABSENCE_INSTANCE_ADD_FORM)
+                            .getExistedComponent(AbsenceInstanceCreateView.ABSENCE_INSTANCE_FORM)
                             .sendData();
                     view.getDialogs().succes("absenceInstance.action.add.inform", "absenceInstance.action.add.inform.good","");
                 }

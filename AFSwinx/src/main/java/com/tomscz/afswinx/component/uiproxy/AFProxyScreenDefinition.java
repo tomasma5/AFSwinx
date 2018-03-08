@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class AFProxyScreenDefinition {
 
-    private String heading;
+    private String key;
     private String screenUrl;
     private Map<SupportedComponents, List<AFProxyComponentDefinition>> componentDefinitions;
 
@@ -66,7 +66,7 @@ public class AFProxyScreenDefinition {
     public void reload(){
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl).getScreenDefinition();
-            setHeading(screenDefinition.heading);
+            setKey(screenDefinition.key);
             setComponentDefinitions(screenDefinition.getComponentDefinitions());
         } catch (IOException e) {
             System.err.println("Cannot reload screen");
@@ -74,12 +74,12 @@ public class AFProxyScreenDefinition {
         }
     }
 
-    public String getHeading() {
-        return heading;
+    public String getKey() {
+        return key;
     }
 
-    public void setHeading(String heading) {
-        this.heading = heading;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getScreenUrl() {
