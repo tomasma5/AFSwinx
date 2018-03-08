@@ -8,17 +8,27 @@ public class ComponentConnection {
     private int port;
     private String parameters;
     private String protocol;
+    private String realAddress;
+    private int realPort;
+    private String realParameters;
+    private String realProtocol;
     private Map<String, String> headerParams;
     private Map<String, String> securityParams;
 
     public ComponentConnection() {
     }
 
-    public ComponentConnection(String address, int port, String parameters, String protocol, Map<String, String> headerParams, Map<String, String> securityParams) {
+    public ComponentConnection(String address, int port, String parameters, String protocol,
+                               String realAddress, int realPort, String realParameters, String realProtocol,
+                               Map<String, String> headerParams, Map<String, String> securityParams) {
         this.address = address;
         this.port = port;
         this.parameters = parameters;
         this.protocol = protocol;
+        this.realAddress = realAddress;
+        this.realPort = realPort;
+        this.realParameters = realParameters;
+        this.realProtocol = realProtocol;
         this.headerParams = headerParams;
         this.securityParams = securityParams;
     }
@@ -71,4 +81,35 @@ public class ComponentConnection {
         this.securityParams = securityParams;
     }
 
+    public String getRealAddress() {
+        return realAddress;
+    }
+
+    public void setRealAddress(String realAddress) {
+        this.realAddress = realAddress;
+    }
+
+    public int getRealPort() {
+        return realPort;
+    }
+
+    public void setRealPort(int realPort) {
+        this.realPort = realPort;
+    }
+
+    public String getRealParameters() {
+        return realParameters;
+    }
+
+    public void setRealParameters(String realParameters) {
+        this.realParameters = realParameters;
+    }
+
+    public String getRealProtocol() {
+        return realProtocol;
+    }
+
+    public void setRealProtocol(String realProtocol) {
+        this.realProtocol = realProtocol;
+    }
 }

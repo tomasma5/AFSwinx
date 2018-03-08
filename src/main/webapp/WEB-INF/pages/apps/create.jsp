@@ -8,7 +8,7 @@
 <jsp:include page="../partials/header.jsp"/>
 <div class="center-90-percent from-top-40-px">
     <div class="panel panel-warning">
-        <div class="panel-heading height-50px">
+        <div class="panel-key height-50px">
             <a href="${pageContext.request.contextPath}/apps/list">Available applications</a> > Create/Edit application
         </div>
         <div class="panel-body ">

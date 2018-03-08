@@ -14,6 +14,9 @@ import java.io.IOException;
 
 public class ScreenListServlet extends HttpServlet {
 
+    static final String LIST_URL = "/WEB-INF/pages/screens/list.jsp";
+    static final String LIST_ROUTE = "list";
+
     @Inject
     private ScreenManagementService screenManagementService;
 
@@ -30,7 +33,7 @@ public class ScreenListServlet extends HttpServlet {
         request.setAttribute("screens", screenManagementService.getAllScreensByApplication(applicationId));
         request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
         request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
-        getServletContext().getRequestDispatcher("/WEB-INF/pages/screens/list.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher(LIST_URL).forward(request, response);
     }
 
     @Override
@@ -38,6 +41,6 @@ public class ScreenListServlet extends HttpServlet {
         ObjectId objectId = new ObjectId(req.getParameter(ParameterNames.SCREEN_ID));
         String appString = req.getParameter(ParameterNames.APPLICATION_ID);
         screenManagementService.removeScreen(objectId);
-        resp.sendRedirect("list?app="+appString);
+        resp.sendRedirect(LIST_ROUTE+"?app="+appString);
     }
 }

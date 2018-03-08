@@ -2,25 +2,27 @@ package rest.model;
 
 public class MenuItem {
 
-    private String title;
+    private String key;
+    private String displayText;
     private String url;
     private int menuOrder;
 
     public MenuItem() {
     }
 
-    public MenuItem(String title, String url, int menuOrder) {
-        this.title = title;
+    public MenuItem(String key, String displayText, String url, int menuOrder) {
+        this.key = key;
+        this.displayText = displayText;
         this.url = url;
         this.menuOrder = menuOrder;
     }
 
-    public String getTitle() {
-        return title;
+    public String getKey() {
+        return key;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getUrl() {
@@ -37,5 +39,13 @@ public class MenuItem {
 
     public void setMenuOrder(int menuOrder) {
         this.menuOrder = menuOrder;
+    }
+
+    public String getDisplayText() {
+        return displayText;
+    }
+
+    public void setDisplayText(String displayText) {
+        this.displayText = displayText;
     }
 }

@@ -14,6 +14,9 @@ import java.io.IOException;
 
 public class ComponentListServlet extends HttpServlet {
 
+    static final String LIST_URL = "/WEB-INF/pages/components/list.jsp";
+    static final String LIST_ROUTE = "list";
+
     @Inject
     private ComponentManagementService componentMagementService;
 
@@ -22,7 +25,7 @@ public class ComponentListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationIdString = request.getParameter(ParameterNames.APPLICATION_ID);
-        if(applicationIdString == null || applicationIdString.isEmpty()){
+        if (applicationIdString == null || applicationIdString.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -31,7 +34,7 @@ public class ComponentListServlet extends HttpServlet {
 
         request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
         request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
-        getServletContext().getRequestDispatcher("/WEB-INF/pages/components/list.jsp").forward(request, response);
+        getServletContext().getRequestDispatcher(LIST_URL).forward(request, response);
     }
 
     @Override
@@ -39,6 +42,6 @@ public class ComponentListServlet extends HttpServlet {
         ObjectId objectId = new ObjectId(req.getParameter(ParameterNames.COMPONENT_ID));
         String appString = req.getParameter(ParameterNames.APPLICATION_ID);
         componentMagementService.removeComponent(objectId);
-        resp.sendRedirect("list?app="+appString);
+        resp.sendRedirect(LIST_ROUTE + "?app=" + appString);
     }
 }

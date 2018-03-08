@@ -19,9 +19,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static servlet.applications.AppListServlet.LIST_ROUTE;
+
 public class AppCreateServlet extends HttpServlet {
 
-    private static final String CREATE_URL = "/WEB-INF/pages/apps/create.jsp";
+    static final String CREATE_URL = "/WEB-INF/pages/apps/create.jsp";
+    static final String CREATE_ROUTE = "create";
 
     @Inject
     private ApplicationsManagementService applicationsManagementService;
@@ -48,30 +51,11 @@ public class AppCreateServlet extends HttpServlet {
         String remoteUrl = req.getParameter(ParameterNames.APPLICATION_REMOTE_URL);
         String port = req.getParameter(ParameterNames.APPLICATION_REMOTE_PORT);
         try {
-            new URL(remoteUrl); //check format of url with trying to create URL object
-
-            Application application;
-            ObjectId id;
-            if (applicationId == null || applicationId.isEmpty()) {
-                application = new Application();
-                id = new ObjectId();
-                application.setId(id);
-            } else {
-                application = applicationsManagementService.findById(new ObjectId(applicationId));
-                id = application.getId();
-            }
-
-            application.setApplicationName(applicationName);
-            application.setRemoteUrl(remoteUrl);
-            application.setRemotePort(Integer.parseInt(port));
-
-            if (applicationId == null || applicationId.isEmpty()) {
-                applicationsManagementService.addNewApplication(application);
-            } else {
-                updateComponentConnections(application);
-                applicationsManagementService.updateApplication(application);
-            }
-            resp.sendRedirect("list");
+            new URL(remoteUrl); //just to check format of url with trying to create URL object
+            Application application = getApplication(applicationId);
+            updateApplicationProperties(applicationName, remoteUrl, port, application);
+            createOrUpdateApplication(applicationId, application);
+            resp.sendRedirect(LIST_ROUTE);
             return;
         } catch (MalformedURLException ex) {
             req.setAttribute("remoteUrlError", "URL has bad format.");
@@ -86,9 +70,35 @@ public class AppCreateServlet extends HttpServlet {
 
     }
 
+    private void createOrUpdateApplication(String applicationId, Application application) {
+        if (applicationId == null || applicationId.isEmpty()) {
+            applicationsManagementService.addNewApplication(application);
+        } else {
+            updateComponentConnections(application);
+            applicationsManagementService.updateApplication(application);
+        }
+    }
+
+    private void updateApplicationProperties(String applicationName, String remoteUrl, String port, Application application) {
+        application.setApplicationName(applicationName);
+        application.setRemoteUrl(remoteUrl);
+        application.setRemotePort(Integer.parseInt(port));
+    }
+
+    private Application getApplication(String applicationId) {
+        Application application;
+        if (applicationId == null || applicationId.isEmpty()) {
+            application = new Application();
+            application.setId(new ObjectId());
+        } else {
+            application = applicationsManagementService.findById(new ObjectId(applicationId));
+        }
+        return application;
+    }
+
     private void updateComponentConnections(Application application) {
         for(ComponentResource componentResource : componentManagementService.getAllComponentsByApplication(application.getId())){
-            ComponentConnectionPack realConnectionsPack = componentResource.getRealConnections();
+            ComponentConnectionPack realConnectionsPack = componentResource.getProxyConnections();
             updateConnectionParameters(application, realConnectionsPack.getModelConnection());
             updateConnectionParameters(application, realConnectionsPack.getModelConnection());
             updateConnectionParameters(application, realConnectionsPack.getModelConnection());
@@ -99,9 +109,9 @@ public class AppCreateServlet extends HttpServlet {
     private void updateConnectionParameters(Application application, ComponentConnection connection) {
         if(connection != null){
             //TODO rozdelit i v aplikace na protocol, adresu a port at nedelam takove veci
-            connection.setProtocol(application.getRemoteUrl().substring(0, application.getRemoteUrl().indexOf(":")));
-            connection.setAddress(application.getRemoteUrl().substring(application.getRemoteUrl().indexOf("://") + 3));
-            connection.setPort(application.getRemotePort());
+            connection.setRealProtocol(application.getRemoteUrl().substring(0, application.getRemoteUrl().indexOf(":")));
+            connection.setRealAddress(application.getRemoteUrl().substring(application.getRemoteUrl().indexOf("://") + 3));
+            connection.setRealPort(application.getRemotePort());
         }
     }
 }

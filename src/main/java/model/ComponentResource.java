@@ -11,8 +11,6 @@ public class ComponentResource extends MongoDocumentEntity {
     private String name;
     private SupportedComponentType type;
     private ComponentConnectionPack proxyConnections;
-    @JsonIgnore
-    private ComponentConnectionPack realConnections;
     private List<ObjectId> referencedScreensIds;
     private ObjectId applicationId;
 
@@ -24,7 +22,6 @@ public class ComponentResource extends MongoDocumentEntity {
         this.name = name;
         this.type = type;
         this.proxyConnections = proxyConnections;
-        this.realConnections = realConnections;
         this.applicationId = applicationId;
     }
 
@@ -51,14 +48,6 @@ public class ComponentResource extends MongoDocumentEntity {
 
     public void setType(SupportedComponentType type) {
         this.type = type;
-    }
-
-    public ComponentConnectionPack getRealConnections() {
-        return realConnections;
-    }
-
-    public void setRealConnections(ComponentConnectionPack realConnections) {
-        this.realConnections = realConnections;
     }
 
     public List<ObjectId> getReferencedScreensIds() {

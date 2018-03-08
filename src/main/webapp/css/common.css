@@ -92,3 +92,8 @@ hr {
     justify-content: center;
     align-items: center;
 }
+
+.param {
+    width: 50% !important;
+    float: left;
+}

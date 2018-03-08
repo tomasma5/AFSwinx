@@ -2,18 +2,16 @@ function addParam(connectionType, type) {
     var modelHeaderParamsCount = document.getElementById(connectionType + type + "ParamsCount");
     var actualCount = parseInt(modelHeaderParamsCount.getAttribute("value"));
     var modelHeaderParamsWrapper = document.getElementById(connectionType + type + "Params");
-    var div = document.createElement("form-group");
+    var div = document.createElement("div");
+    div.classList.add("form-group");
+    div.classList.add("param-group");
 
     var idKey = connectionType + type + "ParamKey" + (actualCount + 1);
     var idVal = connectionType + type + "ParamValue" + (actualCount + 1);
-    var labelKey = createLabelElement(idKey, "Key");
-    var inputKey = createInputTextElement(idKey);
-    var labelValue = createLabelElement(idVal, "Value");
-    var inputValue = createInputTextElement(idVal);
+    var inputKey = createInputTextElement(idKey, "Key");
+    var inputValue = createInputTextElement(idVal, "Value");
 
-    div.appendChild(labelKey);
     div.appendChild(inputKey);
-    div.appendChild(labelValue);
     div.appendChild(inputValue);
 
     modelHeaderParamsWrapper.appendChild(div);
@@ -32,20 +30,14 @@ function removeParam(connectionType, type) {
 
 }
 
-function createLabelElement(id, labelText) {
-    var label = document.createElement("label");
-    label.setAttribute("for", id);
-    label.innerText = labelText;
-    return label;
-}
-
-function createInputTextElement(id) {
+function createInputTextElement(id, placeholder) {
     var input = document.createElement("input");
     input.setAttribute("type", "text");
-    input.setAttribute("class", "form-control");
+    input.setAttribute("class", "form-control param");
     input.setAttribute("id", id);
     input.setAttribute("name", id);
     input.setAttribute("required", "required");
+    input.setAttribute("placeholder", placeholder);
     return input;
 }
 

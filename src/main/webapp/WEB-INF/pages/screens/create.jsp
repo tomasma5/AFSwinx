@@ -8,7 +8,7 @@
 <jsp:include page="../partials/header.jsp"/>
 <div class="center-90-percent from-top-40-px">
     <div class="panel panel-primary">
-        <div class="panel-heading height-50px">
+        <div class="panel-key height-50px">
             <a class="link" href="${pageContext.request.contextPath}/screens/list?app=${app}">
                 <button class="btn button-light">Screens</button>
             </a> >
@@ -19,10 +19,16 @@
                 <input type="hidden" name="screen" value="${screen}">
                 <input type="hidden" id="app" name="app" value="${app}">
                 <div class="form-group">
-                    <label for="heading">Screen heading</label>
-                    <input type="text" class="form-control" id="heading" name="heading"
-                           placeholder="Enter screen heading" value="${heading}" required>
-                    <c:if test="${not empty screenHeadingError}">${screenHeadingError}</c:if>
+                    <label for="key">Screen key</label>
+                    <input type="text" class="form-control" id="key" name="key"
+                           placeholder="Enter screen key" value="${key}" required>
+                    <c:if test="${not empty screenKeyError}">${screenKeyError}</c:if>
+                </div>
+                <div class="form-group">
+                    <label for="name">Display name</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           placeholder="If not filled, will be same as key" value="${name}">
+                    <c:if test="${not empty screenNameError}">${screenNameError}</c:if>
                 </div>
 
                 <c:if test="${not empty screenUrl}">
@@ -43,7 +49,7 @@
                     <div class="col-xs-13 col-md-5">
                         <div class="panel panel-default min-h-350px">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">
+                            <div class="panel-key">
                                 Available components
                             </div>
                             <div class="panel-body">
@@ -67,7 +73,7 @@
                     <div class="col-xs-13 col-md-5">
                         <div class="panel panel-default min-h-350px">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">
+                            <div class="panel-key">
                                 Added components
                             </div>
                             <div class="panel-body">

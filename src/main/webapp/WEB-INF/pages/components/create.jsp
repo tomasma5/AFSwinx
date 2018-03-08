@@ -8,7 +8,7 @@
 <jsp:include page="../partials/header.jsp"/>
 <div class="center-90-percent from-top-40-px">
     <div class="panel panel-primary">
-        <div class="panel-heading height-50px">
+        <div class="panel-key height-50px">
             <a href="${pageContext.request.contextPath}/components/list?app=${app}">
                 <button class="btn button-light">Components</button>
             </a> >
@@ -45,7 +45,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">
+                            <div class="panel-key">
                                 Model connection
                                 <div class="material-switch pull-right">
 
@@ -88,16 +88,16 @@
                                 <div id="modelHeaderParams">
                                     <c:forEach var="headerParam" items="${modelConnectionHeaderParams}"
                                                varStatus="loop">
-                                        <div class="form-group">
-                                            <label for="modelHeaderParamKey${loop.index+1}">Key</label>
-                                            <input type="text" class="form-control"
+                                        <div class="form-group param-group">
+                                            <input type="text" class="form-control param"
                                                    id="modelHeaderParamKey${loop.index+1}"
                                                    name="modelHeaderParamKey${loop.index+1}"
+                                                   placeholder="Key"
                                                    value="${headerParam.key}"/>
-                                            <label for="modelHeaderParamValue${loop.index+1}">Value</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="modelHeaderParamValue${loop.index+1}"
                                                    name="modelHeaderParamValue${loop.index+1}"
+                                                   placeholder="Value"
                                                    value="${headerParam.value}"/>
                                         </div>
                                     </c:forEach>
@@ -115,16 +115,16 @@
                                 <div id="modelSecurityParams">
                                     <c:forEach var="securityParam" items="${modelConnectionSecurityParams}"
                                                varStatus="loop">
-                                        <div class="form-group">
-                                            <label for="modelSecurityParamKey${loop.index+1}">Key</label>
-                                            <input type="text" class="form-control"
+                                        <div class="form-group param-group">
+                                            <input type="text" class="form-control param"
                                                    id="modelSecurityParamKey${loop.index+1}"
                                                    name="modelSecurityParamKey${loop.index+1}"
+                                                   placeholder="Key"
                                                    value="${securityParam.key}"/>
-                                            <label for="modelSecurityParamValue${loop.index+1}">Value</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="modelSecurityParamValue${loop.index+1}"
                                                    name="modelSecurityParamValue${loop.index+1}"
+                                                   placeholder="Value"
                                                    value="${securityParam.value}"/>
                                         </div>
                                     </c:forEach>
@@ -135,7 +135,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">
+                            <div class="panel-key">
                                 Data connection
                                 <div class="material-switch pull-right">
                                     <input id="dataConnectionActive" name="dataConnectionActive" type="checkbox"
@@ -178,15 +178,15 @@
                                     <c:forEach var="headerParam" items="${dataConnectionHeaderParams}"
                                                varStatus="loop">
                                         <div class="form-group">
-                                            <label for="dataHeaderParamKey${loop.index+1}">Key</label>
                                             <input type="text" class="form-control"
                                                    id="dataHeaderParamKey${loop.index+1}"
                                                    name="dataHeaderParamKey${loop.index+1}"
+                                                   placeholder="Key"
                                                    value="${headerParam.key}"/>
-                                            <label for="dataHeaderParamValue${loop.index+1}">Value</label>
                                             <input type="text" class="form-control"
                                                    id="dataHeaderParamValue${loop.index+1}"
                                                    name="dataHeaderParamValue${loop.index+1}"
+                                                   placeholder="Value"
                                                    value="${headerParam.value}"/>
                                         </div>
                                     </c:forEach>
@@ -205,15 +205,15 @@
                                     <c:forEach var="securityParam" items="${dataConnectionSecurityParams}"
                                                varStatus="loop">
                                         <div class="form-group">
-                                            <label for="dataSecurityParamKey${loop.index+1}">Key</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="dataSecurityParamKey${loop.index+1}"
                                                    name="dataSecurityParamKey${loop.index+1}"
+                                                   placeholder="Key"
                                                    value="${securityParam.key}"/>
-                                            <label for="dataSecurityParamValue${loop.index+1}">Value</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="dataSecurityParamValue${loop.index+1}"
                                                    name="dataSecurityParamValue${loop.index+1}"
+                                                   placeholder="Value"
                                                    value="${securityParam.value}"/>
                                         </div>
                                     </c:forEach>
@@ -224,7 +224,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-heading">
+                            <div class="panel-key">
                                 Send connection
                                 <div class="material-switch pull-right">
                                     <input id="sendConnectionActive" name="sendConnectionActive" type="checkbox"
@@ -267,16 +267,16 @@
                                 <div id="sendHeaderParams">
                                     <c:forEach var="headerParam" items="${sendConnectionHeaderParams}"
                                                varStatus="loop">
-                                        <div class="form-group">
-                                            <label for="sendHeaderParamKey${loop.index+1}">Key</label>
-                                            <input type="text" class="form-control"
+                                        <div class="form-group param-group">
+                                            <input type="text" class="form-control param"
                                                    id="sendHeaderParamKey${loop.index+1}"
                                                    name="sendHeaderParamKey${loop.index+1}"
+                                                   placeholder="Key"
                                                    value="${headerParam.key}"/>
-                                            <label for="sendHeaderParamValue${loop.index+1}">Value</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="sendHeaderParamValue${loop.index+1}"
                                                    name="sendHeaderParamValue${loop.index+1}"
+                                                   placeholder="Value"
                                                    value="${headerParam.value}"/>
                                         </div>
                                     </c:forEach>
@@ -294,16 +294,17 @@
                                 <div id="sendSecurityParams">
                                     <c:forEach var="securityParam" items="${sendConnectionSecurityParams}"
                                                varStatus="loop">
-                                        <div class="form-group">
+                                        <div class="form-group param-group">
                                             <label for="sendSecurityParamKey${loop.index+1}">Key</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="sendSecurityParamKey${loop.index+1}"
                                                    name="sendSecurityParamKey${loop.index+1}"
+                                                   placeholder="Key"
                                                    value="${securityParam.key}"/>
-                                            <label for="sendSecurityParamValue${loop.index+1}">Value</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control param"
                                                    id="sendSecurityParamValue${loop.index+1}"
                                                    name="sendSecurityParamValue${loop.index+1}"
+                                                   placeholder="Value"
                                                    value="${securityParam.value}"/>
                                         </div>
                                     </c:forEach>

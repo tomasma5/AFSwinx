@@ -8,7 +8,7 @@
 <jsp:include page="../partials/menu.jsp"/>
 <div class="content">
     <div class="panel panel-primary">
-        <div class="panel-heading height-50px">
+        <div class="panel-key height-50px">
             <button type="button" class="btn btn-primary" disabled>Components</button>
             <a href="${pageContext.request.contextPath}/components/create?app=${app}">
                 <button class="btn btn-success float-right">Add component</button>
@@ -32,16 +32,16 @@
                         <td>${component.type.name}</td>
                         <td>
                             <h4 class="text-primary">Real connections</h4>
-                            <c:if test="${component.realConnections.modelConnection != null}">
-                                <b>Model:</b> ${component.realConnections.modelConnection.protocol}://${component.realConnections.modelConnection.address}:${component.realConnections.modelConnection.port}${component.realConnections.modelConnection.parameters}
+                            <c:if test="${component.proxyConnections.modelConnection != null}">
+                                <b>Model:</b> ${component.proxyConnections.modelConnection.realProtocol}://${component.proxyConnections.modelConnection.realAddress}:${component.proxyConnections.modelConnection.realPort}${component.proxyConnections.modelConnection.realParameters}
                                 <br>
                             </c:if>
-                            <c:if test="${component.realConnections.dataConnection != null}">
-                                <b>Data:</b> ${component.realConnections.dataConnection.protocol}://${component.realConnections.dataConnection.address}:${component.realConnections.dataConnection.port}${component.realConnections.dataConnection.parameters}
+                            <c:if test="${component.proxyConnections.dataConnection != null}">
+                                <b>Data:</b> ${component.proxyConnections.dataConnection.realProtocol}://${component.proxyConnections.dataConnection.realAddress}:${component.proxyConnections.dataConnection.realPort}${component.proxyConnections.dataConnection.realParameters}
                                 <br>
                             </c:if>
-                            <c:if test="${component.realConnections.sendConnection != null}">
-                                <b>Send:</b> ${component.realConnections.sendConnection.protocol}://${component.realConnections.sendConnection.address}:${component.realConnections.sendConnection.port}${component.realConnections.sendConnection.parameters}
+                            <c:if test="${component.proxyConnections.sendConnection != null}">
+                                <b>Send:</b> ${component.proxyConnections.sendConnection.realProtocol}://${component.proxyConnections.sendConnection.realAddress}:${component.proxyConnections.sendConnection.realPort}${component.proxyConnections.sendConnection.realParameters}
                                 <br>
                             </c:if>
                             <h4 class="text-primary">Proxy connections</h4>

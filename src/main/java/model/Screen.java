@@ -8,7 +8,8 @@ import java.util.List;
 
 public class Screen extends MongoDocumentEntity {
 
-    private String heading;
+    private String key;
+    private String name;
     private String screenUrl;
     private int menuOrder;
     private List<ComponentResource> components;
@@ -17,8 +18,9 @@ public class Screen extends MongoDocumentEntity {
     public Screen() {
     }
 
-    public Screen(String heading, String screenUrl, int menuOrder, List<ComponentResource> components, ObjectId applicationId) {
-        this.heading = heading;
+    public Screen(String key, String name, String screenUrl, int menuOrder, List<ComponentResource> components, ObjectId applicationId) {
+        this.key = key;
+        this.name = name;
         this.screenUrl = screenUrl;
         this.menuOrder = menuOrder;
         this.components = components;
@@ -41,12 +43,12 @@ public class Screen extends MongoDocumentEntity {
         components.remove(componentResource);
     }
 
-    public String getHeading() {
-        return heading;
+    public String getKey() {
+        return key;
     }
 
-    public void setHeading(String heading) {
-        this.heading = heading;
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getScreenUrl() {
@@ -79,5 +81,13 @@ public class Screen extends MongoDocumentEntity {
 
     public void setMenuOrder(int menuOrder) {
         this.menuOrder = menuOrder;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

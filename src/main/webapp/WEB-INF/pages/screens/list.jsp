@@ -8,7 +8,7 @@
 <jsp:include page="../partials/menu.jsp"/>
 <div class="content">
     <div class="panel panel-primary">
-        <div class="panel-heading height-50px">
+        <div class="panel-key height-50px">
             <button type="button" class="btn btn-primary" disabled>Screens</button>
             <a href="${pageContext.request.contextPath}/screens/create?app=${app}">
                 <button class="btn btn-success float-right">Add screen</button>
@@ -18,7 +18,8 @@
             <table class="table table-responsive display-block-important">
                 <thead>
                 <tr>
-                    <th>Screen heading</th>
+                    <th>Screen key</th>
+                    <th>Display name</th>
                     <th>Screen url</th>
                     <th>Menu order</th>
                     <th>Number of components</th>
@@ -28,7 +29,8 @@
                 <tbody>
                 <c:forEach var="screen" items="${screens}">
                     <tr>
-                        <td>${screen.heading}</td>
+                        <td>${screen.key}</td>
+                        <td>${screen.name}</td>
                         <td>${screen.screenUrl}</td>
                         <td>${screen.menuOrder}</td>
                         <td>${screen.components != null? screen.components.size() : 0}</td>

@@ -32,7 +32,7 @@ public class ScreenEndpoint {
         List<MenuItem> menuItems = new ArrayList<>();
         List<Screen> screens = screenRestService.getAllScreens();
         for (Screen screen : screens) {
-            menuItems.add(new MenuItem(screen.getHeading(), screen.getScreenUrl(), screen.getMenuOrder()));
+            menuItems.add(new MenuItem(screen.getKey(), screen.getName(), screen.getScreenUrl(), screen.getMenuOrder()));
         }
         return menuItems;
     }
@@ -40,9 +40,9 @@ public class ScreenEndpoint {
     @GET
     @Path("/{screen_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Screen getScreenDefinition(@PathParam("screen_id") String screenId) throws ServiceException{
+    public Screen getScreenDefinition(@PathParam("screen_id") String screenId) throws ServiceException {
         Screen screen = screenRestService.getScreenById(new ObjectId(screenId));
-        if(screen == null) {
+        if (screen == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
         return screen;

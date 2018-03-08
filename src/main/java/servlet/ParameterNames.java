@@ -9,7 +9,8 @@ public class ParameterNames {
 
     public static final String SCREEN_ID = "screen";
     public static final String SCREEN_URL = "screenUrl";
-    public static final String SCREEN_HEADING = "heading";
+    public static final String SCREEN_KEY = "key";
+    public static final String SCREEN_NAME = "name";
     public static final String SCREEN_MENU_ORDER = "menuOrder";
 
     public static final String COMPONENT_ID = "component";
@@ -31,9 +32,6 @@ public class ParameterNames {
     public static final String KEY = "Key";
     public static final String VALUE = "Value";
 
-    public static final String PROTOCOL = "Protocol";
-    public static final String ADDRESS = "Address";
-    public static final String PORT = "Port";
     public static final String PARAMETERS = "Parameters";
 
     public static final String LINKED_COMPONENTS = "linkedComponents";

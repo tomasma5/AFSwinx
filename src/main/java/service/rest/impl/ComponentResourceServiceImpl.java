@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     private static final Logger LOGGER = Logger.getLogger(ComponentResourceServiceImpl.class.getName());
+    private static final String REAL_ENDPOINT_HEADER = "real-endpoint";
 
     @Inject
     ComponentResourceDao componentResourceDao;
@@ -45,10 +46,12 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
                 LOGGER.log(Level.SEVERE, errorMsg);
                 throw new ComponentRequestException(errorMsg);
             }
-            ComponentConnection realModelConnection = componentResource.getRealConnections().getModelConnection();
+            String realEndpoint = checkRealEndpointUrlPresence(headers);
+
+            ComponentConnection modelConnection = componentResource.getProxyConnections().getModelConnection();
             //TODO add context filtering
             try {
-                modelStr = HttpUtils.getRequest(buildUrl(realModelConnection), headers.getRequestHeaders());
+                modelStr = HttpUtils.getRequest(realEndpoint, headers.getRequestHeaders());
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
@@ -58,14 +61,16 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     @Override
     public String getComponentData(ObjectId id, HttpHeaders headers) throws ComponentRequestException {
+        String realEndpoint = checkRealEndpointUrlPresence(headers);
+
         ComponentResource componentResource = componentResourceDao.findById(id);
         String dataStr = null;
         if (componentResource != null) {
-            ComponentConnection realDataConnection = componentResource.getRealConnections().getDataConnection();
+            ComponentConnection dataConnection = componentResource.getProxyConnections().getDataConnection();
 
             //TODO add context filtering
             try {
-                dataStr = HttpUtils.getRequest(buildUrl(realDataConnection), headers.getRequestHeaders());
+                dataStr = HttpUtils.getRequest(realEndpoint, headers.getRequestHeaders());
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
@@ -75,14 +80,15 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     @Override
     public String sendComponentData(ObjectId id, HttpHeaders headers, String data) throws ComponentRequestException {
+        String realEndpoint = checkRealEndpointUrlPresence(headers);
         ComponentResource componentResource = componentResourceDao.findById(id);
         String response = null;
         if (componentResource != null) {
-            ComponentConnection realDataConnection = componentResource.getRealConnections().getSendConnection();
+            ComponentConnection sendConnection = componentResource.getProxyConnections().getSendConnection();
 
             //TODO add context filtering
             try {
-                response = HttpUtils.postRequest(buildUrl(realDataConnection), headers.getRequestHeaders(), data);
+                response = HttpUtils.postRequest(realEndpoint, headers.getRequestHeaders(), data);
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
@@ -90,14 +96,13 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         return response;
     }
 
-    private String buildUrl(ComponentConnection componentConnection) {
-        StringBuilder url = new StringBuilder();
-        url.append(componentConnection.getProtocol());
-        url.append("://");
-        url.append(componentConnection.getAddress());
-        url.append(":");
-        url.append(componentConnection.getPort());
-        url.append(componentConnection.getParameters());
-        return url.toString();
+    private String checkRealEndpointUrlPresence(HttpHeaders headers) throws ComponentRequestException {
+        String realEndpoint = headers.getHeaderString(REAL_ENDPOINT_HEADER);
+        if (realEndpoint == null) {
+            String errorMsg = "Cannot get component model. Real endpoint was not correctly evaluated at client side.";
+            LOGGER.log(Level.SEVERE, errorMsg);
+            throw new ComponentRequestException(errorMsg);
+        }
+        return realEndpoint;
     }
 }
