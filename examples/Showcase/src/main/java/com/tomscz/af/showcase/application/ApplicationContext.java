@@ -66,7 +66,7 @@ public class ApplicationContext {
 	}
 
 	public String getUiProxyUrl() {
-		return uiProxyApplicationUuid;
+		return uiProxyUrl;
 	}
 
 	public String getUiProxyApplicationUuid() throws IOException {
