@@ -9,15 +9,16 @@ import java.util.Locale;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
 
 /**
- * Created by Pavel on 13.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class Localization {
 
     private static SupportedLanguages currentLanguage;
     private static String pathToStrings; //must be set externally
-    private static Context context; //must be set externally
 
-    public static String translate(String resource){
+    public static String translate(Context context, String resource){
         try {
             int id = context.getResources().getIdentifier(resource, "string", pathToStrings);
             System.err.println("Localization for id "+id+" is "+context.getResources().getString(id));
@@ -29,7 +30,7 @@ public class Localization {
         }
     }
 
-    public static void changeLanguage(SupportedLanguages lang){
+    public static void changeLanguage(Context context, SupportedLanguages lang){
         Resources res = context.getResources();
         // Change locale settings in the app.
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -47,10 +48,5 @@ public class Localization {
     public static void setPathToStrings(String path){
         pathToStrings = path;
     }
-
-    public static void setContext(Context ctx){
-        context = ctx;
-    }
-
 
 }

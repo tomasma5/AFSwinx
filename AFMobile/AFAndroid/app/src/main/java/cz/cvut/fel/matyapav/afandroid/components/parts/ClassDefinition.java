@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Pavel on 25.12.2015.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class ClassDefinition {
 
@@ -43,14 +45,14 @@ public class ClassDefinition {
 
     public void addFieldInfo(FieldInfo field){
         if(fieldInfos == null){
-            fieldInfos = new ArrayList<FieldInfo>();
+            fieldInfos = new ArrayList<>();
         }
         fieldInfos.add(field);
     }
 
     public void addInnerClass(ClassDefinition innerClass){
         if(innerClasses == null){
-            innerClasses = new ArrayList<ClassDefinition>();
+            innerClasses = new ArrayList<>();
         }
         innerClasses.add(innerClass);
     }

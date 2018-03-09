@@ -1,18 +1,17 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
-import com.tomscz.afswinx.rest.connection.ConnectionParser;
+import com.tomscz.afswinx.rest.connection.JsonConnectionParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
@@ -30,47 +29,48 @@ import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
- * Created by Pavel on 19.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public abstract class AFComponentBuilder<T> {
 
-    private Activity activity;
+    private Context context;
     private AFSwinxConnectionPack connectionPack;
     private Skin skin;
-    private String connectionKey;
     private String componentKeyName;
-    private InputStream connectionResource;
+    private String connectionConfiguration;
     private HashMap<String, String> connectionParameters;
 
 
-    public T initBuilder(Activity activity, String componentKeyName, InputStream connectionResource, String connectionKey){
-        this.activity = activity;
+    public T initBuilder(Context context, String componentKeyName, String connectionConfiguration) {
+        this.context = context;
         this.componentKeyName = componentKeyName;
-        this.connectionResource = connectionResource;
-        this.connectionKey = connectionKey;
-        this.skin = new DefaultSkin(activity);
+        this.connectionConfiguration = connectionConfiguration;
+        this.skin = new DefaultSkin(this.context);
         return (T) this;
     }
 
-    public T initBuilder(Activity activity, String componentKeyName, InputStream connectionResource,
-                         String connectionKey, HashMap<String, String> connectionParameters) {
-        this.activity = activity;
+    public T initBuilder(Context context, String componentKeyName,  String connectionConfiguration, HashMap<String, String> connectionParameters) {
+        this.context = context;
         this.componentKeyName = componentKeyName;
-        this.connectionResource = connectionResource;
-        this.connectionKey = connectionKey;
         this.connectionParameters = connectionParameters;
-        this.skin = new DefaultSkin(activity);
+        this.connectionConfiguration = connectionConfiguration;
+        this.skin = new DefaultSkin(this.context);
         return (T) this;
     }
 
-    protected void initializeConnections() throws Exception {
-        if (connectionPack == null && connectionKey != null && connectionResource != null) {
-            ConnectionParser connectionParser =
-                    new ConnectionParser(connectionKey, connectionParameters);
-            AFSwinxConnectionPack connections =
-                    connectionParser.parseDocument(com.tomscz.afswinx.common.Utils
-                            .buildDocumentFromFile(connectionResource));
-            connectionPack = connections;
+    @SuppressWarnings("unchecked")
+    public T setConnectionParameters(HashMap<String, String> connectionParameters) {
+        this.connectionParameters = connectionParameters;
+        return (T) this;
+    }
+
+    void initializeConnections() throws Exception {
+        if (connectionPack == null && connectionConfiguration != null) {
+            JsonConnectionParser connectionParser =
+                    new JsonConnectionParser(connectionParameters);
+            connectionPack = connectionParser.parse(new JSONObject(connectionConfiguration));
         } else {
             // Model connection is important if it could be found then throw exception
             throw new Exception(
@@ -78,29 +78,29 @@ public abstract class AFComponentBuilder<T> {
         }
     }
 
-    protected void prepareComponent(ClassDefinition classDef, AFComponent component, int numberOfInnerClasses, boolean parsingInnerClass, StringBuilder road){
-        if(parsingInnerClass){
+    private void prepareComponent(ClassDefinition classDef, AFComponent component, int numberOfInnerClasses, boolean parsingInnerClass, StringBuilder road) {
+        if (parsingInnerClass) {
             numberOfInnerClasses = 0;
         }
-        if(classDef != null) {
-            if(!parsingInnerClass) { //set following properties only once at the beginning
+        if (classDef != null) {
+            if (!parsingInnerClass) { //set following properties only once at the beginning
                 component.setName(classDef.getClassName());
-                if(classDef.getLayout() != null) {
+                if (classDef.getLayout() != null) {
                     component.setLayoutDefinitions(classDef.getLayout().getLayoutDefinition());
                     component.setLayoutOrientation(classDef.getLayout().getLayoutOrientation());
                 }
             }
-            //fieldsView = (TableLayout) buildLayout(classDef, activity);
+            //fieldsView = (TableLayout) buildLayout(classDef, context);
             FieldBuilder builder = new FieldBuilder();
             for (FieldInfo field : classDef.getFieldInfos()) {
-                if(field.isInnerClass()){
+                if (field.isInnerClass()) {
                     String roadBackup = road.toString();
                     road.append(classDef.getInnerClasses().get(numberOfInnerClasses).getClassName());
                     road.append(".");
                     prepareComponent(classDef.getInnerClasses().get(numberOfInnerClasses), component, numberOfInnerClasses++, true, road);
                     road = new StringBuilder(roadBackup);
-                }else {
-                    AFField affield = builder.prepareField(field, road, getActivity(), skin);
+                } else {
+                    AFField affield = builder.prepareField(field, road, getContext(), skin);
                     if (affield != null) {
                         component.addField(affield);
                     }
@@ -111,13 +111,12 @@ public abstract class AFComponentBuilder<T> {
     }
 
     protected AFComponent buildComponent(String modelResponse, SupportedComponents type) throws JSONException {
-        //TODO popremyslet co s timto
         AFComponent component = AFComponentFactory.getInstance().getComponentByType(type);
-        component.setActivity(getActivity());
+        component.setContext(getContext());
         component.setConnectionPack(connectionPack);
         component.setSkin(skin);
 
-        LinearLayout componentView = new LinearLayout(getActivity());
+        LinearLayout componentView = new LinearLayout(getContext());
         componentView.setLayoutParams(getSkin().getTopLayoutParams());
         JSONParser parser = new JSONDefinitionParser();
         JSONObject jsonObj = new JSONObject(modelResponse).getJSONObject(Constants.CLASS_INFO);
@@ -129,27 +128,31 @@ public abstract class AFComponentBuilder<T> {
         return component;
     }
 
-    protected String getModelResponse() throws Exception{
+    protected String getModelResponse() throws Exception {
         AFSwinxConnection modelConnection = connectionPack.getMetamodelConnection();
-        if(modelConnection != null) {
-            RequestTask task = new RequestTask(getActivity(), modelConnection.getHttpMethod(), modelConnection.getContentType(),
-                    modelConnection.getSecurity(), null, Utils.getConnectionEndPoint(modelConnection));
+        if (modelConnection != null) {
+            RequestTask task = new RequestTask(getContext(), Utils.getConnectionEndPoint(modelConnection))
+                    .setHttpMethod(modelConnection.getHttpMethod())
+                    .setConnectionSecurity(modelConnection.getSecurity())
+                    .addHeaderParameter("CONTENT-TYPE", modelConnection.getContentType().toString());
 
             Object modelResponse = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get(); //make it synchronous to wait for response
             if (modelResponse instanceof Exception) {
                 throw (Exception) modelResponse;
             }
             return (String) modelResponse;
-        }else{
+        } else {
             throw new Exception("No model connection available. Did you call initializeConnections() before?");
         }
     }
 
-    protected String getDataResponse() throws Exception{
+    protected String getDataResponse() throws Exception {
         AFSwinxConnection dataConnection = connectionPack.getDataConnection();
-        if(dataConnection != null) {
-            RequestTask getData = new RequestTask(getActivity(), dataConnection.getHttpMethod(), dataConnection.getContentType(),
-                    dataConnection.getSecurity(), null, Utils.getConnectionEndPoint(dataConnection));
+        if (dataConnection != null) {
+            RequestTask getData = new RequestTask(getContext(), Utils.getConnectionEndPoint(dataConnection))
+                    .setHttpMethod(dataConnection.getHttpMethod())
+                    .setConnectionSecurity(dataConnection.getSecurity())
+                    .addHeaderParameter("CONTENT_TYPE", dataConnection.getContentType().toString());
             Object response = getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
             if (response instanceof Exception) {
                 throw (Exception) response;
@@ -163,15 +166,15 @@ public abstract class AFComponentBuilder<T> {
 
     protected abstract View buildComponentView(AFComponent component);
 
-    public Activity getActivity() {
-        return activity;
+    public Context getContext() {
+        return context;
     }
 
     public String getComponentKeyName() {
         return componentKeyName;
     }
 
-    public T setSkin(Skin skin){
+    public T setSkin(Skin skin) {
         this.skin = skin;
         return (T) this;
     }

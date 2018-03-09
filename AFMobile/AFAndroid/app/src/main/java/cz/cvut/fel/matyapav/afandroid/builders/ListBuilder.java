@@ -12,7 +12,9 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * Created by Pavel on 24.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class ListBuilder extends AFComponentBuilder<ListBuilder> {
 
@@ -33,7 +35,7 @@ public class ListBuilder extends AFComponentBuilder<ListBuilder> {
 
     @Override
     protected View buildComponentView(AFComponent component) {
-        ListView listView = new ListView(getActivity());
+        ListView listView = new ListView(getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(getSkin().getListWidth(), getSkin().getListHeight());
         params.setMargins(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());

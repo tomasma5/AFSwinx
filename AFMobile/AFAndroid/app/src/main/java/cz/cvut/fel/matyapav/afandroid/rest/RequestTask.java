@@ -1,12 +1,11 @@
 package cz.cvut.fel.matyapav.afandroid.rest;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Base64;
 
 import com.tomscz.afswinx.rest.connection.ConnectionSecurity;
-import com.tomscz.afswinx.rest.connection.HeaderType;
 import com.tomscz.afswinx.rest.connection.HttpMethod;
 import com.tomscz.afswinx.rest.connection.SecurityMethod;
 
@@ -15,30 +14,67 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import java.util.HashMap;
+import java.util.Map;
+
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
- * Created by Pavel on 14.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
-public class RequestTask extends AsyncTask<String,Integer,Object> {
+public class RequestTask extends AsyncTask<String, Integer, Object> {
 
-    Activity activity;
+    private Context context;
 
-    HeaderType headerType;
-    HttpMethod httpMethod;
-    ConnectionSecurity security;
-    String address;
-    Object data;
+    private HttpMethod httpMethod;
+    private Map<String, String> headerParameters;
+    private ConnectionSecurity connectionSecurity;
+    private String address;
+    private Object data;
 
-    public RequestTask(final Activity activity, HttpMethod method, HeaderType headerType,
-                       ConnectionSecurity security, Object data, String url) {
-        this.activity = activity;
-        this.headerType = headerType;
-        this.httpMethod = method;
-        this.security = security;
+    public RequestTask(final Context context, String url){
+        this.context = context;
         this.address = url;
+    }
+
+    public RequestTask(final Context context, HttpMethod method, Map<String, String> headerParameters,
+                       ConnectionSecurity connectionSecurity, Object data, String url) {
+        this.context = context;
+        this.httpMethod = method;
+        this.address = url;
+        this.headerParameters = headerParameters;
+        this.connectionSecurity = connectionSecurity;
         this.data = data;
+    }
+
+    public RequestTask setHttpMethod(HttpMethod method){
+        this.httpMethod = method;
+        return this;
+    }
+
+    public RequestTask setHeaderParameters(Map<String, String> headerParameters) {
+        this.headerParameters = headerParameters;
+        return this;
+    }
+
+    public RequestTask addHeaderParameter(String key, String value) {
+        if(headerParameters == null) {
+            headerParameters = new HashMap<>();
+        }
+        headerParameters.put(key, value);
+        return this;
+    }
+
+    public RequestTask setConnectionSecurity(ConnectionSecurity security) {
+        this.connectionSecurity = connectionSecurity;
+        return this;
+    }
+
+    public RequestTask setData(Object data) {
+        this.data = data;
+        return this;
     }
 
     @Override
@@ -52,23 +88,25 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
         String response = null;
         HttpURLConnection urlConnection = null;
         try {
-            System.err.println("URL " + address);
-            System.err.println("HTTP METHOD " + httpMethod.toString().toUpperCase());
-            System.err.println("HEADER TYPE " + headerType);
+            System.out.println("URL " + address);
+            System.out.println("HTTP METHOD " + httpMethod.toString().toUpperCase());
 
             URL url = new URL(address);
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(5000);
             urlConnection.setConnectTimeout(5000);
             urlConnection.setRequestMethod(httpMethod.toString().toUpperCase());
-            urlConnection.setRequestProperty("CONTENT-TYPE", headerType.toString()); //TODO there can be also another parameters .. not only content-type
+            for (Map.Entry<String, String> headerParam : headerParameters.entrySet()) {
+                urlConnection.setRequestProperty(headerParam.getKey(), headerParam.getValue());
+            }
+
             urlConnection.setDoInput(true);
 
-            if (security != null) {
-                if (security.getMethod().equals(SecurityMethod.BASIC)) {
-                    String encoded = Base64.encodeToString((security.getUserName() + ":" + security.getPassword()).getBytes(), Base64.NO_WRAP);
+            if (connectionSecurity != null) {
+                if (connectionSecurity.getMethod().equals(SecurityMethod.BASIC)) {
+                    String encoded = Base64.encodeToString((connectionSecurity.getUserName() + ":" + connectionSecurity.getPassword()).getBytes(), Base64.NO_WRAP);
                     urlConnection.setRequestProperty("Authorization", "Basic " + encoded);
-                    System.err.println("SECURITY " + "Basic " + encoded);
+                    System.out.println("SECURITY " + "Basic " + encoded);
                 }
             }
 
@@ -85,7 +123,7 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
             String responseMsg = urlConnection.getResponseMessage();
             System.err.println("RESPONSE CODE " + responseCode);
             if (responseCode < 200 || responseCode >= 300) {
-                throw new ConnectException(responseCode+" "+responseMsg);
+                throw new ConnectException(responseCode + " " + responseMsg);
             } else {
                 inputStream = urlConnection.getInputStream();
             }
@@ -97,15 +135,15 @@ public class RequestTask extends AsyncTask<String,Integer,Object> {
         } catch (Exception e) {
             e.printStackTrace();
             return e;
-        }finally {
+        } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
             }
         }
     }
 
-        @Override
-    protected void onPostExecute(final Object response){
+    @Override
+    protected void onPostExecute(final Object response) {
         super.onPostExecute(response);
     }
 }

@@ -1,7 +1,9 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
 /**
- * Created by Pavel on 15.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public enum SupportedValidations {
 
@@ -10,7 +12,6 @@ public enum SupportedValidations {
     MIN("MIN"),
     MAX("MAX"),
     LESSTHAN("LESSTHAN");
-    
 
     private String validationType;
 

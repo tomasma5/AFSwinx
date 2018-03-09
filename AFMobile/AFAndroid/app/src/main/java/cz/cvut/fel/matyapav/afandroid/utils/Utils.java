@@ -46,6 +46,14 @@ public class Utils {
                 || field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERDOUBLEFIELD);
     }
 
+    public static boolean isFieldIntegerField(AFField field){
+        return field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERFIELD);
+    }
+
+    public static boolean isFieldDoubleField(AFField field){
+        return field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERDOUBLEFIELD);
+    }
+
     public static String getConnectionEndPoint(AFSwinxConnection connection){
         StringBuilder endPointBuilder = new StringBuilder();
         if(connection.getProtocol() != null && !connection.getProtocol().isEmpty()){

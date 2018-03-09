@@ -1,7 +1,12 @@
 package cz.cvut.fel.matyapav.afandroid;
 
+import android.content.Context;
+
+import com.tomscz.afswinx.component.builders.AFSwinxScreenDefinitionBuilder;
+
 import java.util.HashMap;
 
+import cz.cvut.fel.matyapav.afandroid.builders.AFScreenDefinitionBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
@@ -45,5 +50,13 @@ public class AFAndroid {
 
     public ListBuilder getListBuilder(){
         return new ListBuilder();
+    }
+
+    public String getProxyApplicationContext() {
+        return null; //TODO
+    }
+
+    public AFScreenDefinitionBuilder getScreenDefinitionBuilder(Context context, String screenUrl) {
+        return new AFScreenDefinitionBuilder(context, screenUrl);
     }
 }

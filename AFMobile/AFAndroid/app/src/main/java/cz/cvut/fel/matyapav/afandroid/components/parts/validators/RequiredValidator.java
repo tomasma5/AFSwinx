@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.components.parts.validators;
 
+import android.content.Context;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -11,12 +12,14 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
- * Created by Pavel on 14.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class RequiredValidator implements AFValidator {
 
     @Override
-    public boolean validate(AFField field, StringBuilder errorMsgs, ValidationRule rule) {
+    public boolean validate(Context context, AFField field, StringBuilder errorMsgs, ValidationRule rule) {
         boolean validationIsFine = true;
         if(Utils.isFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().equals(SupportedWidgets.CALENDAR)){
             EditText textfield = (EditText) field.getFieldView();
@@ -37,7 +40,7 @@ public class RequiredValidator implements AFValidator {
             }
         }
         if(!validationIsFine){
-            errorMsgs.append(Localization.translate("validation.required"));
+            errorMsgs.append(Localization.translate(context, "validation.required"));
         }
         return validationIsFine;
     }

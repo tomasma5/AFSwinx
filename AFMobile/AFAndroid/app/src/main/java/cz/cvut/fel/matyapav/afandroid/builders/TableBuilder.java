@@ -18,7 +18,9 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 
 /**
- * Created by Pavel on 20.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class TableBuilder extends AFComponentBuilder<TableBuilder> {
 
@@ -42,34 +44,34 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
     @Override
     protected View buildComponentView(AFComponent component) {
         //setup wrapper for table
-        LinearLayout tableWrapper = new LinearLayout(getActivity());
+        LinearLayout tableWrapper = new LinearLayout(getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getSkin().getTableHeight());
         params.setMargins(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
         tableWrapper.setLayoutParams(params);
         tableWrapper.setOrientation(LinearLayout.VERTICAL);
         //setup table layout for header row
-        TableLayout headerTableLayout = new TableLayout(getActivity());
+        TableLayout headerTableLayout = new TableLayout(getContext());
         headerTableLayout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
         headerTableLayout.setStretchAllColumns(true);
         headerTableLayout.setShrinkAllColumns(true);
 
         //setup vertical scroll view for table content
-        ScrollView scrollView = new ScrollView(getActivity());
+        ScrollView scrollView = new ScrollView(getContext());
         scrollView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getSkin().getTableHeight()-getSkin().getHeaderRowHeight()));
         scrollView.setScrollbarFadingEnabled(false);
 
         //setup table layout for table content
-        TableLayout contentTableLayout = new TableLayout(getActivity());
+        TableLayout contentTableLayout = new TableLayout(getContext());
         contentTableLayout.setBackgroundColor(getSkin().getContentBackgroundColor());
         contentTableLayout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
         contentTableLayout.setStretchAllColumns(true);
         contentTableLayout.setShrinkAllColumns(true);
 
-        TableRow headerRow = new TableRow(getActivity());
+        TableRow headerRow = new TableRow(getContext());
         headerRow.setBackgroundColor(getSkin().getHeaderRowBackgroundColor());
 
-        TableRow fakeContentRow = new TableRow(getActivity());
+        TableRow fakeContentRow = new TableRow(getContext());
 
         //insert to header row
         int numberOfColumns = 0;
@@ -79,24 +81,24 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
             }
             numberOfColumns++;
 
-            TextView columnHeaderText = new TextView(getActivity());
+            TextView columnHeaderText = new TextView(getContext());
             Utils.setCellParams(columnHeaderText, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             columnHeaderText.setTextColor(getSkin().getHeaderRowTextColor());
             if(field.getFieldInfo().getLabelText() != null) {
-                columnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText()));
+                columnHeaderText.setText(Localization.translate(getContext(), field.getFieldInfo().getLabelText()));
             }
             headerRow.addView(columnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getHeaderRowHeight()));
             ((AFTable) component).setHeaderRow(headerRow);
 
             //create fake header row which will be added to content table to align items according to header row
-            TextView fakeColumnHeaderText = new TextView(getActivity());
+            TextView fakeColumnHeaderText = new TextView(getContext());
             Utils.setCellParams(fakeColumnHeaderText, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
                     getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                     getSkin().getBorderWidth(), getSkin().getBorderColor());
             if(field.getFieldInfo().getLabelText() != null) {
-                fakeColumnHeaderText.setText(Localization.translate(field.getFieldInfo().getLabelText()));
+                fakeColumnHeaderText.setText(Localization.translate(getContext(), field.getFieldInfo().getLabelText()));
             }
             fakeContentRow.addView(fakeColumnHeaderText, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, 0));
         }

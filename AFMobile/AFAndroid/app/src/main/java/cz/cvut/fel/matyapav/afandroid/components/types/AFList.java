@@ -1,6 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.components.types;
 
-import android.app.Activity;
+import android.content.Context;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -28,7 +28,9 @@ import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * Created by Pavel on 24.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class AFList extends AFComponent {
 
@@ -39,8 +41,8 @@ public class AFList extends AFComponent {
         rows = new ArrayList<>();
     }
 
-    public AFList(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
-        super(activity, connectionPack, skin);
+    public AFList(Context context, AFSwinxConnectionPack connectionPack, Skin skin) {
+        super(context, connectionPack, skin);
         rows = new ArrayList<>();
     }
 
@@ -56,7 +58,7 @@ public class AFList extends AFComponent {
                 road = new StringBuilder();
             }
             //set list adapter
-            ListAdapter listAdapter = new CustomListAdapter(getActivity(), getSkin(), this);
+            ListAdapter listAdapter = new CustomListAdapter(getContext(), getSkin(), this);
             getListView().setAdapter(listAdapter);
         } catch (JSONException e) {
             System.err.println("CANNOT PARSE DATA");
@@ -73,12 +75,12 @@ public class AFList extends AFComponent {
                 road.append(key);
                 road.append(".");
                 insertDataObject(jsonObject.getJSONObject(key), road, row); //parse class types
-                road = new StringBuilder(roadBackup.toString());
+                road = new StringBuilder(roadBackup);
             }else {
                 AFField field = getFieldById(road + key);
                 if (field != null) {
                     String data = jsonObject.get(key).toString();
-                    AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+                    AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(getContext(), field.getFieldInfo(), getSkin());
                     builder.setData(field, data);
                     row.put(road + key, field.getActualData().toString());
                 }

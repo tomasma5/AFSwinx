@@ -81,14 +81,14 @@ public class FieldInfo {
 
     public void addRule(ValidationRule rule){
         if(rules == null){
-            rules = new ArrayList<ValidationRule>();
+            rules = new ArrayList<>();
         }
         rules.add(rule);
     }
 
     public void addOption(FieldOption option){
         if(options == null){
-            options = new ArrayList<FieldOption>();
+            options = new ArrayList<>();
         }
         options.add(option);
     }

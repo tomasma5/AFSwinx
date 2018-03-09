@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.components.parts;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,8 +24,10 @@ public class AFField {
     private Object actualData;
 
     private AFComponent parent;
+    private Context context;
 
-    public AFField(FieldInfo fieldInfo) {
+    public AFField(Context context, FieldInfo fieldInfo) {
+        this.context = context;
         this.fieldInfo = fieldInfo;
     }
 
@@ -32,19 +35,19 @@ public class AFField {
         boolean allValidationsFine = true;
         StringBuilder errorMsgs = new StringBuilder();
         errorView.setVisibility(View.GONE);
-        if(fieldInfo.getRules() != null) {
+        if (fieldInfo.getRules() != null) {
             for (ValidationRule rule : fieldInfo.getRules()) {
                 AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);
-                System.out.println("VALIDATION RULE "+rule.toString());
-                System.out.println("VALIDATOR "+validator.toString());
-                boolean validationResult = validator.validate(this,errorMsgs,rule);
-                if(allValidationsFine){ //if once false stays false
+                System.out.println("VALIDATION RULE " + rule.toString());
+                System.out.println("VALIDATOR " + validator.toString());
+                boolean validationResult = validator.validate(context, this, errorMsgs, rule);
+                if (allValidationsFine) { //if once false stays false
                     allValidationsFine = validationResult;
                 }
-                System.out.println("RESULT "+allValidationsFine);
+                System.out.println("RESULT " + allValidationsFine);
             }
         }
-        if(!allValidationsFine){
+        if (!allValidationsFine) {
             errorView.setText(errorMsgs.toString());
             errorView.setVisibility(View.VISIBLE);
         }
@@ -75,8 +78,6 @@ public class AFField {
         this.id = id;
     }
 
-
-
     public TextView getErrorView() {
         return errorView;
     }
@@ -85,7 +86,7 @@ public class AFField {
         this.errorView = errorView;
     }
 
-    public void setCompleteView(View view){
+    public void setCompleteView(View view) {
         this.completeView = view;
     }
 

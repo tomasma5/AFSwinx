@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.components.parts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
@@ -14,7 +15,9 @@ import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
- * Created by Pavel on 25.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class CustomListAdapter extends BaseAdapter {
 
@@ -47,6 +50,7 @@ public class CustomListAdapter extends BaseAdapter {
 
     class CustomAdapterView extends LinearLayout {
 
+        @SuppressLint("SetTextI18n")
         public CustomAdapterView(Context context, AFList list, int position) {
             super(context);
             setOrientation(LinearLayout.HORIZONTAL);
@@ -86,13 +90,13 @@ public class CustomListAdapter extends BaseAdapter {
                 String label = "";
                 if (i == 0) {
                     if(field.getFieldInfo().getLabelText() != null) {
-                        label = skin.isListItemNameLabelVisible() ? Localization.translate(field.getFieldInfo().getLabelText()) + ": " : "";
+                        label = skin.isListItemNameLabelVisible() ? Localization.translate(getContext(), field.getFieldInfo().getLabelText()) + ": " : "";
                     }
                     textName.setText(label + list.getRows().get(position).get(field.getId()));
                     layout.addView(textName);
                 } else {
                     if(field.getFieldInfo().getLabelText() != null) {
-                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(field.getFieldInfo().getLabelText()) + ": " : "";
+                        label = skin.isListItemTextLabelsVisible() ? Localization.translate(getContext(), field.getFieldInfo().getLabelText()) + ": " : "";
                     }
                     TextView text = new TextView(context);
                     text.setTextSize(skin.getListItemsTextSize());
@@ -118,7 +122,9 @@ public class CustomListAdapter extends BaseAdapter {
                     } else {
                         text.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     }
-                    setOfFields.addView(text);
+                    if (setOfFields != null) {
+                        setOfFields.addView(text);
+                    }
 
                     if(i == list.getVisibleFieldsCount() - 1){
                         layout.addView(setOfFields);

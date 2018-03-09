@@ -27,7 +27,9 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
- * Created by Pavel on 20.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class AFTable extends AFComponent {
 
@@ -53,7 +55,7 @@ public class AFTable extends AFComponent {
         try {
             JSONArray jsonArray = new JSONArray(dataResponse);
             for(int i=0; i<jsonArray.length(); i++){
-                TableRow row = new TableRow(getActivity());
+                TableRow row = new TableRow(getContext());
                 row.setClickable(true);
                 row.setFocusable(true);
 
@@ -69,12 +71,12 @@ public class AFTable extends AFComponent {
                         continue; //do not bother with invisible columns
                     }
                     //build cell
-                    TextView cell = new TextView(getActivity());
+                    TextView cell = new TextView(getContext());
                     setCellParams(cell, getSkin().getContentGravity(), getSkin().getCellPaddingLeft(),
                             getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(),
                             getSkin().getCellPaddingBottom(), getSkin().getBorderWidth(), getSkin().getBorderColor());
                     cell.setTextColor(getSkin().getContentTextColor());
-                    String value = Localization.translate(((JSONObject) jsonArray.get(i)).
+                    String value = Localization.translate(getContext(), ((JSONObject) jsonArray.get(i)).
                             get(column).toString());
                     cell.setText(value);     //set text
                     row.addView(cell, new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, getSkin().getContentRowHeight()));
@@ -94,9 +96,9 @@ public class AFTable extends AFComponent {
             }
 
             //add longest row to header as fake row with 0 height to have all columns properly sized
-            TableRow fakeHeaderRow = new TableRow(getActivity());
+            TableRow fakeHeaderRow = new TableRow(getContext());
             for (String column: longestRowList) {
-                TextView columnView = new TextView(getActivity());
+                TextView columnView = new TextView(getContext());
                 setCellParams(columnView, getSkin().getHeaderRowGravity(), getSkin().getCellPaddingLeft(),
                         getSkin().getCellPaddingRight(), getSkin().getCellPaddingTop(), getSkin().getCellPaddingBottom(),
                         getSkin().getBorderWidth(), getSkin().getBorderColor());

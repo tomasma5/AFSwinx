@@ -23,7 +23,9 @@ import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
- * Created by Pavel on 26.12.2015.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class AFForm extends AFComponent {
 
@@ -35,19 +37,19 @@ public class AFForm extends AFComponent {
     }
 
     @Override
-    public void insertData(String dataResponse, StringBuilder road){
+    public void insertData(String dataResponse, StringBuilder road) {
         try {
             JSONObject jsonObject = new JSONObject(dataResponse);
             Iterator<String> keys = jsonObject.keys();
-            while(keys.hasNext()){
+            while (keys.hasNext()) {
                 String key = keys.next();
-                if(jsonObject.get(key) instanceof JSONObject){
+                if (jsonObject.get(key) instanceof JSONObject) {
                     String roadBackup = road.toString();
                     road.append(key);
                     road.append(".");
                     insertData(jsonObject.get(key).toString(), road); //parse class types
-                    road = new StringBuilder(roadBackup.toString());
-                }else {
+                    road = new StringBuilder(roadBackup);
+                } else {
                     //System.err.println("ROAD+KEY" + (road + key));
                     AFField field = getFieldById(road + key);
                     //System.err.println("FIELD" + field);
@@ -63,8 +65,8 @@ public class AFForm extends AFComponent {
         }
     }
 
-    private void setFieldValue(AFField field, Object val){
-        WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, val);
+    private void setFieldValue(AFField field, Object val) {
+        WidgetBuilderFactory.getInstance().getFieldBuilder(getContext(), field.getFieldInfo(), getSkin()).setData(field, val);
     }
 
     @Override
@@ -72,7 +74,7 @@ public class AFForm extends AFComponent {
         AFDataHolder dataHolder = new AFDataHolder();
         for (AFField field : getFields()) {
             AbstractWidgetBuilder fieldBuilder =
-                    WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+                    WidgetBuilderFactory.getInstance().getFieldBuilder(getContext(), field.getFieldInfo(), getSkin());
             Object data = fieldBuilder.getData(field);
             String propertyName = field.getId();
             // Based on dot notation determine road. Road is used to add object to its right place
@@ -109,10 +111,10 @@ public class AFForm extends AFComponent {
     }
 
     @Override
-    public boolean validateData(){
+    public boolean validateData() {
         boolean allValidationsFine = true;
-        for(AFField field : getFields()){
-            if(!field.validate()){
+        for (AFField field : getFields()) {
+            if (!field.validate()) {
                 allValidationsFine = false;
             }
         }
@@ -120,7 +122,7 @@ public class AFForm extends AFComponent {
     }
 
     /*TROCHU POUPRAVENA MARTINOVA METODA*/
-    public void sendData() throws Exception{
+    public void sendData() throws Exception {
         if (getConnectionPack().getSendConnection() == null) {
             throw new IllegalStateException(
                     "The post connection was not specify. Check your XML configuration or Connection which was used to build this form");
@@ -129,11 +131,15 @@ public class AFForm extends AFComponent {
         if (data == null) {
             return;
         }
-        System.err.println("SEND CONNECTION "+ Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
-        RequestTask sendTask = new RequestTask(getActivity(),getConnectionPack().getSendConnection().getHttpMethod(), getConnectionPack().getSendConnection().getContentType(),
-                getConnectionPack().getSendConnection().getSecurity(), data, Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
+        System.err.println("SEND CONNECTION " + Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
+        RequestTask sendTask = new RequestTask(getContext(),
+                Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()))
+                .setHttpMethod(getConnectionPack().getSendConnection().getHttpMethod())
+                .addHeaderParameter("CONTENT-TYPE", getConnectionPack().getSendConnection().getContentType().toString())
+                .setConnectionSecurity(getConnectionPack().getSendConnection().getSecurity())
+                .setData(data);
         Object response = sendTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
-        if(response instanceof Exception){
+        if (response instanceof Exception) {
             throw (Exception) response;
         }
     }
@@ -157,29 +163,29 @@ public class AFForm extends AFComponent {
     }
 
     public void resetData() {
-        for (AFField field: getFields()) {
-            AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin());
+        for (AFField field : getFields()) {
+            AbstractWidgetBuilder builder = WidgetBuilderFactory.getInstance().getFieldBuilder(getContext(), field.getFieldInfo(), getSkin());
             builder.setData(field, field.getActualData());
         }
     }
 
     public void clearData() {
-        for (AFField field: getFields()) {
+        for (AFField field : getFields()) {
             field.setActualData(null);
         }
         resetData();
     }
 
-    public Object getDataFromFieldWithId(String id){
+    public Object getDataFromFieldWithId(String id) {
         AFField field = getFieldById(id);
-        if(field != null){
-            return WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).getData(field);
+        if (field != null) {
+            return WidgetBuilderFactory.getInstance().getFieldBuilder(getContext(), field.getFieldInfo(), getSkin()).getData(field);
         }
         return null;
     }
 
-    public void setDataToFieldWithId(String id, Object data){
+    public void setDataToFieldWithId(String id, Object data) {
         AFField field = getFieldById(id);
-        WidgetBuilderFactory.getInstance().getFieldBuilder(field.getFieldInfo(), getSkin()).setData(field, data);
+        WidgetBuilderFactory.getInstance().getFieldBuilder(getContext(), field.getFieldInfo(), getSkin()).setData(field, data);
     }
 }

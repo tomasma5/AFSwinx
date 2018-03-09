@@ -7,7 +7,9 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFTable;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * Created by Pavel on 29.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class AFComponentFactory {
 
@@ -28,7 +30,7 @@ public class AFComponentFactory {
         }else if(type.equals(SupportedComponents.LIST)){
             return new AFList();
         }else{
-            ///type not supported;
+            System.err.println("Component type not supported.");
             return null;
         }
 

@@ -1,27 +1,30 @@
 package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 
 /**
- * Created by Pavel on 15.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class CheckboxWidgetBuilder extends BasicBuilder {
 
-    public CheckboxWidgetBuilder(Skin skin, FieldInfo properties) {
-        super(skin, properties);
+
+    CheckboxWidgetBuilder(Context context, Skin skin, FieldInfo properties) {
+        super(context, skin, properties);
     }
 
     @Override
-    public View buildFieldView(Activity activity) {
-        CheckBox checkBox = new CheckBox(activity);
+    public View buildFieldView(Context context) {
+        CheckBox checkBox = new CheckBox(context);
         checkBox.setTextColor(getSkin().getFieldColor());
         checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         if(getProperties().isReadOnly()){

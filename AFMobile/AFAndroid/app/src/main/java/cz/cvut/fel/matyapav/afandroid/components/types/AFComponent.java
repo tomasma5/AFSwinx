@@ -1,6 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.components.types;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.ViewGroup;
 
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
@@ -14,11 +14,13 @@ import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**
- * Created by Pavel on 13.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
-public abstract class AFComponent implements AbstractComponent{
+public abstract class AFComponent implements AbstractComponent {
 
-    private Activity activity;
+    private Context context;
     private String name;
     private ViewGroup view;
     private LayoutDefinitions layoutDefinitions;
@@ -27,31 +29,31 @@ public abstract class AFComponent implements AbstractComponent{
     private AFSwinxConnectionPack connectionPack;
     private Skin skin;
 
-    public AFComponent(){
+    public AFComponent() {
     }
 
-    public AFComponent(Activity activity, AFSwinxConnectionPack connectionPack, Skin skin) {
-        this.activity = activity;
+    public AFComponent(Context context, AFSwinxConnectionPack connectionPack, Skin skin) {
+        this.context = context;
         this.connectionPack = connectionPack;
         this.skin = skin;
     }
 
     //this one should be used by users
-    public void insertData(Object dataObject){
+    public void insertData(Object dataObject) {
         insertData(dataObject.toString(), new StringBuilder());
     }
 
-    public void addField(AFField field){
-        if(fields == null){
-            fields = new ArrayList<AFField>();
+    public void addField(AFField field) {
+        if (fields == null) {
+            fields = new ArrayList<>();
         }
         field.setParent(this);
         fields.add(field);
     }
 
-    public AFField getFieldById(String id){
-        for (AFField field: getFields()) {
-            if(field.getId().equals(id)){
+    public AFField getFieldById(String id) {
+        for (AFField field : getFields()) {
+            if (field.getId().equals(id)) {
                 return field;
             }
         }
@@ -59,10 +61,10 @@ public abstract class AFComponent implements AbstractComponent{
         return null;
     }
 
-    public int getVisibleFieldsCount(){
+    public int getVisibleFieldsCount() {
         int res = 0;
-        for (AFField field: getFields()) {
-            if(field.getFieldInfo().isVisible()){
+        for (AFField field : getFields()) {
+            if (field.getFieldInfo().isVisible()) {
                 res++;
             }
         }
@@ -82,8 +84,8 @@ public abstract class AFComponent implements AbstractComponent{
         return fields;
     }
 
-    public Activity getActivity() {
-        return activity;
+    public Context getContext() {
+        return context;
     }
 
     public AFSwinxConnectionPack getConnectionPack() {
@@ -107,8 +109,8 @@ public abstract class AFComponent implements AbstractComponent{
         this.name = name;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public void setConnectionPack(AFSwinxConnectionPack connectionPack) {

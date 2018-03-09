@@ -1,7 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
-import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,19 +19,22 @@ import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 
 /**
- * Created by Pavel on 15.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class DropDownWidgetBuilder extends BasicBuilder {
 
-    public DropDownWidgetBuilder(Skin skin, FieldInfo properties) {
-        super(skin, properties);
+
+    DropDownWidgetBuilder(Context context, Skin skin, FieldInfo properties) {
+        super(context, skin, properties);
     }
 
     @Override
-    public View buildFieldView(Activity activity) {
-        Spinner spinner = new Spinner(activity);
+    public View buildFieldView(Context context) {
+        Spinner spinner = new Spinner(context);
         if(convertOptionsIntoList() != null) {
-            ArrayAdapter<String> dataAdapter = new MySpinnerAdapter<>(activity,
+            ArrayAdapter<String> dataAdapter = new MySpinnerAdapter<>(context,
                     R.layout.support_simple_spinner_dropdown_item,
                     convertOptionsIntoList(), getSkin());
             spinner.setAdapter(dataAdapter);
@@ -51,14 +54,14 @@ public class DropDownWidgetBuilder extends BasicBuilder {
             return;
         }
         if(value.toString().equals("true")){
-            value = Localization.translate("option.yes");
+            value = Localization.translate(getContext(), "option.yes");
         }else if(value.toString().equals("false")){
-            value = Localization.translate("option.no");
+            value = Localization.translate(getContext(), "option.no");
         }
         if(field.getFieldInfo().getOptions() != null) {
             for (FieldOption option : field.getFieldInfo().getOptions()) {
                 if(option.getKey().equals(value)){
-                    value = Localization.translate(option.getValue());
+                    value = Localization.translate(getContext(), option.getValue());
                     break;
                 }
             }
@@ -78,14 +81,14 @@ public class DropDownWidgetBuilder extends BasicBuilder {
         Spinner spinner = (Spinner) field.getFieldView();
         if(field.getFieldInfo().getOptions() != null) {
             for (FieldOption option : field.getFieldInfo().getOptions()) {
-                if(Localization.translate(option.getValue()).equals(spinner.getSelectedItem().toString())){
+                if(Localization.translate(getContext(), option.getValue()).equals(spinner.getSelectedItem().toString())){
                     return option.getKey();
                 }
             }
         }
-        if(spinner.getSelectedItem().toString().equals(Localization.translate("option.yes"))){
+        if(spinner.getSelectedItem().toString().equals(Localization.translate(getContext(), "option.yes"))){
             return true;
-        }else if(spinner.getSelectedItem().toString().equals(Localization.translate("option.no"))){
+        }else if(spinner.getSelectedItem().toString().equals(Localization.translate(getContext(), "option.no"))){
             return false;
         }else {
             return spinner.getSelectedItem().toString();
@@ -97,12 +100,12 @@ public class DropDownWidgetBuilder extends BasicBuilder {
         int i = 0;
         if(getProperties().getOptions() != null){
             for (FieldOption option : getProperties().getOptions()) {
-                if(option.getValue().toString().equals("true")){
-                    list.add(Localization.translate("option.yes"));
-                }else if(option.getValue().toString().equals("false")){
-                    list.add(Localization.translate("option.no"));
+                if(option.getValue().equals("true")){
+                    list.add(Localization.translate(getContext(), "option.yes"));
+                }else if(option.getValue().equals("false")){
+                    list.add(Localization.translate(getContext(), "option.no"));
                 }else {
-                    list.add(Localization.translate(option.getValue()));
+                    list.add(Localization.translate(getContext(), option.getValue()));
                 }
             }
             return list;
@@ -118,8 +121,10 @@ public class DropDownWidgetBuilder extends BasicBuilder {
             super(context, resource, items);
             this.skin = skin;
         }
+
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             TextView view = (TextView) super.getView(position, convertView, parent);
             view.setTextColor(skin.getFieldColor());
             view.setTypeface(skin.getFieldFont());
@@ -128,7 +133,7 @@ public class DropDownWidgetBuilder extends BasicBuilder {
 
         // Affects opened state of the spinner
         @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
             TextView view = (TextView) super.getDropDownView(position, convertView, parent);
             view.setTextColor(skin.getFieldColor());
             view.setTypeface(skin.getFieldFont());

@@ -1,6 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid.builders.widgets;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
@@ -8,28 +8,29 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.FieldInfo;
-import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 
 /**
- * Created by Pavel on 14.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
 public class TextWidgetBuilder extends BasicBuilder {
 
-
-    public TextWidgetBuilder(Skin skin, FieldInfo properties) {
-        super(skin, properties);
+    TextWidgetBuilder(Context context, Skin skin, FieldInfo properties) {
+        super(context, skin, properties);
     }
 
     @Override
-    public View buildFieldView(Activity activity) {
-        EditText text = new EditText(activity);
+    public View buildFieldView(Context context) {
+        EditText text = new EditText(context);
         text.setTextColor(getSkin().getFieldColor());
         text.setTypeface(getSkin().getFieldFont());
         addInputType(text, getProperties().getWidgetType());
-        if(getProperties().isReadOnly()){
+        if (getProperties().isReadOnly()) {
             text.setInputType(InputType.TYPE_NULL);
             text.setTextColor(Color.LTGRAY);
         }
@@ -38,12 +39,11 @@ public class TextWidgetBuilder extends BasicBuilder {
 
     @Override
     public void setData(final AFField field, final Object value) {
-        if(value != null) {
+        if (value != null) {
             ((EditText) field.getFieldView()).setText(value.toString());
             field.setActualData(value);
 
-            //TODO zvazit tuhle feature .. non editable texty nejdou posunout v pripade, ze je user nevidi cele.
-            if(field.getFieldInfo().isReadOnly()) {
+            if (field.getFieldInfo().isReadOnly()) {
                 field.getFieldView().setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View v) {
@@ -52,7 +52,7 @@ public class TextWidgetBuilder extends BasicBuilder {
                     }
                 });
             }
-        }else{
+        } else {
             ((EditText) field.getFieldView()).setText("");
             field.setActualData("");
         }
@@ -61,10 +61,10 @@ public class TextWidgetBuilder extends BasicBuilder {
 
     @Override
     public Object getData(AFField field) {
-        return ((EditText)field.getFieldView()).getText().toString();
+        return ((EditText) field.getFieldView()).getText().toString();
     }
 
-    private void addInputType(EditText field, SupportedWidgets widgetType){
+    private void addInputType(EditText field, SupportedWidgets widgetType) {
         //textfield or password
         if (widgetType.equals(SupportedWidgets.TEXTFIELD)) {
             field.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -72,8 +72,8 @@ public class TextWidgetBuilder extends BasicBuilder {
             field.setTransformationMethod(PasswordTransformationMethod.getInstance());
             field.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         } else if (widgetType.equals(SupportedWidgets.NUMBERFIELD)) {
-            field.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
-        } else if (widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD)){
+            field.setInputType(InputType.TYPE_CLASS_NUMBER);
+        } else if (widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD)) {
             field.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         }
     }

@@ -34,7 +34,7 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
 
     @Override
     protected View buildComponentView(AFComponent form) {
-        LinearLayout formView = new LinearLayout(getActivity());
+        LinearLayout formView = new LinearLayout(getContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(getSkin().getComponentMarginLeft(), getSkin().getComponentMarginTop(),
                 getSkin().getComponentMarginRight(), getSkin().getComponentMarginBottom());
@@ -67,7 +67,7 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
                 if(setOfFields != null) {
                     formView.addView(setOfFields);
                 }
-                setOfFields = new LinearLayout(getActivity());
+                setOfFields = new LinearLayout(getContext());
                 setOfFields.setOrientation(setOfFieldsOrientation);
                 setOfFields.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             }
