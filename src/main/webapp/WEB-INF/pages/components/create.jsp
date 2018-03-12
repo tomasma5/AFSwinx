@@ -8,7 +8,7 @@
 <jsp:include page="../partials/header.jsp"/>
 <div class="center-90-percent from-top-40-px">
     <div class="panel panel-primary">
-        <div class="panel-key height-50px">
+        <div class="panel-heading height-50px">
             <a href="${pageContext.request.contextPath}/components/list?app=${app}">
                 <button class="btn button-light">Components</button>
             </a> >
@@ -45,7 +45,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-key">
+                            <div class="panel-heading">
                                 Model connection
                                 <div class="material-switch pull-right">
 
@@ -64,13 +64,21 @@
                                         <input type="text" class="form-control" id="modelConnectionParameters"
                                                name="modelConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../model"
-                                               value="${modelConnectionParameters}" disabled>
+                                               value="${modelConnectionParameters}"
+                                        <c:if test="${modelConnectionParameters.indexOf('#{') >= 0}">
+                                               style="background-color: lightsteelblue; font-weight: bold"
+                                        </c:if>
+                                               disabled>
                                     </c:if>
                                     <c:if test="${modelConnectionActive != 0}">
                                         <input type="text" class="form-control" id="modelConnectionParameters"
                                                name="modelConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../model"
-                                               value="${modelConnectionParameters}" required>
+                                               value="${modelConnectionParameters}"
+                                        <c:if test="${modelConnectionParameters.indexOf('#{') >= 0}">
+                                               style="background-color: lightsteelblue; font-weight: bold"
+                                        </c:if>
+                                               required>
                                     </c:if>
 
                                     <c:if test="${not empty modelConnectionParametersError}">${modelConnectionParametersError}</c:if>
@@ -125,7 +133,11 @@
                                                    id="modelSecurityParamValue${loop.index+1}"
                                                    name="modelSecurityParamValue${loop.index+1}"
                                                    placeholder="Value"
-                                                   value="${securityParam.value}"/>
+                                                   value="${securityParam.value}"
+                                                    <c:if test="${securityParam.value.indexOf('#{') == 0}">
+                                                        style="background-color: lightsteelblue; font-weight: bold"
+                                                    </c:if>
+                                            />
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -135,11 +147,12 @@
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-key">
+                            <div class="panel-heading">
                                 Data connection
                                 <div class="material-switch pull-right">
                                     <input id="dataConnectionActive" name="dataConnectionActive" type="checkbox"
-                                           value="${dataConnectionActive}" onclick="toggleConnection('data')"
+                                           value="${dataConnectionActive}"
+                                           onclick="toggleConnection('data')"
                                            <c:if test="${dataConnectionActive == 1 || dataConnectionActive == null}">checked</c:if>
                                     />
                                     <label for="dataConnectionActive" class="label-success"></label>
@@ -153,12 +166,19 @@
                                         <input type="text" class="form-control" id="dataConnectionParameters"
                                                name="dataConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../data"
-                                               value="${dataConnectionParameters}" disabled>
+                                               value="${dataConnectionParameters}"
+                                        <c:if test="${dataConnectionParameters.indexOf('#{') >= 0}">
+                                               style="background-color: lightsteelblue; font-weight: bold"
+                                        </c:if>
+                                               disabled>
                                     </c:if>
                                     <c:if test="${dataConnectionActive != 0}">
                                         <input type="text" class="form-control" id="dataConnectionParameters"
                                                name="dataConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../data"
+                                        <c:if test="${dataConnectionParameters.indexOf('#{') >= 0}">
+                                               style="background-color: lightsteelblue; font-weight: bold"
+                                        </c:if>
                                                value="${dataConnectionParameters}" required>
                                     </c:if>
 
@@ -214,7 +234,11 @@
                                                    id="dataSecurityParamValue${loop.index+1}"
                                                    name="dataSecurityParamValue${loop.index+1}"
                                                    placeholder="Value"
-                                                   value="${securityParam.value}"/>
+                                                   value="${securityParam.value}"
+                                                    <c:if test="${securityParam.value.indexOf('#{') == 0}">
+                                                        style="background-color: lightsteelblue; font-weight: bold"
+                                                    </c:if>
+                                            />
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -224,7 +248,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-4">
                         <div class="panel panel-default">
                             <!-- Default panel contents -->
-                            <div class="panel-key">
+                            <div class="panel-heading">
                                 Send connection
                                 <div class="material-switch pull-right">
                                     <input id="sendConnectionActive" name="sendConnectionActive" type="checkbox"
@@ -243,13 +267,21 @@
                                         <input type="text" class="form-control" id="sendConnectionParameters"
                                                name="sendConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../send"
-                                               value="${sendConnectionParameters}" disabled>
+                                               value="${sendConnectionParameters}"
+                                        <c:if test="${sendConnectionParameters.indexOf('#{') >= 0}">
+                                               style="background-color: lightsteelblue; font-weight: bold"
+                                        </c:if>
+                                               disabled>
                                     </c:if>
                                     <c:if test="${sendConnectionActive != 0}">
                                         <input type="text" class="form-control" id="sendConnectionParameters"
                                                name="sendConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../send"
-                                               value="${sendConnectionParameters}" required>
+                                               value="${sendConnectionParameters}"
+                                        <c:if test="${sendConnectionParameters.indexOf('#{') >= 0}">
+                                               style="background-color: lightsteelblue; font-weight: bold"
+                                        </c:if>
+                                               required>
                                     </c:if>
 
                                     <c:if test="${not empty sendConnectionParametersError}">${sendConnectionParametersError}</c:if>
@@ -295,7 +327,6 @@
                                     <c:forEach var="securityParam" items="${sendConnectionSecurityParams}"
                                                varStatus="loop">
                                         <div class="form-group param-group">
-                                            <label for="sendSecurityParamKey${loop.index+1}">Key</label>
                                             <input type="text" class="form-control param"
                                                    id="sendSecurityParamKey${loop.index+1}"
                                                    name="sendSecurityParamKey${loop.index+1}"
@@ -305,7 +336,11 @@
                                                    id="sendSecurityParamValue${loop.index+1}"
                                                    name="sendSecurityParamValue${loop.index+1}"
                                                    placeholder="Value"
-                                                   value="${securityParam.value}"/>
+                                                   value="${securityParam.value}"
+                                                    <c:if test="${securityParam.value.indexOf('#{') == 0}">
+                                                        style="background-color: lightsteelblue; font-weight: bold"
+                                                    </c:if>
+                                            />
                                         </div>
                                     </c:forEach>
                                 </div>

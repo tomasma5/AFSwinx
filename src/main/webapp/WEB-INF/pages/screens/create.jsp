@@ -8,7 +8,7 @@
 <jsp:include page="../partials/header.jsp"/>
 <div class="center-90-percent from-top-40-px">
     <div class="panel panel-primary">
-        <div class="panel-key height-50px">
+        <div class="panel-heading height-50px">
             <a class="link" href="${pageContext.request.contextPath}/screens/list?app=${app}">
                 <button class="btn button-light">Screens</button>
             </a> >
@@ -49,7 +49,7 @@
                     <div class="col-xs-13 col-md-5">
                         <div class="panel panel-default min-h-350px">
                             <!-- Default panel contents -->
-                            <div class="panel-key">
+                            <div class="panel-heading">
                                 Available components
                             </div>
                             <div class="panel-body">
@@ -73,7 +73,7 @@
                     <div class="col-xs-13 col-md-5">
                         <div class="panel panel-default min-h-350px">
                             <!-- Default panel contents -->
-                            <div class="panel-key">
+                            <div class="panel-heading">
                                 Added components
                             </div>
                             <div class="panel-body">

@@ -152,7 +152,7 @@ public class ComponentCreateServlet extends HttpServlet {
     private void setConnectionInputToRequest(HttpServletRequest req, String type, ComponentConnection connection) {
         if (connection != null) {
             req.setAttribute(type + ParameterNames.CONNECTION_ACTIVE, 1);
-            req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS, connection.getParameters());
+            req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS, connection.getRealParameters());
             if (connection.getHeaderParams() != null) {
                 req.setAttribute(type + ParameterNames.CONNECTION + ParameterNames.HEADER_PARAMS, connection.getHeaderParams());
             }

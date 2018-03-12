@@ -8,7 +8,7 @@
 <jsp:include page="../partials/menu.jsp"/>
 <div class="content">
     <div class="panel panel-primary">
-        <div class="panel-key height-50px">
+        <div class="panel-heading height-50px">
             <button type="button" class="btn btn-primary" disabled>Screens</button>
             <a href="${pageContext.request.contextPath}/screens/create?app=${app}">
                 <button class="btn btn-success float-right">Add screen</button>
