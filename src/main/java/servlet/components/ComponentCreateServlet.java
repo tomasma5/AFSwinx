@@ -116,10 +116,8 @@ public class ComponentCreateServlet extends HttpServlet {
         if (proxyConnection != null && (parameters != null && !parameters.isEmpty()) && (application != null)) {
             int headerParamsCount = Integer.parseInt(req.getParameter(type + ParameterNames.HEADER_PARAMS_COUNT));
             int securityParamsCount = Integer.parseInt(req.getParameter(type + ParameterNames.SECURITY_PARAMS_COUNT));
-            String protocol = application.getRemoteUrl().substring(0, application.getRemoteUrl().indexOf(":"));
-            String address = application.getRemoteUrl().substring(application.getRemoteUrl().indexOf("://") + 3);
-            proxyConnection.setRealProtocol(protocol);
-            proxyConnection.setRealAddress(address);
+            proxyConnection.setRealProtocol(application.getRemoteProtocol());
+            proxyConnection.setRealAddress(application.getRemoteHostname());
             proxyConnection.setRealPort(application.getRemotePort());
             proxyConnection.setRealParameters(parameters);
             proxyConnection.setHeaderParams(getParams(req, type, ParameterNames.HEADER_PARAM, headerParamsCount));

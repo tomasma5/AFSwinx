@@ -14,6 +14,9 @@
         <div class="panel-body ">
             <form action="create" method="post">
                 <input type="hidden" name="app" value="${app}">
+                <c:if test="${not empty urlError}" >${urlError}</c:if>
+                <c:if test="${not empty portError}" >${portError}</c:if>
+
                 <div class="form-group">
                     <label for="applicationName">Application name</label>
                     <input type="text" class="form-control" id="applicationName" name="applicationName"
@@ -22,17 +25,37 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="remoteUrl">Remote url</label>
-                    <input type="url" class="form-control" id="remoteUrl" name="remoteUrl"
-                           placeholder="Example: http://example.com" value="${remoteUrl}" required>
-                    <c:if test="${not empty remoteUrlError}" >${remoteUrlError}</c:if>
+                    <label for="remoteProtocol">Remote protocol</label>
+                    <input type="text" class="form-control" id="remoteProtocol" name="remoteProtocol"
+                           placeholder="Example: http or https" value="${remoteProtocol}" required>
+                </div>
+                <div class="form-group">
+                    <label for="remoteHostname">Remote hostname</label>
+                    <input type="text" class="form-control" id="remoteHostname" name="remoteHostname"
+                           placeholder="Example: localhost" value="${remoteHostname}" required>
+                </div>
+                <div class="form-group">
+                    <label for="remotePort">Remote Port</label>
+                    <input type="number" class="form-control" id="remotePort" name="remotePort"
+                           placeholder="Enter remote port" value="${remotePort}">
                 </div>
 
                 <div class="form-group">
-                    <label for="remotePort">Port</label>
-                    <input type="number" class="form-control" id="remotePort" name="remotePort"
-                           placeholder="Enter remote port" value="${remotePort}" required>
-                    <c:if test="${not empty remotePortError}" >${remotePortError}</c:if>
+                    <label for="proxyProtocol">Proxy protocol</label>
+                    <input type="text" class="form-control" id="proxyProtocol" name="proxyProtocol"
+                           placeholder="Example: http or https. If not filled will be generated automatically." value="${proxyProtocol}">
+                </div>
+
+                <div class="form-group">
+                    <label for="proxyHostname">Proxy hostname</label>
+                    <input type="text" class="form-control" id="proxyHostname" name="proxyHostname"
+                           placeholder="Example: localhost. If not filled will be generated automatically." value="${proxyHostname}">
+                </div>
+
+                <div class="form-group">
+                    <label for="proxyPort">Proxy Port</label>
+                    <input type="number" class="form-control" id="proxyPort" name="proxyPort"
+                           placeholder="Enter proxy port" value="${proxyPort}">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

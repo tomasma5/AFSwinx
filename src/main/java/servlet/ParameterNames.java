@@ -4,8 +4,12 @@ public class ParameterNames {
 
     public static final String APPLICATION_ID = "app";
     public static final String APPLICATION_NAME = "applicationName";
-    public static final String APPLICATION_REMOTE_URL = "remoteUrl";
+    public static final String APPLICATION_REMOTE_HOSTNAME = "remoteHostname";
+    public static final String APPLICATION_REMOTE_PROTOCOL = "remoteProtocol";
     public static final String APPLICATION_REMOTE_PORT = "remotePort";
+    public static final String APPLICATION_PROXY_HOSTNAME = "proxyHostname";
+    public static final String APPLICATION_PROXY_PROTOCOL = "proxyProtocol";
+    public static final String APPLICATION_PROXY_PORT = "proxyPort";
 
     public static final String SCREEN_ID = "screen";
     public static final String SCREEN_URL = "screenUrl";
@@ -18,7 +22,7 @@ public class ParameterNames {
     public static final String COMPONENT_TYPE = "componentType";
 
     public static final String MODEL = "model";
-    public static  final String DATA = "data";
+    public static final String DATA = "data";
     public static final String SEND = "send";
 
     public static final String CONNECTION = "Connection";

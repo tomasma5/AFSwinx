@@ -1,11 +1,14 @@
 package servlet.screens;
 
+import model.Application;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
+import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
+import utils.HttpUtils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -30,6 +33,9 @@ public class ScreenCreateServlet extends HttpServlet {
 
     @Inject
     private ComponentManagementService componentManagementService;
+
+    @Inject
+    private ApplicationsManagementService applicationsManagementService;
 
     @Context
     private ResourceInfo resourceInfo;
@@ -119,27 +125,33 @@ public class ScreenCreateServlet extends HttpServlet {
     }
 
     private String updateScreenProperties(HttpServletRequest req, String appIdString, Screen screen) {
-        screen.setApplicationId(new ObjectId(appIdString));
+        ObjectId appId = new ObjectId(appIdString);
+        screen.setApplicationId(appId);
         String screenUrl = req.getParameter(ParameterNames.SCREEN_URL);
         String screenName = req.getParameter(ParameterNames.SCREEN_NAME);
         String key = req.getParameter(ParameterNames.SCREEN_KEY);
         String menuOrder = req.getParameter(ParameterNames.SCREEN_MENU_ORDER);
-        if (screenUrl == null || screenUrl.isEmpty()) {
-            screenUrl = req.getScheme() +
-                    "://" +
-                    req.getServerName() +
-                    ":" +
-                    req.getServerPort() +
-                    req.getContextPath() +
-                    "/api/screens/" +
-                    screen.getId();
-        }
+        screenUrl = buildScreenUrl(req, screen, appId, screenUrl);
         screen.setKey(key);
         screen.setScreenUrl(screenUrl);
         if (screenName != null && !screenName.isEmpty()) {
             screen.setName(screenName);
         }
         screen.setMenuOrder(Integer.parseInt(menuOrder));
+        return screenUrl;
+    }
+
+    private String buildScreenUrl(HttpServletRequest req, Screen screen, ObjectId appId, String screenUrl) {
+        if (screenUrl == null || screenUrl.isEmpty()) {
+            Application app = applicationsManagementService.findById(appId);
+            screenUrl = HttpUtils.buildUrl(
+                    app.getProxyProtocol(),
+                    app.getProxyHostname(),
+                    app.getProxyPort(),
+                    req.getContextPath(),
+                    "/api/screens/" + screen.getId()
+            );
+        }
         return screenUrl;
     }
 

@@ -40,7 +40,7 @@ public class HttpUtils {
         return response.toString();
     }
 
-    public static String postRequest(String url,  MultivaluedMap<String, String> requestHeaders, String data) throws IOException {
+    public static String postRequest(String url, MultivaluedMap<String, String> requestHeaders, String data) throws IOException {
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -73,14 +73,38 @@ public class HttpUtils {
     }
 
 
-    private static Map<String,String> prepareParameters(MultivaluedMap<String, String> queryParameters) {
+    private static Map<String, String> prepareParameters(MultivaluedMap<String, String> queryParameters) {
 
-        Map<String,String> parameters = new HashMap<String,String>();
+        Map<String, String> parameters = new HashMap<String, String>();
 
-        for(String str : queryParameters.keySet()){
+        for (String str : queryParameters.keySet()) {
             parameters.put(str, queryParameters.getFirst(str));
         }
         return parameters;
 
+    }
+
+    public static String buildUrl(String protocol, String hostname, String port, String contextPath, String parameters) {
+        if (protocol == null || protocol.isEmpty()) {
+            protocol = "http";
+        }
+        return protocol +
+                "://" +
+                hostname +
+                (port != null && !port.isEmpty() ? ":" + Integer.parseInt(port) : "") +
+                (contextPath != null ? contextPath : "") +
+                (parameters != null ? parameters : "");
+    }
+
+    public static String buildUrl(String protocol, String hostname, int port, String contextPath, String parameters) {
+        if (protocol == null || protocol.isEmpty()) {
+            protocol = "http";
+        }
+        return protocol +
+                "://" +
+                hostname +
+                (port != 0 ? ":" + port : "") +
+                (contextPath != null ? contextPath : "") +
+                (parameters != null ? parameters : "");
     }
 }

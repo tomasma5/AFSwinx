@@ -20,7 +20,7 @@
                 <tr>
                     <th>App name</th>
                     <th>Remote url</th>
-                    <th>Remote port</th>
+                    <th>Proxy url</th>
                     <th>UUID</th>
                     <th colspan="3">Actions</th>
                 </tr>
@@ -29,8 +29,12 @@
                 <c:forEach var="app" items="${applications}">
                     <tr>
                         <td>${app.applicationName}</td>
-                        <td>${app.remoteUrl}</td>
-                        <td>${app.remotePort}</td>
+                        <td>
+                            ${app.remoteProtocol}://${app.remoteHostname}<c:if test="${app.remotePort != 0}">:${app.remotePort}</c:if>
+                        </td>
+                        <td>
+                            ${app.proxyProtocol}://${app.proxyHostname}<c:if test="${app.proxyPort != 0}">:${app.proxyPort}</c:if>
+                        </td>
                         <td>${app.uuid}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/apps/create?app=${app.id}">
