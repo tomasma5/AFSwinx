@@ -122,7 +122,7 @@ public class ComponentCreateServlet extends HttpServlet {
             proxyConnection.setRealParameters(parameters);
             proxyConnection.setHeaderParams(getParams(req, type, ParameterNames.HEADER_PARAM, headerParamsCount));
             proxyConnection.setSecurityParams(getParams(req, type, ParameterNames.SECURITY_PARAM, securityParamsCount));
-            setProxyUrl(req, type, componentResource, proxyConnection);
+            setProxyUrl(req, application, type, componentResource, proxyConnection);
         }
     }
 
@@ -167,8 +167,7 @@ public class ComponentCreateServlet extends HttpServlet {
     private void setExistingComponentToRequest(HttpServletRequest request, String componentId) {
         ComponentResource component = componentManagementService.findById(new ObjectId(componentId));
         setComponentInputToRequest(request, component.getId().toString(), component.getName(), component.getType());
-        setConnectionInputToRequest(request, ParameterNames.MODEL, component.getProxyConnections().getModelConnection())
-        ;
+        setConnectionInputToRequest(request, ParameterNames.MODEL, component.getProxyConnections().getModelConnection());
         setConnectionInputToRequest(request, ParameterNames.DATA, component.getProxyConnections().getDataConnection());
         setConnectionInputToRequest(request, ParameterNames.SEND, component.getProxyConnections().getSendConnection());
     }
@@ -208,11 +207,11 @@ public class ComponentCreateServlet extends HttpServlet {
         return connectionActiveString != null && Integer.parseInt(connectionActiveString) == 1;
     }
 
-    private void setProxyUrl(HttpServletRequest req, String type, ObjectId componentResource, ComponentConnection proxyConnection) {
+    private void setProxyUrl(HttpServletRequest req, Application application, String type, ObjectId componentResource, ComponentConnection proxyConnection) {
         //generate proxy url
-        proxyConnection.setProtocol(req.getScheme());
-        proxyConnection.setAddress(req.getServerName());
-        proxyConnection.setPort(req.getServerPort());
+        proxyConnection.setProtocol(application.getProxyProtocol());
+        proxyConnection.setAddress(application.getProxyHostname());
+        proxyConnection.setPort(application.getProxyPort());
         proxyConnection.setParameters(req.getContextPath() + "/api/connections/" + type + "/component/" + componentResource);
         proxyConnection.setHeaderParams(proxyConnection.getHeaderParams());
         proxyConnection.setSecurityParams(proxyConnection.getSecurityParams());

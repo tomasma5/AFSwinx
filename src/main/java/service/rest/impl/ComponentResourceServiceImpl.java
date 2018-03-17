@@ -47,11 +47,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
                 throw new ComponentRequestException(errorMsg);
             }
             String realEndpoint = checkRealEndpointUrlPresence(headers);
-
-            ComponentConnection modelConnection = componentResource.getProxyConnections().getModelConnection();
-            //TODO add context filtering
             try {
                 modelStr = HttpUtils.getRequest(realEndpoint, headers.getRequestHeaders());
+                //TODO add context filtering
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
@@ -66,11 +64,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         ComponentResource componentResource = componentResourceDao.findById(id);
         String dataStr = null;
         if (componentResource != null) {
-            ComponentConnection dataConnection = componentResource.getProxyConnections().getDataConnection();
-
-            //TODO add context filtering
             try {
                 dataStr = HttpUtils.getRequest(realEndpoint, headers.getRequestHeaders());
+                //TODO add context filtering
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
@@ -84,11 +80,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         ComponentResource componentResource = componentResourceDao.findById(id);
         String response = null;
         if (componentResource != null) {
-            ComponentConnection sendConnection = componentResource.getProxyConnections().getSendConnection();
-
-            //TODO add context filtering
             try {
                 response = HttpUtils.postRequest(realEndpoint, headers.getRequestHeaders(), data);
+                //TODO add context filtering
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
