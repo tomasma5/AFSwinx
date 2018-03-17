@@ -2,37 +2,27 @@ package cz.cvut.fel.matyapav.showcase;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import java.io.IOException;
+
+import cz.cvut.fel.matyapav.afandroid.AFAndroid;
+import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
-import cz.cvut.fel.matyapav.showcase.fragments.AbsenceManagementFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.AbsenceTypeManagementFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.CountriesFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.CreateAbsenceFragment;
+import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.showcase.fragments.LoginFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.MyAbsencesFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.ProfileFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.VehiclesFragment;
-import cz.cvut.fel.matyapav.showcase.fragments.WelcomeFragment;
+import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.BUSINESS_TRIP_EDIT_REQUEST;
-
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,50 +31,64 @@ public class MainActivity extends AppCompatActivity
         }
         super.onCreate(savedInstanceState);
         //set localization
-        Localization.setContext(getThisActivity());
         Localization.setPathToStrings("cz.cvut.fel.matyapav.showcase");
 
         if (savedInstanceState != null && Localization.getCurrentLanguage() != null) {
-            Localization.changeLanguage(Localization.getCurrentLanguage());
+            Localization.changeLanguage(getApplicationContext(), Localization.getCurrentLanguage());
         }
 
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        if (drawer != null) {
+            drawer.addDrawerListener(toggle);
+        }
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-
         if (savedInstanceState == null) {
-
-            Menu menu = navigationView.getMenu();
-            menu.setGroupVisible(R.id.beforeLoginGroup, true);
-            menu.setGroupVisible(R.id.afterLoginGroup, false);
             //set default login fragment
-            LoginFragment loginFragment = new LoginFragment();
-            FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-            tx.replace(R.id.mainLayout, loginFragment);
-            tx.commit();
+            try {
+                ApplicationContext.getInstance().loadUIProxyUrl(getBaseContext());
+                AFAndroid.getInstance().setApplicationContextUuid(ApplicationContext.getInstance().getUiProxyApplicationUuid(getBaseContext()));
+            } catch (IOException e) {
+                System.err.println("Cannot get properties file - so af android could not be properly configured");
+                e.printStackTrace();
+            }
+            try {
+                AFAndroidProxyScreenDefinition loginScreenDefinition = AFAndroid.getInstance()
+                        .getScreenDefinitionBuilder(
+                                getApplicationContext(),
+                                ApplicationContext.getInstance().getUiProxyUrl() + "/api/screens/5a9955636402eb092c3b56c7")
+                        .getScreenDefinition();
+                LoginFragment loginFragment = new LoginFragment();
+                loginFragment.setScreenDefinition(loginScreenDefinition);
+                FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+                tx.replace(R.id.mainLayout, loginFragment);
+                tx.commit();
+            } catch (Exception e) {
+                Log.e(MainActivity.class.getName(), "Cannot build login screen, for cause please check the stack trace.");
+                ShowCaseUtils.showBuildingFailedDialog(this, e);
+                e.printStackTrace();
+            }
         } else {
-
-            ShowCaseUtils.refreshCurrentFragment(getThisActivity());
+            String currentFragmentUrl = getIntent().getStringExtra("current_fragment_proxy_url");
+            ShowCaseUtils.refreshCurrentFragment(getThisActivity(), currentFragmentUrl);
         }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer != null) {
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -100,83 +104,16 @@ public class MainActivity extends AppCompatActivity
         // LOCALIZATION
         int id = item.getItemId();
         if (id == R.id.langCZ) {
-            Localization.changeLanguage(SupportedLanguages.CZ);
-
+            Localization.changeLanguage(getApplicationContext(), SupportedLanguages.CZ);
             System.err.println("Current locale: " + getThisActivity().getResources().getConfiguration().locale);
             restartActivity();
         } else if (id == R.id.langEN) {
-            Localization.changeLanguage(SupportedLanguages.EN);
+            Localization.changeLanguage(getApplicationContext(), SupportedLanguages.EN);
             System.err.println("Current locale: " + getThisActivity().getResources().getConfiguration().locale);
             restartActivity();
         }
         //do not call restart activity if new language was not set
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        switch (id) {
-            case R.id.loginForm:
-                fragmentClass = LoginFragment.class;
-                break;
-            case R.id.supportedCountries:
-                fragmentClass = CountriesFragment.class;
-                break;
-            case R.id.userProfile:
-                fragmentClass = ProfileFragment.class;
-                break;
-            case R.id.myAbsences:
-                fragmentClass = MyAbsencesFragment.class;
-                break;
-            case R.id.absenceManagement:
-                fragmentClass = AbsenceManagementFragment.class;
-                break;
-            case R.id.welcome:
-                Toast.makeText(this, Localization.translate("please.wait"), Toast.LENGTH_LONG).show();
-                fragmentClass = WelcomeFragment.class;
-                break;
-            case R.id.createAbsence:
-                fragmentClass = CreateAbsenceFragment.class;
-                break;
-            case R.id.absenceTypeManagement:
-                fragmentClass = AbsenceTypeManagementFragment.class;
-                break;
-            case R.id.businessTrips:
-                fragmentClass = BusinessTripsListFragment.class;
-                break;
-            case R.id.vehiclesManagement:
-                fragmentClass = VehiclesFragment.class;
-                break;
-            case R.id.logout:
-                ShowCaseUtils.clearUserInPreferences(getThisActivity());
-                Menu menu = ((NavigationView) findViewById(R.id.nav_view)).getMenu();
-                menu.setGroupVisible(R.id.beforeLoginGroup, true);
-                menu.setGroupVisible(R.id.afterLoginGroup, false);
-                fragmentClass = LoginFragment.class;
-                break;
-            default:
-                break;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.mainLayout, fragment).commit();
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
     public MainActivity getThisActivity() {
@@ -188,6 +125,7 @@ public class MainActivity extends AppCompatActivity
         Bundle temp_bundle = new Bundle();
         onSaveInstanceState(temp_bundle);
         intent.putExtra("bundle", temp_bundle);
+        intent.putExtra("current_fragment_proxy_url", ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getScreenUrl());
         finish();
         startActivity(intent);
     }

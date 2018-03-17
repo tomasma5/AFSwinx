@@ -3,18 +3,18 @@ apply plugin: 'com.android.application'
 repositories {
     mavenCentral()
     flatDir {
-        dirs "libs"
+        dirs 'libs'
     }
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
 
     defaultConfig {
         applicationId "cz.cvut.fel.matyapav.showcase"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -24,15 +24,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'AFSwinxDefault.properties'
+        exclude 'examples/xml/NonPrimitiveObject.xml'
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    //compile fileTree(include:['*.aar'], dir: 'libs')
+    compile (name: 'AFAndroid-1.0-release', ext:'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.0'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
-    compile 'com.google.code.gson:gson:1.7.2'
-    compile project(":afandroid")
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:design:27.1.0'
+    compile 'com.android.support:support-v4:27.1.0'
+    compile 'com.google.code.gson:gson:2.8.2'
 }

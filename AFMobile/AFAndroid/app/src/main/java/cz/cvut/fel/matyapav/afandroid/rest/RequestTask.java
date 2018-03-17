@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Base64;
 
+import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.ConnectionSecurity;
 import com.tomscz.afswinx.rest.connection.HttpMethod;
 import com.tomscz.afswinx.rest.connection.SecurityMethod;
@@ -17,16 +19,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- *
- *@since 1.0.0..
+ * @since 1.0.0..
  */
 public class RequestTask extends AsyncTask<String, Integer, Object> {
-
-    private Context context;
 
     private HttpMethod httpMethod;
     private Map<String, String> headerParameters;
@@ -34,14 +34,22 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
     private String address;
     private Object data;
 
-    public RequestTask(final Context context, String url){
-        this.context = context;
+    public RequestTask(String url) {
         this.address = url;
+    }
+
+    public RequestTask(AFSwinxConnection connection) {
+        this.headerParameters = connection.getHeaderParams();
+        this.connectionSecurity = connection.getSecurity();
+        this.address = Utils.getConnectionEndPoint(connection);
+        this.httpMethod = connection.getHttpMethod();
+        if (connection.getAcceptedType() != null) {
+            addHeaderParameter("Content-Type", connection.getContentType().toString());
+        }
     }
 
     public RequestTask(final Context context, HttpMethod method, Map<String, String> headerParameters,
                        ConnectionSecurity connectionSecurity, Object data, String url) {
-        this.context = context;
         this.httpMethod = method;
         this.address = url;
         this.headerParameters = headerParameters;
@@ -49,7 +57,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
         this.data = data;
     }
 
-    public RequestTask setHttpMethod(HttpMethod method){
+    public RequestTask setHttpMethod(HttpMethod method) {
         this.httpMethod = method;
         return this;
     }
@@ -60,7 +68,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
     }
 
     public RequestTask addHeaderParameter(String key, String value) {
-        if(headerParameters == null) {
+        if (headerParameters == null) {
             headerParameters = new HashMap<>();
         }
         headerParameters.put(key, value);
@@ -96,8 +104,11 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
             urlConnection.setReadTimeout(5000);
             urlConnection.setConnectTimeout(5000);
             urlConnection.setRequestMethod(httpMethod.toString().toUpperCase());
-            for (Map.Entry<String, String> headerParam : headerParameters.entrySet()) {
-                urlConnection.setRequestProperty(headerParam.getKey(), headerParam.getValue());
+            addHeaderParameter("Application", AFAndroid.getInstance().getProxyApplicationContext());
+            if (headerParameters != null) {
+                for (Map.Entry<String, String> headerParam : headerParameters.entrySet()) {
+                    urlConnection.setRequestProperty(headerParam.getKey(), headerParam.getValue());
+                }
             }
 
             urlConnection.setDoInput(true);

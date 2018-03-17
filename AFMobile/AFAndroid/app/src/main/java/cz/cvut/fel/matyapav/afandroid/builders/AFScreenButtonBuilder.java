@@ -2,6 +2,8 @@ package cz.cvut.fel.matyapav.afandroid.builders;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 
@@ -54,11 +56,11 @@ public class AFScreenButtonBuilder {
         try {
             String key = menuItemJsonObj.getString(BUTTON_KEY);
 
-            String displayText = menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT, null);
+            String displayText = menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT);
             final String url = menuItemJsonObj.getString(BUTTON_URL_KEY);
             int menuOrder = menuItemJsonObj.optInt(BUTTON_ORDER_KEY, -1);
             button.setUrl(url);
-            button.setText(displayText != null ? displayText : key);
+            button.setText((displayText != null && !displayText.isEmpty() && !displayText.equals("null"))? displayText : key);
             button.setMenuOrder(menuOrder);
             button.setKey(key);
             button.setOnClickListener(new View.OnClickListener() {
@@ -66,12 +68,13 @@ public class AFScreenButtonBuilder {
                 public void onClick(View v) {
                     loadScreen(button, url);
 
-                    View.OnClickListener onClickListener = button.getOnClickListener();
+                    View.OnClickListener onClickListener = button.getCustomOnClickListener();
                     if (onClickListener != null) {
                         onClickListener.onClick(v);
                     }
                 }
             });
+            button.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         } catch (JSONException e) {
             throw new AFSwinxBuildException(e.getMessage());
         }

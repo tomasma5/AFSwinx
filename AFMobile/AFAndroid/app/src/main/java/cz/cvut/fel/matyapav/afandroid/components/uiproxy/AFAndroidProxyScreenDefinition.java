@@ -11,6 +11,7 @@ import java.util.Map;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
+import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
@@ -52,6 +53,20 @@ public class AFAndroidProxyScreenDefinition {
         return null;
     }
 
+    public ListBuilder getListBuilderByKey(String componentKey) {
+        if (componentDefinitions != null) {
+            List<AFAndroidProxyComponentDefinition> listDefinitions = componentDefinitions.get(SupportedComponents.LIST);
+            if (listDefinitions != null) {
+                for (AFAndroidProxyComponentDefinition definition : listDefinitions) {
+                    if (definition.getName().equals(componentKey)) {
+                        return (ListBuilder) definition.getBuilder();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public void addComponentDefinition(AFAndroidProxyComponentDefinition componentDefinition) {
         if (componentDefinitions == null) {
             componentDefinitions = new HashMap<>();
@@ -67,6 +82,11 @@ public class AFAndroidProxyScreenDefinition {
                 componentDefinitions.put(SupportedComponents.TABLE, new ArrayList<AFAndroidProxyComponentDefinition>());
             }
             componentDefinitions.get(SupportedComponents.TABLE).add(componentDefinition);
+        } else if (componentDefinition.getType().equals(SupportedComponents.LIST)){
+            if (componentDefinitions.get(SupportedComponents.LIST) == null) {
+                componentDefinitions.put(SupportedComponents.LIST, new ArrayList<AFAndroidProxyComponentDefinition>());
+            }
+            componentDefinitions.get(SupportedComponents.LIST).add(componentDefinition);
         }
     }
 

@@ -51,9 +51,7 @@ public abstract class BaseView extends JPanel {
         b1.add(createLeftMenu());
         b1.add(Box.createHorizontalGlue());
         JPanel content;
-        if (getScreenDefinition() != null) {
-            getScreenDefinition().reload();
-        }
+     
         content = createContent();
 
         b1.add(content);

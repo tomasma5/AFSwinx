@@ -1,43 +1,39 @@
 package cz.cvut.fel.matyapav.showcase.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import java.util.HashMap;
-
-import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.showcase.R;
+import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.skins.MyAbsencesListSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
-
 /**
- * Created by Pavel on 26.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ *
+ *@since 1.0.0..
  */
-public class MyAbsencesFragment extends Fragment {
+public class MyAbsencesFragment extends BaseFragment {
 
-    @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View initialize(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.my_absences_fragment_layout, container, false);
         LinearLayout myAbsencesLayout = (LinearLayout) root.findViewById(R.id.myAbsencesLayout);
 
         //initialize builders
-        HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
+        HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();
 
         try {
-            AFList list = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.MY_ABSENCES_LIST , getResources().openRawResource(connectionXmlId),
-                    ShowcaseConstants.MY_ABSENCES_CONNECTION_KEY, securityConstrains)
-                    .setSkin(new MyAbsencesListSkin(getContext())).createComponent();
+            AFList list = getScreenDefinition()
+                    .getListBuilderByKey(ShowcaseConstants.MY_ABSENCES_LIST)
+                    .setConnectionParameters(securityConstrains)
+                    .setSkin(new MyAbsencesListSkin(getContext()))
+                    .createComponent();
             myAbsencesLayout.addView(list.getView());
         } catch (Exception e) {
             ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);

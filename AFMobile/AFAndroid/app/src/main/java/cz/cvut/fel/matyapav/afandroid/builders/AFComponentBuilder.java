@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.JsonConnectionParser;
@@ -30,8 +31,7 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- *
- *@since 1.0.0..
+ * @since 1.0.0..
  */
 public abstract class AFComponentBuilder<T> {
 
@@ -43,6 +43,7 @@ public abstract class AFComponentBuilder<T> {
     private HashMap<String, String> connectionParameters;
 
 
+    @SuppressWarnings("unchecked")
     public T initBuilder(Context context, String componentKeyName, String connectionConfiguration) {
         this.context = context;
         this.componentKeyName = componentKeyName;
@@ -51,7 +52,8 @@ public abstract class AFComponentBuilder<T> {
         return (T) this;
     }
 
-    public T initBuilder(Context context, String componentKeyName,  String connectionConfiguration, HashMap<String, String> connectionParameters) {
+    @SuppressWarnings("unchecked")
+    public T initBuilder(Context context, String componentKeyName, String connectionConfiguration, HashMap<String, String> connectionParameters) {
         this.context = context;
         this.componentKeyName = componentKeyName;
         this.connectionParameters = connectionParameters;
@@ -67,7 +69,7 @@ public abstract class AFComponentBuilder<T> {
     }
 
     void initializeConnections() throws Exception {
-        if (connectionPack == null && connectionConfiguration != null) {
+        if (connectionConfiguration != null) {
             JsonConnectionParser connectionParser =
                     new JsonConnectionParser(connectionParameters);
             connectionPack = connectionParser.parse(new JSONObject(connectionConfiguration));
@@ -131,11 +133,7 @@ public abstract class AFComponentBuilder<T> {
     protected String getModelResponse() throws Exception {
         AFSwinxConnection modelConnection = connectionPack.getMetamodelConnection();
         if (modelConnection != null) {
-            RequestTask task = new RequestTask(getContext(), Utils.getConnectionEndPoint(modelConnection))
-                    .setHttpMethod(modelConnection.getHttpMethod())
-                    .setConnectionSecurity(modelConnection.getSecurity())
-                    .addHeaderParameter("CONTENT-TYPE", modelConnection.getContentType().toString());
-
+            RequestTask task = new RequestTask(modelConnection);
             Object modelResponse = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get(); //make it synchronous to wait for response
             if (modelResponse instanceof Exception) {
                 throw (Exception) modelResponse;
@@ -149,10 +147,7 @@ public abstract class AFComponentBuilder<T> {
     protected String getDataResponse() throws Exception {
         AFSwinxConnection dataConnection = connectionPack.getDataConnection();
         if (dataConnection != null) {
-            RequestTask getData = new RequestTask(getContext(), Utils.getConnectionEndPoint(dataConnection))
-                    .setHttpMethod(dataConnection.getHttpMethod())
-                    .setConnectionSecurity(dataConnection.getSecurity())
-                    .addHeaderParameter("CONTENT_TYPE", dataConnection.getContentType().toString());
+            RequestTask getData = new RequestTask(dataConnection);
             Object response = getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
             if (response instanceof Exception) {
                 throw (Exception) response;
@@ -174,6 +169,7 @@ public abstract class AFComponentBuilder<T> {
         return componentKeyName;
     }
 
+    @SuppressWarnings("unchecked")
     public T setSkin(Skin skin) {
         this.skin = skin;
         return (T) this;

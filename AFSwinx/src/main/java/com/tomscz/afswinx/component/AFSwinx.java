@@ -8,6 +8,9 @@ import java.util.Set;
 import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.*;
 import com.tomscz.afswinx.component.skin.Skin;
+import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
+import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
+import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 
 /**
  * This class is facade to using AFSwinx. Use getInstance to get unique instance in your
@@ -71,10 +74,30 @@ public class AFSwinx {
         return new AFSwinxMenuBuilder();
     }
 
+    /**
+     * This method returs builder which builds {@link AFProxyScreenDefinition}. This
+     * definition contains component definitions {@link AFProxyComponentDefinition}.
+     * Based on the component definition user can get component builders {@link ComponentBuilder},
+     * which can be used for building a {@link AFSwinxTopLevelComponent}, which can be inserted into view
+     *
+     * @param url url of screen definition on UI proxy
+     * @return screen definition builder
+     */
     public AFSwinxScreenDefinitionBuilder getScreenDefinitionBuilder(String url) {
         return new AFSwinxScreenDefinitionBuilder(url);
     }
 
+    /**
+     * This method returns builder which builds {@link AFSwinxScreenButton}. This button has
+     * predefined on click listener. This listener downloads screen definition {@link AFProxyScreenDefinition}
+     * from UI proxy, which contains component definitions {@link AFProxyComponentDefinition}.
+     * After button is clicked a {@link AFProxyScreenDefinition}
+     * is returned to user and can be manipulated through {@link ScreenPreparedListener}.
+     * Screen definition contains component builders {@link ComponentBuilder} which can be used
+     * for building a {@link AFSwinxTopLevelComponent}, which can be inserted into view
+     *
+     * @return screen button builder
+     */
     public AFSwinxScreenButtonBuilder getScreenButtonBuilder(){
         return new AFSwinxScreenButtonBuilder();
     }

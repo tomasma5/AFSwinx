@@ -1,13 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        archivesBaseName = "AFAndroid"
+        version = android.defaultConfig.versionName
     }
     buildTypes {
         release {
@@ -17,15 +19,24 @@ android {
     }
     productFlavors {
     }
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${version}-${variant.buildType.name}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:design:25.4.0'
-    compile 'com.android.support:support-v4:25.4.0'
+    compile 'com.android.support:appcompat-v7:27.1.0'
+    compile 'com.android.support:design:27.1.0'
+    compile 'com.android.support:support-v4:27.1.0'
     compile 'com.google.code.gson:gson:2.8.2'
-    compile files('D:/Projects/AFSwinx/AFRest/target/AFRest-0.0.1-SNAPSHOT.jar')
-    compile files('D:/Projects/AFSwinx/AFSwinx/target/AFSwinx.jar')
+    compile files('../../../AFRest/target/AFRest-0.0.1-SNAPSHOT.jar')
+    compile files('../../../AFSwinx/target/AFSwinx.jar')
 }

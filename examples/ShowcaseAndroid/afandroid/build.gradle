@@ -1,4 +1,0 @@
-configurations.create("default")
-artifacts.add("default", file('AFAndroid.aar'))
-dependencies {
-}

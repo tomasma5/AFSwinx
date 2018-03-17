@@ -2,15 +2,12 @@ package cz.cvut.fel.matyapav.showcase;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -18,13 +15,15 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
+import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
+import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.skins.BusinessTripFormSkin;
-import cz.cvut.fel.matyapav.showcase.skins.CountryFormSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.BUSINESS_TRIP_EDIT_REQUEST;
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
+import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.LIST_ID;
+import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.LIST_POSITITON;
+import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.SCREEN_DEFINITION_URL;
 
 public class BusinessTripDetailActivity extends AppCompatActivity {
 
@@ -60,43 +59,50 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_trip_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
+        String screenDefinitionUrl = extras.getString(SCREEN_DEFINITION_URL);
 
-        LinearLayout businessTripsFormLayout = (LinearLayout) findViewById(R.id.businessTripsFormWrapper);
-
+        LinearLayout businessTripsFormLayout = findViewById(R.id.businessTripsFormWrapper);
         //initialize builders
-        HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(this);
+        HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();
 
-        FormBuilder formBuilder = AFAndroid.getInstance().getFormBuilder().initBuilder(this,
-                ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM, getResources().openRawResource(connectionXmlId),
-                ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM_CONNECTION_KEY, securityConstrains).setSkin(new BusinessTripFormSkin(this));
-
-        //create and insert form
         try {
+            AFAndroidProxyScreenDefinition screenDefinition =
+                    AFAndroid.getInstance()
+                            .getScreenDefinitionBuilder(this, screenDefinitionUrl).getScreenDefinition();
+            FormBuilder formBuilder = screenDefinition
+                    .getFormBuilderByKey(ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM)
+                    .setConnectionParameters(securityConstrains)
+                    .setSkin(new BusinessTripFormSkin(this));
 
             AFForm form = formBuilder.createComponent();
-
-            if (extras != null) {
-                String listId = extras.getString("LIST_ID");
-                int listPosition = extras.getInt("LIST_POSITION");
-                final AFList list = (AFList) AFAndroid.getInstance().getCreatedComponents().get(listId);
-                form.insertData(list.getDataFromItemOnPosition(listPosition));
+            String listId = extras.getString(LIST_ID);
+            int listPosition = extras.getInt(LIST_POSITITON);
+            final AFList list = (AFList) AFAndroid.getInstance().getCreatedComponents().get(listId);
+            form.insertData(list.getDataFromItemOnPosition(listPosition));
+            if (businessTripsFormLayout != null) {
+                businessTripsFormLayout.addView(form.getView());
             }
-
-            Button perform = (Button) findViewById(R.id.businessTripsBtnAdd);
-            perform.setOnClickListener(onFormPerformListener);
-            Button reset = (Button) findViewById(R.id.businessTripsBtnReset);
-            reset.setOnClickListener(onFormResetListener);
-            businessTripsFormLayout.addView(form.getView());
         } catch (Exception e) {
             ShowCaseUtils.showBuildingFailedDialog(this, e);
             e.printStackTrace();
+            return;
         }
+
+        Button perform = findViewById(R.id.businessTripsBtnAdd);
+        if (perform != null) {
+            perform.setOnClickListener(onFormPerformListener);
+        }
+        Button reset = findViewById(R.id.businessTripsBtnReset);
+        if (reset != null) {
+            reset.setOnClickListener(onFormResetListener);
+        }
+
     }
 
     @Override

@@ -3,6 +3,7 @@ package cz.cvut.fel.matyapav.afandroid.components.types;
 import android.app.Activity;
 import android.os.AsyncTask;
 
+import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
@@ -24,8 +25,7 @@ import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- *
- *@since 1.0.0..
+ * @since 1.0.0..
  */
 public class AFForm extends AFComponent {
 
@@ -132,12 +132,7 @@ public class AFForm extends AFComponent {
             return;
         }
         System.err.println("SEND CONNECTION " + Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()));
-        RequestTask sendTask = new RequestTask(getContext(),
-                Utils.getConnectionEndPoint(getConnectionPack().getSendConnection()))
-                .setHttpMethod(getConnectionPack().getSendConnection().getHttpMethod())
-                .addHeaderParameter("CONTENT-TYPE", getConnectionPack().getSendConnection().getContentType().toString())
-                .setConnectionSecurity(getConnectionPack().getSendConnection().getSecurity())
-                .setData(data);
+        RequestTask sendTask = new RequestTask(getConnectionPack().getSendConnection()).setData(data);
         Object response = sendTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get();
         if (response instanceof Exception) {
             throw (Exception) response;

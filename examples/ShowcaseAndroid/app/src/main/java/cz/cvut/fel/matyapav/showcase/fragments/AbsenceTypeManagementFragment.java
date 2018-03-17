@@ -1,19 +1,15 @@
 package cz.cvut.fel.matyapav.showcase.fragments;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
@@ -21,18 +17,17 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.showcase.R;
+import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.skins.AbsenceManagementListSkin;
 import cz.cvut.fel.matyapav.showcase.skins.CountryFormSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.connectionXmlId;
-
-
 /**
- * Created by Pavel on 28.02.2016.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
-public class AbsenceTypeManagementFragment extends Fragment {
+public class AbsenceTypeManagementFragment extends BaseFragment {
 
     private int countryId = -1;
     private String selectedCountryName;
@@ -44,7 +39,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
             String country = chooseCountryForm.reserialize().getPropertiesAndValues().get(ShowcaseConstants.COUNTRY_KEY);
             setCountryId(Integer.parseInt(country));
             setSelectedCountryName(chooseCountryForm.getDataFromFieldWithId(ShowcaseConstants.COUNTRY_KEY).toString());
-            ShowCaseUtils.refreshCurrentFragment(getActivity());
+            ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
         }
     };
 
@@ -52,16 +47,16 @@ public class AbsenceTypeManagementFragment extends Fragment {
         @Override
         public void onClick(View v) {
             AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if(form != null && form.validateData()) {
+            if (form != null && form.validateData()) {
                 try {
                     form.sendData();
-                    Toast.makeText(getActivity(), Localization.translate("success.addOrUpdate"),
+                    Toast.makeText(getActivity(), Localization.translate(getContext(), "success.addOrUpdate"),
                             Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity());
+                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(Localization.translate("error.addOrUpdate"));
-                    alertDialog.setMessage(Localization.translate("error.reason") + e.getMessage());
+                    alertDialog.setTitle(Localization.translate(getContext(), "error.addOrUpdate"));
+                    alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
                     alertDialog.show();
                     e.printStackTrace();
                 }
@@ -74,7 +69,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
         @Override
         public void onClick(View v) {
             AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if(form != null) {
+            if (form != null) {
                 form.resetData();
             }
         }
@@ -83,15 +78,14 @@ public class AbsenceTypeManagementFragment extends Fragment {
         @Override
         public void onClick(View v) {
             AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if(form != null) {
+            if (form != null) {
                 form.clearData();
             }
         }
     };
 
-    @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View initialize(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.absence_type_management_fragment, container, false);
         LinearLayout absenceTypeManagementLayout = (LinearLayout) root.findViewById(R.id.absenceTypeManagementLayout);
 
@@ -100,9 +94,9 @@ public class AbsenceTypeManagementFragment extends Fragment {
         formWithBtn.setOrientation(LinearLayout.HORIZONTAL);
 
         try {
-            AFForm chooseCountryForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                    ShowcaseConstants.CHOOSE_COUNTRY_FORM, getResources().openRawResource(connectionXmlId),
-                    ShowcaseConstants.CHOOSE_COUNTRY_FORM_CONNECTION_KEY).createComponent();
+            AFForm chooseCountryForm = getScreenDefinition()
+                    .getFormBuilderByKey(ShowcaseConstants.CHOOSE_COUNTRY_FORM)
+                    .createComponent();
             formWithBtn.addView(chooseCountryForm.getView());
 
             //set selected country
@@ -115,7 +109,7 @@ public class AbsenceTypeManagementFragment extends Fragment {
         }
         //create button
         Button chooseCountryButton = new Button(getActivity());
-        chooseCountryButton.setText(Localization.translate("button.choose"));
+        chooseCountryButton.setText(Localization.translate(getContext(), "button.choose"));
         chooseCountryButton.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         chooseCountryButton.setOnClickListener(onCountryChooseListener);
         formWithBtn.addView(chooseCountryButton);
@@ -126,19 +120,21 @@ public class AbsenceTypeManagementFragment extends Fragment {
             HashMap<String, String> parameters = new HashMap<>();
             parameters.put(ShowcaseConstants.ID_KEY, String.valueOf(getCountryId()));
             try {
-                AFList absenceTypeList = AFAndroid.getInstance().getListBuilder().initBuilder(getActivity(),
-                        ShowcaseConstants.ABSENCE_TYPE_LIST, getResources().openRawResource(connectionXmlId),
-                        ShowcaseConstants.ABSENCE_TYPE_LIST_CONNECTION_KEY, parameters)
-                        .setSkin(new AbsenceManagementListSkin(getContext())).createComponent();
+                AFList absenceTypeList = getScreenDefinition()
+                        .getListBuilderByKey(ShowcaseConstants.ABSENCE_TYPE_LIST)
+                        .setConnectionParameters(parameters)
+                        .setSkin(new AbsenceManagementListSkin(getContext()))
+                        .createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeList.getView());
 
-                HashMap<String, String> securityConstrains = ShowCaseUtils.getUserCredentials(getActivity());
+                HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();
                 securityConstrains.put(ShowcaseConstants.ID_KEY, String.valueOf(getCountryId()));
 
-                AFForm absenceTypeForm = AFAndroid.getInstance().getFormBuilder().initBuilder(getActivity(),
-                        ShowcaseConstants.ABSENCE_TYPE_FORM, getResources().openRawResource(connectionXmlId),
-                        ShowcaseConstants.ABSENCE_TYPE_FORM_CONNECTION_KEY, securityConstrains)
-                        .setSkin(new CountryFormSkin(getContext())).createComponent();
+                AFForm absenceTypeForm = getScreenDefinition()
+                        .getFormBuilderByKey(ShowcaseConstants.ABSENCE_TYPE_FORM)
+                        .setConnectionParameters(securityConstrains)
+                        .setSkin(new CountryFormSkin(getContext()))
+                        .createComponent();
                 absenceTypeManagementLayout.addView(absenceTypeForm.getView());
             } catch (Exception e) {
                 ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
@@ -147,15 +143,15 @@ public class AbsenceTypeManagementFragment extends Fragment {
 
             //buttons
             Button perform = new Button(getActivity());
-            perform.setText(Localization.translate("button.perform"));
+            perform.setText(Localization.translate(getContext(),"button.perform"));
             perform.setOnClickListener(onPerformBtnClick);
 
             Button reset = new Button(getActivity());
-            reset.setText(Localization.translate("button.reset"));
+            reset.setText(Localization.translate(getContext(),"button.reset"));
             reset.setOnClickListener(onResetBtnClick);
 
             Button clear = new Button(getActivity());
-            clear.setText(Localization.translate("button.clear"));
+            clear.setText(Localization.translate(getContext(),"button.clear"));
             clear.setOnClickListener(onClearBtnClick);
 
             LinearLayout btns = new LinearLayout(getActivity());

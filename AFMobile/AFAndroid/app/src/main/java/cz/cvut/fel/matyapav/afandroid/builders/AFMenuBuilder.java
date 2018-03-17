@@ -55,9 +55,8 @@ public class AFMenuBuilder {
     }
 
     private String getMenuDefinition(String url) throws Exception {
-        RequestTask task = new RequestTask(context, url)
-                .setHttpMethod(HttpMethod.GET)
-                .addHeaderParameter("Application", AFAndroid.getInstance().getProxyApplicationContext());
+        RequestTask task = new RequestTask(url)
+                .setHttpMethod(HttpMethod.GET);
 
         Object response = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get(); //make it synchronous to wait for response
         if (response instanceof Exception) {

@@ -1,6 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatButton;
+
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
 
 /**
@@ -8,13 +10,13 @@ import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPrepared
  * @since 1.0.0..
  */
 
-public class AFScreenButton extends android.support.v7.widget.AppCompatButton {
+public class AFScreenButton extends AppCompatButton {
 
     private String key;
     private String url;
     private String displayText;
     private int menuOrder;
-    private OnClickListener onClickListener;
+    private OnClickListener customOnClickListener;
     private AFAndroidScreenPreparedListener screenPreparedListener;
 
     public AFScreenButton(Context context) {
@@ -51,12 +53,12 @@ public class AFScreenButton extends android.support.v7.widget.AppCompatButton {
         this.url = url;
     }
 
-    public OnClickListener getOnClickListener() {
-        return onClickListener;
+    public OnClickListener getCustomOnClickListener() {
+        return customOnClickListener;
     }
 
-    public void setOnClickListener(OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public void setCustomOnClickListener(OnClickListener onClickListener) {
+        this.customOnClickListener = onClickListener;
     }
 
     public AFAndroidScreenPreparedListener getScreenPreparedListener() {
