@@ -1,35 +1,23 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Handler;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
-
-import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.task.DeviceStatusVisitor;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.model.DeviceStatusWithNearby;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task.NearbyFinderVisitor;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.HttpProvider;
-
-import static com.android.volley.Request.Method.POST;
 
 /**
  * Facade for executing nearby devices finding and status mining processes
- *  TODO add possibility to periodically run the service
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
 
-public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisitor{
+public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisitor {
 
     private Context context;
     private NearbyFinderManager nearbyFinderManager;
@@ -38,23 +26,45 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     private String serverUrl;
     private boolean sendAsJsonToServer;
     private DeviceStatusAndNearbySearchEvent deviceStatusAndNearbySearchEvent;
+    private boolean executePeriodically = false;
+    private long periodicTime;
 
-    NearbyStatusFacade(Context context, NearbyFinderManager nearbyFinderManager, DeviceStatusManager deviceStatusManager, DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent) {
+    NearbyStatusFacade(Context context, NearbyFinderManager nearbyFinderManager,
+                       DeviceStatusManager deviceStatusManager,
+                       DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent,
+                       boolean executePeriodically, long periodicTime
+    ) {
         this.context = context;
         this.nearbyFinderManager = nearbyFinderManager;
         this.deviceStatusManager = deviceStatusManager;
         this.sendAsJsonToServer = false;
         this.deviceStatusAndNearbySearchEvent = nearbyDevicesSearchEvent;
+        this.executePeriodically = executePeriodically;
+        this.periodicTime = periodicTime;
     }
 
     /**
      * Runs device status mining and nearby devices finding processes
      */
     public void runProcess() {
-        if(deviceStatusAndNearbySearchEvent != null) {
+        Handler runProcessHandler = new Handler();
+        Runnable processRunable = new Runnable() {
+            @Override
+            public void run() {
+                runMining();
+                if (executePeriodically) {
+                    runProcessHandler.postDelayed(this, periodicTime);
+                }
+            }
+        };
+        runProcessHandler.post(processRunable);
+    }
+
+    private void runMining() {
+        if (deviceStatusAndNearbySearchEvent != null) {
             deviceStatusAndNearbySearchEvent.onSearchStart();
         }
-        if(deviceStatusWithNearby == null){
+        if (deviceStatusWithNearby == null) {
             deviceStatusWithNearby = new DeviceStatusWithNearby();
             //set timestamp to the beginning of process
             deviceStatusWithNearby.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());
@@ -69,7 +79,7 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     }
 
     @Override
-    public void onDeviceStatusMined(){
+    public void onDeviceStatusMined() {
         DeviceStatus deviceStatus = deviceStatusManager.getDeviceStatus();
         deviceStatusWithNearby.setDeviceStatus(deviceStatus);
         nearbyFinderManager.filterNearbyFindersByDeviceStatus(deviceStatus);
@@ -79,16 +89,17 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     @Override
     public void onNearbyDevicesSearchFinished() {
         deviceStatusWithNearby.setNearbyDevices(nearbyFinderManager.getFoundDevices());
-        if(sendAsJsonToServer) {
+        if (sendAsJsonToServer) {
             new DataSenderTask(context, deviceStatusWithNearby, serverUrl).execute();
         }
-        if(deviceStatusAndNearbySearchEvent != null){
+        if (deviceStatusAndNearbySearchEvent != null) {
             deviceStatusAndNearbySearchEvent.onSearchFinished();
         }
     }
 
     /**
      * Gets found data as @{@link DeviceStatusWithNearby} wrapper
+     *
      * @return found data
      */
     public DeviceStatusWithNearby getFoundData() {

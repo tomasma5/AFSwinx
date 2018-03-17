@@ -1,13 +1,9 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.task;
 
 import android.os.AsyncTask;
-import android.os.Handler;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyFinderManager;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;

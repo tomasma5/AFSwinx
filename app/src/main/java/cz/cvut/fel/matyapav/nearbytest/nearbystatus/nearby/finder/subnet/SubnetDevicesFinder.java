@@ -3,14 +3,8 @@ package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.subnet;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.text.format.Formatter;
-import android.util.Log;
 
-import com.google.android.gms.ads.NativeExpressAdView;
-
-import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,13 +12,9 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.Device;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.model.DeviceType;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NearbyConstants;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NetworkUtils;
 
 /**

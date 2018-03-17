@@ -22,6 +22,8 @@ public class NearbyStatusFacadeBuilder {
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
     private DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent;
+    private boolean executePeriodically = false;
+    private long periodicTime;
 
     //hide constructor of this class - singleton class should never be instantiated
     private NearbyStatusFacadeBuilder(){
@@ -64,6 +66,12 @@ public class NearbyStatusFacadeBuilder {
             npe.printStackTrace();
             return null;
         }
+        return this;
+    }
+
+    public NearbyStatusFacadeBuilder executePeriodically(long periodicTime) {
+        this.executePeriodically = true;
+        this.periodicTime = periodicTime;
         return this;
     }
 
@@ -133,7 +141,7 @@ public class NearbyStatusFacadeBuilder {
      * @return execution facade
      */
     public NearbyStatusFacade build() {
-        return new NearbyStatusFacade(context, nearbyFinderManager, deviceStatusManager, nearbyDevicesSearchEvent);
+        return new NearbyStatusFacade(context, nearbyFinderManager, deviceStatusManager, nearbyDevicesSearchEvent, executePeriodically, periodicTime);
     }
 
     /**

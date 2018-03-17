@@ -1,14 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
+    buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "cz.cvut.fel.matyapav.nearbytest"
-        minSdkVersion 19
-        targetSdkVersion 25
+        minSdkVersion 16
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        archivesBaseName = "AFNearbyStatusMiner"
+        version = android.defaultConfig.versionName
     }
     buildTypes {
         release {
@@ -20,6 +21,11 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "AFNearbyStatusMiner-${variant.name}.aar"
+        }
+    }
 }
 
 dependencies {
@@ -27,12 +33,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.4.0'
+    //noinspection GradleCompatible
+    compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.google.android.gms:play-services:11.8.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.2'
     compile 'com.android.volley:volley:1.0.0'
-    compile 'com.google.android.gms:play-services-fitness:11.8.0'
-    compile 'com.google.android.gms:play-services-auth:11.8.0'
     testCompile 'junit:junit:4.12'
 }
