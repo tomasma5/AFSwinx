@@ -1,80 +1,107 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
-import java.io.UnsupportedEncodingException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.model.DeviceStatusWithNearby;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.HttpProvider;
-
-import static com.android.volley.Request.Method.POST;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.HttpMethod;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
 
-public class DataSenderTask extends AsyncTask<Void, Void, Void> {
+public class DataSenderTask extends AsyncTask<Void, Integer, Object> {
+
+    private static final int TIMEOUT_IN_MILLIS = 5000;
 
     private String serverUrl;
     private DeviceStatusWithNearby deviceStatusWithNearby;
-    private HttpProvider http;
 
 
-    public DataSenderTask(Context context, DeviceStatusWithNearby deviceStatusWithNearby, String serverUrl) {
+    public DataSenderTask(DeviceStatusWithNearby deviceStatusWithNearby, String serverUrl) {
         this.deviceStatusWithNearby = deviceStatusWithNearby;
         this.serverUrl = serverUrl;
-        this.http = HttpProvider.getInstance(context);
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Object doInBackground(Void... voids) {
         String json = serializeDeviceStatusWithNearbyIntoJson();
-        if(serverUrl == null) {
+        if (serverUrl == null) {
             Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Server URL was not set!");
             return null;
         }
-        if(json == null) {
+        if (json == null) {
             Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Missing sended data!");
             return null;
         }
-        // Instantiate the RequestQueue.
-        StringRequest jsonRequest = new StringRequest(POST, serverUrl,
-                response -> Log.i(GlobalConstants.APPLICATION_TAG, "[JSON - SUCCESS] Sending JSON data was successfull."),
-                error -> Log.e(GlobalConstants.APPLICATION_TAG, "[JSON - ERROR] Sending JSON data failed. Message: " + error.getMessage())
-        ) {
 
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
+        InputStream inputStream;
+        String response = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            System.out.println("URL " + serverUrl);
+            System.out.println("HTTP METHOD" + HttpMethod.POST.toString());
 
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return json.getBytes("utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", json, "utf-8");
-                    return null;
-                }
+            URL url = new URL(serverUrl);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(TIMEOUT_IN_MILLIS);
+            urlConnection.setConnectTimeout(TIMEOUT_IN_MILLIS);
+            urlConnection.setRequestMethod(HttpMethod.POST.toString());
+            urlConnection.setDoInput(true);
+
+            System.err.println("DATA " + json);
+            urlConnection.setDoOutput(true);
+            OutputStream os = urlConnection.getOutputStream();
+            os.write(json.getBytes("UTF-8"));
+            os.close();
+
+            int responseCode = urlConnection.getResponseCode();
+            String responseMsg = urlConnection.getResponseMessage();
+            System.err.println("RESPONSE CODE " + responseCode);
+            if (responseCode < 200 || responseCode >= 300) {
+                throw new ConnectException(responseCode + " " + responseMsg);
+            } else {
+                inputStream = urlConnection.getInputStream();
             }
-        };
-        //this prevents sending request twice
-        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        http.addToRequestQueue(jsonRequest, GlobalConstants.VOLLEY_DSWN_REQUEST_TAG);
-        return null;
+            if (inputStream != null) {
+                response = convertInputStreamToString(inputStream);
+                System.err.println("RESPONSE IS " + response);
+            }
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e;
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+        }
     }
 
-    private String serializeDeviceStatusWithNearbyIntoJson(){
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        return sb.toString();
+    }
+
+    private String serializeDeviceStatusWithNearbyIntoJson() {
         Gson gson = new Gson();
         return gson.toJson(deviceStatusWithNearby);
     }

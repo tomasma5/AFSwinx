@@ -90,7 +90,7 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     public void onNearbyDevicesSearchFinished() {
         deviceStatusWithNearby.setNearbyDevices(nearbyFinderManager.getFoundDevices());
         if (sendAsJsonToServer) {
-            new DataSenderTask(context, deviceStatusWithNearby, serverUrl).execute();
+            new DataSenderTask(deviceStatusWithNearby, serverUrl).execute();
         }
         if (deviceStatusAndNearbySearchEvent != null) {
             deviceStatusAndNearbySearchEvent.onSearchFinished();
