@@ -1,7 +1,11 @@
 package cz.cvut.fel.matyapav.showcase;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -18,11 +24,22 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.DeviceStatusAndNearbySearchEvent;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.LocationStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.bluetooth.BTDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.network.NearbyNetworksFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.subnet.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.showcase.fragments.LoginFragment;
 import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    //permissions
+    public static final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST = 28748;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null && Localization.getCurrentLanguage() != null) {
             Localization.changeLanguage(getApplicationContext(), Localization.getCurrentLanguage());
+        }
+
+        if (!checkLocationPermission()) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_PERMISSION_REQUEST);
         }
 
         setContentView(R.layout.activity_main);
@@ -50,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         if (savedInstanceState == null) {
+            getNearbyDevices();
             //set default login fragment
             try {
                 ApplicationContext.getInstance().loadUIProxyUrl(getBaseContext());
@@ -116,6 +138,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case ACCESS_FINE_LOCATION_PERMISSION_REQUEST:
+                if (!(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    Toast.makeText(this, "This app won't properly work without Fine location permission", Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     public MainActivity getThisActivity() {
         return this;
     }
@@ -130,5 +165,28 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private boolean checkLocationPermission() {
+        int permissionState = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        return permissionState == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void getNearbyDevices() {
+        NearbyStatusFacadeBuilder.getInstance()
+                .initialize(getApplicationContext())
+                .addStatusMiner(new BatteryStatusMiner())
+                .addStatusMiner(new LocationStatusMiner())
+                .addStatusMiner(new NetworkStatusMiner())
+                .addNearbyDevicesFinder(new BTDevicesFinder())
+                .addNearbyDevicesFinder(new NearbyNetworksFinder(), 20)
+                .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
+                .setRecommendedTimeoutForNearbySearch(10000)
+                .executePeriodically(1000*60*1)
+                .build()
+                //.sendDataToServerAfterTimeout("http://192.168.100.8:8080/NSRest/api/consumer/add")
+                //.sendDataToServerAfterTimeout("http://10.50.109.67:8080/NSRest/api/consumer/add")
+               // .sendDataToServerAfterTimeout("http://147.32.217.40:8080/NSRest/api/consumer/add") //TODO uncomment this when we want ot actually store data
+                .runProcess();
+    }
 
 }

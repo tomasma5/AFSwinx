@@ -24,6 +24,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     packagingOptions {
         exclude 'AFSwinxDefault.properties'
         exclude 'examples/xml/NonPrimitiveObject.xml'
@@ -33,6 +37,7 @@ android {
 dependencies {
     //compile fileTree(include:['*.aar'], dir: 'libs')
     compile (name: 'AFAndroid-1.0-release', ext:'aar')
+    compile (name: 'AFNearbyStatusMiner-release', ext:'aar')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:27.1.0'
