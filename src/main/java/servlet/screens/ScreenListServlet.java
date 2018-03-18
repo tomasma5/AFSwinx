@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
+import utils.Utils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -38,8 +39,8 @@ public class ScreenListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId objectId = new ObjectId(req.getParameter(ParameterNames.SCREEN_ID));
-        String appString = req.getParameter(ParameterNames.APPLICATION_ID);
+        ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.SCREEN_ID)));
+        String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         screenManagementService.removeScreen(objectId);
         resp.sendRedirect(LIST_ROUTE+"?app="+appString);
     }

@@ -6,6 +6,7 @@ import model.*;
 import org.bson.types.ObjectId;
 import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
+import utils.Utils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -134,7 +135,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             screen.getComponents().clear();
         }
         for (int i = 0; i < linkedComponentsCount; i++) {
-            String componentId = req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1));
+            String componentId = Utils.trimString(req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1)));
             ComponentResource componentResource = findById(new ObjectId(componentId));
             addComponentToScreen(componentResource, screen);
             filterComponentsScreenReferences(componentResource);
@@ -212,10 +213,10 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
 
     private void updateConnectionAttributes(HttpServletRequest req, String type, Application application, ObjectId componentResource, ComponentConnection proxyConnection) {
-        String parameters = req.getParameter(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS);
+        String parameters = Utils.trimString(req.getParameter(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS));
         if (proxyConnection != null && (parameters != null && !parameters.isEmpty()) && (application != null)) {
-            int headerParamsCount = Integer.parseInt(req.getParameter(type + ParameterNames.HEADER_PARAMS_COUNT));
-            int securityParamsCount = Integer.parseInt(req.getParameter(type + ParameterNames.SECURITY_PARAMS_COUNT));
+            int headerParamsCount = Integer.parseInt(Utils.trimString(req.getParameter(type + ParameterNames.HEADER_PARAMS_COUNT)));
+            int securityParamsCount = Integer.parseInt(Utils.trimString(req.getParameter(type + ParameterNames.SECURITY_PARAMS_COUNT)));
             proxyConnection.setRealProtocol(application.getRemoteProtocol());
             proxyConnection.setRealAddress(application.getRemoteHostname());
             proxyConnection.setRealPort(application.getRemotePort());
@@ -231,8 +232,8 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         if (paramsCount > 0) {
             params = new HashMap<>();
             for (int i = 1; i <= paramsCount; i++) {
-                String key = req.getParameter(type + paramType + ParameterNames.KEY + i);
-                String value = req.getParameter(type + paramType + ParameterNames.VALUE + i);
+                String key = Utils.trimString(req.getParameter(type + paramType + ParameterNames.KEY + i));
+                String value = Utils.trimString(req.getParameter(type + paramType + ParameterNames.VALUE + i));
                 params.put(key, value);
             }
         }
@@ -251,7 +252,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
 
     private boolean isConnectionActive(HttpServletRequest req, String type) {
-        String connectionActiveString = req.getParameter(type + ParameterNames.CONNECTION_ACTIVE);
+        String connectionActiveString = Utils.trimString(req.getParameter(type + ParameterNames.CONNECTION_ACTIVE));
         return connectionActiveString != null && Integer.parseInt(connectionActiveString) == 1;
     }
 

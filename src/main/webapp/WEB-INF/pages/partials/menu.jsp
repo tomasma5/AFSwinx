@@ -5,7 +5,7 @@
     <c:if test="${applicationName != null && app != null}">
     <li><a href="${pageContext.request.contextPath}/screens/list?app=${app}">Screens</a></li>
     <li><a href="${pageContext.request.contextPath}/components/list?app=${app}">Components</a></li>
-    <li><a href="${pageContext.request.contextPath}/bcases/list?app=${app}">Business cases</a></li>
+    <li><a href="${pageContext.request.contextPath}/businesscases/list?app=${app}">Business cases</a></li>
     <li><a href="${pageContext.request.contextPath}/apps/list">Choose another application</a></li>
     </c:if>
 </ul>

@@ -1,10 +1,14 @@
 package servlet.components;
 
-import model.*;
+import model.Application;
+import model.ComponentConnection;
+import model.ComponentResource;
+import model.SupportedComponentType;
 import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
+import utils.Utils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -13,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static servlet.components.ComponentListServlet.LIST_ROUTE;
 
@@ -55,14 +57,14 @@ public class ComponentCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String appIdString = req.getParameter(ParameterNames.APPLICATION_ID);
+        String appIdString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         if (appIdString == null || appIdString.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         Application application = applicationsManagementService.findById(new ObjectId(appIdString));
 
-        String componentId = req.getParameter(ParameterNames.COMPONENT_ID);
+        String componentId = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID));
         ComponentResource componentResource = componentManagementService.findOrCreateComponentResource(req, componentId);
         //set attributes to component resource
         updateComponentProperties(req, componentResource);
@@ -75,7 +77,7 @@ public class ComponentCreateServlet extends HttpServlet {
 
     //component set & update methods
     private void createOrUpdateComponent(HttpServletRequest req, ComponentResource componentResource) {
-        String componentId = req.getParameter(ParameterNames.COMPONENT_ID);
+        String componentId = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID));
         if (componentId == null || componentId.isEmpty()) {
             componentManagementService.addComponent(componentResource);
         } else {
@@ -84,11 +86,11 @@ public class ComponentCreateServlet extends HttpServlet {
     }
 
     private void updateComponentProperties(HttpServletRequest req, ComponentResource componentResource) {
-        String componentName = req.getParameter(ParameterNames.COMPONENT_NAME);
-        SupportedComponentType componentType = SupportedComponentType.valueOf(req.getParameter(ParameterNames.COMPONENT_TYPE));
-        componentResource.setName(componentName);
+        String componentName = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_NAME));
+        SupportedComponentType componentType = SupportedComponentType.valueOf(Utils.trimString(req.getParameter(ParameterNames.COMPONENT_TYPE)));
+        componentResource.setName(Utils.trimString(componentName));
         componentResource.setType(componentType);
-        componentResource.setApplicationId(new ObjectId(req.getParameter(ParameterNames.APPLICATION_ID)));
+        componentResource.setApplicationId(new ObjectId(Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID))));
     }
 
     private void setComponentInputToRequest(HttpServletRequest req, String componentId, String componentName, SupportedComponentType componentType) {

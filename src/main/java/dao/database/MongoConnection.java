@@ -28,7 +28,7 @@ public class MongoConnection {
 
     private MongoConnection() {
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().register("model","model.partial").build()));
+                fromProviders(PojoCodecProvider.builder().register("model","model.partial", "model.afclassification").build()));
         MongoCredential credential = MongoCredential.createCredential(DB_USER, DB_AUTH_DATABASE, DB_PASSWORD.toCharArray());
         MongoClient mongoClient = new MongoClient(new ServerAddress(DB_HOSTNAME, DB_PORT),
                 Collections.singletonList(credential), MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build());

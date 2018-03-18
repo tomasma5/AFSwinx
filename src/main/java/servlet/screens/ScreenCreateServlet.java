@@ -9,6 +9,7 @@ import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 import utils.HttpUtils;
+import utils.Utils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -73,13 +74,13 @@ public class ScreenCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String appIdString = req.getParameter(ParameterNames.APPLICATION_ID);
+        String appIdString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         if (appIdString == null || appIdString.isEmpty()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        String screenId = req.getParameter(ParameterNames.SCREEN_ID);
-        String linkedComponentsCountString = req.getParameter(ParameterNames.LINKED_COMPONENTS_COUNT);
+        String screenId = Utils.trimString(req.getParameter(ParameterNames.SCREEN_ID));
+        String linkedComponentsCountString = Utils.trimString(req.getParameter(ParameterNames.LINKED_COMPONENTS_COUNT));
         try {
             Screen screen = screenManagementService.findOrCreateNewScreen(screenId);
             updateScreenProperties(req, appIdString, screen);
@@ -97,10 +98,10 @@ public class ScreenCreateServlet extends HttpServlet {
     }
 
     private void setInputToRequest(HttpServletRequest req, String appIdString) {
-        req.setAttribute(ParameterNames.SCREEN_KEY, req.getParameter(ParameterNames.SCREEN_KEY));
-        req.setAttribute(ParameterNames.SCREEN_URL, req.getParameter(ParameterNames.SCREEN_URL));
-        req.setAttribute(ParameterNames.SCREEN_NAME, req.getParameter(ParameterNames.SCREEN_NAME));
-        req.setAttribute(ParameterNames.SCREEN_MENU_ORDER, req.getParameter(ParameterNames.SCREEN_MENU_ORDER));
+        req.setAttribute(ParameterNames.SCREEN_KEY, Utils.trimString(req.getParameter(ParameterNames.SCREEN_KEY)));
+        req.setAttribute(ParameterNames.SCREEN_URL, Utils.trimString(req.getParameter(ParameterNames.SCREEN_URL)));
+        req.setAttribute(ParameterNames.SCREEN_NAME, Utils.trimString(req.getParameter(ParameterNames.SCREEN_NAME)));
+        req.setAttribute(ParameterNames.SCREEN_MENU_ORDER, Utils.trimString(req.getParameter(ParameterNames.SCREEN_MENU_ORDER)));
         req.setAttribute(ParameterNames.APPLICATION_ID, appIdString);
     }
 
@@ -115,10 +116,10 @@ public class ScreenCreateServlet extends HttpServlet {
     private void updateScreenProperties(HttpServletRequest req, String appIdString, Screen screen) {
         ObjectId appId = new ObjectId(appIdString);
         screen.setApplicationId(appId);
-        String screenUrl = req.getParameter(ParameterNames.SCREEN_URL);
-        String screenName = req.getParameter(ParameterNames.SCREEN_NAME);
-        String key = req.getParameter(ParameterNames.SCREEN_KEY);
-        String menuOrder = req.getParameter(ParameterNames.SCREEN_MENU_ORDER);
+        String screenUrl = Utils.trimString(req.getParameter(ParameterNames.SCREEN_URL));
+        String screenName = Utils.trimString(req.getParameter(ParameterNames.SCREEN_NAME));
+        String key = Utils.trimString(req.getParameter(ParameterNames.SCREEN_KEY));
+        String menuOrder = Utils.trimString(req.getParameter(ParameterNames.SCREEN_MENU_ORDER));
         screenUrl = screenManagementService.buildScreenUrl(applicationsManagementService.findById(appId), screen, screenUrl, req.getContextPath());
         screen.setKey(key);
         screen.setScreenUrl(screenUrl);

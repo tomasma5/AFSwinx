@@ -1,6 +1,5 @@
 package model;
 
-import java.net.URL;
 import java.util.List;
 
 public class Application extends MongoDocumentEntity{

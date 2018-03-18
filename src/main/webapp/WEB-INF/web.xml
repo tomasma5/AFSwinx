@@ -62,5 +62,23 @@
         <url-pattern>/components/create</url-pattern>
     </servlet-mapping>
 
+    <!-- BUSINESS CASES MAPPING -->
+    <servlet>
+        <servlet-name>BusinessCaseListServlet</servlet-name>
+        <servlet-class>servlet.businesscases.BusinessCaseListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BusinessCaseCreateServlet</servlet-name>
+        <servlet-class>servlet.businesscases.BusinessCaseCreateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BusinessCaseListServlet</servlet-name>
+        <url-pattern>/businesscases/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BusinessCaseCreateServlet</servlet-name>
+        <url-pattern>/businesscases/create</url-pattern>
+    </servlet-mapping>
 
 </web-app>

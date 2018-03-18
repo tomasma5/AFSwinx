@@ -9,6 +9,7 @@ import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 import utils.HttpUtils;
+import utils.Utils;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -54,14 +55,14 @@ public class AppCreateServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String applicationId = req.getParameter(ParameterNames.APPLICATION_ID);
-        String applicationName = req.getParameter(ParameterNames.APPLICATION_NAME);
-        String remoteProtocol = req.getParameter(ParameterNames.APPLICATION_REMOTE_PROTOCOL);
-        String remoteHostname = req.getParameter(ParameterNames.APPLICATION_REMOTE_HOSTNAME);
-        String port = req.getParameter(ParameterNames.APPLICATION_REMOTE_PORT);
-        String proxyProtocol = req.getParameter(ParameterNames.APPLICATION_PROXY_PROTOCOL);
-        String proxyHostname = req.getParameter(ParameterNames.APPLICATION_PROXY_HOSTNAME);
-        String proxyPort = req.getParameter(ParameterNames.APPLICATION_PROXY_PORT);
+        String applicationId = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
+        String applicationName = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_NAME));
+        String remoteProtocol = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_REMOTE_PROTOCOL));
+        String remoteHostname = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_REMOTE_HOSTNAME));
+        String port = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_REMOTE_PORT));
+        String proxyProtocol = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_PROXY_PROTOCOL));
+        String proxyHostname = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_PROXY_HOSTNAME));
+        String proxyPort = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_PROXY_PORT));
         try {
             Application application = applicationsManagementService.findOrCreateApplication(applicationId);
             updateApplicationProperties(req, applicationName, application, remoteProtocol, remoteHostname, port,
@@ -102,10 +103,10 @@ public class AppCreateServlet extends HttpServlet {
         String remoteUrl =
                 HttpUtils.buildUrl(remoteProtocol, remoteHostname, port, null, null);
         new URL(remoteUrl); //just to check format of url with trying to create URL object
-        application.setApplicationName(applicationName);
-        application.setRemoteHostname(remoteHostname);
-        application.setRemoteProtocol(remoteProtocol);
-        application.setRemotePort(port != null ? Integer.parseInt(port) : 0);
+        application.setApplicationName(Utils.trimString(applicationName));
+        application.setRemoteHostname(Utils.trimString(remoteHostname));
+        application.setRemoteProtocol(Utils.trimString(remoteProtocol));
+        application.setRemotePort(port != null ? Integer.parseInt(Utils.trimString(port)) : 0);
 
         if (proxyProtocol == null || proxyProtocol.isEmpty()) {
             proxyProtocol = req.getScheme();
@@ -118,9 +119,9 @@ public class AppCreateServlet extends HttpServlet {
         }
         String proxyUrl = HttpUtils.buildUrl(proxyProtocol, proxyHostname, proxyPort, null, null);
         new URL(proxyUrl); //just to check format of url with trying to create URL object
-        application.setProxyHostname(proxyProtocol);
-        application.setProxyHostname(proxyHostname);
-        application.setProxyPort(Integer.parseInt(proxyPort));
+        application.setProxyHostname(Utils.trimString(proxyProtocol));
+        application.setProxyHostname(Utils.trimString(proxyHostname));
+        application.setProxyPort(Integer.parseInt(Utils.trimString(proxyPort)));
     }
 
 

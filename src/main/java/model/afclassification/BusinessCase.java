@@ -1,6 +1,7 @@
 package model.afclassification;
 
 import model.MongoDocumentEntity;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,8 @@ public class BusinessCase extends MongoDocumentEntity {
 	private String description;
 
 	private List<BCPhase> phases;
+
+	private ObjectId applicationId;
 
 	public BusinessCase() {
 	}
@@ -52,4 +55,11 @@ public class BusinessCase extends MongoDocumentEntity {
 		this.name = name;
 	}
 
+	public ObjectId getApplicationId() {
+		return applicationId;
+	}
+
+	public void setApplicationId(ObjectId applicationId) {
+		this.applicationId = applicationId;
+	}
 }

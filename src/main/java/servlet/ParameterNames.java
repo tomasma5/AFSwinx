@@ -43,5 +43,9 @@ public class ParameterNames {
     public static final String LINKED_COMPONENTS_COUNT = "linkedComponentsCount";
     public static final String LINKED_COMPONENT_ID = "linkedHiddenComponent";
 
+    public static final String BUSINESS_CASE_ID = "bcase";
+    public static final String BUSINESS_CASE_NAME = "businessCaseName";
+    public static final String BUSINESS_CASE_DESCRIPTION = "businessCaseDescription";
+
 
 }
