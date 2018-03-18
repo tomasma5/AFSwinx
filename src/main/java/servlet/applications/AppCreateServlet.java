@@ -63,7 +63,7 @@ public class AppCreateServlet extends HttpServlet {
         String proxyHostname = req.getParameter(ParameterNames.APPLICATION_PROXY_HOSTNAME);
         String proxyPort = req.getParameter(ParameterNames.APPLICATION_PROXY_PORT);
         try {
-            Application application = getApplication(applicationId);
+            Application application = applicationsManagementService.findOrCreateApplication(applicationId);
             updateApplicationProperties(req, applicationName, application, remoteProtocol, remoteHostname, port,
                     proxyProtocol, proxyHostname, proxyPort);
             createOrUpdateApplication(req, applicationId, application);
@@ -90,8 +90,8 @@ public class AppCreateServlet extends HttpServlet {
         if (applicationId == null || applicationId.isEmpty()) {
             applicationsManagementService.addNewApplication(application);
         } else {
-            updateComponentConnections(application);
-            updateScreenConnections(req, application);
+            componentManagementService.updateComponentConnections(application);
+            screenManagementService.updateScreenConnections(application, req.getContextPath());
             applicationsManagementService.updateApplication(application);
         }
     }
@@ -123,48 +123,5 @@ public class AppCreateServlet extends HttpServlet {
         application.setProxyPort(Integer.parseInt(proxyPort));
     }
 
-    private Application getApplication(String applicationId) {
-        Application application;
-        if (applicationId == null || applicationId.isEmpty()) {
-            application = new Application();
-            application.setId(new ObjectId());
-        } else {
-            application = applicationsManagementService.findById(new ObjectId(applicationId));
-        }
-        return application;
-    }
 
-    private void updateComponentConnections(Application application) {
-        for (ComponentResource componentResource : componentManagementService.getAllComponentsByApplication(application.getId())) {
-            ComponentConnectionPack realConnectionsPack = componentResource.getProxyConnections();
-            updateConnectionParameters(application, realConnectionsPack.getModelConnection());
-            updateConnectionParameters(application, realConnectionsPack.getDataConnection());
-            updateConnectionParameters(application, realConnectionsPack.getSendConnection());
-            componentManagementService.updateComponent(componentResource);
-        }
-    }
-
-    private void updateScreenConnections(HttpServletRequest req, Application app) {
-        for (Screen screen : screenManagementService.getAllScreensByApplication(app.getId())) {
-            screen.setScreenUrl(HttpUtils.buildUrl(
-                    app.getProxyProtocol(),
-                    app.getProxyHostname(),
-                    app.getProxyPort(),
-                    req.getContextPath(),
-                    "/api/screens/" + screen.getId()
-            ));
-            screenManagementService.updateScreen(screen);
-        }
-    }
-
-    private void updateConnectionParameters(Application application, ComponentConnection connection) {
-        if (connection != null) {
-            connection.setRealProtocol(application.getRemoteProtocol());
-            connection.setRealAddress(application.getRemoteHostname());
-            connection.setRealPort(application.getRemotePort());
-            connection.setProtocol(application.getProxyProtocol());
-            connection.setAddress(application.getProxyHostname());
-            connection.setPort(application.getProxyPort());
-        }
-    }
 }

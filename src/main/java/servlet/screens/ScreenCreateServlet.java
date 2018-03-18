@@ -81,9 +81,9 @@ public class ScreenCreateServlet extends HttpServlet {
         String screenId = req.getParameter(ParameterNames.SCREEN_ID);
         String linkedComponentsCountString = req.getParameter(ParameterNames.LINKED_COMPONENTS_COUNT);
         try {
-            Screen screen = getScreen(screenId);
+            Screen screen = screenManagementService.findOrCreateNewScreen(screenId);
             updateScreenProperties(req, appIdString, screen);
-            updateLinkedComponents(req, Integer.parseInt(linkedComponentsCountString), screen);
+            componentManagementService.updateLinkedComponents(req, Integer.parseInt(linkedComponentsCountString), screen);
             createOrUpdateScreen(screenId, screen);
             resp.sendRedirect(LIST_ROUTE + "?app=" + appIdString);
             return;
@@ -112,57 +112,22 @@ public class ScreenCreateServlet extends HttpServlet {
         }
     }
 
-    private void updateLinkedComponents(HttpServletRequest req, int linkedComponentsCount, Screen screen) {
-        if (screen.getComponents() != null) {
-            screen.getComponents().clear();
-        }
-        for (int i = 0; i < linkedComponentsCount; i++) {
-            String componentId = req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1));
-            ComponentResource componentResource = componentManagementService.findById(new ObjectId(componentId));
-            componentManagementService.addComponentToScreen(componentResource, screen);
-            componentManagementService.filterComponentsScreenReferences(componentResource);
-        }
-    }
-
-    private String updateScreenProperties(HttpServletRequest req, String appIdString, Screen screen) {
+    private void updateScreenProperties(HttpServletRequest req, String appIdString, Screen screen) {
         ObjectId appId = new ObjectId(appIdString);
         screen.setApplicationId(appId);
         String screenUrl = req.getParameter(ParameterNames.SCREEN_URL);
         String screenName = req.getParameter(ParameterNames.SCREEN_NAME);
         String key = req.getParameter(ParameterNames.SCREEN_KEY);
         String menuOrder = req.getParameter(ParameterNames.SCREEN_MENU_ORDER);
-        screenUrl = buildScreenUrl(req, screen, appId, screenUrl);
+        screenUrl = screenManagementService.buildScreenUrl(applicationsManagementService.findById(appId), screen, screenUrl, req.getContextPath());
         screen.setKey(key);
         screen.setScreenUrl(screenUrl);
         if (screenName != null && !screenName.isEmpty()) {
             screen.setName(screenName);
         }
         screen.setMenuOrder(Integer.parseInt(menuOrder));
-        return screenUrl;
     }
 
-    private String buildScreenUrl(HttpServletRequest req, Screen screen, ObjectId appId, String screenUrl) {
-        if (screenUrl == null || screenUrl.isEmpty()) {
-            Application app = applicationsManagementService.findById(appId);
-            screenUrl = HttpUtils.buildUrl(
-                    app.getProxyProtocol(),
-                    app.getProxyHostname(),
-                    app.getProxyPort(),
-                    req.getContextPath(),
-                    "/api/screens/" + screen.getId()
-            );
-        }
-        return screenUrl;
-    }
 
-    private Screen getScreen(String screenId) {
-        Screen screen;
-        if (screenId == null || screenId.isEmpty()) {
-            screen = new Screen();
-            screen.setId(new ObjectId());
-        } else {
-            screen = screenManagementService.findScreenById(new ObjectId(screenId));
-        }
-        return screen;
-    }
+
 }

@@ -2,6 +2,9 @@ package service.servlet.impl;
 
 import dao.ApplicationDao;
 import model.Application;
+import model.ComponentConnection;
+import model.ComponentConnectionPack;
+import model.ComponentResource;
 import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 
@@ -62,5 +65,17 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
 
     private String generateUuid() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public Application findOrCreateApplication(String applicationId) {
+        Application application;
+        if (applicationId == null || applicationId.isEmpty()) {
+            application = new Application();
+            application.setId(new ObjectId());
+        } else {
+            application = findById(new ObjectId(applicationId));
+        }
+        return application;
     }
 }

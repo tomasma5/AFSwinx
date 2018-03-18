@@ -10,7 +10,7 @@ import org.bson.types.ObjectId;
  */
 public class MongoDocumentEntity {
 
-    MongoDocumentEntity() { }
+    public MongoDocumentEntity() { }
 
     private ObjectId id;
 

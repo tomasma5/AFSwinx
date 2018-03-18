@@ -23,7 +23,7 @@
                     <th>Screen url</th>
                     <th>Menu order</th>
                     <th>Number of components</th>
-                    <th colspan="3">Actions</th>
+                    <th colspan="2">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,13 +47,6 @@
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>
                             </form>
-                        </td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/screens/manage?app=${app}&screen=${screen.id}">
-                                <button class="btn btn-info">
-                                    Manage
-                                </button>
-                            </a>
                         </td>
                     </tr>
                 </c:forEach>

@@ -21,4 +21,5 @@ public interface ApplicationsManagementService {
 
     public Application findByUuid(String uuid);
 
+    public Application findOrCreateApplication(String applicationId);
 }

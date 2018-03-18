@@ -4,7 +4,9 @@ import model.Application;
 import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
+import servlet.ParameterNames;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ComponentManagementService {
@@ -25,4 +27,11 @@ public interface ComponentManagementService {
 
     public void filterComponentsScreenReferences(ComponentResource componentResource);
 
+    public void updateComponentConnections(Application application);
+
+    public void updateLinkedComponents(HttpServletRequest req, int linkedComponentsCount, Screen screen);
+
+    public ComponentResource findOrCreateComponentResource(HttpServletRequest req, String componentId);
+
+    public void updateComponentConnections(HttpServletRequest req, Application application, ComponentResource componentResource);
 }
