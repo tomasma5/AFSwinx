@@ -42,6 +42,6 @@ public class BusinessCaseListServlet extends HttpServlet {
         ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         businessCaseManagementService.removeBusinessCase(objectId);
-        resp.sendRedirect(LIST_ROUTE + "?app="+appString);
+        resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"="+appString);
     }
 }

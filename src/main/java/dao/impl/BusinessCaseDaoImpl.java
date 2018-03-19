@@ -3,9 +3,13 @@ package dao.impl;
 import dao.BusinessCaseDao;
 import dao.ScreenDao;
 import model.Screen;
+import model.afclassification.BCPhase;
 import model.afclassification.BusinessCase;
+import org.bson.types.ObjectId;
 
 import javax.enterprise.context.ApplicationScoped;
+
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -32,4 +36,12 @@ public class BusinessCaseDaoImpl extends GenericMongoDaoImpl<BusinessCase> imple
     }
 
 
+    @Override
+    public List<BCPhase> getPhases(ObjectId bcId) {
+        BusinessCase businessCase = findById(bcId);
+        if(businessCase != null){
+            return businessCase.getPhases();
+        }
+        return null;
+    }
 }

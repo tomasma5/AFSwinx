@@ -86,7 +86,7 @@ public class ScreenCreateServlet extends HttpServlet {
             updateScreenProperties(req, appIdString, screen);
             componentManagementService.updateLinkedComponents(req, Integer.parseInt(linkedComponentsCountString), screen);
             createOrUpdateScreen(screenId, screen);
-            resp.sendRedirect(LIST_ROUTE + "?app=" + appIdString);
+            resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appIdString);
             return;
         } catch (MalformedURLException ex) {
             req.setAttribute("screenUrlError", "URL has bad format.");

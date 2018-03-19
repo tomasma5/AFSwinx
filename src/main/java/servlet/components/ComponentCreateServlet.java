@@ -72,7 +72,7 @@ public class ComponentCreateServlet extends HttpServlet {
         componentManagementService.updateComponentConnections(req, application, componentResource);
 
         createOrUpdateComponent(req, componentResource);
-        resp.sendRedirect(LIST_ROUTE + "?app=" + appIdString);
+        resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appIdString);
     }
 
     //component set & update methods

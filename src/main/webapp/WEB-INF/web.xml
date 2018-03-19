@@ -81,4 +81,23 @@
         <url-pattern>/businesscases/create</url-pattern>
     </servlet-mapping>
 
+    <!-- BUSINESS CASE PHASES MAPPING -->
+    <servlet>
+        <servlet-name>BCPhaseListServlet</servlet-name>
+        <servlet-class>servlet.businesscases.BCPhaseListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BCPhaseCreateServlet</servlet-name>
+        <servlet-class>servlet.businesscases.BCPhaseCreateServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BCPhaseListServlet</servlet-name>
+        <url-pattern>/businesscases/phases/list</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BCPhaseCreateServlet</servlet-name>
+        <url-pattern>/businesscases/phases/create</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -22,7 +22,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Number of phases</th>
-                    <th colspan="2">Actions</th>
+                    <th colspan="3">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +48,11 @@
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>
                             </form>
+                        </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/businesscases/phases/list?app=${app}&bcase=${bc.id}">
+                                <button class="btn btn-success">Phases</button>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>

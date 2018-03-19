@@ -1,9 +1,11 @@
 package model.afclassification;
 
+import model.MongoDocumentEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BCPhase {
+public class BCPhase extends MongoDocumentEntity {
 
 	private BusinessCase businessCase;
 
@@ -24,9 +26,8 @@ public class BCPhase {
 		return businessCase;
 	}
 
-	public void setBusinessCase(BusinessCase businessCase, String name) {
+	public void setBusinessCase(BusinessCase businessCase) {
 		this.businessCase = businessCase;
-		this.setName(name);
 	}
 
 	public List<BCField> getFields() {

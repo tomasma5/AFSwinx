@@ -42,6 +42,6 @@ public class ScreenListServlet extends HttpServlet {
         ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.SCREEN_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         screenManagementService.removeScreen(objectId);
-        resp.sendRedirect(LIST_ROUTE+"?app="+appString);
+        resp.sendRedirect(LIST_ROUTE+"?"+ParameterNames.APPLICATION_ID+"="+appString);
     }
 }

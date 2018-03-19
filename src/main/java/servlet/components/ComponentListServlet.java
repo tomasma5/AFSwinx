@@ -43,6 +43,6 @@ public class ComponentListServlet extends HttpServlet {
         ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         componentMagementService.removeComponent(objectId);
-        resp.sendRedirect(LIST_ROUTE + "?app=" + appString);
+        resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appString);
     }
 }

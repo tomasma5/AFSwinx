@@ -1,6 +1,10 @@
 package dao;
 
+import model.afclassification.BCPhase;
 import model.afclassification.BusinessCase;
+import org.bson.types.ObjectId;
+
+import java.util.List;
 
 /**
  * Mongo DAO for application screens
@@ -11,4 +15,6 @@ import model.afclassification.BusinessCase;
 public interface BusinessCaseDao extends GenericMongoDao<BusinessCase> {
 
     //no need to implement other dao
+
+    public List<BCPhase> getPhases(ObjectId bcId);
 }

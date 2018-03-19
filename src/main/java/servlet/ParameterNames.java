@@ -47,5 +47,7 @@ public class ParameterNames {
     public static final String BUSINESS_CASE_NAME = "businessCaseName";
     public static final String BUSINESS_CASE_DESCRIPTION = "businessCaseDescription";
 
+    public static final String BUSINESS_PHASE_ID = "bcphase";
+    public static final String BUSINESS_PHASE_NAME = "businessPhaseName";
 
 }
