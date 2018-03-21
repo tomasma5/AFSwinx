@@ -37,6 +37,6 @@ public class ApplicationDaoImpl extends GenericMongoDaoImpl<Application> impleme
 
     @Override
     public Application findByUuid(String uuid) {
-        return collection.find(eq("uuid", uuid)).first();
+        return collection.find(eq(ParameterNames.APPLICATION_UUID, uuid)).first();
     }
 }

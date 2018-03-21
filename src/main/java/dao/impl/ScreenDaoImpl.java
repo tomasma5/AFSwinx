@@ -1,10 +1,8 @@
 package dao.impl;
 
-import dao.ApplicationDao;
 import dao.ScreenDao;
-import model.Application;
 import model.Screen;
-import org.bson.types.ObjectId;
+import servlet.ParameterNames;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -34,6 +32,6 @@ public class ScreenDaoImpl extends GenericMongoDaoImpl<Screen> implements Screen
 
     @Override
     public Screen findByName(String name) {
-        return collection.find(eq("heading", name)).first();
+        return collection.find(eq(ParameterNames.SCREEN_NAME, name)).first();
     }
 }

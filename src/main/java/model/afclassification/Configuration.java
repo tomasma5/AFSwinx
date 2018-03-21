@@ -1,17 +1,17 @@
 package model.afclassification;
 
 public class Configuration {
-	
+
 	private Behavior behavior;
-	
+
 	private Double thresholdStart;
-	
+
 	private Double thresholdEnd;
 
 	public Configuration(){
-		
+
 	}
-	
+
 	public Configuration(Behavior behavior, Double thresholdStart, Double thresholdEnd){
 		this.behavior = behavior;
 		this.thresholdStart = thresholdStart;

@@ -10,6 +10,7 @@ public class ParameterNames {
     public static final String APPLICATION_PROXY_HOSTNAME = "proxyHostname";
     public static final String APPLICATION_PROXY_PROTOCOL = "proxyProtocol";
     public static final String APPLICATION_PROXY_PORT = "proxyPort";
+    public static final String APPLICATION_UUID = "uuid";
 
     public static final String SCREEN_ID = "screen";
     public static final String SCREEN_URL = "screenUrl";
@@ -50,4 +51,12 @@ public class ParameterNames {
     public static final String BUSINESS_PHASE_ID = "bcphase";
     public static final String BUSINESS_PHASE_NAME = "businessPhaseName";
 
+    public static final String CONFIGURATION_ID = "config";
+    public static final String CONFIGURATION_NAME = "configurationName";
+    public static final String CONFIGURATION_BEHAVIOUR = "configurationBehaviour";
+    public static final String CONFIGURATION_THRESHOLD_START = "configurationThresholdStart";
+    public static final String CONFIGURATION_THRESHOLD_END = "configurationThresholdEnd";
+
+    public static final String CONFIGURATION_LIST = "configurationsList";
+    public static final String CONFIGURATION_RECORDS_COUNT = "configurationRecordsCount";
 }
