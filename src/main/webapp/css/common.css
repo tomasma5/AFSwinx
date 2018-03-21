@@ -96,4 +96,9 @@ hr {
 .param {
     width: 50% !important;
     float: left;
+
+}
+
+.btn.btn-light{
+    margin: 5px;
 }

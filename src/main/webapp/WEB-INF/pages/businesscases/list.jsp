@@ -22,18 +22,29 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Number of phases</th>
+                    <th>Phases</th>
                     <th colspan="3">Actions</th>
                 </tr>
+
                 </thead>
                 <tbody>
                 <c:forEach var="bc" items="${businessCases}">
                     <tr>
                         <td>${bc.name}</td>
                         <td>
-                            ${bc.description}
+                                ${bc.description}
                         </td>
                         <td>
-                            ${bc.phases != null? bc.phases.size() : 0}
+                                ${bc.phases != null? bc.phases.size() : 0}
+                        </td>
+                        <td>
+                            <c:if test="${bc.phases != null}">
+                                <c:forEach var="phase" items="${bc.phases}">
+                                    <a href="${pageContext.request.contextPath}/businesscases/phases/create?app=${app}&bcase=${bc.id}&bcphase=${phase.id}">
+                                        <button class="btn btn-light">${phase.name}</button>
+                                    </a>
+                                </c:forEach>
+                            </c:if>
                         </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/businesscases/create?app=${app}&bcase=${bc.id}">

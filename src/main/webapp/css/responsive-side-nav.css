@@ -38,7 +38,7 @@ div.content {
     margin-top: 25px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1450px) {
     ul.sidenav {
         width: 100%;
         height: auto;

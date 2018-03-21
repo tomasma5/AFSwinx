@@ -24,6 +24,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Number of linked screens</th>
+                    <th>Linked screens</th>
                     <th colspan="2">Actions</th>
                 </tr>
                 </thead>
@@ -31,8 +32,16 @@
                 <c:forEach var="bcphase" items="${businessPhases}">
                     <tr>
                         <td>${bcphase.name}</td>
+                        <td>${bcphase.linkedScreens != null? bcphase.linkedScreens.size() : 0 } </td>
                         <td>
-                                ${bcphase.linkedScreens != null? bcphase.linkedScreens.size() : 0 }
+                            <c:if test="${bcphase.linkedScreens != null}">
+                                <c:forEach var="screen" items="${bcphase.linkedScreens}">
+                                    <a href="${pageContext.request.contextPath}/screens/create?app=${app}&screen=${screen.id}">
+                                        <button class="btn btn-light">${screen.name}</button>
+                                    </a>
+                                </c:forEach>
+                            </c:if>
+
                         </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/businesscases/phases/create?app=${app}&bcase=${bcase}&bcphase=${bcphase.id}">

@@ -33,7 +33,15 @@
                         <td>${screen.name}</td>
                         <td>${screen.screenUrl}</td>
                         <td>${screen.menuOrder}</td>
-                        <td>${screen.components != null? screen.components.size() : 0}</td>
+                        <td>
+                            <c:if test="${screen.components != null}">
+                                <c:forEach var="component" items="${screen.components}">
+                                    <a href="${pageContext.request.contextPath}/components/create?app=${app}&component=${component.id}">
+                                        <button class="btn btn-light">${component.name}</button>
+                                    </a>
+                                </c:forEach>
+                            </c:if>
+                        </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/screens/create?app=${app}&screen=${screen.id}">
                                 <button class="btn btn-primary">Edit</button>
