@@ -103,11 +103,11 @@
     <!-- CONFIGURATIONS MAPPING-->
     <servlet>
         <servlet-name>ConfigurationListServlet</servlet-name>
-        <servlet-class>servlet.configuration.ConfigurationListServlet</servlet-class>
+        <servlet-class>servlet.configurations.ConfigurationListServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ConfigurationCreateServlet</servlet-name>
-        <servlet-class>servlet.configuration.ConfigurationCreateServlet</servlet-class>
+        <servlet-class>servlet.configurations.ConfigurationCreateServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

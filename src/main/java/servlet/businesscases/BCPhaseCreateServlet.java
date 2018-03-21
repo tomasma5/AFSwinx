@@ -1,12 +1,13 @@
 package servlet.businesscases;
 
+import model.Screen;
 import model.afclassification.BCPhase;
-import model.afclassification.Configuration;
 import model.afclassification.ConfigurationPack;
 import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 import service.servlet.BusinessCaseManagementService;
 import service.servlet.ConfigurationManagementService;
+import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static servlet.businesscases.BusinessCaseListServlet.LIST_ROUTE;
 
@@ -31,6 +33,9 @@ public class BCPhaseCreateServlet extends HttpServlet {
     @Inject
     private ConfigurationManagementService configurationManagementService;
 
+    @Inject
+    private ScreenManagementService screenManagementService;
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationIdString = Utils.trimString(request.getParameter(ParameterNames.APPLICATION_ID));
@@ -43,21 +48,18 @@ public class BCPhaseCreateServlet extends HttpServlet {
         ObjectId appObjId = new ObjectId(applicationIdString);
         ObjectId businessCaseObjId = new ObjectId(businessCaseIdString);
         if (bcPhaseIdString != null) {
-            ObjectId businessPhaseObjId = new ObjectId(bcPhaseIdString);
             try {
-                BCPhase businessPhase = bcManagementService.findPhaseById(businessCaseObjId, businessPhaseObjId);
-                request.setAttribute(ParameterNames.BUSINESS_PHASE_ID, businessPhase.getId());
-                request.setAttribute(ParameterNames.BUSINESS_PHASE_NAME, businessPhase.getName());
-                if(businessPhase.getConfiguration() != null) {
-                    request.setAttribute(ParameterNames.SELECTED_CONFIGURATION, businessPhase.getConfiguration().getId());
-                }
+                setExistingPhaseToRequest(request, bcPhaseIdString, appObjId, businessCaseObjId);
             } catch (ServiceException e) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 e.printStackTrace();
                 return;
             }
+        } else {
+            //options for linking screens with phases
+            request.setAttribute(ParameterNames.SCREEN_OPTIONS, screenManagementService.getAllScreensByApplication(appObjId));
         }
-
+        //options for configuration select
         List<ConfigurationPack> availableConfiguration = configurationManagementService.getAllConfigurationsByApplication(appObjId);
         request.setAttribute(ParameterNames.CONFIGURATION_LIST, availableConfiguration);
 
@@ -65,6 +67,20 @@ public class BCPhaseCreateServlet extends HttpServlet {
         request.setAttribute(ParameterNames.BUSINESS_CASE_ID, businessCaseObjId);
 
         getServletContext().getRequestDispatcher(CREATE_URL).forward(request, response);
+    }
+
+    private void setExistingPhaseToRequest(HttpServletRequest request, String bcPhaseIdString, ObjectId appObjId, ObjectId businessCaseObjId) throws IOException, ServiceException {
+        ObjectId businessPhaseObjId = new ObjectId(bcPhaseIdString);
+
+        BCPhase businessPhase = bcManagementService.findPhaseById(businessCaseObjId, businessPhaseObjId);
+        request.setAttribute(ParameterNames.BUSINESS_PHASE_ID, businessPhase.getId());
+        request.setAttribute(ParameterNames.BUSINESS_PHASE_NAME, businessPhase.getName());
+        request.setAttribute(ParameterNames.SELECTED_CONFIGURATION, businessPhase.getConfiguration().getId());
+        request.setAttribute(ParameterNames.BUSINESS_PHASE_LINKED_SCREENS, businessPhase.getLinkedScreens());
+        List<Screen> screensNotInThisPhaseYet = screenManagementService.getAllScreensByApplication(appObjId).stream()
+                .filter(screen -> !businessPhase.getLinkedScreens().contains(screen))
+                .collect(Collectors.toList());
+        request.setAttribute(ParameterNames.SCREEN_OPTIONS, screensNotInThisPhaseYet);
     }
 
     @Override
@@ -77,18 +93,22 @@ public class BCPhaseCreateServlet extends HttpServlet {
         }
 
         String businessPhaseIdString = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_ID));
+        String linkedScreensCountString = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREENS_COUNT));
         try {
-            BCPhase phase = bcManagementService.findOrCreateBusinessPhaseInCase(new ObjectId(businessCaseIdString), businessPhaseIdString);
+            ObjectId businessCaseId = new ObjectId(businessCaseIdString);
+            BCPhase phase = bcManagementService.findOrCreateBusinessPhaseInCase(businessCaseId, businessPhaseIdString);
             updateBCPhaseProperties(req, new ObjectId(businessCaseIdString), phase);
-            createOrUpdateScreen(businessCaseIdString, businessPhaseIdString, phase);
+            bcManagementService.updateLinkedScreensInBusinessPhase(req, phase, businessCaseId, Integer.parseInt(linkedScreensCountString));
+            createOrUpdateBusinessPhase(businessCaseIdString, businessPhaseIdString, phase);
         } catch (ServiceException e) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             e.printStackTrace();
+            return;
         }
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString);
     }
 
-    private void createOrUpdateScreen(String caseId, String phaseId, BCPhase phase) throws ServiceException {
+    private void createOrUpdateBusinessPhase(String caseId, String phaseId, BCPhase phase) throws ServiceException {
         if (phaseId == null || phaseId.isEmpty()) {
             bcManagementService.addBusinessPhaseToCaseById(new ObjectId(caseId), phase);
         } else {
@@ -100,8 +120,8 @@ public class BCPhaseCreateServlet extends HttpServlet {
         String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_NAME)));
         phase.setBusinessCase(bcManagementService.findById(bcaseId));
         phase.setName(name);
-        String selectedConfiguration =  Utils.trimString(req.getParameter(ParameterNames.SELECTED_CONFIGURATION));
-        ConfigurationPack configurationModel= configurationManagementService.findConfigurationById(new ObjectId(selectedConfiguration));
+        String selectedConfiguration = Utils.trimString(req.getParameter(ParameterNames.SELECTED_CONFIGURATION));
+        ConfigurationPack configurationModel = configurationManagementService.findConfigurationById(new ObjectId(selectedConfiguration));
         phase.setConfiguration(configurationModel);
     }
 }

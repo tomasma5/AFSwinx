@@ -1,15 +1,21 @@
 package service.servlet.impl;
 
 import dao.BusinessCaseDao;
+import dao.ScreenDao;
+import model.ComponentResource;
+import model.Screen;
 import model.afclassification.BCPhase;
 import model.afclassification.BusinessCase;
 import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 import service.servlet.BusinessCaseManagementService;
+import servlet.ParameterNames;
+import utils.Utils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +27,9 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
 
     @Inject
     private BusinessCaseDao businessCaseDao;
+
+    @Inject
+    private ScreenDao screenDao;
 
 
     @Override
@@ -40,7 +49,8 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
             throw new ServiceException("Cannot find business case with id: " + caseId);
         }
         if (businessCase.getPhases() == null || businessCase.getPhases().isEmpty()) {
-            throw new ServiceException("Business case does not have any phases. Cannot delete phase with id " + phaseId);
+            System.err.println("Business case does not have any phases. Cannot delete phase with id " + phaseId);
+            return;
         }
         int indexToRemove = -1;
         int i = 0;
@@ -52,8 +62,9 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
             i++;
         }
         if (indexToRemove == -1) {
-            throw new ServiceException("Phase not found among business case phases, therefore cannot be deleted." +
+            System.err.println("Phase not found among business case phases, therefore cannot be deleted." +
                     " Bcase id:" + caseId + ", BCPhase id: " + phaseId);
+            return;
         }
         businessCase.getPhases().remove(indexToRemove);
         updateBusinessCase(businessCase);
@@ -146,5 +157,18 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
         removeBusinessPhaseFromCaseById(caseId, phase.getId());
         addBusinessPhaseToCaseById(caseId, phase);
     }
+
+    @Override
+    public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, ObjectId businessCaseId, int linkedScreensCount) throws ServiceException {
+        if (phase.getLinkedScreens() != null) {
+            phase.getLinkedScreens().clear();
+        }
+        for (int i = 0; i < linkedScreensCount; i++) {
+            String screenId = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREEN_ID + (i + 1)));
+            Screen screen = screenDao.findById(new ObjectId(screenId));
+            phase.addLinkedScreen(screen);
+        }
+    }
+
 
 }

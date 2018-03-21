@@ -23,6 +23,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Number of linked screens</th>
                     <th colspan="2">Actions</th>
                 </tr>
                 </thead>
@@ -30,6 +31,9 @@
                 <c:forEach var="bcphase" items="${businessPhases}">
                     <tr>
                         <td>${bcphase.name}</td>
+                        <td>
+                                ${bcphase.linkedScreens != null? bcphase.linkedScreens.size() : 0 }
+                        </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/businesscases/phases/create?app=${app}&bcase=${bcase}&bcphase=${bcphase.id}">
                                 <button class="btn btn-primary">Edit</button>

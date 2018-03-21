@@ -50,6 +50,10 @@ public class ParameterNames {
 
     public static final String BUSINESS_PHASE_ID = "bcphase";
     public static final String BUSINESS_PHASE_NAME = "businessPhaseName";
+    public static final String BUSINESS_PHASE_LINKED_SCREENS = "linkedScreens";
+    public static final String BUSINESS_PHASE_LINKED_SCREENS_COUNT = "linkedScreensCount";
+    public static final String BUSINESS_PHASE_LINKED_SCREEN_ID = "linkedHiddenScreen";
+    public static final String SCREEN_OPTIONS = "screenOptions";
 
     public static final String CONFIGURATION_ID = "config";
     public static final String CONFIGURATION_NAME = "configurationName";

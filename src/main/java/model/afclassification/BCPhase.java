@@ -1,6 +1,7 @@
 package model.afclassification;
 
 import model.MongoDocumentEntity;
+import model.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ public class BCPhase extends MongoDocumentEntity {
 
 	private List<BCField> fields;
 
+	private List<Screen> linkedScreens;
+
 	private ConfigurationPack configuration;
 	
 	private String name;
@@ -20,6 +23,13 @@ public class BCPhase extends MongoDocumentEntity {
 			this.fields = new ArrayList<>();
 		}
 		this.fields.add(field);
+	}
+
+	public synchronized void addLinkedScreen(Screen screen) {
+		if(this.linkedScreens == null){
+			this.linkedScreens = new ArrayList<>();
+		}
+		this.linkedScreens.add(screen);
 	}
 
 	public BusinessCase getBusinessCase() {
@@ -44,6 +54,14 @@ public class BCPhase extends MongoDocumentEntity {
 
 	public void setConfiguration(ConfigurationPack configuration) {
 		this.configuration = configuration;
+	}
+
+	public List<Screen> getLinkedScreens() {
+		return linkedScreens;
+	}
+
+	public void setLinkedScreens(List<Screen> linkedScreens) {
+		this.linkedScreens = linkedScreens;
 	}
 
 	public String getName() {

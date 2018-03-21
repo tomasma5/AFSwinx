@@ -5,6 +5,7 @@ import model.afclassification.BusinessCase;
 import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface BusinessCaseManagementService {
@@ -37,6 +38,6 @@ public interface BusinessCaseManagementService {
 
     public BCPhase findOrCreateBusinessPhaseInCase(ObjectId businessCaseId, String businessPhaseId) throws ServiceException;
 
-
+    public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, ObjectId businessCaseId, int linkedScreensCount) throws ServiceException;
 
 }

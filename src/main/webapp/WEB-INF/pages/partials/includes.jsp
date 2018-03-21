@@ -12,3 +12,4 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/material-switch.css" type="text/css"/>
 <script src="${pageContext.request.contextPath}/js/component-form.js"></script>
 <script src="${pageContext.request.contextPath}/js/screen-form.js"></script>
+<script src="${pageContext.request.contextPath}/js/business-phase-form.js"></script>

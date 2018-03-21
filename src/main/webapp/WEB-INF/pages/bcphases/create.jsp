@@ -10,13 +10,13 @@
     <div class="panel panel-warning">
         <div class="panel-heading height-50px">
             <a href="${pageContext.request.contextPath}/businesscases/list?app=${app}">Business cases</a> >
-            <a href="${pageContext.request.contextPath}/businesscases/phases/list?app=${app}&bcase=${bcase}"> Business phases</a>
+            <a href="${pageContext.request.contextPath}/businesscases/phases/list?app=${app}&bcase=${bcase}"> Phases</a>
                 > Create/Edit
             business BC phase
         </div>
         <div class="panel-body ">
             <form action="create?app=${app}&bcase=${bcase}" method="post">
-                <input type="hidden" name="bcphase" value="${bcphase}">
+                <input type="hidden" id="bcphase" name="bcphase" value="${bcphase}">
                 <input type="hidden" name="bcase" value="${bcase}">
                 <input type="hidden" id="app" name="app" value="${app}">
 
@@ -41,7 +41,76 @@
                     <c:if test="${not empty configurationError}">${configurationError}</c:if>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="row">
+                    <div class="col-xs-13 col-md-5">
+                        <div class="panel panel-default min-h-350px">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">
+                                Available screens
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="screenSelect">Screen</label>
+                                    <select class="form-control" id="screenSelect" name="screenSelect" size="5">
+                                        <c:forEach var="screenOption" items="${screenOptions}">
+                                            <option value="${screenOption.id}" ondblclick="addScreenToBusinessPhase()">
+                                                    ${(screenOption.name != null && !screenOption.name.isEmpty())? screenOption.name : screenOption.key}</option>
+                                        </c:forEach>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-13 col-md-2 flex-center">
+                        <div class="btn btn-success" onclick="addScreenToBusinessPhase()" id="addScreenButton">Add screen
+                        </div>
+                    </div>
+                    <div class="col-xs-13 col-md-5">
+                        <div class="panel panel-default min-h-350px">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">
+                                Added screens
+                            </div>
+                            <div class="panel-body">
+                                <input type="hidden" id="linkedScreensCount" name="linkedScreensCount"
+                                       value="${linkedScreens != null? linkedScreens.size() : 0}">
+                                <div id="linkedScreens">
+                                    <c:forEach var="screen" items="${linkedScreens}" varStatus="loop">
+                                        <form-group>
+                                            <label for="linkedHiddenScreen${loop.index+1}">Screen ${loop.index+1}</label>
+                                            <input type="hidden" id="linkedHiddenScreen${loop.index+1}"
+                                                   name="linkedHiddenScreen${loop.index+1}"
+                                                   required="required"
+                                                   value="${screen.id}">
+                                            <div class="input-group">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       id="linkedScreenText${loop.index+1}"
+                                                       name="linkedScreenText${loop.index+1}"
+                                                       required="required"
+                                                       disabled="disabled"
+                                                       value="${screen.name}"/>
+                                                <span class="input-group-btn">
+                                        <button class="btn btn-danger"
+                                                type="button"
+                                                id="linkedScreenButton${loop.index+1}"
+                                                onclick="removeScreenFromBusinessPhase(${loop.index+1})"
+                                        >Remove</button>
+                                </span>
+                                            </div>
+                                        </form-group>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="row flex-center">
+                    <button type="submit" class="btn btn-primary col-xs-11 col-sm-5 col-md-3 height-50px">Submit
+                    </button>
+                </div>
             </form>
         </div>
     </div>

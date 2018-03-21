@@ -60,7 +60,6 @@ function addComponent() {
 }
 
 function removeComponent(linkedComponentId) {
-    //get needed DOM elements //TODO maybe split to multiple functions
     var componentSelect = document.getElementById("componentSelect");
     var linkedComponentEl = document.getElementById(hiddenId + linkedComponentId.toString());
     var linkedComponentInputEl = document.getElementById(inputId + linkedComponentId.toString());
@@ -69,7 +68,6 @@ function removeComponent(linkedComponentId) {
     //put back as a option
     var option = createOption(linkedComponentEl.getAttribute("value"), linkedComponentInputEl.getAttribute("value"));
     componentSelect.appendChild(option);
-    componentSelect.options
 
     //remove it from html
     linkedComponentsWrapper.removeChild(linkedComponentEl.parentNode);
