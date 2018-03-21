@@ -9,7 +9,7 @@
 <div class="center-90-percent from-top-40-px">
     <div class="panel panel-primary">
         <div class="panel-heading height-50px">
-            <a class="link" href="${pageContext.request.contextPath}/configurations/list?app=${app}">
+            <a class="link" href="${pageContext.request.contextPath}/configuration/list?app=${app}">
                 <button class="btn button-light">Configurations</button>
             </a> >
             <button type="button" class="btn btn-primary" disabled>Create/Edit configuration</button>

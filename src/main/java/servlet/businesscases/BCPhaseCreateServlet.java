@@ -1,9 +1,12 @@
 package servlet.businesscases;
 
 import model.afclassification.BCPhase;
+import model.afclassification.Configuration;
+import model.afclassification.ConfigurationPack;
 import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 import service.servlet.BusinessCaseManagementService;
+import service.servlet.ConfigurationManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
 
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static servlet.businesscases.BusinessCaseListServlet.LIST_ROUTE;
 
@@ -23,6 +27,9 @@ public class BCPhaseCreateServlet extends HttpServlet {
 
     @Inject
     private BusinessCaseManagementService bcManagementService;
+
+    @Inject
+    private ConfigurationManagementService configurationManagementService;
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,12 +48,19 @@ public class BCPhaseCreateServlet extends HttpServlet {
                 BCPhase businessPhase = bcManagementService.findPhaseById(businessCaseObjId, businessPhaseObjId);
                 request.setAttribute(ParameterNames.BUSINESS_PHASE_ID, businessPhase.getId());
                 request.setAttribute(ParameterNames.BUSINESS_PHASE_NAME, businessPhase.getName());
+                if(businessPhase.getConfiguration() != null) {
+                    request.setAttribute(ParameterNames.SELECTED_CONFIGURATION, businessPhase.getConfiguration().getId());
+                }
             } catch (ServiceException e) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 e.printStackTrace();
                 return;
             }
         }
+
+        List<ConfigurationPack> availableConfiguration = configurationManagementService.getAllConfigurationsByApplication(appObjId);
+        request.setAttribute(ParameterNames.CONFIGURATION_LIST, availableConfiguration);
+
         request.setAttribute(ParameterNames.APPLICATION_ID, appObjId);
         request.setAttribute(ParameterNames.BUSINESS_CASE_ID, businessCaseObjId);
 
@@ -86,5 +100,8 @@ public class BCPhaseCreateServlet extends HttpServlet {
         String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_NAME)));
         phase.setBusinessCase(bcManagementService.findById(bcaseId));
         phase.setName(name);
+        String selectedConfiguration =  Utils.trimString(req.getParameter(ParameterNames.SELECTED_CONFIGURATION));
+        ConfigurationPack configurationModel= configurationManagementService.findConfigurationById(new ObjectId(selectedConfiguration));
+        phase.setConfiguration(configurationModel);
     }
 }

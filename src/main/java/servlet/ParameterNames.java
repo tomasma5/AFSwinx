@@ -59,4 +59,5 @@ public class ParameterNames {
 
     public static final String CONFIGURATION_LIST = "configurationsList";
     public static final String CONFIGURATION_RECORDS_COUNT = "configurationRecordsCount";
+    public static final String SELECTED_CONFIGURATION = "selectedConfiguration";
 }

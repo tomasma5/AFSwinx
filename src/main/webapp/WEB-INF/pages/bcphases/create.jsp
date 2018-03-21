@@ -26,6 +26,21 @@
                            placeholder="Enter phase name" value="${businessPhaseName}" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="selectedConfiguration">Configuration</label>
+                    <select class="form-control" id="selectedConfiguration" name="selectedConfiguration">
+                        <c:forEach var="configurationOption" items="${configurationsList}">
+                            <c:if test="${configurationOption.id == selectedConfiguration}">
+                                <option value="${configurationOption.id}" selected>${configurationOption.configurationName}</option>
+                            </c:if>
+                            <c:if test="${configurationOption.id != selectedConfiguration}">
+                                <option value="${configurationOption.id}">${configurationOption.configurationName}</option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                    <c:if test="${not empty configurationError}">${configurationError}</c:if>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

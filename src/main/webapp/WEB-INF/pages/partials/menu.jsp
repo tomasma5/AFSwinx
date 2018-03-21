@@ -6,7 +6,7 @@
     <li><a href="${pageContext.request.contextPath}/screens/list?app=${app}">Screens</a></li>
     <li><a href="${pageContext.request.contextPath}/components/list?app=${app}">Components</a></li>
     <li><a href="${pageContext.request.contextPath}/businesscases/list?app=${app}">Business cases</a></li>
-    <li><a href="${pageContext.request.contextPath}/configurations/list?app=${app}">Configurations</a></li>
+    <li><a href="${pageContext.request.contextPath}/configuration/list?app=${app}">Configurations</a></li>
     <li><a href="${pageContext.request.contextPath}/apps/list">Choose another application</a></li>
     </c:if>
 </ul>

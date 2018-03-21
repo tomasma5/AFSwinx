@@ -10,7 +10,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading height-50px">
             <button type="button" class="btn btn-primary" disabled>Configurations of ${applicationName} application</button>
-            <a href="${pageContext.request.contextPath}/configurations/create?app=${app}">
+            <a href="${pageContext.request.contextPath}/configuration/create?app=${app}">
                 <button class="btn btn-success float-right">Add configuration</button>
             </a>
         </div>
@@ -23,11 +23,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="config" items="${configurations}">
+                <c:forEach var="config" items="${configuration}">
                     <tr>
                         <td>${config.configurationName}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/configurations/create?app=${app}&config=${config.id}">
+                            <a href="${pageContext.request.contextPath}/configuration/create?app=${app}&config=${config.id}">
                                 <button class="btn btn-primary">Edit</button>
                             </a>
                         </td>

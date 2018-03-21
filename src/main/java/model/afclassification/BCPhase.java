@@ -11,7 +11,7 @@ public class BCPhase extends MongoDocumentEntity {
 
 	private List<BCField> fields;
 
-	private List<Configuration> configurations;
+	private ConfigurationPack configuration;
 	
 	private String name;
 	
@@ -38,12 +38,12 @@ public class BCPhase extends MongoDocumentEntity {
 		this.fields = fields;
 	}
 
-	public List<Configuration> getConfigurations() {
-		return configurations;
+	public ConfigurationPack getConfiguration() {
+		return configuration;
 	}
 
-	public void setConfigurations(List<Configuration> configurations) {
-		this.configurations = configurations;
+	public void setConfiguration(ConfigurationPack configuration) {
+		this.configuration = configuration;
 	}
 
 	public String getName() {
