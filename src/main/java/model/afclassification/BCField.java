@@ -1,32 +1,36 @@
 package model.afclassification;
 
-public class BCField {
+import model.MongoDocumentEntity;
+import org.bson.types.ObjectId;
+
+public class BCField extends MongoDocumentEntity {
 
 	private Field field;
 
-	private BCPhase phase;
-	
+	private ObjectId phaseId;
+	private ObjectId screenId;
+	private ObjectId componentId;
+
 	private BCFieldSeverity fieldSpecification;
 	
 	private String classUri;
 
-	public BCField(Field field, BCPhase phase) {
-		this.field = field;
-		this.phase = phase;
-	}
-	
-	public BCField(Field field, BCPhase phase, String classUri) {
-		this.field = field;
-		this.phase = phase;
-		this.classUri = classUri;
+	public BCField() {
 	}
 
-	public BCPhase getPhase() {
-		return phase;
+	public BCField(Field field, ObjectId phaseId, ObjectId screenId, ObjectId componentId) {
+		this.field = field;
+		this.phaseId = phaseId;
+		this.screenId = screenId;
+		this.componentId = componentId;
 	}
 
-	public void setPhase(BCPhase phase) {
-		this.phase = phase;
+	public ObjectId getPhaseId() {
+		return phaseId;
+	}
+
+	public void setPhaseId(ObjectId phaseId) {
+		this.phaseId = phaseId;
 	}
 
 	public Field getField() {
@@ -53,4 +57,19 @@ public class BCField {
 		this.fieldSpecification = fieldSpecification;
 	}
 
+	public ObjectId getScreenId() {
+		return screenId;
+	}
+
+	public void setScreenId(ObjectId screenId) {
+		this.screenId = screenId;
+	}
+
+	public ObjectId getComponentId() {
+		return componentId;
+	}
+
+	public void setComponentId(ObjectId componentId) {
+		this.componentId = componentId;
+	}
 }

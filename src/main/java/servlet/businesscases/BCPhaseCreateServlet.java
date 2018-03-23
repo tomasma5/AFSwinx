@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static servlet.businesscases.BusinessCaseListServlet.LIST_ROUTE;
+import static servlet.businesscases.BCPhaseFieldsConfigurationServlet.CONFIGURE_ROUTE;
 
 public class BCPhaseCreateServlet extends HttpServlet {
 
@@ -105,7 +105,9 @@ public class BCPhaseCreateServlet extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString);
+        resp.sendRedirect(CONFIGURE_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" +
+                applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString + "&" +
+                ParameterNames.BUSINESS_PHASE_ID + "=" + businessPhaseIdString);
     }
 
     private void createOrUpdateBusinessPhase(String caseId, String phaseId, BCPhase phase) throws ServiceException {
@@ -118,7 +120,7 @@ public class BCPhaseCreateServlet extends HttpServlet {
 
     private void updateBCPhaseProperties(HttpServletRequest req, ObjectId bcaseId, BCPhase phase) {
         String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_NAME)));
-        phase.setBusinessCase(bcManagementService.findById(bcaseId));
+        phase.setBusinessCaseId(bcaseId);
         phase.setName(name);
         String selectedConfiguration = Utils.trimString(req.getParameter(ParameterNames.SELECTED_CONFIGURATION));
         ConfigurationPack configurationModel = configurationManagementService.findConfigurationById(new ObjectId(selectedConfiguration));

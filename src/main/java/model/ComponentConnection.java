@@ -54,6 +54,9 @@ public class ComponentConnection {
     }
 
     public void setParameters(String parameters) {
+        if(!parameters.startsWith("/")){
+            parameters = "/" + parameters;
+        }
         this.parameters = parameters;
     }
 

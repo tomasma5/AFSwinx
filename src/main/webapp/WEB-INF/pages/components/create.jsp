@@ -40,6 +40,12 @@
                     </select>
                     <c:if test="${not empty componentTypeError}">${componentTypeError}</c:if>
                 </div>
+                <div class="form-group">
+                    <label for="componentFieldInfoUrlParameters">Field info endpoint</label>
+                    <input type="text" class="form-control" id="componentFieldInfoUrlParameters" name="componentFieldInfoUrlParameters"
+                           placeholder="Endpoint on real server on which component field info can be found." value="${componentFieldInfoUrlParameters}" required>
+                    <c:if test="${not empty componentFieldInfoUrlParametersError}">${componentFieldInfoUrlParametersError}</c:if>
+                </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-6 col-md-4">

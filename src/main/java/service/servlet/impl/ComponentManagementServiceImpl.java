@@ -121,6 +121,9 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     @Override
     public void updateComponentConnections(Application application) {
         for (ComponentResource componentResource : getAllComponentsByApplication(application.getId())) {
+            componentResource.setFieldInfoUrlProtocol(application.getRemoteProtocol());
+            componentResource.setFieldInfoUrlHostname(application.getRemoteHostname());
+            componentResource.setFieldInfoUrlPort(application.getRemotePort());
             ComponentConnectionPack realConnectionsPack = componentResource.getProxyConnections();
             updateConnectionParameters(application, realConnectionsPack.getModelConnection());
             updateConnectionParameters(application, realConnectionsPack.getDataConnection());

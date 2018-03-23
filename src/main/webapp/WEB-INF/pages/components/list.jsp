@@ -21,6 +21,7 @@
                     <th>Component name</th>
                     <th>Component type</th>
                     <th>Connections</th>
+                    <th>Field info url</th>
                     <th>Referenced in</th>
                     <th colspan="2">Actions</th>
                 </tr>
@@ -31,6 +32,13 @@
                         <td>${component.name}</td>
                         <td>${component.type.name}</td>
                         <td>
+                            <h4 class="text-primary">Field info url</h4>
+                            <c:if test="${component.fieldInfoUrlParameters != null}">
+                                ${component.fieldInfoUrlProtocol}://${component.fieldInfoUrlHostname}:${component.fieldInfoUrlPort}${component.fieldInfoUrlParameters}
+                            </c:if>
+                            <c:if test="${component.fieldInfoUrlParameters == null}">
+                                <span style="color: red">MISSING!!!!</span>
+                            </c:if>
                             <h4 class="text-primary">Real connections</h4>
                             <c:if test="${component.proxyConnections.modelConnection != null}">
                                 <b>Model:</b> ${component.proxyConnections.modelConnection.realProtocol}://${component.proxyConnections.modelConnection.realAddress}:${component.proxyConnections.modelConnection.realPort}${component.proxyConnections.modelConnection.realParameters}

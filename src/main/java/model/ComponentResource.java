@@ -12,6 +12,12 @@ public class ComponentResource extends MongoDocumentEntity {
     private SupportedComponentType type;
     private ComponentConnectionPack proxyConnections;
     private List<ObjectId> referencedScreensIds;
+
+    private String fieldInfoUrlProtocol;
+    private String fieldInfoUrlHostname;
+    private int fieldInfoUrlPort;
+    private String fieldInfoUrlParameters;
+
     private ObjectId applicationId;
 
     public ComponentResource() {
@@ -72,6 +78,41 @@ public class ComponentResource extends MongoDocumentEntity {
 
     public void setApplicationId(ObjectId applicationId) {
         this.applicationId = applicationId;
+    }
+
+    public String getFieldInfoUrlProtocol() {
+        return fieldInfoUrlProtocol;
+    }
+
+    public void setFieldInfoUrlProtocol(String fieldInfoUrlProtocol) {
+        this.fieldInfoUrlProtocol = fieldInfoUrlProtocol;
+    }
+
+    public String getFieldInfoUrlHostname() {
+        return fieldInfoUrlHostname;
+    }
+
+    public void setFieldInfoUrlHostname(String fieldInfoUrlHostname) {
+        this.fieldInfoUrlHostname = fieldInfoUrlHostname;
+    }
+
+    public int getFieldInfoUrlPort() {
+        return fieldInfoUrlPort;
+    }
+
+    public void setFieldInfoUrlPort(int fieldInfoUrlPort) {
+        this.fieldInfoUrlPort = fieldInfoUrlPort;
+    }
+
+    public String getFieldInfoUrlParameters() {
+        return fieldInfoUrlParameters;
+    }
+
+    public void setFieldInfoUrlParameters(String fieldInfoUrlParameters) {
+        if(!fieldInfoUrlParameters.startsWith("/")){
+            fieldInfoUrlParameters = "/" + fieldInfoUrlParameters;
+        }
+        this.fieldInfoUrlParameters = fieldInfoUrlParameters;
     }
 
     @Override

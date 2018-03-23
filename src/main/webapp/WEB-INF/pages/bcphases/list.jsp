@@ -25,7 +25,7 @@
                     <th>Name</th>
                     <th>Number of linked screens</th>
                     <th>Linked screens</th>
-                    <th colspan="2">Actions</th>
+                    <th colspan="3">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,6 +46,11 @@
                         <td>
                             <a href="${pageContext.request.contextPath}/businesscases/phases/create?app=${app}&bcase=${bcase}&bcphase=${bcphase.id}">
                                 <button class="btn btn-primary">Edit</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/businesscases/phases/configure?app=${app}&bcase=${bcase}&bcphase=${bcphase.id}">
+                                <button class="btn btn-success">Configure fields</button>
                             </a>
                         </td>
                         <td>

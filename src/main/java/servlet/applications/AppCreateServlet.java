@@ -76,6 +76,7 @@ public class AppCreateServlet extends HttpServlet {
             req.setAttribute("portError", "Port must be a number.");
         }
 
+        req.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
         req.setAttribute(ParameterNames.APPLICATION_NAME, applicationName);
         req.setAttribute(ParameterNames.APPLICATION_REMOTE_PROTOCOL, remoteProtocol);
         req.setAttribute(ParameterNames.APPLICATION_REMOTE_HOSTNAME, remoteHostname);

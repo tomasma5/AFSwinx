@@ -11,8 +11,7 @@
         <div class="panel-heading height-50px">
             <a href="${pageContext.request.contextPath}/businesscases/list?app=${app}">Business cases</a> >
             <a href="${pageContext.request.contextPath}/businesscases/phases/list?app=${app}&bcase=${bcase}"> Phases</a>
-                > Create/Edit
-            business BC phase
+                > Create/Edit business case phase
         </div>
         <div class="panel-body ">
             <form action="create?app=${app}&bcase=${bcase}" method="post">

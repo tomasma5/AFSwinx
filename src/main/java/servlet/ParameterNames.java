@@ -21,6 +21,7 @@ public class ParameterNames {
     public static final String COMPONENT_ID = "component";
     public static final String COMPONENT_NAME = "componentName";
     public static final String COMPONENT_TYPE = "componentType";
+    public static final String COMPONENT_FIELD_INFO_URL_PARAMETERS = "componentFieldInfoUrlParameters";
 
     public static final String MODEL = "model";
     public static final String DATA = "data";
@@ -64,4 +65,7 @@ public class ParameterNames {
     public static final String CONFIGURATION_LIST = "configurationsList";
     public static final String CONFIGURATION_RECORDS_COUNT = "configurationRecordsCount";
     public static final String SELECTED_CONFIGURATION = "selectedConfiguration";
+
+    public static final String FIELD_SEVERITY = "fieldSeverity";
+    public static final String FIELD_PURPOSE = "fieldPurpose";
 }

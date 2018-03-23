@@ -4,12 +4,15 @@ import dao.BusinessCaseDao;
 import dao.ScreenDao;
 import model.ComponentResource;
 import model.Screen;
-import model.afclassification.BCPhase;
-import model.afclassification.BusinessCase;
+import model.afclassification.*;
 import org.bson.types.ObjectId;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import service.exception.ServiceException;
 import service.servlet.BusinessCaseManagementService;
 import servlet.ParameterNames;
+import utils.Constants;
+import utils.HttpUtils;
 import utils.Utils;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,6 +20,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,7 +102,6 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
 
     @Override
     public List<BusinessCase> getAllByApplication(ObjectId applicationId) {
-        //TODO make more effective?
         return businessCaseDao.findAll().stream()
                 .filter(screen -> screen.getApplicationId().equals(applicationId))
                 .collect(Collectors.toList());
@@ -129,7 +132,7 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
         }
         BCPhase businessPhase = new BCPhase();
         businessPhase.setId(new ObjectId());
-        businessPhase.setBusinessCase(businessCase);
+        businessPhase.setBusinessCaseId(businessCase.getId());
         return businessPhase;
     }
 
@@ -159,14 +162,85 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
     }
 
     @Override
-    public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, ObjectId businessCaseId, int linkedScreensCount) throws ServiceException {
+    public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, ObjectId businessCaseId,
+                                                   int linkedScreensCount) throws ServiceException {
         if (phase.getLinkedScreens() != null) {
-            phase.getLinkedScreens().clear();
+            phase.getLinkedScreens().clear(); //TODO remove only missing screens or add new screens - fields of screens which are already here shoul be refreshed (as decribed in TODO in BCPhaseFieldsConfigurationServlet.java on line 44)
         }
         for (int i = 0; i < linkedScreensCount; i++) {
-            String screenId = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREEN_ID + (i + 1)));
+            String screenId = Utils.trimString(
+                    req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREEN_ID + (i + 1)));
             Screen screen = screenDao.findById(new ObjectId(screenId));
             phase.addLinkedScreen(screen);
+        }
+        try {
+            updatePhaseBCFields(phase);
+        } catch (IOException e) {
+            System.err.println("Cannot get component fields from server.");
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePhaseBCFields(BCPhase phase) throws IOException {
+        if (phase.getFields() != null) {
+            phase.getFields().clear();
+        }
+        if (phase.getLinkedScreens() != null) {
+            for (Screen screen : phase.getLinkedScreens()) {
+                for (ComponentResource componentResource : screen.getComponents()) {
+                    String classInfoString = HttpUtils.getRequest(HttpUtils.buildUrl(
+                            componentResource.getFieldInfoUrlProtocol(),
+                            componentResource.getFieldInfoUrlHostname(),
+                            componentResource.getFieldInfoUrlPort(),
+                            null,
+                            componentResource.getFieldInfoUrlParameters()
+                    ), null);
+                    JSONObject classInfo = new JSONObject(classInfoString);
+                    String className = classInfo.getString(Constants.CLASS_NAME);
+                    prepareBCFields(classInfo, 0, false, className,
+                            new StringBuilder(), phase, screen, componentResource);
+                }
+            }
+        }
+    }
+
+
+    private void prepareBCFields(JSONObject classInfo, int numberOfInnerClasses, boolean parsingInnerClass,
+                                 String className, StringBuilder road, BCPhase phase, Screen screen, ComponentResource componentResource) {
+        if (parsingInnerClass) {
+            numberOfInnerClasses = 0;
+        }
+        if (classInfo != null) {
+            JSONArray innerClasses = classInfo.optJSONArray(Constants.INNER_CLASSES);
+            JSONArray fieldsInfo = classInfo.optJSONArray(Constants.FIELD_INFO);
+            if (fieldsInfo != null) {
+                for (int i = 0; i < fieldsInfo.length(); i++) {
+                    JSONObject fieldInfo = fieldsInfo.getJSONObject(i);
+                    boolean isClassType = fieldInfo.getBoolean(Constants.FIELD_CLASS_TYPE);
+                    if (isClassType && innerClasses != null) {
+                        String roadBackup = road.toString();
+                        road.append(innerClasses.getJSONObject(numberOfInnerClasses).getString(Constants.CLASS_NAME));
+                        road.append(".");
+                        prepareBCFields(innerClasses.getJSONObject(numberOfInnerClasses), numberOfInnerClasses++,
+                                true, className, road, phase, screen, componentResource);
+                        road = new StringBuilder(roadBackup);
+                    } else {
+                        if (fieldInfo.getBoolean(Constants.FIELD_VISIBILITY)) {
+                            Field field = new Field();
+                            field.setFieldName(road.toString() + fieldInfo.getString(Constants.FIELD_ID));
+                            field.setClassName(className);
+                            field.setType(fieldInfo.getString(Constants.WIDGET_TYPE));
+                            BCField bcField = new BCField();
+                            bcField.setField(field);
+                            bcField.setPhaseId(phase.getId());
+                            bcField.setScreenId(screen.getId());
+                            bcField.setComponentId(componentResource.getId());
+                            bcField.setFieldSpecification(new BCFieldSeverity());
+                            phase.addBCField(bcField);
+                        }
+                    }
+                }
+            }
         }
     }
 

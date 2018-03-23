@@ -67,12 +67,12 @@ public class ComponentCreateServlet extends HttpServlet {
         String componentId = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID));
         ComponentResource componentResource = componentManagementService.findOrCreateComponentResource(req, componentId);
         //set attributes to component resource
-        updateComponentProperties(req, componentResource);
+        updateComponentProperties(req, componentResource, application);
         //set connection data
         componentManagementService.updateComponentConnections(req, application, componentResource);
 
         createOrUpdateComponent(req, componentResource);
-        resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appIdString);
+        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appIdString);
     }
 
     //component set & update methods
@@ -85,18 +85,27 @@ public class ComponentCreateServlet extends HttpServlet {
         }
     }
 
-    private void updateComponentProperties(HttpServletRequest req, ComponentResource componentResource) {
+    private void updateComponentProperties(HttpServletRequest req, ComponentResource componentResource, Application application) {
         String componentName = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_NAME));
         SupportedComponentType componentType = SupportedComponentType.valueOf(Utils.trimString(req.getParameter(ParameterNames.COMPONENT_TYPE)));
-        componentResource.setName(Utils.trimString(componentName));
+        String fieldInfoUrlParameters = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_FIELD_INFO_URL_PARAMETERS));
+        componentResource.setName(componentName);
         componentResource.setType(componentType);
+        //set field info url
+        componentResource.setFieldInfoUrlProtocol(application.getRemoteProtocol() != null ? application.getRemoteProtocol() : "http");
+        componentResource.setFieldInfoUrlHostname(application.getRemoteHostname());
+        componentResource.setFieldInfoUrlPort(application.getRemotePort());
+        componentResource.setFieldInfoUrlParameters(fieldInfoUrlParameters);
+
         componentResource.setApplicationId(new ObjectId(Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID))));
+
     }
 
-    private void setComponentInputToRequest(HttpServletRequest req, String componentId, String componentName, SupportedComponentType componentType) {
-        req.setAttribute(ParameterNames.COMPONENT_ID, componentId);
-        req.setAttribute(ParameterNames.COMPONENT_NAME, componentName);
-        req.setAttribute(ParameterNames.COMPONENT_TYPE, componentType.getName());
+    private void setComponentInputToRequest(HttpServletRequest req, ComponentResource component) {
+        req.setAttribute(ParameterNames.COMPONENT_ID, component.getId());
+        req.setAttribute(ParameterNames.COMPONENT_NAME, component.getName());
+        req.setAttribute(ParameterNames.COMPONENT_TYPE, component.getType().getName());
+        req.setAttribute(ParameterNames.COMPONENT_FIELD_INFO_URL_PARAMETERS, component.getFieldInfoUrlParameters());
     }
 
     private void setConnectionInputToRequest(HttpServletRequest req, String type, ComponentConnection connection) {
@@ -116,7 +125,7 @@ public class ComponentCreateServlet extends HttpServlet {
 
     private void setExistingComponentToRequest(HttpServletRequest request, String componentId) {
         ComponentResource component = componentManagementService.findById(new ObjectId(componentId));
-        setComponentInputToRequest(request, component.getId().toString(), component.getName(), component.getType());
+        setComponentInputToRequest(request, component);
         setConnectionInputToRequest(request, ParameterNames.MODEL, component.getProxyConnections().getModelConnection());
         setConnectionInputToRequest(request, ParameterNames.DATA, component.getProxyConnections().getDataConnection());
         setConnectionInputToRequest(request, ParameterNames.SEND, component.getProxyConnections().getSendConnection());

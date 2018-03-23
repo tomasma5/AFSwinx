@@ -1,5 +1,7 @@
 package utils;
 
+import model.ComponentConnection;
+
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -14,6 +16,7 @@ public class HttpUtils {
 
     private static final String HTTP_GET = "GET";
     private static final String HTTP_POST = "POST";
+    private static final String DEFAULT_PROTOCOL = "http";
 
     public static String getRequest(String url, MultivaluedMap<String, String> requestHeaders) throws IOException {
 
@@ -24,8 +27,10 @@ public class HttpUtils {
         con.setRequestMethod(HTTP_GET);
 
         //add request header
-        for (Map.Entry<String, String> requestHeader : prepareParameters(requestHeaders).entrySet()) {
-            con.setRequestProperty(requestHeader.getKey(), requestHeader.getValue());
+        if (requestHeaders != null) {
+            for (Map.Entry<String, String> requestHeader : prepareParameters(requestHeaders).entrySet()) {
+                con.setRequestProperty(requestHeader.getKey(), requestHeader.getValue());
+            }
         }
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -48,8 +53,10 @@ public class HttpUtils {
         //add reuqest header
         con.setRequestMethod(HTTP_POST);
         //add request header
-        for (Map.Entry<String, String> requestHeader : prepareParameters(requestHeaders).entrySet()) {
-            con.setRequestProperty(requestHeader.getKey(), requestHeader.getValue());
+        if (requestHeaders != null) {
+            for (Map.Entry<String, String> requestHeader : prepareParameters(requestHeaders).entrySet()) {
+                con.setRequestProperty(requestHeader.getKey(), requestHeader.getValue());
+            }
         }
 
         // Send post request
@@ -86,7 +93,7 @@ public class HttpUtils {
 
     public static String buildUrl(String protocol, String hostname, String port, String contextPath, String parameters) {
         if (protocol == null || protocol.isEmpty()) {
-            protocol = "http";
+            protocol = DEFAULT_PROTOCOL;
         }
         return protocol +
                 "://" +
@@ -98,7 +105,7 @@ public class HttpUtils {
 
     public static String buildUrl(String protocol, String hostname, int port, String contextPath, String parameters) {
         if (protocol == null || protocol.isEmpty()) {
-            protocol = "http";
+            protocol = DEFAULT_PROTOCOL;
         }
         return protocol +
                 "://" +
@@ -106,5 +113,16 @@ public class HttpUtils {
                 (port != 0 ? ":" + port : "") +
                 (contextPath != null ? contextPath : "") +
                 (parameters != null ? parameters : "");
+    }
+
+    public static String buildUrl(ComponentConnection componentConnection, String contextPath, boolean proxy) {
+        if (proxy) {
+            return buildUrl(componentConnection.getProtocol(), componentConnection.getAddress(),
+                    componentConnection.getPort(), contextPath, componentConnection.getParameters());
+        } else {
+            return buildUrl(componentConnection.getRealProtocol(), componentConnection.getRealAddress(),
+                    componentConnection.getRealPort(), contextPath, componentConnection.getRealParameters());
+        }
+
     }
 }

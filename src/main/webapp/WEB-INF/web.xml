@@ -90,6 +90,10 @@
         <servlet-name>BCPhaseCreateServlet</servlet-name>
         <servlet-class>servlet.businesscases.BCPhaseCreateServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BCPhaseFieldsConfigurationServlet</servlet-name>
+        <servlet-class>servlet.businesscases.BCPhaseFieldsConfigurationServlet</servlet-class>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>BCPhaseListServlet</servlet-name>
@@ -98,6 +102,10 @@
     <servlet-mapping>
         <servlet-name>BCPhaseCreateServlet</servlet-name>
         <url-pattern>/businesscases/phases/create</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BCPhaseFieldsConfigurationServlet</servlet-name>
+        <url-pattern>/businesscases/phases/configure</url-pattern>
     </servlet-mapping>
 
     <!-- CONFIGURATIONS MAPPING-->

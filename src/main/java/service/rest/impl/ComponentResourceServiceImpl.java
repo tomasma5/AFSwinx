@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import rest.security.RequestContext;
 import service.exception.ComponentRequestException;
 import service.rest.ComponentResourceService;
+import utils.Constants;
 import utils.HttpUtils;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -27,7 +28,6 @@ import java.util.logging.Logger;
 public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     private static final Logger LOGGER = Logger.getLogger(ComponentResourceServiceImpl.class.getName());
-    private static final String REAL_ENDPOINT_HEADER = "real-endpoint";
 
     @Inject
     ComponentResourceDao componentResourceDao;
@@ -91,7 +91,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     }
 
     private String checkRealEndpointUrlPresence(HttpHeaders headers) throws ComponentRequestException {
-        String realEndpoint = headers.getHeaderString(REAL_ENDPOINT_HEADER);
+        String realEndpoint = headers.getHeaderString(Constants.REAL_ENDPOINT_HEADER);
         if (realEndpoint == null) {
             String errorMsg = "Cannot get component model. Real endpoint was not correctly evaluated at client side.";
             LOGGER.log(Level.SEVERE, errorMsg);

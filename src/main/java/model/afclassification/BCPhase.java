@@ -2,22 +2,23 @@ package model.afclassification;
 
 import model.MongoDocumentEntity;
 import model.Screen;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BCPhase extends MongoDocumentEntity {
 
-	private BusinessCase businessCase;
-
 	private List<BCField> fields;
 
 	private List<Screen> linkedScreens;
 
 	private ConfigurationPack configuration;
+
+	private ObjectId businessCaseId;
 	
 	private String name;
-	
+
 	public synchronized void addBCField(BCField field){
 		if(this.fields == null){
 			this.fields = new ArrayList<>();
@@ -30,14 +31,6 @@ public class BCPhase extends MongoDocumentEntity {
 			this.linkedScreens = new ArrayList<>();
 		}
 		this.linkedScreens.add(screen);
-	}
-
-	public BusinessCase getBusinessCase() {
-		return businessCase;
-	}
-
-	public void setBusinessCase(BusinessCase businessCase) {
-		this.businessCase = businessCase;
 	}
 
 	public List<BCField> getFields() {
@@ -72,4 +65,11 @@ public class BCPhase extends MongoDocumentEntity {
 		this.name = name;
 	}
 
+	public ObjectId getBusinessCaseId() {
+		return businessCaseId;
+	}
+
+	public void setBusinessCaseId(ObjectId businessCaseId) {
+		this.businessCaseId = businessCaseId;
+	}
 }
