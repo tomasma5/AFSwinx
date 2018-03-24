@@ -13,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -27,6 +28,7 @@ import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
 import com.tomscz.afserver.manager.exceptions.BusinessException;
+import com.tomscz.afserver.persistence.entity.AbsenceInstance;
 import com.tomscz.afserver.persistence.entity.AbsenceType;
 import com.tomscz.afserver.persistence.entity.Country;
 
@@ -91,7 +93,8 @@ public class AbsenceTypeResource extends BaseResource {
             List<AbsenceType> absenceTypes =
                     getAbsenceTypeManager().findAbsenceTypeInCountry(countryId);
             final GenericEntity<List<AbsenceType>> absenceTypeGeneric =
-                    new GenericEntity<List<AbsenceType>>(absenceTypes) {};
+                    new GenericEntity<List<AbsenceType>>(absenceTypes) {
+                    };
             return Response.status(Response.Status.OK).entity(absenceTypeGeneric).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -99,7 +102,7 @@ public class AbsenceTypeResource extends BaseResource {
             return Response.status(e.getStatus()).build();
         }
     }
-    
+
     @POST
     @Path("/country/{countryId}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -118,7 +121,26 @@ public class AbsenceTypeResource extends BaseResource {
 
     @Override
     public String getResourceUrl() {
-       return "/AFServer/rest/absencetype/";
+        return "/AFServer/rest/absencetype/";
     }
-    
+
+    @Override
+    protected Class getModelClass() {
+        return AbsenceType.class;
+    }
+
+    @GET
+    @Path("/supportedCountries/fieldInfo")
+    @Produces({MediaType.APPLICATION_JSON})
+    @PermitAll
+    public Response getCountriesToAbsenceTypeFieldInfo(@javax.ws.rs.core.Context HttpServletRequest request) {
+        AFClassInfo classInfo = new AFClassInfo();
+        classInfo.setName("");
+        AFFieldInfo fieldInfo = new AFFieldInfo();
+        fieldInfo.setId("country");
+        fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
+        fieldInfo.setWidgetType(SupportedWidgets.DROPDOWNMENU);
+        classInfo.addFieldInfo(fieldInfo);
+        return Response.status(Response.Status.OK).entity(classInfo).build();
+    }
 }

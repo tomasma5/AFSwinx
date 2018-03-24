@@ -29,6 +29,7 @@ import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.BUSINESS_TRI
 public class BusinessTripsListFragment extends BaseFragment {
 
     public static final String SCREEN_DEFINITION_URL = "SCREEN_DEFINITION_URL";
+    public static final String SCREEN_DEFINITION_KEY = "SCREEN_DEFINITION_KEY";
     public static final String LIST_ID = "LIST_ID";
     public static final String LIST_POSITITON = "LIST_POSITION";
 
@@ -57,6 +58,7 @@ public class BusinessTripsListFragment extends BaseFragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent intent = new Intent(getActivity(), BusinessTripDetailActivity.class);
                     intent.putExtra(SCREEN_DEFINITION_URL, getScreenDefinition().getScreenUrl());
+                    intent.putExtra(SCREEN_DEFINITION_KEY, getScreenDefinition().getKey());
                     intent.putExtra(LIST_ID, ShowcaseConstants.BUSINESS_TRIPS_LIST);
                     intent.putExtra(LIST_POSITITON, position);
                     startActivityForResult(intent, BUSINESS_TRIP_EDIT_REQUEST);
@@ -75,7 +77,7 @@ public class BusinessTripsListFragment extends BaseFragment {
 
         if (requestCode == BUSINESS_TRIP_EDIT_REQUEST) {
             try {
-                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
                 if (resultCode == RESULT_OK) {
                     Toast.makeText(getActivity(), "Business trip was updated", Toast.LENGTH_LONG).show();
                 }

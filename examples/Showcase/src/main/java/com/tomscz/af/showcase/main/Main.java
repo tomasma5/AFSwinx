@@ -7,8 +7,10 @@ import com.tomscz.af.showcase.application.ApplicationContext;
 import com.tomscz.af.showcase.application.ShowcaseConstants;
 import com.tomscz.af.showcase.view.WelcomeScreen;
 import com.tomscz.af.showcase.view.controller.WelcomeScreenController;
+import com.tomscz.af.showcase.view.dialogs.Dialogs;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
+import com.tomscz.afswinx.rest.connection.Device;
 
 public class Main {
 
@@ -18,6 +20,7 @@ public class Main {
             ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.ENGLISH_BUNDLE);
             //setup ui proxy
             AFSwinx.getInstance().setProxyApplicationContext(ApplicationContext.getInstance().getUiProxyApplicationUuid());
+            AFSwinx.getInstance().setDeviceType(Device.PC);
             ApplicationContext.getInstance().loadUIProxyUrl();
         } catch (FileNotFoundException e) {
             // Try czech bundle
@@ -33,12 +36,12 @@ public class Main {
 
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance()
-                    .getScreenDefinitionBuilder(ApplicationContext.getInstance().getUiProxyUrl()+"/api/screens/5a9955636402eb092c3b56c7")
+                    .getScreenDefinitionBuilder(ApplicationContext.getInstance().getUiProxyUrl()+"/api/screens/5a9955636402eb092c3b56c7", "Login")
                     .getScreenDefinition();
             WelcomeScreen welcomeScreen = new WelcomeScreen(screenDefinition);
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
         } catch (Exception e) {
-            //TODO something went wrong
+            System.err.println("Cannot get welcome screen from server. Please check stack trace");
             e.printStackTrace();
         }
     }

@@ -17,6 +17,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -154,6 +155,11 @@ public class BusinessTripPartResource extends BaseResource {
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @Override
+    protected Class getModelClass() {
+        return BusinessTripPart.class;
     }
 
 

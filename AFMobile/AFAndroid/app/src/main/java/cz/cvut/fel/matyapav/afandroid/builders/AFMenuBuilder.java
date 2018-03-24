@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.builders;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -10,7 +9,6 @@ import com.tomscz.afswinx.rest.connection.HttpMethod;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFMenu;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFScreenButton;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;

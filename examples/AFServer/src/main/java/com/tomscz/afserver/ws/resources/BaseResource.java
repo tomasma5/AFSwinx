@@ -1,12 +1,27 @@
 package com.tomscz.afserver.ws.resources;
 
+import javax.annotation.security.PermitAll;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+import com.tomscz.afrest.AFRest;
+import com.tomscz.afrest.AFRestGenerator;
+import com.tomscz.afrest.exception.MetamodelException;
+import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afserver.manager.*;
 import com.tomscz.afserver.persistence.entity.*;
 import com.tomscz.afserver.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class provide all managers to its children. It also has abstract method called
@@ -17,6 +32,18 @@ import com.tomscz.afserver.utils.Utils;
  * @since 1.0.0.
  */
 public abstract class BaseResource {
+
+    @GET
+    @Path("/fieldInfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    @PermitAll
+    public Response getComponentFields(@javax.ws.rs.core.Context HttpServletRequest request) throws MetamodelException {
+        AFRest afSwing = new AFRestGenerator(request.getSession().getServletContext());
+        AFMetaModelPack data = afSwing.generateSkeleton(getModelClass().getCanonicalName());
+        return Response.status(Response.Status.OK).entity(data.getClassInfo()).build();
+    };
+
+    protected abstract Class getModelClass();
 
     @SuppressWarnings("unchecked")
     protected CountryManager<Country> getCountryManager() throws NamingException {

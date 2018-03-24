@@ -1,11 +1,16 @@
 package cz.cvut.fel.matyapav.afandroid.utils;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.widget.TextView;
 
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,46 +41,46 @@ public class Utils {
         return sb.toString();
     }
 
-    public static boolean isFieldWritable(SupportedWidgets widgetType){
+    public static boolean isFieldWritable(SupportedWidgets widgetType) {
         return widgetType.equals(SupportedWidgets.TEXTFIELD) || widgetType.equals(SupportedWidgets.NUMBERFIELD)
                 || widgetType.equals(SupportedWidgets.NUMBERDOUBLEFIELD) || widgetType.equals(SupportedWidgets.PASSWORD);
     }
 
-    public static boolean isFieldNumberField(AFField field){
+    public static boolean isFieldNumberField(AFField field) {
         return field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERFIELD)
                 || field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERDOUBLEFIELD);
     }
 
-    public static boolean isFieldIntegerField(AFField field){
+    public static boolean isFieldIntegerField(AFField field) {
         return field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERFIELD);
     }
 
-    public static boolean isFieldDoubleField(AFField field){
+    public static boolean isFieldDoubleField(AFField field) {
         return field.getFieldInfo().getWidgetType().equals(SupportedWidgets.NUMBERDOUBLEFIELD);
     }
 
-    public static String getConnectionEndPoint(AFSwinxConnection connection){
+    public static String getConnectionEndPoint(AFSwinxConnection connection) {
         StringBuilder endPointBuilder = new StringBuilder();
-        if(connection.getProtocol() != null && !connection.getProtocol().isEmpty()){
+        if (connection.getProtocol() != null && !connection.getProtocol().isEmpty()) {
             endPointBuilder.append(connection.getProtocol());
             endPointBuilder.append("://");
         }
-        if(connection.getAddress() != null && !connection.getAddress().isEmpty()){
+        if (connection.getAddress() != null && !connection.getAddress().isEmpty()) {
             endPointBuilder.append(connection.getAddress());
         }
-        if(connection.getPort() != 0){
+        if (connection.getPort() != 0) {
             endPointBuilder.append(":");
             endPointBuilder.append(connection.getPort());
         }
-        if(connection.getParameters() != null && !connection.getParameters().isEmpty()){
+        if (connection.getParameters() != null && !connection.getParameters().isEmpty()) {
             endPointBuilder.append(connection.getParameters());
         }
         return endPointBuilder.toString();
     }
 
     public static boolean shouldBeInvisible(String column, AFComponent component) {
-        for(AFField field: component.getFields()){
-            if(field.getId().equals(column)){
+        for (AFField field : component.getFields()) {
+            if (field.getId().equals(column)) {
                 return !field.getFieldInfo().isVisible();
             }
         }
@@ -83,7 +88,7 @@ public class Utils {
     }
 
     public static void setCellParams(TextView cell, int gravity, int paddingLeft, int paddingRight,
-                               int paddingTop, int paddingBottom, int borderWidth, int borderColor){
+                                     int paddingTop, int paddingBottom, int borderWidth, int borderColor) {
         //create border
         ShapeDrawable rect = new ShapeDrawable(new RectShape());
         rect.getPaint().setStyle(Paint.Style.STROKE);
@@ -95,19 +100,35 @@ public class Utils {
         cell.setBackground(rect);
     }
 
-    public static Date parseDate(String date){
-    String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
-        if(date != null){
-            for (String format: formats) {
+    public static Date parseDate(String date) {
+        String[] formats = {"yyyy-MM-dd'T'HH:mm:ss.SSSZ", "dd.MM.yyyy"};
+        if (date != null) {
+            for (String format : formats) {
                 SimpleDateFormat formatter = new SimpleDateFormat(format);
-                try{
+                try {
                     return formatter.parse(date);
                 } catch (ParseException e) {
-                    System.err.println("Cannot parse date "+date+" using format "+ format);
+                    System.err.println("Cannot parse date " + date + " using format " + format);
                 }
             }
         }
         return null;
+    }
+
+    /**
+     * Determine if device has screen diagonal size bigger than 6.5 inches, which should be size
+     * for tablet.
+     * @param activity
+     * @return
+     */
+    public static boolean deviceHasTabletSize(Activity activity) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        float yInches = metrics.heightPixels / metrics.ydpi;
+        float xInches = metrics.widthPixels / metrics.xdpi;
+        double diagonalInches = Math.sqrt(xInches * xInches + yInches * yInches);
+        return diagonalInches >= 6.5;
     }
 
 

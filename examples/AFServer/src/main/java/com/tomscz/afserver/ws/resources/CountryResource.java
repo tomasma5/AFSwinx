@@ -165,4 +165,8 @@ public class CountryResource extends BaseResource {
         return "/AFServer/rest/country/";
     }
 
+    @Override
+    protected Class getModelClass() {
+        return Country.class;
+    }
 }

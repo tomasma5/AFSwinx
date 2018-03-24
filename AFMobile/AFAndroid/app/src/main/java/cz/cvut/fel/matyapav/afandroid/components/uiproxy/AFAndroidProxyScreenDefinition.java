@@ -92,7 +92,7 @@ public class AFAndroidProxyScreenDefinition {
 
     public void reload(Context context) {
         try {
-            AFAndroidProxyScreenDefinition screenDefinition = AFAndroid.getInstance().getScreenDefinitionBuilder(context, screenUrl).getScreenDefinition();
+            AFAndroidProxyScreenDefinition screenDefinition = AFAndroid.getInstance().getScreenDefinitionBuilder(context, screenUrl, key).getScreenDefinition();
             setKey(screenDefinition.key);
             setComponentDefinitions(screenDefinition.getComponentDefinitions());
         } catch (Exception e) {

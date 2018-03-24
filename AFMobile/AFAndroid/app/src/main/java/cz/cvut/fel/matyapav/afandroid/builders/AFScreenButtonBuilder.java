@@ -54,7 +54,7 @@ public class AFScreenButtonBuilder {
     public AFScreenButton buildComponent(JSONObject menuItemJsonObj) throws AFSwinxBuildException {
         final AFScreenButton button = new AFScreenButton(context);
         try {
-            String key = menuItemJsonObj.getString(BUTTON_KEY);
+            final String key = menuItemJsonObj.getString(BUTTON_KEY);
 
             String displayText = menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT);
             final String url = menuItemJsonObj.getString(BUTTON_URL_KEY);
@@ -66,7 +66,7 @@ public class AFScreenButtonBuilder {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    loadScreen(button, url);
+                    loadScreen(button, url, key);
 
                     View.OnClickListener onClickListener = button.getCustomOnClickListener();
                     if (onClickListener != null) {
@@ -81,10 +81,10 @@ public class AFScreenButtonBuilder {
         return button;
     }
 
-    private void loadScreen(AFScreenButton button, String screenUrl) {
+    private void loadScreen(AFScreenButton button, String screenUrl, String screenKey) {
         AFAndroidProxyScreenDefinition screenDefinition = null;
         try {
-            screenDefinition = AFAndroid.getInstance().getScreenDefinitionBuilder(context, screenUrl).getScreenDefinition();
+            screenDefinition = AFAndroid.getInstance().getScreenDefinitionBuilder(context, screenUrl, screenKey).getScreenDefinition();
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Cannot build screen definition. Please check stacktrace");

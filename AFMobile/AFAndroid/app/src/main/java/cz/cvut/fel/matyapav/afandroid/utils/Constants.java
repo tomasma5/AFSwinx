@@ -32,5 +32,9 @@ public class Constants {
     public static final String OPTIONS = "options";
     public static final String INNER_CLASSES = "innerClasses";
 
+    //header constants
+    public static final String APPLICATION_HEADER = "Application";
+    public static final String SCREEN_HEADER = "Screen";
+    public static final String DEVICE_HEADER = "Device";
 
 }

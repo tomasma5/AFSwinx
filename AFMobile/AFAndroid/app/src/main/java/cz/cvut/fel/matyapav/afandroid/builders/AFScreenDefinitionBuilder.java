@@ -13,6 +13,7 @@ import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyComponent
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -23,6 +24,7 @@ public class AFScreenDefinitionBuilder {
 
     private Context context;
     private String url;
+    private String screenKey;
 
     private static final String SCREEN_KEY = "key";
     private static final String SCREEN_URL_KEY = "screenUrl";
@@ -32,9 +34,10 @@ public class AFScreenDefinitionBuilder {
     private static final String COMPONENT_NAME_KEY = "name";
     private static final String COMPONENT_CONNECTIONS_KEY = "proxyConnections";
 
-    public AFScreenDefinitionBuilder(Context context, String url) {
+    public AFScreenDefinitionBuilder(Context context, String url, String screenKey) {
         this.context = context;
         this.url = url;
+        this.screenKey = screenKey;
     }
 
     public AFAndroidProxyScreenDefinition getScreenDefinition() throws Exception {
@@ -59,7 +62,7 @@ public class AFScreenDefinitionBuilder {
                     TableBuilder tableBuilder = AFAndroid.getInstance().getTableBuilder().initBuilder(context, componentDefinition.getName(), connections.toString());
                     componentDefinition.setBuilder(tableBuilder);
                 }
-                if(componentType.equals(SupportedComponents.LIST)) {
+                if (componentType.equals(SupportedComponents.LIST)) {
                     ListBuilder listBuilder = AFAndroid.getInstance().getListBuilder().initBuilder(context, componentDefinition.getName(), connections.toString());
                     componentDefinition.setBuilder(listBuilder);
                 }
@@ -75,6 +78,7 @@ public class AFScreenDefinitionBuilder {
         if (url != null) {
 
             RequestTask task = new RequestTask(url)
+                    .addHeaderParameter(Constants.SCREEN_HEADER, screenKey)
                     .setHttpMethod(HttpMethod.GET);
 
             Object response = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get(); //make it synchronous to wait for response

@@ -2,6 +2,7 @@ package com.tomscz.afswinx.component.uiproxy;
 
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
 import com.tomscz.afswinx.component.builders.AFSwinxTableBuilder;
 
@@ -65,10 +66,10 @@ public class AFProxyScreenDefinition {
 
     public void reload(){
         try {
-            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl).getScreenDefinition();
+            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl, key).getScreenDefinition();
             setKey(screenDefinition.key);
             setComponentDefinitions(screenDefinition.getComponentDefinitions());
-        } catch (IOException e) {
+        } catch (IOException | AFSwinxBuildException e) {
             System.err.println("Cannot reload screen");
             e.printStackTrace();
         }

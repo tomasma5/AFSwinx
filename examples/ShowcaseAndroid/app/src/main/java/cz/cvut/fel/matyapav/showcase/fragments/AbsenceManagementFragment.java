@@ -35,7 +35,7 @@ public class AbsenceManagementFragment extends BaseFragment {
             if (form != null && form.validateData()) {
                 try {
                     form.sendData();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
                     Toast.makeText(getContext(), Localization.translate(getContext(), "success.addOrUpdate"),
                             Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {

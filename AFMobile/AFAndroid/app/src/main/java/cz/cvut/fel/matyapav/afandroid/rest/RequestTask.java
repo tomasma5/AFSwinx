@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
+import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
@@ -48,7 +49,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
         }
     }
 
-    public RequestTask(final Context context, HttpMethod method, Map<String, String> headerParameters,
+    public RequestTask(HttpMethod method, Map<String, String> headerParameters,
                        ConnectionSecurity connectionSecurity, Object data, String url) {
         this.httpMethod = method;
         this.address = url;
@@ -104,7 +105,8 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
             urlConnection.setReadTimeout(5000);
             urlConnection.setConnectTimeout(5000);
             urlConnection.setRequestMethod(httpMethod.toString().toUpperCase());
-            addHeaderParameter("Application", AFAndroid.getInstance().getProxyApplicationContext());
+            addHeaderParameter(Constants.APPLICATION_HEADER, AFAndroid.getInstance().getProxyApplicationContext());
+            addHeaderParameter(Constants.DEVICE_HEADER, AFAndroid.getInstance().getDeviceType());
             if (headerParameters != null) {
                 for (Map.Entry<String, String> headerParam : headerParameters.entrySet()) {
                     urlConnection.setRequestProperty(headerParam.getKey(), headerParam.getValue());

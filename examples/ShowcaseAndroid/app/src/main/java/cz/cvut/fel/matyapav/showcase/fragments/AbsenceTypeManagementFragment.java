@@ -39,7 +39,7 @@ public class AbsenceTypeManagementFragment extends BaseFragment {
             String country = chooseCountryForm.reserialize().getPropertiesAndValues().get(ShowcaseConstants.COUNTRY_KEY);
             setCountryId(Integer.parseInt(country));
             setSelectedCountryName(chooseCountryForm.getDataFromFieldWithId(ShowcaseConstants.COUNTRY_KEY).toString());
-            ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+            ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
         }
     };
 
@@ -52,7 +52,7 @@ public class AbsenceTypeManagementFragment extends BaseFragment {
                     form.sendData();
                     Toast.makeText(getActivity(), Localization.translate(getContext(), "success.addOrUpdate"),
                             Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
                 } catch (Exception e) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                     alertDialog.setTitle(Localization.translate(getContext(), "error.addOrUpdate"));

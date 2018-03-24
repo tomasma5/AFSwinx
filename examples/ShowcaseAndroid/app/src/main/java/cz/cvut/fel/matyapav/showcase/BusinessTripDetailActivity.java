@@ -23,6 +23,7 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.LIST_ID;
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.LIST_POSITITON;
+import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.SCREEN_DEFINITION_KEY;
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.SCREEN_DEFINITION_URL;
 
 public class BusinessTripDetailActivity extends AppCompatActivity {
@@ -66,6 +67,7 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         String screenDefinitionUrl = extras.getString(SCREEN_DEFINITION_URL);
+        String screenKey = extras.getString(SCREEN_DEFINITION_KEY);
 
         LinearLayout businessTripsFormLayout = findViewById(R.id.businessTripsFormWrapper);
         //initialize builders
@@ -74,7 +76,7 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
         try {
             AFAndroidProxyScreenDefinition screenDefinition =
                     AFAndroid.getInstance()
-                            .getScreenDefinitionBuilder(this, screenDefinitionUrl).getScreenDefinition();
+                            .getScreenDefinitionBuilder(this, screenDefinitionUrl, screenKey).getScreenDefinition();
             FormBuilder formBuilder = screenDefinition
                     .getFormBuilderByKey(ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM)
                     .setConnectionParameters(securityConstrains)

@@ -34,18 +34,18 @@ public class AFSwinxScreenButtonBuilder {
 
     public AFSwinxScreenButton buildComponent(JSONObject menuItemJsonObj) throws AFSwinxBuildException {
         final AFSwinxScreenButton button = new AFSwinxScreenButton();
-        String key = menuItemJsonObj.getString(BUTTON_KEY);
+        final String key = menuItemJsonObj.getString(BUTTON_KEY);
         String displayText = menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT, null);
         final String url = menuItemJsonObj.getString(BUTTON_URL_KEY);
         int menuOrder = menuItemJsonObj.optInt(BUTTON_ORDER_KEY, -1);
         button.setKey(key);
         button.setUrl(url);
-        button.setText(displayText != null? displayText : key);
+        button.setText(displayText != null ? displayText : key);
         button.setMenuOrder(menuOrder);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadScreen(button, url);
+                loadScreen(button, url, key);
                 ActionListener onClickListener = button.getOnClickListener();
                 if (onClickListener != null) {
                     onClickListener.actionPerformed(e);
@@ -55,16 +55,16 @@ public class AFSwinxScreenButtonBuilder {
         return button;
     }
 
-    public void loadScreen(AFSwinxScreenButton button, String screenUrl) {
+    public void loadScreen(AFSwinxScreenButton button, String screenUrl, String screenKey) {
         try {
-            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl).getScreenDefinition();
+            AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl, screenKey).getScreenDefinition();
             ScreenPreparedListener screenPreparedListener = button.getScreenPreparedListener();
             if (screenPreparedListener != null) {
                 screenPreparedListener.onScreenPrepared(screenDefinition);
             }
-        } catch (JsonSyntaxException | IOException e1) {
-            //TODO handle exception
-            e1.printStackTrace();
+        } catch (Exception e) {
+            System.err.println("Screen cannot be loaded. See stack trace for more details.");
+            e.printStackTrace();
         }
     }
 

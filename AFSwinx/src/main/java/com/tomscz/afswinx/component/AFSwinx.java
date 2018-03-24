@@ -11,6 +11,7 @@ import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
 import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
+import com.tomscz.afswinx.rest.connection.Device;
 
 /**
  * This class is facade to using AFSwinx. Use getInstance to get unique instance in your
@@ -34,6 +35,8 @@ public class AFSwinx {
     private Skin applicationSkin;
 
     private String applicationContextUuid;
+
+    private Device deviceType;
 
     private AFSwinx() {
         components = new HashMap<>();
@@ -83,8 +86,8 @@ public class AFSwinx {
      * @param url url of screen definition on UI proxy
      * @return screen definition builder
      */
-    public AFSwinxScreenDefinitionBuilder getScreenDefinitionBuilder(String url) {
-        return new AFSwinxScreenDefinitionBuilder(url);
+    public AFSwinxScreenDefinitionBuilder getScreenDefinitionBuilder(String url, String screenKey) {
+        return new AFSwinxScreenDefinitionBuilder(url, screenKey);
     }
 
     /**
@@ -180,5 +183,13 @@ public class AFSwinx {
 
     public String getProxyApplicationContext() {
         return applicationContextUuid;
+    }
+
+    public String getDeviceType() {
+        return deviceType.toString();
+    }
+
+    public void setDeviceType(Device deviceType) {
+        this.deviceType = deviceType;
     }
 }

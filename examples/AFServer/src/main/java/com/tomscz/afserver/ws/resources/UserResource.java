@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,66 +32,35 @@ import com.tomscz.afserver.ws.security.AFSecurityContext;
 @Path("/users")
 public class UserResource extends BaseResource {
 
-    public static final String PROFILE = "profile";
+    private static final String PROFILE = "profile";
 
     @GET
-    @Path("/{param}")
+    @Path("/" + PROFILE)
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public Response getResources(@javax.ws.rs.core.Context HttpServletRequest request,
-            @PathParam("param") String type) {
+    public Response getProfileResource(@javax.ws.rs.core.Context HttpServletRequest request) {
         try {
             AFRestGenerator afRest = new AFRestGenerator(request.getSession().getServletContext());
-            String fullClassName;
-            // add if-else if you want add more form type definition
-            if (type.equals(LoginFormDefinitions.LOGIN_FORM)) {
-                fullClassName = LoginFormDefinitions.class.getCanonicalName();
-                afRest.setMainLayout("templates/oneColumnLayout.xml");
-            } else if (type.equals(PROFILE)) {
-                fullClassName = Person.class.getCanonicalName();
-                afRest.setMainLayout("templates/oneColumnLayout.xml");
-            } else {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+            String fullClassName = Person.class.getCanonicalName();
+            afRest.setMainLayout("templates/oneColumnLayout.xml");
+
             AFMetaModelPack data = afRest.generateSkeleton(fullClassName);
-            if (type.equals(PROFILE)) {
-                try {
-                    List<Country> countries = getCountryManager().findAllCountry();
-                    HashMap<String, String> countriesToChoose = new HashMap<String, String>();
-                    for (Country country : countries) {
-                        countriesToChoose.put(country.getName(), country.getName());
-                    }
-                    data.assignOptionsToFields(countriesToChoose, "myAddress.country");
-                    HashMap<String, String> genderOptions = new HashMap<String, String>();
-                    genderOptions.put(Gender.MALE.name(), Gender.MALE.name());
-                    genderOptions.put(Gender.FEMALE.name(), Gender.FEMALE.name());
-                    data.assignOptionsToFields(genderOptions, "gender");
-                } catch (NamingException e) {
-                    // Do nothing.
+            try {
+                List<Country> countries = getCountryManager().findAllCountry();
+                HashMap<String, String> countriesToChoose = new HashMap<String, String>();
+                for (Country country : countries) {
+                    countriesToChoose.put(country.getName(), country.getName());
                 }
+                data.assignOptionsToFields(countriesToChoose, "myAddress.country");
+                HashMap<String, String> genderOptions = new HashMap<String, String>();
+                genderOptions.put(Gender.MALE.name(), Gender.MALE.name());
+                genderOptions.put(Gender.FEMALE.name(), Gender.FEMALE.name());
+                data.assignOptionsToFields(genderOptions, "gender");
+            } catch (NamingException e) {
+                // Do nothing.
             }
             return Response.status(Response.Status.OK).entity(data).build();
         } catch (MetamodelException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @POST
-    @Path("/login")
-    @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Response login(LoginFormDefinitions loginForm) {
-        try {
-            Person loggedPerson =
-                    getPersonManager().findUser(loginForm.getUsername(), loginForm.getPassword());
-            if (loggedPerson != null) {
-                return Response.status(Response.Status.OK).build();
-            } else {
-                return Response.status(Response.Status.FORBIDDEN).build();
-            }
-        } catch (BusinessException e) {
-            return Response.status(e.getStatus()).build();
-        } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -122,9 +92,7 @@ public class UserResource extends BaseResource {
         try {
             PersonManager<Person> personManager = getPersonManager();
             personManager.createOrupdate(personToAdd);
-        } catch (NamingException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        } catch (BusinessException e) {
+        } catch (NamingException | BusinessException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
         return Response.status(Response.Status.OK).build();
@@ -139,7 +107,8 @@ public class UserResource extends BaseResource {
         try {
             List<Person> persons = getPersonManager().findUsersByCountry(countryId);
             final GenericEntity<List<Person>> personGeneric =
-                    new GenericEntity<List<Person>>(persons) {};
+                    new GenericEntity<List<Person>>(persons) {
+                    };
             return Response.status(Response.Status.OK).entity(personGeneric).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -157,7 +126,8 @@ public class UserResource extends BaseResource {
         try {
             List<Person> persons = getPersonManager().findAllUsers();
             final GenericEntity<List<Person>> personGeneric =
-                    new GenericEntity<List<Person>>(persons) {};
+                    new GenericEntity<List<Person>>(persons) {
+                    };
             return Response.status(Response.Status.OK).entity(personGeneric).build();
         } catch (NamingException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -185,4 +155,8 @@ public class UserResource extends BaseResource {
         return "/AFServer/rest/users/";
     }
 
+    @Override
+    protected Class getModelClass() {
+        return Person.class;
+    }
 }

@@ -32,11 +32,11 @@ import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 public class ShowCaseUtils {
 
 
-    public static void refreshCurrentFragment(FragmentActivity activity, String currentFragmentUrl){
+    public static void refreshCurrentFragment(FragmentActivity activity, String currentScreenUrl, String currentScreenKey){
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         BaseFragment current = (BaseFragment) fragmentManager.findFragmentById(R.id.mainLayout);
         try {
-            current.setScreenDefinition(AFAndroid.getInstance().getScreenDefinitionBuilder(activity, currentFragmentUrl).getScreenDefinition());
+            current.setScreenDefinition(AFAndroid.getInstance().getScreenDefinitionBuilder(activity, currentScreenUrl, currentScreenKey).getScreenDefinition());
             fragmentManager.beginTransaction().detach(current).attach(current).commit();
         } catch (Exception e) {
             System.err.println("Cannot get screen url");

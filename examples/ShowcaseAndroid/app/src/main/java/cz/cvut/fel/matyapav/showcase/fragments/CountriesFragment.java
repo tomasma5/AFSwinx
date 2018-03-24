@@ -34,7 +34,7 @@ public class CountriesFragment extends BaseFragment {
                 try {
                     form.sendData();
                     Toast.makeText(getActivity(), "Add or update complete", Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
                 } catch (Exception e) {
                     //error while sending
                     e.printStackTrace();

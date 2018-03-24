@@ -24,8 +24,7 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- *
- *@since 1.0.0..
+ * @since 1.0.0..
  */
 public class VehiclesFragment extends BaseFragment {
 
@@ -37,7 +36,7 @@ public class VehiclesFragment extends BaseFragment {
                 try {
                     form.sendData();
                     Toast.makeText(getActivity(), "Add or update complete", Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
                 } catch (Exception e) {
                     //error while sending
                     e.printStackTrace();
@@ -50,7 +49,7 @@ public class VehiclesFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
-            if(form != null) {
+            if (form != null) {
                 form.resetData();
             }
         }
@@ -60,7 +59,7 @@ public class VehiclesFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
-            if(form != null) {
+            if (form != null) {
                 form.clearData();
             }
         }

@@ -23,7 +23,9 @@ import java.io.IOException;
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
+import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.DeviceStatusAndNearbySearchEvent;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 ApplicationContext.getInstance().loadUIProxyUrl(getBaseContext());
                 AFAndroid.getInstance().setApplicationContextUuid(ApplicationContext.getInstance().getUiProxyApplicationUuid(getBaseContext()));
+                AFAndroid.getInstance().setDeviceType(Utils.deviceHasTabletSize(this) ? Device.TABLET : Device.PHONE);
             } catch (IOException e) {
                 System.err.println("Cannot get properties file - so af android could not be properly configured");
                 e.printStackTrace();
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 AFAndroidProxyScreenDefinition loginScreenDefinition = AFAndroid.getInstance()
                         .getScreenDefinitionBuilder(
                                 getApplicationContext(),
-                                ApplicationContext.getInstance().getUiProxyUrl() + "/api/screens/5a9955636402eb092c3b56c7")
+                                ApplicationContext.getInstance().getUiProxyUrl() + "/api/screens/5a9955636402eb092c3b56c7", "Login")
                         .getScreenDefinition();
                 LoginFragment loginFragment = new LoginFragment();
                 loginFragment.setScreenDefinition(loginScreenDefinition);
@@ -98,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             String currentFragmentUrl = getIntent().getStringExtra("current_fragment_proxy_url");
-            ShowCaseUtils.refreshCurrentFragment(getThisActivity(), currentFragmentUrl);
+            String currentFragmentKey = getIntent().getStringExtra("current_fragment_proxy_key");
+            ShowCaseUtils.refreshCurrentFragment(getThisActivity(), currentFragmentUrl, currentFragmentKey);
         }
     }
 
@@ -161,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         onSaveInstanceState(temp_bundle);
         intent.putExtra("bundle", temp_bundle);
         intent.putExtra("current_fragment_proxy_url", ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getScreenUrl());
+        intent.putExtra("current_fragment_proxy_key", ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getKey());
         finish();
         startActivity(intent);
     }
@@ -181,11 +186,11 @@ public class MainActivity extends AppCompatActivity {
                 .addNearbyDevicesFinder(new NearbyNetworksFinder(), 20)
                 .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
                 .setRecommendedTimeoutForNearbySearch(10000)
-                .executePeriodically(1000*60*1)
+                .executePeriodically(1000 * 60 * 5)
                 .build()
                 //.sendDataToServerAfterTimeout("http://192.168.100.8:8080/NSRest/api/consumer/add")
                 //.sendDataToServerAfterTimeout("http://10.50.109.67:8080/NSRest/api/consumer/add")
-               // .sendDataToServerAfterTimeout("http://147.32.217.40:8080/NSRest/api/consumer/add") //TODO uncomment this when we want ot actually store data
+                // .sendDataToServerAfterTimeout("http://147.32.217.40:8080/NSRest/api/consumer/add") //TODO uncomment this when we want ot actually store data
                 .runProcess();
     }
 

@@ -2,7 +2,9 @@ package com.tomscz.afswinx.component.builders;
 
 import com.tomscz.afrest.commons.AFRestUtils;
 import com.tomscz.afrest.commons.SupportedComponents;
+import com.tomscz.afswinx.common.AFSwinxConstants;
 import com.tomscz.afswinx.component.AFSwinx;
+import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
 import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 import org.json.JSONArray;
@@ -17,6 +19,7 @@ import java.net.URL;
 public class AFSwinxScreenDefinitionBuilder {
 
     private String url;
+    private String screenKey;
 
     private static final String SCREEN_KEY = "key";
     private static final String SCREEN_URL_KEY = "screenUrl";
@@ -26,11 +29,12 @@ public class AFSwinxScreenDefinitionBuilder {
     private static final String COMPONENT_NAME_KEY = "name";
     private static final String COMPONENT_CONNECTIONS_KEY = "proxyConnections";
 
-    public AFSwinxScreenDefinitionBuilder(String url) {
+    public AFSwinxScreenDefinitionBuilder(String url, String screenKey) {
         this.url = url;
+        this.screenKey = screenKey;
     }
 
-    public AFProxyScreenDefinition getScreenDefinition() throws IOException {
+    public AFProxyScreenDefinition getScreenDefinition() throws IOException, AFSwinxBuildException {
         JSONObject screenObject = retrieveScreenDefinition();
         AFProxyScreenDefinition screenDefinition = new AFProxyScreenDefinition();
         screenDefinition.setKey(screenObject.getString(SCREEN_KEY));
@@ -60,7 +64,7 @@ public class AFSwinxScreenDefinitionBuilder {
 
     }
 
-    private JSONObject retrieveScreenDefinition() throws IOException {
+    private JSONObject retrieveScreenDefinition() throws IOException, AFSwinxBuildException {
         if (url != null) {
 
             URL obj = new URL(url);
@@ -68,7 +72,8 @@ public class AFSwinxScreenDefinitionBuilder {
 
             con.setRequestMethod("GET");
 
-            con.setRequestProperty("Application", AFSwinx.getInstance().getProxyApplicationContext());
+            con.setRequestProperty(AFSwinxConstants.APPLICATION_HEADER, AFSwinx.getInstance().getProxyApplicationContext());
+            con.setRequestProperty(AFSwinxConstants.SCREEN_HEADER, screenKey);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -81,13 +86,9 @@ public class AFSwinxScreenDefinitionBuilder {
 
             return new JSONObject(response.toString());
         } else {
-            //TODO throw some exception; return null for now
-            return null;
+            throw new AFSwinxBuildException("Cannot get screen definition. URL was not defined");
         }
     }
-
-
-
 
 
 }

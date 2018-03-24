@@ -11,5 +11,9 @@ public class AFSwinxConstants {
 
     //Dummy key. It is used for retype validation
     public static final String DUMMY_KEY = "*&@DummyKey";
+
+    public static final String APPLICATION_HEADER = "Application";
+    public static final String DEVICE_HEADER = "Device";
+    public static final String SCREEN_HEADER = "Screen";
     
 }

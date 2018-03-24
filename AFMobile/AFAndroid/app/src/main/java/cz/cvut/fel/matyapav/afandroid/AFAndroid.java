@@ -2,8 +2,6 @@ package cz.cvut.fel.matyapav.afandroid;
 
 import android.content.Context;
 
-import com.tomscz.afswinx.component.builders.AFSwinxScreenButtonBuilder;
-
 import java.util.HashMap;
 
 import cz.cvut.fel.matyapav.afandroid.builders.AFComponentBuilder;
@@ -18,24 +16,25 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFScreenButton;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyComponentDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
+import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- *
- *@since 1.0.0..
+ * @since 1.0.0..
  */
 public class AFAndroid {
 
     private static AFAndroid instance = null;
     private HashMap<String, AFComponent> createdComponents;
     private String applicationContextUuid;
+    private Device deviceType;
 
     public AFAndroid() {
         createdComponents = new HashMap<>();
     }
 
-    public static synchronized AFAndroid getInstance(){
-        if(instance == null){
+    public static synchronized AFAndroid getInstance() {
+        if (instance == null) {
             instance = new AFAndroid();
         }
         return instance;
@@ -45,11 +44,11 @@ public class AFAndroid {
         return createdComponents;
     }
 
-    public void addCreatedComponent(String name, AFComponent component){
-        createdComponents.put(name,component);
+    public void addCreatedComponent(String name, AFComponent component) {
+        createdComponents.put(name, component);
     }
 
-    public FormBuilder getFormBuilder(){
+    public FormBuilder getFormBuilder() {
         return new FormBuilder();
     }
 
@@ -58,7 +57,7 @@ public class AFAndroid {
         return new TableBuilder();
     }
 
-    public ListBuilder getListBuilder(){
+    public ListBuilder getListBuilder() {
         return new ListBuilder();
     }
 
@@ -85,12 +84,12 @@ public class AFAndroid {
      * Based on the component definition user can get component builders {@link AFComponentBuilder},
      * which can be used for building a {@link AFComponent}, which can be inserted into view
      *
-     * @param context Android context
+     * @param context   Android context
      * @param screenUrl url of screen definition on UI proxy
      * @return screen definition builder
      */
-    public AFScreenDefinitionBuilder getScreenDefinitionBuilder(Context context, String screenUrl) {
-        return new AFScreenDefinitionBuilder(context, screenUrl);
+    public AFScreenDefinitionBuilder getScreenDefinitionBuilder(Context context, String screenUrl, String screenKey) {
+        return new AFScreenDefinitionBuilder(context, screenUrl, screenKey);
     }
 
     /**
@@ -105,7 +104,15 @@ public class AFAndroid {
      * @param context Android context
      * @return screen button builder
      */
-    public AFScreenButtonBuilder getScreenButtonBuilder(Context context){
+    public AFScreenButtonBuilder getScreenButtonBuilder(Context context) {
         return new AFScreenButtonBuilder(context);
+    }
+
+    public void setDeviceType(Device deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public String getDeviceType() {
+        return deviceType.toString();
     }
 }

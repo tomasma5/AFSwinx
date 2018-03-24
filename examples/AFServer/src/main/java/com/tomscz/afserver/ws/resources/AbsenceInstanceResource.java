@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -201,4 +202,8 @@ public class AbsenceInstanceResource extends BaseResource {
         return "/AFServer/rest/absenceInstance/";
     }
 
+    @Override
+    protected Class getModelClass() {
+        return AbsenceInstance.class;
+    }
 }

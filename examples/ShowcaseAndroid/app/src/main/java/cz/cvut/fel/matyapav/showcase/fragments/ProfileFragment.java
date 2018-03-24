@@ -33,7 +33,7 @@ public class ProfileFragment extends BaseFragment {
             if (form != null && form.validateData()) {
                 try {
                     form.sendData();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl());
+                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getScreenUrl());
                     Toast.makeText(getActivity(), Localization.translate(getContext(), "person.updateSuccess"),
                             Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
