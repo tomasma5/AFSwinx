@@ -165,7 +165,7 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
     public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, ObjectId businessCaseId,
                                                    int linkedScreensCount) throws ServiceException {
         if (phase.getLinkedScreens() != null) {
-            phase.getLinkedScreens().clear(); //TODO remove only missing screens or add new screens - fields of screens which are already here shoul be refreshed (as decribed in TODO in BCPhaseFieldsConfigurationServlet.java on line 44)
+            phase.getLinkedScreens().clear();
         }
         for (int i = 0; i < linkedScreensCount; i++) {
             String screenId = Utils.trimString(

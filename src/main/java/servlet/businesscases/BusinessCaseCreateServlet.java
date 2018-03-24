@@ -39,7 +39,6 @@ public class BusinessCaseCreateServlet extends HttpServlet {
             request.setAttribute(ParameterNames.BUSINESS_CASE_ID, businessCase.getId());
             request.setAttribute(ParameterNames.BUSINESS_CASE_NAME, businessCase.getName());
             request.setAttribute(ParameterNames.BUSINESS_CASE_DESCRIPTION, businessCase.getDescription());
-            //todo phases
         }
         request.setAttribute(ParameterNames.APPLICATION_ID, appObjId);
 
@@ -56,7 +55,6 @@ public class BusinessCaseCreateServlet extends HttpServlet {
         String bCaseId = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_ID));
         BusinessCase bcase = bcManagementService.findOrCreateBusinessCase(bCaseId);
         updateBcaseProperties(req, appIdString, bcase);
-        //todo phases
         createOrUpdateBusinessCase(bCaseId, bcase);
         resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appIdString);
     }

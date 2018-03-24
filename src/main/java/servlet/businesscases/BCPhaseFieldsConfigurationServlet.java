@@ -41,7 +41,6 @@ public class BCPhaseFieldsConfigurationServlet extends HttpServlet {
         }
 
         try {
-            //TODO add refresh button with will download fields again, compare fields and add new or remove missing
             BCPhase phase = bcManagementService.findPhaseById(new ObjectId(businessCaseIdString), new ObjectId(businessPhaseIdString));
 
             List<String> severityOptions = new ArrayList<>();

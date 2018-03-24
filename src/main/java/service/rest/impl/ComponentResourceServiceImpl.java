@@ -49,6 +49,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
             String realEndpoint = checkRealEndpointUrlPresence(headers);
             try {
                 modelStr = HttpUtils.getRequest(realEndpoint, headers.getRequestHeaders());
+
                 //TODO add context filtering
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
@@ -66,7 +67,6 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         if (componentResource != null) {
             try {
                 dataStr = HttpUtils.getRequest(realEndpoint, headers.getRequestHeaders());
-                //TODO add context filtering
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
@@ -82,7 +82,6 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         if (componentResource != null) {
             try {
                 response = HttpUtils.postRequest(realEndpoint, headers.getRequestHeaders(), data);
-                //TODO add context filtering
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
             }
