@@ -23,7 +23,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="config" items="${configuration}">
+                <c:forEach var="config" items="${configurations}">
                     <tr>
                         <td>${config.configurationName}</td>
                         <td>

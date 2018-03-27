@@ -31,7 +31,7 @@ public class ScreenDaoImpl extends GenericMongoDaoImpl<Screen> implements Screen
     }
 
     @Override
-    public Screen findByName(String name) {
-        return collection.find(eq(ParameterNames.SCREEN_NAME, name)).first();
+    public Screen findByKey(String key) {
+        return collection.find(eq(ParameterNames.SCREEN_KEY, key)).first();
     }
 }

@@ -20,4 +20,6 @@ public interface ConfigurationManagementService {
     public ConfigurationPack findConfigurationById(ObjectId id);
 
     public ConfigurationPack findOrCreateNewConfiguration(String configurationId);
+
+
 }

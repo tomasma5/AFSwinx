@@ -17,7 +17,11 @@ public interface ScreenManagementService {
 
     public List<Screen> getAllScreensByApplication(ObjectId applicationId);
 
+    public List<Screen> getAllUnassignedScreensByApplication(ObjectId applicationId);
+
     public Screen findScreenById(ObjectId id);
+
+    public Screen findScreenByKey(String screenKey);
 
     public int getScreenCount(ObjectId applicationId);
 

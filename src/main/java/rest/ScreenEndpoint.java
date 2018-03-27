@@ -2,7 +2,7 @@ package rest;
 
 import model.Screen;
 import org.bson.types.ObjectId;
-import rest.model.MenuItem;
+import model.rest.MenuItem;
 import service.exception.ServiceException;
 import service.rest.ScreenRestService;
 

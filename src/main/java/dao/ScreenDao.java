@@ -11,6 +11,6 @@ import org.bson.types.ObjectId;
  */
 public interface ScreenDao extends GenericMongoDao<Screen> {
 
-    public Screen findByName(String name);
+    public Screen findByKey(String name);
 
 }

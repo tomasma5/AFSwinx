@@ -1,7 +1,15 @@
 package model.afclassification;
 
 public class ClientProperty {
-	
+
+    public ClientProperty() {
+    }
+
+    public ClientProperty(Property property, String value) {
+		this.value = value;
+		this.property = property;
+	}
+
 	private String value;
 	
 	private Property property;

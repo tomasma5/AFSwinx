@@ -15,16 +15,22 @@ public class Screen extends MongoDocumentEntity {
     private List<ComponentResource> components;
     private ObjectId applicationId;
 
+    private ObjectId phaseId;
+    private ObjectId businessCaseId;
+
     public Screen() {
     }
 
-    public Screen(String key, String name, String screenUrl, int menuOrder, List<ComponentResource> components, ObjectId applicationId) {
+    public Screen(String key, String name, String screenUrl, int menuOrder, List<ComponentResource> components,
+                  ObjectId applicationId, ObjectId phaseId, ObjectId businessCaseId) {
         this.key = key;
         this.name = name;
         this.screenUrl = screenUrl;
         this.menuOrder = menuOrder;
         this.components = components;
         this.applicationId = applicationId;
+        this.phaseId = phaseId;
+        this.businessCaseId = businessCaseId;
     }
 
     public void addComponentResource(ComponentResource componentResource){
@@ -89,5 +95,21 @@ public class Screen extends MongoDocumentEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ObjectId getPhaseId() {
+        return phaseId;
+    }
+
+    public void setPhaseId(ObjectId phaseId) {
+        this.phaseId = phaseId;
+    }
+
+    public ObjectId getBusinessCaseId() {
+        return businessCaseId;
+    }
+
+    public void setBusinessCaseId(ObjectId businessCaseId) {
+        this.businessCaseId = businessCaseId;
     }
 }

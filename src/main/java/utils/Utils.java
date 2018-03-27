@@ -12,4 +12,5 @@ public class Utils {
         System.err.println("Given string is null, returning null.");
         return str;
     }
+
 }

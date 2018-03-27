@@ -165,6 +165,11 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
     public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, ObjectId businessCaseId,
                                                    int linkedScreensCount) throws ServiceException {
         if (phase.getLinkedScreens() != null) {
+            for (Screen screen : phase.getLinkedScreens()) {
+                screen.setPhaseId(null);
+                screen.setBusinessCaseId(null);
+                screenDao.update(screen);
+            }
             phase.getLinkedScreens().clear();
         }
         for (int i = 0; i < linkedScreensCount; i++) {
@@ -172,6 +177,9 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
                     req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREEN_ID + (i + 1)));
             Screen screen = screenDao.findById(new ObjectId(screenId));
             phase.addLinkedScreen(screen);
+            screen.setPhaseId(phase.getId());
+            screen.setBusinessCaseId(phase.getBusinessCaseId());
+            screenDao.update(screen);
         }
         try {
             updatePhaseBCFields(phase);

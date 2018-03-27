@@ -22,4 +22,9 @@ public class Constants {
     public static final String FIELD_VISIBILITY = "visible";
     public static String CLASS_NAME = "name";
 
+    public static final String SCREEN_HEADER = "Screen";
+    public static final String APPLICATION_HEADER = "Application";
+    public static final String DEVICE_TYPE_HEADER = "DeviceType";
+    public static final String DEVICE_IDENTIFIER_HEADER = "Device";
+
 }

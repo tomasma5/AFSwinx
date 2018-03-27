@@ -2,7 +2,7 @@ package model.afclassification;
 
 public enum Device {
 	PHONE,
-	NOTEBOOK,
+	PC,
 	TABLET,
 	OTHER
 }

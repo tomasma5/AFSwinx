@@ -1,22 +1,17 @@
 package service.servlet.impl;
 
-import dao.BusinessCaseDao;
 import dao.ComponentResourceDao;
 import dao.ScreenDao;
 import model.Application;
 import model.ComponentResource;
 import model.Screen;
-import model.afclassification.BCPhase;
 import org.bson.types.ObjectId;
 import service.servlet.ScreenManagementService;
-import servlet.ParameterNames;
 import utils.HttpUtils;
-import utils.Utils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,8 +63,20 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     }
 
     @Override
+    public List<Screen> getAllUnassignedScreensByApplication(ObjectId applicationId) {
+        return screenDao.findAll().stream()
+                .filter(screen -> screen.getApplicationId().equals(applicationId) && screen.getPhaseId() == null)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Screen findScreenById(ObjectId id) {
         return screenDao.findById(id);
+    }
+
+    @Override
+    public Screen findScreenByKey(String screenKey) {
+        return screenDao.findByKey(screenKey);
     }
 
     @Override

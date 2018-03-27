@@ -10,6 +10,8 @@ public class Client {
 	private List<ClientProperty> clientProperties;
 	
 	private Device device;
+
+	private String deviceIdentifier;
 	
 	public int getKnowledge() {
 		return knowledge;
@@ -42,4 +44,11 @@ public class Client {
 		this.device = device;
 	}
 
+	public void setDeviceIdentifier(String deviceIdentifier) {
+		this.deviceIdentifier = deviceIdentifier;
+	}
+
+	public String getDeviceIdentifier() {
+		return deviceIdentifier;
+	}
 }

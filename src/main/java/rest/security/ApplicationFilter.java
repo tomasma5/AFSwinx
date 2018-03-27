@@ -2,6 +2,7 @@ package rest.security;
 
 import model.Application;
 import service.servlet.ApplicationsManagementService;
+import utils.Constants;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -15,7 +16,7 @@ import java.io.IOException;
 
 /**
  * Filter for application authorization via Basic auth method.
- *
+ * <p>
  * Author: Pavel Matyáš (matyapav@fel.cvut.cz)
  */
 @Provider
@@ -33,9 +34,9 @@ public class ApplicationFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        String applicationUuid = requestContext.getHeaderString("Application");
+        String applicationUuid = requestContext.getHeaderString(Constants.APPLICATION_HEADER);
         if (applicationUuid == null) {
-            abortOnBadRequest(requestContext, "Application header must be provided");
+            abortOnBadRequest(requestContext, Constants.APPLICATION_HEADER + " header must be provided");
             return;
         }
 

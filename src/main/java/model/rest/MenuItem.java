@@ -1,4 +1,4 @@
-package rest.model;
+package model.rest;
 
 public class MenuItem {
 
