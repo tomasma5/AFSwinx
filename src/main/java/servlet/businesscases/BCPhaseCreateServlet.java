@@ -57,7 +57,7 @@ public class BCPhaseCreateServlet extends HttpServlet {
             }
         } else {
             //options for linking screens with phases
-            request.setAttribute(ParameterNames.SCREEN_OPTIONS, screenManagementService.getAllScreensByApplication(appObjId));
+            request.setAttribute(ParameterNames.SCREEN_OPTIONS, screenManagementService.getAllUnassignedScreensByApplication(appObjId));
         }
         //options for configuration select
         List<ConfigurationPack> availableConfiguration = configurationManagementService.getAllConfigurationsByApplication(appObjId);
@@ -77,7 +77,7 @@ public class BCPhaseCreateServlet extends HttpServlet {
         request.setAttribute(ParameterNames.BUSINESS_PHASE_NAME, businessPhase.getName());
         request.setAttribute(ParameterNames.SELECTED_CONFIGURATION, businessPhase.getConfiguration().getId());
         request.setAttribute(ParameterNames.BUSINESS_PHASE_LINKED_SCREENS, businessPhase.getLinkedScreens());
-        List<Screen> screensNotInThisPhaseYet = screenManagementService.getAllScreensByApplication(appObjId).stream()
+        List<Screen> screensNotInThisPhaseYet = screenManagementService.getAllUnassignedScreensByApplication(appObjId).stream()
                 .filter(screen -> !businessPhase.getLinkedScreens().contains(screen))
                 .collect(Collectors.toList());
         request.setAttribute(ParameterNames.SCREEN_OPTIONS, screensNotInThisPhaseYet);

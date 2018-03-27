@@ -24,6 +24,7 @@
                     <c:if test="${not empty applicationNameError}" >${applicationNameError}</c:if>
                 </div>
 
+                <h2>Backend settings </h2>
                 <div class="form-group">
                     <label for="remoteProtocol">Remote protocol</label>
                     <input type="text" class="form-control" id="remoteProtocol" name="remoteProtocol"
@@ -40,6 +41,7 @@
                            placeholder="Enter remote port" value="${remotePort}">
                 </div>
 
+                <h2>Proxy settings </h2>
                 <div class="form-group">
                     <label for="proxyProtocol">Proxy protocol</label>
                     <input type="text" class="form-control" id="proxyProtocol" name="proxyProtocol"
@@ -56,6 +58,32 @@
                     <label for="proxyPort">Proxy Port</label>
                     <input type="number" class="form-control" id="proxyPort" name="proxyPort"
                            placeholder="Enter proxy port" value="${proxyPort}">
+                </div>
+
+                <h2>Context consumer settings</h2>
+
+                <div class="form-group">
+                    <label for="consumerProtocol">Consumer protocol</label>
+                    <input type="text" class="form-control" id="consumerProtocol" name="consumerProtocol"
+                           placeholder="Example: http or https" value="${consumerProtocol}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="consumerHostname">Consumer hostname</label>
+                    <input type="text" class="form-control" id="consumerHostname" name="consumerHostname"
+                           placeholder="Example: localhost." value="${consumerHostname}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="consumerPort">Consumer Port</label>
+                    <input type="number" class="form-control" id="consumerPort" name="consumerPort"
+                           placeholder="Enter consumer port." value="${consumerPort}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="consumerContextPath">Consumer context path</label>
+                    <input type="text" class="form-control" id="consumerContextPath" name="consumerContextPath"
+                           placeholder="Example: /NSRest" value="${consumerContextPath}" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>

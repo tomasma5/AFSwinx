@@ -14,6 +14,7 @@ import service.afclassification.computational.AFClassification;
 import service.exception.ComponentRequestException;
 import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
+import service.servlet.ApplicationsManagementService;
 import service.servlet.BusinessCaseManagementService;
 import service.servlet.ScreenManagementService;
 import utils.Constants;
@@ -45,6 +46,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     @Inject
     ScreenManagementService screenManagementService;
+
+    @Inject
+    ApplicationsManagementService applicationsManagementService;
 
     @Inject
     RequestContext requestContext;
@@ -137,12 +141,13 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         Client client;
         String deviceType = headers.getRequestHeaders().getFirst(Constants.DEVICE_TYPE_HEADER);
         String deviceIdentifier = headers.getRequestHeaders().getFirst(Constants.DEVICE_IDENTIFIER_HEADER);
+        Application application = applicationsManagementService.findByUuid(headers.getRequestHeaders().getFirst(Constants.APPLICATION_HEADER));
         if (Device.valueOf(deviceType).equals(Device.PHONE) || Device.valueOf(deviceType).equals(Device.TABLET)) {
             String contextData = HttpUtils.getRequest(HttpUtils.buildUrl(
-                    "http",
-                    "localhost",
-                    8082,
-                    "/NSRest",
+                    application.getConsumerProtocol(),
+                    application.getConsumerHostname(),
+                    application.getConsumerPort(),
+                    application.getConsumerContextPath(),
                     "/api/data/device/" + deviceIdentifier + "/closestToTime/" + System.currentTimeMillis()
             ), null);
             client = new JsonContextParser().parse(contextData);

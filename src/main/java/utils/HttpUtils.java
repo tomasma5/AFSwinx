@@ -92,20 +92,18 @@ public class HttpUtils {
     }
 
     public static String buildUrl(String protocol, String hostname, String port, String contextPath, String parameters) {
-        if (protocol == null || protocol.isEmpty()) {
-            protocol = DEFAULT_PROTOCOL;
-        }
-        return protocol +
-                "://" +
-                hostname +
-                (port != null && !port.isEmpty() ? ":" + Integer.parseInt(port) : "") +
-                (contextPath != null ? contextPath : "") +
-                (parameters != null ? parameters : "");
+        return buildUrl(protocol, hostname, (port != null && !port.isEmpty() ? Integer.parseInt(port) : 0), contextPath, parameters);
     }
 
     public static String buildUrl(String protocol, String hostname, int port, String contextPath, String parameters) {
         if (protocol == null || protocol.isEmpty()) {
             protocol = DEFAULT_PROTOCOL;
+        }
+        if (hostname == null || hostname.isEmpty()) {
+            hostname = "localhost";
+        }
+        if (contextPath != null && !contextPath.startsWith("/")) {
+            contextPath = "/" + contextPath;
         }
         return protocol +
                 "://" +

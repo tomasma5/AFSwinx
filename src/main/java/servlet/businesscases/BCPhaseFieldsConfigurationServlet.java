@@ -81,17 +81,19 @@ public class BCPhaseFieldsConfigurationServlet extends HttpServlet {
         ObjectId businessPhaseId = new ObjectId(businessPhaseIdString);
         try {
             BCPhase phase = bcManagementService.findPhaseById(businessCaseId, businessPhaseId);
-            for (int i = 0; i < phase.getFields().size(); i++) {
-                String severity = Utils.trimString(req.getParameter(ParameterNames.FIELD_SEVERITY + i));
-                String purpose = Utils.trimString(req.getParameter(ParameterNames.FIELD_PURPOSE + i));
-                if (severity != null) {
-                    phase.getFields().get(i).getFieldSpecification().setSeverity(Severity.valueOf(severity));
+            if (phase.getFields() != null) {
+                for (int i = 0; i < phase.getFields().size(); i++) {
+                    String severity = Utils.trimString(req.getParameter(ParameterNames.FIELD_SEVERITY + i));
+                    String purpose = Utils.trimString(req.getParameter(ParameterNames.FIELD_PURPOSE + i));
+                    if (severity != null) {
+                        phase.getFields().get(i).getFieldSpecification().setSeverity(Severity.valueOf(severity));
+                    }
+                    if (purpose != null) {
+                        phase.getFields().get(i).getFieldSpecification().setPurpose(Purpose.valueOf(purpose));
+                    }
                 }
-                if (purpose != null) {
-                    phase.getFields().get(i).getFieldSpecification().setPurpose(Purpose.valueOf(purpose));
-                }
+                bcManagementService.replaceBusinessPhaseInCaseById(businessCaseId, phase);
             }
-            bcManagementService.replaceBusinessPhaseInCaseById(businessCaseId, phase);
         } catch (ServiceException e) {
             System.err.println("Phase not found");
             e.printStackTrace();

@@ -9,9 +9,16 @@ public class Application extends MongoDocumentEntity{
     private String remoteProtocol;
     private String remoteHostname;
     private int remotePort;
+
     private String proxyProtocol;
     private String proxyHostname;
     private int proxyPort;
+
+    private String consumerProtocol;
+    private String consumerHostname;
+    private int consumerPort;
+    private String consumerContextPath;
+
     private List<Screen> screenList;
 
     public Application() {
@@ -102,5 +109,37 @@ public class Application extends MongoDocumentEntity{
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getConsumerProtocol() {
+        return consumerProtocol;
+    }
+
+    public void setConsumerProtocol(String consumerProtocol) {
+        this.consumerProtocol = consumerProtocol;
+    }
+
+    public String getConsumerHostname() {
+        return consumerHostname;
+    }
+
+    public void setConsumerHostname(String consumerHostname) {
+        this.consumerHostname = consumerHostname;
+    }
+
+    public int getConsumerPort() {
+        return consumerPort;
+    }
+
+    public void setConsumerPort(int consumerPort) {
+        this.consumerPort = consumerPort;
+    }
+
+    public String getConsumerContextPath() {
+        return consumerContextPath;
+    }
+
+    public void setConsumerContextPath(String consumerContextPath) {
+        this.consumerContextPath = consumerContextPath;
     }
 }

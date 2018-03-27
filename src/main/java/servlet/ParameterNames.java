@@ -11,6 +11,10 @@ public class ParameterNames {
     public static final String APPLICATION_PROXY_PROTOCOL = "proxyProtocol";
     public static final String APPLICATION_PROXY_PORT = "proxyPort";
     public static final String APPLICATION_UUID = "uuid";
+    public static final String APPLICATION_CONSUMER_PROTOCOL = "consumerProtocol";
+    public static final String APPLICATION_CONSUMER_HOSTNAME = "consumerHostname";
+    public static final String APPLICATION_CONSUMER_PORT = "consumerPort";
+    public static final String APPLICATION_CONSUMER_CONTEXT_PATH = "consumerContextPath";
 
     public static final String SCREEN_ID = "screen";
     public static final String SCREEN_URL = "screenUrl";

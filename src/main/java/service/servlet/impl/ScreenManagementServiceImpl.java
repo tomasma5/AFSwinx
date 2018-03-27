@@ -65,7 +65,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     @Override
     public List<Screen> getAllUnassignedScreensByApplication(ObjectId applicationId) {
         return screenDao.findAll().stream()
-                .filter(screen -> screen.getApplicationId().equals(applicationId) && screen.getPhaseId() == null)
+                .filter(screen -> screen.getApplicationId().equals(applicationId) && screen.getPhaseId() == null && screen.getBusinessCaseId() == null)
                 .collect(Collectors.toList());
     }
 

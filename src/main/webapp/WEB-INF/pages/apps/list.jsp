@@ -21,6 +21,7 @@
                     <th>App name</th>
                     <th>Remote url</th>
                     <th>Proxy url</th>
+                    <th>Consumer url</th>
                     <th>UUID</th>
                     <th colspan="3">Actions</th>
                 </tr>
@@ -34,6 +35,9 @@
                         </td>
                         <td>
                             ${app.proxyProtocol}://${app.proxyHostname}<c:if test="${app.proxyPort != 0}">:${app.proxyPort}</c:if>
+                        </td>
+                        <td>
+                            ${app.consumerProtocol}://${app.consumerHostname}<c:if test="${app.consumerPort != 0}">:${app.consumerPort}</c:if>${app.consumerContextPath}
                         </td>
                         <td>${app.uuid}</td>
                         <td>
