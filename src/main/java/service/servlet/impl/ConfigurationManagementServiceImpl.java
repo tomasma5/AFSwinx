@@ -12,6 +12,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of configuration management service
+ */
 @Named("configurationManagementService")
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)

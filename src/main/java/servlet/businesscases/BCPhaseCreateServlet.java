@@ -22,9 +22,18 @@ import java.util.stream.Collectors;
 
 import static servlet.businesscases.BCPhaseFieldsConfigurationServlet.CONFIGURE_ROUTE;
 
+/**
+ * Servlet for creating {@link BCPhase} inside {@link model.afclassification.BusinessCase}
+ */
 public class BCPhaseCreateServlet extends HttpServlet {
 
+    /**
+     * The Create url.
+     */
     static final String CREATE_URL = "/WEB-INF/pages/bcphases/create.jsp";
+    /**
+     * The Create route.
+     */
     static final String CREATE_ROUTE = "phases/create";
 
     @Inject

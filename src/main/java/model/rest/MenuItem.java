@@ -1,5 +1,8 @@
 package model.rest;
 
+/**
+ * Extra model which represents menu item
+ */
 public class MenuItem {
 
     private String key;

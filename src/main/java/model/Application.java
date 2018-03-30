@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Application model. Holds information about applications registered in proxy
+ */
 public class Application extends MongoDocumentEntity{
 
     private String uuid;

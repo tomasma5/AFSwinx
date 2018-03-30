@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Implementatio of component management service.
+ */
 @Named("componentManagementService")
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)
@@ -31,6 +34,9 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     @Inject
     private ScreenDao screenDao;
 
+    /**
+     * Instantiates a new Component management service.
+     */
     public ComponentManagementServiceImpl() {
     }
 

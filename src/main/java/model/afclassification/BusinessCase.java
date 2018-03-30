@@ -6,6 +6,9 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Business case holds information about some application use case
+ */
 public class BusinessCase extends MongoDocumentEntity {
 
 	private String name;

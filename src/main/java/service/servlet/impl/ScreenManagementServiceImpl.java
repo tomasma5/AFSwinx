@@ -16,6 +16,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of screen management service.
+ */
 @Named("screenManagementService")
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)
@@ -27,6 +30,9 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     @Inject
     private ComponentResourceDao componentResourceDao;
 
+    /**
+     * Instantiates a new Screen management service.
+     */
     public ScreenManagementServiceImpl() {
     }
 

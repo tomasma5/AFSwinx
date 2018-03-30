@@ -12,9 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet for listing all {@link model.Application}s
+ */
 public class AppListServlet extends HttpServlet {
 
+    /**
+     * The List url.
+     */
     static final String LIST_URL = "/WEB-INF/pages/apps/list.jsp";
+    /**
+     * The List route.
+     */
     static final String LIST_ROUTE = "list";
 
     @Inject

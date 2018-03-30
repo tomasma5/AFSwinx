@@ -1,5 +1,6 @@
 package servlet.components;
 
+import model.ComponentResource;
 import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
@@ -13,9 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet for displaying a list of {@link ComponentResource}s
+ */
 public class ComponentListServlet extends HttpServlet {
 
+    /**
+     * The List url.
+     */
     static final String LIST_URL = "/WEB-INF/pages/components/list.jsp";
+    /**
+     * The List route.
+     */
     static final String LIST_ROUTE = "list";
 
     @Inject

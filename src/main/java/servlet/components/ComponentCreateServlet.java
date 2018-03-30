@@ -21,9 +21,18 @@ import java.util.List;
 
 import static servlet.components.ComponentListServlet.LIST_ROUTE;
 
+/**
+ * Servlet for creating or editing {@link ComponentResource}
+ */
 public class ComponentCreateServlet extends HttpServlet {
 
+    /**
+     * The Create url.
+     */
     static final String CREATE_URL = "/WEB-INF/pages/components/create.jsp";
+    /**
+     * The Create route.
+     */
     static final String CREATE_ROUTE = "create";
 
     @Inject

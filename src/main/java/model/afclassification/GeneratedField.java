@@ -1,5 +1,9 @@
 package model.afclassification;
 
+/**
+ * This structure is generated after field scoring and classifications, therefore it represents final field form
+ *
+ */
 public class GeneratedField {
 	
 	private BCField bcField;

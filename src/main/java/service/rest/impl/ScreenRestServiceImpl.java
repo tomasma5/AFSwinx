@@ -27,9 +27,15 @@ public class ScreenRestServiceImpl implements ScreenRestService {
 
     private static final Logger LOGGER = Logger.getLogger(ScreenRestServiceImpl.class.getName());
 
+    /**
+     * The Screen dao.
+     */
     @Inject
     ScreenDao screenDao;
 
+    /**
+     * The Request context.
+     */
     @Inject
     RequestContext requestContext;
 

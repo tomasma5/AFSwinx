@@ -5,6 +5,10 @@ import org.bson.types.ObjectId;
 
 import java.util.*;
 
+/**
+ * Holds multiple configurations, for each {@link Behavior} one. It is also binded to application and has name for
+ * better identification in system
+ */
 public class ConfigurationPack extends MongoDocumentEntity {
 
     private String configurationName;

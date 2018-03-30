@@ -38,18 +38,33 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     private static final Logger LOGGER = Logger.getLogger(ComponentResourceServiceImpl.class.getName());
 
+    /**
+     * The Component resource dao.
+     */
     @Inject
     ComponentResourceDao componentResourceDao;
 
+    /**
+     * The Business case management service.
+     */
     @Inject
     BusinessCaseManagementService businessCaseManagementService;
 
+    /**
+     * The Screen management service.
+     */
     @Inject
     ScreenManagementService screenManagementService;
 
+    /**
+     * The Applications management service.
+     */
     @Inject
     ApplicationsManagementService applicationsManagementService;
 
+    /**
+     * The Request context.
+     */
     @Inject
     RequestContext requestContext;
 

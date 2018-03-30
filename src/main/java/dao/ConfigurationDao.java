@@ -10,6 +10,12 @@ import model.afclassification.ConfigurationPack;
  */
 public interface ConfigurationDao extends GenericMongoDao<ConfigurationPack> {
 
+    /**
+     * Find configuration pack by its name.
+     *
+     * @param name the name
+     * @return the configuration pack
+     */
     public ConfigurationPack findByName(String name);
 
 }

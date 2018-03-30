@@ -24,6 +24,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of business case management service
+ */
 @Named("businessCaseManagementService")
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)
@@ -189,6 +192,12 @@ public class BusinessCaseManagementServiceImpl implements BusinessCaseManagement
         }
     }
 
+    /**
+     * Update phase bc fields.
+     *
+     * @param phase the phase
+     * @throws IOException the io exception
+     */
     public void updatePhaseBCFields(BCPhase phase) throws IOException {
         if (phase.getFields() != null) {
             phase.getFields().clear();

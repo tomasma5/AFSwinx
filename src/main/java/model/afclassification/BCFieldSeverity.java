@@ -1,5 +1,8 @@
 package model.afclassification;
 
+/**
+ * Business case field severity - it contains how important the field is
+ */
 public class BCFieldSeverity {
 
 	private Severity severity;

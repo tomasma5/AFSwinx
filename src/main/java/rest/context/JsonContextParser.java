@@ -9,8 +9,10 @@ import java.util.Map;
 
 import static rest.context.JsonContextParserConstants.*;
 
+/**
+ * Json parser - parse context information from NSRest API to {@link Client} model
+ */
 public class JsonContextParser extends JSONParser {
-
 
     @Override
     public Client parse(String jsonString) {
@@ -29,6 +31,11 @@ public class JsonContextParser extends JSONParser {
         return client;
     }
 
+    /**
+     * Parses nearby devices information
+     * @param client client model to parse into
+     * @param nearbyDevices json array with nearby devices information
+     */
     private void parseNearbyDevices(Client client, JSONArray nearbyDevices) {
         for (int i = 0; i < nearbyDevices.length(); i++) {
             NearbyDevice nearbyDeviceObject = new NearbyDevice();
@@ -58,6 +65,11 @@ public class JsonContextParser extends JSONParser {
         }
     }
 
+    /**
+     * Parses device info into client model
+     * @param client client model to parse into
+     * @param deviceStatus Json object with device status
+     */
     private void parseDeviceInfo(Client client, JSONObject deviceStatus) {
         JSONObject deviceInfo = deviceStatus.optJSONObject(DEVICE_INFO);
         if (deviceInfo != null) {
@@ -87,6 +99,11 @@ public class JsonContextParser extends JSONParser {
         }
     }
 
+    /**
+     * Parses information about battery into client model
+     * @param client client model to parse into
+     * @param deviceStatus json object with device status
+     */
     private void parseBatteryInfo(Client client, JSONObject deviceStatus) {
         JSONObject batteryInfo = deviceStatus.optJSONObject(BATTERY_INFO);
         if (batteryInfo != null) {
@@ -102,6 +119,11 @@ public class JsonContextParser extends JSONParser {
         }
     }
 
+    /**
+     * Parses information about device location into client model
+     * @param client client model to parse into
+     * @param deviceStatus json object wih device status
+     */
     private void parseLocationInfo(Client client, JSONObject deviceStatus) {
         JSONObject locationInfo = deviceStatus.optJSONObject(LOCATION_INFO);
         if (locationInfo != null) {
@@ -117,6 +139,11 @@ public class JsonContextParser extends JSONParser {
         }
     }
 
+    /**
+     * Parses information about device network into client model
+     * @param client client model to parse into
+     * @param deviceStatus json object with device status
+     */
     private void parseNetworkInfo(Client client, JSONObject deviceStatus) {
         JSONObject networkInfo = deviceStatus.optJSONObject(NETWORK_INFO);
         if (networkInfo != null) {
@@ -128,6 +155,11 @@ public class JsonContextParser extends JSONParser {
         }
     }
 
+    /**
+     * Parses information about wifi into client model
+     * @param client client model to parse inforamtion into
+     * @param networkInfo json object with information about network
+     */
     private void parseWifiInfo(Client client, JSONObject networkInfo) {
         JSONObject wifiInfo = networkInfo.optJSONObject(WIFI_INFO);
         if (wifiInfo != null) {
@@ -140,6 +172,12 @@ public class JsonContextParser extends JSONParser {
         }
     }
 
+    /**
+     * Adds property into client. Checks value for null or empty value.
+     * @param client client model to parse inforamtion into
+     * @param property property key
+     * @param value value to be added
+     */
     private void addPropertyToClient(Client client, Property property, String value) {
         if (value != null && !value.isEmpty()) {
             client.addProperty(new ClientProperty(property, value));

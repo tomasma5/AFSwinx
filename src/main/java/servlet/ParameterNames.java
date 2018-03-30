@@ -1,5 +1,9 @@
 package servlet;
 
+/**
+ * String constants with names of parameters which are used in HTML templates. Used for e.g. getting data from forms
+ * or setting request parameters.
+ */
 public class ParameterNames {
 
     public static final String APPLICATION_ID = "app";

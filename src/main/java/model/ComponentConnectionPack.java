@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Component connection pack holds information model, data and send connection.
+ */
 public class ComponentConnectionPack {
 
     private ComponentConnection modelConnection;

@@ -1,5 +1,8 @@
 package rest.context;
 
+/**
+ * Contants used in {@link JsonContextParser}
+ */
 public class JsonContextParserConstants {
 
     JsonContextParserConstants() {

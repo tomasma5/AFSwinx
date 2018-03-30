@@ -20,17 +20,22 @@ import java.io.IOException;
 import static servlet.configurations.ConfigurationListServlet.LIST_ROUTE;
 
 
+/**
+ * Servlet for creating or edition a {@link ConfigurationPack}
+ */
 public class ConfigurationCreateServlet extends HttpServlet {
 
-
+    /**
+     * The Create url.
+     */
     static final String CREATE_URL = "/WEB-INF/pages/configurations/create.jsp";
+    /**
+     * The Create route.
+     */
     static final String CREATE_ROUTE = "create";
 
     @Inject
     private ConfigurationManagementService configurationManagementService;
-
-    @Inject
-    private ApplicationsManagementService applicationsManagementService;
 
     @Context
     private ResourceInfo resourceInfo;

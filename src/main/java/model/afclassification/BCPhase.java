@@ -7,6 +7,9 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Business case phase - contains information about fields and screens
+ */
 public class BCPhase extends MongoDocumentEntity {
 
 	private List<BCField> fields;
@@ -19,6 +22,11 @@ public class BCPhase extends MongoDocumentEntity {
 	
 	private String name;
 
+	/**
+	 * Adds bc field.
+	 *
+	 * @param field the field
+	 */
 	public synchronized void addBCField(BCField field){
 		if(this.fields == null){
 			this.fields = new ArrayList<>();
@@ -26,6 +34,11 @@ public class BCPhase extends MongoDocumentEntity {
 		this.fields.add(field);
 	}
 
+	/**
+	 * Adds linked screen.
+	 *
+	 * @param screen the screen
+	 */
 	public synchronized void addLinkedScreen(Screen screen) {
 		if(this.linkedScreens == null){
 			this.linkedScreens = new ArrayList<>();

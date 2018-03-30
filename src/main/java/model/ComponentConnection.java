@@ -2,6 +2,9 @@ package model;
 
 import java.util.Map;
 
+/**
+ * Holds information about component real server (where component is defined) and proxy connections (where user can get it)
+ */
 public class ComponentConnection {
 
     private String address;

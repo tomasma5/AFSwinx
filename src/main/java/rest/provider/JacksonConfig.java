@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * Jackson configuration provider
+ */
 @Provider
 public class JacksonConfig implements ContextResolver<ObjectMapper> {
 

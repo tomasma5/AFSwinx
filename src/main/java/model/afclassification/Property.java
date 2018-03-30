@@ -1,5 +1,8 @@
 package model.afclassification;
 
+/**
+ * The enumeration of possible client context information properties
+ */
 public enum Property {
     CONNECTION_CONNECTED,
     CONNECTION_TYPE,

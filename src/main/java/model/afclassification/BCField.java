@@ -3,6 +3,9 @@ package model.afclassification;
 import model.MongoDocumentEntity;
 import org.bson.types.ObjectId;
 
+/**
+ * This structure is for representing component fields in business cases
+ */
 public class BCField extends MongoDocumentEntity {
 
 	private Field field;

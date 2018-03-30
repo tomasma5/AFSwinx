@@ -14,9 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet for displaying a list of {@link model.afclassification.BCPhase}s
+ */
 public class BCPhaseListServlet extends HttpServlet {
 
+    /**
+     * The List url.
+     */
     static final String LIST_URL = "/WEB-INF/pages/bcphases/list.jsp";
+    /**
+     * The List route.
+     */
     static final String LIST_ROUTE = "list";
 
     @Inject

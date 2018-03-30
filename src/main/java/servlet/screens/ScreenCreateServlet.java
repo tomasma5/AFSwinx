@@ -1,14 +1,11 @@
 package servlet.screens;
 
-import model.Application;
-import model.ComponentResource;
 import model.Screen;
 import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
-import utils.HttpUtils;
 import utils.Utils;
 
 import javax.inject.Inject;
@@ -23,10 +20,19 @@ import java.net.MalformedURLException;
 
 import static servlet.screens.ScreenListServlet.LIST_ROUTE;
 
+/**
+ * Servlet for creating or edition {@link Screen}
+ */
 public class ScreenCreateServlet extends HttpServlet {
 
 
+    /**
+     * The Create url.
+     */
     static final String CREATE_URL = "/WEB-INF/pages/screens/create.jsp";
+    /**
+     * The Create route.
+     */
     static final String CREATE_ROUTE = "create";
 
     @Inject

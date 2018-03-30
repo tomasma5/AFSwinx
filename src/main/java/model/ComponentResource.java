@@ -1,11 +1,14 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Contains information about component name, type and connections, where it can be found and in which screens is
+ * component references. It also contains connection to information which fields it has.
+ */
 public class ComponentResource extends MongoDocumentEntity {
 
     private String name;
@@ -31,6 +34,11 @@ public class ComponentResource extends MongoDocumentEntity {
         this.applicationId = applicationId;
     }
 
+    /**
+     * Tells component that it is referenced in specified screen.
+     *
+     * @param screen the screen
+     */
     public void referencedByScreen(Screen screen){
         if(referencedScreensIds == null){
             referencedScreensIds = new ArrayList<>();

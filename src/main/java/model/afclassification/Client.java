@@ -3,6 +3,9 @@ package model.afclassification;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Client holds context information about application user device and so on
+ */
 public class Client {
 
     private int knowledge;
@@ -58,5 +61,9 @@ public class Client {
 
     public String getDeviceIdentifier() {
         return deviceIdentifier;
+    }
+
+    public List<NearbyDevice> getNearbyDevices() {
+        return nearbyDevices;
     }
 }

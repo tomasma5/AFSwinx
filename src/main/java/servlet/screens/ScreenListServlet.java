@@ -13,9 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet for displaying a list of {@link model.Screen}s
+ */
 public class ScreenListServlet extends HttpServlet {
 
+    /**
+     * The List url.
+     */
     static final String LIST_URL = "/WEB-INF/pages/screens/list.jsp";
+    /**
+     * The List route.
+     */
     static final String LIST_ROUTE = "list";
 
     @Inject
@@ -26,7 +35,7 @@ public class ScreenListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationIdString = request.getParameter(ParameterNames.APPLICATION_ID);
-        if(applicationIdString == null || applicationIdString.isEmpty()){
+        if (applicationIdString == null || applicationIdString.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -42,6 +51,6 @@ public class ScreenListServlet extends HttpServlet {
         ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.SCREEN_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         screenManagementService.removeScreen(objectId);
-        resp.sendRedirect(LIST_ROUTE+"?"+ParameterNames.APPLICATION_ID+"="+appString);
+        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
     }
 }

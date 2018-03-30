@@ -11,40 +11,79 @@ import service.afclassification.computational.ccm.Classification;
 import service.afclassification.computational.scm.BaseScoringUnit;
 import service.afclassification.computational.scm.Scoring;
 
+/**
+ * Classification module which can be used for scoring and classifying fields.
+ */
 public class AFClassification {
 
 	private Scoring scoringModule;
 	private Classification classificationModule;
 
+	/**
+	 * Instantiates a new Af classification.
+	 *
+	 * @param scoringModule        the scoring module
+	 * @param classificationModule the classification module
+	 */
 	public AFClassification(Scoring scoringModule,
 			Classification classificationModule) {
 		this.scoringModule = scoringModule;
 		this.classificationModule = classificationModule;
 	}
 
+	/**
+	 * Instantiates a new Af classification.
+	 *
+	 * @param scoringModule the scoring module
+	 */
 	public AFClassification(Scoring scoringModule) {
 		this.scoringModule = scoringModule;
 		this.classificationModule = new BaseClassificationUnit();
 	}
 
+	/**
+	 * Instantiates a new Af classification.
+	 *
+	 * @param classificationModule the classification module
+	 */
 	public AFClassification(Classification classificationModule) {
 		this.scoringModule = new BaseScoringUnit();
 		this.classificationModule = classificationModule;
 	}
 
+	/**
+	 * Instantiates a new Af classification.
+	 */
 	public AFClassification() {
 		this.scoringModule = new BaseScoringUnit();
 		this.classificationModule = new BaseClassificationUnit();
 	}
 
+	/**
+	 * Sets scoring module.
+	 *
+	 * @param scoringModule the scoring module
+	 */
 	public void setScoringModule(Scoring scoringModule) {
 		this.scoringModule = scoringModule;
 	}
 
+	/**
+	 * Sets classification module.
+	 *
+	 * @param classificationModule the classification module
+	 */
 	public void setClassificationModule(Classification classificationModule) {
 		this.classificationModule = classificationModule;
 	}
 
+	/**
+	 * Classifies given meta model.
+	 *
+	 * @param metaModelPack the meta model pack
+	 * @param client        the client
+	 * @param phase         the phase
+	 */
 	public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase){
 		for (BCField field : phase.getFields()) {
 			System.out.println("Classifing field: "

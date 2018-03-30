@@ -22,9 +22,18 @@ import java.net.URL;
 
 import static servlet.applications.AppListServlet.LIST_ROUTE;
 
+/**
+ * Servlet for creating or editing {@link Application}
+ */
 public class AppCreateServlet extends HttpServlet {
 
+    /**
+     * The Create url.
+     */
     static final String CREATE_URL = "/WEB-INF/pages/apps/create.jsp";
+    /**
+     * The Create route.
+     */
     static final String CREATE_ROUTE = "create";
 
     @Inject

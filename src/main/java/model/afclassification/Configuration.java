@@ -1,45 +1,49 @@
 package model.afclassification;
 
+/**
+ * Holds information about score bounds configuration of specific {@link Behavior}.
+ * For example REQUIRED will be selected if score is from 90 to 100
+ */
 public class Configuration {
 
-	private Behavior behavior;
+    private Behavior behavior;
 
-	private Double thresholdStart;
+    private Double thresholdStart;
 
-	private Double thresholdEnd;
+    private Double thresholdEnd;
 
-	public Configuration(){
+    public Configuration() {
 
-	}
+    }
 
-	public Configuration(Behavior behavior, Double thresholdStart, Double thresholdEnd){
-		this.behavior = behavior;
-		this.thresholdStart = thresholdStart;
-		this.thresholdEnd = thresholdEnd;
-	}
+    public Configuration(Behavior behavior, Double thresholdStart, Double thresholdEnd) {
+        this.behavior = behavior;
+        this.thresholdStart = thresholdStart;
+        this.thresholdEnd = thresholdEnd;
+    }
 
-	public Behavior getBehavior() {
-		return behavior;
-	}
+    public Behavior getBehavior() {
+        return behavior;
+    }
 
-	public void setBehavior(Behavior behavior) {
-		this.behavior = behavior;
-	}
+    public void setBehavior(Behavior behavior) {
+        this.behavior = behavior;
+    }
 
-	public Double getThresholdStart() {
-		return thresholdStart;
-	}
+    public Double getThresholdStart() {
+        return thresholdStart;
+    }
 
-	public void setThresholdStart(Double thresholdStart) {
-		this.thresholdStart = thresholdStart;
-	}
+    public void setThresholdStart(Double thresholdStart) {
+        this.thresholdStart = thresholdStart;
+    }
 
-	public Double getThresholdEnd() {
-		return thresholdEnd;
-	}
+    public Double getThresholdEnd() {
+        return thresholdEnd;
+    }
 
-	public void setThresholdEnd(Double thresholdEnd) {
-		this.thresholdEnd = thresholdEnd;
-	}
+    public void setThresholdEnd(Double thresholdEnd) {
+        this.thresholdEnd = thresholdEnd;
+    }
 
 }

@@ -15,6 +15,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Implementation of application management service
+ */
 @Named("applicationsManagementService")
 @ApplicationScoped
 @Transactional(rollbackOn = Exception.class)
@@ -23,6 +26,9 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
     @Inject
     private ApplicationDao applicationDao;
 
+    /**
+     * Instantiates a new Applications management service.
+     */
     public ApplicationsManagementServiceImpl() {
     }
 

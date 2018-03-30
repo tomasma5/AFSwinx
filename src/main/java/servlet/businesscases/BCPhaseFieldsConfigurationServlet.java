@@ -20,9 +20,18 @@ import java.util.List;
 
 import static servlet.businesscases.BCPhaseListServlet.LIST_ROUTE;
 
+/**
+ * Servlet for configuring severity and purpose of {@link BCPhase}'s {@link model.afclassification.BCField}s
+ */
 public class BCPhaseFieldsConfigurationServlet extends HttpServlet {
 
+    /**
+     * The Configure url.
+     */
     static final String CONFIGURE_URL = "/WEB-INF/pages/bcphases/fieldconfiguration.jsp";
+    /**
+     * The Configure route.
+     */
     static final String CONFIGURE_ROUTE = "configure";
 
     @Inject

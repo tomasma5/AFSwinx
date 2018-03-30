@@ -13,9 +13,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Servlet for displaying a list of {@link model.afclassification.BusinessCase}s
+ */
 public class BusinessCaseListServlet extends HttpServlet {
 
+    /**
+     * The List url.
+     */
     static final String LIST_URL = "/WEB-INF/pages/businesscases/list.jsp";
+    /**
+     * The List route.
+     */
     static final String LIST_ROUTE = "list";
 
     @Inject

@@ -6,6 +6,10 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Screen model. Contains information about screen in client application, which components it has inside and on which
+ * endpoint can it be found on proxy.
+ */
 public class Screen extends MongoDocumentEntity {
 
     private String key;
@@ -33,6 +37,11 @@ public class Screen extends MongoDocumentEntity {
         this.businessCaseId = businessCaseId;
     }
 
+    /**
+     * Adds component resource to screen.
+     *
+     * @param componentResource the component resource
+     */
     public void addComponentResource(ComponentResource componentResource){
         if(components == null) {
             components = new ArrayList<>();
@@ -42,6 +51,11 @@ public class Screen extends MongoDocumentEntity {
         }
     }
 
+    /**
+     * Remove component resource from screen.
+     *
+     * @param componentResource the component resource
+     */
     public void removeComponentResource(ComponentResource componentResource) {
         if(components == null){
             return;

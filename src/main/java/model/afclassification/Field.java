@@ -2,6 +2,9 @@ package model.afclassification;
 
 import java.util.List;
 
+/**
+ * Represents field of component
+ */
 public class Field {
 	
 	private String className;

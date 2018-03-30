@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * The enumeration of supported component types
+ */
 public enum SupportedComponentType {
     FORM ("FORM"),
     TABLE ("TABLE"),

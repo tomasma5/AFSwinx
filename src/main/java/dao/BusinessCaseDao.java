@@ -16,5 +16,11 @@ public interface BusinessCaseDao extends GenericMongoDao<BusinessCase> {
 
     //no need to implement other dao
 
+    /**
+     * Gets phases.
+     *
+     * @param bcId the bc id
+     * @return phases
+     */
     public List<BCPhase> getPhases(ObjectId bcId);
 }

@@ -15,9 +15,18 @@ import java.io.IOException;
 
 import static servlet.businesscases.BusinessCaseListServlet.LIST_ROUTE;
 
+/**
+ * Servlet for creating or editing {@link BusinessCase}s
+ */
 public class BusinessCaseCreateServlet extends HttpServlet {
 
+    /**
+     * The Create url.
+     */
     static final String CREATE_URL = "/WEB-INF/pages/businesscases/create.jsp";
+    /**
+     * The Create route.
+     */
     static final String CREATE_ROUTE = "create";
 
     @Inject

@@ -1,5 +1,8 @@
 package model.afclassification;
 
+/**
+ * Represents addiitional client information
+ */
 public class ClientProperty {
 
     public ClientProperty() {
