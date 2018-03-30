@@ -56,7 +56,7 @@ public class AFScreenButtonBuilder {
         try {
             final String key = menuItemJsonObj.getString(BUTTON_KEY);
 
-            String displayText = menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT);
+            String displayText = menuItemJsonObj.isNull(BUTTON_DISPLAY_TEXT)? null : menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT, null);
             final String url = menuItemJsonObj.getString(BUTTON_URL_KEY);
             int menuOrder = menuItemJsonObj.optInt(BUTTON_ORDER_KEY, -1);
             button.setUrl(url);
