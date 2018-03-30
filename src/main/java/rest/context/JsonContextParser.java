@@ -32,6 +32,9 @@ public class JsonContextParser implements JSONParser {
     private static final String WIFI_INFO_BSSID = "bssid";
     private static final String WIFI_INFO_SSID = "ssid";
     private static final String WIFI_INFO_IP = "ipAddress";
+    private static final String DEVICE_INFO_RESOLUTION_WIDTH = "widthInPixels";
+    private static final String DEVICE_INFO_RESOLUTION_HEIGHT = "heightInPixels";
+    private static final String DEVICE_INFO_RESOLUTION_INCHES = "inches";
 
     @Override
     public Client parse(String jsonString) {
@@ -56,15 +59,24 @@ public class JsonContextParser implements JSONParser {
 
             String deviceName = deviceInfo.optString(DEVICE_INFO_DEVICE);
             String deviceModel = deviceInfo.optString(DEVICE_INFO_MODEL);
-            String deviceProdcut = deviceInfo.optString(DEVICE_INFO_PRODUCT);
+            String deviceProduct = deviceInfo.optString(DEVICE_INFO_PRODUCT);
             int deviceApiLevel = deviceInfo.optInt(DEVICE_INFO_API_LEVEL);
-            String deviceResolution = deviceInfo.optString(DEVICE_INFO_RESOLUTION);
+            JSONObject deviceResolution = deviceInfo.optJSONObject(DEVICE_INFO_RESOLUTION);
+
 
             addPropertyToClient(client, Property.DEVICE_NAME, deviceName);
             addPropertyToClient(client, Property.DEVICE_MODEL, deviceModel);
-            addPropertyToClient(client, Property.DEVICE_PRODUCT, deviceProdcut);
+            addPropertyToClient(client, Property.DEVICE_PRODUCT, deviceProduct);
             addPropertyToClient(client, Property.DEVICE_API_LEVEL, String.valueOf(deviceApiLevel));
-            addPropertyToClient(client, Property.DEVICE_RESOLUTION, deviceResolution);
+
+            if(deviceResolution != null){
+                int widthInPixels = deviceResolution.optInt(DEVICE_INFO_RESOLUTION_WIDTH);
+                int heightInPixels = deviceResolution.optInt(DEVICE_INFO_RESOLUTION_HEIGHT);
+                double inches = deviceResolution.optDouble(DEVICE_INFO_RESOLUTION_INCHES);
+                addPropertyToClient(client, Property.DEVICE_RESOLUTION_WIDTH, String.valueOf(widthInPixels));
+                addPropertyToClient(client, Property.DEVICE_RESOLUTION_HEIGHT, String.valueOf(heightInPixels));
+                addPropertyToClient(client, Property.DEVICE_RESOLUTION_INCHES, String.valueOf(inches));
+            }
         }
     }
 
