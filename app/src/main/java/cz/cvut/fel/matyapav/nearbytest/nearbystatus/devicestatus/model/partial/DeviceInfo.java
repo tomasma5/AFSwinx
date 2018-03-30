@@ -13,6 +13,7 @@ public class DeviceInfo {
     private String device;
     private String model;
     private String product;
+    private Resolution resolution;
 
     private String macAddress;
 
@@ -65,5 +66,13 @@ public class DeviceInfo {
 
     public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
+    }
+
+    public Resolution getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(Resolution resolution) {
+        this.resolution = resolution;
     }
 }
