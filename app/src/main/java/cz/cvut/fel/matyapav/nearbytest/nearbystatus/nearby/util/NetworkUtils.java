@@ -1,20 +1,23 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util;
 
 import android.util.Log;
-import android.util.Pair;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.util.GlobalConstants;
+
+import static cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.util.DeviceStatusConstants.NETWORK_INTERFACE_WLAN_0;
 
 /**
  * Util methods used during nearby devices finding process
@@ -134,6 +137,39 @@ public class NetworkUtils {
             e.printStackTrace();
         }
         return lines;
+    }
+
+    /**
+     * Gets mac address of device from wlan0 network interface
+     *
+     * @return mac address of device or null if something during process gone wrong
+     */
+    public static String getMacAddress() {
+        try {
+            List<NetworkInterface> networkInterfaces;
+            networkInterfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface networkInterface : networkInterfaces) {
+                if (!networkInterface.getName().equalsIgnoreCase(NETWORK_INTERFACE_WLAN_0))
+                    continue;
+                byte[] macBytes = new byte[0];
+                macBytes = networkInterface.getHardwareAddress();
+                if (macBytes == null) {
+                    return null;
+                }
+                StringBuilder macAddressBuilder = new StringBuilder();
+                for (byte b : macBytes) {
+                    macAddressBuilder.append(Integer.toHexString(b & 0xFF)).append(":");
+                }
+                if (macAddressBuilder.length() > 0) {
+                    macAddressBuilder.deleteCharAt(macAddressBuilder.length() - 1);
+                }
+                return macAddressBuilder.toString();
+            }
+        } catch (Exception ex) {
+            Log.e(GlobalConstants.APPLICATION_TAG, "Cannot get mac address from network interfaces");
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }
