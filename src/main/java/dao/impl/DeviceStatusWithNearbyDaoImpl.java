@@ -1,5 +1,6 @@
 package dao.impl;
 
+import com.mongodb.client.FindIterable;
 import dao.DeviceStatusWithNearbyDao;
 import dao.GenericMongoDao;
 import model.DeviceStatusWithNearby;
@@ -31,18 +32,47 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
         return "Devices";
     }
 
+    private static final String ID_FIELD = "id";
+    private static final String MAC_ADDRESS_FIELD = "deviceStatus.deviceInfo.macAddress";
+    private static final String TIMESTAMP_FIELD = "timestamp";
+
     @Override
-    public DeviceStatusWithNearby getFirstEarlierThanTimestamp(long timestamp) {
-        return collection.find(lt("timestamp", timestamp))
-                .sort(descending("timestamp"))
+    public List<DeviceStatusWithNearby> findAll(String deviceIdentifier) {
+        if (deviceIdentifier == null) {
+            return collection.find().into(new ArrayList<DeviceStatusWithNearby>());
+        } else {
+            return collection.find(eq(MAC_ADDRESS_FIELD, deviceIdentifier)).into(new ArrayList<DeviceStatusWithNearby>());
+        }
+    }
+
+    @Override
+    public DeviceStatusWithNearby getFirstEarlierThanTimestamp(String deviceIdentifier, long timestamp) {
+        FindIterable<DeviceStatusWithNearby> finder;
+        if (deviceIdentifier == null) {
+            finder = collection.find(lt(TIMESTAMP_FIELD, timestamp));
+        } else {
+            finder = collection.find(and(
+                    eq(MAC_ADDRESS_FIELD, deviceIdentifier),
+                    lt(TIMESTAMP_FIELD, timestamp)
+            ));
+        }
+        return finder.sort(descending(TIMESTAMP_FIELD))
                 .limit(1)
                 .first();
     }
 
     @Override
-    public DeviceStatusWithNearby getFirstLaterThanTimestamp(long timestamp) {
-        return collection.find(gt("timestamp", timestamp))
-                .sort(ascending("timestamp"))
+    public DeviceStatusWithNearby getFirstLaterThanTimestamp(String deviceIdentifier, long timestamp) {
+        FindIterable<DeviceStatusWithNearby> finder;
+        if (deviceIdentifier == null) {
+            finder = collection.find(gt(TIMESTAMP_FIELD, timestamp));
+        } else {
+            finder = collection.find(and(
+                    eq(MAC_ADDRESS_FIELD, deviceIdentifier),
+                    gt(TIMESTAMP_FIELD, timestamp)
+            ));
+        }
+        return finder.sort(ascending(TIMESTAMP_FIELD))
                 .limit(1)
                 .first();
     }
@@ -52,15 +82,15 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
     }
 
     public void update(DeviceStatusWithNearby record) {
-        collection.replaceOne(eq("id", record.getId()), record);
+        collection.replaceOne(eq(ID_FIELD, record.getId()), record);
     }
 
     public DeviceStatusWithNearby findByObjectId(ObjectId id) {
-        return collection.find(eq("id", id)).first();
+        return collection.find(eq(ID_FIELD, id)).first();
     }
 
     public void deleteByObjectId(ObjectId id) {
-        collection.deleteOne(eq("id", id));
+        collection.deleteOne(eq(ID_FIELD, id));
     }
 
     public List<DeviceStatusWithNearby> findAll() {

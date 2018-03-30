@@ -16,21 +16,26 @@ public class DataServiceImpl implements DataService {
     @Inject
     DeviceStatusWithNearbyDao deviceStatusWithNearbyDao;
 
-    public List<DeviceStatusWithNearby> findAllDeviceStatusesWithNearbyDevices() {
-        return deviceStatusWithNearbyDao.findAll();
-    }
-
     @Override
-    public DeviceStatusWithNearby findClosestToGivenTimestamp(long timestamp) {
-        DeviceStatusWithNearby firstBigger = deviceStatusWithNearbyDao.getFirstLaterThanTimestamp(timestamp);
-        DeviceStatusWithNearby firstLower = deviceStatusWithNearbyDao.getFirstEarlierThanTimestamp(timestamp);
-        if(firstBigger != null && firstLower != null) {
+    public DeviceStatusWithNearby findClosestToGivenTimestamp(String deviceIdentifier, long timestamp) {
+        DeviceStatusWithNearby firstBigger = deviceStatusWithNearbyDao.getFirstLaterThanTimestamp(deviceIdentifier, timestamp);
+        DeviceStatusWithNearby firstLower = deviceStatusWithNearbyDao.getFirstEarlierThanTimestamp(deviceIdentifier, timestamp);
+        if (firstBigger != null && firstLower != null) {
             if (abs(timestamp - firstBigger.getTimestamp()) < abs(timestamp - firstLower.getTimestamp())) {
                 return firstBigger;
             } else {
                 return firstLower;
             }
+        } else if(firstBigger != null){
+            return firstBigger;
+        } else if(firstLower != null) {
+            return firstLower;
         }
         return null;
+    }
+
+    @Override
+    public List<DeviceStatusWithNearby> findAllDeviceStatusesWithNearbyDevices(String deviceIdentifier) {
+        return deviceStatusWithNearbyDao.findAll(deviceIdentifier);
     }
 }
