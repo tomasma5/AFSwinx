@@ -1,40 +1,16 @@
 package rest.context;
 
-import model.afclassification.Client;
-import model.afclassification.ClientProperty;
-import model.afclassification.Property;
+import model.afclassification.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static rest.context.JsonContextParserConstants.*;
 
 public class JsonContextParser extends JSONParser {
 
-    private static final String DEVICE_STATUS = "deviceStatus";
-    private static final String DEVICE_INFO = "deviceInfo";
-    private static final String BATTERY_INFO = "batteryStatus";
-    private static final String LOCATION_INFO = "locationStatus";
-    private static final String NETWORK_INFO = "networkStatus";
-    private static final String WIFI_INFO = "wifiStatus";
-    private static final String DEVICE_INFO_RESOLUTION = "resolution";
-    private static final String DEVICE_INFO_DEVICE = "device";
-    private static final String DEVICE_INFO_MAC_ADDRESS = "macAddress";
-    private static final String DEVICE_INFO_MODEL = "model";
-    private static final String DEVICE_INFO_PRODUCT = "product";
-    private static final String DEVICE_INFO_API_LEVEL = "apiLevel";
-    private static final String BATTERY_INFO_LEVEL = "batteryLevel";
-    private static final String BATTERY_INFO_TEMPERATURE = "temperatureLevel";
-    private static final String BATTERY_INFO_CHARGING = "charging";
-    private static final String BATTERY_INFO_CHARGE_TYPE = "chargeType";
-    private static final String LOCATION_INFO_LATITUDE = "latitude";
-    private static final String LOCATION_INFO_LONGITUDE = "longitude";
-    private static final String LOCATION_INFO_ALTITUDE = "altitude";
-    private static final String LOCATION_INFO_SPEED = "speed";
-    private static final String NETWORK_INFO_CONNECTED = "connected";
-    private static final String NETWORK_INFO_TYPE_NAME = "networkTypeName";
-    private static final String WIFI_INFO_BSSID = "bssid";
-    private static final String WIFI_INFO_SSID = "ssid";
-    private static final String WIFI_INFO_IP = "ipAddress";
-    private static final String DEVICE_INFO_RESOLUTION_WIDTH = "widthInPixels";
-    private static final String DEVICE_INFO_RESOLUTION_HEIGHT = "heightInPixels";
-    private static final String DEVICE_INFO_RESOLUTION_INCHES = "inches";
 
     @Override
     public Client parse(String jsonString) {
@@ -44,11 +20,42 @@ public class JsonContextParser extends JSONParser {
         Client client = new Client();
         JSONObject json = new JSONObject(jsonString);
         JSONObject deviceStatus = json.getJSONObject(DEVICE_STATUS);
+        JSONArray nearbyDevices = json.getJSONArray(NEARBY_DEVICE);
         parseDeviceInfo(client, deviceStatus);
         parseBatteryInfo(client, deviceStatus);
         parseLocationInfo(client, deviceStatus);
         parseNetworkInfo(client, deviceStatus);
+        parseNearbyDevices(client, nearbyDevices);
         return client;
+    }
+
+    private void parseNearbyDevices(Client client, JSONArray nearbyDevices) {
+        for (int i = 0; i < nearbyDevices.length(); i++) {
+            NearbyDevice nearbyDeviceObject = new NearbyDevice();
+
+            JSONObject nearbyDevice = nearbyDevices.getJSONObject(i);
+            String name = optString(nearbyDevice, NEARBY_DEVICE_NAME);
+            String macAddress = optString(nearbyDevice, NEARBY_DEVICE_MAC_ADDRESS);
+            String macVendor = optString(nearbyDevice, NEARBY_DEVICE_MAC_VENDOR);
+            String deviceType = optString(nearbyDevice, NEARBY_DEVICE_TYPE);
+            JSONObject nearbyDeviceAdditionalInformations = nearbyDevice.optJSONObject(NEARBY_DEVICE_ADDITIONAL_INFO);
+            Map<String, String> additionalInfoMap = null;
+            if (nearbyDeviceAdditionalInformations != null) {
+                additionalInfoMap = new HashMap<>();
+                for (String key : nearbyDeviceAdditionalInformations.keySet()) {
+                    String value = optString(nearbyDeviceAdditionalInformations, key);
+                    additionalInfoMap.put(key, value);
+                }
+            }
+            nearbyDeviceObject.setName(name);
+            nearbyDeviceObject.setMacAddress(macAddress);
+            nearbyDeviceObject.setMacVendor(macVendor);
+            nearbyDeviceObject.setDeviceType(NearbyDeviceType.valueOf(deviceType));
+            if (additionalInfoMap != null) {
+                nearbyDeviceObject.setAdditionalInformations(additionalInfoMap);
+            }
+            client.addNearbyDevice(nearbyDeviceObject);
+        }
     }
 
     private void parseDeviceInfo(Client client, JSONObject deviceStatus) {
@@ -69,7 +76,7 @@ public class JsonContextParser extends JSONParser {
             addPropertyToClient(client, Property.DEVICE_PRODUCT, deviceProduct);
             addPropertyToClient(client, Property.DEVICE_API_LEVEL, String.valueOf(deviceApiLevel));
 
-            if(deviceResolution != null){
+            if (deviceResolution != null) {
                 int widthInPixels = deviceResolution.optInt(DEVICE_INFO_RESOLUTION_WIDTH);
                 int heightInPixels = deviceResolution.optInt(DEVICE_INFO_RESOLUTION_HEIGHT);
                 double inches = deviceResolution.optDouble(DEVICE_INFO_RESOLUTION_INCHES);

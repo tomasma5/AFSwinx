@@ -4,51 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
-	
-	private int knowledge;
 
-	private List<ClientProperty> clientProperties;
-	
-	private Device device;
+    private int knowledge;
 
-	private String deviceIdentifier;
-	
-	public int getKnowledge() {
-		return knowledge;
-	}
+    private List<ClientProperty> clientProperties;
+    private List<NearbyDevice> nearbyDevices;
 
-	public void setKnowledge(int knowledge) {
-		this.knowledge = knowledge;
-	}
+    private Device device;
 
-	public List<ClientProperty> getClientProperties() {
-		return clientProperties;
-	}
+    private String deviceIdentifier;
 
-	public void addProperty(ClientProperty clientProperty) {
-		if(this.clientProperties == null){
-			this.clientProperties = new ArrayList<ClientProperty>();
-		}
-		this.clientProperties.add(clientProperty);
-	}
-	
-	public void setClientProperties(List<ClientProperty> clientProperties) {
-		this.clientProperties = clientProperties;
-	}
+    public int getKnowledge() {
+        return knowledge;
+    }
 
-	public Device getDevice() {
-		return device;
-	}
+    public void setKnowledge(int knowledge) {
+        this.knowledge = knowledge;
+    }
 
-	public void setDevice(Device device) {
-		this.device = device;
-	}
+    public List<ClientProperty> getClientProperties() {
+        return clientProperties;
+    }
 
-	public void setDeviceIdentifier(String deviceIdentifier) {
-		this.deviceIdentifier = deviceIdentifier;
-	}
+    public void addProperty(ClientProperty clientProperty) {
+        if (this.clientProperties == null) {
+            this.clientProperties = new ArrayList<>();
+        }
+        this.clientProperties.add(clientProperty);
+    }
 
-	public String getDeviceIdentifier() {
-		return deviceIdentifier;
-	}
+    public void addNearbyDevice(NearbyDevice nearbyDevice) {
+        if (this.nearbyDevices == null) {
+            this.nearbyDevices = new ArrayList<>();
+        }
+        this.nearbyDevices.add(nearbyDevice);
+    }
+
+    public void setClientProperties(List<ClientProperty> clientProperties) {
+        this.clientProperties = clientProperties;
+    }
+
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
+    public void setDeviceIdentifier(String deviceIdentifier) {
+        this.deviceIdentifier = deviceIdentifier;
+    }
+
+    public String getDeviceIdentifier() {
+        return deviceIdentifier;
+    }
 }
