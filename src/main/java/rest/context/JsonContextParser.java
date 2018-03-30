@@ -98,10 +98,10 @@ public class JsonContextParser extends JSONParser {
     private void parseLocationInfo(Client client, JSONObject deviceStatus) {
         JSONObject locationInfo = deviceStatus.optJSONObject(LOCATION_INFO);
         if (locationInfo != null) {
-            double latitude = deviceStatus.optDouble(LOCATION_INFO_LATITUDE);
-            double longitude = deviceStatus.optDouble(LOCATION_INFO_LONGITUDE);
-            double altitude = deviceStatus.optDouble(LOCATION_INFO_ALTITUDE);
-            double speed = deviceStatus.optDouble(LOCATION_INFO_SPEED);
+            double latitude = locationInfo.optDouble(LOCATION_INFO_LATITUDE);
+            double longitude = locationInfo.optDouble(LOCATION_INFO_LONGITUDE);
+            double altitude = locationInfo.optDouble(LOCATION_INFO_ALTITUDE);
+            double speed = locationInfo.optDouble(LOCATION_INFO_SPEED);
 
             addPropertyToClient(client, Property.LOCATION_LATITUDE, String.valueOf(latitude));
             addPropertyToClient(client, Property.LOCATION_LONGITUDE, String.valueOf(longitude));
