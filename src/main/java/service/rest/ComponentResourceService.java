@@ -2,6 +2,7 @@ package service.rest;
 
 import org.bson.types.ObjectId;
 import service.exception.ComponentRequestException;
+import service.exception.ServiceException;
 
 import javax.ws.rs.core.HttpHeaders;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.HttpHeaders;
  */
 public interface ComponentResourceService {
 
-    public String getComponentModel(ObjectId componentId, HttpHeaders headers) throws ComponentRequestException;
+    public String getComponentModel(ObjectId componentId, HttpHeaders headers) throws ComponentRequestException, ServiceException;
 
     public String getComponentData(ObjectId componentId, HttpHeaders headers) throws ComponentRequestException;
 

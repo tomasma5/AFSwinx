@@ -2,6 +2,7 @@ package rest;
 
 import org.bson.types.ObjectId;
 import service.exception.ComponentRequestException;
+import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
 
 import javax.inject.Inject;
@@ -25,7 +26,7 @@ public class ComponentResourcesEndpoint {
     @GET
     @Path("/model/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getModelDefinition(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+    public String getModelDefinition(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException, ServiceException {
         return componentResourceService.getComponentModel(componentId, headers);
     }
 

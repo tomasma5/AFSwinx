@@ -54,7 +54,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     RequestContext requestContext;
 
     @Override
-    public String getComponentModel(ObjectId id, HttpHeaders headers) throws ComponentRequestException {
+    public String getComponentModel(ObjectId id, HttpHeaders headers) throws ComponentRequestException, ServiceException {
         Application application = requestContext.getCurrentApplication();
         ComponentResource componentResource = componentResourceDao.findById(id);
         if (componentResource != null && application != null) {
@@ -72,8 +72,6 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
                 return gson.toJson(metaModel);
             } catch (IOException e) {
                 throw new ComponentRequestException(e.getMessage(), e);
-            } catch (ServiceException e) {
-                e.printStackTrace();
             }
         }
         return null;
@@ -140,9 +138,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     private Client getClientFromRequest(HttpHeaders headers) throws IOException {
         Client client;
         String deviceType = headers.getRequestHeaders().getFirst(Constants.DEVICE_TYPE_HEADER);
-        String deviceIdentifier = headers.getRequestHeaders().getFirst(Constants.DEVICE_IDENTIFIER_HEADER);
         Application application = applicationsManagementService.findByUuid(headers.getRequestHeaders().getFirst(Constants.APPLICATION_HEADER));
         if (Device.valueOf(deviceType).equals(Device.PHONE) || Device.valueOf(deviceType).equals(Device.TABLET)) {
+            String deviceIdentifier = headers.getRequestHeaders().getFirst(Constants.DEVICE_IDENTIFIER_HEADER);
             String contextData = HttpUtils.getRequest(HttpUtils.buildUrl(
                     application.getConsumerProtocol(),
                     application.getConsumerHostname(),

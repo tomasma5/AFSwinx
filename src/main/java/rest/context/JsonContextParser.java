@@ -5,7 +5,7 @@ import model.afclassification.ClientProperty;
 import model.afclassification.Property;
 import org.json.JSONObject;
 
-public class JsonContextParser implements JSONParser {
+public class JsonContextParser extends JSONParser {
 
     private static final String DEVICE_STATUS = "deviceStatus";
     private static final String DEVICE_INFO = "deviceInfo";
@@ -54,12 +54,12 @@ public class JsonContextParser implements JSONParser {
     private void parseDeviceInfo(Client client, JSONObject deviceStatus) {
         JSONObject deviceInfo = deviceStatus.optJSONObject(DEVICE_INFO);
         if (deviceInfo != null) {
-            String macAddress = deviceInfo.optString(DEVICE_INFO_MAC_ADDRESS);
+            String macAddress = optString(deviceInfo, DEVICE_INFO_MAC_ADDRESS);
             client.setDeviceIdentifier(macAddress);
 
-            String deviceName = deviceInfo.optString(DEVICE_INFO_DEVICE);
-            String deviceModel = deviceInfo.optString(DEVICE_INFO_MODEL);
-            String deviceProduct = deviceInfo.optString(DEVICE_INFO_PRODUCT);
+            String deviceName = optString(deviceInfo, DEVICE_INFO_DEVICE);
+            String deviceModel = optString(deviceInfo, DEVICE_INFO_MODEL);
+            String deviceProduct = optString(deviceInfo, DEVICE_INFO_PRODUCT);
             int deviceApiLevel = deviceInfo.optInt(DEVICE_INFO_API_LEVEL);
             JSONObject deviceResolution = deviceInfo.optJSONObject(DEVICE_INFO_RESOLUTION);
 
@@ -83,10 +83,10 @@ public class JsonContextParser implements JSONParser {
     private void parseBatteryInfo(Client client, JSONObject deviceStatus) {
         JSONObject batteryInfo = deviceStatus.optJSONObject(BATTERY_INFO);
         if (batteryInfo != null) {
-            int batteryLevel = deviceStatus.optInt(BATTERY_INFO_LEVEL);
-            int temperature = deviceStatus.optInt(BATTERY_INFO_TEMPERATURE);
-            boolean charging = deviceStatus.optBoolean(BATTERY_INFO_CHARGING);
-            String chargeType = deviceStatus.optString(BATTERY_INFO_CHARGE_TYPE);
+            int batteryLevel = batteryInfo.optInt(BATTERY_INFO_LEVEL);
+            int temperature = batteryInfo.optInt(BATTERY_INFO_TEMPERATURE);
+            boolean charging = batteryInfo.optBoolean(BATTERY_INFO_CHARGING);
+            String chargeType = optString(batteryInfo, BATTERY_INFO_CHARGE_TYPE);
 
             addPropertyToClient(client, Property.BATTERY_CAPACITY, String.valueOf(batteryLevel));
             addPropertyToClient(client, Property.BATTERY_TEMPERATURE, String.valueOf(temperature));
@@ -113,22 +113,20 @@ public class JsonContextParser implements JSONParser {
     private void parseNetworkInfo(Client client, JSONObject deviceStatus) {
         JSONObject networkInfo = deviceStatus.optJSONObject(NETWORK_INFO);
         if (networkInfo != null) {
-
             boolean connected = networkInfo.optBoolean(NETWORK_INFO_CONNECTED);
-            String networkTypeName = networkInfo.optString(NETWORK_INFO_TYPE_NAME);
+            String networkTypeName = optString(networkInfo, NETWORK_INFO_TYPE_NAME);
             addPropertyToClient(client, Property.CONNECTION_CONNECTED, String.valueOf(connected));
             addPropertyToClient(client, Property.CONNECTION_TYPE, networkTypeName);
             parseWifiInfo(client, networkInfo);
-
         }
     }
 
     private void parseWifiInfo(Client client, JSONObject networkInfo) {
         JSONObject wifiInfo = networkInfo.optJSONObject(WIFI_INFO);
         if (wifiInfo != null) {
-            String bssid = wifiInfo.optString(WIFI_INFO_BSSID);
-            String ssid = wifiInfo.optString(WIFI_INFO_SSID);
-            String ipAddress = wifiInfo.optString(WIFI_INFO_IP);
+            String bssid = optString(wifiInfo, WIFI_INFO_BSSID);
+            String ssid = optString(wifiInfo, WIFI_INFO_SSID);
+            String ipAddress = optString(wifiInfo, WIFI_INFO_IP);
             addPropertyToClient(client, Property.CONNECTION_WIFI_BSSID, bssid);
             addPropertyToClient(client, Property.CONNECTION_WIFI_SSID, ssid);
             addPropertyToClient(client, Property.CONNECTION_WIFI_IP_ADDRESS, ipAddress);
