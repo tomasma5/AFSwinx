@@ -32,9 +32,8 @@ import com.tomscz.afswinx.common.Utils;
 
 /**
  * This abstract class is responsible for perform requests to server.
- * 
+ *
  * @author Martin Tomasek (martin@toms-cz.com)
- * 
  * @since 1.0.0.
  */
 public abstract class BaseConnector implements Connector {
@@ -63,7 +62,7 @@ public abstract class BaseConnector implements Connector {
      * This method perform request on server and return response from server. It also set status
      * code. If during performing request is exception occur then {@link AFSwinxConnectionException}
      * is thrown.
-     * 
+     *
      * @param httpMethod method which will be used.
      * @return InputStream of response from server.
      * @throws ConnectException if during request is exception occur.
@@ -91,9 +90,9 @@ public abstract class BaseConnector implements Connector {
 
     /**
      * This method do request on server.
-     * 
+     *
      * @param clazz returned type.
-     * @param body of request.
+     * @param body  of request.
      * @return object of T which will contains response body from server.
      * @throws ConnectException
      */
@@ -104,12 +103,12 @@ public abstract class BaseConnector implements Connector {
                             this.headersParams, getContext(), this.security);
             HttpRequest request = requestBuilder.getRequest(getParameter());
             request.setHeader(AFSwinxConstants.APPLICATION_HEADER, AFSwinx.getInstance().getProxyApplicationContext());
-            request.setHeader(AFSwinxConstants.DEVICE_HEADER, AFSwinx.getInstance().getDeviceType());
+            request.setHeader(AFSwinxConstants.DEVICE_TYPE_HEADER, AFSwinx.getInstance().getDeviceType());
             InputStream inputStream;
             boolean transformResponseData = true;
             if (body != null
                     && (requestBuilder.httpMethod.equals(HttpMethod.POST) || requestBuilder.httpMethod
-                            .equals(HttpMethod.PUT))) {
+                    .equals(HttpMethod.PUT))) {
                 HttpEntityEnclosingRequest requestWithBody = (HttpEntityEnclosingRequest) request;
                 requestWithBody.setEntity(new StringEntity(body));
                 inputStream = getResponse(requestWithBody);
@@ -179,9 +178,8 @@ public abstract class BaseConnector implements Connector {
 
     /**
      * This class is request builder. It build http or https request which will be used.
-     * 
+     *
      * @author Martin Tomasek (martin@toms-cz.com)
-     * 
      * @since 1.0.0.
      */
     public static class HttpRequestBuilder {
@@ -195,8 +193,8 @@ public abstract class BaseConnector implements Connector {
         private ConnectionSecurity security;
 
         public HttpRequestBuilder(HeaderType accept, HeaderType contentType, HttpMethod httpMethod,
-                HashMap<String, String> headersParams, HttpContext context,
-                ConnectionSecurity security) {
+                                  HashMap<String, String> headersParams, HttpContext context,
+                                  ConnectionSecurity security) {
             this.accept = accept;
             this.contentType = contentType;
             this.httpMethod = httpMethod;

@@ -34,6 +34,7 @@ import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkSt
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.bluetooth.BTDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.network.NearbyNetworksFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.subnet.SubnetDevicesFinder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NetworkUtils;
 import cz.cvut.fel.matyapav.showcase.fragments.LoginFragment;
 import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
@@ -79,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 ApplicationContext.getInstance().loadUIProxyUrl(getBaseContext());
                 AFAndroid.getInstance().setApplicationContextUuid(ApplicationContext.getInstance().getUiProxyApplicationUuid(getBaseContext()));
                 AFAndroid.getInstance().setDeviceType(Utils.deviceHasTabletSize(this) ? Device.TABLET : Device.PHONE);
+                AFAndroid.getInstance().setDeviceIdentifier(NetworkUtils.getMacAddress());
             } catch (IOException e) {
                 System.err.println("Cannot get properties file - so af android could not be properly configured");
                 e.printStackTrace();

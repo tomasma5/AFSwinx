@@ -28,6 +28,7 @@ public class AFAndroid {
     private HashMap<String, AFComponent> createdComponents;
     private String applicationContextUuid;
     private Device deviceType;
+    private String deviceIdentifier;
 
     public AFAndroid() {
         createdComponents = new HashMap<>();
@@ -114,5 +115,13 @@ public class AFAndroid {
 
     public String getDeviceType() {
         return deviceType.toString();
+    }
+
+    public String getDeviceIdentifier() {
+        return deviceIdentifier;
+    }
+
+    public void setDeviceIdentifier(String deviceIdentifier) {
+        this.deviceIdentifier = deviceIdentifier;
     }
 }

@@ -36,7 +36,7 @@ public class Main {
 
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance()
-                    .getScreenDefinitionBuilder(ApplicationContext.getInstance().getUiProxyUrl()+"/api/screens/5a9955636402eb092c3b56c7", "Login")
+                    .getScreenDefinitionBuilder(ApplicationContext.getInstance().getUiProxyUrl() + "/api/screens/5a9955636402eb092c3b56c7", "Login")
                     .getScreenDefinition();
             WelcomeScreen welcomeScreen = new WelcomeScreen(screenDefinition);
             WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
