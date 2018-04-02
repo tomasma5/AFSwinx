@@ -29,6 +29,9 @@ public class ConsumerServiceImpl implements ConsumerService {
 
     private static final Logger LOGGER = Logger.getLogger( ConsumerServiceImpl.class.getName() );
 
+    /**
+     * Adds new record with device status and nearby devices into database
+     */
     @Inject
     DeviceStatusWithNearbyDao deviceStatusWithNearbyDao;
 
