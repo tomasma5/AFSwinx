@@ -53,16 +53,13 @@ public class BusinessTripsListFragment extends BaseFragment {
             final AFList list = listBuilder.createComponent();
             businessTripListLayout.addView(list.getView());
 
-            list.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(getActivity(), BusinessTripDetailActivity.class);
-                    intent.putExtra(SCREEN_DEFINITION_URL, getScreenDefinition().getScreenUrl());
-                    intent.putExtra(SCREEN_DEFINITION_KEY, getScreenDefinition().getKey());
-                    intent.putExtra(LIST_ID, ShowcaseConstants.BUSINESS_TRIPS_LIST);
-                    intent.putExtra(LIST_POSITITON, position);
-                    startActivityForResult(intent, BUSINESS_TRIP_EDIT_REQUEST);
-                }
+            list.getListView().setOnItemClickListener((parent, view, position, id) -> {
+                Intent intent = new Intent(getActivity(), BusinessTripDetailActivity.class);
+                intent.putExtra(SCREEN_DEFINITION_URL, getScreenDefinition().getScreenUrl());
+                intent.putExtra(SCREEN_DEFINITION_KEY, getScreenDefinition().getKey());
+                intent.putExtra(LIST_ID, ShowcaseConstants.BUSINESS_TRIPS_LIST);
+                intent.putExtra(LIST_POSITITON, position);
+                startActivityForResult(intent, BUSINESS_TRIP_EDIT_REQUEST);
             });
         } catch (Exception e) {
             ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);

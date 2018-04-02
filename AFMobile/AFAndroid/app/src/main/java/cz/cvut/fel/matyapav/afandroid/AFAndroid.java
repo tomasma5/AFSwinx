@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.afandroid;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyComponent
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
 import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
+import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -26,9 +28,7 @@ public class AFAndroid {
 
     private static AFAndroid instance = null;
     private HashMap<String, AFComponent> createdComponents;
-    private String applicationContextUuid;
-    private Device deviceType;
-    private String deviceIdentifier;
+    private AndroidUIProxySetup proxySetup;
 
     public AFAndroid() {
         createdComponents = new HashMap<>();
@@ -71,12 +71,8 @@ public class AFAndroid {
         return new AFMenuBuilder(context);
     }
 
-    public void setApplicationContextUuid(String applicationContextUuid) {
-        this.applicationContextUuid = applicationContextUuid;
-    }
-
-    public String getProxyApplicationContext() {
-        return applicationContextUuid;
+    public String getProxyApplicationContext(Context context) {
+        return proxySetup.getUiProxyApplicationUuid(context);
     }
 
     /**
@@ -109,19 +105,19 @@ public class AFAndroid {
         return new AFScreenButtonBuilder(context);
     }
 
-    public void setDeviceType(Device deviceType) {
-        this.deviceType = deviceType;
+    public String getDeviceType(Context context) {
+        return proxySetup.getDeviceType(context).toString();
     }
 
-    public String getDeviceType() {
-        return deviceType.toString();
+    public String getDeviceIdentifier(Context context) {
+        return proxySetup.getDeviceIdentifier(context);
     }
 
-    public String getDeviceIdentifier() {
-        return deviceIdentifier;
+    public void setProxySetup(AndroidUIProxySetup proxySetup) {
+        this.proxySetup = proxySetup;
     }
 
-    public void setDeviceIdentifier(String deviceIdentifier) {
-        this.deviceIdentifier = deviceIdentifier;
+    public AndroidUIProxySetup getProxySetup() {
+        return proxySetup;
     }
 }

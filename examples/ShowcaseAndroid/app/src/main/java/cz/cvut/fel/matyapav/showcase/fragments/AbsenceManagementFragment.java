@@ -27,24 +27,21 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
  */
 public class AbsenceManagementFragment extends BaseFragment {
 
-    private View.OnClickListener onPerformButtonClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents()
-                    .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM);
-            if (form != null && form.validateData()) {
-                try {
-                    form.sendData();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
-                    Toast.makeText(getContext(), Localization.translate(getContext(), "success.addOrUpdate"),
-                            Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(Localization.translate(getContext(), "error.addOrUpdate"));
-                    alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
-                    alertDialog.show();
-                    e.printStackTrace();
-                }
+    private View.OnClickListener onPerformButtonClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents()
+                .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM);
+        if (form != null && form.validateData()) {
+            try {
+                form.sendData();
+                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
+                Toast.makeText(getContext(), Localization.translate(getContext(), "success.addOrUpdate"),
+                        Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle(Localization.translate(getContext(), "error.addOrUpdate"));
+                alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
+                alertDialog.show();
+                e.printStackTrace();
             }
         }
     };
@@ -52,7 +49,7 @@ public class AbsenceManagementFragment extends BaseFragment {
     @Override
     public View initialize(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.absence_management_fragment, container, false);
-        LinearLayout layout = (LinearLayout) root.findViewById(R.id.absenceManagementLayout);
+        LinearLayout layout = root.findViewById(R.id.absenceManagementLayout);
 
         //build security constraints
         HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();
@@ -93,12 +90,7 @@ public class AbsenceManagementFragment extends BaseFragment {
                 .get(ShowcaseConstants.ABSENCE_INSTANCE_EDIT_FORM);
 
         if (absenceList != null) {
-            absenceList.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    absenceForm.insertData(absenceList.getDataFromItemOnPosition(position));
-                }
-            });
+            absenceList.getListView().setOnItemClickListener((parent, view, position, id) -> absenceForm.insertData(absenceList.getDataFromItemOnPosition(position)));
         }
 
 

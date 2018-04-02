@@ -11,6 +11,7 @@ import com.tomscz.afswinx.component.skin.Skin;
 import com.tomscz.afswinx.component.uiproxy.AFProxyComponentDefinition;
 import com.tomscz.afswinx.component.uiproxy.AFProxyScreenDefinition;
 import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
+import com.tomscz.afswinx.component.uiproxy.UIProxySetup;
 import com.tomscz.afswinx.rest.connection.Device;
 
 /**
@@ -18,9 +19,8 @@ import com.tomscz.afswinx.rest.connection.Device;
  * application. It also hold information about localization see
  * {@link AFSwinx#enableLocalization(ResourceBundle)} and with skin see
  * {@link AFSwinx#setApplicationSkin(Skin)} for more information.
- * 
+ *
  * @author Martin Tomasek (martin@toms-cz.com)
- * 
  * @since 1.0.0.
  */
 public class AFSwinx {
@@ -34,9 +34,7 @@ public class AFSwinx {
 
     private Skin applicationSkin;
 
-    private String applicationContextUuid;
-
-    private Device deviceType;
+    private UIProxySetup proxySetup;
 
     private AFSwinx() {
         components = new HashMap<>();
@@ -51,7 +49,7 @@ public class AFSwinx {
 
     /**
      * This method return builder which must be used to build {@link AFSwinxForm}.
-     * 
+     *
      * @return new instance of builder, which can build form.
      */
     public AFSwinxFormBuilder getFormBuilder() {
@@ -60,7 +58,7 @@ public class AFSwinx {
 
     /**
      * This method return builder which must be used to build {@link AFSwinxTable}.
-     * 
+     *
      * @return new instance of builder which can build table.
      */
     public AFSwinxTableBuilder getTableBuilder() {
@@ -101,16 +99,17 @@ public class AFSwinx {
      *
      * @return screen button builder
      */
-    public AFSwinxScreenButtonBuilder getScreenButtonBuilder(){
+    public AFSwinxScreenButtonBuilder getScreenButtonBuilder() {
         return new AFSwinxScreenButtonBuilder();
     }
+
     /**
      * This method add component to current hash map, which hold all components which could be
      * retrieved by this class. If there exists components with the same key then component is
      * removed and the new one is added.
-     * 
+     *
      * @param componentToAdd which will be add.
-     * @param key under it will be add. This key also could be used to retrieve this component.
+     * @param key            under it will be add. This key also could be used to retrieve this component.
      */
     public void addComponent(AFSwinxTopLevelComponent componentToAdd, String key) {
         removeComponent(key);
@@ -120,10 +119,10 @@ public class AFSwinx {
     /**
      * This method return component by key. If component was not added before then it null is
      * returned.
-     * 
+     *
      * @param componentKey key of component which will be retrieve.
      * @return component whose key is equal to componentKey which is received as parameter. Null if
-     *         component does not exist.
+     * component does not exist.
      */
     public AFSwinxTopLevelComponent getExistedComponent(String componentKey) {
         return components.get(componentKey);
@@ -131,6 +130,7 @@ public class AFSwinx {
 
     /**
      * This method remove component from hash map based on key.
+     *
      * @param key of component which will be removed.
      */
     public void removeComponent(String key) {
@@ -161,9 +161,9 @@ public class AFSwinx {
      * This method set localization which is used to during building components. This localization
      * is more important then default localization but less important then concrete localization on
      * component. It localize labels and validation messages.
-     * 
+     *
      * @param localization bundle which will be used. Could be null if null, then default
-     *        localization is used.
+     *                     localization is used.
      */
     public void enableLocalization(ResourceBundle localization) {
         this.localization = localization;
@@ -177,19 +177,15 @@ public class AFSwinx {
         this.applicationSkin = applicationSkin;
     }
 
-    public void setProxyApplicationContext(String applicationUuid) {
-        this.applicationContextUuid = applicationUuid;
-    }
-
     public String getProxyApplicationContext() {
-        return applicationContextUuid;
+        return proxySetup.getUiProxyApplicationUuid();
     }
 
     public String getDeviceType() {
-        return deviceType.toString();
+        return proxySetup.getDeviceType().toString();
     }
 
-    public void setDeviceType(Device deviceType) {
-        this.deviceType = deviceType;
+    public void setProxySetup(UIProxySetup proxySetup) {
+        this.proxySetup = proxySetup;
     }
 }

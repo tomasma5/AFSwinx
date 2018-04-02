@@ -26,36 +26,29 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
  */
 public class ProfileFragment extends BaseFragment {
 
-    private View.OnClickListener onPersonUpdateBtnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.PROFILE_FORM);
-            if (form != null && form.validateData()) {
-                try {
-                    form.sendData();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getScreenUrl());
-                    Toast.makeText(getActivity(), Localization.translate(getContext(), "person.updateSuccess"),
-                            Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    //update failed
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(Localization.translate(getContext(), "person.updateFailed"));
-                    alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
-                    alertDialog.show();
-                    e.printStackTrace();
-                }
+    private View.OnClickListener onPersonUpdateBtnClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.PROFILE_FORM);
+        if (form != null && form.validateData()) {
+            try {
+                form.sendData();
+                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getScreenUrl());
+                Toast.makeText(getActivity(), Localization.translate(getContext(), "person.updateSuccess"),
+                        Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                //update failed
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle(Localization.translate(getContext(), "person.updateFailed"));
+                alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
+                alertDialog.show();
+                e.printStackTrace();
             }
         }
     };
 
-    private View.OnClickListener onResetBtnClick = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.PROFILE_FORM);
-            if (form != null) {
-                form.resetData();
-            }
+    private View.OnClickListener onResetBtnClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.PROFILE_FORM);
+        if (form != null) {
+            form.resetData();
         }
     };
 

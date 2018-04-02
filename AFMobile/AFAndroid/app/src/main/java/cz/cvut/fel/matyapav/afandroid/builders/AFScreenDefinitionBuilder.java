@@ -79,7 +79,7 @@ public class AFScreenDefinitionBuilder {
 
             RequestTask task = new RequestTask(url)
                     .addHeaderParameter(Constants.SCREEN_HEADER, screenKey)
-                    .setHttpMethod(HttpMethod.GET);
+                    .setHttpMethod(context, HttpMethod.GET);
 
             Object response = task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR).get(); //make it synchronous to wait for response
             if (response instanceof Exception) {

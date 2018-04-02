@@ -34,6 +34,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
     private ConnectionSecurity connectionSecurity;
     private String address;
     private Object data;
+    private Context context;
 
     public RequestTask(String url) {
         this.address = url;
@@ -49,17 +50,19 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
         }
     }
 
-    public RequestTask(HttpMethod method, Map<String, String> headerParameters,
+    public RequestTask(Context context, HttpMethod method, Map<String, String> headerParameters,
                        ConnectionSecurity connectionSecurity, Object data, String url) {
         this.httpMethod = method;
         this.address = url;
         this.headerParameters = headerParameters;
         this.connectionSecurity = connectionSecurity;
         this.data = data;
+        this.context = context;
     }
 
-    public RequestTask setHttpMethod(HttpMethod method) {
+    public RequestTask setHttpMethod(Context context, HttpMethod method) {
         this.httpMethod = method;
+        this.context = context;
         return this;
     }
 
@@ -105,9 +108,9 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
             urlConnection.setReadTimeout(5000);
             urlConnection.setConnectTimeout(5000);
             urlConnection.setRequestMethod(httpMethod.toString().toUpperCase());
-            addHeaderParameter(Constants.APPLICATION_HEADER, AFAndroid.getInstance().getProxyApplicationContext());
-            addHeaderParameter(Constants.DEVICE_HEADER, AFAndroid.getInstance().getDeviceIdentifier());
-            addHeaderParameter(Constants.DEVICE_TYPE_HEADER, AFAndroid.getInstance().getDeviceType());
+            addHeaderParameter(Constants.APPLICATION_HEADER, AFAndroid.getInstance().getProxyApplicationContext(context));
+            addHeaderParameter(Constants.DEVICE_HEADER, AFAndroid.getInstance().getDeviceIdentifier(context));
+            addHeaderParameter(Constants.DEVICE_TYPE_HEADER, AFAndroid.getInstance().getDeviceType(context));
             if (headerParameters != null) {
                 for (Map.Entry<String, String> headerParam : headerParameters.entrySet()) {
                     urlConnection.setRequestProperty(headerParam.getKey(), headerParam.getValue());

@@ -25,25 +25,22 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
  */
 public class CreateAbsenceFragment extends BaseFragment {
 
-    private View.OnClickListener onCreateAbsenceClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm createAbsenceForm = (AFForm) AFAndroid.getInstance().getCreatedComponents()
-                    .get(ShowcaseConstants.ABSENCE_ADD_FORM);
-            if(createAbsenceForm != null && createAbsenceForm.validateData()){
-                try {
-                    createAbsenceForm.sendData();
-                    Toast.makeText(getActivity(), Localization.translate(getContext(),"absence.create"),
-                            Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(Localization.translate(getContext(), "absence.createFailed"));
-                    alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
-                    alertDialog.show();
-                    e.printStackTrace();
-                }
-
+    private View.OnClickListener onCreateAbsenceClick = v -> {
+        AFForm createAbsenceForm = (AFForm) AFAndroid.getInstance().getCreatedComponents()
+                .get(ShowcaseConstants.ABSENCE_ADD_FORM);
+        if(createAbsenceForm != null && createAbsenceForm.validateData()){
+            try {
+                createAbsenceForm.sendData();
+                Toast.makeText(getActivity(), Localization.translate(getContext(),"absence.create"),
+                        Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle(Localization.translate(getContext(), "absence.createFailed"));
+                alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
+                alertDialog.show();
+                e.printStackTrace();
             }
+
         }
     };
 

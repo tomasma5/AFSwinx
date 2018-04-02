@@ -23,7 +23,7 @@ public class MyAbsencesFragment extends BaseFragment {
     @Override
     public View initialize(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.my_absences_fragment_layout, container, false);
-        LinearLayout myAbsencesLayout = (LinearLayout) root.findViewById(R.id.myAbsencesLayout);
+        LinearLayout myAbsencesLayout = root.findViewById(R.id.myAbsencesLayout);
 
         //initialize builders
         HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();

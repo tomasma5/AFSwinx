@@ -28,40 +28,31 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
  */
 public class VehiclesFragment extends BaseFragment {
 
-    private View.OnClickListener onFormPerformListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
-            if (form != null && form.validateData()) {
-                try {
-                    form.sendData();
-                    Toast.makeText(getActivity(), "Add or update complete", Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
-                } catch (Exception e) {
-                    //error while sending
-                    e.printStackTrace();
-                }
+    private View.OnClickListener onFormPerformListener = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
+        if (form != null && form.validateData()) {
+            try {
+                form.sendData();
+                Toast.makeText(getActivity(), "Add or update complete", Toast.LENGTH_SHORT).show();
+                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
+            } catch (Exception e) {
+                //error while sending
+                e.printStackTrace();
             }
         }
     };
 
-    private View.OnClickListener onFormResetListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
-            if (form != null) {
-                form.resetData();
-            }
+    private View.OnClickListener onFormResetListener = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
+        if (form != null) {
+            form.resetData();
         }
     };
 
-    private View.OnClickListener onFormClearListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
-            if (form != null) {
-                form.clearData();
-            }
+    private View.OnClickListener onFormClearListener = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.VEHICLES_FORM);
+        if (form != null) {
+            form.clearData();
         }
     };
 

@@ -26,40 +26,31 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
  */
 public class CountriesFragment extends BaseFragment {
 
-    private View.OnClickListener onCountryPerformListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
-            if (form != null && form.validateData()) {
-                try {
-                    form.sendData();
-                    Toast.makeText(getActivity(), "Add or update complete", Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
-                } catch (Exception e) {
-                    //error while sending
-                    e.printStackTrace();
-                }
+    private View.OnClickListener onCountryPerformListener = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
+        if (form != null && form.validateData()) {
+            try {
+                form.sendData();
+                Toast.makeText(getActivity(), "Add or update complete", Toast.LENGTH_SHORT).show();
+                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
+            } catch (Exception e) {
+                //error while sending
+                e.printStackTrace();
             }
         }
     };
 
-    private View.OnClickListener onCountryResetListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
-            if (form != null) {
-                form.resetData();
-            }
+    private View.OnClickListener onCountryResetListener = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
+        if (form != null) {
+            form.resetData();
         }
     };
 
-    private View.OnClickListener onCountryClearListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
-            if (form != null) {
-                form.clearData();
-            }
+    private View.OnClickListener onCountryClearListener = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.COUNTRY_FORM);
+        if (form != null) {
+            form.clearData();
         }
     };
 

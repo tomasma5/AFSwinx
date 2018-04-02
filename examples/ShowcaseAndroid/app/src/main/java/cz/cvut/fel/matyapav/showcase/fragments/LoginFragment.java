@@ -27,22 +27,19 @@ import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
  */
 public class LoginFragment extends BaseFragment {
 
-    private View.OnClickListener onLoginButtonClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.LOGIN_FORM);
-            if (form != null && form.validateData()) {
-                try {
-                    form.sendData();
-                    doLogin(form);
-                } catch (Exception e) {
-                    //login failed
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(Localization.translate(getContext(), "login.failed"));
-                    alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
-                    alertDialog.show();
-                    e.printStackTrace();
-                }
+    private View.OnClickListener onLoginButtonClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.LOGIN_FORM);
+        if (form != null && form.validateData()) {
+            try {
+                form.sendData();
+                doLogin(form);
+            } catch (Exception e) {
+                //login failed
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle(Localization.translate(getContext(), "login.failed"));
+                alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
+                alertDialog.show();
+                e.printStackTrace();
             }
         }
     };

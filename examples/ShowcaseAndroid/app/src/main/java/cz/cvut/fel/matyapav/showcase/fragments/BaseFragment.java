@@ -1,6 +1,7 @@
 package cz.cvut.fel.matyapav.showcase.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -58,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ApplicationContext.getInstance().setCurrentFragment(this);
         createMenu();
         if (getScreenDefinition() != null) {
@@ -108,12 +109,7 @@ public abstract class BaseFragment extends Fragment {
                                     .getScreenButtonBuilder(getContext())
                                     .buildComponent(ProxyConstants.BTN_CUSTOM_LOGOUT, "Logout", button.getUrl());
                             logoutButton.setScreenPreparedListener(button.getScreenPreparedListener());
-                            logoutButton.setCustomOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ApplicationContext.getInstance().setSecurityContext(null);
-                                }
-                            });
+                            logoutButton.setCustomOnClickListener(view -> ApplicationContext.getInstance().setSecurityContext(null));
                             continue;
                         }
                         menuLayout.addView(button, button.getLayoutParams());
@@ -136,77 +132,29 @@ public abstract class BaseFragment extends Fragment {
     private Button createHomeButton() {
         Button button = new Button(getContext());
         button.setText("Home");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //change fragment
-                FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
-                tx.replace(R.id.mainLayout, new WelcomeFragment());
-                tx.commit();
-                DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
-                if (drawer != null) {
-                    drawer.closeDrawer(GravityCompat.START);
-                }
+        button.setOnClickListener(view -> {
+            //change fragment
+            FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
+            tx.replace(R.id.mainLayout, new WelcomeFragment());
+            tx.commit();
+            DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
+            if (drawer != null) {
+                drawer.closeDrawer(GravityCompat.START);
             }
         });
         return button;
     }
 
     private void initializeScreenPreparedListeners() {
-        loginListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(LoginFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        avaiableCountryPublicListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(CountriesFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        vehiclesButtonListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(VehiclesFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        myProfileListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(ProfileFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        absenceTypeListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(AbsenceTypeManagementFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        absenceInstanceCreateListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(CreateAbsenceFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        myAbsenceInstanceListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(MyAbsencesFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        absenceInstanceEditListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(AbsenceManagementFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
-        businessTripsListener = new AFAndroidScreenPreparedListener() {
-            @Override
-            public void onScreenPrepared(AFAndroidProxyScreenDefinition afAndroidProxyScreenDefinition) {
-                changeFragment(BusinessTripsListFragment.class, afAndroidProxyScreenDefinition);
-            }
-        };
+        loginListener = afAndroidProxyScreenDefinition -> changeFragment(LoginFragment.class, afAndroidProxyScreenDefinition);
+        avaiableCountryPublicListener = afAndroidProxyScreenDefinition -> changeFragment(CountriesFragment.class, afAndroidProxyScreenDefinition);
+        vehiclesButtonListener = afAndroidProxyScreenDefinition -> changeFragment(VehiclesFragment.class, afAndroidProxyScreenDefinition);
+        myProfileListener = afAndroidProxyScreenDefinition -> changeFragment(ProfileFragment.class, afAndroidProxyScreenDefinition);
+        absenceTypeListener = afAndroidProxyScreenDefinition -> changeFragment(AbsenceTypeManagementFragment.class, afAndroidProxyScreenDefinition);
+        absenceInstanceCreateListener = afAndroidProxyScreenDefinition -> changeFragment(CreateAbsenceFragment.class, afAndroidProxyScreenDefinition);
+        myAbsenceInstanceListener = afAndroidProxyScreenDefinition -> changeFragment(MyAbsencesFragment.class, afAndroidProxyScreenDefinition);
+        absenceInstanceEditListener = afAndroidProxyScreenDefinition -> changeFragment(AbsenceManagementFragment.class, afAndroidProxyScreenDefinition);
+        businessTripsListener = afAndroidProxyScreenDefinition -> changeFragment(BusinessTripsListFragment.class, afAndroidProxyScreenDefinition);
     }
 
     private void changeFragment(Class fragmentClass, AFAndroidProxyScreenDefinition screenDefinition) {

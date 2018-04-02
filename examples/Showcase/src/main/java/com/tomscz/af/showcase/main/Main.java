@@ -18,10 +18,6 @@ public class Main {
 
         try {
             ApplicationContext.getInstance().changeLocalization(ShowcaseConstants.ENGLISH_BUNDLE);
-            //setup ui proxy
-            AFSwinx.getInstance().setProxyApplicationContext(ApplicationContext.getInstance().getUiProxyApplicationUuid());
-            AFSwinx.getInstance().setDeviceType(Device.PC);
-            ApplicationContext.getInstance().loadUIProxyUrl();
         } catch (FileNotFoundException e) {
             // Try czech bundle
             try {
@@ -29,10 +25,10 @@ public class Main {
             } catch (FileNotFoundException fileNotFoundException) {
                 // Do nothing localization wont be used
             }
-        } catch (IOException e) {
-            System.err.println("Cannot get application uuid from properties");
-            e.printStackTrace();
         }
+
+        //setup ui proxy
+        AFSwinx.getInstance().setProxySetup(ApplicationContext.getInstance());
 
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance()

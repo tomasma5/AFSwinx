@@ -75,21 +75,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getNearbyDevices();
-            //set default login fragment
-            try {
-                ApplicationContext.getInstance().loadUIProxyUrl(getBaseContext());
-                AFAndroid.getInstance().setApplicationContextUuid(ApplicationContext.getInstance().getUiProxyApplicationUuid(getBaseContext()));
-                AFAndroid.getInstance().setDeviceType(Utils.deviceHasTabletSize(this) ? Device.TABLET : Device.PHONE);
-                AFAndroid.getInstance().setDeviceIdentifier(NetworkUtils.getMacAddress());
-            } catch (IOException e) {
-                System.err.println("Cannot get properties file - so af android could not be properly configured");
-                e.printStackTrace();
-            }
+
+            //setup ui proxy
+            AFAndroid.getInstance().setProxySetup(ApplicationContext.getInstance());
+
             try {
                 AFAndroidProxyScreenDefinition loginScreenDefinition = AFAndroid.getInstance()
                         .getScreenDefinitionBuilder(
                                 getApplicationContext(),
-                                ApplicationContext.getInstance().getUiProxyUrl() + "/api/screens/5a9955636402eb092c3b56c7", "Login")
+                                ApplicationContext.getInstance().getUiProxyUrl(getApplicationContext()) + "/api/screens/5a9955636402eb092c3b56c7", "Login")
                         .getScreenDefinition();
                 LoginFragment loginFragment = new LoginFragment();
                 loginFragment.setScreenDefinition(loginScreenDefinition);

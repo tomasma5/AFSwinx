@@ -32,55 +32,43 @@ public class AbsenceTypeManagementFragment extends BaseFragment {
     private int countryId = -1;
     private String selectedCountryName;
 
-    private View.OnClickListener onCountryChooseListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm chooseCountryForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.CHOOSE_COUNTRY_FORM);
-            String country = chooseCountryForm.reserialize().getPropertiesAndValues().get(ShowcaseConstants.COUNTRY_KEY);
-            setCountryId(Integer.parseInt(country));
-            setSelectedCountryName(chooseCountryForm.getDataFromFieldWithId(ShowcaseConstants.COUNTRY_KEY).toString());
-            ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
-        }
+    private View.OnClickListener onCountryChooseListener = v -> {
+        AFForm chooseCountryForm = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.CHOOSE_COUNTRY_FORM);
+        String country = chooseCountryForm.reserialize().getPropertiesAndValues().get(ShowcaseConstants.COUNTRY_KEY);
+        setCountryId(Integer.parseInt(country));
+        setSelectedCountryName(chooseCountryForm.getDataFromFieldWithId(ShowcaseConstants.COUNTRY_KEY).toString());
+        ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
     };
 
-    private View.OnClickListener onPerformBtnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if (form != null && form.validateData()) {
-                try {
-                    form.sendData();
-                    Toast.makeText(getActivity(), Localization.translate(getContext(), "success.addOrUpdate"),
-                            Toast.LENGTH_SHORT).show();
-                    ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
-                } catch (Exception e) {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setTitle(Localization.translate(getContext(), "error.addOrUpdate"));
-                    alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
-                    alertDialog.show();
-                    e.printStackTrace();
-                }
+    private View.OnClickListener onPerformBtnClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
+        if (form != null && form.validateData()) {
+            try {
+                form.sendData();
+                Toast.makeText(getActivity(), Localization.translate(getContext(), "success.addOrUpdate"),
+                        Toast.LENGTH_SHORT).show();
+                ShowCaseUtils.refreshCurrentFragment(getActivity(), getScreenDefinition().getScreenUrl(), getScreenDefinition().getKey());
+            } catch (Exception e) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle(Localization.translate(getContext(), "error.addOrUpdate"));
+                alertDialog.setMessage(Localization.translate(getContext(), "error.reason") + e.getMessage());
+                alertDialog.show();
+                e.printStackTrace();
             }
         }
     };
 
 
-    private View.OnClickListener onResetBtnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if (form != null) {
-                form.resetData();
-            }
+    private View.OnClickListener onResetBtnClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
+        if (form != null) {
+            form.resetData();
         }
     };
-    private View.OnClickListener onClearBtnClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
-            if (form != null) {
-                form.clearData();
-            }
+    private View.OnClickListener onClearBtnClick = v -> {
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.ABSENCE_TYPE_FORM);
+        if (form != null) {
+            form.clearData();
         }
     };
 
@@ -143,15 +131,15 @@ public class AbsenceTypeManagementFragment extends BaseFragment {
 
             //buttons
             Button perform = new Button(getActivity());
-            perform.setText(Localization.translate(getContext(),"button.perform"));
+            perform.setText(Localization.translate(getContext(), "button.perform"));
             perform.setOnClickListener(onPerformBtnClick);
 
             Button reset = new Button(getActivity());
-            reset.setText(Localization.translate(getContext(),"button.reset"));
+            reset.setText(Localization.translate(getContext(), "button.reset"));
             reset.setOnClickListener(onResetBtnClick);
 
             Button clear = new Button(getActivity());
-            clear.setText(Localization.translate(getContext(),"button.clear"));
+            clear.setText(Localization.translate(getContext(), "button.clear"));
             clear.setOnClickListener(onClearBtnClick);
 
             LinearLayout btns = new LinearLayout(getActivity());
