@@ -11,7 +11,7 @@
         <div class="panel-heading height-50px">
             <a href="${pageContext.request.contextPath}/businesscases/list?app=${app}">Business cases</a> >
             <a href="${pageContext.request.contextPath}/businesscases/phases/list?app=${app}&bcase=${bcase}"> Phases</a>
-                > Create/Edit business case phase
+            > Create/Edit business case phase
         </div>
         <div class="panel-body ">
             <form action="create?app=${app}&bcase=${bcase}" method="post">
@@ -30,7 +30,8 @@
                     <select class="form-control" id="selectedConfiguration" name="selectedConfiguration">
                         <c:forEach var="configurationOption" items="${configurationsList}">
                             <c:if test="${configurationOption.id == selectedConfiguration}">
-                                <option value="${configurationOption.id}" selected>${configurationOption.configurationName}</option>
+                                <option value="${configurationOption.id}"
+                                        selected>${configurationOption.configurationName}</option>
                             </c:if>
                             <c:if test="${configurationOption.id != selectedConfiguration}">
                                 <option value="${configurationOption.id}">${configurationOption.configurationName}</option>
@@ -39,6 +40,46 @@
                     </select>
                     <c:if test="${not empty configurationError}">${configurationError}</c:if>
                 </div>
+
+                <div class="form-group">
+                    <label for="selectedClassificationUnit">Classification unit</label>
+                    <select class="form-control" id="selectedClassificationUnit" name="selectedClassificationUnit">
+                        <c:forEach var="classificationUnitOption" items="${classificationUnitList}">
+                            <c:if test="${classificationUnitOption == selectedClassificationUnit}">
+                                <option value="${classificationUnitOption}" selected>
+                                        ${classificationUnitOption} - ${classificationUnitOption.name}
+                                </option>
+                            </c:if>
+                            <c:if test="${classificationUnitOption != selectedClassificationUnit}">
+                                <option value="${classificationUnitOption}">
+                                        ${classificationUnitOption} - ${classificationUnitOption.name}
+                                </option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                    <c:if test="${not empty classificationUnitError}">${classificationUnitError}</c:if>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="selectedScoringUnit">Configuration</label>
+                    <select class="form-control" id="selectedScoringUnit" name="selectedScoringUnit">
+                        <c:forEach var="scoringUnitOption" items="${scoringUnitList}">
+                            <c:if test="${scoringUnitOption == selectedScoringUnit}">
+                                <option value="${configurationOption.id}" selected>
+                                        ${scoringUnitOption} - ${scoringUnitOption.name}
+                                </option>
+                            </c:if>
+                            <c:if test="${scoringUnitOption != selectedScoringUnit}">
+                                <option value="${scoringUnitOption}">
+                                        ${scoringUnitOption} - ${scoringUnitOption.name}
+                                </option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+                    <c:if test="${not empty scoringUnitError}">${scoringUnitError}</c:if>
+                </div>
+
 
                 <div class="row">
                     <div class="col-xs-13 col-md-5">
@@ -62,7 +103,8 @@
                         </div>
                     </div>
                     <div class="col-xs-13 col-md-2 flex-center">
-                        <div class="btn btn-success" onclick="addScreenToBusinessPhase()" id="addScreenButton">Add screen
+                        <div class="btn btn-success" onclick="addScreenToBusinessPhase()" id="addScreenButton">Add
+                            screen
                         </div>
                     </div>
                     <div class="col-xs-13 col-md-5">

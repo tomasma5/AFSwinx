@@ -1,8 +1,11 @@
 package servlet.businesscases;
 
 import model.Screen;
+import model.SupportedComponentType;
 import model.afclassification.BCPhase;
 import model.afclassification.ConfigurationPack;
+import model.afclassification.SupportedClassificationUnit;
+import model.afclassification.SupportedScoringUnit;
 import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 import service.servlet.BusinessCaseManagementService;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +75,8 @@ public class BCPhaseCreateServlet extends HttpServlet {
         //options for configuration select
         List<ConfigurationPack> availableConfiguration = configurationManagementService.getAllConfigurationsByApplication(appObjId);
         request.setAttribute(ParameterNames.CONFIGURATION_LIST, availableConfiguration);
+        request.setAttribute(ParameterNames.CLASSIFICATION_UNIT_LIST, SupportedClassificationUnit.class.getEnumConstants());
+        request.setAttribute(ParameterNames.SCORING_UNIT_LIST, SupportedScoringUnit.class.getEnumConstants());
 
         request.setAttribute(ParameterNames.APPLICATION_ID, appObjId);
         request.setAttribute(ParameterNames.BUSINESS_CASE_ID, businessCaseObjId);
@@ -85,6 +91,8 @@ public class BCPhaseCreateServlet extends HttpServlet {
         request.setAttribute(ParameterNames.BUSINESS_PHASE_ID, businessPhase.getId());
         request.setAttribute(ParameterNames.BUSINESS_PHASE_NAME, businessPhase.getName());
         request.setAttribute(ParameterNames.SELECTED_CONFIGURATION, businessPhase.getConfiguration().getId());
+        request.setAttribute(ParameterNames.SELECTED_CLASSIFICATION_UNIT, businessPhase.getClassificationUnit());
+        request.setAttribute(ParameterNames.SELECTED_SCORING_UNIT, businessPhase.getScoringUnit());
         request.setAttribute(ParameterNames.BUSINESS_PHASE_LINKED_SCREENS, businessPhase.getLinkedScreens());
         List<Screen> screensNotInThisPhaseYet = screenManagementService.getAllUnassignedScreensByApplication(appObjId).stream()
                 .filter(screen -> !businessPhase.getLinkedScreens().contains(screen))
@@ -129,8 +137,14 @@ public class BCPhaseCreateServlet extends HttpServlet {
 
     private void updateBCPhaseProperties(HttpServletRequest req, ObjectId bcaseId, BCPhase phase) {
         String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_NAME)));
+        SupportedClassificationUnit classificationUnitType =
+                SupportedClassificationUnit.valueOf(Utils.trimString(req.getParameter(ParameterNames.SELECTED_CLASSIFICATION_UNIT)));
+        SupportedScoringUnit supportedScoringUnit =
+                SupportedScoringUnit.valueOf(Utils.trimString(req.getParameter(ParameterNames.SELECTED_SCORING_UNIT)));
         phase.setBusinessCaseId(bcaseId);
         phase.setName(name);
+        phase.setClassificationUnit(classificationUnitType);
+        phase.setScoringUnit(supportedScoringUnit);
         String selectedConfiguration = Utils.trimString(req.getParameter(ParameterNames.SELECTED_CONFIGURATION));
         ConfigurationPack configurationModel = configurationManagementService.findConfigurationById(new ObjectId(selectedConfiguration));
         phase.setConfiguration(configurationModel);

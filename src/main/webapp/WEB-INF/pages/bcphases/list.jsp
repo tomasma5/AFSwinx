@@ -11,7 +11,7 @@
     <div class="panel panel-primary">
         <div class="panel-heading height-50px">
             <a href="${pageContext.request.contextPath}/businesscases/list?app=${app}">
-                <button class="btn btn-default">< Back </button>
+                <button class="btn btn-default">< Back</button>
             </a>
             <b>${applicationName}</b> application - Business phases of business case <b>${businessCaseName}</b>
             <a href="${pageContext.request.contextPath}/businesscases/phases/create?app=${app}&bcase=${bcase}">
@@ -25,6 +25,7 @@
                     <th>Name</th>
                     <th>Number of linked screens</th>
                     <th>Linked screens</th>
+                    <th>Strategy</th>
                     <th colspan="3">Actions</th>
                 </tr>
                 </thead>
@@ -42,6 +43,17 @@
                                 </c:forEach>
                             </c:if>
 
+                        </td>
+                        <td>
+                            Classification unit :
+                            <c:if test="${bcphase.classificationUnit != null}">${bcphase.classificationUnit} [${bcphase.classificationUnit.name}]</c:if>
+                            <c:if test="${bcphase.classificationUnit == null}"><span
+                                    style="color: red">MISSING!!!</span></c:if>
+                            <br>
+                            Scoring unit :
+                            <c:if test="${bcphase.scoringUnit != null}">${bcphase.scoringUnit} [${bcphase.scoringUnit.name}]</c:if>
+                            <c:if test="${bcphase.scoringUnit == null}"><span
+                                    style="color: red">MISSING!!!</span></c:if>
                         </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/businesscases/phases/create?app=${app}&bcase=${bcase}&bcphase=${bcphase.id}">

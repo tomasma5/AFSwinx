@@ -76,4 +76,9 @@ public class ParameterNames {
 
     public static final String FIELD_SEVERITY = "fieldSeverity";
     public static final String FIELD_PURPOSE = "fieldPurpose";
+
+    public static final String CLASSIFICATION_UNIT_LIST = "classificationUnitList";
+    public static final String SCORING_UNIT_LIST = "scoringUnitList";
+    public static final String SELECTED_CLASSIFICATION_UNIT = "selectedClassificationUnit";
+    public static final String SELECTED_SCORING_UNIT = "selectedScoringUnit";
 }

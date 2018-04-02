@@ -11,6 +11,7 @@ import org.bson.types.ObjectId;
 import rest.context.JsonContextParser;
 import rest.security.RequestContext;
 import service.afclassification.computational.AFClassification;
+import service.afclassification.computational.AFClassificationFactory;
 import service.exception.ComponentRequestException;
 import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
@@ -139,7 +140,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         BCPhase phase = getBusinessPhaseFromRequest(headers);
         Client client = getClientFromRequest(headers);
         AFMetaModelPack metaModel = gson.fromJson(modelStr, AFMetaModelPack.class);
-        AFClassification classification = new AFClassification();
+        AFClassification classification = AFClassificationFactory.getInstance().getClassificationModule(phase);
         classification.classifyMetaModel(metaModel, client, phase);
         return metaModel;
     }

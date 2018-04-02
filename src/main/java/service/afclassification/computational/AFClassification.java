@@ -16,209 +16,171 @@ import service.afclassification.computational.scm.Scoring;
  */
 public class AFClassification {
 
-	private Scoring scoringModule;
-	private Classification classificationModule;
+    private Scoring scoringModule;
+    private Classification classificationModule;
 
-	/**
-	 * Instantiates a new Af classification.
-	 *
-	 * @param scoringModule        the scoring module
-	 * @param classificationModule the classification module
-	 */
-	public AFClassification(Scoring scoringModule,
-			Classification classificationModule) {
-		this.scoringModule = scoringModule;
-		this.classificationModule = classificationModule;
-	}
+    protected AFClassification() {}
 
-	/**
-	 * Instantiates a new Af classification.
-	 *
-	 * @param scoringModule the scoring module
-	 */
-	public AFClassification(Scoring scoringModule) {
-		this.scoringModule = scoringModule;
-		this.classificationModule = new BaseClassificationUnit();
-	}
+    /**
+     * Sets scoring module.
+     *
+     * @param scoringModule the scoring module
+     */
+    public void setScoringModule(Scoring scoringModule) {
+        this.scoringModule = scoringModule;
+    }
 
-	/**
-	 * Instantiates a new Af classification.
-	 *
-	 * @param classificationModule the classification module
-	 */
-	public AFClassification(Classification classificationModule) {
-		this.scoringModule = new BaseScoringUnit();
-		this.classificationModule = classificationModule;
-	}
+    /**
+     * Sets classification module.
+     *
+     * @param classificationModule the classification module
+     */
+    public void setClassificationModule(Classification classificationModule) {
+        this.classificationModule = classificationModule;
+    }
 
-	/**
-	 * Instantiates a new Af classification.
-	 */
-	public AFClassification() {
-		this.scoringModule = new BaseScoringUnit();
-		this.classificationModule = new BaseClassificationUnit();
-	}
+    /**
+     * Classifies given meta model.
+     *
+     * @param metaModelPack the meta model pack
+     * @param client        the client
+     * @param phase         the phase
+     */
+    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase) {
+        for (BCField field : phase.getFields()) {
+            System.out.println("Classifing field: "
+                    + field.getField().getFieldName());
+            GeneratedField result = classifyField(field, client, phase.getConfiguration());
+            System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
+            AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
+            editFieldProperties(metaModelPack.getClassInfo(), field, result, fieldInfo);
+        }
+    }
 
-	/**
-	 * Sets scoring module.
-	 *
-	 * @param scoringModule the scoring module
-	 */
-	public void setScoringModule(Scoring scoringModule) {
-		this.scoringModule = scoringModule;
-	}
+    private GeneratedField classifyField(BCField field, Client client, ConfigurationPack configuration) {
+        Double score = scoringModule.scoreField(field.getFieldSpecification()
+                        .getPurpose(), field.getFieldSpecification().getSeverity(),
+                client);
+        Behavior behavior = classificationModule.classify(score, configuration);
+        GeneratedField generatedField = new GeneratedField();
+        generatedField.setBcField(field);
+        generatedField.setBehavior(behavior);
+        return generatedField;
+    }
 
-	/**
-	 * Sets classification module.
-	 *
-	 * @param classificationModule the classification module
-	 */
-	public void setClassificationModule(Classification classificationModule) {
-		this.classificationModule = classificationModule;
-	}
+    private void editFieldProperties(AFClassInfo classInfo, BCField field, GeneratedField result, AFFieldInfo fieldInfo) {
+        if (fieldInfo != null) {
+            switch (result.getBehavior()) {
+                case REQUIRED:
+                    enableRequiredOnField(fieldInfo);
+                    break;
+                case VALIDATION:
+                    disableRequiredOnField(fieldInfo);
+                    fieldInfo.setVisible(true);
+                    break;
+                case ONLY_DISPLAY:
+                    doNotValidateField(fieldInfo);
+                    fieldInfo.setVisible(true);
+                    break;
+                case HIDDEN:
+                    doNotValidateField(fieldInfo);
+                    fieldInfo.setVisible(false);
+                    break;
+                case NOT_PRESENT:
+                    removeFieldInfoFromMetaModel(classInfo, field.getField().getFieldName());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
-	/**
-	 * Classifies given meta model.
-	 *
-	 * @param metaModelPack the meta model pack
-	 * @param client        the client
-	 * @param phase         the phase
-	 */
-	public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase){
-		for (BCField field : phase.getFields()) {
-			System.out.println("Classifing field: "
-					+ field.getField().getFieldName());
-			GeneratedField result = classifyField(field, client, phase.getConfiguration());
-			System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
-			AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
-			editFieldProperties(metaModelPack.getClassInfo(), field, result, fieldInfo);
-		}
-	}
+    private AFFieldInfo getFieldInfoFromMetaModel(AFClassInfo classInfo, String fieldId) {
 
-	private GeneratedField classifyField(BCField field, Client client, ConfigurationPack configuration) {
-		Double score = scoringModule.scoreField(field.getFieldSpecification()
-				.getPurpose(), field.getFieldSpecification().getSeverity(),
-				client);
-		Behavior behavior = classificationModule.classify(score, configuration);
-		GeneratedField generatedField = new GeneratedField();
-		generatedField.setBcField(field);
-		generatedField.setBehavior(behavior);
-		return generatedField;
-	}
+        AFClassInfo properClassInfo = getProperAfClassInfo(classInfo, fieldId);
+        //fieldId = fieldId.contains(".") ? fieldId.substring(fieldId.lastIndexOf('.') + 1) : fieldId;
+        for (AFFieldInfo fieldInfo : properClassInfo.getFieldInfo()) {
+            if (fieldInfo.getId().equals(fieldId)) {
+                return fieldInfo;
+            }
+        }
+        return null;
+    }
 
-	private void editFieldProperties(AFClassInfo classInfo, BCField field, GeneratedField result, AFFieldInfo fieldInfo) {
-		if (fieldInfo != null) {
-			switch (result.getBehavior()) {
-				case REQUIRED:
-					enableRequiredOnField(fieldInfo);
-					break;
-				case VALIDATION:
-					disableRequiredOnField(fieldInfo);
-					fieldInfo.setVisible(true);
-					break;
-				case ONLY_DISPLAY:
-					doNotValidateField(fieldInfo);
-					fieldInfo.setVisible(true);
-					break;
-				case HIDDEN:
-					doNotValidateField(fieldInfo);
-					fieldInfo.setVisible(false);
-					break;
-				case NOT_PRESENT:
-					removeFieldInfoFromMetaModel(classInfo, field.getField().getFieldName());
-					break;
-				default:
-					break;
-			}
-		}
-	}
+    private AFClassInfo getProperAfClassInfo(AFClassInfo classInfo, String fieldId) {
+        if (!fieldId.contains(".")) {
+            return classInfo;
+        }
+        for (AFClassInfo innerClassInfo : classInfo.getInnerClasses()) {
+            int nextDotIndex = fieldId.indexOf('.');
+            if (!classInfo.getName().equals(fieldId.substring(0, nextDotIndex))) {
+                return getProperAfClassInfo(innerClassInfo, fieldId.substring(nextDotIndex + 1));
+            }
+        }
+        return null;
+    }
 
-	private AFFieldInfo getFieldInfoFromMetaModel(AFClassInfo classInfo, String fieldId) {
-
-		AFClassInfo properClassInfo = getProperAfClassInfo(classInfo, fieldId);
-		//fieldId = fieldId.contains(".") ? fieldId.substring(fieldId.lastIndexOf('.') + 1) : fieldId;
-		for (AFFieldInfo fieldInfo : properClassInfo.getFieldInfo()) {
-			if (fieldInfo.getId().equals(fieldId)) {
-				return fieldInfo;
-			}
-		}
-		return null;
-	}
-
-	private AFClassInfo getProperAfClassInfo(AFClassInfo classInfo, String fieldId) {
-		if (!fieldId.contains(".")) {
-			return classInfo;
-		}
-		for (AFClassInfo innerClassInfo : classInfo.getInnerClasses()) {
-			int nextDotIndex = fieldId.indexOf('.');
-			if (!classInfo.getName().equals(fieldId.substring(0, nextDotIndex))) {
-				return getProperAfClassInfo(innerClassInfo, fieldId.substring(nextDotIndex + 1));
-			}
-		}
-		return null;
-	}
-
-	private void removeFieldInfoFromMetaModel(AFClassInfo classInfo, String fieldId) {
-		AFClassInfo properClassInfo = getProperAfClassInfo(classInfo, fieldId);
-		fieldId = fieldId.contains(".") ? fieldId.substring(fieldId.lastIndexOf('.') + 1) : fieldId;
-		int indexToRemove = -1;
-		int i = 0;
-		for (AFFieldInfo fieldInfo : properClassInfo.getFieldInfo()) {
-			if (fieldInfo.getId().equals(fieldId)) {
-				indexToRemove = i;
-				break;
-			}
-		}
-		if (indexToRemove != -1) {
-			properClassInfo.getFieldInfo().remove(indexToRemove);
-		}
-	}
+    private void removeFieldInfoFromMetaModel(AFClassInfo classInfo, String fieldId) {
+        AFClassInfo properClassInfo = getProperAfClassInfo(classInfo, fieldId);
+        fieldId = fieldId.contains(".") ? fieldId.substring(fieldId.lastIndexOf('.') + 1) : fieldId;
+        int indexToRemove = -1;
+        int i = 0;
+        for (AFFieldInfo fieldInfo : properClassInfo.getFieldInfo()) {
+            if (fieldInfo.getId().equals(fieldId)) {
+                indexToRemove = i;
+                break;
+            }
+        }
+        if (indexToRemove != -1) {
+            properClassInfo.getFieldInfo().remove(indexToRemove);
+        }
+    }
 
 
-	private void doNotValidateField(AFFieldInfo fieldInfo) {
-		if (fieldInfo.getRules() != null) {
-			fieldInfo.getRules().clear();
-		}
-	}
+    private void doNotValidateField(AFFieldInfo fieldInfo) {
+        if (fieldInfo.getRules() != null) {
+            fieldInfo.getRules().clear();
+        }
+    }
 
-	private void disableRequiredOnField(AFFieldInfo fieldInfo) {
-		if (fieldInfo.getRules() != null) {
-			if (removeRequiredRuleFromField(fieldInfo, true)) {
-				fieldInfo.getRules().add(new AFValidationRule(SupportedValidations.REQUIRED, "false"));
-			}
-		}
-	}
+    private void disableRequiredOnField(AFFieldInfo fieldInfo) {
+        if (fieldInfo.getRules() != null) {
+            if (removeRequiredRuleFromField(fieldInfo, true)) {
+                fieldInfo.getRules().add(new AFValidationRule(SupportedValidations.REQUIRED, "false"));
+            }
+        }
+    }
 
-	private void enableRequiredOnField(AFFieldInfo fieldInfo) {
-		if (removeRequiredRuleFromField(fieldInfo, false) || removeRequiredRuleFromField(fieldInfo, true)) {
-			//present should be replaced
-			fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
-		} else {
-			//not present at all
-			fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
-		}
-		fieldInfo.setVisible(true);
-	}
+    private void enableRequiredOnField(AFFieldInfo fieldInfo) {
+        if (removeRequiredRuleFromField(fieldInfo, false) || removeRequiredRuleFromField(fieldInfo, true)) {
+            //present should be replaced
+            fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
+        } else {
+            //not present at all
+            fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
+        }
+        fieldInfo.setVisible(true);
+    }
 
 
-	private boolean removeRequiredRuleFromField(AFFieldInfo fieldInfo, boolean removeWithTrueValue) {
-		if (fieldInfo.getRules() != null) {
-			int indexOfRequiredRule = -1;
-			int i = 0;
-			for (AFValidationRule validationRule : fieldInfo.getRules()) {
-				if (validationRule.getValidationType().equals(SupportedValidations.REQUIRED) &&
-						validationRule.getValue().equals(removeWithTrueValue ? "true" : "false")) {
-					indexOfRequiredRule = i;
-					break;
-				}
-				i++;
-			}
-			if (indexOfRequiredRule != -1) {
-				fieldInfo.getRules().remove(indexOfRequiredRule);
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean removeRequiredRuleFromField(AFFieldInfo fieldInfo, boolean removeWithTrueValue) {
+        if (fieldInfo.getRules() != null) {
+            int indexOfRequiredRule = -1;
+            int i = 0;
+            for (AFValidationRule validationRule : fieldInfo.getRules()) {
+                if (validationRule.getValidationType().equals(SupportedValidations.REQUIRED) &&
+                        validationRule.getValue().equals(removeWithTrueValue ? "true" : "false")) {
+                    indexOfRequiredRule = i;
+                    break;
+                }
+                i++;
+            }
+            if (indexOfRequiredRule != -1) {
+                fieldInfo.getRules().remove(indexOfRequiredRule);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
