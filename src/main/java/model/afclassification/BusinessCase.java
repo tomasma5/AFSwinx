@@ -29,7 +29,7 @@ public class BusinessCase extends MongoDocumentEntity {
 	
 	public void addPhase(BCPhase phase){
 		if(phases == null){
-			phases = new ArrayList<BCPhase>();
+			phases = new ArrayList<>();
 		}
 		this.phases.add(phase);
 	}

@@ -102,7 +102,7 @@ public class HttpUtils {
 
     private static Map<String, String> prepareParameters(MultivaluedMap<String, String> queryParameters) {
 
-        Map<String, String> parameters = new HashMap<String, String>();
+        Map<String, String> parameters = new HashMap<>();
 
         for (String str : queryParameters.keySet()) {
             parameters.put(str, queryParameters.getFirst(str));
