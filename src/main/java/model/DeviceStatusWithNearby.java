@@ -1,6 +1,5 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import model.partial.Device;
 import model.partial.DeviceStatus;
 

@@ -1,17 +1,15 @@
 package model.partial;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import model.partial.BatteryStatus;
-import model.partial.DeviceInfo;
-import model.partial.LocationStatus;
-import model.partial.NetworkStatus;
 
 /**
  * Device status model - keeps all partial information about device in one place
  * Consisted of {@link DeviceInfo}, {@link BatteryStatus}, {@link LocationStatus}, {@link NetworkStatus}
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
- * @since 1.0.0
+ * @since 1.0.0..
  */
 public class DeviceStatus {
 
@@ -19,6 +17,7 @@ public class DeviceStatus {
     private BatteryStatus batteryStatus;
     private LocationStatus locationStatus;
     private NetworkStatus networkStatus;
+    private ApplicationState applicationState;
 
     public DeviceStatus() {
     }
@@ -53,5 +52,13 @@ public class DeviceStatus {
 
     public void setDeviceInfo(DeviceInfo deviceInfo) {
         this.deviceInfo = deviceInfo;
+    }
+
+    public ApplicationState getApplicationState() {
+        return applicationState;
+    }
+
+    public void setApplicationState(ApplicationState applicationState) {
+        this.applicationState = applicationState;
     }
 }

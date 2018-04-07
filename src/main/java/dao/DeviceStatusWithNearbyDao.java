@@ -45,4 +45,24 @@ public abstract class DeviceStatusWithNearbyDao extends GenericMongoDao<DeviceSt
      * @return list of @{@link DeviceStatusWithNearby} recors for this device
      */
     public abstract List<DeviceStatusWithNearby> findAll(String deviceIdentifier);
+
+    /**
+     * Gets first record which timestamp is bigger (later) than given timestamp with given action and device identifier
+     *
+     * @param deviceIdentifier given device identifier - most likely a mac address of device.
+     * @param action           given action
+     * @param timestamp        given timestamp
+     * @return
+     */
+    public abstract DeviceStatusWithNearby getFirstLaterThanTImestampWithGivenAction(String deviceIdentifier, String action, long timestamp);
+
+    /**
+     * Gets first record which timestamp is smaller (earlier) than given timestamp with given action and device identifier
+     *
+     * @param deviceIdentifier given device identifier - most likely a mac address of device.
+     * @param action           given action
+     * @param timestamp        given timestamp
+     * @return
+     */
+    public abstract DeviceStatusWithNearby getFirstEarlierThanTimestampWithGivenAction(String deviceIdentifier, String action, long timestamp);
 }

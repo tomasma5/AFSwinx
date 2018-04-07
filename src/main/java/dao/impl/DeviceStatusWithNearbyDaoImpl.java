@@ -2,7 +2,6 @@ package dao.impl;
 
 import com.mongodb.client.FindIterable;
 import dao.DeviceStatusWithNearbyDao;
-import dao.GenericMongoDao;
 import model.DeviceStatusWithNearby;
 import org.bson.types.ObjectId;
 
@@ -13,7 +12,6 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Sorts.ascending;
 import static com.mongodb.client.model.Sorts.descending;
-import static java.lang.Math.abs;
 
 /**
  * Implementation of Mongo DAO for devices with status and its nearby devices
@@ -35,6 +33,7 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
     private static final String ID_FIELD = "id";
     private static final String MAC_ADDRESS_FIELD = "deviceStatus.deviceInfo.macAddress";
     private static final String TIMESTAMP_FIELD = "timestamp";
+    private static final String ACTION_FIELD = "deviceStatus.applicationState.action";
 
     @Override
     public List<DeviceStatusWithNearby> findAll(String deviceIdentifier) {
@@ -73,6 +72,28 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
             ));
         }
         return finder.sort(ascending(TIMESTAMP_FIELD))
+                .limit(1)
+                .first();
+    }
+
+    public DeviceStatusWithNearby getFirstEarlierThanTimestampWithGivenAction(String deviceIdentifier, String action, long timestamp) {
+        return collection.find(and(
+                eq(MAC_ADDRESS_FIELD, deviceIdentifier),
+                gt(TIMESTAMP_FIELD, timestamp),
+                eq(ACTION_FIELD, action)
+        ))
+                .sort(descending(TIMESTAMP_FIELD))
+                .limit(1)
+                .first();
+    }
+
+    public DeviceStatusWithNearby getFirstLaterThanTImestampWithGivenAction(String deviceIdentifier, String action, long timestamp) {
+        return collection.find(and(
+                eq(MAC_ADDRESS_FIELD, deviceIdentifier),
+                lt(TIMESTAMP_FIELD, timestamp),
+                eq(action)
+        ))
+                .sort(ascending(TIMESTAMP_FIELD))
                 .limit(1)
                 .first();
     }
