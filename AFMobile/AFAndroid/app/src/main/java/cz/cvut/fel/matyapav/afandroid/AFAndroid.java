@@ -17,6 +17,8 @@ import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyComponent
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
 import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacade;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -27,6 +29,7 @@ public class AFAndroid {
     private static AFAndroid instance = null;
     private HashMap<String, AFComponent> createdComponents;
     private AndroidUIProxySetup proxySetup;
+    private NearbyStatusFacade nearbyStatusFacade;
 
     public AFAndroid() {
         createdComponents = new HashMap<>();
@@ -103,19 +106,15 @@ public class AFAndroid {
         return new AFScreenButtonBuilder(context);
     }
 
-    public String getDeviceType(Context context) {
-        return proxySetup.getDeviceType(context).toString();
-    }
-
-    public String getDeviceIdentifier(Context context) {
-        return proxySetup.getDeviceIdentifier(context);
-    }
-
-    public void setProxySetup(AndroidUIProxySetup proxySetup) {
-        this.proxySetup = proxySetup;
-    }
-
     public AndroidUIProxySetup getProxySetup() {
         return proxySetup;
+    }
+
+    public NearbyStatusFacade getNearbyStatusFacade() {
+        return nearbyStatusFacade;
+    }
+
+    public void setNearbyStatusFacade(NearbyStatusFacade nearbyStatusFacade) {
+        this.nearbyStatusFacade = nearbyStatusFacade;
     }
 }

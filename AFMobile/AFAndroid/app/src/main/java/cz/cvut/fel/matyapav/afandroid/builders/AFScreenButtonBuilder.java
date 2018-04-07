@@ -14,6 +14,8 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFScreenButton;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
+import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacade;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
@@ -56,18 +58,23 @@ public class AFScreenButtonBuilder {
         try {
             final String key = menuItemJsonObj.getString(BUTTON_KEY);
 
-            String displayText = menuItemJsonObj.isNull(BUTTON_DISPLAY_TEXT)? null : menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT, null);
+            String displayText = menuItemJsonObj.isNull(BUTTON_DISPLAY_TEXT) ? null : menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT, null);
             final String url = menuItemJsonObj.getString(BUTTON_URL_KEY);
             int menuOrder = menuItemJsonObj.optInt(BUTTON_ORDER_KEY, -1);
             button.setUrl(url);
-            button.setText((displayText != null && !displayText.isEmpty() && !displayText.equals("null"))? displayText : key);
+            button.setText((displayText != null && !displayText.isEmpty() && !displayText.equals("null")) ? displayText : key);
             button.setMenuOrder(menuOrder);
             button.setKey(key);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     loadScreen(button, url, key);
-
+                    if (AFAndroid.getInstance().getNearbyStatusFacade() != null) {
+                        AFAndroid.getInstance().getNearbyStatusFacade().runProcess();
+                    }
+                    if (AFAndroid.getInstance().getProxySetup() != null) {
+                        AFAndroid.getInstance().getProxySetup().setLastScreenKey(key);
+                    }
                     View.OnClickListener onClickListener = button.getCustomOnClickListener();
                     if (onClickListener != null) {
                         onClickListener.onClick(v);

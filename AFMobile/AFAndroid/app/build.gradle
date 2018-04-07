@@ -1,10 +1,17 @@
 apply plugin: 'com.android.library'
 
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion "26.0.2"
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -32,6 +39,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile (name: 'AFNearbyStatusMiner-release', ext:'aar')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support:design:27.1.0'

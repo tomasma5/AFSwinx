@@ -17,6 +17,7 @@ public abstract class AndroidUIProxySetup {
     private Device deviceType;
     private String deviceIdentifier;
     private String user;
+    private String lastScreenKey;
 
     /**
      * Load ui proxy application uuid into uiProxyApplicationUuid field.
@@ -112,5 +113,13 @@ public abstract class AndroidUIProxySetup {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getLastScreenKey() {
+        return lastScreenKey;
+    }
+
+    public void setLastScreenKey(String lastScreenKey) {
+        this.lastScreenKey = lastScreenKey;
     }
 }

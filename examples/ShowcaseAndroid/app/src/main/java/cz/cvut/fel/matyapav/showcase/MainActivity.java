@@ -21,6 +21,7 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacade;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.ApplicationStateMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
@@ -173,7 +174,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getNearbyDevices() {
-        NearbyStatusFacadeBuilder.getInstance()
+        //TODO setup pres AFAndroid
+        NearbyStatusFacade nearbyStatusFacade = NearbyStatusFacadeBuilder.getInstance()
                 .initialize(getApplicationContext())
                 .addStatusMiner(new BatteryStatusMiner())
                 .addStatusMiner(new LocationStatusMiner())
@@ -199,7 +201,8 @@ public class MainActivity extends AppCompatActivity {
                 //.sendDataToServerAfterTimeout("http://192.168.100.8:8080/NSRest/api/consumer/add")
                 //.sendDataToServerAfterTimeout("http://10.50.109.67:8080/NSRest/api/consumer/add")
                 // .sendDataToServerAfterTimeout("http://147.32.217.40:8080/NSRest/api/consumer/add") //TODO uncomment this when we want ot actually store data
-                .runProcess();
+                ;
+        AFAndroid.getInstance().setNearbyStatusFacade(nearbyStatusFacade);
     }
 
 }
