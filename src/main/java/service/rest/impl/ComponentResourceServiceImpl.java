@@ -138,11 +138,17 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     private AFMetaModelPack getFilteredComponentModel(HttpHeaders headers, String modelStr, Gson gson) throws ServiceException, IOException {
         BCPhase phase = getBusinessPhaseFromRequest(headers);
+        Application application = getApplicationFromRequest(headers);
         Client client = getClientFromRequest(headers);
         AFMetaModelPack metaModel = gson.fromJson(modelStr, AFMetaModelPack.class);
         AFClassification classification = AFClassificationFactory.getInstance().getClassificationModule(phase);
-        classification.classifyMetaModel(metaModel, client, phase);
+        classification.classifyMetaModel(metaModel, client, phase, application);
         return metaModel;
+    }
+
+    private Application getApplicationFromRequest(HttpHeaders headers) {
+        String appUuid = headers.getRequestHeaders().getFirst(Constants.APPLICATION_HEADER);
+        return applicationsManagementService.findByUuid(appUuid);
     }
 
     private BCPhase getBusinessPhaseFromRequest(HttpHeaders headers) throws ServiceException {
@@ -171,6 +177,8 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         }
         if (client != null) {
             client.setDevice(Device.valueOf(deviceType));
+            client.setAction(headers.getRequestHeaders().getFirst(Constants.SCREEN_HEADER));
+            client.setUsername(headers.getRequestHeaders().getFirst(Constants.USER_HEADER));
         }
         return client;
     }

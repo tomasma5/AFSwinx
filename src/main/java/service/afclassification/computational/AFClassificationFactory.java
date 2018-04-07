@@ -1,10 +1,12 @@
 package service.afclassification.computational;
 
 import model.afclassification.BCPhase;
-import model.afclassification.SupportedClassificationUnit;
-import model.afclassification.SupportedScoringUnit;
-import service.afclassification.computational.ccm.BaseClassificationUnit;
-import service.afclassification.computational.scm.BaseScoringUnit;
+import service.afclassification.computational.ccm.units.BaseClassificationUnit;
+import service.afclassification.computational.ccm.SupportedClassificationUnit;
+import service.afclassification.computational.scm.units.BaseScoringUnit;
+import service.afclassification.computational.scm.SupportedScoringUnit;
+import service.afclassification.computational.scm.units.BatteryConnectionScoringUnit;
+import service.afclassification.computational.scm.units.NearbyDevicesScoringUnit;
 
 /**
  * The type Af classification factory.
@@ -55,6 +57,10 @@ public class AFClassificationFactory {
         if (scoringUnit.equals(SupportedScoringUnit.BASIC)) {
             classification.setScoringModule(new BaseScoringUnit());
             //add alternative scoring units here into else if
+        } else if (scoringUnit.equals(SupportedScoringUnit.NEARBY_DEVICE_SCORING)) {
+            classification.setScoringModule(new NearbyDevicesScoringUnit());
+        }else if (scoringUnit.equals(SupportedScoringUnit.BATTERY_AND_CONNECTION_SCORING)) {
+            classification.setScoringModule(new BatteryConnectionScoringUnit());
         } else {
             System.err.println("Scoring unit not supported. Picking default BaseScoringUnit.");
             classification.setScoringModule(new BaseScoringUnit());

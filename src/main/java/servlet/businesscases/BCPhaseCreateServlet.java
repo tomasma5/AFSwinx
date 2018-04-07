@@ -1,11 +1,10 @@
 package servlet.businesscases;
 
 import model.Screen;
-import model.SupportedComponentType;
 import model.afclassification.BCPhase;
 import model.afclassification.ConfigurationPack;
-import model.afclassification.SupportedClassificationUnit;
-import model.afclassification.SupportedScoringUnit;
+import service.afclassification.computational.ccm.SupportedClassificationUnit;
+import service.afclassification.computational.scm.SupportedScoringUnit;
 import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 import service.servlet.BusinessCaseManagementService;
@@ -20,7 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

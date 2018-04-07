@@ -8,6 +8,7 @@ package utils;
  */
 public class Constants {
 
+
     //hide contructor - this class should not be instantiated
     private Constants() {
     }
@@ -26,5 +27,5 @@ public class Constants {
     public static final String APPLICATION_HEADER = "Application";
     public static final String DEVICE_TYPE_HEADER = "DeviceType";
     public static final String DEVICE_IDENTIFIER_HEADER = "Device";
-
+    public static final String USER_HEADER = "User";
 }

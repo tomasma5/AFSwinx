@@ -1,4 +1,4 @@
-package service.afclassification.computational.ccm;
+package service.afclassification.computational.ccm.units;
 
 import model.afclassification.Behavior;
 import model.afclassification.ConfigurationPack;

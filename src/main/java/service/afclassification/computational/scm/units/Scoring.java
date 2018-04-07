@@ -1,5 +1,6 @@
-package service.afclassification.computational.scm;
+package service.afclassification.computational.scm.units;
 
+import model.Application;
 import model.afclassification.Client;
 import model.afclassification.Purpose;
 import model.afclassification.Severity;
@@ -30,6 +31,6 @@ public interface Scoring {
      * @param client context information
      * @return calculated score
      */
-    public Double scoreField(Purpose purpose, Severity severity, Client client);
+    public Double scoreField(Purpose purpose, Severity severity, Client client, Application application);
 
 }

@@ -3,6 +3,8 @@ package model.afclassification;
 import model.MongoDocumentEntity;
 import model.Screen;
 import org.bson.types.ObjectId;
+import service.afclassification.computational.ccm.SupportedClassificationUnit;
+import service.afclassification.computational.scm.SupportedScoringUnit;
 
 import java.util.ArrayList;
 import java.util.List;

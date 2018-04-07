@@ -1,5 +1,6 @@
-package service.afclassification.computational.scm;
+package service.afclassification.computational.scm.units;
 
+import model.Application;
 import model.afclassification.Client;
 import model.afclassification.Purpose;
 import model.afclassification.Severity;
@@ -7,7 +8,7 @@ import model.afclassification.Severity;
 import java.util.List;
 
 
-public class BaseScoringUnit implements Scoring{
+public class BaseScoringUnit implements Scoring {
 
 	@Override
 	public Double scoreField(List<String> possibleValues, String actualValue,
@@ -16,8 +17,7 @@ public class BaseScoringUnit implements Scoring{
 	}
 
 	@Override
-	public Double scoreField(Purpose purpose, Severity severity, Client client) {
-		//TODO tady implementovat strategy - nejake rozumne scorovani
+	public Double scoreField(Purpose purpose, Severity severity, Client client, Application application) {
 		if(purpose.equals(Purpose.SYSTEM_IDENTIFICATION) && severity.equals(Severity.CRITICAL)){
 			return 100D;
 		}

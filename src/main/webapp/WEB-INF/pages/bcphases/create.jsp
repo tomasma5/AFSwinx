@@ -67,16 +67,19 @@
                         <c:forEach var="scoringUnitOption" items="${scoringUnitList}">
                             <c:if test="${scoringUnitOption == selectedScoringUnit}">
                                 <option value="${configurationOption.id}" selected>
-                                        ${scoringUnitOption} - ${scoringUnitOption.name}
+                                        ${scoringUnitOption.name}<br>
+                                    [${scoringUnitOption.description}]
                                 </option>
                             </c:if>
                             <c:if test="${scoringUnitOption != selectedScoringUnit}">
                                 <option value="${scoringUnitOption}">
-                                        ${scoringUnitOption} - ${scoringUnitOption.name}
+                                        ${scoringUnitOption.name}<br>
+                                    [${scoringUnitOption.description}]
                                 </option>
                             </c:if>
                         </c:forEach>
                     </select>
+
                     <c:if test="${not empty scoringUnitError}">${scoringUnitError}</c:if>
                 </div>
 

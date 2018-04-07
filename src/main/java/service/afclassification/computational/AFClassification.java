@@ -5,11 +5,10 @@ import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import com.tomscz.afrest.rest.dto.AFValidationRule;
+import model.Application;
 import model.afclassification.*;
-import service.afclassification.computational.ccm.BaseClassificationUnit;
-import service.afclassification.computational.ccm.Classification;
-import service.afclassification.computational.scm.BaseScoringUnit;
-import service.afclassification.computational.scm.Scoring;
+import service.afclassification.computational.ccm.units.Classification;
+import service.afclassification.computational.scm.units.Scoring;
 
 /**
  * Classification module which can be used for scoring and classifying fields.
@@ -19,7 +18,8 @@ public class AFClassification {
     private Scoring scoringModule;
     private Classification classificationModule;
 
-    protected AFClassification() {}
+    protected AFClassification() {
+    }
 
     /**
      * Sets scoring module.
@@ -46,21 +46,26 @@ public class AFClassification {
      * @param client        the client
      * @param phase         the phase
      */
-    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase) {
+    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase, Application application) {
         for (BCField field : phase.getFields()) {
             System.out.println("Classifing field: "
                     + field.getField().getFieldName());
-            GeneratedField result = classifyField(field, client, phase.getConfiguration());
-            System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
-            AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
-            editFieldProperties(metaModelPack.getClassInfo(), field, result, fieldInfo);
+            GeneratedField result = classifyField(field, client, phase.getConfiguration(), application);
+            if (result != null) {
+                System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
+                AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
+                editFieldProperties(metaModelPack.getClassInfo(), field, result, fieldInfo);
+            }
         }
     }
 
-    private GeneratedField classifyField(BCField field, Client client, ConfigurationPack configuration) {
+    private GeneratedField classifyField(BCField field, Client client, ConfigurationPack configuration, Application application) {
         Double score = scoringModule.scoreField(field.getFieldSpecification()
                         .getPurpose(), field.getFieldSpecification().getSeverity(),
-                client);
+                client, application);
+        if (score == null) {
+            return null;
+        }
         Behavior behavior = classificationModule.classify(score, configuration);
         GeneratedField generatedField = new GeneratedField();
         generatedField.setBcField(field);

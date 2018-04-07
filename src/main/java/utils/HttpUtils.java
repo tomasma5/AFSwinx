@@ -1,5 +1,6 @@
 package utils;
 
+import model.Application;
 import model.ComponentConnection;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -169,6 +170,20 @@ public class HttpUtils {
             return buildUrl(componentConnection.getRealProtocol(), componentConnection.getRealAddress(),
                     componentConnection.getRealPort(), contextPath, componentConnection.getRealParameters());
         }
+    }
 
+    /**
+     * Builds url for consumer edpoint using {@link Application} model and given endpoint parameters
+     *
+     * @param application given application object
+     * @param parameters endpoint paramenters
+     * @return built url
+     */
+    public static String buildConsumerEndpointUrl(Application application, String parameters) {
+        return buildUrl(application.getConsumerProtocol(),
+                application.getConsumerHostname(),
+                application.getConsumerPort(),
+                application.getConsumerContextPath(),
+                parameters);
     }
 }

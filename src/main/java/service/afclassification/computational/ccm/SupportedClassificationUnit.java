@@ -1,4 +1,4 @@
-package model.afclassification;
+package service.afclassification.computational.ccm;
 
 public enum SupportedClassificationUnit {
 
