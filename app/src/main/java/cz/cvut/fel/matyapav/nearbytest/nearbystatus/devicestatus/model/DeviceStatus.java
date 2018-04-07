@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model;
 
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.ApplicationState;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.BatteryStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.DeviceInfo;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.partial.LocationStatus;
@@ -18,6 +19,7 @@ public class DeviceStatus {
     private BatteryStatus batteryStatus;
     private LocationStatus locationStatus;
     private NetworkStatus networkStatus;
+    private ApplicationState applicationState;
 
     public DeviceStatus() {
     }
@@ -52,5 +54,13 @@ public class DeviceStatus {
 
     public void setDeviceInfo(DeviceInfo deviceInfo) {
         this.deviceInfo = deviceInfo;
+    }
+
+    public ApplicationState getApplicationState() {
+        return applicationState;
+    }
+
+    public void setApplicationState(ApplicationState applicationState) {
+        this.applicationState = applicationState;
     }
 }

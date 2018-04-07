@@ -27,7 +27,20 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     private boolean sendAsJsonToServer;
     private DeviceStatusAndNearbySearchEvent deviceStatusAndNearbySearchEvent;
     private boolean executePeriodically = false;
+    private boolean alreadyRunning = false;
     private long periodicTime;
+    private Handler runProcessHandler;
+
+    private Runnable processRunnable = new Runnable() {
+        @Override
+        public void run() {
+            alreadyRunning = true;
+            runMining();
+            if (executePeriodically) {
+                runProcessHandler.postDelayed(this, periodicTime);
+            }
+        }
+    };
 
     NearbyStatusFacade(Context context, NearbyFinderManager nearbyFinderManager,
                        DeviceStatusManager deviceStatusManager,
@@ -41,23 +54,18 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
         this.deviceStatusAndNearbySearchEvent = nearbyDevicesSearchEvent;
         this.executePeriodically = executePeriodically;
         this.periodicTime = periodicTime;
+        this.runProcessHandler = new Handler();
     }
 
     /**
      * Runs device status mining and nearby devices finding processes
      */
     public void runProcess() {
-        Handler runProcessHandler = new Handler();
-        Runnable processRunable = new Runnable() {
-            @Override
-            public void run() {
-                runMining();
-                if (executePeriodically) {
-                    runProcessHandler.postDelayed(this, periodicTime);
-                }
-            }
-        };
-        runProcessHandler.post(processRunable);
+        if (alreadyRunning) {
+            //cancel already running tasks and run again
+            runProcessHandler.removeCallbacks(processRunnable);
+        }
+        runProcessHandler.post(processRunnable);
     }
 
     private void runMining() {
