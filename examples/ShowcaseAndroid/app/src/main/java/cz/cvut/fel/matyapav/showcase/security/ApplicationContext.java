@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.showcase.security;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -8,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
 import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
@@ -80,6 +80,11 @@ public class ApplicationContext extends AndroidUIProxySetup {
     }
 
     public void setSecurityContext(SecurityContext securityContext) {
+        if (securityContext == null) {
+            AFAndroid.getInstance().getProxySetup().setUser(null);
+        } else {
+            AFAndroid.getInstance().getProxySetup().setUser(securityContext.getUsername());
+        }
         this.securityContext = securityContext;
     }
 

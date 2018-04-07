@@ -37,5 +37,5 @@ public class Constants {
     public static final String SCREEN_HEADER = "Screen";
     public static final String DEVICE_HEADER = "Device";
     public static final String DEVICE_TYPE_HEADER = "DeviceType";
-
+    public static final String USERNAME_HEADER = "User";
 }

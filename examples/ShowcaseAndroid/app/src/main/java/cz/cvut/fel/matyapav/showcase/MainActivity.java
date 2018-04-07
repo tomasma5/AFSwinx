@@ -15,26 +15,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
-
-import java.io.IOException;
 
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
-import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
-import cz.cvut.fel.matyapav.afandroid.utils.Utils;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.DeviceStatusAndNearbySearchEvent;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.ApplicationStateMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.LocationStatusMiner;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkStatusMiner;
+import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.bluetooth.BTDevicesFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.network.NearbyNetworksFinder;
 import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.subnet.SubnetDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NetworkUtils;
+import cz.cvut.fel.matyapav.showcase.context.ApplicationStateMiner;
 import cz.cvut.fel.matyapav.showcase.fragments.LoginFragment;
 import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
@@ -44,10 +40,14 @@ public class MainActivity extends AppCompatActivity {
     //permissions
     public static final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST = 28748;
 
+    private static final String CURRENT_SCREEN_PROXY_URL = "current_fragment_proxy_url";
+    private static final String CURRENT_SCREEN_PROXY_KEY = "current_fragment_proxy_key";
+    private static final String BUNDLE_NAME = "bundle";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (getIntent().hasExtra("bundle") && savedInstanceState == null) {
-            savedInstanceState = getIntent().getExtras().getBundle("bundle");
+        if (getIntent().hasExtra(BUNDLE_NAME) && savedInstanceState == null) {
+            savedInstanceState = getIntent().getExtras().getBundle(BUNDLE_NAME);
         }
         super.onCreate(savedInstanceState);
         //set localization
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            String currentFragmentUrl = getIntent().getStringExtra("current_fragment_proxy_url");
-            String currentFragmentKey = getIntent().getStringExtra("current_fragment_proxy_key");
+            String currentFragmentUrl = getIntent().getStringExtra(CURRENT_SCREEN_PROXY_URL);
+            String currentFragmentKey = getIntent().getStringExtra(CURRENT_SCREEN_PROXY_KEY);
             ShowCaseUtils.refreshCurrentFragment(getThisActivity(), currentFragmentUrl, currentFragmentKey);
         }
     }
@@ -159,9 +159,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle temp_bundle = new Bundle();
         onSaveInstanceState(temp_bundle);
-        intent.putExtra("bundle", temp_bundle);
-        intent.putExtra("current_fragment_proxy_url", ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getScreenUrl());
-        intent.putExtra("current_fragment_proxy_key", ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getKey());
+        intent.putExtra(BUNDLE_NAME, temp_bundle);
+        intent.putExtra(CURRENT_SCREEN_PROXY_URL, ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getScreenUrl());
+        intent.putExtra(CURRENT_SCREEN_PROXY_KEY, ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getKey());
         finish();
         startActivity(intent);
     }
@@ -178,6 +178,18 @@ public class MainActivity extends AppCompatActivity {
                 .addStatusMiner(new BatteryStatusMiner())
                 .addStatusMiner(new LocationStatusMiner())
                 .addStatusMiner(new NetworkStatusMiner())
+                .addStatusMiner(new ApplicationStateMiner() {
+                    @Override
+                    public String getUsername() {
+                        return ApplicationContext.getInstance().getSecurityContext().getUsername();
+                    }
+
+                    @Override
+                    public String getAction() {
+                        return ApplicationContext.getInstance().getCurrentFragment().getScreenDefinition().getKey();
+                    }
+
+                })
                 .addNearbyDevicesFinder(new BTDevicesFinder())
                 .addNearbyDevicesFinder(new NearbyNetworksFinder(), 20)
                 .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)

@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid;
 
-import android.app.Activity;
 import android.content.Context;
 
 import java.util.HashMap;
@@ -17,7 +16,6 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFScreenButton;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyComponentDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
-import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
 import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
 
 /**

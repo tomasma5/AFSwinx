@@ -111,6 +111,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
             addHeaderParameter(Constants.APPLICATION_HEADER, AFAndroid.getInstance().getProxyApplicationContext(context));
             addHeaderParameter(Constants.DEVICE_HEADER, AFAndroid.getInstance().getDeviceIdentifier(context));
             addHeaderParameter(Constants.DEVICE_TYPE_HEADER, AFAndroid.getInstance().getDeviceType(context));
+            addHeaderParameter(Constants.USERNAME_HEADER, AFAndroid.getInstance().getProxySetup().getUser());
             if (headerParameters != null) {
                 for (Map.Entry<String, String> headerParam : headerParameters.entrySet()) {
                     urlConnection.setRequestProperty(headerParam.getKey(), headerParam.getValue());

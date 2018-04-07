@@ -3,10 +3,7 @@ package cz.cvut.fel.matyapav.afandroid.uiproxy;
 
 import android.content.Context;
 
-import java.io.IOException;
-
 import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
-import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
  * Setup for UI proxy. User of this framework must provide URL location of Ui proxy and set uuid of application
@@ -19,6 +16,7 @@ public abstract class AndroidUIProxySetup {
     private String uiProxyUrl;
     private Device deviceType;
     private String deviceIdentifier;
+    private String user;
 
     /**
      * Load ui proxy application uuid into uiProxyApplicationUuid field.
@@ -106,5 +104,13 @@ public abstract class AndroidUIProxySetup {
             deviceIdentifier = loadDeviceIdentifier(context);
         }
         return deviceIdentifier;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
