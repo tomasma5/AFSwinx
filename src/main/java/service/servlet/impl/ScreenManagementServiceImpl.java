@@ -1,16 +1,20 @@
 package service.servlet.impl;
 
+import dao.ApplicationDao;
 import dao.ComponentResourceDao;
 import dao.ScreenDao;
 import model.Application;
 import model.ComponentResource;
 import model.Screen;
 import service.servlet.ScreenManagementService;
+import servlet.ParameterNames;
 import utils.HttpUtils;
+import utils.Utils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +33,9 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     @Inject
     private ComponentResourceDao componentResourceDao;
 
+    @Inject
+    private ApplicationDao applicationDao;
+
     /**
      * Instantiates a new Screen management service.
      */
@@ -37,17 +44,6 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
 
     @Override
     public void createOrUpdate(Screen screen) {
-        List<ComponentResource> componentResources = componentResourceDao.getAll().stream()
-                .filter(componentResource -> componentResource.getReferencedScreens() != null &&
-                        componentResource.getReferencedScreens().contains(screen))
-                .collect(Collectors.toList());
-
-        for (ComponentResource componentResource : componentResources) {
-            if (!screen.getComponents().contains(componentResource)) {
-                componentResource.getReferencedScreens().remove(screen);
-                componentResourceDao.createOrUpdate(componentResource);
-            }
-        }
         screenDao.createOrUpdate(screen);
     }
 
@@ -101,20 +97,38 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     }
 
     @Override
-    public String buildScreenUrl(Application app, Screen screen, String screenUrl, String contextPath) {
+    public String buildScreenUrl(Application app, Integer screen, String screenUrl, String contextPath) {
         if (screenUrl == null || screenUrl.isEmpty()) {
             screenUrl = HttpUtils.buildUrl(
                     app.getProxyProtocol(),
                     app.getProxyHostname(),
                     app.getProxyPort(),
                     contextPath,
-                    "/api/screens/" + screen.getId()
+                    "/api/screens/" + screen
             );
         }
         return screenUrl;
     }
 
     @Override
+    public void addComponentToScreen(ComponentResource componentResource, Screen screen) {
+        componentResource.referencedByScreen(screen);
+        screen.addComponentResource(componentResource);
+        componentResourceDao.createOrUpdate(componentResource);
+    }
+
+    @Override
+    public void fillAndCreateScreen (HttpServletRequest req, String screenId, String appIdString, String linkedComponentsCountString){
+        Screen screen = findOrCreateNewScreen(screenId);
+        updateScreenProperties(req, appIdString, screen);
+        updateLinkedComponents(req, Integer.parseInt(linkedComponentsCountString), screen);
+        createOrUpdate(screen);
+        String screenUrl = Utils.trimString(req.getParameter(ParameterNames.SCREEN_URL));
+        screenUrl = buildScreenUrl(applicationDao.getById(Integer.parseInt(appIdString)), screen.getId(), screenUrl, req.getContextPath());
+        screen.setScreenUrl(screenUrl);
+        createOrUpdate(screen);
+    }
+
     public Screen findOrCreateNewScreen(String screenId) {
         Screen screen;
         if (screenId == null || screenId.isEmpty()) {
@@ -125,5 +139,29 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
         return screen;
     }
 
+    private void updateScreenProperties(HttpServletRequest req, String appIdString, Screen screen) {
+        int appId = Integer.parseInt(appIdString);
+        Application application = applicationDao.getById(appId);
+        screen.setApplication(application);
+        String screenName = Utils.trimString(req.getParameter(ParameterNames.SCREEN_NAME));
+        String key = Utils.trimString(req.getParameter(ParameterNames.SCREEN_KEY));
+        String menuOrder = Utils.trimString(req.getParameter(ParameterNames.SCREEN_MENU_ORDER));
+        screen.setKey(key);
+        if (screenName != null && !screenName.isEmpty()) {
+            screen.setName(screenName);
+        }
+        screen.setMenuOrder(Integer.parseInt(menuOrder));
+    }
+
+    public void updateLinkedComponents(HttpServletRequest req, int linkedComponentsCount, Screen screen) {
+        if (screen.getComponents() != null) {
+            screen.getComponents().clear();
+        }
+        for (int i = 0; i < linkedComponentsCount; i++) {
+            String componentId = Utils.trimString(req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1)));
+            ComponentResource componentResource = componentResourceDao.getById(Integer.parseInt(componentId));
+            screen.addComponentResource(componentResource);
+        }
+    }
 
 }

@@ -99,7 +99,7 @@
                                         <button class="btn btn-danger"
                                                 type="button"
                                                 id="linkedComponentButton${loop.index+1}"
-                                                onclick="removeScreenFromBusinessPhase(${loop.index+1})"
+                                                onclick="removeComponent(${loop.index+1})"
                                         >Remove</button>
                                 </span>
                                             </div>

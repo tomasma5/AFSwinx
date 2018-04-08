@@ -50,7 +50,6 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     @Override
     public void createOrUpdate(ComponentResource componentResource) {
-        addComponentToReferencedScreens(componentResource);
         componentResourceDao.createOrUpdate(componentResource);
     }
 
@@ -74,29 +73,11 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     }
 
     @Override
-    public List<ComponentResource> getComponentsNotInScreen(int screenId, int applicationId) {
+    public List<ComponentResource> getComponentsNotInScreen(Screen screen, int applicationId) {
         return getAllComponentsByApplication(applicationId).stream()
                 .filter(componentResource -> componentResource.getReferencedScreens() == null ||
-                        !componentResource.getReferencedScreens().contains(screenId))
+                        !componentResource.getReferencedScreens().contains(screen))
                 .collect(toList());
-    }
-
-    @Override
-    public void addComponentToScreen(ComponentResource componentResource, Screen screen) {
-        componentResource.referencedByScreen(screen);
-        screen.addComponentResource(componentResource);
-        componentResourceDao.createOrUpdate(componentResource);
-        screenDao.createOrUpdate(screen);
-    }
-
-
-    private void addComponentToReferencedScreens(ComponentResource componentResource) {
-        List<Screen> updatedReferencedScreens = componentResource.getReferencedScreens();
-        if (updatedReferencedScreens != null) {
-            for (Screen screen : updatedReferencedScreens) {
-                addComponentToScreen(componentResource, screen);
-            }
-        }
     }
 
     private void removeComponentFromReferencedScreens(ComponentResource componentResource) {
@@ -126,18 +107,6 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             updateConnectionParameters(application, realConnectionsPack.getModelConnection());
             updateConnectionParameters(application, realConnectionsPack.getDataConnection());
             updateConnectionParameters(application, realConnectionsPack.getSendConnection());
-        }
-    }
-
-    @Override
-    public void updateLinkedComponents(HttpServletRequest req, int linkedComponentsCount, Screen screen) {
-        if (screen.getComponents() != null) {
-            screen.getComponents().clear();
-        }
-        for (int i = 0; i < linkedComponentsCount; i++) {
-            String componentId = Utils.trimString(req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1)));
-            ComponentResource componentResource = findById(Integer.parseInt(componentId));
-            addComponentToScreen(componentResource, screen);
         }
     }
 

@@ -1,8 +1,10 @@
 package service.servlet;
 
 import model.Application;
+import model.ComponentResource;
 import model.Screen;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -81,13 +83,22 @@ public interface ScreenManagementService {
      * @param contextPath the context path
      * @return the string
      */
-    public String buildScreenUrl(Application app, Screen screen, String screenUrl, String contextPath);
+    public String buildScreenUrl(Application app, Integer screen, String screenUrl, String contextPath);
 
     /**
-     * Find or create new screen.
+     * Add component to screen.
      *
-     * @param screenId the screen id
-     * @return the screen
+     * @param componentResource the component resource
+     * @param screen            the screen
      */
-    public Screen findOrCreateNewScreen(String screenId);
+    public void addComponentToScreen(ComponentResource componentResource, Screen screen);
+
+    /**
+     * TODO
+     * @param req
+     * @param screenId
+     * @param appId
+     * @param linkedComponentCount
+     */
+    public void fillAndCreateScreen(HttpServletRequest req, String screenId, String appId, String linkedComponentCount);
 }

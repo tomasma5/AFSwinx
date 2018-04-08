@@ -1,10 +1,10 @@
-var inputId = "linkedComponentText";
-var hiddenId = "linkedHiddenComponent";
-var buttonId = "linkedComponentButton";
+var componentInputId = "linkedComponentText";
+var componentHiddenId = "linkedHiddenComponent";
+var componentButtonId = "linkedComponentButton";
 var componentLabel = "Component";
 
 function addComponent() {
-    var hiddens = document.querySelectorAll("input[id^=" + hiddenId + "]");
+    var hiddens = document.querySelectorAll("input[id^=" + componentHiddenId + "]");
     var componentSelect = document.getElementById("componentSelect");
     var selectedComponetntToAdd = componentSelect.options[componentSelect.selectedIndex];
     if (selectedComponetntToAdd === null || selectedComponetntToAdd === undefined) {
@@ -25,11 +25,11 @@ function addComponent() {
     var linkedComponentsWrapper = document.getElementById("linkedComponents");
 
     var div = document.createElement("form-group");
-    var id = hiddenId + (actualCount + 1);
-    var idText = inputId + (actualCount + 1);
+    var id = componentHiddenId + (actualCount + 1);
+    var idText = componentInputId + (actualCount + 1);
 
-    var inputGroup = document.createElement("div");
-    inputGroup.setAttribute("class", "input-group");
+    var componentInputGroup = document.createElement("div");
+    componentInputGroup.setAttribute("class", "input-group");
 
     var componentIdInput = createHiddenIdField(id);
     componentIdInput.setAttribute("value", toBeAddedId);
@@ -38,21 +38,21 @@ function addComponent() {
     componentFieldInput.setAttribute("disabled", "disabled");
     componentFieldInput.setAttribute("value", toBeAddedText);
 
-    var span = document.createElement("span");
-    span.setAttribute("class", "input-group-btn");
-    var button = document.createElement("button");
-    button.setAttribute("class", "btn btn-danger");
-    button.setAttribute("type", "button");
-    button.setAttribute("id", buttonId + (actualCount + 1).toString());
-    button.innerText = "Remove";
-    button.addEventListener("click", removeComponent.bind(null, (actualCount + 1)));
-    span.appendChild(button);
+    var componentSpan = document.createElement("span");
+    componentSpan.setAttribute("class", "input-group-btn");
+    var componentButton = document.createElement("button");
+    componentButton.setAttribute("class", "btn btn-danger");
+    componentButton.setAttribute("type", "button");
+    componentButton.setAttribute("id", componentButtonId + (actualCount + 1).toString());
+    componentButton.innerText = "Remove";
+    componentButton.addEventListener("click", removeComponent.bind(null, (actualCount + 1)));
+    componentSpan.appendChild(componentButton);
 
     div.appendChild(componentFieldLabel);
     div.appendChild(componentIdInput);
-    inputGroup.appendChild(componentFieldInput);
-    inputGroup.appendChild(span);
-    div.appendChild(inputGroup);
+    componentInputGroup.appendChild(componentFieldInput);
+    componentInputGroup.appendChild(componentSpan);
+    div.appendChild(componentInputGroup);
 
     linkedComponentsWrapper.appendChild(div);
     linkedComponentsCount.setAttribute("value", "" + (actualCount + 1));
@@ -61,8 +61,8 @@ function addComponent() {
 
 function removeComponent(linkedComponentId) {
     var componentSelect = document.getElementById("componentSelect");
-    var linkedComponentEl = document.getElementById(hiddenId + linkedComponentId.toString());
-    var linkedComponentInputEl = document.getElementById(inputId + linkedComponentId.toString());
+    var linkedComponentEl = document.getElementById(componentHiddenId + linkedComponentId.toString());
+    var linkedComponentInputEl = document.getElementById(componentInputId + linkedComponentId.toString());
     var linkedComponentsWrapper = document.getElementById("linkedComponents");
 
     //put back as a option
@@ -76,19 +76,19 @@ function removeComponent(linkedComponentId) {
     linkedComponentsCount.setAttribute("value", "" + (actualCount - 1));
 
     //recalculate next indexes
-    var inputs = document.querySelectorAll("input[id^=" + inputId + "]");
-    var hiddens = document.querySelectorAll("input[id^=" + hiddenId + "]");
-    var labels = document.querySelectorAll("label[for^=" + hiddenId + "]");
-    var buttons = document.querySelectorAll("button[id^=" + buttonId + "]");
+    var inputs = document.querySelectorAll("input[id^=" + componentInputId + "]");
+    var hiddens = document.querySelectorAll("input[id^=" + componentHiddenId + "]");
+    var labels = document.querySelectorAll("label[for^=" + componentHiddenId + "]");
+    var buttons = document.querySelectorAll("button[id^=" + componentButtonId + "]");
     for (var i = 0; i < inputs.length; i++) {
         var j = i + 1;
-        inputs[i].id = inputId + j.toString();
-        inputs[i].name = inputId + j.toString();
-        hiddens[i].id = hiddenId + j.toString();
-        hiddens[i].name = hiddenId + j.toString();
-        labels[i].for = hiddenId + j.toString();
+        inputs[i].id = componentInputId + j.toString();
+        inputs[i].name = componentInputId + j.toString();
+        hiddens[i].id = componentHiddenId + j.toString();
+        hiddens[i].name = componentHiddenId + j.toString();
+        labels[i].for = componentHiddenId + j.toString();
         labels[i].innerText = componentLabel + " " + j.toString();
-        buttons[i].id = buttonId + j.toString();
+        buttons[i].id = componentButtonId + j.toString();
         var buttonClone = buttons[i].cloneNode(true);
         buttonClone.addEventListener("click", removeComponent.bind(null, j));
         buttons[i].parentNode.replaceChild(buttonClone, buttons[i]);

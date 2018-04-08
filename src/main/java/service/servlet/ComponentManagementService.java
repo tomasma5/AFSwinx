@@ -46,19 +46,11 @@ public interface ComponentManagementService {
     /**
      * Gets components, which are not in screen.
      *
-     * @param screenId      the screen id
+     * @param screen      the screen
      * @param applicationId the application id
      * @return the components not in screen
      */
-    List<ComponentResource> getComponentsNotInScreen(int screenId, int applicationId);
-
-    /**
-     * Add component to screen.
-     *
-     * @param componentResource the component resource
-     * @param screen            the screen
-     */
-    public void addComponentToScreen(ComponentResource componentResource, Screen screen);
+    List<ComponentResource> getComponentsNotInScreen(Screen screen, int applicationId);
 
     /**
      * Update component connections.
@@ -67,14 +59,6 @@ public interface ComponentManagementService {
      */
     public void updateComponentConnections(Application application);
 
-    /**
-     * Update components in referenced screen linked components
-     *
-     * @param req                   the req
-     * @param linkedComponentsCount the linked components count
-     * @param screen                the screen
-     */
-    public void updateLinkedComponents(HttpServletRequest req, int linkedComponentsCount, Screen screen);
 
     /**
      * Find or create component resource.

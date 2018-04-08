@@ -1,10 +1,10 @@
-var inputId = "linkedScreenText";
-var hiddenId = "linkedHiddenScreen";
-var buttonId = "linkedScreenButton";
+var screenInputId = "linkedScreenText";
+var screenHiddenId = "linkedHiddenScreen";
+var screenButtonId = "linkedScreenButton";
 var screenLabel = "Screen";
 
 function addScreenToBusinessPhase() {
-    var hiddens = document.querySelectorAll("input[id^=" + hiddenId + "]");
+    var hiddens = document.querySelectorAll("input[id^=" + screenHiddenId + "]");
     var screenSelect = document.getElementById("screenSelect");
     var selectedScreenToAdd = screenSelect.options[screenSelect.selectedIndex];
     if (selectedScreenToAdd === null || selectedScreenToAdd === undefined) {
@@ -25,11 +25,11 @@ function addScreenToBusinessPhase() {
     var linkedScreensWrapper = document.getElementById("linkedScreens");
 
     var div = document.createElement("form-group");
-    var id = hiddenId + (actualCount + 1);
-    var idText = inputId + (actualCount + 1);
+    var id = screenHiddenId + (actualCount + 1);
+    var idText = screenInputId + (actualCount + 1);
 
-    var inputGroup = document.createElement("div");
-    inputGroup.setAttribute("class", "input-group");
+    var screenInputGroup = document.createElement("div");
+    screenInputGroup.setAttribute("class", "input-group");
 
     var screenIdInput = createHiddenIdField(id);
     screenIdInput.setAttribute("value", toBeAddedId);
@@ -38,21 +38,21 @@ function addScreenToBusinessPhase() {
     screenFieldInput.setAttribute("disabled", "disabled");
     screenFieldInput.setAttribute("value", toBeAddedText);
 
-    var span = document.createElement("span");
-    span.setAttribute("class", "input-group-btn");
-    var button = document.createElement("button");
-    button.setAttribute("class", "btn btn-danger");
-    button.setAttribute("type", "button");
-    button.setAttribute("id", buttonId + (actualCount + 1).toString());
-    button.innerText = "Remove";
-    button.addEventListener("click", removeScreenFromBusinessPhase.bind(null, (actualCount + 1)));
-    span.appendChild(button);
+    var screenSpan = document.createElement("span");
+    screenSpan.setAttribute("class", "input-group-btn");
+    var screenButton = document.createElement("button");
+    screenButton.setAttribute("class", "btn btn-danger");
+    screenButton.setAttribute("type", "button");
+    screenButton.setAttribute("id", screenButtonId + (actualCount + 1).toString());
+    screenButton.innerText = "Remove";
+    screenButton.addEventListener("click", removeScreenFromBusinessPhase.bind(null, (actualCount + 1)));
+    screenSpan.appendChild(screenButton);
 
     div.appendChild(screenFieldLabel);
     div.appendChild(screenIdInput);
-    inputGroup.appendChild(screenFieldInput);
-    inputGroup.appendChild(span);
-    div.appendChild(inputGroup);
+    screenInputGroup.appendChild(screenFieldInput);
+    screenInputGroup.appendChild(screenSpan);
+    div.appendChild(screenInputGroup);
 
     linkedScreensWrapper.appendChild(div);
     linkedScreensCount.setAttribute("value", "" + (actualCount + 1));
@@ -61,8 +61,8 @@ function addScreenToBusinessPhase() {
 
 function removeScreenFromBusinessPhase(linkedScreenId) {
     var screenSelect = document.getElementById("screenSelect");
-    var linkedScreenEl = document.getElementById(hiddenId + linkedScreenId.toString());
-    var linkedScreenInputEl = document.getElementById(inputId + linkedScreenId.toString());
+    var linkedScreenEl = document.getElementById(screenHiddenId + linkedScreenId.toString());
+    var linkedScreenInputEl = document.getElementById(screenInputId + linkedScreenId.toString());
     var linkedScreensWrapper = document.getElementById("linkedScreens");
 
     //put back as a option
@@ -76,19 +76,19 @@ function removeScreenFromBusinessPhase(linkedScreenId) {
     linkedScreensCount.setAttribute("value", "" + (actualCount - 1));
 
     //recalculate next indexes
-    var inputs = document.querySelectorAll("input[id^=" + inputId + "]");
-    var hiddens = document.querySelectorAll("input[id^=" + hiddenId + "]");
-    var labels = document.querySelectorAll("label[for^=" + hiddenId + "]");
-    var buttons = document.querySelectorAll("button[id^=" + buttonId + "]");
+    var inputs = document.querySelectorAll("input[id^=" + screenInputId + "]");
+    var hiddens = document.querySelectorAll("input[id^=" + screenHiddenId + "]");
+    var labels = document.querySelectorAll("label[for^=" + screenHiddenId + "]");
+    var buttons = document.querySelectorAll("button[id^=" + screenButtonId + "]");
     for (var i = 0; i < inputs.length; i++) {
         var j = i + 1;
-        inputs[i].id = inputId + j.toString();
-        inputs[i].name = inputId + j.toString();
-        hiddens[i].id = hiddenId + j.toString();
-        hiddens[i].name = hiddenId + j.toString();
-        labels[i].for = hiddenId + j.toString();
+        inputs[i].id = screenInputId + j.toString();
+        inputs[i].name = screenInputId + j.toString();
+        hiddens[i].id = screenHiddenId + j.toString();
+        hiddens[i].name = screenHiddenId + j.toString();
+        labels[i].for = screenHiddenId + j.toString();
         labels[i].innerText = screenLabel + " " + j.toString();
-        buttons[i].id = buttonId + j.toString();
+        buttons[i].id = screenButtonId + j.toString();
         var buttonClone = buttons[i].cloneNode(true);
         buttonClone.addEventListener("click", removeScreenFromBusinessPhase.bind(null, j));
         buttons[i].parentNode.replaceChild(buttonClone, buttons[i]);

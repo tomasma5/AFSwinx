@@ -148,4 +148,28 @@ public class Screen extends DtoEntity {
     public Integer getId() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Screen screen = (Screen) o;
+
+        if (menuOrder != screen.menuOrder) return false;
+        if (id != null ? !id.equals(screen.id) : screen.id != null) return false;
+        if (key != null ? !key.equals(screen.key) : screen.key != null) return false;
+        if (name != null ? !name.equals(screen.name) : screen.name != null) return false;
+        return screenUrl != null ? screenUrl.equals(screen.screenUrl) : screen.screenUrl == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (key != null ? key.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (screenUrl != null ? screenUrl.hashCode() : 0);
+        result = 31 * result + menuOrder;
+        return result;
+    }
 }
