@@ -1,37 +1,66 @@
 package model;
 
-import org.bson.types.ObjectId;
+import model.converter.SupportedComponentTypeConverter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static model.Screen.COMPONENT_SCREEN_TABLE;
 
 /**
  * Contains information about component name, type and connections, where it can be found and in which screens is
  * component references. It also contains connection to information which fields it has.
  */
-public class ComponentResource extends MongoDocumentEntity {
+@Entity
+@Table(name = ComponentResource.TABLE_NAME)
+public class ComponentResource extends DtoEntity {
 
+    public static final String TABLE_NAME = "Component";
+    public static final String COMPONENT_ID = "component_id";
+    public static final String COMPONENT_NAME = "name";
+    public static final String COMPONENT_TYPE = "type";
+    public static final String FIELD_INFO_URL_PROTOCOL = "field_info_protocol";
+    public static final String FIELD_INFO_URL_HOSTNAME = "field_info_hostname";
+    public static final String FIELD_INFO_URL_PORT = "field_info_port";
+    public static final String FIELD_INFO_URL_PARAMETERS = "field_info_parameters";
+
+    @Id
+    @Column(name = COMPONENT_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = COMPONENT_NAME)
     private String name;
+    @Column(name = COMPONENT_TYPE)
+    @Convert(converter = SupportedComponentTypeConverter.class)
     private SupportedComponentType type;
+    @OneToOne
     private ComponentConnectionPack proxyConnections;
-    private List<ObjectId> referencedScreensIds;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = COMPONENT_SCREEN_TABLE,
+            joinColumns = @JoinColumn(name = "screen_id"),
+            inverseJoinColumns = @JoinColumn(name = "component_id"))
+    private List<Screen> referencedScreens;
+    @ManyToOne
+    @JoinColumn(name = Application.APPLICATION_ID)
+    private Application application;
+    @Column(name = FIELD_INFO_URL_PROTOCOL)
     private String fieldInfoUrlProtocol;
+    @Column(name = FIELD_INFO_URL_HOSTNAME)
     private String fieldInfoUrlHostname;
+    @Column(name = FIELD_INFO_URL_PORT)
     private int fieldInfoUrlPort;
+    @Column(name = FIELD_INFO_URL_PARAMETERS)
     private String fieldInfoUrlParameters;
-
-    private ObjectId applicationId;
 
     public ComponentResource() {
     }
 
-    public ComponentResource(String name, SupportedComponentType type, ComponentConnectionPack proxyConnections,
-                             ComponentConnectionPack realConnections, ObjectId applicationId) {
+    public ComponentResource(String name, SupportedComponentType type, ComponentConnectionPack proxyConnections) {
         this.name = name;
         this.type = type;
         this.proxyConnections = proxyConnections;
-        this.applicationId = applicationId;
     }
 
     /**
@@ -39,12 +68,12 @@ public class ComponentResource extends MongoDocumentEntity {
      *
      * @param screen the screen
      */
-    public void referencedByScreen(Screen screen){
-        if(referencedScreensIds == null){
-            referencedScreensIds = new ArrayList<>();
+    public void referencedByScreen(Screen screen) {
+        if (referencedScreens == null) {
+            referencedScreens = new ArrayList<>();
         }
-        if(!referencedScreensIds.contains(screen.getId())) {
-            referencedScreensIds.add(screen.getId());
+        if (!referencedScreens.contains(screen)) {
+            referencedScreens.add(screen);
         }
     }
 
@@ -64,12 +93,12 @@ public class ComponentResource extends MongoDocumentEntity {
         this.type = type;
     }
 
-    public List<ObjectId> getReferencedScreensIds() {
-        return referencedScreensIds;
+    public List<Screen> getReferencedScreens() {
+        return referencedScreens;
     }
 
-    public void setReferencedScreensIds(List<ObjectId> referencedScreensIds) {
-        this.referencedScreensIds = referencedScreensIds;
+    public void setReferencedScreens(List<Screen> referencedScreens) {
+        this.referencedScreens = referencedScreens;
     }
 
     public ComponentConnectionPack getProxyConnections() {
@@ -78,14 +107,6 @@ public class ComponentResource extends MongoDocumentEntity {
 
     public void setProxyConnections(ComponentConnectionPack proxyConnections) {
         this.proxyConnections = proxyConnections;
-    }
-
-    public ObjectId getApplicationId() {
-        return applicationId;
-    }
-
-    public void setApplicationId(ObjectId applicationId) {
-        this.applicationId = applicationId;
     }
 
     public String getFieldInfoUrlProtocol() {
@@ -117,31 +138,22 @@ public class ComponentResource extends MongoDocumentEntity {
     }
 
     public void setFieldInfoUrlParameters(String fieldInfoUrlParameters) {
-        if(!fieldInfoUrlParameters.startsWith("/")){
+        if (!fieldInfoUrlParameters.startsWith("/")) {
             fieldInfoUrlParameters = "/" + fieldInfoUrlParameters;
         }
         this.fieldInfoUrlParameters = fieldInfoUrlParameters;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public Application getApplication() {
+        return application;
+    }
 
-        ComponentResource that = (ComponentResource) o;
-
-        if (!name.equals(that.name)) return false;
-        if (type != that.type) return false;
-        return applicationId.equals(that.applicationId);
+    public void setApplication(Application application) {
+        this.application = application;
     }
 
     @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + type.hashCode();
-        result = 31 * result + applicationId.hashCode();
-        return result;
+    public Integer getId() {
+        return id;
     }
-
-
 }

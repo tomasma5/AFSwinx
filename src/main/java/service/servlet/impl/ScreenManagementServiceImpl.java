@@ -5,7 +5,6 @@ import dao.ScreenDao;
 import model.Application;
 import model.ComponentResource;
 import model.Screen;
-import org.bson.types.ObjectId;
 import service.servlet.ScreenManagementService;
 import utils.HttpUtils;
 
@@ -37,47 +36,44 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     }
 
     @Override
-    public void addNewScreen(Screen screen) {
-        screenDao.create(screen);
-    }
-
-    @Override
-    public void removeScreen(ObjectId id) {
-        screenDao.deleteByObjectId(id);
-    }
-
-    @Override
-    public void updateScreen(Screen updatedScreen) {
-        List<ComponentResource> componentResources = componentResourceDao.findAll().stream()
-                .filter(componentResource -> componentResource.getReferencedScreensIds() != null && componentResource.getReferencedScreensIds().contains(updatedScreen.getId()))
+    public void createOrUpdate(Screen screen) {
+        List<ComponentResource> componentResources = componentResourceDao.getAll().stream()
+                .filter(componentResource -> componentResource.getReferencedScreens() != null &&
+                        componentResource.getReferencedScreens().contains(screen))
                 .collect(Collectors.toList());
 
         for (ComponentResource componentResource : componentResources) {
-            if (!updatedScreen.getComponents().contains(componentResource)) {
-                componentResource.getReferencedScreensIds().remove(updatedScreen.getId());
-                componentResourceDao.update(componentResource);
+            if (!screen.getComponents().contains(componentResource)) {
+                componentResource.getReferencedScreens().remove(screen);
+                componentResourceDao.createOrUpdate(componentResource);
             }
         }
-        screenDao.update(updatedScreen);
+        screenDao.createOrUpdate(screen);
     }
 
     @Override
-    public List<Screen> getAllScreensByApplication(ObjectId applicationId) {
-        return screenDao.findAll().stream()
-                .filter(screen -> screen.getApplicationId().equals(applicationId))
+    public void removeScreen(int screen) {
+        screenDao.delete(findScreenById(screen));
+    }
+
+    @Override
+    public List<Screen> getAllScreensByApplication(int applicationId) {
+        return screenDao.getAll().stream()
+                .filter(screen -> screen.getApplication().getId() == applicationId)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Screen> getAllUnassignedScreensByApplication(ObjectId applicationId) {
-        return screenDao.findAll().stream()
-                .filter(screen -> screen.getApplicationId().equals(applicationId) && screen.getPhaseId() == null && screen.getBusinessCaseId() == null)
+    public List<Screen> getAllUnassignedScreensByApplication(int applicationId) {
+        return screenDao.getAll().stream()
+                .filter(screen -> (screen.getApplication().getId() == applicationId) &&
+                        screen.getPhase() == null)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Screen findScreenById(ObjectId id) {
-        return screenDao.findById(id);
+    public Screen findScreenById(int id) {
+        return screenDao.getById(id);
     }
 
     @Override
@@ -86,7 +82,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     }
 
     @Override
-    public int getScreenCount(ObjectId applicationId) {
+    public int getScreenCount(int applicationId) {
         return getAllScreensByApplication(applicationId).size();
     }
 
@@ -100,7 +96,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
                     contextPath,
                     "/api/screens/" + screen.getId()
             ));
-            updateScreen(screen);
+            createOrUpdate(screen);
         }
     }
 
@@ -123,9 +119,8 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
         Screen screen;
         if (screenId == null || screenId.isEmpty()) {
             screen = new Screen();
-            screen.setId(new ObjectId());
         } else {
-            screen = findScreenById(new ObjectId(screenId));
+            screen = findScreenById(Integer.parseInt(screenId));
         }
         return screen;
     }

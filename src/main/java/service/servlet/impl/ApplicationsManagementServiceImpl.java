@@ -2,10 +2,6 @@ package service.servlet.impl;
 
 import dao.ApplicationDao;
 import model.Application;
-import model.ComponentConnection;
-import model.ComponentConnectionPack;
-import model.ComponentResource;
-import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -33,25 +29,20 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
     }
 
     @Override
-    public void addNewApplication(Application app) {
+    public void createOrUpdate(Application app) {
         String uuid = generateUuid();
         app.setUuid(uuid);
-        applicationDao.create(app);
+        applicationDao.createOrUpdate(app);
     }
 
     @Override
-    public void removeApplication(ObjectId id) {
-        applicationDao.deleteByObjectId(id);
+    public void removeApplication(int application) {
+        applicationDao.delete(findById(application));
     }
 
     @Override
-    public void updateApplication(Application app) {
-        applicationDao.update(app);
-    }
-
-    @Override
-    public Application findById(ObjectId id) {
-        return applicationDao.findById(id);
+    public Application findById(int id) {
+        return applicationDao.getById(id);
     }
 
     @Override
@@ -61,7 +52,7 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
 
     @Override
     public List<Application> getAll() {
-        return applicationDao.findAll();
+        return applicationDao.getAll();
     }
 
     @Override
@@ -78,9 +69,8 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
         Application application;
         if (applicationId == null || applicationId.isEmpty()) {
             application = new Application();
-            application.setId(new ObjectId());
         } else {
-            application = findById(new ObjectId(applicationId));
+            application = findById(Integer.parseInt(applicationId));
         }
         return application;
     }

@@ -2,11 +2,10 @@ package dao.impl;
 
 import dao.ConfigurationDao;
 import model.afclassification.ConfigurationPack;
-import servlet.ParameterNames;
-
 import javax.enterprise.context.ApplicationScoped;
+import java.util.HashMap;
+import java.util.Map;
 
-import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Implementation of Mongo DAO for classification behaviour configurations
@@ -15,23 +14,18 @@ import static com.mongodb.client.model.Filters.eq;
  * @since 1.0.0
  */
 @ApplicationScoped
-public class ConfigurationDaoImpl extends GenericMongoDaoImpl<ConfigurationPack> implements ConfigurationDao {
+public class ConfigurationDaoImpl extends AbstractGenericDaoImpl<ConfigurationPack> implements ConfigurationDao {
 
     public ConfigurationDaoImpl() {
-    }
-
-    @Override
-    public Class getModelClass() {
-        return ConfigurationPack.class;
-    }
-
-    @Override
-    public String getCollectionName() {
-        return "configurations";
+        super(ConfigurationPack.class);
     }
 
     @Override
     public ConfigurationPack findByName(String name) {
-        return collection.find(eq(ParameterNames.CONFIGURATION_NAME, name)).first();
+        String query = ConfigurationPack.CONFIG_PACK_NAME + " = :name";
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", name);
+
+        return getByWhereConditionSingleResult(query, params);
     }
 }

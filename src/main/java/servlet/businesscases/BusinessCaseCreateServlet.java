@@ -1,7 +1,8 @@
 package servlet.businesscases;
 
+import model.Application;
 import model.afclassification.BusinessCase;
-import org.bson.types.ObjectId;
+import service.servlet.ApplicationsManagementService;
 import service.servlet.BusinessCaseManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
@@ -32,6 +33,9 @@ public class BusinessCaseCreateServlet extends HttpServlet {
     @Inject
     private BusinessCaseManagementService bcManagementService;
 
+    @Inject
+    private ApplicationsManagementService applicationsManagementService;
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String applicationId = request.getParameter(ParameterNames.APPLICATION_ID);
@@ -40,9 +44,9 @@ public class BusinessCaseCreateServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        ObjectId appObjId = new ObjectId(applicationId);
+        int appObjId = Integer.parseInt(applicationId);
         if (bcaseId != null) {
-            ObjectId bcaseObjId = new ObjectId(bcaseId);
+            int bcaseObjId = Integer.parseInt(bcaseId);
 
             BusinessCase businessCase = bcManagementService.findById(bcaseObjId);
             request.setAttribute(ParameterNames.BUSINESS_CASE_ID, businessCase.getId());
@@ -70,18 +74,19 @@ public class BusinessCaseCreateServlet extends HttpServlet {
 
     private void createOrUpdateBusinessCase(String bCaseId, BusinessCase bcase) {
         if (bCaseId == null || bCaseId.isEmpty()) {
-            bcManagementService.createBusinessCase(bcase);
+            bcManagementService.createOrUpdate(bcase);
         } else {
-            bcManagementService.updateBusinessCase(bcase);
+            bcManagementService.createOrUpdate(bcase);
         }
     }
 
     private void updateBcaseProperties(HttpServletRequest req, String appIdString, BusinessCase bcase) {
-        ObjectId appId = new ObjectId(appIdString);
+        int appId = Integer.parseInt(appIdString);
+        Application application = applicationsManagementService.findById(appId);
         String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_NAME)));
         String description = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_DESCRIPTION)));
 
-        bcase.setApplicationId(appId);
+        bcase.setApplication(application);
         bcase.setName(name);
         bcase.setDescription(description);
     }

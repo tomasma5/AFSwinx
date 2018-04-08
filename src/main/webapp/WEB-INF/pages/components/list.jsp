@@ -66,7 +66,7 @@
                                 <br>
                             </c:if>
                         </td>
-                        <td>${component.referencedScreensIds != null? component.referencedScreensIds.size() : 0} screen(s)</td>
+                        <td>${component.referencedScreens != null? component.referencedScreens.size() : 0} screen(s)</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/components/create?app=${app}&component=${component.id}">
                                 <button class="btn btn-primary">Edit</button>
@@ -75,7 +75,7 @@
                         <td>
                             <form method="post" action="list?app=${app}&component=${component.id}">
                                 <input type="hidden" name="screen" value="${component.id}">
-                                <input type="hidden" name="app" value="${component.applicationId}">
+                                <input type="hidden" name="app" value="${component.application.id}">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>

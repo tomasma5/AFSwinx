@@ -1,12 +1,26 @@
 package model;
 
+import javax.persistence.*;
+
 /**
  * Component connection pack holds information model, data and send connection.
  */
-public class ComponentConnectionPack {
+@Entity
+@Table(name = ComponentConnectionPack.TABLE_NAME)
+public class ComponentConnectionPack extends DtoEntity {
 
+    public static final String TABLE_NAME = "component_connection_pack";
+    public static final String COMPONENT_PACK_ID = "connection_pack_id";
+
+    @Id
+    @Column(name = COMPONENT_PACK_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @OneToOne
     private ComponentConnection modelConnection;
+    @OneToOne
     private ComponentConnection dataConnection;
+    @OneToOne
     private ComponentConnection sendConnection;
 
     public ComponentConnectionPack() {
@@ -40,5 +54,10 @@ public class ComponentConnectionPack {
 
     public void setSendConnection(ComponentConnection sendConnection) {
         this.sendConnection = sendConnection;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

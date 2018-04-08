@@ -2,36 +2,29 @@ package dao.impl;
 
 import dao.ScreenDao;
 import model.Screen;
-import servlet.ParameterNames;
-
 import javax.enterprise.context.ApplicationScoped;
-
-import static com.mongodb.client.model.Filters.eq;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Implementation of Mongo DAO for application screens
+ * Implementation of DAO for application screens
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
 @ApplicationScoped
-public class ScreenDaoImpl extends GenericMongoDaoImpl<Screen> implements ScreenDao {
+public class ScreenDaoImpl extends AbstractGenericDaoImpl<Screen> implements ScreenDao {
 
     public ScreenDaoImpl() {
-    }
-
-    @Override
-    public Class getModelClass() {
-        return Screen.class;
-    }
-
-    @Override
-    public String getCollectionName() {
-        return "screens";
+        super(Screen.class);
     }
 
     @Override
     public Screen findByKey(String key) {
-        return collection.find(eq(ParameterNames.SCREEN_KEY, key)).first();
+        String query = Screen.SCREEN_KEY + " = :screenKey";
+        Map<String, Object> params = new HashMap<>();
+        params.put("screenKey", key);
+
+        return getByWhereConditionSingleResult(query, params);
     }
 }

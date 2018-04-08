@@ -1,21 +1,60 @@
 package model;
 
+import javax.persistence.*;
+import javax.ws.rs.POST;
 import java.util.Map;
 
 /**
  * Holds information about component real server (where component is defined) and proxy connections (where user can get it)
  */
-public class ComponentConnection {
+@Entity
+@Table(name = ComponentConnection.TABLE_NAME)
+public class ComponentConnection extends DtoEntity {
 
+    public static final String TABLE_NAME = "component_connection";
+    public static final String COMPONENT_CONNECTION_ID = "connection_id";
+    public static final String ADDRESS = "address";
+    public static final String PORT = "port";
+    public static final String PARAMETERS = "parameters";
+    public static final String PROTOCOL = "protocol";
+    public static final String REAL_ADDRESS = "real_address";
+    public static final String REAL_PORT = "real_port";
+    public static final String REAL_PARAMETERS = "real_parameters";
+    public static final String REAL_PROTOCOL = "real_protocol";
+
+    @Id
+    @Column(name = COMPONENT_CONNECTION_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = ADDRESS)
     private String address;
+    @Column(name = PORT)
     private int port;
+    @Column(name = PARAMETERS)
     private String parameters;
+    @Column(name = PROTOCOL)
     private String protocol;
+    @Column(name = REAL_ADDRESS)
     private String realAddress;
+    @Column(name = REAL_PORT)
     private int realPort;
+    @Column(name = REAL_PARAMETERS)
     private String realParameters;
+    @Column(name = REAL_PROTOCOL)
     private String realProtocol;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "connection_headerParams",
+            joinColumns = @JoinColumn(name = COMPONENT_CONNECTION_ID))
+    @MapKeyColumn(name = "param_name")
+    @Column(name = "param_value")
     private Map<String, String> headerParams;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "connection_securityParams",
+            joinColumns = @JoinColumn(name = COMPONENT_CONNECTION_ID))
+    @MapKeyColumn(name = "param_name")
+    @Column(name = "param_value")
     private Map<String, String> securityParams;
 
     public ComponentConnection() {
@@ -57,7 +96,7 @@ public class ComponentConnection {
     }
 
     public void setParameters(String parameters) {
-        if(!parameters.startsWith("/")){
+        if (!parameters.startsWith("/")) {
             parameters = "/" + parameters;
         }
         this.parameters = parameters;
@@ -117,5 +156,10 @@ public class ComponentConnection {
 
     public void setRealProtocol(String realProtocol) {
         this.realProtocol = realProtocol;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

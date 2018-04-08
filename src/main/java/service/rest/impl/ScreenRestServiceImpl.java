@@ -3,7 +3,6 @@ package service.rest.impl;
 import dao.ScreenDao;
 import model.Application;
 import model.Screen;
-import org.bson.types.ObjectId;
 import rest.security.RequestContext;
 import service.exception.ServiceException;
 import service.rest.ScreenRestService;
@@ -40,11 +39,11 @@ public class ScreenRestServiceImpl implements ScreenRestService {
     RequestContext requestContext;
 
     @Override
-    public Screen getScreenById(ObjectId screenId) throws ServiceException {
+    public Screen getScreenById(int screenId) throws ServiceException {
         Application application = requestContext.getCurrentApplication();
         if (application != null) {
-            Screen screen = screenDao.findById(screenId);
-            if (screen.getApplicationId().equals(application.getId())) {
+            Screen screen = screenDao.getById(screenId);
+            if (screen.getApplication().equals(application.getId())) {
                 return screen;
             } else {
                 //this screen belongs to another application
@@ -60,8 +59,8 @@ public class ScreenRestServiceImpl implements ScreenRestService {
     public List<Screen> getAllScreens() {
         Application application = requestContext.getCurrentApplication();
         if (application != null) {
-            return screenDao.findAll().stream()
-                    .filter(screen -> screen.getApplicationId().equals(application.getId()))
+            return screenDao.getAll().stream()
+                    .filter(screen -> screen.getApplication().getId() == application.getId())
                     .collect(toList());
         }
         return null;

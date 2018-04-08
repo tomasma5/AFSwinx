@@ -1,6 +1,5 @@
 package rest;
 
-import org.bson.types.ObjectId;
 import service.exception.ComponentRequestException;
 import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
@@ -26,14 +25,14 @@ public class ComponentResourcesEndpoint {
     @GET
     @Path("/model/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getModelDefinition(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException, ServiceException {
+    public String getModelDefinition(@Context HttpHeaders headers, @PathParam("component_id") int componentId) throws ComponentRequestException, ServiceException {
         return componentResourceService.getComponentModel(componentId, headers);
     }
 
     @GET
     @Path("/data/component/{component_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String getComponentData(@Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+    public String getComponentData(@Context HttpHeaders headers, @PathParam("component_id") int componentId) throws ComponentRequestException {
         return componentResourceService.getComponentData(componentId, headers);
     }
 
@@ -41,7 +40,7 @@ public class ComponentResourcesEndpoint {
     @Path("/send/component/{component_id}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public String sendComponentData(String data, @Context HttpHeaders headers, @PathParam("component_id") ObjectId componentId) throws ComponentRequestException {
+    public String sendComponentData(String data, @Context HttpHeaders headers, @PathParam("component_id") int componentId) throws ComponentRequestException {
         return componentResourceService.sendComponentData(componentId, headers, data);
     }
 }

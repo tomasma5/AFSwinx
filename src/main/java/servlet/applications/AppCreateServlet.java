@@ -1,9 +1,6 @@
 package servlet.applications;
 
 import model.*;
-import org.bson.types.ObjectId;
-import service.exception.ServiceException;
-import service.rest.ComponentResourceService;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
@@ -48,7 +45,7 @@ public class AppCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter(ParameterNames.APPLICATION_ID);
         if (id != null) {
-            Application application = applicationsManagementService.findById(new ObjectId(id));
+            Application application = applicationsManagementService.findById(Integer.parseInt(id));
             request.setAttribute(ParameterNames.APPLICATION_ID, application.getId());
             request.setAttribute(ParameterNames.APPLICATION_NAME, application.getApplicationName());
             request.setAttribute(ParameterNames.APPLICATION_REMOTE_PROTOCOL, application.getRemoteProtocol());
@@ -111,13 +108,13 @@ public class AppCreateServlet extends HttpServlet {
     }
 
     private void createOrUpdateApplication(HttpServletRequest req, String applicationId, Application application) {
-        if (applicationId == null || applicationId.isEmpty()) {
-            applicationsManagementService.addNewApplication(application);
-        } else {
+        if (applicationId != null && !applicationId.isEmpty()) {
             componentManagementService.updateComponentConnections(application);
             screenManagementService.updateScreenConnections(application, req.getContextPath());
-            applicationsManagementService.updateApplication(application);
+            applicationsManagementService.createOrUpdate(application);
         }
+        applicationsManagementService.createOrUpdate(application);
+
     }
 
 
@@ -148,7 +145,7 @@ public class AppCreateServlet extends HttpServlet {
         }
         String proxyUrl = HttpUtils.buildUrl(proxyProtocol, proxyHostname, proxyPort, null, null);
         new URL(proxyUrl); //just to check format of url with trying to create URL object
-        application.setProxyHostname(Utils.trimString(proxyProtocol));
+        application.setProxyProtocol(Utils.trimString(proxyProtocol));
         application.setProxyHostname(Utils.trimString(proxyHostname));
         application.setProxyPort(Integer.parseInt(Utils.trimString(proxyPort)));
     }

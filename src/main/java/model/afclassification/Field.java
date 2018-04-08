@@ -1,20 +1,42 @@
 package model.afclassification;
 
+import model.DtoEntity;
+
+import javax.persistence.*;
 import java.util.List;
 
 /**
  * Represents field of component
  */
-public class Field {
-	
+@Entity
+@Table(name = Field.TABLE_NAME)
+public class Field extends DtoEntity {
+
+	public static final String TABLE_NAME = "Field";
+	public static final String FIELD_ID = "field_id";
+	public static final String CLASS_NAME = "class_name";
+	public static final String FIELD_NAME = "field_name";
+	public static final String FIELD_TYPE = "field_type";
+	public static final String VALUE = "value";
+
+	@Id
+	@Column(name = FIELD_ID)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = CLASS_NAME)
 	private String className;
-	
+
+	@Column(name = FIELD_NAME)
 	private String fieldName;
-	
+
+	@Column(name = FIELD_TYPE)
 	private String type;
-	
+
+	@Column(name = VALUE)
 	private String value;
-	
+
+	@OneToMany(mappedBy = "field")
 	private List<BCField> BCFields;
 
 	public String getClassName() {
@@ -57,4 +79,8 @@ public class Field {
 		BCFields = bCFields;
 	}
 
+	@Override
+	public Integer getId() {
+		return id;
+	}
 }

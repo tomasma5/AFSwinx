@@ -1,8 +1,8 @@
 package servlet.configurations;
 
+import model.Application;
 import model.afclassification.Behavior;
 import model.afclassification.ConfigurationPack;
-import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ConfigurationManagementService;
 import servlet.ParameterNames;
@@ -37,6 +37,9 @@ public class ConfigurationCreateServlet extends HttpServlet {
     @Inject
     private ConfigurationManagementService configurationManagementService;
 
+    @Inject
+    private ApplicationsManagementService applicationsManagementService;
+
     @Context
     private ResourceInfo resourceInfo;
 
@@ -50,7 +53,7 @@ public class ConfigurationCreateServlet extends HttpServlet {
 
         ConfigurationPack configuration;
         if (configurationId != null) {
-            ObjectId configurationObjId = new ObjectId(configurationId);
+            int configurationObjId = Integer.parseInt(configurationId);
 
             configuration = configurationManagementService.findConfigurationById(configurationObjId);
             request.setAttribute(ParameterNames.CONFIGURATION_ID, configuration.getId());
@@ -81,17 +84,18 @@ public class ConfigurationCreateServlet extends HttpServlet {
 
     private void createOrUpdateScreen(String screenId, ConfigurationPack configuration) {
         if (screenId == null || screenId.isEmpty()) {
-            configurationManagementService.createConfiguration(configuration);
+            configurationManagementService.createOrUpdate(configuration);
         } else {
-            configurationManagementService.updateConfiguration(configuration);
+            configurationManagementService.createOrUpdate(configuration);
         }
     }
 
     private void updateConfigurationProperties(
             HttpServletRequest req, String appIdString, ConfigurationPack configuration, int configPropertiesCount
     ) {
-        ObjectId appId = new ObjectId(appIdString);
-        configuration.setApplicationId(appId);
+        int appId = Integer.parseInt(appIdString);
+        Application application = applicationsManagementService.findById(appId);
+        configuration.setApplication(application);
         String configurationName = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_NAME));
         configuration.setConfigurationName(configurationName);
         for (int i = 0; i < configPropertiesCount; i++) {

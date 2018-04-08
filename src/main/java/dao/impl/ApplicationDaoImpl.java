@@ -2,41 +2,38 @@ package dao.impl;
 
 import dao.ApplicationDao;
 import model.Application;
-import servlet.ParameterNames;
-
 import javax.enterprise.context.ApplicationScoped;
-
-import static com.mongodb.client.model.Filters.eq;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Implementation of Mongo DAO for devices with status and its nearby devices
+ * Implementation of DAO for applications
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
 @ApplicationScoped
-public class ApplicationDaoImpl extends GenericMongoDaoImpl<Application> implements ApplicationDao {
+public class ApplicationDaoImpl extends AbstractGenericDaoImpl<Application> implements ApplicationDao {
 
     public ApplicationDaoImpl() {
-    }
-
-    @Override
-    public Class getModelClass() {
-        return Application.class;
-    }
-
-    @Override
-    public String getCollectionName() {
-        return "applications";
+        super(Application.class);
     }
 
     @Override
     public Application findByName(String name) {
-        return collection.find(eq(ParameterNames.APPLICATION_NAME, name)).first();
+        String query = Application.APPLICATION_NAME + " = :applicationName";
+        Map<String, Object> params = new HashMap<>();
+        params.put("applicationName", name);
+
+        return getByWhereConditionSingleResult(query, params);
     }
 
     @Override
     public Application findByUuid(String uuid) {
-        return collection.find(eq(ParameterNames.APPLICATION_UUID, uuid)).first();
+        String query = Application.APPLICATION_UUID + " = :applicationUuid";
+        Map<String, Object> params = new HashMap<>();
+        params.put("applicationUuid", uuid);
+
+        return getByWhereConditionSingleResult(query, params);
     }
 }

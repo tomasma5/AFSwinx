@@ -1,16 +1,41 @@
 package model.afclassification;
 
+import model.DtoEntity;
+import model.converter.PurposeConverter;
+import model.converter.SeverityConverter;
+
+import javax.persistence.*;
+
 /**
  * Business case field severity - it contains how important the field is
  */
-public class BCFieldSeverity {
+@Entity
+@Table(name = BCFieldSeverity.TABLE_NAME)
+public class BCFieldSeverity extends DtoEntity {
 
+	public static final String TABLE_NAME = "BCFieldSeverity";
+	public static final String BC_FIELD_SEVERITY_ID = "field_severity_id";
+	public static final String SEVERITY = "severity";
+	public static final String PURPOSE = "purpose";
+	public static final String SCORE = "score";
+
+	@Id
+	@Column(name = BC_FIELD_SEVERITY_ID)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = SEVERITY)
+	@Convert(converter = SeverityConverter.class)
 	private Severity severity;
-	
+
+	@Column(name = PURPOSE)
+	@Convert(converter = PurposeConverter.class)
 	private Purpose purpose;
-	
+
+	@Column(name = SCORE)
 	private Double score;
-	
+
+	@OneToOne
 	private BCField field;
 
 	public Severity getSeverity() {
@@ -44,5 +69,9 @@ public class BCFieldSeverity {
 	public void setField(BCField field) {
 		this.field = field;
 	}
-	
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
 }

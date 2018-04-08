@@ -2,7 +2,6 @@ package service.servlet.impl;
 
 import dao.ConfigurationDao;
 import model.afclassification.ConfigurationPack;
-import org.bson.types.ObjectId;
 import service.servlet.ConfigurationManagementService;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -24,30 +23,25 @@ public class ConfigurationManagementServiceImpl implements ConfigurationManageme
     private ConfigurationDao configurationDao;
 
     @Override
-    public void createConfiguration(ConfigurationPack configuration) {
-        configurationDao.create(configuration);
+    public void createOrUpdate(ConfigurationPack configuration) {
+        configurationDao.createOrUpdate(configuration);
     }
 
     @Override
-    public void removeConfigurationById(ObjectId id) {
-        configurationDao.deleteByObjectId(id);
+    public void removeConfigurationById(ConfigurationPack pack) {
+        configurationDao.delete(pack);
     }
 
     @Override
-    public void updateConfiguration(ConfigurationPack updatedConfiguration) {
-        configurationDao.update(updatedConfiguration);
-    }
-
-    @Override
-    public List<ConfigurationPack> getAllConfigurationsByApplication(ObjectId applicationId) {
-        return configurationDao.findAll().stream()
-                .filter(config -> config.getApplicationId().equals(applicationId))
+    public List<ConfigurationPack> getAllConfigurationsByApplication(int applicationId) {
+        return configurationDao.getAll().stream()
+                .filter(config -> config.getApplication().getId() == applicationId)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public ConfigurationPack findConfigurationById(ObjectId id) {
-        return configurationDao.findById(id);
+    public ConfigurationPack findConfigurationById(int id) {
+        return configurationDao.getById(id);
     }
 
     @Override
@@ -55,9 +49,8 @@ public class ConfigurationManagementServiceImpl implements ConfigurationManageme
         ConfigurationPack configurationPack;
         if (configurationId == null || configurationId.isEmpty()) {
             configurationPack = new ConfigurationPack(false);
-            configurationPack.setId(new ObjectId());
         } else {
-            configurationPack = findConfigurationById(new ObjectId(configurationId));
+            configurationPack = findConfigurationById(Integer.parseInt(configurationId));
         }
         return configurationPack;
     }

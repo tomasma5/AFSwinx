@@ -1,7 +1,8 @@
 package servlet.screens;
 
-import org.bson.types.ObjectId;
+import model.Screen;
 import service.servlet.ApplicationsManagementService;
+import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
@@ -31,6 +32,9 @@ public class ScreenListServlet extends HttpServlet {
     private ScreenManagementService screenManagementService;
 
     @Inject
+    private ComponentManagementService componentManagementService;
+
+    @Inject
     private ApplicationsManagementService applicationsManagementService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +43,7 @@ public class ScreenListServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        ObjectId applicationId = new ObjectId(applicationIdString);
+        int applicationId = Integer.parseInt(applicationIdString);
         request.setAttribute("screens", screenManagementService.getAllScreensByApplication(applicationId));
         request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
         request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
@@ -48,9 +52,9 @@ public class ScreenListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.SCREEN_ID)));
+        int screenId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.SCREEN_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
-        screenManagementService.removeScreen(objectId);
+        screenManagementService.removeScreen(screenId);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
     }
 }

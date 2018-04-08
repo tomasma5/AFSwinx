@@ -1,7 +1,6 @@
 package servlet.components;
 
 import model.ComponentResource;
-import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
@@ -40,7 +39,7 @@ public class ComponentListServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        ObjectId applicationId = new ObjectId(applicationIdString);
+        int applicationId = Integer.parseInt(applicationIdString);
         request.setAttribute("components", componentMagementService.getAllComponentsByApplication(applicationId));
 
         request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
@@ -50,9 +49,9 @@ public class ComponentListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID)));
+        int componentId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
-        componentMagementService.removeComponent(objectId);
-        resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appString);
+        componentMagementService.removeComponent(componentId);
+        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
     }
 }

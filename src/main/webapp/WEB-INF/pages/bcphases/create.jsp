@@ -66,7 +66,7 @@
                     <select class="form-control" id="selectedScoringUnit" name="selectedScoringUnit">
                         <c:forEach var="scoringUnitOption" items="${scoringUnitList}">
                             <c:if test="${scoringUnitOption == selectedScoringUnit}">
-                                <option value="${configurationOption.id}" selected>
+                                <option value="${scoringUnitOption}" selected>
                                         ${scoringUnitOption.name}<br>
                                     [${scoringUnitOption.description}]
                                 </option>

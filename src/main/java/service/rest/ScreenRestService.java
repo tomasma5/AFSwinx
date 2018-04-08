@@ -1,7 +1,6 @@
 package service.rest;
 
 import model.Screen;
-import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface ScreenRestService {
      * @return the screen by id
      * @throws ServiceException the service exception
      */
-    public Screen getScreenById(ObjectId screenId) throws ServiceException;
+    public Screen getScreenById(int screenId) throws ServiceException;
 
     /**
      * Gets all screens.

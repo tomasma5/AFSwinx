@@ -1,8 +1,9 @@
 package model;
 
 
-import org.bson.types.ObjectId;
+import model.afclassification.BCPhase;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,31 +11,55 @@ import java.util.List;
  * Screen model. Contains information about screen in client application, which components it has inside and on which
  * endpoint can it be found on proxy.
  */
-public class Screen extends MongoDocumentEntity {
+@Entity
+@Table(name = Screen.TABLE_NAME)
+public class Screen extends DtoEntity {
 
+    public static final String TABLE_NAME = "Screen";
+    public static final String SCREEN_ID = "screen_id";
+    public static final String SCREEN_KEY = "key";
+    public static final String SCREEN_NAME = "name";
+    public static final String SCREEN_URL = "url";
+    public static final String MENU_ORDER = "menu_order";
+
+    public static final String COMPONENT_SCREEN_TABLE = "component_screen";
+
+    @Id
+    @Column(name = SCREEN_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = SCREEN_KEY)
     private String key;
+    @Column(name = SCREEN_NAME)
     private String name;
+    @Column(name = SCREEN_URL)
     private String screenUrl;
+    @Column(name = MENU_ORDER)
     private int menuOrder;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = COMPONENT_SCREEN_TABLE,
+            joinColumns = @JoinColumn(name = "component_id"),
+            inverseJoinColumns = @JoinColumn(name = "screen_id"))
     private List<ComponentResource> components;
-    private ObjectId applicationId;
-
-    private ObjectId phaseId;
-    private ObjectId businessCaseId;
+    @ManyToOne
+    @JoinColumn(name = Application.APPLICATION_ID)
+    private Application application;
+    @ManyToOne
+    @JoinColumn(name = BCPhase.PHASE_ID)
+    private BCPhase phase;
 
     public Screen() {
     }
 
     public Screen(String key, String name, String screenUrl, int menuOrder, List<ComponentResource> components,
-                  ObjectId applicationId, ObjectId phaseId, ObjectId businessCaseId) {
+                  Application application, BCPhase phase) {
         this.key = key;
         this.name = name;
         this.screenUrl = screenUrl;
         this.menuOrder = menuOrder;
         this.components = components;
-        this.applicationId = applicationId;
-        this.phaseId = phaseId;
-        this.businessCaseId = businessCaseId;
+        this.application = application;
+        this.phase = phase;
     }
 
     /**
@@ -42,11 +67,11 @@ public class Screen extends MongoDocumentEntity {
      *
      * @param componentResource the component resource
      */
-    public void addComponentResource(ComponentResource componentResource){
-        if(components == null) {
+    public void addComponentResource(ComponentResource componentResource) {
+        if (components == null) {
             components = new ArrayList<>();
         }
-        if(!components.contains(componentResource)) {
+        if (!components.contains(componentResource)) {
             components.add(componentResource);
         }
     }
@@ -57,7 +82,7 @@ public class Screen extends MongoDocumentEntity {
      * @param componentResource the component resource
      */
     public void removeComponentResource(ComponentResource componentResource) {
-        if(components == null){
+        if (components == null) {
             return;
         }
         components.remove(componentResource);
@@ -87,12 +112,12 @@ public class Screen extends MongoDocumentEntity {
         this.components = components;
     }
 
-    public ObjectId getApplicationId() {
-        return applicationId;
+    public Application getApplication() {
+        return application;
     }
 
-    public void setApplicationId(ObjectId applicationId) {
-        this.applicationId = applicationId;
+    public void setApplication(Application application) {
+        this.application = application;
     }
 
     public int getMenuOrder() {
@@ -111,19 +136,16 @@ public class Screen extends MongoDocumentEntity {
         this.name = name;
     }
 
-    public ObjectId getPhaseId() {
-        return phaseId;
+    public BCPhase getPhase() {
+        return phase;
     }
 
-    public void setPhaseId(ObjectId phaseId) {
-        this.phaseId = phaseId;
+    public void setPhase(BCPhase phase) {
+        this.phase = phase;
     }
 
-    public ObjectId getBusinessCaseId() {
-        return businessCaseId;
-    }
-
-    public void setBusinessCaseId(ObjectId businessCaseId) {
-        this.businessCaseId = businessCaseId;
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

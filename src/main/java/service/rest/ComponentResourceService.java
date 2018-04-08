@@ -1,6 +1,5 @@
 package service.rest;
 
-import org.bson.types.ObjectId;
 import service.exception.ComponentRequestException;
 import service.exception.ServiceException;
 
@@ -23,7 +22,7 @@ public interface ComponentResourceService {
      * @throws ComponentRequestException the component request exception
      * @throws ServiceException          the service exception
      */
-    public String getComponentModel(ObjectId componentId, HttpHeaders headers) throws ComponentRequestException, ServiceException;
+    public String getComponentModel(int componentId, HttpHeaders headers) throws ComponentRequestException, ServiceException;
 
     /**
      * Gets component data from "real" server where the actual models are.
@@ -33,7 +32,7 @@ public interface ComponentResourceService {
      * @return the component data
      * @throws ComponentRequestException the component request exception
      */
-    public String getComponentData(ObjectId componentId, HttpHeaders headers) throws ComponentRequestException;
+    public String getComponentData(int componentId, HttpHeaders headers) throws ComponentRequestException;
 
     /**
      * Send component data string from "real" server where the actual models are.
@@ -44,6 +43,6 @@ public interface ComponentResourceService {
      * @return the string
      * @throws ComponentRequestException the component request exception
      */
-    public String sendComponentData(ObjectId componentId, HttpHeaders headers, String data) throws ComponentRequestException;
+    public String sendComponentData(int componentId, HttpHeaders headers, String data) throws ComponentRequestException;
 
 }

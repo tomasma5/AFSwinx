@@ -1,21 +1,37 @@
 package model.afclassification;
 
-import model.MongoDocumentEntity;
-import org.bson.types.ObjectId;
+import model.Application;
+import model.DtoEntity;
 
+import javax.persistence.*;
 import java.util.*;
 
 /**
  * Holds multiple configurations, for each {@link Behavior} one. It is also binded to application and has name for
  * better identification in system
  */
-public class ConfigurationPack extends MongoDocumentEntity {
+@Entity
+@Table(name = ConfigurationPack.TABLE_NAME)
+public class ConfigurationPack extends DtoEntity {
 
+    public static final String TABLE_NAME = "configuration_pack";
+    public static final String CONFIG_PACK_ID = "configuration_pack_id";
+    public static final String CONFIG_PACK_NAME = "pack_name";
+
+    @Id
+    @Column(name = CONFIG_PACK_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = CONFIG_PACK_NAME)
     private String configurationName;
 
+    @OneToMany
     private List<Configuration> configurationMap;
 
-    private ObjectId applicationId;
+    @ManyToOne
+    @JoinColumn(name = Application.APPLICATION_ID)
+    private Application application;
 
     public ConfigurationPack() {
     }
@@ -64,15 +80,20 @@ public class ConfigurationPack extends MongoDocumentEntity {
         return configurationName;
     }
 
-    public ObjectId getApplicationId() {
-        return applicationId;
+    public Application getApplication() {
+        return application;
     }
 
-    public void setApplicationId(ObjectId applicationId) {
-        this.applicationId = applicationId;
+    public void setApplication(Application application) {
+        this.application = application;
     }
 
     public void setConfigurationName(String configurationName) {
         this.configurationName = configurationName;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

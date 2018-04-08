@@ -1,9 +1,8 @@
 package servlet.configurations;
 
-import org.bson.types.ObjectId;
+import model.afclassification.ConfigurationPack;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ConfigurationManagementService;
-import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
 
@@ -41,7 +40,7 @@ public class ConfigurationListServlet extends HttpServlet {
             return;
         }
 
-        ObjectId applicationId = new ObjectId(applicationIdString);
+        int applicationId = Integer.parseInt(applicationIdString);
         request.setAttribute("configurations", configurationManagementService.getAllConfigurationsByApplication(applicationId));
         request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
         request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
@@ -50,9 +49,10 @@ public class ConfigurationListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_ID)));
+        int configId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
-        configurationManagementService.removeConfigurationById(objectId);
+        ConfigurationPack toBeRemoved = configurationManagementService.findConfigurationById(configId);
+        configurationManagementService.removeConfigurationById(toBeRemoved);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
     }
 }

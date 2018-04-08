@@ -34,7 +34,7 @@
                         <td>
                             <form method="post" action="list?app=${app}">
                                 <input type="hidden" name="config" value="${config.id}">
-                                <input type="hidden" name="app" value="${config.applicationId}">
+                                <input type="hidden" name="app" value="${config.application.id}">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>

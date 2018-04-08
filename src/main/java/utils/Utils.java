@@ -19,7 +19,7 @@ public class Utils {
             return str.trim();
         }
         System.err.println("Given string is null, returning null.");
-        return str;
+        return null;
     }
 
 }

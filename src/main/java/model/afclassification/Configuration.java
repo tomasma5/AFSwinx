@@ -1,15 +1,36 @@
 package model.afclassification;
 
+import model.DtoEntity;
+import model.converter.BehaviorConverter;
+
+import javax.persistence.*;
+
 /**
  * Holds information about score bounds configuration of specific {@link Behavior}.
  * For example REQUIRED will be selected if score is from 90 to 100
  */
-public class Configuration {
+@Entity
+@Table(name = Configuration.TABLE_NAME)
+public class Configuration extends DtoEntity {
 
+    public static final String TABLE_NAME = "Configuration";
+    public static final String CONFIG_ID = "configuration_id";
+    public static final String BEHAVIOR = "behavior";
+    public static final String THRESHOLD_START = "threshold_start";
+    public static final String THRESHOLD_END = "threshold_end";
+
+    @Id
+    @Column(name = CONFIG_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(name = BEHAVIOR)
+    @Convert(converter = BehaviorConverter.class)
     private Behavior behavior;
 
+    @Column(name = THRESHOLD_START)
     private Double thresholdStart;
 
+    @Column(name = THRESHOLD_END)
     private Double thresholdEnd;
 
     public Configuration() {
@@ -46,4 +67,8 @@ public class Configuration {
         this.thresholdEnd = thresholdEnd;
     }
 
+    @Override
+    public Integer getId() {
+        return id;
+    }
 }

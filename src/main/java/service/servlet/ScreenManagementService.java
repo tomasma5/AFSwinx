@@ -1,9 +1,7 @@
 package service.servlet;
 
 import model.Application;
-import model.ComponentResource;
 import model.Screen;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -17,21 +15,14 @@ public interface ScreenManagementService {
      *
      * @param screen the screen
      */
-    public void addNewScreen(Screen screen);
+    public void createOrUpdate(Screen screen);
 
     /**
      * Remove screen.
      *
-     * @param id the id
+     * @param screen the id
      */
-    public void removeScreen(ObjectId id);
-
-    /**
-     * Update screen.
-     *
-     * @param updatedScreen the updated screen
-     */
-    public void updateScreen(Screen updatedScreen);
+    public void removeScreen(int screen);
 
     /**
      * Gets all screens by application.
@@ -39,7 +30,7 @@ public interface ScreenManagementService {
      * @param applicationId the application id
      * @return the all screens by application
      */
-    public List<Screen> getAllScreensByApplication(ObjectId applicationId);
+    public List<Screen> getAllScreensByApplication(int applicationId);
 
     /**
      * Gets all unassigned screens by application.
@@ -47,7 +38,7 @@ public interface ScreenManagementService {
      * @param applicationId the application id
      * @return the all unassigned screens by application
      */
-    public List<Screen> getAllUnassignedScreensByApplication(ObjectId applicationId);
+    public List<Screen> getAllUnassignedScreensByApplication(int applicationId);
 
     /**
      * Find screen by id .
@@ -55,7 +46,7 @@ public interface ScreenManagementService {
      * @param id the id
      * @return the screen
      */
-    public Screen findScreenById(ObjectId id);
+    public Screen findScreenById(int id);
 
     /**
      * Find screen by key .
@@ -71,7 +62,7 @@ public interface ScreenManagementService {
      * @param applicationId the application id
      * @return the screen count
      */
-    public int getScreenCount(ObjectId applicationId);
+    public int getScreenCount(int applicationId);
 
     /**
      * Update screen connections.

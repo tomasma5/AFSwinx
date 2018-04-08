@@ -1,9 +1,10 @@
 package service.servlet.impl;
 
 import dao.ComponentResourceDao;
+import dao.ConnectionDao;
+import dao.ConnectionPackDao;
 import dao.ScreenDao;
 import model.*;
-import org.bson.types.ObjectId;
 import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Implementatio of component management service.
+ * Implementation of component management service.
  */
 @Named("componentManagementService")
 @ApplicationScoped
@@ -34,6 +36,12 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     @Inject
     private ScreenDao screenDao;
 
+    @Inject
+    private ConnectionPackDao connectionPackDao;
+
+    @Inject
+    private ConnectionDao connectionDao;
+
     /**
      * Instantiates a new Component management service.
      */
@@ -41,86 +49,69 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     }
 
     @Override
-    public void addComponent(ComponentResource componentResource) {
+    public void createOrUpdate(ComponentResource componentResource) {
         addComponentToReferencedScreens(componentResource);
-        componentResourceDao.create(componentResource);
+        componentResourceDao.createOrUpdate(componentResource);
     }
 
     @Override
-    public void removeComponent(ObjectId id) {
-        ComponentResource componentResource = componentResourceDao.findById(id);
-        removeComponentFromReferencedScreens(componentResource);
-        componentResourceDao.deleteByObjectId(id);
-
+    public void removeComponent(int componentResource) {
+        ComponentResource toBeRemoved = componentResourceDao.getById(componentResource);
+        removeComponentFromReferencedScreens(toBeRemoved);
+        componentResourceDao.delete(toBeRemoved);
     }
 
     @Override
-    public void updateComponent(ComponentResource updated) {
-        ComponentResource componentResource = componentResourceDao.findById(updated.getId());
-        removeComponentFromReferencedScreens(componentResource);
-        addComponentToReferencedScreens(updated);
-        componentResourceDao.update(updated);
+    public ComponentResource findById(int id) {
+        return componentResourceDao.getById(id);
     }
 
     @Override
-    public ComponentResource findById(ObjectId id) {
-        return componentResourceDao.findById(id);
-    }
-
-    @Override
-    public List<ComponentResource> getAllComponentsByApplication(ObjectId applicationId) {
-        return componentResourceDao.findAll().stream()
-                .filter(componentResource -> componentResource.getApplicationId().equals(applicationId))
+    public List<ComponentResource> getAllComponentsByApplication(int applicationId) {
+        return componentResourceDao.getAll().stream()
+                .filter(componentResource -> componentResource.getApplication().getId() == applicationId)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ComponentResource> getComponentsNotInScreen(ObjectId screenId, ObjectId applicationId) {
+    public List<ComponentResource> getComponentsNotInScreen(int screenId, int applicationId) {
         return getAllComponentsByApplication(applicationId).stream()
-                .filter(componentResource -> componentResource.getReferencedScreensIds() == null ||
-                        !componentResource.getReferencedScreensIds().contains(screenId))
+                .filter(componentResource -> componentResource.getReferencedScreens() == null ||
+                        !componentResource.getReferencedScreens().contains(screenId))
                 .collect(toList());
     }
 
     @Override
     public void addComponentToScreen(ComponentResource componentResource, Screen screen) {
+        componentResource.referencedByScreen(screen);
         screen.addComponentResource(componentResource);
-        screenDao.update(screen);
-        componentResourceDao.update(componentResource);
-    }
-
-    @Override
-    public void filterComponentsScreenReferences(ComponentResource componentResource) {
-        List<ObjectId> screenIds = screenDao.findAll().stream()
-                .filter(screen -> screen.getApplicationId().equals(componentResource.getApplicationId()) &&
-                        (screen.getComponents() != null && screen.getComponents().contains(componentResource)))
-                .map(Screen::getId)
-                .collect(Collectors.toList());
-        componentResource.setReferencedScreensIds(screenIds);
-        componentResourceDao.update(componentResource);
+        componentResourceDao.createOrUpdate(componentResource);
+        screenDao.createOrUpdate(screen);
     }
 
 
     private void addComponentToReferencedScreens(ComponentResource componentResource) {
-        List<ObjectId> updatedReferencedScreens = componentResource.getReferencedScreensIds();
+        List<Screen> updatedReferencedScreens = componentResource.getReferencedScreens();
         if (updatedReferencedScreens != null) {
-            for (ObjectId screenId : updatedReferencedScreens) {
-                addComponentToScreen(componentResource, screenDao.findById(screenId));
+            for (Screen screen : updatedReferencedScreens) {
+                addComponentToScreen(componentResource, screen);
             }
         }
     }
 
     private void removeComponentFromReferencedScreens(ComponentResource componentResource) {
-        List<ObjectId> referencedScreens = componentResource.getReferencedScreensIds();
+        List<Screen> referencedScreens = componentResource.getReferencedScreens();
+        List<Screen> toBeRemoved = new ArrayList<>();
         if (referencedScreens != null) {
-            Screen screen;
-            for (ObjectId screenId : referencedScreens) {
-                screen = screenDao.findById(screenId);
+            for (Screen screen : referencedScreens) {
                 if (screen != null) {
                     screen.removeComponentResource(componentResource);
-                    screenDao.update(screen);
+                    screenDao.createOrUpdate(screen);
+                    toBeRemoved.add(screen);
                 }
             }
+            componentResource.getReferencedScreens().removeAll(toBeRemoved);
+            componentResourceDao.createOrUpdate(componentResource);
         }
     }
 
@@ -130,11 +121,11 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             componentResource.setFieldInfoUrlProtocol(application.getRemoteProtocol());
             componentResource.setFieldInfoUrlHostname(application.getRemoteHostname());
             componentResource.setFieldInfoUrlPort(application.getRemotePort());
+            componentResourceDao.createOrUpdate(componentResource);
             ComponentConnectionPack realConnectionsPack = componentResource.getProxyConnections();
             updateConnectionParameters(application, realConnectionsPack.getModelConnection());
             updateConnectionParameters(application, realConnectionsPack.getDataConnection());
             updateConnectionParameters(application, realConnectionsPack.getSendConnection());
-            updateComponent(componentResource);
         }
     }
 
@@ -145,9 +136,8 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         }
         for (int i = 0; i < linkedComponentsCount; i++) {
             String componentId = Utils.trimString(req.getParameter(ParameterNames.LINKED_COMPONENT_ID + (i + 1)));
-            ComponentResource componentResource = findById(new ObjectId(componentId));
+            ComponentResource componentResource = findById(Integer.parseInt(componentId));
             addComponentToScreen(componentResource, screen);
-            filterComponentsScreenReferences(componentResource);
         }
     }
 
@@ -156,10 +146,9 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         ComponentResource componentResource;
         if (componentId == null || componentId.isEmpty()) {
             componentResource = new ComponentResource();
-            componentResource.setId(new ObjectId());
             componentResource.setProxyConnections(createNewConnectionPack(req));
         } else {
-            componentResource = findById(new ObjectId(componentId));
+            componentResource = findById(Integer.parseInt(componentId));
             resetConnectionsInExistingComponent(req, componentResource);
         }
         return componentResource;
@@ -168,33 +157,39 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
     private ComponentConnectionPack createNewConnectionPack(HttpServletRequest req) {
         ComponentConnectionPack connectionPack = new ComponentConnectionPack();
         if (isConnectionActive(req, ParameterNames.MODEL)) {
-            connectionPack.setModelConnection(new ComponentConnection());
+            connectionPack.setModelConnection(createComponentConnection());
         }
         if (isConnectionActive(req, ParameterNames.DATA)) {
-            connectionPack.setDataConnection(new ComponentConnection());
+            connectionPack.setDataConnection(createComponentConnection());
         }
         if (isConnectionActive(req, ParameterNames.SEND)) {
-            connectionPack.setSendConnection(new ComponentConnection());
+            connectionPack.setSendConnection(createComponentConnection());
         }
-
+        connectionPackDao.createOrUpdate(connectionPack);
         return connectionPack;
+    }
+
+    private ComponentConnection createComponentConnection() {
+        ComponentConnection modelConnection = new ComponentConnection();
+        connectionDao.createOrUpdate(modelConnection);
+        return modelConnection;
     }
 
 
     private void resetConnectionsInExistingComponent(HttpServletRequest req, ComponentResource componentResource) {
         if (isConnectionActive(req, ParameterNames.MODEL) &&
                 componentResource.getProxyConnections().getModelConnection() == null) {
-            componentResource.getProxyConnections().setModelConnection(new ComponentConnection());
+            componentResource.getProxyConnections().setModelConnection(createComponentConnection());
         }
 
         if (isConnectionActive(req, ParameterNames.DATA) &&
                 componentResource.getProxyConnections().getDataConnection() == null) {
-            componentResource.getProxyConnections().setModelConnection(new ComponentConnection());
+            componentResource.getProxyConnections().setModelConnection(createComponentConnection());
         }
 
         if (isConnectionActive(req, ParameterNames.SEND) &&
                 componentResource.getProxyConnections().getSendConnection() == null) {
-            componentResource.getProxyConnections().setModelConnection(new ComponentConnection());
+            componentResource.getProxyConnections().setModelConnection(createComponentConnection());
         }
     }
 
@@ -205,23 +200,26 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
                     componentResource.getProxyConnections().getModelConnection());
         } else {
             componentResource.getProxyConnections().setModelConnection(null);
+            connectionPackDao.createOrUpdate(componentResource.getProxyConnections());
         }
         if (isConnectionActive(req, ParameterNames.DATA)) {
             updateConnectionAttributes(req, ParameterNames.DATA, application, componentResource.getId(),
                     componentResource.getProxyConnections().getDataConnection());
         } else {
             componentResource.getProxyConnections().setDataConnection(null);
+            connectionPackDao.createOrUpdate(componentResource.getProxyConnections());
         }
         if (isConnectionActive(req, ParameterNames.SEND)) {
             updateConnectionAttributes(req, ParameterNames.SEND, application, componentResource.getId(),
                     componentResource.getProxyConnections().getSendConnection());
         } else {
             componentResource.getProxyConnections().setSendConnection(null);
+            connectionPackDao.createOrUpdate(componentResource.getProxyConnections());
         }
     }
 
 
-    private void updateConnectionAttributes(HttpServletRequest req, String type, Application application, ObjectId componentResource, ComponentConnection proxyConnection) {
+    private void updateConnectionAttributes(HttpServletRequest req, String type, Application application, Integer componentResource, ComponentConnection proxyConnection) {
         String parameters = Utils.trimString(req.getParameter(type + ParameterNames.CONNECTION + ParameterNames.PARAMETERS));
         if (proxyConnection != null && (parameters != null && !parameters.isEmpty()) && (application != null)) {
             int headerParamsCount = Integer.parseInt(Utils.trimString(req.getParameter(type + ParameterNames.HEADER_PARAMS_COUNT)));
@@ -233,6 +231,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             proxyConnection.setHeaderParams(getParams(req, type, ParameterNames.HEADER_PARAM, headerParamsCount));
             proxyConnection.setSecurityParams(getParams(req, type, ParameterNames.SECURITY_PARAM, securityParamsCount));
             setProxyUrl(req, application, type, componentResource, proxyConnection);
+            connectionDao.createOrUpdate(proxyConnection);
         }
     }
 
@@ -249,12 +248,12 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
         return params;
     }
 
-    private void setProxyUrl(HttpServletRequest req, Application application, String type, ObjectId componentResource, ComponentConnection proxyConnection) {
+    public void setProxyUrl(HttpServletRequest req, Application application, String type, Integer componentResourceId, ComponentConnection proxyConnection) {
         //generate proxy url
         proxyConnection.setProtocol(application.getProxyProtocol());
         proxyConnection.setAddress(application.getProxyHostname());
         proxyConnection.setPort(application.getProxyPort());
-        proxyConnection.setParameters(req.getContextPath() + "/api/connections/" + type + "/component/" + componentResource);
+        proxyConnection.setParameters(req.getContextPath() + "/api/connections/" + type + "/component/" + componentResourceId);
         proxyConnection.setHeaderParams(proxyConnection.getHeaderParams());
         proxyConnection.setSecurityParams(proxyConnection.getSecurityParams());
     }
@@ -273,8 +272,8 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
             connection.setProtocol(application.getProxyProtocol());
             connection.setAddress(application.getProxyHostname());
             connection.setPort(application.getProxyPort());
+            connectionDao.createOrUpdate(connection);
         }
     }
-
 
 }

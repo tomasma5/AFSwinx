@@ -54,7 +54,7 @@
                         <td>
                             <form method="post" action="list">
                                 <input type="hidden" name="bcase" value="${bc.id}">
-                                <input type="hidden" name="app" value="${bc.applicationId}">
+                                <input type="hidden" name="app" value="${bc.application.id}">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>

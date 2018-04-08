@@ -1,6 +1,6 @@
 package servlet.applications;
 
-import org.bson.types.ObjectId;
+import model.Application;
 import service.servlet.ApplicationsManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
@@ -36,8 +36,8 @@ public class AppListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId objectId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID)));
-        applicationsManagementService.removeApplication(objectId);
+        int id = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID)));
+        applicationsManagementService.removeApplication(id);
         resp.sendRedirect(LIST_ROUTE);
     }
 }

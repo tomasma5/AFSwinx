@@ -1,7 +1,6 @@
 package service.servlet;
 
 import model.afclassification.ConfigurationPack;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -15,21 +14,14 @@ public interface ConfigurationManagementService {
      *
      * @param configuration the configuration
      */
-    public void createConfiguration(ConfigurationPack configuration);
+    public void createOrUpdate(ConfigurationPack configuration);
 
     /**
      * Remove configuration by id.
      *
-     * @param id the id
+     * @param pack the id
      */
-    public void removeConfigurationById(ObjectId id);
-
-    /**
-     * Update configuration.
-     *
-     * @param updatedConfiguration the updated configuration
-     */
-    public void updateConfiguration(ConfigurationPack updatedConfiguration);
+    public void removeConfigurationById(ConfigurationPack pack);
 
     /**
      * Gets all configurations by application.
@@ -37,7 +29,7 @@ public interface ConfigurationManagementService {
      * @param applicationId the application id
      * @return the all configurations by application
      */
-    public List<ConfigurationPack> getAllConfigurationsByApplication(ObjectId applicationId);
+    public List<ConfigurationPack> getAllConfigurationsByApplication(int applicationId);
 
     /**
      * Find configuration by id.
@@ -45,7 +37,7 @@ public interface ConfigurationManagementService {
      * @param id the id
      * @return the configuration pack
      */
-    public ConfigurationPack findConfigurationById(ObjectId id);
+    public ConfigurationPack findConfigurationById(int id);
 
     /**
      * Find or create new configuration pack.

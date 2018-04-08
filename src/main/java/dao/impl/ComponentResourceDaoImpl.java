@@ -9,25 +9,16 @@ import model.Screen;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
- * Implementation of Mongo DAO for component resources
+ * Implementation of DAO for component resources
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
 @ApplicationScoped
-public class ComponentResourceDaoImpl extends GenericMongoDaoImpl<ComponentResource> implements ComponentResourceDao {
+public class ComponentResourceDaoImpl extends AbstractGenericDaoImpl<ComponentResource> implements ComponentResourceDao {
 
     public ComponentResourceDaoImpl() {
-    }
-
-    @Override
-    public Class getModelClass() {
-        return ComponentResource.class;
-    }
-
-    @Override
-    public String getCollectionName() {
-        return "components";
+        super(ComponentResource.class);
     }
 
 }

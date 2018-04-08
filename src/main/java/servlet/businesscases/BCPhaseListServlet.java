@@ -1,9 +1,9 @@
 package servlet.businesscases;
 
-import org.bson.types.ObjectId;
 import service.exception.ServiceException;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.BusinessCaseManagementService;
+import service.servlet.BusinessPhaseManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
 
@@ -32,6 +32,9 @@ public class BCPhaseListServlet extends HttpServlet {
     private BusinessCaseManagementService businessCaseManagementService;
 
     @Inject
+    BusinessPhaseManagementService businessPhaseManagementService;
+
+    @Inject
     private ApplicationsManagementService applicationsManagementService;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,9 +44,9 @@ public class BCPhaseListServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        ObjectId businessCaseId = new ObjectId(businessCaseIdString);
-        ObjectId applicationId = new ObjectId(applicationIdString);
-        request.setAttribute("businessPhases", businessCaseManagementService.findPhases(businessCaseId));
+        int businessCaseId = Integer.parseInt(businessCaseIdString);
+        int applicationId = Integer.parseInt(applicationIdString);
+        request.setAttribute("businessPhases", businessPhaseManagementService.findPhasesByBusinessCase(businessCaseId));
         request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
         request.setAttribute(ParameterNames.BUSINESS_CASE_NAME, businessCaseManagementService.findById(businessCaseId).getName());
         request.setAttribute(ParameterNames.BUSINESS_CASE_ID, businessCaseId);
@@ -53,7 +56,7 @@ public class BCPhaseListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ObjectId phaseId = new ObjectId(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_ID)));
+        int phaseId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_ID)));
         String applicationIdString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
         String businessCaseIdString = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_ID));
         if (applicationIdString == null || applicationIdString.isEmpty() || businessCaseIdString == null || businessCaseIdString.isEmpty()) {
@@ -61,7 +64,7 @@ public class BCPhaseListServlet extends HttpServlet {
             return;
         }
         try {
-            businessCaseManagementService.removeBusinessPhaseFromCaseById(new ObjectId(businessCaseIdString), phaseId);
+            businessCaseManagementService.removeBusinessPhaseFromCaseById(Integer.parseInt(businessCaseIdString), phaseId);
             resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString);
         } catch (ServiceException e) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);

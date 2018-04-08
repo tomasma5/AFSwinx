@@ -1,8 +1,6 @@
 package service.servlet;
 
 import model.Application;
-import org.bson.types.ObjectId;
-
 import java.util.List;
 
 /**
@@ -15,21 +13,14 @@ public interface ApplicationsManagementService {
      *
      * @param app the app
      */
-    public void addNewApplication(Application app);
+    public void createOrUpdate(Application app);
 
     /**
      * Remove application.
      *
-     * @param id the id
+     * @param app application to be removed
      */
-    public void removeApplication(ObjectId id);
-
-    /**
-     * Update application.
-     *
-     * @param app the app
-     */
-    public void updateApplication(Application app);
+    public void removeApplication(int app);
 
     /**
      * Find application by id.
@@ -37,7 +28,7 @@ public interface ApplicationsManagementService {
      * @param id the id
      * @return the application
      */
-    public Application findById(ObjectId id);
+    public Application findById(int id);
 
     /**
      * Find application by name.

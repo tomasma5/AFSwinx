@@ -1,31 +1,52 @@
 package model.afclassification;
 
-import model.MongoDocumentEntity;
+import model.DtoEntity;
 import model.Screen;
-import org.bson.types.ObjectId;
 import service.afclassification.computational.ccm.SupportedClassificationUnit;
 import service.afclassification.computational.scm.SupportedScoringUnit;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Business case phase - contains information about fields and screens
  */
-public class BCPhase extends MongoDocumentEntity {
+@Entity
+@Table(name = BCPhase.TABLE_NAME)
+public class BCPhase extends DtoEntity {
 
+    public static final String TABLE_NAME = "business_phase";
+    public static final String PHASE_ID = "phase_id";
+    public static final String PHASE_NAME = "phase_name";
+    public static final String CLASSIFICATION_UNIT = "classification_unit";
+    public static final String SCORIGN_UNIT = "scoringUnit";
+
+    @Id
+    @Column(name = PHASE_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @OneToMany
     private List<BCField> fields;
 
+    @OneToMany(mappedBy = "phase")
     private List<Screen> linkedScreens;
 
+    @OneToOne
     private ConfigurationPack configuration;
 
-    private ObjectId businessCaseId;
+    @ManyToOne
+    @JoinColumn(name = BusinessCase.BUSINESS_CASE_ID)
+    private BusinessCase businessCase;
 
+    @Column(name = CLASSIFICATION_UNIT)
     private SupportedClassificationUnit classificationUnit;
 
+    @Column(name = SCORIGN_UNIT)
     private SupportedScoringUnit scoringUnit;
 
+    @Column(name = PHASE_NAME)
     private String name;
 
     /**
@@ -84,12 +105,12 @@ public class BCPhase extends MongoDocumentEntity {
         this.name = name;
     }
 
-    public ObjectId getBusinessCaseId() {
-        return businessCaseId;
+    public BusinessCase getBusinessCase() {
+        return businessCase;
     }
 
-    public void setBusinessCaseId(ObjectId businessCaseId) {
-        this.businessCaseId = businessCaseId;
+    public void setBusinessCase(BusinessCase businessCase) {
+        this.businessCase = businessCase;
     }
 
     public SupportedClassificationUnit getClassificationUnit() {
@@ -106,5 +127,10 @@ public class BCPhase extends MongoDocumentEntity {
 
     public void setScoringUnit(SupportedScoringUnit scoringUnit) {
         this.scoringUnit = scoringUnit;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
     }
 }

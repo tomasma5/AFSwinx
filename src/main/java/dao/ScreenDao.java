@@ -1,7 +1,6 @@
 package dao;
 
 import model.Screen;
-import org.bson.types.ObjectId;
 
 /**
  * Mongo DAO for application screens
@@ -9,7 +8,7 @@ import org.bson.types.ObjectId;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
-public interface ScreenDao extends GenericMongoDao<Screen> {
+public interface ScreenDao extends AbstractGenericDao<Screen> {
 
     /**
      * Find screen by key.

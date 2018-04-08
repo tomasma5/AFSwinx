@@ -1,10 +1,9 @@
 package service.servlet;
 
 import model.Application;
+import model.ComponentConnection;
 import model.ComponentResource;
 import model.Screen;
-import org.bson.types.ObjectId;
-import servlet.ParameterNames;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -19,21 +18,14 @@ public interface ComponentManagementService {
      *
      * @param componentResource the component resource
      */
-    public void addComponent(ComponentResource componentResource);
+    public void createOrUpdate(ComponentResource componentResource);
 
     /**
      * Remove component.
      *
-     * @param id the id
+     * @param componentResource the id
      */
-    public void removeComponent(ObjectId id);
-
-    /**
-     * Update component.
-     *
-     * @param componentResource the component resource
-     */
-    public void updateComponent(ComponentResource componentResource);
+    public void removeComponent(int componentResource);
 
     /**
      * Find component resource by id.
@@ -41,7 +33,7 @@ public interface ComponentManagementService {
      * @param id the id
      * @return the component resource
      */
-    public ComponentResource findById(ObjectId id);
+    public ComponentResource findById(int id);
 
     /**
      * Gets all components in application.
@@ -49,7 +41,7 @@ public interface ComponentManagementService {
      * @param applicationId the application id
      * @return the all components by application
      */
-    public List<ComponentResource> getAllComponentsByApplication(ObjectId applicationId);
+    public List<ComponentResource> getAllComponentsByApplication(int applicationId);
 
     /**
      * Gets components, which are not in screen.
@@ -58,7 +50,7 @@ public interface ComponentManagementService {
      * @param applicationId the application id
      * @return the components not in screen
      */
-    List<ComponentResource> getComponentsNotInScreen(ObjectId screenId, ObjectId applicationId);
+    List<ComponentResource> getComponentsNotInScreen(int screenId, int applicationId);
 
     /**
      * Add component to screen.
@@ -67,13 +59,6 @@ public interface ComponentManagementService {
      * @param screen            the screen
      */
     public void addComponentToScreen(ComponentResource componentResource, Screen screen);
-
-    /**
-     * Filter components screen references. Removes
-     *
-     * @param componentResource the component resource
-     */
-    public void filterComponentsScreenReferences(ComponentResource componentResource);
 
     /**
      * Update component connections.
@@ -108,4 +93,5 @@ public interface ComponentManagementService {
      * @param componentResource the component resource
      */
     public void updateComponentConnections(HttpServletRequest req, Application application, ComponentResource componentResource);
+
 }

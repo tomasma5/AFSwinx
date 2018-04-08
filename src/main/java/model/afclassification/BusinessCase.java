@@ -1,68 +1,91 @@
 package model.afclassification;
 
-import model.MongoDocumentEntity;
-import org.bson.types.ObjectId;
+import model.Application;
+import model.DtoEntity;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Business case holds information about some application use case
  */
-public class BusinessCase extends MongoDocumentEntity {
+@Entity
+@Table(name = BusinessCase.TABLE_NAME)
+public class BusinessCase extends DtoEntity {
 
-	private String name;
+    public static final String TABLE_NAME = "business_case";
+    public static final String BUSINESS_CASE_ID = "business_case_id";
+    public static final String BUSINESS_CASE_NAME = "name";
+    public static final String BUSINESS_CASE_DESCRIPTION = "description";
 
-	private String description;
+    @Id
+    @Column(name = BUSINESS_CASE_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private List<BCPhase> phases;
+    @Column(name = BUSINESS_CASE_NAME)
+    private String name;
 
-	private ObjectId applicationId;
+    @Column(name = BUSINESS_CASE_DESCRIPTION)
+    private String description;
 
-	public BusinessCase() {
-	}
+    @OneToMany(mappedBy = "businessCase")
+    private List<BCPhase> phases;
 
-	public BusinessCase(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
-	
-	public void addPhase(BCPhase phase){
-		if(phases == null){
-			phases = new ArrayList<>();
-		}
-		this.phases.add(phase);
-	}
+    @ManyToOne
+    @JoinColumn(name = Application.APPLICATION_ID)
+    private Application application;
 
-	public List<BCPhase> getPhases() {
-		return phases;
-	}
+    public BusinessCase() {
+    }
 
-	public void setPhases(List<BCPhase> phases) {
-		this.phases = phases;
-	}
+    public BusinessCase(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void addPhase(BCPhase phase) {
+        if (phases == null) {
+            phases = new ArrayList<>();
+        }
+        this.phases.add(phase);
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public List<BCPhase> getPhases() {
+        return phases;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPhases(List<BCPhase> phases) {
+        this.phases = phases;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public ObjectId getApplicationId() {
-		return applicationId;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setApplicationId(ObjectId applicationId) {
-		this.applicationId = applicationId;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Application getApplication() {
+        return application;
+    }
+
+    public void setApplication(Application application) {
+        this.application = application;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
 }

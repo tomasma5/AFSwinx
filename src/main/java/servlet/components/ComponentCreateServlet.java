@@ -4,7 +4,6 @@ import model.Application;
 import model.ComponentConnection;
 import model.ComponentResource;
 import model.SupportedComponentType;
-import org.bson.types.ObjectId;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import servlet.ParameterNames;
@@ -71,27 +70,16 @@ public class ComponentCreateServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        Application application = applicationsManagementService.findById(new ObjectId(appIdString));
+        Application application = applicationsManagementService.findById(Integer.parseInt(appIdString));
 
         String componentId = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID));
         ComponentResource componentResource = componentManagementService.findOrCreateComponentResource(req, componentId);
         //set attributes to component resource
         updateComponentProperties(req, componentResource, application);
         //set connection data
+        componentManagementService.createOrUpdate(componentResource);
         componentManagementService.updateComponentConnections(req, application, componentResource);
-
-        createOrUpdateComponent(req, componentResource);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appIdString);
-    }
-
-    //component set & update methods
-    private void createOrUpdateComponent(HttpServletRequest req, ComponentResource componentResource) {
-        String componentId = Utils.trimString(req.getParameter(ParameterNames.COMPONENT_ID));
-        if (componentId == null || componentId.isEmpty()) {
-            componentManagementService.addComponent(componentResource);
-        } else {
-            componentManagementService.updateComponent(componentResource);
-        }
     }
 
     private void updateComponentProperties(HttpServletRequest req, ComponentResource componentResource, Application application) {
@@ -106,7 +94,7 @@ public class ComponentCreateServlet extends HttpServlet {
         componentResource.setFieldInfoUrlPort(application.getRemotePort());
         componentResource.setFieldInfoUrlParameters(fieldInfoUrlParameters);
 
-        componentResource.setApplicationId(new ObjectId(Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID))));
+        componentResource.setApplication(application);
 
     }
 
@@ -133,7 +121,7 @@ public class ComponentCreateServlet extends HttpServlet {
     }
 
     private void setExistingComponentToRequest(HttpServletRequest request, String componentId) {
-        ComponentResource component = componentManagementService.findById(new ObjectId(componentId));
+        ComponentResource component = componentManagementService.findById(Integer.parseInt(componentId));
         setComponentInputToRequest(request, component);
         setConnectionInputToRequest(request, ParameterNames.MODEL, component.getProxyConnections().getModelConnection());
         setConnectionInputToRequest(request, ParameterNames.DATA, component.getProxyConnections().getDataConnection());

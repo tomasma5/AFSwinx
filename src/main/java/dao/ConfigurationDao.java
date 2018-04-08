@@ -8,7 +8,7 @@ import model.afclassification.ConfigurationPack;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
-public interface ConfigurationDao extends GenericMongoDao<ConfigurationPack> {
+public interface ConfigurationDao extends AbstractGenericDao<ConfigurationPack> {
 
     /**
      * Find configuration pack by its name.

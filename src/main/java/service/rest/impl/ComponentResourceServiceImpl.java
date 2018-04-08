@@ -7,7 +7,6 @@ import model.Application;
 import model.ComponentResource;
 import model.Screen;
 import model.afclassification.*;
-import org.bson.types.ObjectId;
 import rest.context.JsonContextParser;
 import rest.security.RequestContext;
 import service.afclassification.computational.AFClassification;
@@ -15,9 +14,7 @@ import service.afclassification.computational.AFClassificationFactory;
 import service.exception.ComponentRequestException;
 import service.exception.ServiceException;
 import service.rest.ComponentResourceService;
-import service.servlet.ApplicationsManagementService;
-import service.servlet.BusinessCaseManagementService;
-import service.servlet.ScreenManagementService;
+import service.servlet.*;
 import utils.Constants;
 import utils.HttpUtils;
 
@@ -25,6 +22,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,10 +44,13 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     ComponentResourceDao componentResourceDao;
 
     /**
-     * The Business case management service.
+     * The Business phase management service.
      */
     @Inject
-    BusinessCaseManagementService businessCaseManagementService;
+    BusinessPhaseManagementService businessPhaseManagementService;
+
+    @Inject
+    BusinessFieldsManagementService businessFieldsManagementService;
 
     /**
      * The Screen management service.
@@ -70,11 +71,11 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     RequestContext requestContext;
 
     @Override
-    public String getComponentModel(ObjectId id, HttpHeaders headers) throws ComponentRequestException, ServiceException {
+    public String getComponentModel(int id, HttpHeaders headers) throws ComponentRequestException, ServiceException {
         Application application = requestContext.getCurrentApplication();
-        ComponentResource componentResource = componentResourceDao.findById(id);
+        ComponentResource componentResource = componentResourceDao.getById(id);
         if (componentResource != null && application != null) {
-            if (!componentResource.getApplicationId().equals(application.getId())) {
+            if (!(componentResource.getApplication().getId() == application.getId())) {
                 String errorMsg = "Cannot get component model, this component belongs to another application";
                 LOGGER.log(Level.SEVERE, errorMsg);
                 throw new ComponentRequestException(errorMsg);
@@ -95,10 +96,10 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
 
     @Override
-    public String getComponentData(ObjectId id, HttpHeaders headers) throws ComponentRequestException {
+    public String getComponentData(int id, HttpHeaders headers) throws ComponentRequestException {
         String realEndpoint = checkRealEndpointUrlPresence(headers);
 
-        ComponentResource componentResource = componentResourceDao.findById(id);
+        ComponentResource componentResource = componentResourceDao.getById(id);
         String dataStr = null;
         if (componentResource != null) {
             try {
@@ -111,9 +112,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     }
 
     @Override
-    public String sendComponentData(ObjectId id, HttpHeaders headers, String data) throws ComponentRequestException {
+    public String sendComponentData(int id, HttpHeaders headers, String data) throws ComponentRequestException {
         String realEndpoint = checkRealEndpointUrlPresence(headers);
-        ComponentResource componentResource = componentResourceDao.findById(id);
+        ComponentResource componentResource = componentResourceDao.getById(id);
         String response = null;
         if (componentResource != null) {
             try {
@@ -136,13 +137,22 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         return realEndpoint;
     }
 
-    private AFMetaModelPack getFilteredComponentModel(HttpHeaders headers, String modelStr, Gson gson) throws ServiceException, IOException {
-        BCPhase phase = getBusinessPhaseFromRequest(headers);
-        Application application = getApplicationFromRequest(headers);
-        Client client = getClientFromRequest(headers);
+    private AFMetaModelPack getFilteredComponentModel(HttpHeaders headers, String modelStr, Gson gson) throws IOException {
         AFMetaModelPack metaModel = gson.fromJson(modelStr, AFMetaModelPack.class);
-        AFClassification classification = AFClassificationFactory.getInstance().getClassificationModule(phase);
-        classification.classifyMetaModel(metaModel, client, phase, application);
+        BCPhase phase = null;
+        List<BCField> phaseFields = null;
+        try {
+            phase = getBusinessPhaseFromRequest(headers);
+            phaseFields = businessFieldsManagementService.findAllByPhase(phase.getId());
+        } catch (ServiceException e) {
+            LOGGER.log(Level.SEVERE, "Cannot find business phase for screen. Classification cannot be done. Returning basic metamodel.");
+        }
+        if (phase != null && phaseFields != null) {
+            Application application = getApplicationFromRequest(headers);
+            Client client = getClientFromRequest(headers);
+            AFClassification classification = AFClassificationFactory.getInstance().getClassificationModule(phase);
+            classification.classifyMetaModel(metaModel, client, phase, phaseFields, application);
+        }
         return metaModel;
     }
 
@@ -154,7 +164,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     private BCPhase getBusinessPhaseFromRequest(HttpHeaders headers) throws ServiceException {
         String screenKey = headers.getRequestHeaders().getFirst(Constants.SCREEN_HEADER);
         Screen screen = screenManagementService.findScreenByKey(screenKey);
-        return businessCaseManagementService.findPhaseById(screen.getBusinessCaseId(), screen.getPhaseId());
+        return screen.getPhase();
     }
 
     private Client getClientFromRequest(HttpHeaders headers) throws IOException {

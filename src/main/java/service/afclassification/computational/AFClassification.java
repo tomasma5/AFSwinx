@@ -10,6 +10,8 @@ import model.afclassification.*;
 import service.afclassification.computational.ccm.units.Classification;
 import service.afclassification.computational.scm.units.Scoring;
 
+import java.util.List;
+
 /**
  * Classification module which can be used for scoring and classifying fields.
  */
@@ -46,8 +48,8 @@ public class AFClassification {
      * @param client        the client
      * @param phase         the phase
      */
-    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase, Application application) {
-        for (BCField field : phase.getFields()) {
+    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase, List<BCField> fieldList, Application application) {
+        for (BCField field : fieldList) {
             System.out.println("Classifing field: "
                     + field.getField().getFieldName());
             GeneratedField result = classifyField(field, client, phase.getConfiguration(), application);

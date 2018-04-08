@@ -50,7 +50,7 @@
                         <td>
                             <form method="post" action="list?app=${app}">
                                 <input type="hidden" name="screen" value="${screen.id}">
-                                <input type="hidden" name="app" value="${screen.applicationId}">
+                                <input type="hidden" name="app" value="${screen.application.id}">
                                 <button type="submit" class="btn btn-danger"
                                         onclick="if (!confirm('Are you sure?')) { return false }">Delete
                                 </button>

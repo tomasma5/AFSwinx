@@ -1,78 +1,94 @@
 package model.afclassification;
 
-import model.MongoDocumentEntity;
-import org.bson.types.ObjectId;
+import model.ComponentResource;
+import model.DtoEntity;
+import model.Screen;
+
+import javax.persistence.*;
 
 /**
  * This structure is for representing component fields in business cases
  */
-public class BCField extends MongoDocumentEntity {
+@Entity
+@Table(name = BCField.TABLE_NAME)
+public class BCField extends DtoEntity {
 
-	private Field field;
+    public static final String TABLE_NAME = "BCField";
+    public static final String BC_FIELD_ID = "bc_field_id";
 
-	private ObjectId phaseId;
-	private ObjectId screenId;
-	private ObjectId componentId;
+    @Id
+    @Column(name = BC_FIELD_ID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	private BCFieldSeverity fieldSpecification;
-	
-	private String classUri;
+    @ManyToOne
+    @JoinColumn(name = Field.FIELD_ID)
+    private Field field;
+    @ManyToOne
+    @JoinColumn(name = BCPhase.PHASE_ID)
+    private BCPhase phase;
+    @ManyToOne
+    @JoinColumn(name = Screen.SCREEN_ID)
+    private Screen screen;
+    @ManyToOne
+    @JoinColumn(name = ComponentResource.COMPONENT_ID)
+    private ComponentResource component;
 
-	public BCField() {
-	}
+    @OneToOne
+    private BCFieldSeverity fieldSpecification;
 
-	public BCField(Field field, ObjectId phaseId, ObjectId screenId, ObjectId componentId) {
-		this.field = field;
-		this.phaseId = phaseId;
-		this.screenId = screenId;
-		this.componentId = componentId;
-	}
+    public BCField() {
+    }
 
-	public ObjectId getPhaseId() {
-		return phaseId;
-	}
+    public BCField(Field field, BCPhase phase, Screen screen, ComponentResource component) {
+        this.field = field;
+        this.phase = phase;
+        this.screen = screen;
+        this.component = component;
+    }
 
-	public void setPhaseId(ObjectId phaseId) {
-		this.phaseId = phaseId;
-	}
+    public BCPhase getPhase() {
+        return phase;
+    }
 
-	public Field getField() {
-		return field;
-	}
+    public void setPhase(BCPhase phase) {
+        this.phase = phase;
+    }
 
-	public void setField(Field field) {
-		this.field = field;
-	}
+    public Field getField() {
+        return field;
+    }
 
-	public String getClassUri() {
-		return classUri;
-	}
+    public void setField(Field field) {
+        this.field = field;
+    }
 
-	public void setClassUri(String classUri) {
-		this.classUri = classUri;
-	}
+    public BCFieldSeverity getFieldSpecification() {
+        return fieldSpecification;
+    }
 
-	public BCFieldSeverity getFieldSpecification() {
-		return fieldSpecification;
-	}
+    public void setFieldSpecification(BCFieldSeverity fieldSpecification) {
+        this.fieldSpecification = fieldSpecification;
+    }
 
-	public void setFieldSpecification(BCFieldSeverity fieldSpecification) {
-		this.fieldSpecification = fieldSpecification;
-	}
+    public Screen getScreen() {
+        return screen;
+    }
 
-	public ObjectId getScreenId() {
-		return screenId;
-	}
+    public void setScreen(Screen screen) {
+        this.screen = screen;
+    }
 
-	public void setScreenId(ObjectId screenId) {
-		this.screenId = screenId;
-	}
+    public ComponentResource getComponent() {
+        return component;
+    }
 
-	public ObjectId getComponentId() {
-		return componentId;
-	}
+    public void setComponent(ComponentResource component) {
+        this.component = component;
+    }
 
-	public void setComponentId(ObjectId componentId) {
-		this.componentId = componentId;
-	}
+    @Override
+    public Integer getId() {
+        return id;
+    }
 }

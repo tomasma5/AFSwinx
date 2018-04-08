@@ -1,7 +1,6 @@
 package rest;
 
 import model.Screen;
-import org.bson.types.ObjectId;
 import model.rest.MenuItem;
 import service.exception.ServiceException;
 import service.rest.ScreenRestService;
@@ -40,8 +39,8 @@ public class ScreenEndpoint {
     @GET
     @Path("/{screen_id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Screen getScreenDefinition(@PathParam("screen_id") String screenId) throws ServiceException {
-        Screen screen = screenRestService.getScreenById(new ObjectId(screenId));
+    public Screen getScreenDefinition(@PathParam("screen_id") int screenId) throws ServiceException {
+        Screen screen = screenRestService.getScreenById(screenId);
         if (screen == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
