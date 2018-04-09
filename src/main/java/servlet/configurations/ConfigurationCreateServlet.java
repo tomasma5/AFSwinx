@@ -75,36 +75,8 @@ public class ConfigurationCreateServlet extends HttpServlet {
         }
         String configId = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_ID));
         String configMapRecordsCount = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_RECORDS_COUNT));
-
-        ConfigurationPack configuration = configurationManagementService.findOrCreateNewConfiguration(configId);
-        updateConfigurationProperties(req, appIdString, configuration, Integer.parseInt(configMapRecordsCount));
-        createOrUpdateScreen(configId, configuration);
+        configurationManagementService.saveConfigurationPackFromRequest(req, configId, appIdString, configMapRecordsCount);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appIdString);
-    }
-
-    private void createOrUpdateScreen(String screenId, ConfigurationPack configuration) {
-        if (screenId == null || screenId.isEmpty()) {
-            configurationManagementService.createOrUpdate(configuration);
-        } else {
-            configurationManagementService.createOrUpdate(configuration);
-        }
-    }
-
-    private void updateConfigurationProperties(
-            HttpServletRequest req, String appIdString, ConfigurationPack configuration, int configPropertiesCount
-    ) {
-        int appId = Integer.parseInt(appIdString);
-        Application application = applicationsManagementService.findById(appId);
-        configuration.setApplication(application);
-        String configurationName = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_NAME));
-        configuration.setConfigurationName(configurationName);
-        for (int i = 0; i < configPropertiesCount; i++) {
-            String behaviour = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_BEHAVIOUR + i));
-            String thresholdStart = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_THRESHOLD_START + i));
-            String thresholdEnd = Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_THRESHOLD_END + i));
-            configuration.addConfiguration(Behavior.valueOf(behaviour), Double.parseDouble(thresholdStart), Double.parseDouble(thresholdEnd));
-        }
-
     }
 
 

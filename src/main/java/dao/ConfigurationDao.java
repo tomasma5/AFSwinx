@@ -1,6 +1,6 @@
 package dao;
 
-import model.afclassification.ConfigurationPack;
+import model.afclassification.Configuration;
 
 /**
  * Mongo DAO for classification behaviour configurations
@@ -8,14 +8,7 @@ import model.afclassification.ConfigurationPack;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0
  */
-public interface ConfigurationDao extends AbstractGenericDao<ConfigurationPack> {
+public interface ConfigurationDao extends AbstractGenericDao<Configuration> {
 
-    /**
-     * Find configuration pack by its name.
-     *
-     * @param name the name
-     * @return the configuration pack
-     */
-    public ConfigurationPack findByName(String name);
-
+    // no need to implement any more method that is in abstractDao
 }

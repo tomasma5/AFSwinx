@@ -1,7 +1,11 @@
 package dao.impl;
 
 import dao.ConfigurationDao;
+import dao.ConfigurationPackDao;
+import dao.ConnectionDao;
+import model.afclassification.Configuration;
 import model.afclassification.ConfigurationPack;
+
 import javax.enterprise.context.ApplicationScoped;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,18 +18,10 @@ import java.util.Map;
  * @since 1.0.0
  */
 @ApplicationScoped
-public class ConfigurationDaoImpl extends AbstractGenericDaoImpl<ConfigurationPack> implements ConfigurationDao {
+public class ConfigurationDaoImpl extends AbstractGenericDaoImpl<Configuration> implements ConfigurationDao {
 
     public ConfigurationDaoImpl() {
-        super(ConfigurationPack.class);
+        super(Configuration.class);
     }
 
-    @Override
-    public ConfigurationPack findByName(String name) {
-        String query = ConfigurationPack.CONFIG_PACK_NAME + " = :name";
-        Map<String, Object> params = new HashMap<>();
-        params.put("name", name);
-
-        return getByWhereConditionSingleResult(query, params);
-    }
 }

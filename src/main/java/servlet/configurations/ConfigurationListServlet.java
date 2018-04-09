@@ -51,8 +51,7 @@ public class ConfigurationListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int configId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
-        ConfigurationPack toBeRemoved = configurationManagementService.findConfigurationById(configId);
-        configurationManagementService.removeConfigurationById(toBeRemoved);
+        configurationManagementService.removeConfigurationById(configId);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
     }
 }

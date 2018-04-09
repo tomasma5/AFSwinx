@@ -33,6 +33,9 @@ public class Configuration extends DtoEntity {
     @Column(name = THRESHOLD_END)
     private Double thresholdEnd;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private ConfigurationPack configurationPack;
+
     public Configuration() {
 
     }
@@ -65,6 +68,14 @@ public class Configuration extends DtoEntity {
 
     public void setThresholdEnd(Double thresholdEnd) {
         this.thresholdEnd = thresholdEnd;
+    }
+
+    public ConfigurationPack getConfigurationPack() {
+        return configurationPack;
+    }
+
+    public void setConfigurationPack(ConfigurationPack configurationPack) {
+        this.configurationPack = configurationPack;
     }
 
     @Override

@@ -2,6 +2,7 @@ package service.servlet;
 
 import model.afclassification.ConfigurationPack;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -19,9 +20,9 @@ public interface ConfigurationManagementService {
     /**
      * Remove configuration by id.
      *
-     * @param pack the id
+     * @param packId the id
      */
-    public void removeConfigurationById(ConfigurationPack pack);
+    public void removeConfigurationById(Integer packId);
 
     /**
      * Gets all configurations by application.
@@ -47,5 +48,12 @@ public interface ConfigurationManagementService {
      */
     public ConfigurationPack findOrCreateNewConfiguration(String configurationId);
 
-
+    /**
+     * Creates or finds configuration pack and fills it with data from request
+     * @param req the request
+     * @param configId string representation of configuration id
+     * @param appIdString string representation of application id
+     * @param configMapRecordsCount how many configuration records should be in config pack
+     */
+    public void saveConfigurationPackFromRequest(HttpServletRequest req, String configId, String appIdString, String configMapRecordsCount);
 }
