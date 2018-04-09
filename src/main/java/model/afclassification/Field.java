@@ -3,6 +3,7 @@ package model.afclassification;
 import model.DtoEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,13 @@ public class Field extends DtoEntity {
 
 	@OneToMany(mappedBy = "field")
 	private List<BCField> BCFields;
+
+	public void addBCField(BCField bcField){
+		if(BCFields == null){
+			BCFields = new ArrayList<>();
+		}
+		BCFields.add(bcField);
+	}
 
 	public String getClassName() {
 		return className;

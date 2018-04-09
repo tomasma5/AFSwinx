@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.converter.SupportedComponentTypeConverter;
 import org.hibernate.annotations.Cascade;
 
@@ -38,14 +39,18 @@ public class ComponentResource extends DtoEntity {
     @OneToOne
     private ComponentConnectionPack proxyConnections;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(name = COMPONENT_SCREEN_TABLE,
             joinColumns = @JoinColumn(name = "screen_id"),
             inverseJoinColumns = @JoinColumn(name = "component_id"))
     private List<Screen> referencedScreens;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = Application.APPLICATION_ID)
+
     private Application application;
     @Column(name = FIELD_INFO_URL_PROTOCOL)
     private String fieldInfoUrlProtocol;

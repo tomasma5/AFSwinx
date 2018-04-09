@@ -2,7 +2,6 @@ package dao.impl;
 
 import dao.BusinessPhaseDao;
 import model.afclassification.BCPhase;
-import model.afclassification.BusinessCase;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;

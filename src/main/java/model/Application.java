@@ -54,7 +54,7 @@ Application extends DtoEntity {
     private int consumerPort;
     @Column(name = CONSUMER_CONTEXT_PATH)
     private String consumerContextPath;
-    @OneToMany(mappedBy = "application")
+    @OneToMany(mappedBy = "application", fetch = FetchType.EAGER)
     private List<Screen> screenList;
 
     public Application() {

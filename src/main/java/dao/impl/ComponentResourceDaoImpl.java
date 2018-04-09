@@ -1,10 +1,7 @@
 package dao.impl;
 
-import dao.ApplicationDao;
 import dao.ComponentResourceDao;
-import model.Application;
 import model.ComponentResource;
-import model.Screen;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;

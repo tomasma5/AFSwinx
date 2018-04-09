@@ -2,6 +2,8 @@ package service.servlet;
 
 import model.Application;
 import model.afclassification.BCField;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -53,4 +55,12 @@ public interface BusinessFieldsManagementService {
      * @return the business field
      */
     public BCField findOrCreateBusinessField(String businessFieldId);
+
+    /**
+     * Updates fields severities and purposes of phase from request
+     *
+     * @param req the request
+     * @param businessPhaseIdString string representaion of business phase id
+     */
+    public void saveFieldConfigurationFromRequest(HttpServletRequest req, String businessPhaseIdString);
 }

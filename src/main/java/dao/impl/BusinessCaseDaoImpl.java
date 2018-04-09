@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import java.util.List;
 
 /**
- * Implementation of Mongo DAO for business cases
+ * Implementation of DAO for business cases
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0

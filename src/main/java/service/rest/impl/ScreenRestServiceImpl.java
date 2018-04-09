@@ -43,7 +43,7 @@ public class ScreenRestServiceImpl implements ScreenRestService {
         Application application = requestContext.getCurrentApplication();
         if (application != null) {
             Screen screen = screenDao.getScreenByIdWithLoadedComponents(screenId);
-            if (screen.getApplication().equals(application.getId())) {
+            if (screen.getApplication().getId().equals(application.getId())) {
                 return screen;
             } else {
                 //this screen belongs to another application

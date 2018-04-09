@@ -8,7 +8,7 @@ import model.afclassification.BCPhase;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
- * Implementation of Mongo DAO for business fields
+ * Implementation of DAO for business fields
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0

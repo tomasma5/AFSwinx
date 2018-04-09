@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 /**
- * Implementation of Mongo DAO for classification behaviour configurations
+ * Implementation of DAO for classification behaviour configurations
  *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0

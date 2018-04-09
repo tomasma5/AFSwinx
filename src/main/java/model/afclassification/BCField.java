@@ -3,6 +3,7 @@ package model.afclassification;
 import model.ComponentResource;
 import model.DtoEntity;
 import model.Screen;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -22,6 +23,7 @@ public class BCField extends DtoEntity {
     private Integer id;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = Field.FIELD_ID)
     private Field field;
     @ManyToOne

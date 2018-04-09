@@ -30,7 +30,8 @@ public class BCPhase extends DtoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "phase")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<BCField> fields;
 
     @OneToMany(mappedBy = "phase")
@@ -64,7 +65,9 @@ public class BCPhase extends DtoEntity {
         if (this.fields == null) {
             this.fields = new ArrayList<>();
         }
-        this.fields.add(field);
+        if(!this.fields.contains(field)) {
+            this.fields.add(field);
+        }
     }
 
     /**

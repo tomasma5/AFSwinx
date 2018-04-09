@@ -80,21 +80,7 @@ public class BCPhaseFieldsConfigurationServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        int businessPhaseId = Integer.parseInt(businessPhaseIdString);
-        List<BCField> fields = businessFieldsManagementService.findAllByPhase(businessPhaseId);
-
-        for (int i = 0; i < fields.size(); i++) {
-            String severity = Utils.trimString(req.getParameter(ParameterNames.FIELD_SEVERITY + i));
-            String purpose = Utils.trimString(req.getParameter(ParameterNames.FIELD_PURPOSE + i));
-            BCField field = fields.get(i);
-            if (severity != null) {
-                field.getFieldSpecification().setSeverity(Severity.valueOf(severity));
-            }
-            if (purpose != null) {
-                field.getFieldSpecification().setPurpose(Purpose.valueOf(purpose));
-            }
-            businessFieldsManagementService.createOrUpdate(field);
-        }
+        businessFieldsManagementService.saveFieldConfigurationFromRequest(req, businessPhaseIdString);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString);
     }
 

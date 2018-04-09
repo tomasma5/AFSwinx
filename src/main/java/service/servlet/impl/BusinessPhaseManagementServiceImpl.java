@@ -1,9 +1,6 @@
 package service.servlet.impl;
 
-import dao.BusinessCaseDao;
-import dao.BusinessPhaseDao;
-import dao.ConfigurationPackDao;
-import dao.ScreenDao;
+import dao.*;
 import model.ComponentResource;
 import model.Screen;
 import model.afclassification.*;
@@ -38,16 +35,18 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
 
     @Inject
     private BusinessPhaseDao businessPhaseDao;
-
     @Inject
     private BusinessCaseDao businessCaseDao;
-
+    @Inject
+    private BusinessFieldsDao businessFieldsDao;
+    @Inject
+    private FieldSeverityDao fieldSeverityDao;
+    @Inject
+    private FieldsDao fieldsDao;
     @Inject
     private ConfigurationPackDao configurationPackDao;
-
     @Inject
     private ScreenDao screenDao;
-
 
     @Override
     public void createOrUpdate(BCPhase phase) {
@@ -57,16 +56,31 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
     @Override
     public void removeBusinessPhase(Integer phaseId) {
         BCPhase toBeRemoved = findById(phaseId);
+        removePhaseFromLinkedScreens(toBeRemoved);
+        businessPhaseDao.createOrUpdate(toBeRemoved);
+        businessPhaseDao.delete(toBeRemoved);
+    }
+
+    private void removePhaseFromLinkedScreens(BCPhase toBeRemoved) {
         List<Screen> linkedScreens = toBeRemoved.getLinkedScreens();
-        if(linkedScreens != null){
-            for(Screen linkedScreen : linkedScreens){
+        if (linkedScreens != null) {
+            for (Screen linkedScreen : linkedScreens) {
                 linkedScreen.setPhase(null);
                 screenDao.createOrUpdate(linkedScreen);
             }
+            toBeRemoved.getLinkedScreens().clear();
         }
-        toBeRemoved.getLinkedScreens().clear();
-        businessPhaseDao.createOrUpdate(toBeRemoved);
-        businessPhaseDao.delete(toBeRemoved);
+    }
+
+    private void removePhaseFromLinkedFields(BCPhase toBeRemoved) {
+        List<BCField> linkedFields = toBeRemoved.getFields();
+        if (linkedFields != null) {
+            for (BCField field : linkedFields) {
+                field.setPhase(null);
+                businessFieldsDao.createOrUpdate(field);
+            }
+            toBeRemoved.getFields().clear();
+        }
     }
 
     @Override
@@ -92,9 +106,7 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
 
     @Override
     public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, int linkedScreensCount) throws ServiceException {
-        if (phase.getLinkedScreens() != null) {
-            phase.getLinkedScreens().clear();
-        }
+        removePhaseFromLinkedScreens(phase);
         for (int i = 0; i < linkedScreensCount; i++) {
             String screenId = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREEN_ID + (i + 1)));
             Screen screen = screenDao.getById(Integer.parseInt(screenId));
@@ -118,7 +130,7 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
     @Override
     public void updatePhaseBCFields(BCPhase phase) throws IOException {
         if (phase.getFields() != null) {
-            phase.getFields().clear();
+            removePhaseFromLinkedFields(phase);
         }
         if (phase.getLinkedScreens() != null) {
             for (Screen screen : phase.getLinkedScreens()) {
@@ -160,17 +172,34 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
                         road = new StringBuilder(roadBackup);
                     } else {
                         if (fieldInfo.getBoolean(Constants.FIELD_VISIBILITY)) {
-                            Field field = new Field();
-                            field.setFieldName(road.toString() + fieldInfo.getString(Constants.FIELD_ID));
-                            field.setClassName(className);
-                            field.setType(fieldInfo.getString(Constants.WIDGET_TYPE));
-                            BCField bcField = new BCField();
-                            bcField.setField(field);
-                            bcField.setPhase(phase);
-                            bcField.setScreen(screen);
-                            bcField.setComponent(componentResource);
-                            bcField.setFieldSpecification(new BCFieldSeverity());
-                            phase.addBCField(bcField);
+                            String fieldName = road.toString() + fieldInfo.getString(Constants.FIELD_ID);
+                            String fieldType = fieldInfo.getString(Constants.WIDGET_TYPE);
+                            Field field = fieldsDao.getByClassAndFieldNameAndType(className, fieldName, fieldType);
+                            if (field == null) {
+                                //if field is already here
+                                field = new Field();
+                                field.setClassName(className);
+                                field.setFieldName(fieldName);
+                                field.setType(fieldType);
+                                BCField bcField = new BCField();
+                                bcField.setPhase(phase);
+                                bcField.setScreen(screen);
+                                bcField.setComponent(componentResource);
+                                BCFieldSeverity fieldSeverity = new BCFieldSeverity();
+                                fieldSeverityDao.createOrUpdate(fieldSeverity);
+                                bcField.setFieldSpecification(fieldSeverity);
+                                field.addBCField(bcField);
+                                fieldsDao.createOrUpdate(field);
+                                bcField.setField(field);
+                                businessFieldsDao.createOrUpdate(bcField);
+                                phase.addBCField(bcField);
+                            } else {
+                                for(BCField bcField : field.getBCFields()){
+                                    bcField.setPhase(phase);
+                                    businessFieldsDao.createOrUpdate(bcField);
+                                    phase.addBCField(bcField);
+                                }
+                            }
                         }
                     }
                 }
@@ -180,7 +209,7 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
 
     @Override
     public Integer saveBCPhaseFromRequest(HttpServletRequest req, String businessPhaseIdString,
-                                       String businessCaseId, String linkedScreensCountString) throws ServiceException {
+                                          String businessCaseId, String linkedScreensCountString) throws ServiceException {
         BCPhase phase = findOrCreateBusinessPhase(businessPhaseIdString);
         updateBCPhaseProperties(req, Integer.parseInt(businessCaseId), phase);
         updateLinkedScreensInBusinessPhase(req, phase, Integer.parseInt(linkedScreensCountString));

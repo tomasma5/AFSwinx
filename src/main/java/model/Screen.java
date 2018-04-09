@@ -1,6 +1,7 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.afclassification.BCPhase;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
@@ -44,10 +45,13 @@ public class Screen extends DtoEntity {
             joinColumns = @JoinColumn(name = "component_id"),
             inverseJoinColumns = @JoinColumn(name = "screen_id"))
     private List<ComponentResource> components;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = Application.APPLICATION_ID)
     private Application application;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = BCPhase.PHASE_ID)
     private BCPhase phase;
