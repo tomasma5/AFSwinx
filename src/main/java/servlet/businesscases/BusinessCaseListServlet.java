@@ -50,8 +50,7 @@ public class BusinessCaseListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int bcId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
-        BusinessCase toBeRemoved = businessCaseManagementService.findById(bcId);
-        businessCaseManagementService.removeBusinessCase(toBeRemoved);
+        businessCaseManagementService.removeBusinessCase(bcId);
         resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
     }
 }

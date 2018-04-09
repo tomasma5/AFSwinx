@@ -66,28 +66,9 @@ public class BusinessCaseCreateServlet extends HttpServlet {
             return;
         }
         String bCaseId = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_ID));
-        BusinessCase bcase = bcManagementService.findOrCreateBusinessCase(bCaseId);
-        updateBcaseProperties(req, appIdString, bcase);
-        createOrUpdateBusinessCase(bCaseId, bcase);
-        resp.sendRedirect(LIST_ROUTE + "?"+ParameterNames.APPLICATION_ID+"=" + appIdString);
+        bcManagementService.saveBusinessCaseFromRequest(req, bCaseId, appIdString);
+        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appIdString);
     }
 
-    private void createOrUpdateBusinessCase(String bCaseId, BusinessCase bcase) {
-        if (bCaseId == null || bCaseId.isEmpty()) {
-            bcManagementService.createOrUpdate(bcase);
-        } else {
-            bcManagementService.createOrUpdate(bcase);
-        }
-    }
 
-    private void updateBcaseProperties(HttpServletRequest req, String appIdString, BusinessCase bcase) {
-        int appId = Integer.parseInt(appIdString);
-        Application application = applicationsManagementService.findById(appId);
-        String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_NAME)));
-        String description = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_CASE_DESCRIPTION)));
-
-        bcase.setApplication(application);
-        bcase.setName(name);
-        bcase.setDescription(description);
-    }
 }

@@ -3,6 +3,8 @@ package service.servlet;
 import model.afclassification.BCPhase;
 import model.afclassification.BusinessCase;
 import service.exception.ServiceException;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -20,9 +22,9 @@ public interface BusinessCaseManagementService {
     /**
      * Remove business case.
      *
-     * @param bc business case to be removed
+     * @param bcId id of business case to be removed
      */
-    public void removeBusinessCase(BusinessCase bc);
+    public void removeBusinessCase(Integer bcId);
 
     /**
      * Find business case by id .
@@ -63,6 +65,15 @@ public interface BusinessCaseManagementService {
      * @throws ServiceException the service exception
      */
     public void removeBusinessPhaseFromCaseById(int caseId, int phaseId) throws ServiceException;
+
+    /**
+     * Creates or updates business case and fill it with data from request
+     *
+     * @param req the request
+     * @param bCaseId string representation of business case id
+     * @param appIdString string representation of application id
+     */
+    public void saveBusinessCaseFromRequest(HttpServletRequest req, String bCaseId, String appIdString);
 
     /**
      * Add business phase to case by id.

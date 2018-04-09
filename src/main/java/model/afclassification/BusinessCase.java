@@ -30,7 +30,7 @@ public class BusinessCase extends DtoEntity {
     @Column(name = BUSINESS_CASE_DESCRIPTION)
     private String description;
 
-    @OneToMany(mappedBy = "businessCase")
+    @OneToMany(mappedBy = "businessCase", fetch = FetchType.EAGER)
     private List<BCPhase> phases;
 
     @ManyToOne
@@ -85,7 +85,8 @@ public class BusinessCase extends DtoEntity {
     }
 
     @Override
-    public Integer getId() {
+    public Integer
+    getId() {
         return id;
     }
 }
