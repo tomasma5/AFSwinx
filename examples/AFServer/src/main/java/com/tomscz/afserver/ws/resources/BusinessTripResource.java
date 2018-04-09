@@ -171,7 +171,7 @@ public class BusinessTripResource extends BaseResource {
     @POST
     @Path("/add/{username}")
     @Produces({MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON + "; charset=utf-8"})
     @RolesAllowed({"admin", "user"})
     public Response createOrUpdateBusinessTrip(
             @javax.ws.rs.core.Context HttpServletRequest request,

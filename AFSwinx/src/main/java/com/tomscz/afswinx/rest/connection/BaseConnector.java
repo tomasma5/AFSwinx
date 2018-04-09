@@ -29,6 +29,8 @@ import org.apache.http.protocol.HttpContext;
 
 import com.google.gson.Gson;
 import com.tomscz.afswinx.common.Utils;
+import org.apache.http.util.EntityUtils;
+import sun.nio.cs.UTF_32;
 
 /**
  * This abstract class is responsible for perform requests to server.
@@ -73,17 +75,13 @@ public abstract class BaseConnector implements Connector {
             this.statusCode = -1;
             response = getClient().execute(getHost(), httpMethod, getContext());
             statusCode = response.getStatusLine().getStatusCode();
-        } catch (ClientProtocolException e) {
-            throw new ConnectException(e.getMessage());
         } catch (IOException e) {
             throw new ConnectException(e.getMessage());
         }
         HttpEntity entity = response.getEntity();
         try {
             return entity.getContent();
-        } catch (IllegalStateException e) {
-            throw new ConnectException(e.getMessage());
-        } catch (IOException e) {
+        } catch (IllegalStateException | IOException e) {
             throw new ConnectException(e.getMessage());
         }
     }
@@ -110,7 +108,7 @@ public abstract class BaseConnector implements Connector {
                     && (requestBuilder.httpMethod.equals(HttpMethod.POST) || requestBuilder.httpMethod
                     .equals(HttpMethod.PUT))) {
                 HttpEntityEnclosingRequest requestWithBody = (HttpEntityEnclosingRequest) request;
-                requestWithBody.setEntity(new StringEntity(body));
+                requestWithBody.setEntity(new StringEntity(body, "UTF-8"));
                 inputStream = getResponse(requestWithBody);
                 transformResponseData = false;
             } else {

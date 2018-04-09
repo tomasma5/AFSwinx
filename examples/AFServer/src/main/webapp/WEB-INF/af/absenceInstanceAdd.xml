@@ -19,4 +19,9 @@
 		<default tag="structure/entity.xml" />
 	</mapping>
 
+	<mapping>
+		<type>AbsenceType</type>
+		<default tag="structure/entity.xml"/>
+	</mapping>
+
 </configuration>
