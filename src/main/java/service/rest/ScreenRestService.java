@@ -20,6 +20,15 @@ public interface ScreenRestService {
     public Screen getScreenById(int screenId) throws ServiceException;
 
     /**
+     * Gets screen by key.
+     *
+     * @param screenKey the screen id
+     * @return the screen by key
+     * @throws ServiceException the service exception
+     */
+    public Screen getScreenByKey(String screenKey) throws ServiceException;
+
+    /**
      * Gets all screens.
      *
      * @return the all screens

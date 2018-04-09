@@ -47,4 +47,15 @@ public class ScreenEndpoint {
         return screen;
     }
 
+    @GET
+    @Path("/key/{screen_key}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Screen getScreenDefinition(@PathParam("screen_key") String screenKey) throws ServiceException {
+        Screen screen = screenRestService.getScreenByKey(screenKey);
+        if (screen == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        return screen;
+    }
+
 }

@@ -54,4 +54,16 @@ public class ScreenDaoImpl extends AbstractGenericDaoImpl<Screen> implements Scr
             return null;
         }
     }
+
+    @Override
+    public Screen getScreenByKeyWithLoadedComponents(String screenKey) {
+        try {
+            Query query = getEntityManager().createQuery(
+                    "SELECT DISTINCT s FROM Screen s left join fetch s.components where s.key = :screenKey")
+                    .setParameter("screenKey", screenKey);
+            return (Screen) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

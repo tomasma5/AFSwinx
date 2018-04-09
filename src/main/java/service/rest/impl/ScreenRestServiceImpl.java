@@ -47,7 +47,24 @@ public class ScreenRestServiceImpl implements ScreenRestService {
                 return screen;
             } else {
                 //this screen belongs to another application
-                String errorMsg = "Cannot get screen, this screen belongs to another application";
+                String errorMsg = "Cannot get screen by id, this screen belongs to another application";
+                LOGGER.log(Level.SEVERE, errorMsg);
+                throw new ServiceException(errorMsg);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Screen getScreenByKey(String screenKey) throws ServiceException {
+        Application application = requestContext.getCurrentApplication();
+        if (application != null) {
+            Screen screen = screenDao.getScreenByKeyWithLoadedComponents(screenKey);
+            if (screen.getApplication().getId().equals(application.getId())) {
+                return screen;
+            } else {
+                //this screen belongs to another application
+                String errorMsg = "Cannot get screen by key, this screen belongs to another application";
                 LOGGER.log(Level.SEVERE, errorMsg);
                 throw new ServiceException(errorMsg);
             }

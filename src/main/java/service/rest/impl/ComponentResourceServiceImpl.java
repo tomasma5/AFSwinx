@@ -164,6 +164,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     private BCPhase getBusinessPhaseFromRequest(HttpHeaders headers) throws ServiceException {
         String screenKey = headers.getRequestHeaders().getFirst(Constants.SCREEN_HEADER);
         Screen screen = screenManagementService.findScreenByKey(screenKey);
+        if(screen == null) {
+            throw new ServiceException("Cannot get business phase. Screen specified in headers was not found.");
+        }
         return screen.getPhase();
     }
 

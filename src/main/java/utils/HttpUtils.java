@@ -4,10 +4,7 @@ import model.Application;
 import model.ComponentConnection;
 
 import javax.ws.rs.core.MultivaluedMap;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -45,10 +42,9 @@ public class HttpUtils {
             }
         }
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
         String inputLine;
         StringBuilder response = new StringBuilder();
-
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
@@ -82,10 +78,10 @@ public class HttpUtils {
 
         // Send post request
         con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(data);
-        wr.flush();
-        wr.close();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(con.getOutputStream(), "UTF-8"));
+        writer.write(data);
+        writer.flush();
+        writer.close();
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
