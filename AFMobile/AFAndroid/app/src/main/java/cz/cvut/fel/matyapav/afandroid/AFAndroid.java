@@ -106,6 +106,10 @@ public class AFAndroid {
         return new AFScreenButtonBuilder(context);
     }
 
+    public void setProxySetup(AndroidUIProxySetup proxySetup) {
+        this.proxySetup = proxySetup;
+    }
+
     public AndroidUIProxySetup getProxySetup() {
         return proxySetup;
     }

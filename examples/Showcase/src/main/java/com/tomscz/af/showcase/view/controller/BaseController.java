@@ -47,18 +47,24 @@ public abstract class BaseController {
         view.addLogoutButtonMenuListener(logoutButtonListener);
         Map<String, AFSwinxScreenButton> menuButtons = view.getSwinxMenu().getMenuButtons();
         try {
-            menuButtons.get(ProxyConstants.BTN_KEY_LOGIN).setScreenPreparedListener(loginButtonListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_COUNTRIES).setScreenPreparedListener(avaiableCountryPublicListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_VEHICLES).setScreenPreparedListener(vehiclesButtonListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_PROFILE).setScreenPreparedListener(myProfileListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_ABSENCE_TYPE).setScreenPreparedListener(absenceTypeListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_CREATE_ABSENCE).setScreenPreparedListener(absenceInstanceCreateListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_MY_ABSENCES).setScreenPreparedListener(myAbsenceInstanceListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_ABSENCE_MANAGEMENT).setScreenPreparedListener(absenceInstanceEditListener);
-            menuButtons.get(ProxyConstants.BTN_KEY_BUSINESS_TRIPS).setScreenPreparedListener(businessTripsListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_LOGIN, loginButtonListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_COUNTRIES, avaiableCountryPublicListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_VEHICLES, vehiclesButtonListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_PROFILE, myProfileListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_ABSENCE_TYPE, absenceTypeListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_CREATE_ABSENCE, absenceInstanceCreateListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_MY_ABSENCES, myAbsenceInstanceListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_ABSENCE_MANAGEMENT, absenceInstanceEditListener);
+            setScreenPreparedListener(menuButtons, ProxyConstants.BTN_KEY_BUSINESS_TRIPS, businessTripsListener);
         } catch (NullPointerException ex) {
             System.err.println("One of the menu buttons were not found. Please check the exception\n");
             ex.printStackTrace();
+        }
+    }
+
+    private void setScreenPreparedListener(Map<String, AFSwinxScreenButton> menuButtons, String menuButtonKey, ScreenPreparedListener screenPreparedListener){
+        if(menuButtons != null && menuButtons.get(menuButtonKey) != null){
+            menuButtons.get(menuButtonKey).setScreenPreparedListener(screenPreparedListener);
         }
     }
 

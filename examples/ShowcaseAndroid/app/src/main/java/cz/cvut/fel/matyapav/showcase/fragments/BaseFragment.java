@@ -75,7 +75,7 @@ public abstract class BaseFragment extends Fragment {
         menuLayout.removeAllViews();
         try {
             AFMenu afmenu = AFAndroid.getInstance().getMenuBuilder(getContext())
-                    .setUrl("http://10.0.2.2:8081/UIxy/api/screens")
+                    .setUrl(AFAndroid.getInstance().getProxySetup().getUiProxyUrl(getContext()) + "/api/screens")
                     .buildComponent();
             initializeScreenPreparedListeners();
             Map<String, AFScreenButton> menuButtons = afmenu.getMenuButtons();

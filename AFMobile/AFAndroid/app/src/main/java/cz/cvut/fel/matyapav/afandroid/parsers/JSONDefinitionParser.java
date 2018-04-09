@@ -100,17 +100,20 @@ public class JSONDefinitionParser implements JSONParser {
         }
 
         String layDefName = layoutJson.isNull(Constants.LAYOUT_DEF) ? null : layoutJson.optString(Constants.LAYOUT_DEF, null);
-        LayoutDefinitions layDef = LayoutDefinitions.valueOf(layDefName);
-        layoutProp.setLayoutDefinition(layDef);
-
+        if (layDefName != null) {
+            LayoutDefinitions layDef = LayoutDefinitions.valueOf(layDefName);
+            layoutProp.setLayoutDefinition(layDef);
+        }
         String orientation = layoutJson.isNull(Constants.LAYOUT_ORIENT) ? null : layoutJson.optString(Constants.LAYOUT_ORIENT, null);
-        LayoutOrientation layOrient = LayoutOrientation.valueOf(orientation);
-        layoutProp.setLayoutOrientation(layOrient);
-
+        if (orientation != null) {
+            LayoutOrientation layOrient = LayoutOrientation.valueOf(orientation);
+            layoutProp.setLayoutOrientation(layOrient);
+        }
         String position = layoutJson.isNull(Constants.LABEL_POS) ? null : layoutJson.optString(Constants.LABEL_POS, null);
-
-        LabelPosition labelPos = LabelPosition.valueOf(position);
-        layoutProp.setLabelPosition(labelPos);
+        if (position != null) {
+            LabelPosition labelPos = LabelPosition.valueOf(position);
+            layoutProp.setLabelPosition(labelPos);
+        }
 
         return layoutProp;
     }

@@ -130,7 +130,7 @@ public class JsonConnectionParser implements JSONParser {
      * @param securityParams node with security options
      */
     private void parseSecurityParams(AFSwinxConnection connection, JSONObject securityParams) {
-        if (securityParams == null) {
+        if (securityParams == null || securityParams.keySet().isEmpty()) {
             return;
         }
         ConnectionSecurity security = new ConnectionSecurity();
@@ -155,7 +155,7 @@ public class JsonConnectionParser implements JSONParser {
     }
 
     private void parseHeaderParam(AFSwinxConnection connection, JSONObject headerParams) {
-        if (headerParams == null) {
+        if (headerParams == null || headerParams.keySet().isEmpty()) {
             return;
         }
         String key, value;

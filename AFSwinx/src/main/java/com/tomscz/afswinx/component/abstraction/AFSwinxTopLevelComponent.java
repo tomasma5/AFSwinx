@@ -72,7 +72,7 @@ public abstract class AFSwinxTopLevelComponent extends JPanel
                 throw new UnsupportedOperationException("XML File is not supperted yet");
             } else {
                 dataConnector =
-                        new AFConnector<JsonElement>(getDataConnection(), JsonElement.class);
+                        new AFConnector<>(getDataConnection(), JsonElement.class);
             }
             // Set response for future use
             this.lastResponse = dataConnector.getResponse();
