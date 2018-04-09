@@ -36,7 +36,7 @@ public class ScreenDaoImpl extends AbstractGenericDaoImpl<Screen> implements Scr
     public List<Screen> getScreensWithLoadedComponents() {
         try {
             Query query = getEntityManager().createQuery(
-                    "SELECT DISTINCT s FROM Screen s join fetch s.components");
+                    "SELECT DISTINCT s FROM Screen s left join fetch s.components");
             return query.getResultList();
         } catch (NoResultException e) {
             return null;
