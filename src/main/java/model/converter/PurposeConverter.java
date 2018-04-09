@@ -13,7 +13,7 @@ public class PurposeConverter implements AttributeConverter<Purpose, String> {
             return null;
         }
 
-        return value.toString();
+        return value.name();
     }
 
     public Purpose convertToEntityAttribute(String value) {

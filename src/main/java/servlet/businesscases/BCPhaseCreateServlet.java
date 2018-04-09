@@ -39,9 +39,6 @@ public class BCPhaseCreateServlet extends HttpServlet {
     static final String CREATE_ROUTE = "phases/create";
 
     @Inject
-    private BusinessCaseManagementService bcManagementService;
-
-    @Inject
     private BusinessPhaseManagementService bcPhaseManagementService;
 
     @Inject
@@ -109,37 +106,19 @@ public class BCPhaseCreateServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
         String businessPhaseIdString = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_ID));
         String linkedScreensCountString = Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_LINKED_SCREENS_COUNT));
         try {
-            int businessCaseId = Integer.parseInt(businessCaseIdString);
-            BCPhase phase = bcPhaseManagementService.findOrCreateBusinessPhase(businessPhaseIdString);
-            updateBCPhaseProperties(req, businessCaseId, phase);
-            bcPhaseManagementService.updateLinkedScreensInBusinessPhase(req, phase, Integer.parseInt(linkedScreensCountString));
-            bcPhaseManagementService.createOrUpdate(phase);
+            Integer bcPhaseId = bcPhaseManagementService.saveBCPhaseFromRequest(req, businessPhaseIdString, businessCaseIdString, linkedScreensCountString);
+            resp.sendRedirect(CONFIGURE_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" +
+                    applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString + "&" +
+                    ParameterNames.BUSINESS_PHASE_ID + "=" + bcPhaseId.toString());
         } catch (ServiceException e) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             e.printStackTrace();
-            return;
         }
-        resp.sendRedirect(CONFIGURE_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" +
-                applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString + "&" +
-                ParameterNames.BUSINESS_PHASE_ID + "=" + businessPhaseIdString);
+
     }
 
-    private void updateBCPhaseProperties(HttpServletRequest req, int bcaseId, BCPhase phase) {
-        String name = Utils.trimString(Utils.trimString(req.getParameter(ParameterNames.BUSINESS_PHASE_NAME)));
-        SupportedClassificationUnit classificationUnitType =
-                SupportedClassificationUnit.valueOf(Utils.trimString(req.getParameter(ParameterNames.SELECTED_CLASSIFICATION_UNIT)));
-        SupportedScoringUnit supportedScoringUnit =
-                SupportedScoringUnit.valueOf(Utils.trimString(req.getParameter(ParameterNames.SELECTED_SCORING_UNIT)));
-        phase.setBusinessCase(bcManagementService.findById(bcaseId));
-        phase.setName(name);
-        phase.setClassificationUnit(classificationUnitType);
-        phase.setScoringUnit(supportedScoringUnit);
-        String selectedConfiguration = Utils.trimString(req.getParameter(ParameterNames.SELECTED_CONFIGURATION));
-        ConfigurationPack configurationModel = configurationManagementService.findConfigurationById(Integer.parseInt(selectedConfiguration));
-        phase.setConfiguration(configurationModel);
-    }
+
 }

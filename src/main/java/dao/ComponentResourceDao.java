@@ -2,6 +2,8 @@ package dao;
 
 import model.ComponentResource;
 
+import java.util.List;
+
 /**
  * DAO for component resources
  *
@@ -12,4 +14,5 @@ public interface ComponentResourceDao extends AbstractGenericDao<ComponentResour
 
     // no need to implement any more method that is in abstractDao
 
+    public List<ComponentResource> getComponentsWithLoadedScreens();
 }

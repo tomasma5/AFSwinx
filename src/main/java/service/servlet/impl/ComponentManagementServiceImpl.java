@@ -67,7 +67,7 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
     @Override
     public List<ComponentResource> getAllComponentsByApplication(int applicationId) {
-        return componentResourceDao.getAll().stream()
+        return componentResourceDao.getComponentsWithLoadedScreens().stream()
                 .filter(componentResource -> componentResource.getApplication().getId() == applicationId)
                 .collect(Collectors.toList());
     }

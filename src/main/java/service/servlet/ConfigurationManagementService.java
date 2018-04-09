@@ -1,6 +1,7 @@
 package service.servlet;
 
 import model.afclassification.ConfigurationPack;
+import service.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,7 +23,7 @@ public interface ConfigurationManagementService {
      *
      * @param packId the id
      */
-    public void removeConfigurationById(Integer packId);
+    public void removeConfigurationById(Integer packId) throws ServiceException;
 
     /**
      * Gets all configurations by application.

@@ -2,6 +2,8 @@ package dao;
 
 import model.Screen;
 
+import java.util.List;
+
 /**
  * Mongo DAO for application screens
  *
@@ -17,5 +19,9 @@ public interface ScreenDao extends AbstractGenericDao<Screen> {
      * @return the screen
      */
     public Screen findByKey(String name);
+
+    public List<Screen> getScreensWithLoadedComponents();
+
+    public Screen getScreenByIdWithLoadedComponents(Integer screenId);
 
 }

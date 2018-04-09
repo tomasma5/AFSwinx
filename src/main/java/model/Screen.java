@@ -2,6 +2,8 @@ package model;
 
 
 import model.afclassification.BCPhase;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ public class Screen extends DtoEntity {
     private String screenUrl;
     @Column(name = MENU_ORDER)
     private int menuOrder;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(name = COMPONENT_SCREEN_TABLE,
             joinColumns = @JoinColumn(name = "component_id"),
             inverseJoinColumns = @JoinColumn(name = "screen_id"))
@@ -44,6 +47,7 @@ public class Screen extends DtoEntity {
     @ManyToOne
     @JoinColumn(name = Application.APPLICATION_ID)
     private Application application;
+
     @ManyToOne
     @JoinColumn(name = BCPhase.PHASE_ID)
     private BCPhase phase;

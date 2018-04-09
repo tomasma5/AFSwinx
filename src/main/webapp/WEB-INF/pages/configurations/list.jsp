@@ -15,6 +15,7 @@
             </a>
         </div>
         <div class="panel-body ">
+            <span style="color: #ff0000;">${deleteError}</span>
             <table class="table table-responsive display-block-important">
                 <thead>
                 <tr>

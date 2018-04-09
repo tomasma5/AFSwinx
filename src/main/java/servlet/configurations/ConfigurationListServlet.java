@@ -1,6 +1,7 @@
 package servlet.configurations;
 
 import model.afclassification.ConfigurationPack;
+import service.exception.ServiceException;
 import service.servlet.ApplicationsManagementService;
 import service.servlet.ConfigurationManagementService;
 import servlet.ParameterNames;
@@ -39,19 +40,29 @@ public class ConfigurationListServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-
-        int applicationId = Integer.parseInt(applicationIdString);
-        request.setAttribute("configurations", configurationManagementService.getAllConfigurationsByApplication(applicationId));
-        request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
-        request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
+        setRequestParams(request, applicationIdString);
         getServletContext().getRequestDispatcher(LIST_URL).forward(request, response);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int configId = Integer.parseInt(Utils.trimString(req.getParameter(ParameterNames.CONFIGURATION_ID)));
         String appString = Utils.trimString(req.getParameter(ParameterNames.APPLICATION_ID));
-        configurationManagementService.removeConfigurationById(configId);
-        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + appString);
+        setRequestParams(req, appString);
+        try {
+            configurationManagementService.removeConfigurationById(configId);
+        } catch (ServiceException e) {
+            req.setAttribute("deleteError", e.getMessage());
+            e.printStackTrace();
+        }
+        getServletContext().getRequestDispatcher(LIST_URL).forward(req, resp);
+    }
+
+    private void setRequestParams(HttpServletRequest request, String appString) {
+        int applicationId = Integer.parseInt(appString);
+        request.setAttribute("configurations", configurationManagementService.getAllConfigurationsByApplication(applicationId));
+        request.setAttribute(ParameterNames.APPLICATION_NAME, applicationsManagementService.findById(applicationId).getApplicationName());
+        request.setAttribute(ParameterNames.APPLICATION_ID, applicationId);
     }
 }

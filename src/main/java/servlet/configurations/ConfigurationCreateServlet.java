@@ -37,9 +37,6 @@ public class ConfigurationCreateServlet extends HttpServlet {
     @Inject
     private ConfigurationManagementService configurationManagementService;
 
-    @Inject
-    private ApplicationsManagementService applicationsManagementService;
-
     @Context
     private ResourceInfo resourceInfo;
 

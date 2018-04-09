@@ -1,8 +1,6 @@
 package servlet.screens;
 
-import model.Screen;
 import service.servlet.ApplicationsManagementService;
-import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
@@ -30,9 +28,6 @@ public class ScreenListServlet extends HttpServlet {
 
     @Inject
     private ScreenManagementService screenManagementService;
-
-    @Inject
-    private ComponentManagementService componentManagementService;
 
     @Inject
     private ApplicationsManagementService applicationsManagementService;

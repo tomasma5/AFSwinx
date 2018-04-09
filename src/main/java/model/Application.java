@@ -8,7 +8,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = Application.TABLE_NAME)
-public class Application extends DtoEntity {
+public class
+Application extends DtoEntity {
 
     public static final String TABLE_NAME = "Application";
     public static final String APPLICATION_ID = "application_id";

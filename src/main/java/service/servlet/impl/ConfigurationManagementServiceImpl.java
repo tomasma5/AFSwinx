@@ -7,6 +7,7 @@ import model.Application;
 import model.afclassification.Behavior;
 import model.afclassification.Configuration;
 import model.afclassification.ConfigurationPack;
+import service.exception.ServiceException;
 import service.servlet.ConfigurationManagementService;
 import servlet.ParameterNames;
 import utils.Utils;
@@ -16,6 +17,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import javax.xml.ws.Service;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,20 +45,23 @@ public class ConfigurationManagementServiceImpl implements ConfigurationManageme
     }
 
     @Override
-    public void removeConfigurationById(Integer packId) {
-        configurationPackDao.delete(configurationPackDao.getById(packId));
+    public void removeConfigurationById(Integer packId) throws ServiceException {
+        boolean removeSuccessfull = configurationPackDao.delete(configurationPackDao.getById(packId));
+        if(!removeSuccessfull){
+            throw new ServiceException("Configuration cannot be deleted. Maybe it still is references in some business phases");
+        }
     }
 
     @Override
     public List<ConfigurationPack> getAllConfigurationsByApplication(int applicationId) {
-        return configurationPackDao.getAll().stream()
+        return configurationPackDao.getAllWithLoadedConfigurations().stream()
                 .filter(config -> config.getApplication().getId() == applicationId)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ConfigurationPack findConfigurationById(int id) {
-        return configurationPackDao.getById(id);
+        return configurationPackDao.getByIdWithLoadedConfigurations(id);
     }
 
     @Override

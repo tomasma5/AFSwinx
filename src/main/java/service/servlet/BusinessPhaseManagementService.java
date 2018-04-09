@@ -22,9 +22,9 @@ public interface BusinessPhaseManagementService {
     /**
      * Remove business case.
      *
-     * @param phase the id
+     * @param phaseId the id
      */
-    public void removeBusinessPhase(BCPhase phase);
+    public void removeBusinessPhase(Integer phaseId);
 
     /**
      * Find business phase by id .
@@ -74,5 +74,18 @@ public interface BusinessPhaseManagementService {
      * @throws IOException the io exception
      */
     public void updatePhaseBCFields(BCPhase phase) throws IOException;
+
+    /**
+     * Creates or updates business phase and fills it with data from request
+     *
+     * @param req the request
+     * @param businessPhaseIdString string representation of business phase id
+     * @param businessCaseId string representation of business case id
+     * @param linkedScreensCountString string representation of number of linked screens
+     * @return id of bc phase
+     * @throws ServiceException
+     */
+    public Integer saveBCPhaseFromRequest(HttpServletRequest req, String businessPhaseIdString,
+                                       String businessCaseId, String linkedScreensCountString) throws ServiceException;
 
 }

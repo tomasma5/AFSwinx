@@ -1,6 +1,7 @@
 package model;
 
 import model.converter.SupportedComponentTypeConverter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,7 +38,8 @@ public class ComponentResource extends DtoEntity {
     @OneToOne
     private ComponentConnectionPack proxyConnections;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinTable(name = COMPONENT_SCREEN_TABLE,
             joinColumns = @JoinColumn(name = "screen_id"),
             inverseJoinColumns = @JoinColumn(name = "component_id"))

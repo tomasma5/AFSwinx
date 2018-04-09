@@ -2,6 +2,9 @@ package model.afclassification;
 
 import model.DtoEntity;
 import model.Screen;
+import model.converter.SupportedClassificationUnitConverter;
+import model.converter.SupportedScoringUnitConverter;
+import org.hibernate.annotations.Cascade;
 import service.afclassification.computational.ccm.SupportedClassificationUnit;
 import service.afclassification.computational.scm.SupportedScoringUnit;
 
@@ -37,13 +40,16 @@ public class BCPhase extends DtoEntity {
     private ConfigurationPack configuration;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @JoinColumn(name = BusinessCase.BUSINESS_CASE_ID)
     private BusinessCase businessCase;
 
     @Column(name = CLASSIFICATION_UNIT)
+    @Convert(converter = SupportedClassificationUnitConverter.class)
     private SupportedClassificationUnit classificationUnit;
 
     @Column(name = SCORIGN_UNIT)
+    @Convert(converter = SupportedScoringUnitConverter.class)
     private SupportedScoringUnit scoringUnit;
 
     @Column(name = PHASE_NAME)
@@ -67,10 +73,13 @@ public class BCPhase extends DtoEntity {
      * @param screen the screen
      */
     public synchronized void addLinkedScreen(Screen screen) {
+
         if (this.linkedScreens == null) {
             this.linkedScreens = new ArrayList<>();
         }
-        this.linkedScreens.add(screen);
+        if(!this.linkedScreens.contains(screen)) {
+            this.linkedScreens.add(screen);
+        }
     }
 
     public List<BCField> getFields() {

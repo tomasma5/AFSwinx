@@ -63,12 +63,7 @@ public class BCPhaseListServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        try {
-            businessCaseManagementService.removeBusinessPhaseFromCaseById(Integer.parseInt(businessCaseIdString), phaseId);
-            resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString);
-        } catch (ServiceException e) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-            e.printStackTrace();
-        }
+        businessPhaseManagementService.removeBusinessPhase(phaseId);
+        resp.sendRedirect(LIST_ROUTE + "?" + ParameterNames.APPLICATION_ID + "=" + applicationIdString + "&" + ParameterNames.BUSINESS_CASE_ID + "=" + businessCaseIdString);
     }
 }

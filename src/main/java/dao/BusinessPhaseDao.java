@@ -2,6 +2,8 @@ package dao;
 
 import model.afclassification.BCPhase;
 
+import java.util.List;
+
 /**
  * DAO for application screens
  *
@@ -11,5 +13,7 @@ import model.afclassification.BCPhase;
 public interface BusinessPhaseDao extends AbstractGenericDao<BCPhase> {
 
     //no need to implement other dao
+    public List<BCPhase> getBusinessPhasesWithLoadedScreens();
 
+    public BCPhase getBusinessPhaseByIdWithLoadedScreens(Integer bpId);
 }

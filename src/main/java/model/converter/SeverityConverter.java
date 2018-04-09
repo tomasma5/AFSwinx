@@ -13,7 +13,7 @@ public class SeverityConverter implements AttributeConverter<Severity, String> {
             return null;
         }
 
-        return value.toString();
+        return value.name();
     }
 
     public Severity convertToEntityAttribute(String value) {

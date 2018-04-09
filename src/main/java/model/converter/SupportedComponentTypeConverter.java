@@ -13,7 +13,7 @@ public class SupportedComponentTypeConverter implements AttributeConverter<Suppo
             return null;
         }
 
-        return value.toString();
+        return value.name();
     }
 
     public SupportedComponentType convertToEntityAttribute(String value) {

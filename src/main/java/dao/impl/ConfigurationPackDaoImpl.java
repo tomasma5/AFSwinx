@@ -3,7 +3,10 @@ package dao.impl;
 import dao.ConfigurationPackDao;
 import model.afclassification.ConfigurationPack;
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,5 +30,28 @@ public class ConfigurationPackDaoImpl extends AbstractGenericDaoImpl<Configurati
         params.put("name", name);
 
         return getByWhereConditionSingleResult(query, params);
+    }
+
+    @Override
+    public List<ConfigurationPack> getAllWithLoadedConfigurations() {
+        try {
+            Query query = getEntityManager().createQuery(
+                    "SELECT DISTINCT c FROM ConfigurationPack c left join fetch c.configurationMap");
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public ConfigurationPack getByIdWithLoadedConfigurations(Integer configId) {
+        try {
+            Query query = getEntityManager().createQuery(
+                    "SELECT DISTINCT c FROM ConfigurationPack c left join fetch c.configurationMap where c.id = :configId")
+                    .setParameter("configId", configId);
+            return (ConfigurationPack) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

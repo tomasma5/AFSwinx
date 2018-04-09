@@ -7,6 +7,9 @@ import model.ComponentResource;
 import model.Screen;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import java.util.List;
 
 /**
  * Implementation of DAO for component resources
@@ -21,4 +24,14 @@ public class ComponentResourceDaoImpl extends AbstractGenericDaoImpl<ComponentRe
         super(ComponentResource.class);
     }
 
+    @Override
+    public List<ComponentResource> getComponentsWithLoadedScreens() {
+        try {
+            Query query = getEntityManager().createQuery(
+                    "SELECT DISTINCT c FROM ComponentResource c left join fetch c.referencedScreens");
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

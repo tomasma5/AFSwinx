@@ -26,7 +26,7 @@ public class ConfigurationPack extends DtoEntity {
     @Column(name = CONFIG_PACK_NAME)
     private String configurationName;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "configurationPack")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "configurationPack")
     private List<Configuration> configurationMap;
 
     @ManyToOne

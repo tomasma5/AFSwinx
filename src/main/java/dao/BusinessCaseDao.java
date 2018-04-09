@@ -1,6 +1,7 @@
 package dao;
 
 import model.afclassification.BusinessCase;
+import java.util.List;
 
 /**
  * Mongo DAO for application screens
@@ -11,5 +12,7 @@ import model.afclassification.BusinessCase;
 public interface BusinessCaseDao extends AbstractGenericDao<BusinessCase> {
 
     //no need to implement other dao
+
+    public List<BusinessCase> getBusinessCasesWithLoadedPhases();
 
 }

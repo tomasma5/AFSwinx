@@ -13,7 +13,7 @@ public class BehaviorConverter implements AttributeConverter<Behavior, String> {
             return null;
         }
 
-        return value.toString();
+        return value.name();
     }
 
     public Behavior convertToEntityAttribute(String value) {

@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,20 +49,34 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
     }
 
     @Override
-    public void removeScreen(int screen) {
-        screenDao.delete(findScreenById(screen));
+    public void removeScreen(int screenId) {
+        Screen toBeDeleted = findScreenById(screenId);
+        List<ComponentResource> componentResources = toBeDeleted.getComponents();
+        if(componentResources != null){
+            for(ComponentResource componentResource : componentResources){
+                if(componentResource.getReferencedScreens().contains(toBeDeleted)){
+                    componentResource.getReferencedScreens().remove(toBeDeleted);
+                    componentResourceDao.createOrUpdate(componentResource);
+                }
+            }
+        }
+        toBeDeleted.getComponents().clear();
+        toBeDeleted.setPhase(null);
+        screenDao.createOrUpdate(toBeDeleted);
+        screenDao.delete(toBeDeleted);
     }
 
     @Override
     public List<Screen> getAllScreensByApplication(int applicationId) {
-        return screenDao.getAll().stream()
+        List<Screen> screens = screenDao.getScreensWithLoadedComponents().stream()
                 .filter(screen -> screen.getApplication().getId() == applicationId)
                 .collect(Collectors.toList());
+        return screens;
     }
 
     @Override
     public List<Screen> getAllUnassignedScreensByApplication(int applicationId) {
-        return screenDao.getAll().stream()
+        return screenDao.getScreensWithLoadedComponents().stream()
                 .filter(screen -> (screen.getApplication().getId() == applicationId) &&
                         screen.getPhase() == null)
                 .collect(Collectors.toList());
@@ -69,7 +84,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
 
     @Override
     public Screen findScreenById(int id) {
-        return screenDao.getById(id);
+        return screenDao.getScreenByIdWithLoadedComponents(id);
     }
 
     @Override

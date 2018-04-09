@@ -21,7 +21,6 @@
                     <th>Component name</th>
                     <th>Component type</th>
                     <th>Connections</th>
-                    <th>Field info url</th>
                     <th>Referenced in</th>
                     <th colspan="2">Actions</th>
                 </tr>

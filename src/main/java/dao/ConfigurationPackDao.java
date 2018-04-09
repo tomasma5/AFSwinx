@@ -2,6 +2,8 @@ package dao;
 
 import model.afclassification.ConfigurationPack;
 
+import java.util.List;
+
 /**
  * Mongo DAO for classification behaviour configurations packs
  *
@@ -18,4 +20,7 @@ public interface ConfigurationPackDao extends AbstractGenericDao<ConfigurationPa
      */
     public ConfigurationPack findByName(String name);
 
+    public List<ConfigurationPack> getAllWithLoadedConfigurations();
+
+    public ConfigurationPack getByIdWithLoadedConfigurations(Integer configId);
 }

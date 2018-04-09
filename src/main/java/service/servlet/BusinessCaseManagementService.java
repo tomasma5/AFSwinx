@@ -40,7 +40,7 @@ public interface BusinessCaseManagementService {
      * @param id the id
      * @return the all by application
      */
-    public List<BusinessCase> getAllByApplication(int id);
+    public List<BusinessCase> getAllByApplication(Integer id);
 
     /**
      * Find or create business case.
@@ -58,15 +58,6 @@ public interface BusinessCaseManagementService {
     public List<BusinessCase> getAll();
 
     /**
-     * Remove business phase from case by id.
-     *
-     * @param caseId  the case id
-     * @param phaseId the phase id
-     * @throws ServiceException the service exception
-     */
-    public void removeBusinessPhaseFromCaseById(int caseId, int phaseId) throws ServiceException;
-
-    /**
      * Creates or updates business case and fill it with data from request
      *
      * @param req the request
@@ -75,12 +66,4 @@ public interface BusinessCaseManagementService {
      */
     public void saveBusinessCaseFromRequest(HttpServletRequest req, String bCaseId, String appIdString);
 
-    /**
-     * Add business phase to case by id.
-     *
-     * @param caseId the case id
-     * @param phase  the phase
-     * @throws ServiceException the service exception
-     */
-    public void addBusinessPhaseToCaseById(int caseId, BCPhase phase) throws ServiceException;
 }

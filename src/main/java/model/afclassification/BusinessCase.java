@@ -2,6 +2,7 @@ package model.afclassification;
 
 import model.Application;
 import model.DtoEntity;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,7 +31,8 @@ public class BusinessCase extends DtoEntity {
     @Column(name = BUSINESS_CASE_DESCRIPTION)
     private String description;
 
-    @OneToMany(mappedBy = "businessCase", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "businessCase")
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private List<BCPhase> phases;
 
     @ManyToOne

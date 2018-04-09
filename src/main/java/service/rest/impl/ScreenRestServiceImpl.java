@@ -42,7 +42,7 @@ public class ScreenRestServiceImpl implements ScreenRestService {
     public Screen getScreenById(int screenId) throws ServiceException {
         Application application = requestContext.getCurrentApplication();
         if (application != null) {
-            Screen screen = screenDao.getById(screenId);
+            Screen screen = screenDao.getScreenByIdWithLoadedComponents(screenId);
             if (screen.getApplication().equals(application.getId())) {
                 return screen;
             } else {
@@ -59,7 +59,7 @@ public class ScreenRestServiceImpl implements ScreenRestService {
     public List<Screen> getAllScreens() {
         Application application = requestContext.getCurrentApplication();
         if (application != null) {
-            return screenDao.getAll().stream()
+            return screenDao.getScreensWithLoadedComponents().stream()
                     .filter(screen -> screen.getApplication().getId() == application.getId())
                     .collect(toList());
         }
