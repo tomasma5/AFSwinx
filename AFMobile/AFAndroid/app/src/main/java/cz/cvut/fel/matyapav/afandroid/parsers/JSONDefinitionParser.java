@@ -1,5 +1,7 @@
 package cz.cvut.fel.matyapav.afandroid.parsers;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,13 +62,16 @@ public class JSONDefinitionParser implements JSONParser {
         System.out.println("PARSING FIELD " + field.getString(Constants.ID));
         FieldInfo fieldInfo = new FieldInfo();
         try {
-            fieldInfo.setWidgetType(SupportedWidgets.valueOf(field.getString(Constants.WIDGET_TYPE)));
+            String widgetType = field.isNull(Constants.WIDGET_TYPE) ? null : field.getString(Constants.WIDGET_TYPE);
+            if (widgetType != null) {
+                fieldInfo.setWidgetType(SupportedWidgets.valueOf(widgetType));
+            }
         } catch (IllegalArgumentException e) {
             System.err.println(e.getLocalizedMessage());
         }
         fieldInfo.setId(field.getString(Constants.ID));
 
-        fieldInfo.setLabelText(field.get(Constants.LABEL).equals(null) ? null : field.get(Constants.LABEL).toString());
+        fieldInfo.setLabelText(field.isNull(Constants.LABEL) ? null : field.getString(Constants.LABEL));
         fieldInfo.setIsClass(Boolean.valueOf(field.getString(Constants.CLASS_TYPE)));
         fieldInfo.setVisible(Boolean.valueOf(field.getString(Constants.VISIBLE)));
         fieldInfo.setReadOnly(Boolean.valueOf(field.getString(Constants.READ_ONLY)));

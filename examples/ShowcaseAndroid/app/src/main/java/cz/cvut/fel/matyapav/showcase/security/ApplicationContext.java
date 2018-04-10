@@ -75,6 +75,20 @@ public class ApplicationContext extends AndroidUIProxySetup {
         return NetworkUtils.getMacAddress();
     }
 
+    @Override
+    protected String loadNearbyAppUrl(Context context) {
+        Properties applicationProperties = new Properties();
+        try {
+            InputStream propInput = context.getAssets().open(APP_CONFIG_FILE);
+            applicationProperties.load(propInput);
+            return applicationProperties.getProperty("nearby.rest.url");
+        } catch (IOException e) {
+            Log.e(ApplicationContext.class.toString(), "Cannot get ui proxy url uuid from " + APP_CONFIG_FILE);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public SecurityContext getSecurityContext() {
         return securityContext;
     }

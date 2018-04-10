@@ -14,6 +14,7 @@ public abstract class AndroidUIProxySetup {
 
     private String uiProxyApplicationUuid;
     private String uiProxyUrl;
+    private String nsRestAppUrl;
     private Device deviceType;
     private String deviceIdentifier;
     private String user;
@@ -56,6 +57,14 @@ public abstract class AndroidUIProxySetup {
     protected abstract String loadDeviceIdentifier(Context context);
 
     /**
+     * Loads url of remote REST application where is collected data about device and nearby devices
+     *
+     * @param context android context
+     * @return url of nearby remote app
+     */
+    protected abstract String loadNearbyAppUrl(Context context);
+
+    /**
      * Gets ui proxy url.
      *
      * @param context android context
@@ -66,6 +75,19 @@ public abstract class AndroidUIProxySetup {
             uiProxyUrl = loadUIProxyUrl(context);
         }
         return uiProxyUrl;
+    }
+
+    /**
+     * Gets NSRest application url.
+     *
+     * @param context android context
+     * @return the app url
+     */
+    public String getNSRestAppUrl(Context context){
+        if(nsRestAppUrl == null || nsRestAppUrl.isEmpty()){
+            nsRestAppUrl = loadNearbyAppUrl(context);
+        }
+        return nsRestAppUrl;
     }
 
     /**

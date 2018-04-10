@@ -98,4 +98,6 @@
     <string name="vehicleType.motocycle">Motocycle</string>
     <string name="title_activity_business_trip_detail">Business trip detail</string>
     <string name="businessTrips.parts">Trip parts</string>
+    <string name="title_activity_business_trip_parts">Trip parts</string>
+    <string name="title_activity_business_trip_parts_detail">Detail of trip part</string>
 </resources>

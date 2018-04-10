@@ -101,4 +101,6 @@
     <string name="vehicleType.plane">Plane</string>
     <string name="vehicleType.motocycle">Motocycle</string>
     <string name="businessTrips.parts">business trip parts</string>
+    <string name="title_activity_business_trip_parts">Trip parts</string>
+    <string name="title_activity_business_trip_parts_detail">Detail of trip part</string>
 </resources>

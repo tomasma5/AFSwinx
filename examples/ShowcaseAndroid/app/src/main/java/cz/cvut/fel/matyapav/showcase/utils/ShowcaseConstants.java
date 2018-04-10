@@ -8,6 +8,8 @@ package cz.cvut.fel.matyapav.showcase.utils;
 public class ShowcaseConstants {
 
     public static final int BUSINESS_TRIP_EDIT_REQUEST = 127;
+    public static final int BUSINESS_TRIP_PARTS_REQUEST = 45458;
+    public static final int BUSINESS_TRIP_PARTS_EDIT_REQUEST = 465;
 
     //absence type management
     public static final String CHOOSE_COUNTRY_FORM = "absenceCountryForm";

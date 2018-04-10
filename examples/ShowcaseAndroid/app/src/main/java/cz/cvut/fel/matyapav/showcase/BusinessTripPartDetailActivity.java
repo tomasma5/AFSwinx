@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -22,19 +21,16 @@ import cz.cvut.fel.matyapav.showcase.skins.BusinessTripFormSkin;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
 import cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants;
 
+import static cz.cvut.fel.matyapav.showcase.BusinessTripDetailActivity.BUSINESS_TRIP_ID;
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.LIST_ID;
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.LIST_POSITITON;
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.SCREEN_DEFINITION_KEY;
 import static cz.cvut.fel.matyapav.showcase.fragments.BusinessTripsListFragment.SCREEN_DEFINITION_URL;
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.BUSINESS_TRIP_EDIT_REQUEST;
-import static cz.cvut.fel.matyapav.showcase.utils.ShowcaseConstants.BUSINESS_TRIP_PARTS_REQUEST;
 
-public class BusinessTripDetailActivity extends AppCompatActivity {
-
-    public static final String BUSINESS_TRIP_ID = "businessTripId";
+public class BusinessTripPartDetailActivity extends AppCompatActivity {
 
     private View.OnClickListener onFormPerformListener = v -> {
-        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM);
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.BUSINESS_TRIPS_PARTS_EDIT_FORM);
         if (form != null && form.validateData()) {
             try {
                 form.sendData();
@@ -43,14 +39,13 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
                 finish();
             } catch (Exception e) {
                 //error while sending
-                Toast.makeText(this, "There was an error while creating or updating business trip part", Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
         }
     };
 
     private View.OnClickListener onFormResetListener = v -> {
-        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM);
+        AFForm form = (AFForm) AFAndroid.getInstance().getCreatedComponents().get(ShowcaseConstants.BUSINESS_TRIPS_PARTS_EDIT_FORM);
         if (form != null) {
             form.resetData();
         }
@@ -59,7 +54,7 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_trip_detail);
+        setContentView(R.layout.activity_business_trip_part_detail);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -68,41 +63,31 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String screenDefinitionUrl = extras.getString(SCREEN_DEFINITION_URL);
         String screenKey = extras.getString(SCREEN_DEFINITION_KEY);
+        int businessTripId = extras.getInt(BUSINESS_TRIP_ID);
 
-        LinearLayout businessTripsFormLayout = findViewById(R.id.businessTripsFormWrapper);
+        LinearLayout businessTripPartFormLayout = findViewById(R.id.businessTripPartFormWrapper);
         //initialize builders
         HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();
+        securityConstrains.put(BUSINESS_TRIP_ID, String.valueOf(businessTripId));
 
         try {
             AFAndroidProxyScreenDefinition screenDefinition =
                     AFAndroid.getInstance()
                             .getScreenDefinitionBuilder(this, screenDefinitionUrl, screenKey).getScreenDefinition();
             FormBuilder formBuilder = screenDefinition
-                    .getFormBuilderByKey(ShowcaseConstants.BUSINESS_TRIPS_EDIT_FORM)
+                    .getFormBuilderByKey(ShowcaseConstants.BUSINESS_TRIPS_PARTS_EDIT_FORM)
                     .setConnectionParameters(securityConstrains)
                     .setSkin(new BusinessTripFormSkin(this));
 
             AFForm form = formBuilder.createComponent();
             String listId = extras.getString(LIST_ID);
             int listPosition = extras.getInt(LIST_POSITITON);
-            if (listId != null) {
+            if(listId != null) {
                 final AFList list = (AFList) AFAndroid.getInstance().getCreatedComponents().get(listId);
                 form.insertData(list.getDataFromItemOnPosition(listPosition));
             }
-            if (businessTripsFormLayout != null) {
-                businessTripsFormLayout.addView(form.getView());
-            }
-
-            Button tripParts = findViewById(R.id.businessTripsBtnParts);
-            if (tripParts != null) {
-                tripParts.setOnClickListener(v -> {
-                    int businessTripId = Integer.parseInt(form.getDataFromFieldWithId("id").toString());
-                    Intent intent = new Intent(this, BusinessTripPartsActivity.class);
-                    intent.putExtra(SCREEN_DEFINITION_URL, screenDefinition.getScreenUrl());
-                    intent.putExtra(SCREEN_DEFINITION_KEY, screenDefinition.getKey());
-                    intent.putExtra(BUSINESS_TRIP_ID, businessTripId);
-                    startActivity(intent);
-                });
+            if (businessTripPartFormLayout != null) {
+                businessTripPartFormLayout.addView(form.getView());
             }
         } catch (Exception e) {
             ShowCaseUtils.showBuildingFailedDialog(this, e);
@@ -110,14 +95,15 @@ public class BusinessTripDetailActivity extends AppCompatActivity {
             return;
         }
 
-        Button perform = findViewById(R.id.businessTripsBtnAdd);
+        Button perform = findViewById(R.id.businessTripPartBtnAdd);
         if (perform != null) {
             perform.setOnClickListener(onFormPerformListener);
         }
-        Button reset = findViewById(R.id.businessTripsBtnReset);
+        Button reset = findViewById(R.id.businessTripPartBtnReset);
         if (reset != null) {
             reset.setOnClickListener(onFormResetListener);
         }
+
     }
 
     @Override

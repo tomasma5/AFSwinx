@@ -1,23 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cz.cvut.fel.matyapav.afandroid.VerticalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/businessTripsLayout"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <cz.cvut.fel.matyapav.afandroid.VerticalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/businessTrips"
-            android:textSize="24dp"/>
-        <LinearLayout
-            android:id="@+id/businessTripsListWrapper"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/businessTripsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
-    </LinearLayout>
-</cz.cvut.fel.matyapav.afandroid.VerticalScrollView>
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/businessTrips"
+                android:textSize="24dp" />
+
+            <LinearLayout
+                android:id="@+id/businessTripsListWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+    </cz.cvut.fel.matyapav.afandroid.VerticalScrollView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_business_trip_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_black_24dp" />
+
+</android.support.design.widget.CoordinatorLayout>
+

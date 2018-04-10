@@ -2,10 +2,12 @@ package cz.cvut.fel.matyapav.showcase.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import java.util.HashMap;
@@ -61,6 +63,16 @@ public class BusinessTripsListFragment extends BaseFragment {
                 intent.putExtra(LIST_POSITITON, position);
                 startActivityForResult(intent, BUSINESS_TRIP_EDIT_REQUEST);
             });
+
+            FloatingActionButton addBtn = root.findViewById(R.id.add_business_trip_btn);
+            if(addBtn != null){
+                addBtn.setOnClickListener(v -> {
+                    Intent intent = new Intent(getActivity(), BusinessTripDetailActivity.class);
+                    intent.putExtra(SCREEN_DEFINITION_URL, getScreenDefinition().getScreenUrl());
+                    intent.putExtra(SCREEN_DEFINITION_KEY, getScreenDefinition().getKey());
+                    startActivityForResult(intent, BUSINESS_TRIP_EDIT_REQUEST);
+                });
+            }
         } catch (Exception e) {
             ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
             e.printStackTrace();

@@ -31,6 +31,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cz.cvut.fel.matyapav.showcase.MainActivity" />
         </activity>
+        <activity
+            android:name=".BusinessTripPartsActivity"
+            android:label="@string/title_activity_business_trip_parts"
+            android:parentActivityName=".BusinessTripDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cz.cvut.fel.matyapav.showcase.BusinessTripDetailActivity" />
+        </activity>
+        <activity
+            android:name=".BusinessTripPartDetailActivity"
+            android:label="@string/title_activity_business_trip_parts_detail"
+            android:parentActivityName=".BusinessTripPartsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cz.cvut.fel.matyapav.showcase.BusinessTripPartsActivity" />
+        </activity>
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

@@ -98,5 +98,7 @@
     <string name="vehicleType.motocycle">Motocykl</string>
     <string name="title_activity_business_trip_detail">Detail služební cesty</string>
     <string name="businessTrips.parts">Části cesty</string>
+    <string name="title_activity_business_trip_parts">Části cesty</string>
+    <string name="title_activity_business_trip_parts_detail">Detail části cesty</string>
 
 </resources>

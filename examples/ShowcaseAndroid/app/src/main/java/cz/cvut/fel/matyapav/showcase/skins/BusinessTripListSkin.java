@@ -3,8 +3,6 @@ package cz.cvut.fel.matyapav.showcase.skins;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import cz.cvut.fel.matyapav.showcase.R;
 
@@ -36,7 +34,7 @@ public class BusinessTripListSkin extends ListSkin{
 
     @Override
     public int getListHeight() {
-        return AbsListView.LayoutParams.WRAP_CONTENT;
+        return convertDpToPixels(350, getContext());
     }
 
 }

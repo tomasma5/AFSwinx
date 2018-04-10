@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 AFAndroidProxyScreenDefinition loginScreenDefinition = AFAndroid.getInstance()
                         .getScreenDefinitionBuilder(
                                 getApplicationContext(),
-                                ApplicationContext.getInstance().getUiProxyUrl(getApplicationContext()) + "/api/screens/5a9955636402eb092c3b56c7", "Login")
+                                ApplicationContext.getInstance().getUiProxyUrl(getApplicationContext()) + "/api/screens/key/Login", "Login")
                         .getScreenDefinition();
                 LoginFragment loginFragment = new LoginFragment();
                 loginFragment.setScreenDefinition(loginScreenDefinition);
@@ -181,7 +181,10 @@ public class MainActivity extends AppCompatActivity {
                 .addStatusMiner(new ApplicationStateMiner() {
                     @Override
                     public String getUsername() {
-                        return ApplicationContext.getInstance().getSecurityContext().getUsername();
+                        if(ApplicationContext.getInstance().getSecurityContext() != null) {
+                            return ApplicationContext.getInstance().getSecurityContext().getUsername();
+                        }
+                        return null;
                     }
 
                     @Override
@@ -192,14 +195,11 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .addNearbyDevicesFinder(new BTDevicesFinder())
                 .addNearbyDevicesFinder(new NearbyNetworksFinder(), 20)
-                .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
+                //.addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
                 .setRecommendedTimeoutForNearbySearch(10000)
-                .executePeriodically(1000 * 60 * 5)
+                .executePeriodically(1000 * 60 * 3)
                 .build()
-                .sendDataToServerAfterTimeout("http://147.32.185.108:8082/NSRest/api/consumer/add")
-                //.sendDataToServerAfterTimeout("http://192.168.100.8:8080/NSRest/api/consumer/add")
-                //.sendDataToServerAfterTimeout("http://10.50.109.67:8080/NSRest/api/consumer/add")
-                // .sendDataToServerAfterTimeout("http://147.32.217.40:8080/NSRest/api/consumer/add") //TODO uncomment this when we want ot actually store data
+                .sendDataToServerAfterTimeout(ApplicationContext.getInstance().getNSRestAppUrl(getApplicationContext())+"/api/consumer/add")
                 ;
         AFAndroid.getInstance().setNearbyStatusFacade(nearbyStatusFacade);
     }
