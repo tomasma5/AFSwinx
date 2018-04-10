@@ -15,6 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +29,10 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class ConsumerServiceImpl implements ConsumerService {
 
-    private static final Logger LOGGER = Logger.getLogger( ConsumerServiceImpl.class.getName() );
+    private static final Logger LOGGER = Logger.getLogger(ConsumerServiceImpl.class.getName());
+    private static final int THREAD_POOL_SIZE = 10;
+    private ExecutorService executor;
+
 
     /**
      * Adds new record with device status and nearby devices into database
@@ -36,17 +41,17 @@ public class ConsumerServiceImpl implements ConsumerService {
     DeviceStatusWithNearbyDao deviceStatusWithNearbyDao;
 
     public void addNewDeviceNearbyStatusRecord(DeviceStatusWithNearby record) {
-        if(record != null) {
-            fillNearbyDevicesWithMacVendorInfo(record);
-            deviceStatusWithNearbyDao.create(record);
+        if (executor == null || executor.isShutdown()) {
+            executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         }
+        executor.submit(new SaveRecordRunnable(record));
     }
 
-    private void fillNearbyDevicesWithMacVendorInfo(DeviceStatusWithNearby record){
+    private void fillNearbyDevicesWithMacVendorInfo(DeviceStatusWithNearby record) {
         String macVendor;
-        for(Device device : record.getNearbyDevices()){
+        for (Device device : record.getNearbyDevices()) {
             macVendor = getMacVendorFromApi(device.getMacAddress());
-            if(macVendor != null){
+            if (macVendor != null) {
                 device.setMacVendor(macVendor);
             }
         }
@@ -65,7 +70,7 @@ public class ConsumerServiceImpl implements ConsumerService {
             LOGGER.log(Level.INFO, "Response Code : " + responseCode);
 
             //readResponse only if api returned something
-            if(responseCode < HttpURLConnection.HTTP_INTERNAL_ERROR) {
+            if (responseCode < HttpURLConnection.HTTP_INTERNAL_ERROR) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String inputLine;
@@ -91,5 +96,21 @@ public class ConsumerServiceImpl implements ConsumerService {
             LOGGER.log(Level.SEVERE, "There was a problem during reading response stream\n" + e.toString());
         }
         return null;
+    }
+
+    private class SaveRecordRunnable implements Runnable {
+
+        private DeviceStatusWithNearby record;
+
+        SaveRecordRunnable(DeviceStatusWithNearby record) {
+            this.record = record;
+        }
+
+        @Override
+        public void run() {
+            //Mac vendors api is very limited in FREE version so we don't use it until paid
+            //fillNearbyDevicesWithMacVendorInfo(record);
+            deviceStatusWithNearbyDao.create(record);
+        }
     }
 }
