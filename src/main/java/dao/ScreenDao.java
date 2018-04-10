@@ -20,8 +20,27 @@ public interface ScreenDao extends AbstractGenericDao<Screen> {
      */
     public Screen findByKey(String name);
 
+    /**
+     * Gets all screens with loadede components - can be used with lazily loaded collection of components
+     *
+     * @return list of screens with loaded components
+     */
     public List<Screen> getScreensWithLoadedComponents();
 
+    /**
+     * Get screen with loaded components by id - can be used with lazily loaded collection of components
+     *
+     * @param screenId screen id
+     * @return screen with loaded components
+     */
     public Screen getScreenByIdWithLoadedComponents(Integer screenId);
+
+    /**
+     * Get screen with loaded components by screen key - can be used with lazily loaded collection of components
+     *
+     * @param screenKey screen key
+     * @return screen with loaded components
+     */
+    public Screen getScreenByKeyWithLoadedComponents(String screenKey);
 
 }

@@ -120,6 +120,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
             try {
                 response = HttpUtils.postRequest(realEndpoint, headers.getRequestHeaders(), data);
             } catch (IOException e) {
+                //TODO lepe zpracovat response kody
                 throw new ComponentRequestException(e.getMessage(), e);
             }
         }
@@ -166,6 +167,9 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         Screen screen = screenManagementService.findScreenByKey(screenKey);
         if(screen == null) {
             throw new ServiceException("Cannot get business phase. Screen specified in headers was not found.");
+        }
+        if(screen.getPhase() == null){
+            throw new ServiceException("Screen does not have phase.");
         }
         return screen.getPhase();
     }
