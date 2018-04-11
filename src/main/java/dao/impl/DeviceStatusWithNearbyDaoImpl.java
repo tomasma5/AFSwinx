@@ -79,7 +79,7 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
     public DeviceStatusWithNearby getFirstEarlierThanTimestampWithGivenAction(String deviceIdentifier, String action, long timestamp) {
         return collection.find(and(
                 eq(MAC_ADDRESS_FIELD, deviceIdentifier),
-                gt(TIMESTAMP_FIELD, timestamp),
+                lt(TIMESTAMP_FIELD, timestamp),
                 eq(ACTION_FIELD, action)
         ))
                 .sort(descending(TIMESTAMP_FIELD))
@@ -90,7 +90,7 @@ public class DeviceStatusWithNearbyDaoImpl extends DeviceStatusWithNearbyDao {
     public DeviceStatusWithNearby getFirstLaterThanTImestampWithGivenAction(String deviceIdentifier, String action, long timestamp) {
         return collection.find(and(
                 eq(MAC_ADDRESS_FIELD, deviceIdentifier),
-                lt(TIMESTAMP_FIELD, timestamp),
+                gt(TIMESTAMP_FIELD, timestamp),
                 eq(action)
         ))
                 .sort(ascending(TIMESTAMP_FIELD))
