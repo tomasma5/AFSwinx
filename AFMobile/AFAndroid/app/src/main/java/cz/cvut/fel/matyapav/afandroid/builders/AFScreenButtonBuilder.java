@@ -15,7 +15,7 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFScreenButton;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
 import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacade;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.NearbyStatusFacade;
 
 /**
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).

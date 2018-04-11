@@ -21,15 +21,15 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidProxyScreenDefinition;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
 import cz.cvut.fel.matyapav.afandroid.utils.Localization;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacade;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.NearbyStatusFacadeBuilder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.ApplicationStateMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.BatteryStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.LocationStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.devicestatus.miner.NetworkStatusMiner;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.bluetooth.BTDevicesFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.network.NearbyNetworksFinder;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.finder.subnet.SubnetDevicesFinder;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.NearbyStatusFacade;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.NearbyStatusFacadeBuilder;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.miner.ApplicationStateMiner;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.miner.BatteryStatusMiner;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.miner.LocationStatusMiner;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.miner.NetworkStatusMiner;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.finder.bluetooth.BTDevicesFinder;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.finder.network.NearbyNetworksFinder;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.finder.subnet.SubnetDevicesFinder;
 import cz.cvut.fel.matyapav.showcase.fragments.LoginFragment;
 import cz.cvut.fel.matyapav.showcase.security.ApplicationContext;
 import cz.cvut.fel.matyapav.showcase.utils.ShowCaseUtils;
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .addNearbyDevicesFinder(new BTDevicesFinder())
                 .addNearbyDevicesFinder(new NearbyNetworksFinder(), 20)
-                //.addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
+                .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
                 .setRecommendedTimeoutForNearbySearch(10000)
                 .executePeriodically(1000 * 60 * 3)
                 .build()
