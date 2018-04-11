@@ -1,11 +1,9 @@
 package cz.cvut.fel.matyapav.afandroid.rest;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Base64;
 
-import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.ConnectionSecurity;
 import com.tomscz.afswinx.rest.connection.HttpMethod;
