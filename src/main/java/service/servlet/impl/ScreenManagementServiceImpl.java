@@ -89,7 +89,7 @@ public class ScreenManagementServiceImpl implements ScreenManagementService {
 
     @Override
     public Screen findScreenByKey(String screenKey) {
-        return screenDao.findByKey(screenKey);
+        return screenDao.getScreenByKeyWithLoadedComponents(screenKey);
     }
 
     @Override

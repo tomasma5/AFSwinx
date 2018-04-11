@@ -30,8 +30,10 @@ public class ApplicationsManagementServiceImpl implements ApplicationsManagement
 
     @Override
     public void createOrUpdate(Application app) {
-        String uuid = generateUuid();
-        app.setUuid(uuid);
+        if(app.getUuid() == null) {
+            String uuid = generateUuid();
+            app.setUuid(uuid);
+        }
         applicationDao.createOrUpdate(app);
     }
 

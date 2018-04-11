@@ -1,6 +1,8 @@
 package service.afclassification.computational;
 
+import model.Application;
 import model.afclassification.BCPhase;
+import model.afclassification.Client;
 import service.afclassification.computational.ccm.units.BaseClassificationUnit;
 import service.afclassification.computational.ccm.SupportedClassificationUnit;
 import service.afclassification.computational.scm.units.BaseScoringUnit;
@@ -33,8 +35,8 @@ public class AFClassificationFactory {
      * @param phase the phase
      * @return the classification module
      */
-    public AFClassification getClassificationModule(BCPhase phase) {
-        return getClassificationModule(phase.getClassificationUnit(), phase.getScoringUnit());
+    public AFClassification getClassificationModule(BCPhase phase, Client client, Application application) {
+        return getClassificationModule(phase.getClassificationUnit(), phase.getScoringUnit(), client, application);
     }
 
     /**
@@ -44,7 +46,8 @@ public class AFClassificationFactory {
      * @param scoringUnit        the scoring unit type
      * @return the classification module
      */
-    public AFClassification getClassificationModule(SupportedClassificationUnit classificationUnit, SupportedScoringUnit scoringUnit) {
+    public AFClassification getClassificationModule(SupportedClassificationUnit classificationUnit, SupportedScoringUnit scoringUnit,
+                                                    Client client, Application application) {
         AFClassification classification = new AFClassification();
         if (classificationUnit.equals(SupportedClassificationUnit.BASIC)) {
             classification.setClassificationModule(new BaseClassificationUnit());
@@ -58,7 +61,7 @@ public class AFClassificationFactory {
             classification.setScoringModule(new BaseScoringUnit());
             //add alternative scoring units here into else if
         } else if (scoringUnit.equals(SupportedScoringUnit.NEARBY_DEVICE_SCORING)) {
-            classification.setScoringModule(new NearbyDevicesScoringUnit());
+            classification.setScoringModule(new NearbyDevicesScoringUnit(client, application));
         }else if (scoringUnit.equals(SupportedScoringUnit.BATTERY_AND_CONNECTION_SCORING)) {
             classification.setScoringModule(new BatteryConnectionScoringUnit());
         } else {

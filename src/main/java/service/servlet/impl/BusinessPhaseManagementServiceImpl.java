@@ -212,6 +212,7 @@ public class BusinessPhaseManagementServiceImpl implements BusinessPhaseManageme
                                           String businessCaseId, String linkedScreensCountString) throws ServiceException {
         BCPhase phase = findOrCreateBusinessPhase(businessPhaseIdString);
         updateBCPhaseProperties(req, Integer.parseInt(businessCaseId), phase);
+        createOrUpdate(phase);
         updateLinkedScreensInBusinessPhase(req, phase, Integer.parseInt(linkedScreensCountString));
         createOrUpdate(phase);
         return phase.getId();

@@ -19,7 +19,11 @@ public class NearbyDevicesScoringUnit implements Scoring {
 
     private HashMap<NearbyDeviceSetupSimilarity, Double> rankedNearbyDeviceSetup = new HashMap<>();
 
-    public NearbyDevicesScoringUnit() {
+    private List<NearbyDevice> pastNearbyDevices;
+
+    private String pastUser;
+
+    public NearbyDevicesScoringUnit(Client client, Application application) {
         // Rank severity
         rankedSeverity.put(Severity.CRITICAL, 100D);
         rankedSeverity.put(Severity.REQUIRED, 80D);
@@ -37,6 +41,22 @@ public class NearbyDevicesScoringUnit implements Scoring {
         rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MORE_DIFFERENT, 10D);
         rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MOSTLY_DIFFERENT, 5D);
         rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.DIFFERENT, 0D);
+
+        try {
+            String endpoint = getEndpointUrlForLastRecord(client);
+            if (pastNearbyDevices == null) {
+                String lastNearbyDevicesString = HttpUtils.getRequest(getUrlForLastNearbyDevices(application, endpoint), null);
+                Gson gson = new Gson();
+                pastNearbyDevices = gson.fromJson(lastNearbyDevicesString, new TypeToken<List<NearbyDevice>>() {
+                }.getType());
+            }
+            if (pastUser == null) {
+                pastUser = HttpUtils.getRequest(getUrlForLastUser(application, endpoint), null);
+            }
+        } catch (IOException e) {
+            System.err.println("Cannot get data from server ");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -53,37 +73,28 @@ public class NearbyDevicesScoringUnit implements Scoring {
             return severityValue;
         }
         if (client != null && (client.getDevice().equals(Device.PHONE) || client.getDevice().equals(Device.TABLET))) {
-            try {
-                String endpoint = getEndpointUrlForLastRecord(client);
-                String lastNearbyDevicesString = HttpUtils.getRequest(getUrlForLastNearbyDevices(application, endpoint), null);
-                String lastUser = HttpUtils.getRequest(getUrlForLastUser(application, endpoint), null);
-                Gson gson = new Gson();
-                List<NearbyDevice> lastNearbyDevices = gson.fromJson(lastNearbyDevicesString, new TypeToken<List<NearbyDevice>>() {
-                }.getType());
-                Double score = (severityValue * 0.7) + (purposeValue * 0.5);
-                if (purpose == Purpose.SYSTEM_IDENTIFICATION && lastNearbyDevices != null && !lastUser.isEmpty() && client.getNearbyDevices() != null) {
-                    double similarity = getNearbyDeviceSetupSimilarity(lastNearbyDevices, lastUser, client);
-                    NearbyDeviceSetupSimilarity nearbyDeviceSetupSimilarity = NearbyDeviceSetupSimilarity.getEnumBySimilarityValue(similarity);
-                    score -= rankedNearbyDeviceSetup.get(nearbyDeviceSetupSimilarity);
-                }
-                if (score > 100D) {
-                    score = 100D;
-                }
-                if (score < 0D) {
-                    score = 0D;
-                }
-                return score;
-            } catch (IOException e) {
-                System.err.println("Cannot get data from server ");
-                e.printStackTrace();
+            Double score = (severityValue * 0.7) + (purposeValue * 0.5);
+            if (purpose == Purpose.SYSTEM_IDENTIFICATION || purpose == Purpose.SYSTEM_INFORMATION &&
+                    pastNearbyDevices != null && !pastUser.isEmpty() && client.getNearbyDevices() != null) {
+                double similarity = getNearbyDeviceSetupSimilarity(client);
+                NearbyDeviceSetupSimilarity nearbyDeviceSetupSimilarity = NearbyDeviceSetupSimilarity.getEnumBySimilarityValue(similarity);
+                score -= rankedNearbyDeviceSetup.get(nearbyDeviceSetupSimilarity);
             }
+            if (score > 100D) {
+                score = 100D;
+            }
+            if (score < 0D) {
+                score = 0D;
+            }
+            return score;
+
         }
         return null;
     }
 
 
-    private double getNearbyDeviceSetupSimilarity(List<NearbyDevice> pastNearbyDevices, String pastUser, Client client) {
-        if (pastUser == null || pastUser.equals(client.getUsername())) {
+    private double getNearbyDeviceSetupSimilarity(Client client) {
+        if (pastUser == null || !pastUser.equals(client.getUsername())) {
             //different user - check information again
             return 0D;
         }

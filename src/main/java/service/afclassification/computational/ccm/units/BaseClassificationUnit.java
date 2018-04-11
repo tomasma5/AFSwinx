@@ -3,6 +3,7 @@ package service.afclassification.computational.ccm.units;
 import model.afclassification.Behavior;
 import model.afclassification.Configuration;
 import model.afclassification.ConfigurationPack;
+import org.hibernate.Hibernate;
 
 public class BaseClassificationUnit implements Classification {
 

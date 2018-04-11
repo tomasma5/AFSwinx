@@ -9,13 +9,18 @@ import model.Application;
 import model.afclassification.*;
 import service.afclassification.computational.ccm.units.Classification;
 import service.afclassification.computational.scm.units.Scoring;
+import service.rest.impl.ComponentResourceServiceImpl;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Classification module which can be used for scoring and classifying fields.
  */
 public class AFClassification {
+
+    private static final Logger LOGGER = Logger.getLogger(AFClassification.class.getName());
 
     private Scoring scoringModule;
     private Classification classificationModule;
@@ -44,15 +49,17 @@ public class AFClassification {
     /**
      * Classifies given meta model.
      *
-     * @param metaModelPack the meta model pack
-     * @param client        the client
-     * @param phase         the phase
+     * @param metaModelPack     the meta model pack
+     * @param client            the client
+     * @param configurationPack the phase config pack
      */
-    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, BCPhase phase, List<BCField> fieldList, Application application) {
+    public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, ConfigurationPack configurationPack, List<BCField> fieldList, Application application) {
         for (BCField field : fieldList) {
             System.out.println("Classifing field: "
                     + field.getField().getFieldName());
-            GeneratedField result = classifyField(field, client, phase.getConfiguration(), application);
+            long start = System.currentTimeMillis();
+            GeneratedField result = classifyField(field, client, configurationPack, application);
+            LOGGER.log(Level.INFO, "Classification of field took " + (System.currentTimeMillis() - start) + " ms");
             if (result != null) {
                 System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
                 AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());

@@ -3,6 +3,7 @@ package service.rest.impl;
 import com.google.gson.Gson;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
 import dao.ComponentResourceDao;
+import dao.ConfigurationPackDao;
 import model.Application;
 import model.ComponentResource;
 import model.Screen;
@@ -37,36 +38,16 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
 
     private static final Logger LOGGER = Logger.getLogger(ComponentResourceServiceImpl.class.getName());
 
-    /**
-     * The Component resource dao.
-     */
+    @Inject
+    ConfigurationPackDao configurationPackDao;
     @Inject
     ComponentResourceDao componentResourceDao;
-
-    /**
-     * The Business phase management service.
-     */
-    @Inject
-    BusinessPhaseManagementService businessPhaseManagementService;
-
     @Inject
     BusinessFieldsManagementService businessFieldsManagementService;
-
-    /**
-     * The Screen management service.
-     */
     @Inject
     ScreenManagementService screenManagementService;
-
-    /**
-     * The Applications management service.
-     */
     @Inject
     ApplicationsManagementService applicationsManagementService;
-
-    /**
-     * The Request context.
-     */
     @Inject
     RequestContext requestContext;
 
@@ -75,7 +56,7 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         Application application = requestContext.getCurrentApplication();
         ComponentResource componentResource = componentResourceDao.getById(id);
         if (componentResource != null && application != null) {
-            if (!(componentResource.getApplication().getId() == application.getId())) {
+            if (!(componentResource.getApplication().getId().equals(application.getId()))) {
                 String errorMsg = "Cannot get component model, this component belongs to another application";
                 LOGGER.log(Level.SEVERE, errorMsg);
                 throw new ComponentRequestException(errorMsg);
@@ -148,11 +129,14 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
         } catch (ServiceException e) {
             LOGGER.log(Level.SEVERE, "Cannot find business phase for screen. Classification cannot be done. Returning basic metamodel.");
         }
-        if (phase != null && phaseFields != null) {
+        if (phase != null && phaseFields != null && phase.getConfiguration() != null) {
+            ConfigurationPack configurationPack = configurationPackDao.getByIdWithLoadedConfigurations(phase.getConfiguration().getId());
             Application application = getApplicationFromRequest(headers);
             Client client = getClientFromRequest(headers);
-            AFClassification classification = AFClassificationFactory.getInstance().getClassificationModule(phase);
-            classification.classifyMetaModel(metaModel, client, phase, phaseFields, application);
+            AFClassification classification = AFClassificationFactory.getInstance().getClassificationModule(phase, client, application);
+            long start = System.currentTimeMillis();
+            classification.classifyMetaModel(metaModel, client, configurationPack, phaseFields, application);
+            LOGGER.log(Level.INFO, "Classification took " + (System.currentTimeMillis() - start) + " ms");
         }
         return metaModel;
     }
@@ -165,10 +149,10 @@ public class ComponentResourceServiceImpl implements ComponentResourceService {
     private BCPhase getBusinessPhaseFromRequest(HttpHeaders headers) throws ServiceException {
         String screenKey = headers.getRequestHeaders().getFirst(Constants.SCREEN_HEADER);
         Screen screen = screenManagementService.findScreenByKey(screenKey);
-        if(screen == null) {
+        if (screen == null) {
             throw new ServiceException("Cannot get business phase. Screen specified in headers was not found.");
         }
-        if(screen.getPhase() == null){
+        if (screen.getPhase() == null) {
             throw new ServiceException("Screen does not have phase.");
         }
         return screen.getPhase();
