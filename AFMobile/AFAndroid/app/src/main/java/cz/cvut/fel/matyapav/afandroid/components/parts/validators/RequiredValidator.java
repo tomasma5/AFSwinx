@@ -20,6 +20,9 @@ public class RequiredValidator implements AFValidator {
 
     @Override
     public boolean validate(Context context, AFField field, StringBuilder errorMsgs, ValidationRule rule) {
+        if(!Boolean.valueOf(rule.getValue())){
+            return true;
+        }
         boolean validationIsFine = true;
         if(Utils.isFieldWritable(field.getFieldInfo().getWidgetType()) || field.getFieldInfo().getWidgetType().equals(SupportedWidgets.CALENDAR)){
             EditText textfield = (EditText) field.getFieldView();

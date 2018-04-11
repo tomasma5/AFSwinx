@@ -105,8 +105,8 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
 
             URL url = new URL(address);
             urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(5000);
-            urlConnection.setConnectTimeout(5000);
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setConnectTimeout(10000);
             urlConnection.setRequestMethod(httpMethod.toString().toUpperCase());
             addHeaderParameter(Constants.APPLICATION_HEADER, AFAndroid.getInstance().getProxyApplicationContext(context));
             addHeaderParameter(Constants.DEVICE_HEADER, AFAndroid.getInstance().getProxySetup().getDeviceIdentifier(context));

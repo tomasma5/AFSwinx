@@ -1,5 +1,6 @@
 package cz.cvut.fel.matyapav.showcase.fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -93,8 +94,6 @@ public abstract class BaseFragment extends Fragment {
                 System.err.println("One of the menu buttons were not found. Please check the exception\n");
                 ex.printStackTrace();
             }
-            //FIXME opravit menu podle toho jestli je user lognuty nebo nea
-
             if (afmenu.getMenuButtons() != null) {
                 if (ApplicationContext.getInstance().getSecurityContext() != null && ApplicationContext.getInstance().getSecurityContext().isUserLogged()) {
                     //home button

@@ -172,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getNearbyDevices() {
-        //TODO setup pres AFAndroid
         NearbyStatusFacade nearbyStatusFacade = NearbyStatusFacadeBuilder.getInstance()
                 .initialize(getApplicationContext())
                 .addStatusMiner(new BatteryStatusMiner())
