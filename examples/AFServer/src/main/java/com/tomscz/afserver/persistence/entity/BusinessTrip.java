@@ -18,7 +18,9 @@ public class BusinessTrip {
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     private Person person;
+    @Temporal(value = TemporalType.DATE)
     private Date startDate;
+    @Temporal(value = TemporalType.DATE)
     private Date endDate;
     @OneToOne
     private Address startPlace;
