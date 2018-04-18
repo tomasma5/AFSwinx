@@ -37,6 +37,8 @@
             <groupId>com.tomscz.af</groupId>
             <artifactId>AFRest</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+	    <systemPath>${project.basedir}/../../AFRest/target/AFRest-0.0.1-SNAPSHOT.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
