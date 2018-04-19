@@ -12,6 +12,14 @@
     <packaging>war</packaging>
     <name>AspectFaces Server</name>
 
+    <repositories>
+        <repository>
+            <id>in-project</id>
+            <name>In Project Repo</name>
+            <url>file://${project.basedir}/../../AFRest/target</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>javax.ejb</groupId>

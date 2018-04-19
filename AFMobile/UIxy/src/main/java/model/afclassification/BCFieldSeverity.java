@@ -35,9 +35,6 @@ public class BCFieldSeverity extends DtoEntity {
 	@Column(name = SCORE)
 	private Double score;
 
-	@OneToOne
-	private BCField field;
-
 	public Severity getSeverity() {
 		return severity;
 	}
@@ -60,14 +57,6 @@ public class BCFieldSeverity extends DtoEntity {
 
 	public void setScore(Double score) {
 		this.score = score;
-	}
-
-	public BCField getField() {
-		return field;
-	}
-
-	public void setField(BCField field) {
-		this.field = field;
 	}
 
 	@Override
