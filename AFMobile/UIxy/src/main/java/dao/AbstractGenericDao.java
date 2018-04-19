@@ -1,6 +1,5 @@
 package dao;
 
-
 import model.DtoEntity;
 
 import java.util.List;

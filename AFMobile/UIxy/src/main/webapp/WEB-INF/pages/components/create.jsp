@@ -71,9 +71,6 @@
                                                name="modelConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../model"
                                                value="${modelConnectionParameters}"
-                                        <c:if test="${modelConnectionParameters.indexOf('#{') >= 0}">
-                                               style="background-color: lightsteelblue; font-weight: bold"
-                                        </c:if>
                                                disabled>
                                     </c:if>
                                     <c:if test="${modelConnectionActive != 0}">
@@ -81,9 +78,6 @@
                                                name="modelConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../model"
                                                value="${modelConnectionParameters}"
-                                        <c:if test="${modelConnectionParameters.indexOf('#{') >= 0}">
-                                               style="background-color: lightsteelblue; font-weight: bold"
-                                        </c:if>
                                                required>
                                     </c:if>
 
@@ -140,9 +134,6 @@
                                                    name="modelSecurityParamValue${loop.index+1}"
                                                    placeholder="Value"
                                                    value="${securityParam.value}"
-                                                    <c:if test="${securityParam.value.indexOf('#{') == 0}">
-                                                        style="background-color: lightsteelblue; font-weight: bold"
-                                                    </c:if>
                                             />
                                         </div>
                                     </c:forEach>
@@ -173,18 +164,12 @@
                                                name="dataConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../data"
                                                value="${dataConnectionParameters}"
-                                        <c:if test="${dataConnectionParameters.indexOf('#{') >= 0}">
-                                               style="background-color: lightsteelblue; font-weight: bold"
-                                        </c:if>
                                                disabled>
                                     </c:if>
                                     <c:if test="${dataConnectionActive != 0}">
                                         <input type="text" class="form-control" id="dataConnectionParameters"
                                                name="dataConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../data"
-                                        <c:if test="${dataConnectionParameters.indexOf('#{') >= 0}">
-                                               style="background-color: lightsteelblue; font-weight: bold"
-                                        </c:if>
                                                value="${dataConnectionParameters}" required>
                                     </c:if>
 
@@ -241,9 +226,6 @@
                                                    name="dataSecurityParamValue${loop.index+1}"
                                                    placeholder="Value"
                                                    value="${securityParam.value}"
-                                                    <c:if test="${securityParam.value.indexOf('#{') == 0}">
-                                                        style="background-color: lightsteelblue; font-weight: bold"
-                                                    </c:if>
                                             />
                                         </div>
                                     </c:forEach>
@@ -274,9 +256,6 @@
                                                name="sendConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../send"
                                                value="${sendConnectionParameters}"
-                                        <c:if test="${sendConnectionParameters.indexOf('#{') >= 0}">
-                                               style="background-color: lightsteelblue; font-weight: bold"
-                                        </c:if>
                                                disabled>
                                     </c:if>
                                     <c:if test="${sendConnectionActive != 0}">
@@ -284,9 +263,6 @@
                                                name="sendConnectionParameters"
                                                placeholder="Example: AFServer/rest/.../send"
                                                value="${sendConnectionParameters}"
-                                        <c:if test="${sendConnectionParameters.indexOf('#{') >= 0}">
-                                               style="background-color: lightsteelblue; font-weight: bold"
-                                        </c:if>
                                                required>
                                     </c:if>
 
@@ -343,9 +319,6 @@
                                                    name="sendSecurityParamValue${loop.index+1}"
                                                    placeholder="Value"
                                                    value="${securityParam.value}"
-                                                    <c:if test="${securityParam.value.indexOf('#{') == 0}">
-                                                        style="background-color: lightsteelblue; font-weight: bold"
-                                                    </c:if>
                                             />
                                         </div>
                                     </c:forEach>
