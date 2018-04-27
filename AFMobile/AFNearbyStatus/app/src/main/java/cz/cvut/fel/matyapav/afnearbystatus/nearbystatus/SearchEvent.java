@@ -5,7 +5,7 @@ package cz.cvut.fel.matyapav.afnearbystatus.nearbystatus;
  * @since 1.0.0..
  */
 
-public abstract class DeviceStatusAndNearbySearchEvent {
+public abstract class SearchEvent {
 
     public abstract void onSearchStart();
 

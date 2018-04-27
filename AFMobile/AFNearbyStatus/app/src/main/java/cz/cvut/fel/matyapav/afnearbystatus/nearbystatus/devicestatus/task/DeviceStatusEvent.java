@@ -6,7 +6,7 @@ package cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.task;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-public interface DeviceStatusVisitor {
+public interface DeviceStatusEvent {
 
     /**
      * Should be called when device status is mined and filled

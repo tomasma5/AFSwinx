@@ -4,13 +4,12 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.finder.AbstractNearbyDevicesFinder;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.model.Device;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.task.FindDevicesTask;
-import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.task.NearbyFinderVisitor;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.task.NearbyFinderEvent;
 
 /**
  * Manages nearby device finding process
@@ -34,10 +33,10 @@ public class NearbyFinderManager {
     /**
      * Runs the nearby device finding process
      *
-     * @param callbackClass object which implements {@link NearbyFinderVisitor} class
+     * @param callbackClass object which implements {@link NearbyFinderEvent} class
      *                      - onNearbyDevicesSearchFinished() method will be called at the end
      */
-    void findNearbyDevices(NearbyFinderVisitor callbackClass) {
+    void findNearbyDevices(NearbyFinderEvent callbackClass) {
         devices.clear();
         findDevicesTask = new FindDevicesTask(this, callbackClass).setRecommendedTimeout(recommendedTimeout);
         findDevicesTask.execute();
@@ -49,9 +48,11 @@ public class NearbyFinderManager {
      * @param devices
      */
     public void addDevices(List<Device> devices) {
-        devices.stream().filter(device -> !this.devices.contains(device)).forEach(device -> {
-            this.devices.add(device);
-        });
+        for(Device device : devices){
+            if(!this.devices.contains(device)){
+                this.devices.add(device);
+            }
+        }
     }
 
     /**
@@ -97,9 +98,13 @@ public class NearbyFinderManager {
      * @param deviceStatus
      */
     void filterNearbyFindersByDeviceStatus(DeviceStatus deviceStatus) {
-        nearbyDevicesFinders = nearbyDevicesFinders.stream()
-                .filter(finder -> deviceStatus.getBatteryStatus().getBatteryLevel() >= finder.getBatteryLimit())
-                .collect(Collectors.toList());
+        List<AbstractNearbyDevicesFinder> abstractNearbyDevicesFinders = new ArrayList<>();
+        for(AbstractNearbyDevicesFinder devicesFinder : nearbyDevicesFinders){
+            if(deviceStatus.getBatteryStatus().getBatteryLevel() >= devicesFinder.getBatteryLimit()){
+                abstractNearbyDevicesFinders.add(devicesFinder);
+            }
+        }
+        nearbyDevicesFinders = abstractNearbyDevicesFinders;
     }
 
     public List<AbstractNearbyDevicesFinder> getNearbyDevicesFinders() {

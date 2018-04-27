@@ -17,10 +17,10 @@ import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.finder.AbstractNe
 public class FindDevicesTask extends AsyncTask<Void, Integer, Void> {
 
     private NearbyFinderManager finder;
-    private NearbyFinderVisitor nearbyFinderVisitor;
+    private NearbyFinderEvent nearbyFinderVisitor;
     private int timeoutInMillis = 12000;
 
-    public FindDevicesTask(NearbyFinderManager finder, NearbyFinderVisitor nearbyFinderVisitor) {
+    public FindDevicesTask(NearbyFinderManager finder, NearbyFinderEvent nearbyFinderVisitor) {
         this.finder = finder;
         this.nearbyFinderVisitor = nearbyFinderVisitor;
     }

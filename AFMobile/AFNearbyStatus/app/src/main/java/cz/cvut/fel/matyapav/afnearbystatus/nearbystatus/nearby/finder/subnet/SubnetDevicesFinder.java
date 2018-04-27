@@ -96,9 +96,11 @@ public class SubnetDevicesFinder extends AbstractNearbyDevicesFinder {
         // Get addresses from ARP Info first as they are likely to be pingable
         addresses.addAll(NetworkUtils.getAllIPAddressesInARPCache());
         // Add all missing addresses in subnet
-        String nextIpAddress = networkAddress;
+        String nextIpAddress = NetworkUtils.nextIpAddress(networkAddress); //start with first address after network address
         for (int j = 0; j < range; j++) {
-            addresses.add(nextIpAddress);
+			if(!addresses.contains(nextIpAddress)){
+				addresses.add(nextIpAddress);
+			}
             nextIpAddress = NetworkUtils.nextIpAddress(nextIpAddress);
         }
     }

@@ -14,9 +14,9 @@ import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.model.Devic
 public class DeviceStatusMinerTask extends AsyncTask<Void, Integer, Void> {
 
     private DeviceStatusManager deviceStatusManager;
-    private DeviceStatusVisitor deviceStatusVisitor;
+    private DeviceStatusEvent deviceStatusVisitor;
 
-    public DeviceStatusMinerTask(DeviceStatusManager deviceStatusMiner, DeviceStatusVisitor deviceStatusVisitor) {
+    public DeviceStatusMinerTask(DeviceStatusManager deviceStatusMiner, DeviceStatusEvent deviceStatusVisitor) {
         this.deviceStatusManager = deviceStatusMiner;
         this.deviceStatusVisitor = deviceStatusVisitor;
     }

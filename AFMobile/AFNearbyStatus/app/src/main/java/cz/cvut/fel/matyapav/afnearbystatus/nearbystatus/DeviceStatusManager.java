@@ -9,7 +9,7 @@ import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.miner.Abstr
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.miner.DeviceInfoMiner;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.model.DeviceStatus;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.task.DeviceStatusMinerTask;
-import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.task.DeviceStatusVisitor;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.task.DeviceStatusEvent;
 
 /**
  * Manages device status mining process
@@ -33,10 +33,10 @@ public class DeviceStatusManager {
     /**
      * Runs the device status mining process
      *
-     * @param callbackClass object which implements {@link DeviceStatusVisitor} class
+     * @param callbackClass object which implements {@link DeviceStatusEvent} class
      *                      - onDeviceStatusMined() method will be called at the end of mining
      */
-    void mineDeviceStatus(DeviceStatusVisitor callbackClass) {
+    void mineDeviceStatus(DeviceStatusEvent callbackClass) {
         deviceStatusMinerTask = new DeviceStatusMinerTask(this, callbackClass);
         deviceStatusMinerTask.execute();
     }

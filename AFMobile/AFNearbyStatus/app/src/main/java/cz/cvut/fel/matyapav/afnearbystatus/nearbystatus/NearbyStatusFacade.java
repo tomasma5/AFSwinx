@@ -1,14 +1,13 @@
 package cz.cvut.fel.matyapav.afnearbystatus.nearbystatus;
 
-import android.content.Context;
 import android.os.Handler;
 
 import java.sql.Timestamp;
 
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.model.DeviceStatus;
-import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.task.DeviceStatusVisitor;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.task.DeviceStatusEvent;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.model.DeviceStatusWithNearby;
-import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.task.NearbyFinderVisitor;
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.task.NearbyFinderEvent;
 
 /**
  * Facade for executing nearby devices finding and status mining processes
@@ -17,15 +16,14 @@ import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.task.NearbyFinder
  * @since 1.0.0..
  */
 
-public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisitor {
+public class NearbyStatusFacade implements NearbyFinderEvent, DeviceStatusEvent {
 
-    private Context context;
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
     private DeviceStatusWithNearby deviceStatusWithNearby;
     private String serverUrl;
     private boolean sendAsJsonToServer;
-    private DeviceStatusAndNearbySearchEvent deviceStatusAndNearbySearchEvent;
+    private SearchEvent searchEvent;
     private boolean executePeriodically = false;
     private boolean alreadyRunning = false;
     private long periodicTime;
@@ -42,19 +40,24 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
         }
     };
 
-    NearbyStatusFacade(Context context, NearbyFinderManager nearbyFinderManager,
+    NearbyStatusFacade(){
+    };
+
+    NearbyStatusFacade(NearbyFinderManager nearbyFinderManager,
                        DeviceStatusManager deviceStatusManager,
-                       DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent,
-                       boolean executePeriodically, long periodicTime
+                       SearchEvent searchEvent,
+                       boolean executePeriodically, long periodicTime,
+                       boolean sendAsJsonToServer, String serverUrl
     ) {
-        this.context = context;
         this.nearbyFinderManager = nearbyFinderManager;
         this.deviceStatusManager = deviceStatusManager;
         this.sendAsJsonToServer = false;
-        this.deviceStatusAndNearbySearchEvent = nearbyDevicesSearchEvent;
+        this.searchEvent = searchEvent;
         this.executePeriodically = executePeriodically;
         this.periodicTime = periodicTime;
         this.runProcessHandler = new Handler();
+        this.sendAsJsonToServer = sendAsJsonToServer;
+        this.serverUrl = serverUrl;
     }
 
     /**
@@ -69,8 +72,8 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
     }
 
     private void runMining() {
-        if (deviceStatusAndNearbySearchEvent != null) {
-            deviceStatusAndNearbySearchEvent.onSearchStart();
+        if (searchEvent != null) {
+            searchEvent.onSearchStart();
         }
         if (deviceStatusWithNearby == null) {
             deviceStatusWithNearby = new DeviceStatusWithNearby();
@@ -78,12 +81,6 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
             deviceStatusWithNearby.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());
         }
         deviceStatusManager.mineDeviceStatus(this);
-    }
-
-    public NearbyStatusFacade sendDataToServerAfterTimeout(String serverUrl) {
-        this.serverUrl = serverUrl;
-        this.sendAsJsonToServer = true;
-        return this;
     }
 
     @Override
@@ -100,8 +97,8 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
         if (sendAsJsonToServer) {
             new DataSenderTask(deviceStatusWithNearby, serverUrl).execute();
         }
-        if (deviceStatusAndNearbySearchEvent != null) {
-            deviceStatusAndNearbySearchEvent.onSearchFinished();
+        if (searchEvent != null) {
+            searchEvent.onSearchFinished();
         }
     }
 
@@ -114,5 +111,32 @@ public class NearbyStatusFacade implements NearbyFinderVisitor, DeviceStatusVisi
         return deviceStatusWithNearby;
     }
 
+    void setNearbyFinderManager(NearbyFinderManager nearbyFinderManager) {
+        this.nearbyFinderManager = nearbyFinderManager;
+    }
+
+    void setDeviceStatusManager(DeviceStatusManager deviceStatusManager) {
+        this.deviceStatusManager = deviceStatusManager;
+    }
+
+    void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
+    void setSendAsJsonToServer(boolean sendAsJsonToServer) {
+        this.sendAsJsonToServer = sendAsJsonToServer;
+    }
+
+    void setSearchEvent(SearchEvent searchEvent) {
+        this.searchEvent = searchEvent;
+    }
+
+    void setExecutePeriodically(boolean executePeriodically) {
+        this.executePeriodically = executePeriodically;
+    }
+
+    void setPeriodicTime(long periodicTime) {
+        this.periodicTime = periodicTime;
+    }
 
 }

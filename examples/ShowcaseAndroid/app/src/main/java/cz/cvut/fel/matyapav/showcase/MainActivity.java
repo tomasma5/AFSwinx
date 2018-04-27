@@ -197,9 +197,9 @@ public class MainActivity extends AppCompatActivity {
                 .addNearbyDevicesFinder(new SubnetDevicesFinder(), 30)
                 .setRecommendedTimeoutForNearbySearch(10000)
                 .executePeriodically(1000 * 60 * 3)
-                .build()
-                .sendDataToServerAfterTimeout(ApplicationContext.getInstance().getNSRestAppUrl(getApplicationContext())+"/api/consumer/add")
-                ;
+                .sendDataToServer(ApplicationContext.getInstance().getNSRestAppUrl(getApplicationContext())+"/api/consumer/add")
+                .build();
+        nearbyStatusFacade.runProcess();
         AFAndroid.getInstance().setNearbyStatusFacade(nearbyStatusFacade);
     }
 

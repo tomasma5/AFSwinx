@@ -17,11 +17,11 @@ import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.util.GlobalConstants;
 public class NearbyStatusFacadeBuilder {
 
     private static NearbyStatusFacadeBuilder instance = null;
-    private Context context;
 
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
-    private DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent;
+    private SearchEvent nearbyDevicesSearchEvent;
+    private String serverUrl;
     private boolean executePeriodically = false;
     private long periodicTime;
 
@@ -47,7 +47,6 @@ public class NearbyStatusFacadeBuilder {
      * @return initialized instance of builder
      */
     public NearbyStatusFacadeBuilder initialize(Context context) {
-        this.context = context;
         nearbyFinderManager = new NearbyFinderManager(context);
         deviceStatusManager = new DeviceStatusManager(context);
         return this;
@@ -95,7 +94,7 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
-    public NearbyStatusFacadeBuilder setNearbyDevicesSearchEvent(DeviceStatusAndNearbySearchEvent nearbyDevicesSearchEvent) {
+    public NearbyStatusFacadeBuilder setNearbyDevicesSearchEvent(SearchEvent nearbyDevicesSearchEvent) {
         this.nearbyDevicesSearchEvent = nearbyDevicesSearchEvent;
         return this;
     }
@@ -135,13 +134,19 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
+    public NearbyStatusFacadeBuilder sendDataToServer(String url){
+        this.serverUrl = url;
+        return this;
+    }
+
     /**
      * Builds nearby devices finding and device status mining processes execution {@link NearbyStatusFacade}
      * from properties previously set to {@link NearbyStatusFacadeBuilder}
      * @return execution facade
      */
     public NearbyStatusFacade build() {
-        return new NearbyStatusFacade(context, nearbyFinderManager, deviceStatusManager, nearbyDevicesSearchEvent, executePeriodically, periodicTime);
+        return new NearbyStatusFacade(nearbyFinderManager, deviceStatusManager,
+                nearbyDevicesSearchEvent, executePeriodically, periodicTime, serverUrl != null, serverUrl);
     }
 
     /**

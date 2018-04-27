@@ -63,7 +63,7 @@ public class NetworkUtils {
         for (int range : ranges){
             result *= range;
         }
-        return result;
+        return result - 2; //first is network address, last is broadcast address
     }
 
     /**
