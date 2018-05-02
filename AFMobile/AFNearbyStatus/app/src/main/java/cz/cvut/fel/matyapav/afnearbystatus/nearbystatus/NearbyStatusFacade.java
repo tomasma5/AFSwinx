@@ -70,11 +70,9 @@ public class NearbyStatusFacade implements NearbyFinderEvent, DeviceStatusEvent 
         if (deviceStatusAndNearbySearchEvent != null) {
             deviceStatusAndNearbySearchEvent.onSearchStart();
         }
-        if (deviceStatusWithNearby == null) {
-            deviceStatusWithNearby = new DeviceStatusWithNearby();
-            //set timestamp to the beginning of process
-            deviceStatusWithNearby.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());
-        }
+        deviceStatusWithNearby = new DeviceStatusWithNearby();
+        //set timestamp to the beginning of process
+        deviceStatusWithNearby.setTimestamp(new Timestamp(System.currentTimeMillis()).getTime());
         deviceStatusManager.mineDeviceStatus(this);
     }
 

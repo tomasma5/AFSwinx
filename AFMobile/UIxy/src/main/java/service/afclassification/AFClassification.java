@@ -19,8 +19,6 @@ import java.util.logging.Logger;
  */
 public class AFClassification {
 
-    private static final Logger LOGGER = Logger.getLogger(AFClassification.class.getName());
-
     private Scoring scoringModule;
     private Classification classificationModule;
 
@@ -54,11 +52,10 @@ public class AFClassification {
      */
     public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, ConfigurationPack configurationPack, List<BCField> fieldList, Application application) {
         for (BCField field : fieldList) {
-            System.out.println("Classifing field: "
-                    + field.getField().getFieldName());
+            System.out.println("Classifing field: " + field.getField().getFieldName());
             long start = System.currentTimeMillis();
             GeneratedField result = classifyField(field, client, configurationPack, application);
-            LOGGER.log(Level.INFO, "Classification of field took " + (System.currentTimeMillis() - start) + " ms");
+            System.out.println("Classification of field took " + (System.currentTimeMillis() - start) + " ms");
             if (result != null) {
                 System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
                 AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
