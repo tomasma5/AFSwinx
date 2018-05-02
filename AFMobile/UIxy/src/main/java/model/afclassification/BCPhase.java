@@ -61,7 +61,7 @@ public class BCPhase extends DtoEntity {
      *
      * @param field the field
      */
-    public synchronized void addBCField(BCField field) {
+    public void addBCField(BCField field) {
         if (this.fields == null) {
             this.fields = new ArrayList<>();
         }
@@ -75,7 +75,7 @@ public class BCPhase extends DtoEntity {
      *
      * @param screen the screen
      */
-    public synchronized void addLinkedScreen(Screen screen) {
+    public void addLinkedScreen(Screen screen) {
 
         if (this.linkedScreens == null) {
             this.linkedScreens = new ArrayList<>();
@@ -103,10 +103,6 @@ public class BCPhase extends DtoEntity {
 
     public List<Screen> getLinkedScreens() {
         return linkedScreens;
-    }
-
-    public void setLinkedScreens(List<Screen> linkedScreens) {
-        this.linkedScreens = linkedScreens;
     }
 
     public String getName() {

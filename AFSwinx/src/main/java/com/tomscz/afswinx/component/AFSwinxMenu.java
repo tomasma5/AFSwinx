@@ -3,6 +3,7 @@ package com.tomscz.afswinx.component;
 import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.util.*;
 
 public class AFSwinxMenu {
@@ -63,7 +64,7 @@ public class AFSwinxMenu {
         return menuButtons;
     }
 
-    class MenuOrderComparator implements Comparator<String>{
+    static class MenuOrderComparator implements Comparator<String>, Serializable{
 
         HashMap<String, AFSwinxScreenButton> map = new HashMap<>();
 

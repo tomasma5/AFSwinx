@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ConnectException;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.tomscz.afswinx.common.AFSwinxConstants;
 import com.tomscz.afswinx.component.AFSwinx;
@@ -215,10 +216,10 @@ public abstract class BaseConnector implements Connector {
             request.addHeader("Content-Type", contentType.toString() + ";charset=UTF-8");
             request.addHeader("Accept", accept.toString() + ";charset=UTF-8");
             if (headersParam != null) {
-                for (String key : headersParam.keySet()) {
-                    String value = headersParam.get(key);
+                for (Map.Entry<String, String> entry : headersParam.entrySet()) {
+                    String value = entry.getValue();
                     if (value != null && !value.isEmpty()) {
-                        request.addHeader(key, value);
+                        request.addHeader(entry.getKey(), value);
                     }
                 }
             }

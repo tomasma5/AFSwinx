@@ -34,8 +34,8 @@ public class BusinessTripPart {
                             Address endPlace, double distance) {
         this.id = id;
         this.businessTrip = businessTrip;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = new Date(startDate.getTime());
+        this.endDate = new Date(endDate.getTime());
         this.startPlace = startPlace;
         this.endPlace = endPlace;
         this.distance = distance;
@@ -66,11 +66,11 @@ public class BusinessTripPart {
     @UIWidgetType(widgetType = SupportedWidgets.CALENDAR)
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public Date getStartDate() {
-        return startDate;
+        return new Date(startDate.getTime());
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        this.startDate = new Date(startDate.getTime());
     }
 
     @UiRequired
@@ -79,11 +79,11 @@ public class BusinessTripPart {
     @UIWidgetType(widgetType = SupportedWidgets.CALENDAR)
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public Date getEndDate() {
-        return endDate;
+        return new Date(endDate.getTime());
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+        this.endDate = new Date(endDate.getTime());
     }
 
     @UiRequired

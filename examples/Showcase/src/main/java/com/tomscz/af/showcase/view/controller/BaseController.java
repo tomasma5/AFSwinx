@@ -76,7 +76,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             WelcomeScreen loginScreen = new WelcomeScreen(afProxyScreenDefinition);
-            WelcomeScreenController controller = new WelcomeScreenController(loginScreen);
+            new WelcomeScreenController(loginScreen);
             view.setVisible(false);
             view = null;
             loginScreen.setVisible(true);
@@ -90,7 +90,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             ApplicationContext.getInstance().setSecurityContext(null);
             WelcomeScreen welcomeScreen = new WelcomeScreen(afProxyScreenDefinition);
-            WelcomeScreenController controller = new WelcomeScreenController(welcomeScreen);
+            new WelcomeScreenController(welcomeScreen);
             view.setVisible(false);
             view = null;
             welcomeScreen.setVisible(true);
@@ -103,7 +103,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             AvaiableCountryView avaiableCountry = new AvaiableCountryView(afProxyScreenDefinition);
-            AvaiableCountryController controller = new AvaiableCountryController(avaiableCountry);
+            new AvaiableCountryController(avaiableCountry);
             view.setVisible(false);
             view = null;
             avaiableCountry.setVisible(true);
@@ -116,7 +116,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             PersonView personView = new PersonView(afProxyScreenDefinition);
-            PersonController controller = new PersonController(personView);
+            new PersonController(personView);
             view.setVisible(false);
             personView.setVisible(true);
         }
@@ -144,8 +144,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             AbsenceInstanceCreateView absenceInstanceCreateView = new AbsenceInstanceCreateView(afProxyScreenDefinition);
-            AbsenceInstanceCreateController controller =
-                    new AbsenceInstanceCreateController(absenceInstanceCreateView);
+            new AbsenceInstanceCreateController(absenceInstanceCreateView);
             view.setVisible(false);
             view = null;
             absenceInstanceCreateView.setVisible(true);
@@ -159,7 +158,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             MyAbsenceInstanceView myAbsenceInstanceView = new MyAbsenceInstanceView(afProxyScreenDefinition);
-            MyAbsenceInstanceController controller = new MyAbsenceInstanceController(myAbsenceInstanceView);
+            new MyAbsenceInstanceController(myAbsenceInstanceView);
             view.setVisible(false);
             view = null;
             myAbsenceInstanceView.setVisible(true);
@@ -173,7 +172,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             AvailableVehiclesView vehiclesView = new AvailableVehiclesView(afProxyScreenDefinition);
-            AvailableVehiclesController controller = new AvailableVehiclesController(vehiclesView);
+            new AvailableVehiclesController(vehiclesView);
             view.setVisible(false);
             view = null;
             vehiclesView.setVisible(true);
@@ -186,7 +185,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             BusinessTripEditView businessTripEditView = new BusinessTripEditView(afProxyScreenDefinition);
-            BusinessTripEditController controller = new BusinessTripEditController(businessTripEditView);
+            new BusinessTripEditController(businessTripEditView);
             view.setVisible(false);
             view = null;
             businessTripEditView.setVisible(true);
@@ -200,8 +199,7 @@ public abstract class BaseController {
         public void onScreenPrepared(AFProxyScreenDefinition afProxyScreenDefinition) {
             AFSwinx.getInstance().removeAllComponents();
             AbsenceInstanceEditView absenceInstanceEditView = new AbsenceInstanceEditView(afProxyScreenDefinition);
-            AbsenceInstanceEditController controller =
-                    new AbsenceInstanceEditController(absenceInstanceEditView);
+            new AbsenceInstanceEditController(absenceInstanceEditView);
             view.setVisible(false);
             view = null;
             absenceInstanceEditView.setVisible(true);

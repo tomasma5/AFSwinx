@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.validation;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Comparator;
  * 
  * @since 1.0.0.
  */
-public class ValidatorPriorityComparator implements Comparator<AFValidations> {
+public class ValidatorPriorityComparator implements Comparator<AFValidations>, Serializable {
 
     @Override
     public int compare(AFValidations o1, AFValidations o2) {

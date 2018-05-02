@@ -22,16 +22,17 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * This class is security interceptor. Some of logic was transfered from my previous project:
  * https://gitlab.fit.cvut.cz/listivit/letadla/blob/master/flightAirlines/src/main/java/cz/cvut/fel/aos
  * /flightAirlines/security/MySecurityInterceptor.java
- * 
+ *
  * @author Martin Tomasek (martin@toms-cz.com)
- * 
  * @since 1.0.0.
  */
 @Provider
@@ -46,7 +47,8 @@ public class SecurityInterceptor implements ContainerRequestFilter {
     @javax.ws.rs.core.Context
     private HttpServletRequest httpRequest;
 
-    public SecurityInterceptor() {}
+    public SecurityInterceptor() {
+    }
 
     private Response checkPermissions(ContainerRequestContext requestContext) {
         Method methodToVerify = resourceInfo.getResourceMethod();
@@ -70,17 +72,17 @@ public class SecurityInterceptor implements ContainerRequestFilter {
                 authorization.get(0)
                         .replaceFirst(AFServerConstants.AUTHENTICATION_SCHEME + " ", "");
         String usernameAndPassword;
-        usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes()));
-        final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-        final String nickname = tokenizer.nextToken();
-        final String password = tokenizer.nextToken();
-        PersonManager<Person> personManager = getPersonManager();
-        if (personManager == null) {
-            return AFServerConstants.ACCESS_DENIED;
-        }
-        Person authenticatedUser;
         try {
-            authenticatedUser = personManager.findUser(nickname, password);
+            usernameAndPassword = new String(Base64.getDecoder().decode(encodedUserPassword.getBytes("UTF-8")), "UTF-8");
+
+            final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
+            final String nickname = tokenizer.nextToken();
+            final String password = tokenizer.nextToken();
+            PersonManager<Person> personManager = getPersonManager();
+            if (personManager == null) {
+                return AFServerConstants.ACCESS_DENIED;
+            }
+            Person authenticatedUser = personManager.findUser(nickname, password);
             if (authenticatedUser == null) {
                 return AFServerConstants.ACCESS_DENIED;
             } else {
@@ -94,7 +96,7 @@ public class SecurityInterceptor implements ContainerRequestFilter {
                     }
                 }
             }
-        } catch (BusinessException e) {
+        } catch (BusinessException | UnsupportedEncodingException e) {
             return AFServerConstants.SERVER_ERROR;
         }
         return null;

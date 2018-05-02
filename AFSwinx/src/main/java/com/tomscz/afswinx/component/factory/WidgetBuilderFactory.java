@@ -45,9 +45,6 @@ public class WidgetBuilderFactory {
         SupportedWidgets widgetType = fieldInfo.getWidgetType();
         WidgetBuilder fieldBuilder;
         fieldBuilder = createWidgetBuilder(widgetType);
-        if (fieldBuilder == null) {
-            fieldBuilder = new InputBuilder();
-        }
         return fieldBuilder;
     }
 

@@ -46,7 +46,7 @@ public class BatteryConnectionScoringUnit implements Scoring {
         }
         if (client != null && (client.getDevice().equals(Device.PHONE) || client.getDevice().equals(Device.TABLET))) {
             Double score = (severityValue * 0.7) + (purposeValue * 0.5);
-            if (purpose == Purpose.INFORMATION_MINING && severity == Severity.NICE_TO_HAVE || severity == Severity.NEEDED) {
+            if (purpose == Purpose.INFORMATION_MINING && (severity == Severity.NICE_TO_HAVE || severity == Severity.NEEDED)) {
                 score -= getScoreChangeByBatteryLevel(client);
                 score += getScoreChangeByConnectionType(client);
             }

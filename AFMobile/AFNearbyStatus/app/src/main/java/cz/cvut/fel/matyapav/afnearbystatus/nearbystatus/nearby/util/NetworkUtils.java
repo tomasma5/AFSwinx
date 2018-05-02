@@ -3,10 +3,16 @@ package cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.util;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FilterInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -25,17 +31,17 @@ import static cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.devicestatus.util
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-public class NetworkUtils {
+public class NetworkUtils{
 
-    //hides constructor - this class should never be instantiated
-    private NetworkUtils() {
-    }
 
     public static String nextIpAddress(final String input) {
+        checkIpAddressFormat(input);
         final String[] tokens = input.split("\\.");
-
         for (int i = tokens.length - 1; i >= 0; i--) {
             final int item = Integer.parseInt(tokens[i]);
+            if (item > 255 || item < 0) {
+                throw new IllegalArgumentException("One of IP parts contains number which is not in limits");
+            }
             if (item < 255) {
                 tokens[i] = String.valueOf(item + 1);
                 for (int j = i + 1; j < 4; j++) {
@@ -43,6 +49,7 @@ public class NetworkUtils {
                 }
                 break;
             }
+
         }
         return tokens[0] + '.' +
                 tokens[1] + '.' +
@@ -50,17 +57,41 @@ public class NetworkUtils {
                 tokens[3];
     }
 
+    public static void checkIpAddressFormat(String ipAddress) {
+        if (ipAddress == null || ipAddress.isEmpty()) {
+            throw new IllegalArgumentException("Ip address is null or empty");
+        }
+        final String[] tokens = ipAddress.split("\\.");
+        if (tokens.length != 4) {
+            throw new IllegalArgumentException("IP address has bad format");
+        }
+        for (String token : tokens) {
+            if (token.isEmpty()) {
+                throw new IllegalArgumentException("One of IP parts are missing");
+            }
+            try {
+                final int item = Integer.parseInt(token);
+                if (item > 255 || item < 0) {
+                    throw new IllegalArgumentException("One of IP parts contains number which is not in limits");
+                }
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("One of IP parts does not contain number");
+            }
+        }
+    }
+
     public static int getRangeFromMask(String maskAddress) {
+        checkIpAddressFormat(maskAddress);
         String[] parts = maskAddress.split("\\.");
         int[] ranges = new int[parts.length];
         int i = 0;
-        for(String part : parts){
+        for (String part : parts) {
             int value = Integer.parseInt(part);
             ranges[i] = (255 - value) + 1;
             i++;
         }
         int result = 1;
-        for (int range : ranges){
+        for (int range : ranges) {
             result *= range;
         }
         return result - 2; //first is network address, last is broadcast address
@@ -68,6 +99,7 @@ public class NetworkUtils {
 
     /**
      * Gets mac address from ip address
+     *
      * @param ip ip address
      * @return mac address
      */
@@ -103,6 +135,7 @@ public class NetworkUtils {
 
     /**
      * Gets all ip and mac addresses from ARP Cache
+     *
      * @return hashmap of pairs - ip address, mac address from ARP cache
      */
     private static Map<String, String> getAllIPAndMACAddressesInARPCache() {
@@ -127,7 +160,7 @@ public class NetworkUtils {
      */
     private static ArrayList<String> getLinesInARPCache() {
         ArrayList<String> lines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(NearbyConstants.ARP_LOCATION))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(NearbyConstants.ARP_LOCATION), "UTF-8"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 lines.add(line);
@@ -151,8 +184,7 @@ public class NetworkUtils {
             for (NetworkInterface networkInterface : networkInterfaces) {
                 if (!networkInterface.getName().equalsIgnoreCase(NETWORK_INTERFACE_WLAN_0))
                     continue;
-                byte[] macBytes = new byte[0];
-                macBytes = networkInterface.getHardwareAddress();
+                byte[] macBytes = networkInterface.getHardwareAddress();
                 if (macBytes == null) {
                     return null;
                 }

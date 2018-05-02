@@ -64,7 +64,7 @@ public class Person {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.hireDate = hireDate;
+        this.hireDate = new Date(hireDate.getTime());
         this.active = active;
         this.age = age;
         this.gender = gender;
@@ -169,11 +169,11 @@ public class Person {
 
     @UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
     public Date getHireDate() {
-        return hireDate;
+        return new Date(hireDate.getTime());
     }
 
     public void setHireDate(Date hireDate) {
-        this.hireDate = hireDate;
+        this.hireDate = new Date(hireDate.getTime());
     }
 
     

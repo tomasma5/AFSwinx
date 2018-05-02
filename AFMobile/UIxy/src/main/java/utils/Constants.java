@@ -21,7 +21,7 @@ public class Constants {
     public static final String FIELD_ID = "id";
     public static final String WIDGET_TYPE = "widgetType";
     public static final String FIELD_VISIBILITY = "visible";
-    public static String CLASS_NAME = "name";
+    public static final String CLASS_NAME = "name";
 
     public static final String SCREEN_HEADER = "Screen";
     public static final String APPLICATION_HEADER = "Application";

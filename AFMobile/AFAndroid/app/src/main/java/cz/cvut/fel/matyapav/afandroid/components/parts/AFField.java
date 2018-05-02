@@ -38,9 +38,9 @@ public class AFField {
         if (fieldInfo.getRules() != null) {
             for (ValidationRule rule : fieldInfo.getRules()) {
                 AFValidator validator = ValidatorFactory.getInstance().getValidator(rule);
-                System.out.println("VALIDATION RULE " + rule.toString());
-                System.out.println("VALIDATOR " + validator.toString());
                 if(validator != null) {
+                    System.out.println("VALIDATION RULE " + rule.toString());
+                    System.out.println("VALIDATOR " + validator.toString());
                     boolean validationResult = validator.validate(context, this, errorMsgs, rule);
                     if (allValidationsFine) { //if once false stays false
                         allValidationsFine = validationResult;

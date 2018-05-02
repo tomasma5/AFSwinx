@@ -1,6 +1,8 @@
 package cz.cvut.fel.matyapav.afandroid.components.types;
 
 import android.view.View;
+
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +72,7 @@ public class AFMenu {
         return menuButtons;
     }
 
-    class MenuOrderComparator implements Comparator<String> {
+    static class MenuOrderComparator implements Comparator<String>, Serializable {
 
         HashMap<String, AFScreenButton> map = new HashMap<>();
 

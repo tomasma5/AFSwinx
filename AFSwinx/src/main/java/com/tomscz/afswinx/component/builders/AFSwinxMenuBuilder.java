@@ -51,7 +51,7 @@ public class AFSwinxMenuBuilder {
 
         con.setRequestProperty("Application", AFSwinx.getInstance().getProxyApplicationContext());
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
         String inputLine;
         StringBuilder response = new StringBuilder();
 

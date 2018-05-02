@@ -81,7 +81,7 @@ public class DataSenderTask extends AsyncTask<Void, Integer, Object> {
                 System.err.println("RESPONSE IS " + response);
             }
             return response;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return e;
         } finally {
@@ -93,7 +93,7 @@ public class DataSenderTask extends AsyncTask<Void, Integer, Object> {
 
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         StringBuilder sb = new StringBuilder();
-        BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         String line;
         while ((line = rd.readLine()) != null) {
             sb.append(line);

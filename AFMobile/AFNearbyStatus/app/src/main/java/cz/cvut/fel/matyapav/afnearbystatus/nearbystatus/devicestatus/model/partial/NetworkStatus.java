@@ -37,7 +37,7 @@ public class NetworkStatus {
     }
 
     public void setNetworkSubtypeName(String networkSubtypeName) {
-        if(!networkSubtypeName.isEmpty()) {
+        if(networkSubtypeName != null && !networkSubtypeName.isEmpty()) {
             this.networkSubtypeName = networkSubtypeName;
         }
     }

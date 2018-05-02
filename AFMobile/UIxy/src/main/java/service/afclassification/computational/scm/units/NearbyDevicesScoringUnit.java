@@ -74,7 +74,7 @@ public class NearbyDevicesScoringUnit implements Scoring {
         }
         if (client != null && (client.getDevice().equals(Device.PHONE) || client.getDevice().equals(Device.TABLET))) {
             Double score = (severityValue * 0.7) + (purposeValue * 0.5);
-            if (purpose == Purpose.SYSTEM_IDENTIFICATION || purpose == Purpose.SYSTEM_INFORMATION &&
+            if (purpose == Purpose.INFORMATION_MINING || purpose == Purpose.SYSTEM_INFORMATION &&
                     pastNearbyDevices != null && !pastUser.isEmpty() && client.getNearbyDevices() != null) {
                 double similarity = getNearbyDeviceSetupSimilarity(client);
                 NearbyDeviceSetupSimilarity nearbyDeviceSetupSimilarity = NearbyDeviceSetupSimilarity.getEnumBySimilarityValue(similarity);

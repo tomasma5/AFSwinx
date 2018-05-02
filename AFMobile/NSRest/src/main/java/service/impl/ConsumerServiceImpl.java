@@ -71,7 +71,7 @@ public class ConsumerServiceImpl implements ConsumerService {
 
             //readResponse only if api returned something
             if (responseCode < HttpURLConnection.HTTP_INTERNAL_ERROR) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
                 StringBuilder response = new StringBuilder();
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {

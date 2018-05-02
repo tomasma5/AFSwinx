@@ -1,4 +1,4 @@
-package service.afclassification.computational;
+package service.afclassification;
 
 import model.Application;
 import model.afclassification.BCPhase;

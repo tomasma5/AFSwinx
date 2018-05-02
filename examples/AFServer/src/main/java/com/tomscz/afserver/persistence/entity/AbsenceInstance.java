@@ -65,11 +65,11 @@ public class AbsenceInstance {
 	@UiLabel(value = "absenceInstance.startDate")
 	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
 	public Date getStartDate() {
-		return startDate;
+		return new Date(startDate.getTime());
 	}
 
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		this.startDate = new Date(startDate.getTime());
 	}
 
 	@UiRequired
@@ -77,11 +77,11 @@ public class AbsenceInstance {
 	@UiLabel(value = "absenceInstance.endDate")
 	@UILayout(labelPossition = LabelPosition.BEFORE, layout = LayouDefinitions.ONECOLUMNLAYOUT, layoutOrientation = LayoutOrientation.AXISY)
 	public Date getEndDate() {
-		return endDate;
+		return new Date(endDate.getTime());
 	}
 
 	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+		this.endDate = new Date(endDate.getTime());
 	}
 
 	@UiLabel(value = "absenceInstance.state")

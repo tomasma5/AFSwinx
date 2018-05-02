@@ -1,4 +1,4 @@
-package service.afclassification.computational;
+package service.afclassification;
 
 import com.tomscz.afrest.commons.SupportedValidations;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
@@ -9,7 +9,6 @@ import model.Application;
 import model.afclassification.*;
 import service.afclassification.computational.ccm.units.Classification;
 import service.afclassification.computational.scm.units.Scoring;
-import service.rest.impl.ComponentResourceServiceImpl;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -166,13 +165,9 @@ public class AFClassification {
     }
 
     private void enableRequiredOnField(AFFieldInfo fieldInfo) {
-        if (removeRequiredRuleFromField(fieldInfo, false) || removeRequiredRuleFromField(fieldInfo, true)) {
-            //present should be replaced
-            fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
-        } else {
-            //not present at all
-            fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
-        }
+        removeRequiredRuleFromField(fieldInfo, false);
+        removeRequiredRuleFromField(fieldInfo, true);
+        fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
         fieldInfo.setVisible(true);
     }
 

@@ -11,9 +11,7 @@ import java.io.Serializable;
  * @Author Pavel Matyáš (matyapav@fel.cvut.cz)
  */
 @RequestScoped
-public class RequestContext implements Serializable{
-
-    private static final long serialVersionUID = -5039880007004887337L;
+public class RequestContext{
 
     private Application currentApplication;
 

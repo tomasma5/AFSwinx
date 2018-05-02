@@ -294,4 +294,7 @@ public abstract class BaseWidgetBuilder implements WidgetBuilder {
         fieldInfo.addOption(new AFOptions("", valueLocalized));
     }
 
+    public Component getCoreComponent() {
+        return coreComponent;
+    }
 }

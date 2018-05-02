@@ -9,6 +9,7 @@ import com.tomscz.afswinx.rest.connection.ConnectionSecurity;
 import com.tomscz.afswinx.rest.connection.HttpMethod;
 import com.tomscz.afswinx.rest.connection.SecurityMethod;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ConnectException;
@@ -78,7 +79,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
     }
 
     public RequestTask setConnectionSecurity(ConnectionSecurity security) {
-        this.connectionSecurity = connectionSecurity;
+        this.connectionSecurity = security;
         return this;
     }
 
@@ -121,7 +122,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
 
             if (connectionSecurity != null) {
                 if (connectionSecurity.getMethod().equals(SecurityMethod.BASIC)) {
-                    String encoded = Base64.encodeToString((connectionSecurity.getUserName() + ":" + connectionSecurity.getPassword()).getBytes(), Base64.NO_WRAP);
+                    String encoded = Base64.encodeToString((connectionSecurity.getUserName() + ":" + connectionSecurity.getPassword()).getBytes("UTF-8"), Base64.NO_WRAP);
                     urlConnection.setRequestProperty("Authorization", "Basic " + encoded);
                     System.out.println("SECURITY " + "Basic " + encoded);
                 }
@@ -149,7 +150,7 @@ public class RequestTask extends AsyncTask<String, Integer, Object> {
                 System.err.println("RESPONSE IS " + response);
             }
             return response;
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return e;
         } finally {

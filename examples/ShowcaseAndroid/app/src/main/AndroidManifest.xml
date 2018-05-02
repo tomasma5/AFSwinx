@@ -49,7 +49,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cz.cvut.fel.matyapav.showcase.BusinessTripPartsActivity" />
         </activity>
-        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

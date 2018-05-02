@@ -76,8 +76,8 @@ public abstract class AbstractGenericDaoImpl<T extends DtoEntity> implements Abs
         sb.append(whereCondition);
         Query query = getEntityManager().createQuery(sb.toString());
 
-        for (String key : sqlParams.keySet()) {
-            query.setParameter(key, sqlParams.get(key));
+        for (Map.Entry<String, Object> entry : sqlParams.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
         }
         return (Long) query.getSingleResult();
     }
@@ -104,8 +104,8 @@ public abstract class AbstractGenericDaoImpl<T extends DtoEntity> implements Abs
         sb.append("SELECT e FROM ").append(clazz.getAnnotation(Table.class).name()).append(" e WHERE ");
         sb.append(whereCondition);
         Query query = entityManager.createQuery(sb.toString());
-        for (String key : sqlParams.keySet()) {
-            query.setParameter(key, sqlParams.get(key));
+        for (Map.Entry<String, Object> entry : sqlParams.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
         }
         return query;
     }

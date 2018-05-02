@@ -21,20 +21,21 @@ public class NearbyStatusFacadeBuilder {
     private NearbyFinderManager nearbyFinderManager;
     private DeviceStatusManager deviceStatusManager;
     private SearchEvent nearbyDevicesSearchEvent;
-    private String serverUrl;
     private boolean executePeriodically = false;
+    private String serverUrl;
     private long periodicTime;
 
     //hide constructor of this class - singleton class should never be instantiated
-    private NearbyStatusFacadeBuilder(){
+    private NearbyStatusFacadeBuilder() {
     }
 
     /**
      * Gets instance of {@link NearbyStatusFacadeBuilder}
+     *
      * @return instnce of builder
      */
     public static synchronized NearbyStatusFacadeBuilder getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new NearbyStatusFacadeBuilder();
         }
         return instance;
@@ -43,6 +44,7 @@ public class NearbyStatusFacadeBuilder {
     /**
      * Initializes builder - prepares all needed parts used in building process
      * Must be called right after getting instance of {@link NearbyStatusFacadeBuilder}!
+     *
      * @param context application context - it requires context
      * @return initialized instance of builder
      */
@@ -54,10 +56,11 @@ public class NearbyStatusFacadeBuilder {
 
     /**
      * Sets recommended timeout of both nearby devices finding and status mining processes
+     *
      * @param recommendedTimeout recommended timout in milliseconds
      * @return updated instance of builder
      */
-    public NearbyStatusFacadeBuilder setRecommendedTimeoutForNearbySearch(int recommendedTimeout){
+    public NearbyStatusFacadeBuilder setRecommendedTimeoutForNearbySearch(int recommendedTimeout) {
         try {
             nearbyFinderManager.setRecommendedTimeout(recommendedTimeout);
         } catch (NullPointerException npe) {
@@ -80,13 +83,13 @@ public class NearbyStatusFacadeBuilder {
      * means the finder will not be used (turned off) if battery level is below this limit.
      *
      * @param nearbyDevicesFinder nearby devices finder
-     * @param batteryLevelLimit battery level limitation
+     * @param batteryLevelLimit   battery level limitation
      * @return updated instance of builder
      */
-    public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit){
+    public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder, int batteryLevelLimit) {
         try {
             nearbyFinderManager.addNearbyDevicesFinder(nearbyDevicesFinder, batteryLevelLimit);
-        }  catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             logUninitializedManagerError();
             npe.printStackTrace();
             return null;
@@ -106,10 +109,10 @@ public class NearbyStatusFacadeBuilder {
      * @param nearbyDevicesFinder nearby devices finder
      * @return updated instance of builder
      */
-    public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder){
+    public NearbyStatusFacadeBuilder addNearbyDevicesFinder(AbstractNearbyDevicesFinder nearbyDevicesFinder) {
         try {
             nearbyFinderManager.addNearbyDevicesFinder(nearbyDevicesFinder);
-        }  catch (NullPointerException npe) {
+        } catch (NullPointerException npe) {
             logUninitializedManagerError();
             npe.printStackTrace();
             return null;
@@ -120,10 +123,11 @@ public class NearbyStatusFacadeBuilder {
     /**
      * Adds status miner to miners list - if miner is added it will be considered during device
      * status mining process.
+     *
      * @param statusMiner status miner
      * @return updated instance of builder
      */
-    public NearbyStatusFacadeBuilder addStatusMiner(AbstractStatusMiner statusMiner){
+    public NearbyStatusFacadeBuilder addStatusMiner(AbstractStatusMiner statusMiner) {
         try {
             deviceStatusManager.addStatusMiner(statusMiner);
         } catch (NullPointerException npe) {
@@ -134,7 +138,13 @@ public class NearbyStatusFacadeBuilder {
         return this;
     }
 
-    public NearbyStatusFacadeBuilder sendDataToServer(String url){
+    /**
+     * Sends data after timeout to specified URL.
+     *
+     * @param url endpoint
+     * @return updated instance of builder
+     */
+    public NearbyStatusFacadeBuilder sendDataToServer(String url) {
         this.serverUrl = url;
         return this;
     }
@@ -142,11 +152,11 @@ public class NearbyStatusFacadeBuilder {
     /**
      * Builds nearby devices finding and device status mining processes execution {@link NearbyStatusFacade}
      * from properties previously set to {@link NearbyStatusFacadeBuilder}
+     *
      * @return execution facade
      */
     public NearbyStatusFacade build() {
-        return new NearbyStatusFacade(nearbyFinderManager, deviceStatusManager,
-                nearbyDevicesSearchEvent, executePeriodically, periodicTime, serverUrl != null, serverUrl);
+        return new NearbyStatusFacade(nearbyFinderManager, deviceStatusManager, nearbyDevicesSearchEvent, executePeriodically, periodicTime, serverUrl);
     }
 
     /**
@@ -155,7 +165,6 @@ public class NearbyStatusFacadeBuilder {
     private void logUninitializedManagerError() {
         Log.e(GlobalConstants.APPLICATION_TAG, "Nearby finder manager was not initialized. You probably forgot to call initialize");
     }
-
 
 
 }

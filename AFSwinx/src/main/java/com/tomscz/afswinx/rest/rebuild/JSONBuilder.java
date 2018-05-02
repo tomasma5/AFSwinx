@@ -26,7 +26,6 @@ public class JSONBuilder extends BaseRestBuilder {
 
     private static String baseClass = "dummy";
 
-    StringBuilder sb = new StringBuilder();
     AFDataPack dataPack = new AFDataPack(baseClass);
     List<AFDataPack> moreDatas = new ArrayList<AFDataPack>();
 

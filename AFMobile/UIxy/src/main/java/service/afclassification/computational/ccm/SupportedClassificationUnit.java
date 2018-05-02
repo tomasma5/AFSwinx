@@ -2,8 +2,7 @@ package service.afclassification.computational.ccm;
 
 public enum SupportedClassificationUnit {
 
-    BASIC("Basic classification unit"),
-    BASIC2("Alternative basic classification unit");
+    BASIC("Basic classification unit");
 
     private String name;
 

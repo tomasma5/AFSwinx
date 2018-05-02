@@ -1,7 +1,7 @@
 package model;
 
 /**
- * @Author Roman Kuchár <kucharrom@gmail.com>.
+ * @Author Pavel Matyáš <matyapav@fel.cvut.cz>.
  */
 public abstract class DtoEntity {
 
