@@ -11,7 +11,8 @@ import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;
 import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
-import cz.cvut.fel.matyapav.nearbytest.nearbystatus.nearby.util.NetworkUtils;
+
+import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.nearby.util.NetworkUtils;
 import cz.cvut.fel.matyapav.showcase.fragments.BaseFragment;
 
 /**

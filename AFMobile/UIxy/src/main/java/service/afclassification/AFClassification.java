@@ -57,9 +57,9 @@ public class AFClassification {
             GeneratedField result = classifyField(field, client, configurationPack, application);
             System.out.println("Classification of field took " + (System.currentTimeMillis() - start) + " ms");
             if (result != null) {
-                System.out.println("The field :" + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
+                System.out.println("The field " + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
                 AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
-                editFieldProperties(metaModelPack.getClassInfo(), field, result, fieldInfo);
+                editFieldProperties(metaModelPack, field, result, fieldInfo);
             }
         }
     }
@@ -78,7 +78,7 @@ public class AFClassification {
         return generatedField;
     }
 
-    private void editFieldProperties(AFClassInfo classInfo, BCField field, GeneratedField result, AFFieldInfo fieldInfo) {
+    private void editFieldProperties(AFMetaModelPack metaModelPack, BCField field, GeneratedField result, AFFieldInfo fieldInfo) {
         if (fieldInfo != null) {
             switch (result.getBehavior()) {
                 case REQUIRED:
@@ -97,7 +97,7 @@ public class AFClassification {
                     fieldInfo.setVisible(false);
                     break;
                 case NOT_PRESENT:
-                    removeFieldInfoFromMetaModel(classInfo, field.getField().getFieldName());
+                    removeFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
                     break;
                 default:
                     break;
@@ -116,6 +116,7 @@ public class AFClassification {
         }
         return null;
     }
+
 
     private AFClassInfo getProperAfClassInfo(AFClassInfo classInfo, String fieldId) {
         if (!fieldId.contains(".")) {
@@ -140,20 +141,24 @@ public class AFClassification {
                 indexToRemove = i;
                 break;
             }
+            i++;
         }
         if (indexToRemove != -1) {
             properClassInfo.getFieldInfo().remove(indexToRemove);
+            System.out.println(fieldId + " successfully removed");
         }
     }
 
 
     private void doNotValidateField(AFFieldInfo fieldInfo) {
+        System.out.println("[AFClassification] Clearing validations of " + fieldInfo.getId());
         if (fieldInfo.getRules() != null) {
             fieldInfo.getRules().clear();
         }
     }
 
     private void disableRequiredOnField(AFFieldInfo fieldInfo) {
+        System.out.println("[AFClassification] Disabling REQUIRED on field " + fieldInfo.getId());
         if (fieldInfo.getRules() != null) {
             if (removeRequiredRuleFromField(fieldInfo, true)) {
                 fieldInfo.getRules().add(new AFValidationRule(SupportedValidations.REQUIRED, "false"));
@@ -162,6 +167,7 @@ public class AFClassification {
     }
 
     private void enableRequiredOnField(AFFieldInfo fieldInfo) {
+        System.out.println("[AFClassification] Enabling REQUIRED on field " + fieldInfo.getId());
         removeRequiredRuleFromField(fieldInfo, false);
         removeRequiredRuleFromField(fieldInfo, true);
         fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));

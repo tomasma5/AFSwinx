@@ -9,7 +9,7 @@ public class ProxyConstants {
 
     public static final String BTN_KEY_LOGIN = "Login";
     public static final String BTN_KEY_COUNTRIES = "Supported countries";
-    public static final String BTN_KEY_VEHICLES = "Vehicles";
+    public static final String BTN_KEY_VEHICLES = "Vehicle management";
     public static final String BTN_KEY_PROFILE = "Profile";
     public static final String BTN_KEY_ABSENCE_TYPE = "Absence type management";
     public static final String BTN_KEY_CREATE_ABSENCE = "Create absence";
