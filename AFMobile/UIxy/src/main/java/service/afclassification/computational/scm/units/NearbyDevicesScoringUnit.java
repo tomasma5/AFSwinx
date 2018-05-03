@@ -56,7 +56,7 @@ public class NearbyDevicesScoringUnit implements Scoring {
                 pastUser = HttpUtils.getRequest(getUrlForLastUser(application, endpoint), null);
             }
         } catch (IOException e) {
-            System.err.println("Cannot get data from server ");
+            System.err.println("[Classification]Cannot get data from server ");
             e.printStackTrace();
         }
     }
@@ -75,16 +75,17 @@ public class NearbyDevicesScoringUnit implements Scoring {
             return severityValue;
         }
         if (client != null && (client.getDevice().equals(Device.PHONE) || client.getDevice().equals(Device.TABLET))) {
-            Double score = (severityValue * 0.7) + (purposeValue * 0.5);
-            System.out.println("[NearbyDevicesScoringUnit] START score for purpose " + purpose + " and severity " + severity + " is " + score);
-            if (purpose == Purpose.INFORMATION_MINING || purpose == Purpose.SYSTEM_INFORMATION &&
-                    pastNearbyDevices != null && !pastUser.isEmpty() && client.getNearbyDevices() != null) {
+            Double score = (severityValue * 0.8) + (purposeValue * 0.6);
+            System.out.println("[Classification][NearbyDevicesScoringUnit] START score for purpose " + purpose + " and severity " + severity + " is " + score);
+            if ((purpose == Purpose.INFORMATION_MINING || purpose == Purpose.SYSTEM_INFORMATION) && pastNearbyDevices != null && !pastUser.isEmpty()) {
                 double similarity = getNearbyDeviceSetupSimilarity(client);
                 NearbyDeviceSetupSimilarity nearbyDeviceSetupSimilarity = NearbyDeviceSetupSimilarity.getEnumBySimilarityValue(similarity);
-                System.out.println("[NearbyDevicesScoringUnit] It is considered to be "+ nearbyDeviceSetupSimilarity +
-                        " setup. Similarity was from "+ nearbyDeviceSetupSimilarity.getThresholdFrom() + " to "
-                        + nearbyDeviceSetupSimilarity.getThresholdTo());
-                score -= rankedNearbyDeviceSetup.get(nearbyDeviceSetupSimilarity);
+                if (nearbyDeviceSetupSimilarity != null) {
+                    System.out.println("[Classification][NearbyDevicesScoringUnit] It is considered to be " + nearbyDeviceSetupSimilarity +
+                            " setup. Similarity was from " + nearbyDeviceSetupSimilarity.getThresholdFrom() + " to "
+                            + nearbyDeviceSetupSimilarity.getThresholdTo());
+                    score -= rankedNearbyDeviceSetup.get(nearbyDeviceSetupSimilarity);
+                }
             }
             if (score > 100D) {
                 score = 100D;
@@ -92,7 +93,7 @@ public class NearbyDevicesScoringUnit implements Scoring {
             if (score < 0D) {
                 score = 0D;
             }
-            System.out.println("[NearbyDevicesScoringUnit] FINAL score for purpose " + purpose + " and severity " + severity + " is " + score);
+            System.out.println("[Classification][NearbyDevicesScoringUnit] FINAL score for purpose " + purpose + " and severity " + severity + " is " + score);
             return score;
 
         }
@@ -101,13 +102,18 @@ public class NearbyDevicesScoringUnit implements Scoring {
 
 
     private double getNearbyDeviceSetupSimilarity(Client client) {
-        if (pastUser == null || !pastUser.equals(client.getUsername())) {
+        if (pastUser == null || !pastUser.equals(client.getUsername()) ) {
             //different user - check information again
-            System.err.println("[NearbyDevicesScoringUnit] Cannot compare context data for different user");
+            System.err.println("[Classification][NearbyDevicesScoringUnit] Cannot compare context data for different user");
+            return 0D;
+        }
+        if(client.getNearbyDevices() == null) {
+            //no nearby devices found .. setup is different or we cannot decide
             return 0D;
         }
 
         double devicesFound = 0;
+        System.out.println(client.toString());
         for (NearbyDevice currentDevice : client.getNearbyDevices()) {
             for (NearbyDevice pastDevice : pastNearbyDevices) {
                 if (currentDevice.getMacAddress().equals(pastDevice.getMacAddress())) {
@@ -116,8 +122,9 @@ public class NearbyDevicesScoringUnit implements Scoring {
                 }
             }
         }
-        double result = (devicesFound / pastNearbyDevices.size()) * 100D;
-        System.out.println("[NearbyDevicesScoringUnit] New context data has " + result + " % of last context data nearby devices ");
+        double size = (client.getNearbyDevices().size() > pastNearbyDevices.size() ? client.getNearbyDevices().size() : pastNearbyDevices.size());
+        double result = (devicesFound / size) * 100D;
+        System.out.println("[Classification][NearbyDevicesScoringUnit] New context data has " + result + " % of last context data nearby devices ");
         return result;
     }
 

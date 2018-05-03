@@ -20,7 +20,7 @@ public class BaseClassificationUnit implements Classification {
 		for (Configuration config : configurations.getConfigurations()) {
 			if (score >= config.getThresholdStart() && score <= config.getThresholdEnd()) {
 				selectedConfiguration = config;
-				System.out.println("[BaseClassificationUnit] Behavior " + selectedConfiguration.getBehavior() +
+				System.out.println("[Classification][BaseClassificationUnit] Behavior " + selectedConfiguration.getBehavior() +
 						" was chosen! Score was "+ score + " and config thresholds were from " + config.getThresholdStart() + "" +
 						" to " + config.getThresholdEnd());
 				break;

@@ -61,13 +61,14 @@ public class AvaiableCountryView extends BaseView {
             // Because of security policy, get logged user
 
             SecurityContext securityContext = ApplicationContext.getInstance().getSecurityContext();
-
+            long start = System.currentTimeMillis();
             AFSwinxForm form = getScreenDefinition()
                     .getFormBuilderByKey(COUNTRY_FORM)
                     .setLocalization(ApplicationContext.getInstance().getLocalization())
                     .setConnectionParameters(securityContext != null ? securityContext.getUserNameAndPasswodr() : null)
                     .setSkin(new MySkin())
                     .buildComponent();
+            System.out.println("Creating took " + (System.currentTimeMillis() - start) + " ms");
             centerPanel.add(form);
             //Add buttons
             addCountryButton =

@@ -153,12 +153,12 @@ public class ComponentManagementServiceImpl implements ComponentManagementServic
 
         if (isConnectionActive(req, ParameterNames.DATA) &&
                 componentResource.getProxyConnections().getDataConnection() == null) {
-            componentResource.getProxyConnections().setModelConnection(createComponentConnection());
+            componentResource.getProxyConnections().setDataConnection(createComponentConnection());
         }
 
         if (isConnectionActive(req, ParameterNames.SEND) &&
                 componentResource.getProxyConnections().getSendConnection() == null) {
-            componentResource.getProxyConnections().setModelConnection(createComponentConnection());
+            componentResource.getProxyConnections().setSendConnection(createComponentConnection());
         }
     }
 

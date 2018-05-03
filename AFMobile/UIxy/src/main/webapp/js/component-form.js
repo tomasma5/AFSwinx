@@ -43,6 +43,11 @@ function createInputTextElement(id, placeholder) {
 
 function toggleConnection(connectionType) {
     var checkbox = document.getElementById(connectionType + "ConnectionActive");
+    if(checkbox.checked){
+        checkbox.value = 1;
+    } else {
+        checkbox.value = 0;
+    }
     var modelConnectionForm = document.getElementById(connectionType + "Connection");
     if (!checkbox.checked) {
         disableInputs(modelConnectionForm, true);

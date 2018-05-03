@@ -99,4 +99,17 @@ public class Client {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "knowledge=" + knowledge +
+                ", clientProperties=" + clientProperties +
+                ", nearbyDevices=" + nearbyDevices +
+                ", device=" + device +
+                ", deviceIdentifier='" + deviceIdentifier + '\'' +
+                ", action='" + action + '\'' +
+                ", username='" + username + '\'' +
+                '}';
+    }
 }

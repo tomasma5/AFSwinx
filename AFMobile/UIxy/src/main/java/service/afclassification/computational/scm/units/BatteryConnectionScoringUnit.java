@@ -47,7 +47,7 @@ public class BatteryConnectionScoringUnit implements Scoring {
         }
         if (client != null && (client.getDevice().equals(Device.PHONE) || client.getDevice().equals(Device.TABLET))) {
             Double score = (severityValue * 0.7) + (purposeValue * 0.5);
-            System.out.println("[BatteryConnectionScoringUnit] START score for purpose " + purpose + " and severity " + severity + " is " + score);
+            System.out.println("[Classification][BatteryConnectionScoringUnit] START score for purpose " + purpose + " and severity " + severity + " is " + score);
             if (purpose == Purpose.INFORMATION_MINING && (severity == Severity.NICE_TO_HAVE || severity == Severity.NEEDED)) {
                 score -= getScoreChangeByBatteryLevel(client);
                 score += getScoreChangeByConnectionType(client);
@@ -58,7 +58,7 @@ public class BatteryConnectionScoringUnit implements Scoring {
             if (score < 0D) {
                 score = 0D;
             }
-            System.out.println("[BatteryConnectionScoringUnit] FINAL score for purpose " + purpose + " and severity " + severity + " is " + score);
+            System.out.println("[Classification][BatteryConnectionScoringUnit] FINAL score for purpose " + purpose + " and severity " + severity + " is " + score);
             return score;
         }
         return null;
@@ -72,7 +72,7 @@ public class BatteryConnectionScoringUnit implements Scoring {
                 break;
             }
         }
-        System.out.println("[BatteryConnectionScoringUnit] Score changed because of connection type by " + result);
+        System.out.println("[Classification][BatteryConnectionScoringUnit] Score changed because of connection type by " + result);
         return result;
     }
 
@@ -92,13 +92,13 @@ public class BatteryConnectionScoringUnit implements Scoring {
             if (batteryCapacityStr != null && chargingStr != null) {
                 double batteryCapacity = Integer.parseInt(batteryCapacityStr);
                 boolean charging = Boolean.valueOf(chargingStr);
-                System.out.println("[BatteryConnectionScoringUnit] Battery has capacity of " + batteryCapacity + " and " + (charging? "is charging" : "is not charging"));
+                System.out.println("[Classification][BatteryConnectionScoringUnit] Battery has capacity of " + batteryCapacity + " and " + (charging? "is charging" : "is not charging"));
                 if (!charging) {
                     result = (100D - batteryCapacity) * 0.4;
                 }
             }
         }
-        System.out.println("[BatteryConnectionScoringUnit] Score changed because of battery level by " + result);
+        System.out.println("[Classification][BatteryConnectionScoringUnit] Score changed because of battery level by " + result);
         return result;
     }
 

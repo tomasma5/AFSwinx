@@ -40,12 +40,13 @@ public class PersonView extends BaseView {
             centerPanel.setAlignmentX(LEFT_ALIGNMENT);
             HashMap<String, String> securityConstrains =
                     ApplicationContext.getInstance().getSecurityContext().getUserNameAndPasswodr();
-
+            long start = System.currentTimeMillis();
             AFSwinxForm form = getScreenDefinition().getFormBuilderByKey(PERSON_FORM)
                             .setConnectionParameters(securityConstrains)
                             .setLocalization(ApplicationContext.getInstance().getLocalization())
                             .setSkin(new LongInputSkin()).buildComponent();
             centerPanel.add(form);
+            System.out.println("Creating took " + (System.currentTimeMillis() - start) + " ms");
             Box buttonBox = Box.createHorizontalBox();
             buttonBox.add(Box.createHorizontalStrut(60));
             updateButton =

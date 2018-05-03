@@ -52,12 +52,12 @@ public class AFClassification {
      */
     public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, ConfigurationPack configurationPack, List<BCField> fieldList, Application application) {
         for (BCField field : fieldList) {
-            System.out.println("Classifing field: " + field.getField().getFieldName());
+            System.out.println("[Classification][AFClassification] Classifing field: " + field.getField().getFieldName());
             long start = System.currentTimeMillis();
             GeneratedField result = classifyField(field, client, configurationPack, application);
-            System.out.println("Classification of field took " + (System.currentTimeMillis() - start) + " ms");
+            System.out.println("[Classification][AFClassification] Classification of field took " + (System.currentTimeMillis() - start) + " ms");
             if (result != null) {
-                System.out.println("The field " + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
+                System.out.println("[Classification][AFClassification] The field " + field.getField().getFieldName() + " has behavior: " + result.getBehavior());
                 AFFieldInfo fieldInfo = getFieldInfoFromMetaModel(metaModelPack.getClassInfo(), field.getField().getFieldName());
                 editFieldProperties(metaModelPack, field, result, fieldInfo);
             }
@@ -108,7 +108,7 @@ public class AFClassification {
     private AFFieldInfo getFieldInfoFromMetaModel(AFClassInfo classInfo, String fieldId) {
 
         AFClassInfo properClassInfo = getProperAfClassInfo(classInfo, fieldId);
-        //fieldId = fieldId.contains(".") ? fieldId.substring(fieldId.lastIndexOf('.') + 1) : fieldId;
+        fieldId = fieldId.contains(".") ? fieldId.substring(fieldId.lastIndexOf('.') + 1) : fieldId;
         for (AFFieldInfo fieldInfo : properClassInfo.getFieldInfo()) {
             if (fieldInfo.getId().equals(fieldId)) {
                 return fieldInfo;
@@ -151,14 +151,14 @@ public class AFClassification {
 
 
     private void doNotValidateField(AFFieldInfo fieldInfo) {
-        System.out.println("[AFClassification] Clearing validations of " + fieldInfo.getId());
+        System.out.println("[Classification][AFClassification] Clearing validations of " + fieldInfo.getId());
         if (fieldInfo.getRules() != null) {
             fieldInfo.getRules().clear();
         }
     }
 
     private void disableRequiredOnField(AFFieldInfo fieldInfo) {
-        System.out.println("[AFClassification] Disabling REQUIRED on field " + fieldInfo.getId());
+        System.out.println("[Classification][AFClassification] Disabling REQUIRED on field " + fieldInfo.getId());
         if (fieldInfo.getRules() != null) {
             if (removeRequiredRuleFromField(fieldInfo, true)) {
                 fieldInfo.getRules().add(new AFValidationRule(SupportedValidations.REQUIRED, "false"));
@@ -167,7 +167,7 @@ public class AFClassification {
     }
 
     private void enableRequiredOnField(AFFieldInfo fieldInfo) {
-        System.out.println("[AFClassification] Enabling REQUIRED on field " + fieldInfo.getId());
+        System.out.println("[Classification][AFClassification] Enabling REQUIRED on field " + fieldInfo.getId());
         removeRequiredRuleFromField(fieldInfo, false);
         removeRequiredRuleFromField(fieldInfo, true);
         fieldInfo.addRule(new AFValidationRule(SupportedValidations.REQUIRED, "true"));
