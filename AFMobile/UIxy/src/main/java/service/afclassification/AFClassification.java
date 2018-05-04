@@ -103,6 +103,7 @@ public class AFClassification {
                     break;
             }
         }
+        System.out.println(fieldInfo);
     }
 
     private AFFieldInfo getFieldInfoFromMetaModel(AFClassInfo classInfo, String fieldId) {
@@ -158,9 +159,9 @@ public class AFClassification {
     }
 
     private void disableRequiredOnField(AFFieldInfo fieldInfo) {
-        System.out.println("[Classification][AFClassification] Disabling REQUIRED on field " + fieldInfo.getId());
         if (fieldInfo.getRules() != null) {
             if (removeRequiredRuleFromField(fieldInfo, true)) {
+                System.out.println("[Classification][AFClassification] Disabling REQUIRED on field " + fieldInfo.getId());
                 fieldInfo.getRules().add(new AFValidationRule(SupportedValidations.REQUIRED, "false"));
             }
         }

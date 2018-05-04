@@ -26,6 +26,9 @@ public enum NearbyDeviceSetupSimilarity {
     }
 
     public static NearbyDeviceSetupSimilarity getEnumBySimilarityValue(double similarity) {
+        if(similarity == 0){
+            return DIFFERENT;
+        }
         for (NearbyDeviceSetupSimilarity enumConstant : NearbyDeviceSetupSimilarity.class.getEnumConstants()) {
             if (similarity > enumConstant.getThresholdFrom() && similarity <= enumConstant.getThresholdTo()) {
                 return enumConstant;

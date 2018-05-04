@@ -27,6 +27,6 @@ public class MaxCharsValidator implements AFValidator {
         if(!validationIsFine){
             errorMsgs.append(Localization.translate(context, "validation.maxchars"));
         }
-        return true;
+        return validationIsFine;
     }
 }

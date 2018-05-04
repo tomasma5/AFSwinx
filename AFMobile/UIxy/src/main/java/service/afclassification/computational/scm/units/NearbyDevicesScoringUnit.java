@@ -40,9 +40,9 @@ public class NearbyDevicesScoringUnit implements Scoring {
         rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.SAME, 35D);
         rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MOSTLY_SIMILAR, 25D);
         rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MORE_SIMILAR, 15D);
-        rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MORE_DIFFERENT, 10D);
-        rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MOSTLY_DIFFERENT, 5D);
-        rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.DIFFERENT, 0D);
+        rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MORE_DIFFERENT, 5D);
+        rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.MOSTLY_DIFFERENT, -5D);
+        rankedNearbyDeviceSetup.put(NearbyDeviceSetupSimilarity.DIFFERENT, -15D);
 
         try {
             String endpoint = getEndpointUrlForLastRecord(client);
