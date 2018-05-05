@@ -62,7 +62,8 @@ public class AFSwinxScreenButtonBuilder {
         final String key = menuItemJsonObj.getString(BUTTON_KEY);
         String displayText = menuItemJsonObj.isNull(BUTTON_DISPLAY_TEXT) ? null : menuItemJsonObj.optString(BUTTON_DISPLAY_TEXT, null);
         final String url = menuItemJsonObj.getString(BUTTON_URL_KEY);
-        int menuOrder = menuItemJsonObj.optInt(BUTTON_ORDER_KEY, -1);
+
+        int menuOrder = menuItemJsonObj.has(BUTTON_ORDER_KEY)? menuItemJsonObj.optInt(BUTTON_ORDER_KEY, -1) : -1;
         button.setKey(key);
         button.setUrl(url);
         button.setText(displayText != null ? displayText : key);

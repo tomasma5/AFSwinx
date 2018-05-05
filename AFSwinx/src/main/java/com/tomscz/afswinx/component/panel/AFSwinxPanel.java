@@ -80,7 +80,7 @@ public class AFSwinxPanel extends JPanel {
      * This method validate this panel. For each registered validatator is validation make. If
      * failed, then no other validation are not performed on this field.
      * 
-     * @throws ValidationException
+     * @throws ValidationException validation exception
      */
     public void validateModel() throws ValidationException {
         // Validate only if components are visible

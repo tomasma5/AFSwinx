@@ -127,7 +127,7 @@ public class AFSwinxTable extends AFSwinxTopLevelComponent {
 
     /**
      * This method resize table. It works only if fit size attribute is set to true see
-     * {@link #AFSwinxTable#setFitSize(boolean)} . It also work with dynamic size attribute see
+     * {@link AFSwinxTable#setFitSize(boolean)} . It also work with dynamic size attribute see
      * {@link AFSwinxTable#setDynamicSize(boolean)}. If it is true then maximal size of table is set
      * to 2000 and minimal on 15 otherwise are used attributes from current calculation.
      */
