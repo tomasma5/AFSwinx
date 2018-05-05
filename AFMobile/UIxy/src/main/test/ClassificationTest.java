@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * This class tests metamodel modifications which is based on classification result
  *
- * @author Pavel Matyáš <matyapav@fel.cvut.cz>
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
  */
 public class ClassificationTest {
 
@@ -90,6 +90,11 @@ public class ClassificationTest {
         return bcField;
     }
 
+    /**
+     * If field has not present behavior it should be deleted from metamodel
+     *
+     * @throws Exception exception
+     */
     @Test
     public void shouldDeleteNotPresentField() throws Exception {
         assertTrue(metaModelPack.getClassInfo().getFieldInfo().stream()
@@ -99,6 +104,11 @@ public class ClassificationTest {
                 .anyMatch(fieldInfo -> fieldInfo.getId().equals("toBeDeleted")));
     }
 
+    /**
+     * If filed has required behavior it should have required validation rule set to true
+     *
+     * @throws Exception exception
+     */
     @Test
     public void shouldBeRequired() throws Exception {
         afClassification.classifyMetaModel(metaModelPack, null, configurationPack, bcFields, null);
@@ -113,6 +123,11 @@ public class ClassificationTest {
         }
     }
 
+    /**
+     * If field has validation behavior it should be validated but not required
+     *
+     * @throws Exception exception
+     */
     @Test
     public void shouldBeOnlyValidated() throws Exception {
         afClassification.classifyMetaModel(metaModelPack, null, configurationPack, bcFields, null);
@@ -130,6 +145,11 @@ public class ClassificationTest {
         }
     }
 
+    /**
+     * If filed has only display behavior it should have no validation rules and be visible
+     *
+     * @throws Exception exception
+     */
     @Test
     public void shouldBeOnlyDisplayed() throws Exception {
         for (AFFieldInfo f : metaModelPack.getClassInfo().getFieldInfo()) {
@@ -147,6 +167,11 @@ public class ClassificationTest {
         }
     }
 
+    /**
+     * If field has hidden behavior it should be hidden and have no validations
+     *
+     * @throws Exception exception
+     */
     @Test
     public void shouldBeHidden() throws Exception {
         for (AFFieldInfo f : metaModelPack.getClassInfo().getFieldInfo()) {
@@ -167,6 +192,9 @@ public class ClassificationTest {
     }
 
 
+    /**
+     * Scoring unit which gives specific values for test
+     */
     private static class TestScoringUnit implements Scoring {
 
         @Override

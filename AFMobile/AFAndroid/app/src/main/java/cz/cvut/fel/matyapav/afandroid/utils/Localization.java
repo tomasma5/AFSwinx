@@ -9,9 +9,10 @@ import java.util.Locale;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedLanguages;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Localization module - translates strings
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class Localization {
 

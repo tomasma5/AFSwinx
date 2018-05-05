@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Request context which contains application from which the request is
  *
- * @Author Pavel Matyáš (matyapav@fel.cvut.cz)
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
  */
 @RequestScoped
 public class RequestContext{

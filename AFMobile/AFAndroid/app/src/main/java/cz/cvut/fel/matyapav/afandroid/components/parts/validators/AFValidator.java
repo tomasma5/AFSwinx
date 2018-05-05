@@ -6,7 +6,10 @@ import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ValidationRule;
 
 /**
- * Created by Pavel on 14.02.2016.
+ * Validator interface
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public interface AFValidator {
 

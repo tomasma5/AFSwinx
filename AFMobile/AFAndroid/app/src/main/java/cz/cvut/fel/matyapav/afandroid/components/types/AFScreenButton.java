@@ -6,6 +6,8 @@ import android.support.v7.widget.AppCompatButton;
 import cz.cvut.fel.matyapav.afandroid.components.uiproxy.AFAndroidScreenPreparedListener;
 
 /**
+ * Model for BUTTON which should serve screen definition on its click
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */

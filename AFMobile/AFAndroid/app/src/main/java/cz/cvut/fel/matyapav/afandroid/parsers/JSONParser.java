@@ -5,7 +5,10 @@ import org.json.JSONObject;
 import cz.cvut.fel.matyapav.afandroid.components.parts.ClassDefinition;
 
 /**
- * Created by Pavel on 17.12.2015.
+ * JSON definition parser interface
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public interface JSONParser {
 

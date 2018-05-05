@@ -29,6 +29,7 @@ public interface Scoring {
      * @param purpose purpose of the field
      * @param severity severity of the field
      * @param client context information
+     * @param application the application
      * @return calculated score
      */
     public Double scoreField(Purpose purpose, Severity severity, Client client, Application application);

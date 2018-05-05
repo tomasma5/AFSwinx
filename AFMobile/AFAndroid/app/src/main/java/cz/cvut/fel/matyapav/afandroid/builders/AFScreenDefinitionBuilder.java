@@ -16,10 +16,11 @@ import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 
 /**
+ * Gets screen definition from proxy application
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class AFScreenDefinitionBuilder {
 
     private Context context;
@@ -40,6 +41,12 @@ public class AFScreenDefinitionBuilder {
         this.screenKey = screenKey;
     }
 
+    /**
+     * Gets and parses screen definition from proxy. Also prepared component builders which should be in screen
+     *
+     * @return Screen definition
+     * @throws Exception thrown if something wrong happended during getting or parsing screen definition
+     */
     public AFAndroidProxyScreenDefinition getScreenDefinition() throws Exception {
         JSONObject screenObject = new JSONObject(retrieveScreenDefinition());
         AFAndroidProxyScreenDefinition screenDefinition = new AFAndroidProxyScreenDefinition();

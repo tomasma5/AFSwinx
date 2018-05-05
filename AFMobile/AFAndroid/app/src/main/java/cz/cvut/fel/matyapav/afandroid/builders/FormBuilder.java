@@ -12,8 +12,10 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**
- * Builds for from class definition
- * Created by Pavel on 26.12.2015.
+ * Builds form from class definition
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class FormBuilder extends AFComponentBuilder<FormBuilder>{
 

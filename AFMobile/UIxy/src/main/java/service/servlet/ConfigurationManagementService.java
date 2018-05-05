@@ -22,6 +22,7 @@ public interface ConfigurationManagementService {
      * Remove configuration by id.
      *
      * @param packId the id
+     * @throws ServiceException thrown if something happened during config removal
      */
     public void removeConfigurationById(Integer packId) throws ServiceException;
 

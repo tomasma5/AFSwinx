@@ -27,10 +27,10 @@ public class ValidatorFactory {
         if (rule.getValidationType().equals(SupportedValidations.MAXLENGTH.getValidationType())) {
             return new MaxCharsValidator();
         }
-        if (rule.getValidationType().equals(SupportedValidations.MAX.getValidationType())){
+        if (rule.getValidationType().equals(SupportedValidations.MAXVALUE.getValidationType())){
             return new MaxValueValidator();
         }
-        if (rule.getValidationType().equals(SupportedValidations.MIN.getValidationType())){
+        if (rule.getValidationType().equals(SupportedValidations.MINVALUE.getValidationType())){
             return new MinValueValidator();
         }
         if(rule.getValidationType().equals(SupportedValidations.LESSTHAN.getValidationType())){

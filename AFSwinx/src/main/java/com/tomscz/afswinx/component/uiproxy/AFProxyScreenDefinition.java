@@ -12,12 +12,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Model which holds screen definition along with prepared builders for components which should be in screen
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
+ */
 public class AFProxyScreenDefinition {
 
     private String key;
     private String screenUrl;
     private Map<SupportedComponents, List<AFProxyComponentDefinition>> componentDefinitions;
 
+    /**
+     * Gets builder for form with key from screen definition
+     *
+     * @param componentKey form key
+     * @return builder for this form if it is present in screen definition, null otherwise
+     */
     public AFSwinxFormBuilder getFormBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
             List<AFProxyComponentDefinition> formDefinitions = componentDefinitions.get(SupportedComponents.FORM);
@@ -32,6 +43,12 @@ public class AFProxyScreenDefinition {
         return null;
     }
 
+    /**
+     * Gets builder for table with key from screen definition
+     *
+     * @param componentKey table key
+     * @return builder for this table if it is present in screen defition, null otherwise
+     */
     public AFSwinxTableBuilder getTableBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
             List<AFProxyComponentDefinition> tableDefinitions = componentDefinitions.get(SupportedComponents.TABLE);
@@ -46,6 +63,11 @@ public class AFProxyScreenDefinition {
         return null;
     }
 
+    /**
+     * Adds component definition to screen definition
+     *
+     * @param componentDefinition component definition
+     */
     public void addComponentDefinition(AFProxyComponentDefinition componentDefinition) {
         if (componentDefinitions == null) {
             componentDefinitions = new HashMap<>();
@@ -64,6 +86,10 @@ public class AFProxyScreenDefinition {
         }
     }
 
+    /**
+     * Reloads screen definition from server (proxy aplication)
+     *
+     */
     public void reload(){
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl, key).getScreenDefinition();

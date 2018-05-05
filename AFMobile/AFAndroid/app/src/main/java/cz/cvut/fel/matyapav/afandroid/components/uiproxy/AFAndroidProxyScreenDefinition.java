@@ -16,15 +16,23 @@ import cz.cvut.fel.matyapav.afandroid.builders.TableBuilder;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
+ * Model which holds information about screen
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class AFAndroidProxyScreenDefinition {
+
     private String key;
     private String screenUrl;
     private Map<SupportedComponents, List<AFAndroidProxyComponentDefinition>> componentDefinitions;
 
+    /**
+     * Gets FORM builder by component key
+     *
+     * @param componentKey the component key
+     * @return return form builder for key if the screen definition contains such builder, null otherwise
+     */
     public FormBuilder getFormBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
             List<AFAndroidProxyComponentDefinition> formDefinitions = componentDefinitions.get(SupportedComponents.FORM);
@@ -39,6 +47,12 @@ public class AFAndroidProxyScreenDefinition {
         return null;
     }
 
+    /**
+     * Gets TABLE builder by component key
+     *
+     * @param componentKey the component key
+     * @return return TABLE builder for key if the screen definition contains such builder, null otherwise
+     */
     public TableBuilder getTableBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
             List<AFAndroidProxyComponentDefinition> tableDefinitions = componentDefinitions.get(SupportedComponents.TABLE);
@@ -53,6 +67,12 @@ public class AFAndroidProxyScreenDefinition {
         return null;
     }
 
+    /**
+     * Gets LIST builder by component key
+     *
+     * @param componentKey the component key
+     * @return return LIST builder for key if the screen definition contains such builder, null otherwise
+     */
     public ListBuilder getListBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
             List<AFAndroidProxyComponentDefinition> listDefinitions = componentDefinitions.get(SupportedComponents.LIST);
@@ -67,6 +87,11 @@ public class AFAndroidProxyScreenDefinition {
         return null;
     }
 
+    /**
+     * Adds component definition to screen definition
+     *
+     * @param componentDefinition the component definition
+     */
     public void addComponentDefinition(AFAndroidProxyComponentDefinition componentDefinition) {
         if (componentDefinitions == null) {
             componentDefinitions = new HashMap<>();
@@ -90,6 +115,11 @@ public class AFAndroidProxyScreenDefinition {
         }
     }
 
+    /**
+     * Reloads screen definition from server
+     *
+     * @param context android context
+     */
     public void reload(Context context) {
         try {
             AFAndroidProxyScreenDefinition screenDefinition = AFAndroid.getInstance().getScreenDefinitionBuilder(context, screenUrl, key).getScreenDefinition();

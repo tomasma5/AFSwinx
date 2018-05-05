@@ -1,8 +1,9 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Enumeration of supported components
  *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  *@since 1.0.0..
  */
 public enum SupportedComponents {

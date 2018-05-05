@@ -94,11 +94,11 @@ public interface ScreenManagementService {
     public void addComponentToScreen(ComponentResource componentResource, Screen screen);
 
     /**
-     * TODO
-     * @param req
-     * @param screenId
-     * @param appId
-     * @param linkedComponentCount
+     * Creates screen and fills it with information from request
+     * @param req request
+     * @param screenId id of screen
+     * @param appId application id where screen belongs
+     * @param linkedComponentCount count of linked components
      */
     public void fillAndCreateScreen(HttpServletRequest req, String screenId, String appId, String linkedComponentCount);
 }

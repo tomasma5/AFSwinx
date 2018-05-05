@@ -1,7 +1,9 @@
 package model;
 
 /**
- * @Author Pavel Matyáš <matyapav@fel.cvut.cz>.
+ * Basic entity
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  */
 public abstract class DtoEntity {
 

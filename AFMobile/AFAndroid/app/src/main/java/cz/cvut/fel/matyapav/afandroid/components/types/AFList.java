@@ -28,9 +28,10 @@ import cz.cvut.fel.matyapav.afandroid.builders.skins.Skin;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Model for LIST component
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class AFList extends AFComponent {
 

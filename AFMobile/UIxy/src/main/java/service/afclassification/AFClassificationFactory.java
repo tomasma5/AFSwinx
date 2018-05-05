@@ -33,6 +33,8 @@ public class AFClassificationFactory {
      * Gets classification module by phase.
      *
      * @param phase the phase
+     * @param client client which contains context information
+     * @param application the application
      * @return the classification module
      */
     public AFClassification getClassificationModule(BCPhase phase, Client client, Application application) {
@@ -44,6 +46,8 @@ public class AFClassificationFactory {
      *
      * @param classificationUnit the classification unit type
      * @param scoringUnit        the scoring unit type
+     * @param client client with context information
+     * @param application the application
      * @return the classification module
      */
     public AFClassification getClassificationModule(SupportedClassificationUnit classificationUnit, SupportedScoringUnit scoringUnit,

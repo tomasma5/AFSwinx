@@ -14,9 +14,10 @@ import cz.cvut.fel.matyapav.afandroid.enums.LayoutDefinitions;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Defualt implementation for component
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public abstract class AFComponent implements AbstractComponent {
 

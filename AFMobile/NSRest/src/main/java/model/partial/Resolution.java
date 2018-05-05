@@ -1,10 +1,11 @@
 package model.partial;
 
 /**
+ * Holds information about device screen resolution
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class Resolution {
 
     private int widthInPixels;

@@ -5,9 +5,10 @@ import com.tomscz.afswinx.rest.rebuild.holder.AFDataHolder;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Abstract model for component
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public interface AbstractComponent {
 

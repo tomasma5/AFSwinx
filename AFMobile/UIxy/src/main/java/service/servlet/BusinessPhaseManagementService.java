@@ -52,9 +52,9 @@ public interface BusinessPhaseManagementService {
     /**
      * Update linked screens in business phase.
      *
-     * @param req                the req
-     * @param phase              the phase
-     * @param linkedScreensCount the linked screens count
+     * @param req                the servlet request
+     * @param phase              business phase
+     * @param linkedScreensCount linked screens count
      * @throws ServiceException the service exception
      */
     public void updateLinkedScreensInBusinessPhase(HttpServletRequest req, BCPhase phase, int linkedScreensCount) throws ServiceException;
@@ -62,16 +62,16 @@ public interface BusinessPhaseManagementService {
     /**
      * Find list of phases by business case id.
      *
-     * @param bcId the bc id
-     * @return the list
+     * @param bcId the id of business case
+     * @return the list of business phases which belongs to this business case
      */
     public List<BCPhase> findPhasesByBusinessCase(int bcId);
 
     /**
-     * Update phase bc fields.
+     * Update phase business case fields.
      *
-     * @param phase the phase
-     * @throws IOException the io exception
+     * @param phase business phase
+     * @throws IOException thrown if fields cannot be got from server
      */
     public void updatePhaseBCFields(BCPhase phase) throws IOException;
 
@@ -83,7 +83,7 @@ public interface BusinessPhaseManagementService {
      * @param businessCaseId string representation of business case id
      * @param linkedScreensCountString string representation of number of linked screens
      * @return id of bc phase
-     * @throws ServiceException
+     * @throws ServiceException thrown if phase cannot be saved
      */
     public Integer saveBCPhaseFromRequest(HttpServletRequest req, String businessPhaseIdString,
                                        String businessCaseId, String linkedScreensCountString) throws ServiceException;

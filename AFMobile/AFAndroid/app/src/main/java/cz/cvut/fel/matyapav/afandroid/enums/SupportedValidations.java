@@ -1,16 +1,17 @@
 package cz.cvut.fel.matyapav.afandroid.enums;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Enumeration of supported validation rules
  *
+ *@author Pavel Matyáš (matyapav@fel.cvut.cz).
  *@since 1.0.0..
  */
 public enum SupportedValidations {
 
     REQUIRED("REQUIRED"),
     MAXLENGTH("MAXLENGTH"),
-    MIN("MIN"),
-    MAX("MAX"),
+    MINVALUE("MINVALUE"),
+    MAXVALUE("MAXVALUE"),
     LESSTHAN("LESSTHAN");
 
     private String validationType;

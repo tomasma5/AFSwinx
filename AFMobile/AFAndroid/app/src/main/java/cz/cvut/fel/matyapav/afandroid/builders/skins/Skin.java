@@ -4,7 +4,10 @@ import android.graphics.Typeface;
 import android.view.ViewGroup;
 
 /**
- * Created by Pavel on 24.02.2016.
+ * Skin interface for component visualization
+ * 
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public interface Skin {
 

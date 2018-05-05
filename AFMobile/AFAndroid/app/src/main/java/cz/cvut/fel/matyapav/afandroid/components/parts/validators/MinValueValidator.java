@@ -9,9 +9,10 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Validator which checks if input value is bigger than given minimum value
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class MinValueValidator implements AFValidator {
 

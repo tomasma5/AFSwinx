@@ -5,6 +5,11 @@ import com.tomscz.afswinx.component.uiproxy.ScreenPreparedListener;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Model for button which should serve screen definition on its click
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
+ */
 public class AFSwinxScreenButton extends JButton{
 
     private static final long serialVersionUID = 1L;

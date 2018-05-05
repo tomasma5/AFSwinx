@@ -22,7 +22,6 @@ import cz.cvut.fel.matyapav.afandroid.utils.Localization;
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class FieldBuilder {
 
     public AFField prepareField(FieldInfo properties, StringBuilder road, Context context, Skin skin) {

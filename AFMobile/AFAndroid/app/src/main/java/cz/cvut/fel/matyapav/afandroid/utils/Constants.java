@@ -1,8 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * This class defines string constants used in application
  *

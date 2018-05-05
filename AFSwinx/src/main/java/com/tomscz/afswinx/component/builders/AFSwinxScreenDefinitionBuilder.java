@@ -16,6 +16,11 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Gets screen definition from proxy server and prepares component builders for components in screen
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
+ */
 public class AFSwinxScreenDefinitionBuilder {
 
     private String url;
@@ -34,6 +39,13 @@ public class AFSwinxScreenDefinitionBuilder {
         this.screenKey = screenKey;
     }
 
+    /**
+     * Downloads screen definitions and prepared component builders
+     *
+     * @return screen definition model
+     * @throws IOException thrown if something happens during getting definition from server
+     * @throws AFSwinxBuildException thrown if something happens during preparation of component builders
+     */
     public AFProxyScreenDefinition getScreenDefinition() throws IOException, AFSwinxBuildException {
         JSONObject screenObject = retrieveScreenDefinition();
         AFProxyScreenDefinition screenDefinition = new AFProxyScreenDefinition();

@@ -12,9 +12,10 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Builds list component from class definition
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class ListBuilder extends AFComponentBuilder<ListBuilder> {
 

@@ -14,10 +14,11 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFScreenButton;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
 
 /**
+ * Builds menu from menu definition
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class AFMenuBuilder {
 
     private Context context;
@@ -32,6 +33,12 @@ public class AFMenuBuilder {
         return this;
     }
 
+    /**
+     * Builds menu component
+     *
+     * @return menu
+     * @throws AFSwinxBuildException thrown if something happen during menu building
+     */
     public AFMenu buildComponent() throws AFSwinxBuildException {
         if (url == null || url.isEmpty()) {
             throw new AFSwinxBuildException("Cannot build menu because the menu definition url was not set.");

@@ -3,6 +3,11 @@ package com.tomscz.afswinx.component.uiproxy;
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.builders.ComponentBuilder;
 
+/**
+ * Model which holds information about component gathered from proxy application
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
+ */
 public class AFProxyComponentDefinition {
 
     private int id;

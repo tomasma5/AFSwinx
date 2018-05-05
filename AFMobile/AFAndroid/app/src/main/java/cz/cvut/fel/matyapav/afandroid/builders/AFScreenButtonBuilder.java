@@ -18,6 +18,8 @@ import cz.cvut.fel.matyapav.afandroid.uiproxy.AndroidUIProxySetup;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.NearbyStatusFacade;
 
 /**
+ * Builder for buttons which should serve screen definition with prepared builders on click
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
@@ -35,6 +37,15 @@ public class AFScreenButtonBuilder {
         this.context = context;
     }
 
+    /**
+     * Builds button which will load screen definition from given url on click
+     *
+     * @param key key of screen which should be got
+     * @param displayText text of button
+     * @param url url of screen definition
+     * @return built button
+     * @throws AFSwinxBuildException thrown if json from url from which it is build cannot be parsed
+     */
     public AFScreenButton buildComponent(String key, String displayText, String url) throws AFSwinxBuildException {
         JSONObject menuItem = new JSONObject();
         try {
@@ -48,11 +59,25 @@ public class AFScreenButtonBuilder {
         return buildComponent(menuItem);
     }
 
+    /**
+     * Builds button which will load screen definition from given url on click
+     * @param key key of screen which should be got
+     * @param url url of screen definition
+     * @return built button
+     * @throws AFSwinxBuildException thrown if json from url from which it is build cannot be parsed
+     */
     public AFScreenButton buildComponent(String key, String url) throws AFSwinxBuildException {
         return buildComponent(key, null, url);
     }
 
 
+    /**
+     * Builds button from menu item json definition
+     *
+     * @param menuItemJsonObj menu item json definition
+     * @return built button
+     * @throws AFSwinxBuildException thrown if something happened during building process
+     */
     public AFScreenButton buildComponent(JSONObject menuItemJsonObj) throws AFSwinxBuildException {
         final AFScreenButton button = new AFScreenButton(context);
         try {

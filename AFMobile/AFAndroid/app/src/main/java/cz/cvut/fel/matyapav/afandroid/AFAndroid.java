@@ -21,6 +21,8 @@ import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.NearbyStatusFacade;
 import cz.cvut.fel.matyapav.afnearbystatus.nearbystatus.NearbyStatusFacadeBuilder;
 
 /**
+ * AFAndroid facade which should be used for operating the framework
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */

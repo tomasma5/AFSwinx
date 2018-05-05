@@ -6,6 +6,11 @@ import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Model holding menu buttons
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz)
+ */
 public class AFSwinxMenu {
 
     private static final long serialVersionUID = 1L;
@@ -23,6 +28,11 @@ public class AFSwinxMenu {
         addMenuButton(button.getKey(), button);
     }
 
+    /**
+     * Adds menu button into menu map
+     * @param key key
+     * @param button button
+     */
     public void addMenuButton(String key, AFSwinxScreenButton button) {
         if(menuButtons == null) {
             menuButtons = new HashMap<>();
@@ -30,6 +40,12 @@ public class AFSwinxMenu {
         menuButtons.put(key, button);
     }
 
+    /**
+     * Adds on click listener to button with key
+     * #
+     * @param key key
+     * @param listener action listener
+     */
     public void addOnClickListenerToButton(String key, ActionListener listener) {
         if(menuButtons != null){
             AFSwinxScreenButton button = menuButtons.get(key);
@@ -39,6 +55,12 @@ public class AFSwinxMenu {
         }
     }
 
+    /**
+     * Adds on screen prepared listener to button with key
+     *
+     * @param key key
+     * @param listener on screen prepared listener
+     */
     public void addOnScreenPreparedListenerToButton(String key, ScreenPreparedListener listener) {
         if(menuButtons != null){
             AFSwinxScreenButton button = menuButtons.get(key);
@@ -48,6 +70,9 @@ public class AFSwinxMenu {
         }
     }
 
+    /**
+     * Sorts menu according to menu button specified menu order
+     */
     public void sort(){
         if(menuButtons != null){
             Map<String, AFSwinxScreenButton> sorted = new TreeMap<>(new MenuOrderComparator(menuButtons));

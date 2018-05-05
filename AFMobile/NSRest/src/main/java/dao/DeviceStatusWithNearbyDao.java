@@ -52,7 +52,7 @@ public abstract class DeviceStatusWithNearbyDao extends GenericMongoDao<DeviceSt
      * @param deviceIdentifier given device identifier - most likely a mac address of device.
      * @param action           given action
      * @param timestamp        given timestamp
-     * @return
+     * @return first later record which has given action
      */
     public abstract DeviceStatusWithNearby getFirstLaterThanTImestampWithGivenAction(String deviceIdentifier, String action, long timestamp);
 
@@ -62,7 +62,7 @@ public abstract class DeviceStatusWithNearbyDao extends GenericMongoDao<DeviceSt
      * @param deviceIdentifier given device identifier - most likely a mac address of device.
      * @param action           given action
      * @param timestamp        given timestamp
-     * @return
+     * @return first earlier record which has given action
      */
     public abstract DeviceStatusWithNearby getFirstEarlierThanTimestampWithGivenAction(String deviceIdentifier, String action, long timestamp);
 }

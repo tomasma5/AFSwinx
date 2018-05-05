@@ -24,6 +24,8 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedWidgets;
 
 /**
+ * Utils methods used by framework
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */

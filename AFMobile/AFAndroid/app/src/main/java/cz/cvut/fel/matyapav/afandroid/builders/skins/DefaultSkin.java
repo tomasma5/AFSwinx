@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 
 /**
- * Created by Pavel on 24.02.2016.
+ * Default skin for component visualization
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class DefaultSkin implements Skin {
 

@@ -5,7 +5,9 @@ import model.DtoEntity;
 import java.util.List;
 
 /**
- * @Author Pavel Matyáš <matyapav@fel.cvut.cz>.
+ * Abstract generic database access object
+ *
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  */
 public interface AbstractGenericDao<T extends DtoEntity> {
 

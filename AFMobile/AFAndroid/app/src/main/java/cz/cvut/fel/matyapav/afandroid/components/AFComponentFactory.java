@@ -7,9 +7,10 @@ import cz.cvut.fel.matyapav.afandroid.components.types.AFTable;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
- * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * Component factory for building FORM, TABLE or LIST component
  *
- *@since 1.0.0..
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
+ * @since 1.0.0..
  */
 public class AFComponentFactory {
 

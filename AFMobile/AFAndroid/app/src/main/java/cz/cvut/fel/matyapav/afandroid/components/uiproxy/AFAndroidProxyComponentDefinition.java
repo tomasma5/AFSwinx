@@ -4,10 +4,11 @@ import cz.cvut.fel.matyapav.afandroid.builders.AFComponentBuilder;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 
 /**
+ * Model which holds information about component from proxy
+ *
  * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  * @since 1.0.0..
  */
-
 public class AFAndroidProxyComponentDefinition {
     private int id;
     private String name;

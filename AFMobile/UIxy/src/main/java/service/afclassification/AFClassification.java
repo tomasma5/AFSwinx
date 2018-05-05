@@ -47,8 +47,10 @@ public class AFClassification {
      * Classifies given meta model.
      *
      * @param metaModelPack     the meta model pack
-     * @param client            the client
+     * @param client            the client with context data
      * @param configurationPack the phase config pack
+     * @param fieldList the list of business case fields
+     * @param application the application
      */
     public void classifyMetaModel(AFMetaModelPack metaModelPack, Client client, ConfigurationPack configurationPack, List<BCField> fieldList, Application application) {
         for (BCField field : fieldList) {

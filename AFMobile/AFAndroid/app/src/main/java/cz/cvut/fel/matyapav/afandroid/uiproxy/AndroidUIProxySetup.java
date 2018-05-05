@@ -1,6 +1,5 @@
 package cz.cvut.fel.matyapav.afandroid.uiproxy;
 
-
 import android.content.Context;
 
 import cz.cvut.fel.matyapav.afandroid.enums.uiproxy.Device;

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author Pavel Matyáš <matyapav@fel.cvut.cz>.
+ * @author Pavel Matyáš (matyapav@fel.cvut.cz).
  */
 @Stateless
 public abstract class AbstractGenericDaoImpl<T extends DtoEntity> implements AbstractGenericDao<T> {
