@@ -57,6 +57,11 @@ public class TestUtils {
         }
     }
 
+    /**
+     * Tests what happends when expression language parser should replace something and do not have specified value
+     *
+     * @throws Exception paramenter missing exception
+     */
     @Test(expected = ParameterMissingException.class)
     public void testStringElParsersInvalid() throws Exception{
         HashMap<String, String> parameters = new HashMap<String, String>();

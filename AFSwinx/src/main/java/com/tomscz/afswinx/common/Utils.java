@@ -62,8 +62,8 @@ public final class Utils {
     /**
      * This method create {@link Document} from input file. This document can be parsed by DOM or
      * SAX.
-     * 
-     * @param file from which will be created document to parse
+     *
+     * @param is Input stream with document information
      * @return Document which will be parsed by DOM or SAX
      * @throws IllegalArgumentException If exception occurs during open file or parsing file then
      *         {@link IllegalArgumentException} is thrown, because input file given in parameter is
@@ -83,15 +83,15 @@ public final class Utils {
 
     /**
      * This method parse input string and replaced all #{value} values in hash and bracket by value
-     * given in parameters. If value is not found then null is inserted. <br
+     * given in parameters. If value is not found then null is inserted.
      * / Example:
-     * <ul>
-     * <li>inputs : expressionToEvaluate/home/#{user}, parameters: user:martin; result /home/martin</li>
-     * <li>inputs : expressionToEvaluate/home/#{user}/#{subdir}, parameters: user:martin,
-     * subdir:backup; result /home/martin/backup</li>
-     * <li>inputs : expressionToEvaluate/home/#{user}/#{subDir}, parameters: user:martin,
-     * subdir:backup; result /home/martin/null</li>
-     * <ul>
+     *
+     * inputs : expressionToEvaluate/home/#{user}, parameters: user:martin; result /home/martin
+     * inputs : expressionToEvaluate/home/#{user}/#{subdir}, parameters: user:martin,
+     * subdir:backup; result /home/martin/backup
+     * inputs : expressionToEvaluate/home/#{user}/#{subDir}, parameters: user:martin,
+     * subdir:backup; result /home/martin/null
+     *
      * Please note that this parser can't handle with unpairs {} in input parameters
      * 
      * @param expressionToEvaluate this is expression which will be processed and in which will all

@@ -47,7 +47,7 @@ public interface ComponentBuilder<T> {
      * components.
      * 
      * @return component which will be build based on initial and current settings
-     * @throws AFSwinxBuildException
+     * @throws AFSwinxBuildException thrown if something went wrong during building process
      */
     public AFSwinxTopLevelComponent buildComponent() throws AFSwinxBuildException;
 

@@ -54,8 +54,8 @@ public interface WidgetBuilder {
     public void setLocalization(ResourceBundle localization);
     
     /**
-     * This method set localization resource bundle, which will be used.
-     * @param localization which will be used to translate text
+     * This method set skin, which will be used.
+     * @param skin which will be used to represent visualization of component
      */
     public void setSkin(Skin skin);
     

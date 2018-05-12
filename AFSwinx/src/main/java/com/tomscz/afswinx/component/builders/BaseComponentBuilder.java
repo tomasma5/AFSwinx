@@ -153,6 +153,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
      * @param layoutBuilder layout builder which will be used
      * @param form which is builded
      * @param key of current field. It is used to determine which class belongs to which fields
+     * @throws AFSwinxBuildException thrown if something went wrong during building fields
      */
     protected void buildFields(AFClassInfo classInfo, BaseLayoutBuilder layoutBuilder,
             AFSwinxTopLevelComponent form, String key) throws AFSwinxBuildException {

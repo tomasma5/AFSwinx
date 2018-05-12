@@ -138,6 +138,7 @@ public class AFSwinxConnection {
      *        /AFserver/rest/personServicer more information
      * @param contentType type of request on end point see {@link HeaderType} for more information
      * @param protocol ex: http, https, etc.
+     * @param acceptedType accepted type
      */
     public AFSwinxConnection(String address, int port, String parameters, HeaderType acceptedType,
             HeaderType contentType, String protocol) {

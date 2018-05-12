@@ -28,12 +28,14 @@ public abstract class UIProxySetup {
      * Loads ui proxy url into uiProxyUrl field. Framework will use this to make requests to proper location of UIProxy.
      * This url should in following format - protocol://www.hostname:port/contextPath where www is optional, hostname
      * can be something like example.com, port is optional as well and contextPath can be something like UIxy/api/
+     *
      * @return proxy url
      */
     protected abstract String loadUIProxyUrl();
 
     /**
      * Loads device type into deviceType field;
+     *
      * @return deviceType
      */
     protected abstract Device loadDeviceType();
@@ -44,7 +46,7 @@ public abstract class UIProxySetup {
      * @return the ui proxy url
      */
     public String getUiProxyUrl() {
-        if(uiProxyUrl == null || uiProxyUrl.isEmpty()) {
+        if (uiProxyUrl == null || uiProxyUrl.isEmpty()) {
             uiProxyUrl = loadUIProxyUrl();
         }
         return uiProxyUrl;
@@ -54,7 +56,6 @@ public abstract class UIProxySetup {
      * Gets ui proxy application uuid.
      *
      * @return the ui proxy application uuid
-     * @throws IOException the io exception
      */
     public String getUiProxyApplicationUuid() {
         if (uiProxyApplicationUuid == null || uiProxyApplicationUuid.isEmpty()) {
@@ -64,7 +65,7 @@ public abstract class UIProxySetup {
     }
 
     public Device getDeviceType() {
-        if(deviceType == null){
+        if (deviceType == null) {
             deviceType = loadDeviceType();
         }
         return deviceType;

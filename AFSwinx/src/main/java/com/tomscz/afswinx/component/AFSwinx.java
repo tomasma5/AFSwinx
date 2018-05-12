@@ -82,6 +82,7 @@ public class AFSwinx {
      * which can be used for building a {@link AFSwinxTopLevelComponent}, which can be inserted into view
      *
      * @param url url of screen definition on UI proxy
+     * @param screenKey key of screen
      * @return screen definition builder
      */
     public AFSwinxScreenDefinitionBuilder getScreenDefinitionBuilder(String url, String screenKey) {

@@ -15,8 +15,9 @@ public interface XMLParser {
     /**
      * This method parse XML document.
      * 
-     * @param documentToParse
+     * @param documentToParse document which should be parsed
      * @return data of document. Typically as object of generic type.
+     * @throws ParameterMissingException if some parameters during expression evaluation is missing
      */
     public <T> T parseDocument(Document documentToParse) throws ParameterMissingException;
 

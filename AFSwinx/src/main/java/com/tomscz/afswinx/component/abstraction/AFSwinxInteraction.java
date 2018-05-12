@@ -29,7 +29,7 @@ public interface AFSwinxInteraction {
      * This method get concrete data from server to model. This data are data which will be set to
      * concrete component.
      * 
-     * @return data which will be set to components, it could be some of {@link HeaderType} based on
+     * @return data which will be set to components, it could be some of {@link com.tomscz.afswinx.rest.connection.HeaderType} based on
      *         connection
      * @throws AFSwinxConnectionException if exception during obtaining data to model occur.
      */
@@ -38,7 +38,6 @@ public interface AFSwinxInteraction {
     /**
      * This method set data to model
      * 
-     * @throws AFSwinxConnectionException
      */
     public void fillData(List<AFDataPack> dataPack);
 
@@ -56,7 +55,7 @@ public interface AFSwinxInteraction {
      * This method generate data which will be post. It do validations and create data object which
      * will be posted. But post is not performed.
      * 
-     * @return
+     * @return send data object
      */
     public Object generateSendData();
 

@@ -90,10 +90,11 @@ public abstract class BaseConnector implements Connector {
     /**
      * This method do request on server.
      *
+     * @param <T> return type
      * @param clazz returned type.
      * @param body  of request.
      * @return object of T which will contains response body from server.
-     * @throws ConnectException
+     * @throws ConnectException thrown if something went wrong when connecting to server
      */
     protected <T> T doRequest(Class<T> clazz, String body) throws ConnectException {
         try {

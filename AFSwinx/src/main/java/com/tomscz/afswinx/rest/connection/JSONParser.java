@@ -16,8 +16,9 @@ public interface JSONParser {
     /**
      * This method parse JSON string.
      * 
-     * @param connections
+     * @param connections json object to be parsed
      * @return data of document. Typically as object of generic type.
+     * @throws ParameterMissingException if some parameters are missing during expression evaluation
      */
     public <T> T parse(JSONObject connections) throws ParameterMissingException;
 
