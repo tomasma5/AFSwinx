@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
+import com.tomscz.afswinx.common.ParameterMissingException;
 import com.tomscz.afswinx.common.Utils;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
@@ -19,6 +20,7 @@ import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
 import com.tomscz.afswinx.rest.connection.JsonConnectionParser;
 import com.tomscz.afswinx.validation.RetypeValidator;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
@@ -128,7 +130,7 @@ public abstract class BaseComponentBuilder<T> implements ComponentBuilder<T> {
         return (T) this;
     }
 
-    protected void initializeConnections() throws AFSwinxBuildException {
+    protected void initializeConnections() throws AFSwinxBuildException, ParameterMissingException, JSONException {
         if (connectionConfiguration != null) {
             JsonConnectionParser connectionParser =
                     new JsonConnectionParser(connectionParameters);

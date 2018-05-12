@@ -6,6 +6,11 @@ import android.graphics.drawable.shapes.RectShape;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.tomscz.afswinx.common.ParameterMissingException;
+
+import org.json.JSONException;
+
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
@@ -21,7 +26,12 @@ public class ListBuilder extends AFComponentBuilder<ListBuilder> {
 
     @Override
     public AFList createComponent() throws Exception {
-        initializeConnections();
+        try {
+            initializeConnections();
+        } catch (ParameterMissingException | JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
         String modelResponse = getModelResponse();
         //create form from response
         AFList list = (AFList) buildComponent(modelResponse, SupportedComponents.LIST);

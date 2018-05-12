@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
 import org.junit.Test;
 
 import com.tomscz.afswinx.common.Utils;
@@ -22,7 +23,7 @@ public class TestUtils {
      * This is test for expression language parser.
      */
     @Test
-    public void testStrinELParser() {
+    public void testStrinELParser() throws ParameterMissingException {
         // Create parameters which will replaced in input string
         HashMap<String, String> parameters = new HashMap<String, String>();
         String id = "23";
@@ -32,7 +33,6 @@ public class TestUtils {
         // Create strings which will be parsed
         List<String> stringToParse = new ArrayList<String>();
 
-        stringToParse.add("#{error}");
         stringToParse.add("/AFServer/rest/Person/#{id}");
         stringToParse.add("/AFServer/rest#{location}/Person/#{id}");
         stringToParse.add("#{location}/AFServer/rest#{location}/Person/#{id}");
@@ -41,7 +41,6 @@ public class TestUtils {
         stringToParse.add("{}{{{}}}");
         // Create results which should be returned by parser
         List<String> expectedResults = new ArrayList<String>();
-        expectedResults.add("null");
         expectedResults.add("/AFServer/rest/Person/" + id);
         expectedResults.add("/AFServer/rest" + location + "/Person/" + id);
         expectedResults.add(location + "/AFServer/rest" + location + "/Person/" + id);
@@ -56,6 +55,14 @@ public class TestUtils {
                 fail("Expected : " + expectedResults.get(i) + " received: " + result);
             }
         }
+    }
+
+    @Test(expected = ParameterMissingException.class)
+    public void testStringElParsersInvalid() throws Exception{
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        String id = "23";
+        String stringToParse = "#{error}";
+        Utils.evaluateElExpression(stringToParse, parameters);
     }
 
 }

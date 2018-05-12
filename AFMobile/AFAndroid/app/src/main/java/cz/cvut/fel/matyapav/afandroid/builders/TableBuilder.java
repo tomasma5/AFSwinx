@@ -8,6 +8,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
+
+import org.json.JSONException;
+
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFTable;
@@ -28,7 +32,12 @@ public class TableBuilder extends AFComponentBuilder<TableBuilder> {
 
     @Override
     public AFTable createComponent() throws Exception {
-        initializeConnections();
+        try {
+            initializeConnections();
+        } catch (ParameterMissingException | JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
         String modelResponse = getModelResponse();
         //create form from response
         AFTable table = (AFTable) buildComponent(modelResponse, SupportedComponents.TABLE);

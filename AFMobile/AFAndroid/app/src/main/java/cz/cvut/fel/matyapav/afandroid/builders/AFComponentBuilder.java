@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnection;
 import com.tomscz.afswinx.rest.connection.AFSwinxConnectionPack;
@@ -26,6 +27,7 @@ import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONDefinitionParser;
 import cz.cvut.fel.matyapav.afandroid.parsers.JSONParser;
 import cz.cvut.fel.matyapav.afandroid.rest.RequestTask;
+import cz.cvut.fel.matyapav.afandroid.utils.AFAndroidBuildException;
 import cz.cvut.fel.matyapav.afandroid.utils.Constants;
 import cz.cvut.fel.matyapav.afandroid.utils.Utils;
 
@@ -68,14 +70,14 @@ public abstract class AFComponentBuilder<T> {
         return (T) this;
     }
 
-    void initializeConnections() throws Exception {
+    void initializeConnections() throws AFAndroidBuildException, ParameterMissingException, JSONException {
         if (connectionConfiguration != null) {
             JsonConnectionParser connectionParser =
                     new JsonConnectionParser(connectionParameters);
             connectionPack = connectionParser.parse(new JSONObject(connectionConfiguration));
         } else {
             // Model connection is important if it could be found then throw exception
-            throw new Exception(
+            throw new AFAndroidBuildException(
                     "There is error during building AFForm. Connection was not specified. Did you used initBuilder method before build?");
         }
     }

@@ -1,9 +1,6 @@
 package servlet.screens;
 
-import model.Application;
-import model.ComponentResource;
 import model.Screen;
-import service.servlet.ApplicationsManagementService;
 import service.servlet.ComponentManagementService;
 import service.servlet.ScreenManagementService;
 import servlet.ParameterNames;
@@ -41,9 +38,6 @@ public class ScreenCreateServlet extends HttpServlet {
 
     @Inject
     private ComponentManagementService componentManagementService;
-
-    @Inject
-    private ApplicationsManagementService applicationsManagementService;
 
     @Context
     private ResourceInfo resourceInfo;

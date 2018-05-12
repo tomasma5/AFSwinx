@@ -1,6 +1,7 @@
 package com.tomscz.afswinx.rest.connection;
 
 import com.tomscz.afrest.commons.AFRestUtils;
+import com.tomscz.afswinx.common.ParameterMissingException;
 import com.tomscz.afswinx.common.Utils;
 import org.json.JSONObject;
 
@@ -67,7 +68,7 @@ public class JsonConnectionParser implements JSONParser {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public AFSwinxConnectionPack parse(JSONObject connections) {
+    public AFSwinxConnectionPack parse(JSONObject connections) throws ParameterMissingException {
         // Prepare connection pack
         AFSwinxConnectionPack connectionPack = new AFSwinxConnectionPack();
         // Find root of document
@@ -88,7 +89,7 @@ public class JsonConnectionParser implements JSONParser {
         return connectionPack;
     }
 
-    private void parseConnection(AFSwinxConnectionPack connectionPack, String connectionName, JSONObject connectionObj) {
+    private void parseConnection(AFSwinxConnectionPack connectionPack, String connectionName, JSONObject connectionObj) throws ParameterMissingException {
         AFSwinxConnection connection = new AFSwinxConnection();
         connection.setAddress(evaluateEL(connectionObj.getString(ADDRESS)));
         connection.setParameters(evaluateEL(connectionObj.getString(END_POINT_PARAMETERS)));
@@ -129,7 +130,7 @@ public class JsonConnectionParser implements JSONParser {
      * @param connection     current connection
      * @param securityParams node with security options
      */
-    private void parseSecurityParams(AFSwinxConnection connection, JSONObject securityParams) {
+    private void parseSecurityParams(AFSwinxConnection connection, JSONObject securityParams) throws ParameterMissingException {
         if (securityParams == null || securityParams.keySet().isEmpty()) {
             return;
         }
@@ -154,7 +155,7 @@ public class JsonConnectionParser implements JSONParser {
         connection.setSecurity(security);
     }
 
-    private void parseHeaderParam(AFSwinxConnection connection, JSONObject headerParams) {
+    private void parseHeaderParam(AFSwinxConnection connection, JSONObject headerParams) throws ParameterMissingException {
         if (headerParams == null || headerParams.keySet().isEmpty()) {
             return;
         }
@@ -182,7 +183,7 @@ public class JsonConnectionParser implements JSONParser {
      * @return value of node after execute EL parser on it. If parser should not be execute then
      * return received value without modification
      */
-    private String evaluateEL(String nodeValue) {
+    private String evaluateEL(String nodeValue) throws ParameterMissingException {
         if (doElEvaluation && nodeValue != null && !nodeValue.isEmpty()) {
             return Utils.evaluateElExpression(nodeValue, elConnectionData);
         }

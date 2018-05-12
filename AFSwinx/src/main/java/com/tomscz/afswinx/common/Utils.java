@@ -102,7 +102,7 @@ public final class Utils {
      *         is not found in hash map then null is inserted
      */
     public static String evaluateElExpression(String expressionToEvaluate,
-            HashMap<String, String> parameters) {
+            HashMap<String, String> parameters) throws ParameterMissingException {
         // To chaining string use string builder
         StringBuilder replacedValue = new StringBuilder();
         // Split expression by #{ it gives you strings between and after value which should be
@@ -122,6 +122,9 @@ public final class Utils {
             String[] valuesBehind = value.split("\\}");
             // Find replaced value and append it
             String elValue = parameters.get(valuesBehind[0].substring(0, valuesBehind[0].length()));
+            if(elValue == null){
+                throw new ParameterMissingException("Parameters does not contain value which can replace " + value);
+            }
             replacedValue.append(elValue);
             // If some values left - this means that there is more } brackets ex: #{value}/a}/a}
             // then append them too

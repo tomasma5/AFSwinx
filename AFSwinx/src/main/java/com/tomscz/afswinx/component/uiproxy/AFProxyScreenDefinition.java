@@ -3,6 +3,7 @@ package com.tomscz.afswinx.component.uiproxy;
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
+import com.tomscz.afswinx.component.abstraction.AFSwinxTopLevelComponent;
 import com.tomscz.afswinx.component.builders.AFSwinxFormBuilder;
 import com.tomscz.afswinx.component.builders.AFSwinxTableBuilder;
 
@@ -21,7 +22,7 @@ public class AFProxyScreenDefinition {
 
     private String key;
     private String screenUrl;
-    private Map<SupportedComponents, List<AFProxyComponentDefinition>> componentDefinitions;
+    private List<AFProxyComponentDefinition> componentDefinitions;
 
     /**
      * Gets builder for form with key from screen definition
@@ -31,12 +32,9 @@ public class AFProxyScreenDefinition {
      */
     public AFSwinxFormBuilder getFormBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
-            List<AFProxyComponentDefinition> formDefinitions = componentDefinitions.get(SupportedComponents.FORM);
-            if (formDefinitions != null) {
-                for (AFProxyComponentDefinition definition : formDefinitions) {
-                    if (definition.getName().equals(componentKey)) {
-                        return (AFSwinxFormBuilder) definition.getBuilder();
-                    }
+            for (AFProxyComponentDefinition definition : componentDefinitions) {
+                if (definition.getType().equals(SupportedComponents.FORM) && definition.getName().equals(componentKey)) {
+                    return (AFSwinxFormBuilder) definition.getBuilder();
                 }
             }
         }
@@ -51,12 +49,9 @@ public class AFProxyScreenDefinition {
      */
     public AFSwinxTableBuilder getTableBuilderByKey(String componentKey) {
         if (componentDefinitions != null) {
-            List<AFProxyComponentDefinition> tableDefinitions = componentDefinitions.get(SupportedComponents.TABLE);
-            if (tableDefinitions != null) {
-                for (AFProxyComponentDefinition definition : tableDefinitions) {
-                    if (definition.getName().equals(componentKey)) {
-                        return (AFSwinxTableBuilder) definition.getBuilder();
-                    }
+            for (AFProxyComponentDefinition definition : componentDefinitions) {
+                if (definition.getType().equals(SupportedComponents.TABLE) && definition.getName().equals(componentKey)) {
+                    return (AFSwinxTableBuilder) definition.getBuilder();
                 }
             }
         }
@@ -64,33 +59,62 @@ public class AFProxyScreenDefinition {
     }
 
     /**
+     * Builds all component from screen
+     *
+     * @param connectionParameters basic connectionParameters
+     * @return list of prepared components
+     */
+    public List<AFSwinxTopLevelComponent> buildAllComponents(HashMap<String, String> connectionParameters) {
+        List<AFSwinxTopLevelComponent> components = new ArrayList<>();
+        if (componentDefinitions != null) {
+            for (AFProxyComponentDefinition definition : componentDefinitions) {
+                AFSwinxTopLevelComponent component = null;
+                try {
+                    switch (definition.getType()) {
+                        case FORM:
+                            component = ((AFSwinxFormBuilder) definition.getBuilder())
+                                    .setConnectionParameters(connectionParameters)
+                                    .buildComponent();
+                            break;
+                        case TABLE:
+                            component = ((AFSwinxTableBuilder) definition.getBuilder())
+                                    .setConnectionParameters(connectionParameters)
+                                    .buildComponent();
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (AFSwinxBuildException e) {
+                    component = null;
+                }
+                if (component != null) {
+                    components.add(component);
+                } else {
+                    System.err.println("Something went wrong during build of this component. Component will not be added");
+                }
+            }
+        }
+        return components;
+    }
+
+    /**
      * Adds component definition to screen definition
      *
      * @param componentDefinition component definition
      */
+
     public void addComponentDefinition(AFProxyComponentDefinition componentDefinition) {
         if (componentDefinitions == null) {
-            componentDefinitions = new HashMap<>();
+            componentDefinitions = new ArrayList<>();
         }
-        if (componentDefinition.getType().equalsName(SupportedComponents.FORM.name())) {
-            if (componentDefinitions.get(SupportedComponents.FORM) == null) {
-                componentDefinitions.put(SupportedComponents.FORM, new ArrayList<AFProxyComponentDefinition>());
-            }
+        componentDefinitions.add(componentDefinition);
 
-            componentDefinitions.get(SupportedComponents.FORM).add(componentDefinition);
-        } else if (componentDefinition.getType().equalsName(SupportedComponents.TABLE.name())) {
-            if (componentDefinitions.get(SupportedComponents.TABLE) == null) {
-                componentDefinitions.put(SupportedComponents.TABLE, new ArrayList<AFProxyComponentDefinition>());
-            }
-            componentDefinitions.get(SupportedComponents.TABLE).add(componentDefinition);
-        }
     }
 
     /**
      * Reloads screen definition from server (proxy aplication)
-     *
      */
-    public void reload(){
+    public void reload() {
         try {
             AFProxyScreenDefinition screenDefinition = AFSwinx.getInstance().getScreenDefinitionBuilder(screenUrl, key).getScreenDefinition();
             setKey(screenDefinition.key);
@@ -117,11 +141,11 @@ public class AFProxyScreenDefinition {
         this.screenUrl = screenUrl;
     }
 
-    public Map<SupportedComponents, List<AFProxyComponentDefinition>> getComponentDefinitions() {
+    public List<AFProxyComponentDefinition> getComponentDefinitions() {
         return componentDefinitions;
     }
 
-    public void setComponentDefinitions(Map<SupportedComponents, List<AFProxyComponentDefinition>> componentDefinitions) {
+    public void setComponentDefinitions(List<AFProxyComponentDefinition> componentDefinitions) {
         this.componentDefinitions = componentDefinitions;
     }
 }

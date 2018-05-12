@@ -12,19 +12,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/countriesTable"
+        android:id="@+id/countriesComponents"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/countriesForm"
-        android:paddingTop="25dp"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/countriesButtons"

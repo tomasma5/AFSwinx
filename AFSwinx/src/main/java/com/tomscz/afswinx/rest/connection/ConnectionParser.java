@@ -2,6 +2,7 @@ package com.tomscz.afswinx.rest.connection;
 
 import java.util.HashMap;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -85,7 +86,7 @@ public class ConnectionParser implements XMLParser {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public AFSwinxConnectionPack parseDocument(Document documentToParse) {
+    public AFSwinxConnectionPack parseDocument(Document documentToParse) throws ParameterMissingException {
         // Prepare connection pack
         AFSwinxConnectionPack connectionPack = new AFSwinxConnectionPack();
         // Find root of document
@@ -161,7 +162,7 @@ public class ConnectionParser implements XMLParser {
      * @param connection current connection
      * @param securityParams node with security options
      */
-    private void parseSecurityParams(AFSwinxConnection connection, NodeList securityParams){
+    private void parseSecurityParams(AFSwinxConnection connection, NodeList securityParams) throws ParameterMissingException {
         ConnectionSecurity security = new ConnectionSecurity();
         for(int i=0;i<securityParams.getLength();i++){
             Node node = securityParams.item(i);
@@ -182,7 +183,7 @@ public class ConnectionParser implements XMLParser {
         connection.setSecurity(security);
     }
 
-    private void parseHeaderParam(AFSwinxConnection connection, NodeList headerParam) {
+    private void parseHeaderParam(AFSwinxConnection connection, NodeList headerParam) throws ParameterMissingException {
         String key = "";
         String value = "";
         for (int i = 0; i < headerParam.getLength(); i++) {
@@ -219,7 +220,7 @@ public class ConnectionParser implements XMLParser {
      * @return value of node after execute EL parser on it. If parser should not be execute then
      *         return received value without modification
      */
-    private String evaluateEL(String nodeValue) {
+    private String evaluateEL(String nodeValue) throws ParameterMissingException {
         if (doElEvaluation && nodeValue != null && !nodeValue.isEmpty()) {
             return Utils.evaluateElExpression(nodeValue, elConnectionData);
         }

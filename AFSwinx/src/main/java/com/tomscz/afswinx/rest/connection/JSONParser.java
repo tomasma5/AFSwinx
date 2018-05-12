@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.rest.connection;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 
@@ -18,6 +19,6 @@ public interface JSONParser {
      * @param connections
      * @return data of document. Typically as object of generic type.
      */
-    public <T> T parse(JSONObject connections);
+    public <T> T parse(JSONObject connections) throws ParameterMissingException;
 
 }

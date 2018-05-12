@@ -9,7 +9,7 @@ package cz.cvut.fel.matyapav.afandroid.enums;
 public enum SupportedComponents {
 
     FORM("Form"),
-    TABLE("Table"),
+    TABLE("Table"), //not yet fully supported
     LIST("List");
 
     SupportedComponents(String type) {

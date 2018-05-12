@@ -2,7 +2,8 @@ package service.afclassification.computational.ccm;
 
 public enum SupportedClassificationUnit {
 
-    BASIC("Basic classification unit");
+    BASIC("Basic classification unit"),
+    REQUIRED("Returns for all field required bahaviour no matter the score");
 
     private String name;
 

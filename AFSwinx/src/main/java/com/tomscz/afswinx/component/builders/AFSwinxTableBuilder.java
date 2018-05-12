@@ -15,6 +15,7 @@ import javax.swing.table.TableRowSorter;
 import com.tomscz.afrest.commons.SupportedComponents;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afswinx.common.ParameterMissingException;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxTable;
@@ -28,6 +29,7 @@ import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 import com.tomscz.afswinx.swing.component.model.UnEditableTableModel;
+import org.json.JSONException;
 
 
 public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilder> {
@@ -39,7 +41,12 @@ public class AFSwinxTableBuilder extends BaseComponentBuilder<AFSwinxTableBuilde
 
     @Override
     public AFSwinxTable buildComponent() throws AFSwinxBuildException {
-        super.initializeConnections();
+        try {
+            super.initializeConnections();
+        } catch (ParameterMissingException | JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
         AFSwinxTable afSwinxTable = new AFSwinxTable(modelConnection, dataConnection, sendConnection);
         afSwinxTable.setLayout(new GridLayout(1,1));
         afSwinxTable.setDynamicSize(dynamicSize);

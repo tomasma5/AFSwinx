@@ -11,6 +11,7 @@ import com.tomscz.afrest.layout.Layout;
 import com.tomscz.afrest.rest.dto.AFClassInfo;
 import com.tomscz.afrest.rest.dto.AFFieldInfo;
 import com.tomscz.afrest.rest.dto.AFMetaModelPack;
+import com.tomscz.afswinx.common.ParameterMissingException;
 import com.tomscz.afswinx.component.AFSwinx;
 import com.tomscz.afswinx.component.AFSwinxBuildException;
 import com.tomscz.afswinx.component.AFSwinxForm;
@@ -23,19 +24,23 @@ import com.tomscz.afswinx.rest.rebuild.BaseRestBuilder;
 import com.tomscz.afswinx.rest.rebuild.RestBuilderFactory;
 import com.tomscz.afswinx.rest.rebuild.holder.AFDataPack;
 import com.tomscz.afswinx.validation.LessThanValidator;
+import org.json.JSONException;
 
 /**
  * This is form builder. This class is responsible for create {@link AFSwinxForm} component.
- * 
+ *
  * @author Martin Tomasek (martin@toms-cz.com)
- * 
  * @since 1.0.0.
  */
 public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder> {
 
     @Override
     public AFSwinxForm buildComponent() throws AFSwinxBuildException {
-        super.initializeConnections();
+        try {
+            super.initializeConnections();
+        } catch (ParameterMissingException | JSONException e) {
+            return null;
+        }
         AFSwinxForm form = new AFSwinxForm(modelConnection, dataConnection, sendConnection);
         try {
             // Build component
@@ -62,7 +67,7 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
 
     /**
      * This method will build form based on metamodel
-     * 
+     *
      * @param form which will be build
      * @throws AFSwinxConnectionException if exception during retrieve metamodel ocurre
      */
@@ -81,20 +86,20 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
             // Initialize layout builder
             BaseLayoutBuilder layoutBuilder = new BaseLayoutBuilder(layout);
             buildFields(classInfo, layoutBuilder, form, "");
-            
+
             //add LessThan validations - all fields needs to be created
             Iterator<Entry<String, ComponentDataPacker>> it = form.getPanels().entrySet().iterator();
             while (it.hasNext()) {
-            	Entry<String, ComponentDataPacker> pair = (Entry<String, ComponentDataPacker>) it.next();
-            	AFSwinxPanel panel = pair.getValue().getComponent();
-            	String otherPanelId = panel.getCompareByLessThanWith();
-            	if(otherPanelId != null){
-            		AFSwinxPanel otherPanel = form.getPanels().get(otherPanelId).getComponent();
-            		LessThanValidator validator = new LessThanValidator(panel.getWidgetType(), otherPanel);
-            		panel.addValidator(validator);
+                Entry<String, ComponentDataPacker> pair = (Entry<String, ComponentDataPacker>) it.next();
+                AFSwinxPanel panel = pair.getValue().getComponent();
+                String otherPanelId = panel.getCompareByLessThanWith();
+                if (otherPanelId != null) {
+                    AFSwinxPanel otherPanel = form.getPanels().get(otherPanelId).getComponent();
+                    LessThanValidator validator = new LessThanValidator(panel.getWidgetType(), otherPanel);
+                    panel.addValidator(validator);
                 }
             }
-            
+
             // Build layout
             layoutBuilder.buildLayout(form);
         }
@@ -102,14 +107,14 @@ public class AFSwinxFormBuilder extends BaseComponentBuilder<AFSwinxFormBuilder>
 
     @Override
     protected void addComponent(AFSwinxPanel panelToAdd, BaseLayoutBuilder layoutBuilder,
-            AFSwinxTopLevelComponent component) {
+                                AFSwinxTopLevelComponent component) {
         ComponentDataPacker dataPacker =
                 new ComponentDataPacker(0, panelToAdd.getPanelId(), panelToAdd);
         component.getPanels().put(dataPacker.getId(), dataPacker);
         panelToAdd.setAfParent(component);
-        if(panelToAdd.isVisible()){
+        if (panelToAdd.isVisible()) {
             component.add(panelToAdd);
-            layoutBuilder.addComponent(panelToAdd); 
+            layoutBuilder.addComponent(panelToAdd);
         }
     }
 

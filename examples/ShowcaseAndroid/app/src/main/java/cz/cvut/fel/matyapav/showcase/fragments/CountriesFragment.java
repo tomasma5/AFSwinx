@@ -7,10 +7,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import java.util.HashMap;
+import java.util.List;
+
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.builders.FormBuilder;
 import cz.cvut.fel.matyapav.afandroid.builders.ListBuilder;
+import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFList;
 import cz.cvut.fel.matyapav.showcase.R;
@@ -58,41 +62,21 @@ public class CountriesFragment extends BaseFragment {
     public View initialize(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.countries_fragment_layout, container, false);
         //get layouts where we want to put components
-        LinearLayout countriesTableLayout = root.findViewById(R.id.countriesTable);
-        LinearLayout countriesFormLayout = root.findViewById(R.id.countriesForm);
+        LinearLayout countriesLayout = root.findViewById(R.id.countriesComponents);
 
         //initialize builders
         HashMap<String, String> securityConstrains = ApplicationContext.getInstance().getSecurityContext().getUserCredentials();
-
-        ListBuilder listBuilder = getScreenDefinition()
-                .getListBuilderByKey(ShowcaseConstants.COUNTRY_LIST)
-                .setConnectionParameters(securityConstrains)
-                .setSkin(new ListSkin(getContext()));
-
-        FormBuilder formBuilder = getScreenDefinition()
-                .getFormBuilderByKey(ShowcaseConstants.COUNTRY_FORM)
-                .setConnectionParameters(securityConstrains)
-                .setSkin(new CountryFormSkin(getContext()));
-
-        //create and insert form
-        try {
-            final AFList list = listBuilder.createComponent();
-            countriesTableLayout.addView(list.getView());
-
-            AFForm form = formBuilder.createComponent();
-
-            Button perform = root.findViewById(R.id.countriesBtnAdd);
-            perform.setOnClickListener(onCountryPerformListener);
-            Button reset = root.findViewById(R.id.countriesBtnReset);
-            reset.setOnClickListener(onCountryResetListener);
-            countriesFormLayout.addView(form.getView());
-            Button clear = root.findViewById(R.id.countriesBtnClear);
-            clear.setOnClickListener(onCountryClearListener);
-        } catch (Exception e) {
-            ShowCaseUtils.showBuildingFailedDialog(getActivity(), e);
-            e.printStackTrace();
+        List<AFComponent> componentList = getScreenDefinition().buildAllComponents(securityConstrains);
+        for (AFComponent component : componentList) {
+            countriesLayout.addView(component.getView());
         }
 
+        Button perform = root.findViewById(R.id.countriesBtnAdd);
+        perform.setOnClickListener(onCountryPerformListener);
+        Button reset = root.findViewById(R.id.countriesBtnReset);
+        reset.setOnClickListener(onCountryResetListener);
+        Button clear = root.findViewById(R.id.countriesBtnClear);
+        clear.setOnClickListener(onCountryClearListener);
         //connect list and form
         ShowCaseUtils.connectFormAndList(ShowcaseConstants.COUNTRY_LIST, ShowcaseConstants.COUNTRY_FORM);
 

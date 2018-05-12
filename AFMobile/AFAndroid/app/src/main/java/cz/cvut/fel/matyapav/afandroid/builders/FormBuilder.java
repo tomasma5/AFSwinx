@@ -4,12 +4,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
+
+import org.json.JSONException;
+
 import cz.cvut.fel.matyapav.afandroid.AFAndroid;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFComponent;
 import cz.cvut.fel.matyapav.afandroid.enums.SupportedComponents;
 import cz.cvut.fel.matyapav.afandroid.components.parts.AFField;
 import cz.cvut.fel.matyapav.afandroid.components.types.AFForm;
 import cz.cvut.fel.matyapav.afandroid.enums.LayoutOrientation;
+import cz.cvut.fel.matyapav.afandroid.utils.AFAndroidBuildException;
 
 /**
  * Builds form from class definition
@@ -21,7 +26,12 @@ public class FormBuilder extends AFComponentBuilder<FormBuilder>{
 
     @Override
     public AFForm createComponent() throws Exception {
-        initializeConnections();
+        try {
+            initializeConnections();
+        } catch (ParameterMissingException | JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
         String modelResponse = getModelResponse();
         //create form from response
         AFForm form = (AFForm) buildComponent(modelResponse, SupportedComponents.FORM);

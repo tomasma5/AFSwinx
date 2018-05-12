@@ -62,7 +62,7 @@
 
 
                 <div class="form-group">
-                    <label for="selectedScoringUnit">Configuration</label>
+                    <label for="selectedScoringUnit">Scoring unit</label>
                     <select class="form-control" id="selectedScoringUnit" name="selectedScoringUnit">
                         <c:forEach var="scoringUnitOption" items="${scoringUnitList}">
                             <c:if test="${scoringUnitOption == selectedScoringUnit}">

@@ -1,5 +1,6 @@
 package com.tomscz.afswinx.rest.connection;
 
+import com.tomscz.afswinx.common.ParameterMissingException;
 import org.w3c.dom.Document;
 
 /**
@@ -17,6 +18,6 @@ public interface XMLParser {
      * @param documentToParse
      * @return data of document. Typically as object of generic type.
      */
-    public <T> T parseDocument(Document documentToParse);
+    public <T> T parseDocument(Document documentToParse) throws ParameterMissingException;
 
 }
